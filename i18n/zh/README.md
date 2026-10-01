@@ -1,10 +1,10 @@
-<p align="center"><sub>社区翻译，以<a href="../../README.md">英文原文为准</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
+<p align="center"><sub>简体中文译本，以<a href="../../README.md">英文原文为准</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
 <p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
+  <img src="../../assets/banner.svg" alt="从零开始的 AI 工程：参考手册横幅" width="100%">
 </p>
 
 <p align="center">
-  <b>Read in your language:</b>
+  <b>选择阅读语言：</b>
   <a href="../../i18n/es/README.md">Español</a> ·
   <a href="../../i18n/fr/README.md">Français</a> ·
   <a href="../../i18n/pt/README.md">Português</a> ·
@@ -17,84 +17,79 @@
   <a href="../../i18n/ar/README.md">العربية</a> ·
   <a href="../../i18n/ru/README.md">Русский</a> ·
   <a href="../../i18n/tr/README.md">Türkçe</a>
-  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
+  <br><sub>各语言的项目介绍页保存在仓库中，以英文为准；课程页面的机器译文位于 <code>translations</code> 分支。详见 <a href="../../docs/i18n.md">docs/i18n.md</a>。</sub>
 </p>
 
 <p align="center">
-  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lessons"></a>
-  <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
-  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 许可证"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 节课"></a>
+  <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 个阶段"></a>
+  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub 星标数"></a>
+  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="网站"></a>
 </p>
 
-## From the creator of [Agent Memory - #1 Persistent memory ⭐](https://github.com/rohitg00/agentmemory) <a href="https://github.com/rohitg00/agentmemory/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a> which naturally works with any agents or chat assistants.
+## 本项目由 [Agent Memory - #1 Persistent memory ⭐](https://github.com/rohitg00/agentmemory) <a href="https://github.com/rohitg00/agentmemory/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub 星标数"></a> 的作者创建；Agent Memory 可自然融入各种智能体和聊天助手。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-> **84% 的学生已经在使用 AI 工具，却只有 18% 觉得自己能专业地使用它们。** 这套课程正是为了填补这道鸿沟。
+> **84% 的学生已经在使用 AI 工具，但只有 18% 认为自己已做好在专业工作中使用这些工具的准备。** 本课程旨在弥合这一差距。
 >
-> 523 节课。20 个阶段。约 342 小时。Python、TypeScript、Rust、Julia。每节课都产出一个可复用的成果：一个提示词、一个技能、一个智能体、一个 MCP 服务器。免费、开源、MIT 许可。
+> 523 节课，20 个阶段，约 342 小时。使用 Python、TypeScript、Rust、Julia。每节课都会产出一项可复用成果：提示词、技能、智能体或 MCP 服务器。免费、开源，采用 MIT 许可证。
 >
-> 你不只是学 AI，你亲手把它造出来。从头到尾，全部手写。
+> 你不只是学习 AI，还要亲手把它从头到尾构建出来。
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
+<p align="center"><sub><b>114,584</b> 位读者 &nbsp;·&nbsp; 最近 30 天有 <b>181,995</b> 次页面浏览 &nbsp;·&nbsp; 数据截至 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-## Start here: choose what you want to build
+## 从这里开始：选择你想构建的东西
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
-opens the same curriculum on GitHub or the website, and both versions use the
-same lesson code.
+无需先浏览全部 523 节课。选定一个目标就可以开始。各链接分别通往 GitHub 或网站上的同一套课程，两种阅读方式使用相同的课程代码。
 
-| Your goal | Learn on GitHub | Learn on the website |
+| 你的目标 | 在 GitHub 上学习 | 在网站上学习 |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA track](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+| 我是初学者，想系统打好基础 | [第 0 阶段：环境配置与工具](../../phases/00-setup-and-tooling/) | [开发环境](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| 我会 Python，想学习数学与机器学习基础 | [第 1 阶段：数学基础](../../phases/01-math-foundations/) | [建立线性代数直觉](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| 我想构建生产级 LLM 应用 | [第 11 阶段：LLM 工程](../../phases/11-llm-engineering/) | [提示词工程](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| 我想构建智能体 | [第 14 阶段：智能体工程](../../phases/14-agent-engineering/) | [智能体循环](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| 我想在真实仓库中使用编程智能体 | [智能体辅助工程路径](../../learning-paths/using-coding-agents.json) | [智能体辅助工程](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| 我想在动手实现前确定该做什么、怎样做 | [产品判断与交付路径](../../learning-paths/shaping-the-build.json) | [产品判断与交付](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| 我想用模型上下文协议（MCP）构建系统 | [模型上下文协议（MCP）路线](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [模型上下文协议（MCP）路径](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| 我想编写并发布 Agent Skills | [Agent Skills 专项路线](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 路径](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| 我想备考 Claude 认证 | [认证备考入门](../../certifications/claude/GETTING_STARTED.md) | [认证学院](https://aiengineeringfromscratch.com/certifications.html) |
+| 我想备考 MCP Associate（MCPA） | [MCPA 备考入门](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA 路线](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
 
-Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
-or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).
+不确定从哪里开始？试试 [`start-learning` 水平定位导师](../../skills/start-learning/SKILL.md)，或查看[网站上的先修要求指南](https://aiengineeringfromscratch.com/prereqs.html)。
 
-Compare four core domains and six career routes in the [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+前往 [AI 工程学习路径](https://aiengineeringfromscratch.com/learning-paths.html)，比较四大核心领域和六条职业方向路线。
 
 ### 赞助方
 
 <a href="https://serpapi.com/ai-engineering-from-scratch">
-  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi。面向 AI 应用的网页搜索 API，可为任何集成提供 Markdown 和 JSON 格式。" width="600">
+  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi：为 AI 应用提供网页搜索 API，支持 Markdown 和 JSON 格式，便于接入各种应用。" width="600">
 </a>
 
-<p><br><b>感谢我们的赞助方。</b></p>
-<p>你的支持让每节课都能保持免费和开源。</p>
+<p><br><b>感谢各位赞助方。</b></p>
+<p>有了你们的支持，每节课才能持续免费、开源。</p>
 <p>
-  <a href="#supporters">查看所有支持者</a><br>
+  <a href="#supporters">查看全部支持者</a><br>
   <a href="../../SPONSORS.md">Become a sponsor</a>
   <br clear="all">
 </p>
 
-### Use every lesson the same way
+### 每节课都按这套方法学习
 
-1. **Read** `docs/en.md` and explain the core idea in your own words.
-2. **Type and build** the important code instead of treating the code block as decoration.
-3. **Run** the lesson command from the repository root, the directory containing `README.md` and `phases/`.
-4. **Keep evidence**: the command, working directory, exit code, meaningful output, and the artifact you changed or produced.
-5. **Continue** only when you can explain the output and make one small change without guessing.
+1. **阅读** `docs/en.md`，用自己的话解释核心概念。
+2. **亲手输入并实现**关键代码，不要只是看看代码块。
+3. **运行**课程命令，工作目录应为仓库根目录，也就是包含 `README.md` 和 `phases/` 的目录。
+4. **保留验证记录**：命令、工作目录、退出码、有意义的输出，以及你修改或生成的成果。
+5. **确认后再继续**：你应当能够解释输出，并且有把握地完成一处小改动。
 
-Commands in lesson pages are paths from the repository root unless the lesson
-explicitly says to change directories. If a lesson offers several languages,
-run the implementation for the language you are learning.
+除非课程明确要求切换目录，否则课程页面中的命令都以仓库根目录为起点。如果一节课提供多种语言的实现，请运行你正在学习的那一种。
 
-### Clone it and produce your first evidence
+### 克隆仓库，留下第一份运行记录
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -103,21 +98,13 @@ python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route be
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-The preflight separates requirements needed now from tools needed later. Every
-required failure includes the detected reason and a corrective command. The
-second command is a dependency-free lesson and ends by showing that a matrix
-times a vector is the operation inside a neural network layer. Save that
-terminal output as your first evidence.
+环境预检会区分当前必需的条件和后续才会用到的工具。每一项未通过的必需检查都会说明检测到的原因，并给出修复命令。第二条命令运行一节无需额外依赖的课程，最后展示神经网络层内部的矩阵与向量相乘运算。保存这段终端输出，作为你的第一份运行凭证。
 
-## Add the AI tutor in 30 seconds
+## 30 秒添加 AI 导师
 
-If Node.js, `npx`, and a skill-capable coding agent are already installed,
-your coding agent can become your tutor in two commands. A repository clone is
-not needed to install or read the tutor. Runnable focused-path labs need
-`python3`. Agent Skills host labs also need a selected host and a writable
-user or project skill scope.
+如果你已经安装 Node.js、`npx` 和支持技能的编程智能体，只需两条命令就能让编程智能体成为你的导师。安装导师或阅读其内容无需克隆仓库。运行专项学习路径中的实验需要 `python3`；Agent Skills 的宿主实验还需要选定一个宿主，并确保用户级或项目级技能安装位置可写。
 
-Check the local requirements first:
+先检查本地环境：
 
 ```bash
 node --version
@@ -125,73 +112,43 @@ npx --version
 python3 --version
 ```
 
-Then install the curriculum skills and choose the host and scope you intend to
-use when the installer asks:
+然后安装课程技能，并在安装程序提示时选择要使用的宿主和安装范围：
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-Invocation syntax belongs to the host, not to the portable `SKILL.md` format:
+技能的调用语法由宿主决定，并非由可移植的 `SKILL.md` 格式规定：
 
-| Host | Start the course | Start Model Context Protocol (MCP) | Start Agent Skills | Run a phase quiz |
+| 宿主 | 开始课程 | 开始学习模型上下文协议（MCP） | 开始学习 Agent Skills | 进行阶段测验 |
 |---|---|---|---|---|
-| Codex | `start-learning`, or choose it from `/skills` | `learn-mcp`, or choose it from `/skills` | `learn-agent-skills`, or choose it from `/skills` | `check-understanding 13`, or choose it from `/skills` |
+| Codex | `start-learning`，或从 `/skills` 中选择 | `learn-mcp`，或从 `/skills` 中选择 | `learn-agent-skills`，或从 `/skills` 中选择 | `check-understanding 13`，或从 `/skills` 中选择 |
 | Claude Code | `/start-learning` | `/learn-mcp` | `/learn-agent-skills` | `/check-understanding 13` |
-| Other compatible hosts | `Use start-learning to begin the course.` | `Use learn-mcp to start the Model Context Protocol (MCP) path.` | `Use learn-agent-skills to start the Agent Skills Engineering path.` | `Use check-understanding to quiz me on Phase 13.` |
+| 其他兼容宿主 | `Use start-learning to begin the course.` | `Use learn-mcp to start the Model Context Protocol (MCP) path.` | `Use learn-agent-skills to start the Agent Skills Engineering path.` | `Use check-understanding to quiz me on Phase 13.` |
 
-A ten-question placement quiz maps what you already know to a starting phase and
-saves a personalized study plan to `LEARNING.md`. From there, the `learn` skill
-teaches one lesson per session: concept, math, code, quiz. It streams lessons
-straight from this repo, and the `course-guide` skill jumps you to the exact
-lesson that covers anything you are stuck on. In Codex, invoke these skills with
-`learn` and `course-guide`; in Claude Code, use `/learn` and `/course-guide`;
-in other compatible hosts, ask to use the skill by name.
+一份包含十道题的水平定位测验会根据你已有的知识确定起始阶段，并将个性化学习计划保存到 `LEARNING.md`。随后，`learn` 技能每次带你学习一节课，依次讲解概念、数学、代码，再进行测验。课程内容直接从本仓库读取；遇到困难时，`course-guide` 技能会引导你找到对应的具体课程。在 Codex 中使用 `learn` 和 `course-guide` 调用这些技能；在 Claude Code 中使用 `/learn` 和 `/course-guide`；在其他兼容宿主中，直接要求按名称使用相应技能。
 
-Only want Model Context Protocol (MCP)? Use the MCP invocation for your host. It creates
-`MCP-LEARNING.md` and follows one 17-lesson route through stateless
-requests, transports, bidirectional work, security, reliability, registry
-governance, and conformance evidence. The exact order and checkpoints live in
-the [Model Context Protocol (MCP) manifest](../../learning-paths/model-context-protocol.json).
+只想学习模型上下文协议（Model Context Protocol，MCP）？使用适合你所用宿主的 MCP 调用方式。导师会创建 `MCP-LEARNING.md`，按一条包含 17 节课的路线讲解无状态请求、传输机制、双向交互、安全性、可靠性、注册表治理和规范符合性验证记录。具体顺序和检查点见[模型上下文协议（MCP）路径清单](../../learning-paths/model-context-protocol.json)。
 
-Only want Agent Skills? Use the Agent Skills invocation for your host. It
-creates `AGENT-SKILLS-LEARNING.md` and follows one coherent five-lesson route:
-contract, discovery, invocation, sandbox boundaries, then release evals and
-real-host portability. Start on the web with the
-[Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+只想学习 Agent Skills？使用适合你所用宿主的 Agent Skills 调用方式。导师会创建 `AGENT-SKILLS-LEARNING.md`，沿着连贯的五课路线展开：技能契约、发现、调用、沙箱边界，最后是发布评测和真实宿主间的可移植性。也可以从网站上的 [Agent Skills 学习路径](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills)开始。
 
-The installer lists the hosts it can configure and asks where to install. If
-you do not have Node.js, `npx`, `python3`, a supported host, or a writable
-scope yet, use the website or read `docs/en.md` manually. That path teaches the
-concepts, but real-host discovery, invocation, script, and uninstall evidence
-remains pending until the preflight is available. Read the lessons at
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
+安装程序会列出可配置的宿主，并询问安装位置。如果你尚未准备好 Node.js、`npx`、`python3`、受支持的宿主或可写的安装位置，可以先使用网站，或直接阅读 `docs/en.md`。这条路径可以帮助你理解概念，但真实宿主中的发现、调用、脚本运行和卸载验证记录，仍需等到具备环境预检条件后补齐。课程见 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)。
 
-## 运作方式
+## 这套课程如何组织
 
-Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
-flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
-explain its loss curve. You hook a function to an agent but can't say what attention does
-inside the model that's calling it.
+大多数 AI 学习资料是零散的：这里一篇论文，那里一篇微调文章，再加上一段炫目的智能体演示。这些内容很少能连成体系。你做出了聊天机器人，却解释不了它的损失曲线；你给智能体接上了函数，却说不清调用这个函数的模型内部，注意力机制究竟做了什么。
 
-This curriculum is the spine. 20 phases, 523 lessons, four languages: Python, TypeScript,
-Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm
-gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time
-PyTorch shows up, you already know what it's doing under the hood.
+本课程把这些知识串成一条主线：20 个阶段、523 节课，使用 Python、TypeScript、Rust、Julia 四种语言，从线性代数一路走到自主智能体群。每种算法都先从数学原理开始实现：反向传播、分词器、注意力机制、智能体循环。等到用上 PyTorch 时，你已经知道它在底层做了什么。
 
-Each lesson runs the same loop: read the problem, derive the math, write the code, run
-the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding.
-Free, open source, and built to run on your own laptop.
+每节课都遵循同一流程：理解问题、推导数学、编写代码、运行测试、保留成果。没有五分钟速成视频，没有复制粘贴就部署的捷径，也不包办每一步。课程免费开源，可以在你自己的笔记本电脑上运行。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## 课程的整体结构
+## 课程结构
 
-Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
-Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
-the top is breaking.
+二十个阶段逐层递进，以数学为基础，最终走向智能体和生产实践。如果已经掌握前面的知识，可以跳到后面；但不要跳过必要基础后，又困惑于后续环节为何出错。
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
@@ -223,9 +180,9 @@ flowchart TB
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## 单节课的结构
+## 每节课的结构
 
-Each lesson lives in its own folder, with the same structure across the entire curriculum:
+每节课都有独立文件夹，整个课程使用相同的目录结构：
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
@@ -235,9 +192,7 @@ phases/<NN>-<phase-name>/<NN>-<lesson-name>/
 └── outputs/   prompts, skills, agents, or MCP servers this lesson produces
 ```
 
-Every lesson follows six beats. The *Build It / Use It* split is the spine — you implement the
-algorithm from scratch first, then run the same thing through the production library. You
-understand what the framework is doing because you wrote the smaller version yourself.
+每节课包含六个环节，核心是“*自己实现 / 使用现成工具*”：先从零实现算法，再用生产级库完成同样的工作。因为亲手写过简化版本，你就能理解框架究竟在做什么。
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
@@ -249,31 +204,21 @@ flowchart LR
   U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
 ```
 
-## 快速开始
+## 开始学习
 
-三种入门方式，任选其一。
+有三种入门方式，选一种即可。
 
-**Option A — learn in your terminal *(recommended)*.** After the Node.js,
-`npx`, host, and scope preflight above, install the learning skills into a
-compatible agent and let the course drive itself:
+**方式 A：在终端中学习（*推荐*）。** 完成前面针对 Node.js、`npx`、宿主和安装范围的预检后，将学习技能安装到兼容的智能体中，让它带你推进课程：
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-Use the host-specific invocation table above. The installed skills provide
-`start-learning`, `learn`, `course-guide`, and the focused
-`learn-mcp` and `learn-agent-skills` routes. Lesson prose can
-stream from this repository without a clone. A local clone is required for
-copied repository code commands and executable MCP or Agent Skills labs.
-Progress lives in `LEARNING.md`, `MCP-LEARNING.md`, or
-`AGENT-SKILLS-LEARNING.md` in your project, so every session can resume.
+请使用上方调用表中与你的宿主对应的语法。安装后可使用 `start-learning`、`learn`、`course-guide`，以及专项学习路线 `learn-mcp` 和 `learn-agent-skills`。课程文字可以直接从本仓库读取，无需克隆；运行复制的仓库代码命令以及 MCP 或 Agent Skills 实验，则需要本地克隆。学习进度保存在项目中的 `LEARNING.md`、`MCP-LEARNING.md` 或 `AGENT-SKILLS-LEARNING.md`，每次都能接着学。
 
-**Option B — read.** Open any completed lesson on
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) or expand a phase under
-[Contents](#contents). No setup, no cloning.
+**方式 B：直接阅读。** 在 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) 打开任意已完成的课程，或在[目录](#contents)中展开一个阶段。无需配置环境，也无需克隆。
 
-**Option C — clone and run.**
+**方式 C：克隆并运行。**
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -281,131 +226,98 @@ cd ai-engineering-from-scratch
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-Cloning also auto-loads the learning skills in Claude Code, and gives every
-lesson's code to the `learn` tutor for real execution instead of read-along.
+克隆仓库后，Claude Code 也会自动加载学习技能；`learn` 导师还能使用各节课的代码进行实际运行，而不只是陪你阅读。
 
-### 先决条件
+### 先修要求
 
-- You can write code (any language; Python helps).
-- You want to understand how AI **actually works**, not just call APIs.
+- 能用任意一种语言编写代码；会 Python 更方便。
+- 想理解 AI **究竟如何运作**，而不只是调用 API。
 
-### Prepare for Claude certifications
+### 备考 Claude 认证
 
-The [Claude Certification Academy](../../certifications/claude/README.md) is a free,
-open-source preparation program for all four official Claude certification tracks:
-Associate Foundations, Developer Foundations, Architect Foundations, and Architect
-Professional. Each route combines blueprint-mapped lessons, runnable labs, a
-diagnostic, capstone work, and a full-length original practice exam.
+[Claude Certification Academy](../../certifications/claude/README.md) 是免费的开源备考项目，覆盖 Claude 的全部四条官方认证路线：Associate Foundations、Developer Foundations、Architect Foundations 和 Architect Professional。每条路线都包含与考试大纲对应的课程、可运行的实验、水平诊断测试、综合项目，以及一套完整的原创模拟试卷。
 
-Use the [AI-native GitHub onboarding guide](../../certifications/claude/GETTING_STARTED.md)
-with Claude Code, Codex, ChatGPT, Cursor, or another agent. Run
-`claude-certification` in Codex, `/claude-certification` in Claude Code, or ask
-another host to use `claude-certification`. It chooses a track, creates a
-persistent route in `CLAUDE-CERTIFICATION.md`, teaches one step at a time, runs
-the real labs, and gives artifact-based feedback. The same curriculum remains
-available on the [certification website](https://aiengineeringfromscratch.com/certifications.html).
+使用 Claude Code、Codex、ChatGPT、Cursor 或其他智能体，按照 [AI 原生 GitHub 入门指南](../../certifications/claude/GETTING_STARTED.md) 开始学习。在 Codex 中运行 `claude-certification`，在 Claude Code 中运行 `/claude-certification`，或让其他宿主使用 `claude-certification`。它会帮你选择认证路线，将学习路线持久保存在 `CLAUDE-CERTIFICATION.md` 中，逐步教学、运行真实实验，并根据你的成果给出反馈。同一套课程也可以在[认证网站](https://aiengineeringfromscratch.com/certifications.html)上学习。
 
-The academy is independent study material based on public exam objectives. It is not
-affiliated with Anthropic, does not reproduce live exam questions, and cannot guarantee
-a passing score.
+本学院提供依据公开考试目标编写的独立学习资料，与 Anthropic 无关联，不复现正式考试真题，也不保证通过考试。
 
-### Prepare for the MCP Associate (MCPA) certification
+### 备考 MCP Associate（MCPA）认证
 
-The [MCPA Certification Curriculum](../../certifications/mcpa/README.md) is a free,
-open-source preparation program for the Model Context Protocol Associate exam from the
-Agentic AI Foundation, delivered through Linux Foundation Training. Its 34 lessons teach
-the stateless 2026-07-28 protocol across the five exam domains: per-request `_meta` and
-`server/discover` in place of the old handshake, multi round-trip requests, subscriptions,
-caching, the tasks and MCP Apps extensions, OAuth authorization, and the registry and SDK
-tiers. Every lesson ships a runnable standard-library lab whose transcript is checked for
-the current wire shape, and the track adds a diagnostic, a capstone, and three full-length
-original practice exams whose question mix follows the published blueprint weights.
+[MCPA Certification Curriculum](../../certifications/mcpa/README.md) 是免费的开源备考项目，面向 Agentic AI Foundation 的 Model Context Protocol Associate 考试，该考试通过 Linux Foundation Training 提供。课程共 34 课，围绕无状态的 2026-07-28 版协议，覆盖五个考试领域：以每次请求中的 `_meta` 和 `server/discover` 取代旧版握手流程、多轮往返请求、订阅、缓存、tasks 和 MCP Apps 扩展、OAuth 授权，以及注册表和 SDK 的分级。每课都提供可运行的标准库实验，并检查实验交互记录是否符合当前的协议消息格式。这条路线还包含水平诊断测试、综合项目，以及三套完整的原创模拟试卷，题目比例遵循已公布的考试大纲权重。
 
-Use the [AI-native GitHub onboarding guide](../../certifications/mcpa/GETTING_STARTED.md) with
-Claude Code, Codex, ChatGPT, Cursor, or another agent. Run `mcpa-certification` in Codex,
-`/mcpa-certification` in Claude Code, or ask another host to use `mcpa-certification`. It
-creates a persistent route in `MCPA-CERTIFICATION.md`, teaches one step at a time, runs
-the real labs, and gives artifact-based feedback. The same curriculum is available on the
-[MCPA track page](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+使用 Claude Code、Codex、ChatGPT、Cursor 或其他智能体，按照 [AI 原生 GitHub 入门指南](../../certifications/mcpa/GETTING_STARTED.md) 开始学习。在 Codex 中运行 `mcpa-certification`，在 Claude Code 中运行 `/mcpa-certification`，或让其他宿主使用 `mcpa-certification`。它会将学习路线持久保存在 `MCPA-CERTIFICATION.md` 中，逐步教学、运行真实实验，并根据你的成果给出反馈。同一套课程也可以在 [MCPA 路线页面](https://aiengineeringfromscratch.com/certification?id=mcpa-f)上学习。
 
-This curriculum is independent study material based on public exam objectives. It is not
-affiliated with the Agentic AI Foundation or the Linux Foundation, does not reproduce
-live exam questions, and cannot guarantee a passing score.
+本课程提供依据公开考试目标编写的独立学习资料，与 Agentic AI Foundation 和 Linux Foundation 均无关联，不复现正式考试真题，也不保证通过考试。
 
-### The learning skills
+### 学习技能
 
-| Skill | What it does |
+| 技能 | 功能 |
 |---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | One-time onboarding: why you're learning, placement quiz, personalized plan saved to `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | The tutor loop. Warm-up recall, then the next lesson taught interactively, then its quiz; records progress and a review queue. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Topic router. "Where do I learn attention?" or "my loss is NaN" → the exact lessons, with links. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Focused Model Context Protocol (MCP) tutor. Creates `MCP-LEARNING.md`, follows the 17-lesson manifest, and records wire, security, reliability, and conformance evidence. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Focused Agent Skills tutor. Creates `AGENT-SKILLS-LEARNING.md`, teaches lessons 22, 24, 25, 26, and 27, and records real-host evidence. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certification tutor. Chooses CCAO-F, CCDV-F, CCAR-F, or CCAR-P; teaches each lesson; runs labs; reviews artifacts; administers diagnostics and mocks; saves progress. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA tutor. Follows the 34-lesson `mcpa-f` route on the 2026-07-28 protocol; teaches each lesson; runs labs and the wire checker; administers the diagnostic and three mocks; saves progress. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. Use the Codex, Claude Code, or natural-language form in the invocation table above. |
+| [`start-learning`](../../skills/start-learning/SKILL.md) | 一次性入门引导：了解学习动机、完成水平测试，并将个性化学习计划保存到 `LEARNING.md`。 |
+| [`learn`](../../skills/learn/SKILL.md) | 导师教学循环：先热身回顾，再以交互方式教授下一课，最后完成该课测验；记录进度并维护复习队列。 |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | 按主题定位课程。“在哪里学习注意力机制？”或“我的损失值是 NaN” → 对应的具体课程及链接。 |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | 专门教授 Model Context Protocol（MCP）的导师。创建 `MCP-LEARNING.md`，遵循 17 课的学习清单，并记录协议交互、安全性、可靠性和规范符合性方面的验证证据。 |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | 专门教授 Agent Skills 的导师。创建 `AGENT-SKILLS-LEARNING.md`，讲授第 22、24、25、26 和 27 课，并记录真实宿主中的验证证据。 |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | 认证导师。选择 CCAO-F、CCDV-F、CCAR-F 或 CCAR-P；逐课教学；运行实验；评审成果；组织水平诊断测试和模拟考试；保存进度。 |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA 导师。遵循基于 2026-07-28 版协议、共 34 课的 `mcpa-f` 路线；逐课教学；运行实验和协议消息格式检查器；组织水平诊断测试和三次模拟考试；保存进度。 |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | 包含十道题的水平测试。根据你的知识水平确定起始阶段，并生成带预计学时的个性化学习路线。 |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | 每阶段八道测验题，提供反馈并指出需要复习的具体课程。请采用上方调用方式表中的 Codex、Claude Code 或自然语言形式。 |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Read the core curriculum as a book
+## 以书籍形式阅读核心课程
 
-The 20-phase core curriculum under `phases/` compiles into a six-volume book series. EPUB and PDF are built by CI from the same core lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
+`phases/` 下的 20 个阶段核心课程可编译为六卷系列丛书。CI 使用同一套核心课程源文件生成 EPUB 和 PDF，并将其附在每个 [GitHub 发布版本](https://github.com/rohitg00/ai-engineering-from-scratch/releases)中；以下链接始终指向最新发布版本。卷号表示丛书中的顺序，而非版本号：每份书籍都标有带日期的版次，旧版仍可在对应的发布页面下载。
 
-Certification curricula are intentionally not converted into the books. Their
-AI tutor state, runnable labs, interactive figures, diagnostics, and timed mocks
-remain first-class on GitHub and the website.
+认证课程有意不纳入书籍。其 AI 导师状态、可运行实验、交互式图示、水平诊断测试和限时模拟考试，仍在 GitHub 和网站上获得完整支持。
 
-| Vol | Title | Phases | Download |
+| 卷 | 书名 | 阶段 | 下载 |
 |-----|-------|--------|----------|
-| 1 | Foundations · Math, Tooling, and Classical Machine Learning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Deep Learning · Networks, Vision, and Speech | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Language · NLP Foundations and the Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Large Language Models · Generation, Reinforcement, Pretraining, and Engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agents · Multimodality, Protocols, Autonomy, and Swarms | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Production · Infrastructure, Safety, and Capstones | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+| 1 | 基础篇 · 数学、工具与经典机器学习 | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | 深度学习篇 · 网络、视觉与语音 | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | 语言篇 · NLP 基础与 Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | 大语言模型篇 · 生成、强化学习、预训练与工程 | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | 智能体篇 · 多模态、协议、自主性与群体系统 | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | 生产篇 · 基础设施、安全与综合项目 | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
 
-The book is the snapshot; this repository is the living edition. Every chapter ends with links back to the lesson's animated figures, quiz, and runnable code. Build locally with `python3 scripts/build_book.py` (pandoc required); pipeline details in [book/README.md](../../book/README.md).
+书籍是课程快照，仓库则是持续更新的版本。每章末尾都有链接，可返回对应课程的动态图示、测验和可运行代码。运行 `python3 scripts/build_book.py` 可在本地构建（需要 pandoc）；构建流程详见 [book/README.md](../../book/README.md)。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## 每节课都有产出
+## 每课都有可交付成果
 
-Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
-**reusable tool** you can install or paste into your daily workflow.
+其他课程以 *“恭喜，你学会了 X”* 结束。这里的每一课都会产出一个**可复用工具**，你可以安装它，或直接粘贴到日常工作流程中使用。
 
 <table>
 <tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A prompts"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B skills"/><br/><sub>FIG_001 · B</sub><br/><b>SKILLS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agents"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP servers"/><br/><sub>FIG_001 · D</sub><br/><b>MCP SERVERS</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A 提示词"/><br/><sub>FIG_001 · A</sub><br/><b>提示词</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B 技能"/><br/><sub>FIG_001 · B</sub><br/><b>技能</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C 智能体"/><br/><sub>FIG_001 · C</sub><br/><b>智能体</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP 服务器"/><br/><sub>FIG_001 · D</sub><br/><b>MCP 服务器</b></th>
 </tr>
 <tr>
-<td valign="top">Paste into any AI assistant for expert-level help on a narrow task.</td>
-<td valign="top">Drop into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads <code>SKILL.md</code>.</td>
-<td valign="top">Deploy as autonomous workers — you wrote the loop yourself in Phase 14.</td>
-<td valign="top">Plug into any MCP-compatible client. Built end-to-end in Phase 13.</td>
+<td valign="top">粘贴到任意 AI 助手中，即可针对某项具体任务获得专家级帮助。</td>
+<td valign="top">可用于 Claude、Cursor、Codex、OpenClaw、Hermes，或任何能够读取 <code>SKILL.md</code> 的智能体。</td>
+<td valign="top">部署为自主执行任务的智能体；其运行循环由你在阶段 14 亲手编写。</td>
+<td valign="top">接入任意兼容 MCP 的客户端；在阶段 13 中完成端到端构建。</td>
 </tr>
 </table>
 
-> Install the lot with `python3 scripts/install_skills.py <target>`. Real tools, not homework.
-> By the end of the curriculum, you have a portfolio of 523 artifacts you actually
-> understand because you built them.
+> 运行 `python3 scripts/install_skills.py <target>` 即可全部安装。这些是实用工具，不只是课后作业。完成课程后，你将拥有 523 项成果；因为亲手构建过，你也真正理解它们。
 
-### FIG_002 · A worked sample
+### FIG_002 · 完整示例
 
-Phase 14, lesson 1: the agent loop. ~120 lines of pure Python, no dependencies.
+阶段 14，第 1 课：智能体循环。约 120 行纯 Python，无需依赖。
 
 <table>
 <tr>
 <td valign="top" width="50%">
 
-**`code/agent_loop.py`** &nbsp; <sub><i>build it</i></sub>
+**`code/agent_loop.py`** &nbsp; <sub><i>亲手实现</i></sub>
 
 ```python
 def run(query, tools):
@@ -424,7 +336,7 @@ def run(query, tools):
 </td>
 <td valign="top" width="50%">
 
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>ship it</i></sub>
+**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>交付成果</i></sub>
 
 ```markdown
 ---
@@ -457,11 +369,11 @@ the agent went wrong and explain why...
 
 ## 目录
 
-Twenty phases. Click any phase to expand its lesson list.
+共 20 个阶段。点击任一阶段可展开课程列表。
 
 <a id="phase-0"></a>
-### Phase 0: Setup & Tooling `12 lessons`
-> Get your environment ready for everything that follows.
+### 阶段 0：环境搭建与工具 `12 lessons`
+> 为后续学习准备好环境。
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
@@ -479,7 +391,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 12 | [Debugging & Profiling](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Build | Python |
 
 <details id="phase-1">
-<summary><b>Phase 1 — Math Foundations</b> &nbsp;<code>22 lessons</code>&nbsp; <em>The intuition behind every AI algorithm, through code.</em></summary>
+<summary><b>阶段 1：数学基础</b> &nbsp;<code>22 lessons</code>&nbsp; <em>通过代码，直观理解每种 AI 算法背后的原理。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -510,7 +422,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-2">
-<summary><b>Phase 2 — ML Fundamentals</b> &nbsp;<code>18 lessons</code>&nbsp; <em>Classical ML — still the backbone of most production AI.</em></summary>
+<summary><b>阶段 2：机器学习基础</b> &nbsp;<code>18 lessons</code>&nbsp; <em>经典机器学习仍是多数生产级 AI 系统的基础。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -537,7 +449,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-3">
-<summary><b>Phase 3 — Deep Learning Core</b> &nbsp;<code>13 lessons</code>&nbsp; <em>Neural networks from first principles. No frameworks until you build one.</em></summary>
+<summary><b>阶段 3：深度学习核心</b> &nbsp;<code>13 lessons</code>&nbsp; <em>从基本原理出发理解神经网络。先亲手实现，再使用框架。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -559,7 +471,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-4">
-<summary><b>Phase 4 — Computer Vision</b> &nbsp;<code>28 lessons</code>&nbsp; <em>From pixels to understanding — image, video, 3D, VLMs, and world models.</em></summary>
+<summary><b>阶段 4：计算机视觉</b> &nbsp;<code>28 lessons</code>&nbsp; <em>从像素到理解：图像、视频、3D、VLM 和世界模型。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -596,7 +508,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-5">
-<summary><b>Phase 5 — NLP: Foundations to Advanced</b> &nbsp;<code>29 lessons</code>&nbsp; <em>Language is the interface to intelligence.</em></summary>
+<summary><b>阶段 5：NLP 从基础到进阶</b> &nbsp;<code>29 lessons</code>&nbsp; <em>语言是通往智能的接口。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -634,7 +546,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-6">
-<summary><b>Phase 6 — Speech & Audio</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Hear, understand, speak.</em></summary>
+<summary><b>阶段 6：语音与音频</b> &nbsp;<code>17 lessons</code>&nbsp; <em>听见、理解、表达。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -660,7 +572,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-7">
-<summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>16 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
+<summary><b>阶段 7：深入理解 Transformer</b> &nbsp;<code>16 lessons</code>&nbsp; <em>改变一切的架构。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -685,7 +597,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-8">
-<summary><b>Phase 8 — Generative AI</b> &nbsp;<code>15 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
+<summary><b>阶段 8：生成式 AI</b> &nbsp;<code>15 lessons</code>&nbsp; <em>生成图像、视频、音频、3D 等内容。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -709,7 +621,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-9">
-<summary><b>Phase 9 — Reinforcement Learning</b> &nbsp;<code>12 lessons</code>&nbsp; <em>The foundation of RLHF and game-playing AI.</em></summary>
+<summary><b>阶段 9：强化学习</b> &nbsp;<code>12 lessons</code>&nbsp; <em>RLHF 和游戏 AI 的基础。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -730,7 +642,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-10">
-<summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>24 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
+<summary><b>阶段 10：从零构建大语言模型</b> &nbsp;<code>24 lessons</code>&nbsp; <em>构建、训练并理解大语言模型。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -763,7 +675,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-11">
-<summary><b>Phase 11 — LLM Engineering</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Put LLMs to work in production.</em></summary>
+<summary><b>阶段 11：大语言模型工程</b> &nbsp;<code>17 lessons</code>&nbsp; <em>让大语言模型在生产环境中发挥作用。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -789,7 +701,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-12">
-<summary><b>Phase 12 — Multimodal AI</b> &nbsp;<code>25 lessons</code>&nbsp; <em>See, hear, read, and reason across modalities — from ViT patches to computer-use agents.</em></summary>
+<summary><b>阶段 12：多模态 AI</b> &nbsp;<code>25 lessons</code>&nbsp; <em>跨模态地看、听、读和推理：从 ViT 图像块到计算机操作智能体。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -823,7 +735,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-13">
-<summary><b>Phase 13 — Tools & Protocols</b> &nbsp;<code>31 lessons</code>&nbsp; <em>The interfaces between AI and the real world.</em></summary>
+<summary><b>阶段 13：工具与协议</b> &nbsp;<code>31 lessons</code>&nbsp; <em>连接 AI 与现实世界的接口。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -860,22 +772,14 @@ Twenty phases. Click any phase to expand its lesson list.
 | 30 | [MCP Registry Supply Chain: Admission, Drift, and Rollback](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Build | Python |
 | 31 | [MCP Conformance Engineering: Versioning, Evidence, and Operations](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Build | Python |
 
-Lessons 06-18 and 28-31 form the focused
-[Model Context Protocol (MCP) path](../../learning-paths/model-context-protocol.json). Its manifest order
-is 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Start
-it with the host-specific `learn-mcp` invocation above. Lesson 23
-is its only optional capstone and also requires Lessons 19 and 20.
+第 06-18 课和第 28-31 课组成专门的 [Model Context Protocol（MCP）学习路线](../../learning-paths/model-context-protocol.json)。清单中的学习顺序为 06、07、08、09、10、11、12、13、14、15、16、18、17、28、29、30、31。请使用上文对应宿主的 `learn-mcp` 调用方式开始学习。第 23 课是这条路线唯一的可选综合项目，还要求先完成第 19 和 20 课。
 
-Lessons 22 and 24-27 form the focused
-[Agent Skills learning path](../../learning-paths/agent-skills.json), from package
-contract through real-host release gates. Start it with the host-specific
-`learn-agent-skills` invocation shown above; do not follow numeric next
-navigation from 22 to 23.
+第 22 课和第 24-27 课组成专门的 [Agent Skills 学习路线](../../learning-paths/agent-skills.json)，从技能包规范讲到真实宿主中的发布验收。请使用上文对应宿主的 `learn-agent-skills` 调用方式开始学习；不要按课号导航从第 22 课直接进入第 23 课。
 
 </details>
 
 <details id="phase-14">
-<summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>54 lessons</code>&nbsp; <em>Build agents from first principles, use coding agents reliably, and shape the work before implementation.</em></summary>
+<summary><b>阶段 14：智能体工程</b> &nbsp;<code>54 lessons</code>&nbsp; <em>从基本原理构建智能体，可靠地使用编程智能体，并在实现前明确工作方向。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -935,18 +839,14 @@ navigation from 22 to 23.
 | 53 | [Choose Prototype, Pilot, or Production Deliberately](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Build | Python |
 | 54 | [Build a Feedback Ratchet with Ownership and Retirement](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Build | Python |
 
-Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent before it opens the full lesson docs.
+阶段 14 的每节工作台课程（31-42）都附有 `mission.md`，让智能体在打开完整课程文档前先了解任务。
 
-Lessons 31-46 form the [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json).
-Its manifest order combines the workbench foundation with task framing, planning,
-delegation, and durable feedback. Lessons 47-54 form the
-[Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json), from outcome framing
-through evidence, risk, scope, measurement, staged release, and feedback ownership.
+第 31-46 课组成[智能体辅助工程学习路线](../../learning-paths/using-coding-agents.json)。清单中的学习顺序将工作台基础与任务界定、规划、委派和持久反馈结合起来。第 47-54 课组成[产品判断与交付学习路线](../../learning-paths/shaping-the-build.json)，从界定目标成果，逐步讲到证据、风险、范围、衡量方法、分阶段发布和反馈责任归属。
 
 </details>
 
 <details id="phase-15">
-<summary><b>Phase 15 — Autonomous Systems</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Long-horizon agents, self-improvement, and the 2026 safety stack.</em></summary>
+<summary><b>阶段 15：自主系统</b> &nbsp;<code>22 lessons</code>&nbsp; <em>长时程智能体、自我改进，以及 2026 年的安全技术栈。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -977,7 +877,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 </details>
 
 <details id="phase-16">
-<summary><b>Phase 16 — Multi-Agent & Swarms</b> &nbsp;<code>25 lessons</code>&nbsp; <em>Coordination, emergence, and collective intelligence.</em></summary>
+<summary><b>阶段 16：多智能体与群体系统</b> &nbsp;<code>25 lessons</code>&nbsp; <em>协调、涌现与集体智能。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -1011,7 +911,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 </details>
 
 <details id="phase-17">
-<summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
+<summary><b>阶段 17：基础设施与生产部署</b> &nbsp;<code>28 lessons</code>&nbsp; <em>将 AI 部署到现实世界。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -1048,7 +948,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 </details>
 
 <details id="phase-18">
-<summary><b>Phase 18 — Ethics, Safety & Alignment</b> &nbsp;<code>30 lessons</code>&nbsp; <em>Build AI that helps humanity. Not optional.</em></summary>
+<summary><b>阶段 18：伦理、安全与对齐</b> &nbsp;<code>30 lessons</code>&nbsp; <em>构建有益于人类的 AI。这是必须满足的要求。</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -1087,7 +987,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 </details>
 
 <details id="phase-19">
-<summary><b>Phase 19 — Capstone Projects</b> &nbsp;<code>85 lessons</code>&nbsp; <em>17 end-to-end products + 9 deep-build tracks. 20-40 hours per project; 4-12 lessons per track.</em></summary>
+<summary><b>阶段 19：综合项目</b> &nbsp;<code>85 lessons</code>&nbsp; <em>17 个端到端产品 + 9 条深度构建路线。每个项目需 20-40 小时；每条路线包含 4-12 课。</em></summary>
 <br/>
 
 | # | Project | Combines | Lang |
@@ -1110,7 +1010,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 | 16 | [GitHub Issue-to-PR Autonomous Agent](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
 | 17 | [Personal AI Tutor (Adaptive, Multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
 
-**Deep-build tracks** — multi-lesson series that build a complete subsystem from scratch.
+**深度构建路线**：通过连续多课，从零构建一个完整的子系统。
 
 | # | Project | Combines | Lang |
 |:---:|---------|----------|------|
@@ -1191,7 +1091,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 
 ## 工具箱
 
-Every lesson produces a reusable artifact. By the end you have:
+每课都会产出一项可复用成果。完成课程后，你将拥有：
 
 ```text
 outputs/
@@ -1199,30 +1099,21 @@ outputs/
 └── skills/       SKILL.md files for AI coding agents
 ```
 
-Plug them into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that
-reads a SKILL.md / AGENTS.md directory. Real tools, not homework.
+将它们接入 Claude、Cursor、Codex、OpenClaw、Hermes，或任何能够读取 SKILL.md / AGENTS.md 目录的智能体。这些是实用工具，不只是课后作业。
 
-### Install course skills into your agent
+### 为你的智能体安装课程技能
 
-Two skill sets, two installers:
+两套技能，对应两个安装工具：
 
-**The learning skills** (`start-learning`, `learn`, `course-guide`,
-`learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`,
-`find-your-level`, and `check-understanding`) live under [`skills/`](../../skills/) and
-install into a supported skill-capable host with one command. Installation needs
-Node.js and `npx`, but not a repository clone or Python:
+**学习技能**（`start-learning`、`learn`、`course-guide`、`learn-mcp`、`learn-agent-skills`、`claude-certification`、`mcpa-certification`、`find-your-level` 和 `check-understanding`）位于 [`skills/`](../../skills/) 下，一条命令即可安装到受支持且具备技能功能的宿主中。安装需要 Node.js 和 `npx`，无需克隆仓库，也不需要 Python：
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-`skills` writes to the host and scope selected during installation, such as
-`.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, or another supported
-skills folder. Verify that the selected host discovers that exact destination.
+`skills` 会根据安装时选择的宿主和作用范围，写入 `.claude/skills/`、`.cursor/skills/`、`.codex/skills/` 或其他受支持的技能目录。请确认所选宿主能够发现这个确切的目标目录。
 
-**The lesson artifacts.** The repo ships 396 skills and 99 prompts under
-`phases/**/outputs/`; install them via `scripts/install_skills.py`. Requires
-cloning the repo. Supports tag filters, dry-runs, and per-agent layouts:
+**课程成果。** 仓库在 `phases/**/outputs/` 下提供 396 个技能和 99 个提示词，可通过 `scripts/install_skills.py` 安装，需要先克隆仓库。安装工具支持按标签筛选、试运行，以及不同智能体所需的目录布局：
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1235,26 +1126,19 @@ python3 scripts/install_skills.py <target> --dry-run                       # pre
 python3 scripts/install_skills.py <target> --force                         # overwrite existing files
 ```
 
-`<target>` is the skills directory for your agent (examples:
-`~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`,
-`.skills/`, or any path your agent reads).
+`<target>` 是你的智能体使用的技能目录，例如 `~/.claude/skills/`、`~/.cursor/skills/`、`~/.config/openclaw/skills/`、`.skills/`，或智能体能够读取的任意路径。
 
-By default the script refuses to overwrite an existing destination and exits
-with code 1 after listing every colliding path. Use `--dry-run` to preview
-collisions or `--force` to overwrite. Every non-dry-run run writes a
-`manifest.json` in the target with the full inventory grouped by type and
-phase. Pick the layout your agent reads:
+默认情况下，脚本拒绝覆盖已存在的目标，列出所有冲突路径后，以退出码 1 结束。使用 `--dry-run` 可预览冲突，使用 `--force` 可覆盖现有内容。每次非试运行都会在目标目录中写入 `manifest.json`，包含按类型和阶段分组的完整清单。请选择你的智能体能够读取的布局：
 
-| `--layout`  | Path written |
+| `--layout`  | 写入路径 |
 |---|---|
-| `skills`    | `<target>/<name>/SKILL.md` (nested convention, supported by Claude / Cursor / Codex / OpenClaw / Hermes) |
+| `skills`    | `<target>/<name>/SKILL.md`（嵌套目录约定，Claude / Cursor / Codex / OpenClaw / Hermes 均支持） |
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Drop the agent workbench into your own repo
+### 将智能体工作台加入你自己的仓库
 
-The Phase 14 capstone ships a reusable Agent Workbench pack (AGENTS.md, schemas,
-init / verify / handoff scripts). Scaffold it into any repo with:
+阶段 14 的综合项目提供了可复用的 Agent Workbench 工具包（AGENTS.md、数据模式，以及初始化 / 验证 / 交接脚本）。使用以下命令，可在任意仓库中搭建工作台：
 
 ```bash
 python3 scripts/scaffold_workbench.py path/to/your-repo            # full pack + seeds
@@ -1263,16 +1147,11 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --dry-run  # preview onl
 python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 ```
 
-You get the seven workbench surfaces wired up, a starter `task_board.json`,
-and a fresh `agent_state.json` at `schema_version: 1`. From there: edit the
-task, edit `AGENTS.md`, run `scripts/init_agent.py`, hand the contract to
-your agent. The pack source lives at
-`phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
+你将获得已配置并串联好的七个工作台组成部分、初始 `task_board.json`，以及 `schema_version: 1` 的全新 `agent_state.json`。接下来：编辑任务，编辑 `AGENTS.md`，运行 `scripts/init_agent.py`，再将约定交给智能体。工具包源文件位于 `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`。
 
-### Browse the entire course as JSON
+### 通过 JSON 浏览整套课程
 
-`scripts/build_catalog.py` walks every phase, every lesson, every artifact on
-disk and writes `catalog.json` at the repo root. One file, every course truth.
+`scripts/build_catalog.py` 会遍历磁盘上的每个阶段、每节课和每项成果，并在仓库根目录写入 `catalog.json`。一个文件，汇集课程的全部实际信息。
 
 ```bash
 python3 scripts/build_catalog.py               # writes <repo>/catalog.json
@@ -1280,23 +1159,13 @@ python3 scripts/build_catalog.py --stdout      # to stdout, do not touch repo
 python3 scripts/build_catalog.py --out path/to/file.json
 ```
 
-The catalog is filesystem-derived, not README-derived, so counts always match
-what is actually on disk. Use it for site builds, downstream tooling, or to
-verify the README counts have not drifted. Schema is documented at the top of
-the script.
+目录数据来自文件系统，而不是 README，因此计数始终与磁盘上的实际内容一致。它可用于构建网站、支持下游工具，或检查 README 中的计数是否已偏离实际内容。数据模式见脚本顶部的说明。
 
-A GitHub Action (`.github/workflows/curriculum.yml`) rebuilds `catalog.json`
-on every PR and fails the build if the committed file is stale. After editing
-any lesson, run `python3 scripts/build_catalog.py` and commit the result, or
-CI will reject the PR. The same workflow runs `audit_lessons.py` in
-warn-only mode (so existing drift does not block contributors).
+GitHub Action（`.github/workflows/curriculum.yml`）会在每个 PR 中重新生成 `catalog.json`；如果已提交的文件过时，构建就会失败。编辑任何课程后，请运行 `python3 scripts/build_catalog.py` 并提交生成结果，否则 CI 会拒绝该 PR。同一工作流还会以仅告警模式运行 `audit_lessons.py`，避免现有的不一致问题阻碍贡献者提交。
 
-### Smoke-check every lesson's Python code
+### 快速检查每节课的 Python 代码
 
-`scripts/lesson_run.py` byte-compiles every `.py` file under each lesson's
-`code/` directory. Default mode is syntax-check only — no execution, no API
-keys, no heavy ML deps required. Catches the regressions contributors
-introduce most often (bad indentation, broken f-strings, stray edits).
+`scripts/lesson_run.py` 会将每节课 `code/` 目录下的所有 `.py` 文件编译为字节码。默认仅检查语法，不执行代码，不需要 API 密钥，也不需要大型机器学习依赖。它可捕获贡献者最常引入的回归问题，例如缩进错误、损坏的 f-string 和误改内容。
 
 ```bash
 python3 scripts/lesson_run.py                  # syntax-check the whole curriculum
@@ -1306,62 +1175,53 @@ python3 scripts/lesson_run.py --strict         # exit 1 if any lesson fails
 python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per lesson
 ```
 
-`--execute` runs each lesson's `code/main.py` (or the first `.py` file) with a
-10-second timeout. Lessons whose entry file starts with a `# requires: pkg1,
-pkg2` comment listing non-stdlib deps are skipped with reason `needs <deps>`.
-The script is opt-in and not wired into CI.
+`--execute` 会运行每节课的 `code/main.py`（或第一个 `.py` 文件），超时为 10 秒。如果入口文件以 `# requires: pkg1, pkg2` 注释列出非标准库依赖，该课程就会被跳过，原因为 `needs <deps>`。该脚本需手动选择运行，尚未接入 CI。
 
-Stdlib only, Python 3.10+. Set `LINK_CHECK_SKIP=domain1,domain2` to override
-the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
-`instagram.com`, `medium.com` — domains that aggressively block automated
-HEAD/GET).
+仅使用标准库，需要 Python 3.10+。设置 `LINK_CHECK_SKIP=domain1,domain2` 可覆盖默认跳过列表（`twitter.com`、`x.com`、`linkedin.com`、`instagram.com`、`medium.com`；这些域名会严格拦截自动化 HEAD/GET 请求）。
 
 ## 从哪里开始
 
-| Background | Start at | Estimated time |
+| 已有基础 | 建议起点 | 预计时间 |
 |---|---|---|
-| New to programming and AI | Phase 0 — Setup | ~306 hours |
-| Know Python, new to ML | Phase 1 — Math Foundations | ~270 hours |
-| Know ML, new to deep learning | Phase 3 — Deep Learning Core | ~200 hours |
-| Know deep learning, want LLMs and agents | Phase 10 — LLMs from Scratch | ~100 hours |
-| Senior engineer, only want agent engineering | Phase 14 — Agent Engineering | ~60 hours |
-| Only want to build production MCP systems | [Model Context Protocol (MCP) path](../../learning-paths/model-context-protocol.json) | ~23 hours 15 min |
-| Only want to build production Agent Skills | [Agent Skills Engineering path](../../learning-paths/agent-skills.json) | ~9.5 hours |
+| 刚接触编程和 AI | 阶段 0：环境搭建 | 约 306 小时 |
+| 会 Python，刚接触机器学习 | 阶段 1：数学基础 | 约 270 小时 |
+| 了解机器学习，刚接触深度学习 | 阶段 3：深度学习核心 | 约 200 小时 |
+| 了解深度学习，想学习大语言模型和智能体 | 阶段 10：从零构建大语言模型 | 约 100 小时 |
+| 资深工程师，只想学习智能体工程 | 阶段 14：智能体工程 | 约 60 小时 |
+| 只想构建生产级 MCP 系统 | [Model Context Protocol（MCP）学习路线](../../learning-paths/model-context-protocol.json) | 约 23 小时 15 分钟 |
+| 只想构建生产级 Agent Skills | [Agent Skills 工程学习路线](../../learning-paths/agent-skills.json) | 约 9.5 小时 |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## 为什么这在当下很重要
+## 为什么现在值得学
 
 <table>
 <tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>THE INDUSTRY SIGNAL</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>FOUNDATIONAL PAPERS COVERED</b></th>
+<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>行业动向</b></th>
+<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>课程涵盖的奠基性论文</b></th>
 </tr>
 <tr>
 <td valign="top">
 
-> *"The hottest new programming language is English."*<br/>
-> — **Andrej Karpathy** ([tweet](https://x.com/karpathy/status/1617979122625712128))
+> *“当下最热门的新编程语言是英语。”*<br/> — **Andrej Karpathy**（[推文](https://x.com/karpathy/status/1617979122625712128)）
 >
-> *"Software engineering is being remade in front of our eyes."*<br/>
-> — **Boris Cherny**, creator of Claude Code
+> *“软件工程正在我们眼前被重塑。”*<br/> — **Boris Cherny**，Claude Code 的创建者
 >
-> *"Models will keep getting better. The skill that compounds is **knowing what to build**."*<br/>
-> — Industry consensus, 2026
+> *“模型会持续进步。能够不断累积价值的技能，是**知道该构建什么**。”*<br/> — 行业共识，2026
 
 </td>
 <td valign="top">
 
-- *Attention Is All You Need* — Vaswani et al., 2017 → [Phase 7](#phase-7)
-- *Language Models are Few-Shot Learners* (GPT-3) → [Phase 10](#phase-10)
-- *Denoising Diffusion Probabilistic Models* → [Phase 8](#phase-8)
-- *InstructGPT / RLHF* → [Phase 10](#phase-10)
-- *Direct Preference Optimization* → [Phase 10](#phase-10)
-- *Chain-of-Thought Prompting* → [Phase 11](#phase-11)
-- *ReAct: Reasoning + Acting in LLMs* → [Phase 14](#phase-14)
-- *Model Context Protocol* — Anthropic → [Phase 13](#phase-13)
+- *Attention Is All You Need* — Vaswani 等，2017 → [阶段 7](#phase-7)
+- *Language Models are Few-Shot Learners* (GPT-3) → [阶段 10](#phase-10)
+- *Denoising Diffusion Probabilistic Models* → [阶段 8](#phase-8)
+- *InstructGPT / RLHF* → [阶段 10](#phase-10)
+- *Direct Preference Optimization* → [阶段 10](#phase-10)
+- *Chain-of-Thought Prompting* → [阶段 11](#phase-11)
+- *ReAct: Reasoning + Acting in LLMs* → [阶段 14](#phase-14)
+- *Model Context Protocol* — Anthropic → [阶段 13](#phase-13)
 
 </td>
 </tr>
@@ -1373,16 +1233,16 @@ HEAD/GET).
 
 ## 参与贡献
 
-| Goal | Read |
+| 目标 | 阅读材料 |
 |---|---|
-| Contribute a lesson or fix | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
-| Fork for your team or school | [FORKING.md](../../FORKING.md) |
-| Lesson template | [LESSON_TEMPLATE.md](../../LESSON_TEMPLATE.md) |
-| Track progress | [ROADMAP.md](../../ROADMAP.md) |
-| Glossary | [glossary/terms.md](../../glossary/terms.md) |
-| Code of conduct | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
+| 贡献课程或修复问题 | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
+| 为团队或学校派生仓库 | [FORKING.md](../../FORKING.md) |
+| 课程模板 | [LESSON_TEMPLATE.md](../../LESSON_TEMPLATE.md) |
+| 跟踪进度 | [ROADMAP.md](../../ROADMAP.md) |
+| 术语表 | [glossary/terms.md](../../glossary/terms.md) |
+| 行为准则 | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
 
-Before submitting a lesson, run the invariant check:
+提交课程前，请运行一致性规则检查：
 
 ```bash
 python3 scripts/audit_lessons.py           # full curriculum
@@ -1390,10 +1250,7 @@ python3 scripts/audit_lessons.py --phase 14  # single phase
 python3 scripts/audit_lessons.py --json    # CI-friendly output
 ```
 
-Exit code is non-zero when any rule fails. Rules (L001–L010) validate directory
-shape, `docs/en.md` presence + H1, `code/` non-emptiness, `quiz.json` schema
-(rejects the legacy `q/choices/answer` keys that caused issue #102), and
-relative links inside lesson docs.
+任何规则检查失败，退出码都会为非零。规则（L001–L010）会检查目录结构、`docs/en.md` 是否存在且含有 H1 标题、`code/` 是否非空、`quiz.json` 数据模式（拒绝曾导致 issue #102 的旧版 `q/choices/answer` 字段），以及课程文档中的相对链接。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1403,24 +1260,24 @@ relative links inside lesson docs.
 
 ## 赞助本项目
 
-免费、采用 MIT 许可证，共 523 节课。感谢所有让这项工作成为可能的赞助方和支持者。[查看所有赞助方和支持者](../../BACKERS.md)。
+免费，采用 MIT 许可证，共 523 课。感谢让项目得以持续的赞助者和支持者。[查看所有赞助者和支持者](../../BACKERS.md)。
 
-想支持这项工作？请查看[赞助方案](../../SPONSORS.md)，包括[硬件赞助](../../SPONSORS.md#hardware-lab-partner)，或[通过 GitHub 赞助](https://github.com/sponsors/rohitg00)。
+想支持这个项目？请查看[赞助选项](../../SPONSORS.md)，其中包括[硬件赞助](../../SPONSORS.md#hardware-lab-partner)，也可以[通过 GitHub 赞助](https://github.com/sponsors/rohitg00)。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-If this manual helped you, star the repo. It keeps the project alive.
+如果这本手册对你有帮助，请给仓库点一颗星。你的支持让项目得以延续。
 
 ## 许可证
 
-MIT 许可。随你怎么用：复刻、教学、出售、发布都行。欢迎署名，但并非必须。
+MIT。你可以自由使用：派生仓库、用于教学、出售或交付。欢迎署名，但不强制要求。
 
 由 [Rohit Ghumare](https://github.com/rohitg00) 和社区共同维护。
 
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
   <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Report / Suggest</a>
+  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">报告问题 / 提出建议</a>
 </sub>
