@@ -1,0 +1,1156 @@
+{
+  "schema_version": 1,
+  "lesson_id": "06-02",
+  "source_path": "phases/06-speech-and-audio/02-spectrograms-mel-features/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "0602755bc120b7d0ab3d015d8895b671285f23df",
+  "source_sha256": "c3ccb984a9bcf8aefcfb077ccafee53704c504b5cc8c7bf3e394f2ccf48af525",
+  "target_path": "i18n/zh/phases/06-speech-and-audio/02-spectrograms-mel-features/docs/zh.md",
+  "target_sha256": "175fa5a866d7d4d0b3b04dffc2c3491c896a7052d34d4f4eefe768decf41edde",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "06-02:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features"
+      ],
+      "ordinal": 1,
+      "source_sha256": "d4458114ba5675b035a67d29e01ed4dabddcec60c90a21ac4818b3537d9df69f",
+      "target": "# 频谱图、mel 尺度与音频特征\n"
+    },
+    {
+      "segment_id": "06-02:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features"
+      ],
+      "ordinal": 2,
+      "source_sha256": "eb43b2293a9afe031bf6ac4a031c9b6d275eb1a2599dc9466bf97108d12f3fac",
+      "target": "> 神经网络不擅长直接处理原始波形，却能处理频谱图（spectrogram），而基于梅尔频率尺度（mel）的频谱图效果更好。2026 年的每个自动语音识别（ASR）、文本转语音（TTS）系统和音频分类器，都成败系于这一个预处理选择。\n"
+    },
+    {
+      "segment_id": "06-02:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features"
+      ],
+      "ordinal": 3,
+      "source_sha256": "2842977a83ddfbb35dddb890a247e6d13e7f0983ecdf35573df0b7b8b2afddc4",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 6 · 01（音频基础）\n**Time:** ~45 分钟\n"
+    },
+    {
+      "segment_id": "06-02:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "06-02:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "a6af7ef8de4ab8f273642ea275ceeabaa9c07b8be3d1160ba800a3623adabd02",
+      "target": "以一段时长 10 秒、采样率为 16 kHz 的音频为例，它包含 160,000 个浮点数，都位于 `[-1, 1]` 范围内，与“狗叫”或“单词 cat”这样的标签几乎完全不相关。原始波形包含信息，但其形式让模型难以提取。相隔 100 ms 发出的两个相同音素，会有完全不同的原始采样点。\n"
+    },
+    {
+      "segment_id": "06-02:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "ede06dd2f014741e1b264a0c27dabd9bce95728294a575d1764521885009218d",
+      "target": "频谱图解决了这个问题。它压缩人类感知忽略的时间细节（微秒级抖动），并保留人类感知关注的结构（在 ~10–25 ms 的时间窗口内，哪些频率具有较高能量）。\n"
+    },
+    {
+      "segment_id": "06-02:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "9a35eb57c4a2e423717b2ccdca4eeb459783f3b360d8da2ea23e10a50d408c3f",
+      "target": "mel 频谱图更进一步。人类对音高的感知呈对数关系：100 Hz 与 200 Hz 听起来的“间距”，和 1000 Hz 与 2000 Hz 的“间距”相同。mel 尺度通过变换频率轴来匹配这种感知。采用 mel 尺度的频谱图，是从 2010 到 2026 年语音机器学习中最重要的单一特征。\n"
+    },
+    {
+      "segment_id": "06-02:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "06-02:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "bc51f6dccd4b6703c3be404dd2a755329e04e16e482dccbde5a31076c1b7ee47",
+      "target": "![从波形到 STFT、mel 频谱图再到 MFCC 的逐级转换](../assets/mel-features.svg)\n"
+    },
+    {
+      "segment_id": "06-02:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "d6559db01a01a6f98fc36a41593e7d8f12624cd3ba3d1db6a7129a32a7041206",
+      "target": "**短时傅里叶变换（STFT）。** 将波形切分为相互重叠的帧（典型设置：25 ms 窗长、10 ms 帧移 = 在 16 kHz 下分别为 400 个采样点 / 160 个采样点）。每一帧都乘以窗函数（默认使用 Hann；Hamming 的取舍略有不同）。对每帧进行快速傅里叶变换（FFT）。将幅度谱堆叠成形状为 `(n_frames, n_freq_bins)` 的矩阵，这就是频谱图。\n"
+    },
+    {
+      "segment_id": "06-02:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "6c740d817d2531e2a042c592e017d6c7ab4abfa079c8c5cc143f01ce6684128f",
+      "target": "**对数幅度。** 原始幅度跨越 5-6 个数量级。取 `log(|X| + 1e-6)` 或 `20 * log10(|X|)` 来压缩动态范围。所有生产流水线都使用对数幅度，而非原始幅度。\n"
+    },
+    {
+      "segment_id": "06-02:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "c6bd4685d7aef76496cfe04f18fdb86f9decae10767d3918e078d55494fa9faf",
+      "target": "**mel 尺度。** 单位为 Hz 的频率 `f` 可映射为 mel 值 `m`，公式为 `m = 2595 * log10(1 + f / 700)`。这一映射在 1 kHz 以下近似线性，在更高频率处近似对数。覆盖 0–8 kHz 的 80 个 mel 频带是标准的 ASR 输入。\n"
+    },
+    {
+      "segment_id": "06-02:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "436840debe2401e129b5b543cfc22a0ab225584aa0295e2093e507e98392d5d9",
+      "target": "**mel 滤波器组。** 一组在 mel 尺度上等间距分布的三角滤波器。每个滤波器对相邻的 FFT 频点进行加权求和。将 STFT 幅度与滤波器组矩阵相乘，一次矩阵乘法就能得到 mel 频谱图。\n"
+    },
+    {
+      "segment_id": "06-02:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "d9b22cb1b314661ad58255b7bcca0997e83ad954e3addb404637fb04e951a6e8",
+      "target": "**log-mel 频谱图。** `log(mel_spec + 1e-10)`。Whisper 的输入，Parakeet 的输入，SeamlessM4T 的输入，也是 2026 年通用的音频前端。\n"
+    },
+    {
+      "segment_id": "06-02:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "cec8ca173336f955b1f37e60fea5edd0682a0d22e640665ddb799b21cafb3311",
+      "target": "**MFCC（梅尔频率倒谱系数）。** 对 log-mel 频谱图应用离散余弦变换（DCT，II 型），保留前 13 个系数。这会降低特征间的相关性，并进一步压缩表示。它一直是主流特征，直到大约 2015 年，直接处理 log-mel 的卷积神经网络（CNN）和 Transformer 赶了上来。它仍用于说话人识别（x-vectors、ECAPA）。\n"
+    },
+    {
+      "segment_id": "06-02:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "36ffa1808b5272a2fed76050a6c504a528b6e596408d369eb5001f9cbae23222",
+      "target": "**分辨率取舍。** 更大的 FFT = 更好的频率分辨率，但更差的时间分辨率。25 ms / 10 ms 是音频机器学习的默认设置；音乐使用 50 ms / 12.5 ms；瞬态检测（鼓点、爆破音）使用 5 ms / 2 ms。\n"
+    },
+    {
+      "segment_id": "06-02:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 17,
+      "source_sha256": "0fc81e97ec9e8ac1fd12e39d3758e9366ead8d3452d843ec1c3dbe3e07b4cfd5",
+      "target": "```figure\nspectrogram-window\n```\n"
+    },
+    {
+      "segment_id": "06-02:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## The Concept"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It"
+      ],
+      "ordinal": 18,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "06-02:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 1: frame the waveform"
+      ],
+      "ordinal": 19,
+      "source_sha256": "419577ceea8f48aed8577f35d8f2844a902ef00c23585bc1df66dbe3fc1b7fe3",
+      "target": "### 步骤 1：对波形分帧\n"
+    },
+    {
+      "segment_id": "06-02:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 1: frame the waveform"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 1: frame the waveform"
+      ],
+      "ordinal": 20,
+      "source_sha256": "ca1aebe45e8cb52fb9313e8e4318f6d0ad819b69d3a488cb88be10b42111298b",
+      "target": "```python\ndef frame(signal, frame_len, hop):\n    n = 1 + (len(signal) - frame_len) // hop\n    return [signal[i * hop : i * hop + frame_len] for i in range(n)]\n```\n"
+    },
+    {
+      "segment_id": "06-02:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 1: frame the waveform"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 1: frame the waveform"
+      ],
+      "ordinal": 21,
+      "source_sha256": "f05934f75b513104c25866b1414774f253f2a12f27a8009da2decc6f93828916",
+      "target": "一段时长 10 秒、采样率为 16 kHz 的音频，在 `frame_len=400, hop=160` 时会得到 998 帧。\n"
+    },
+    {
+      "segment_id": "06-02:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 1: frame the waveform"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 2: Hann window"
+      ],
+      "ordinal": 22,
+      "source_sha256": "60390d00fa78145608b8c245fdd334dcf742ce428bd81266a68ea2a9d133cef9",
+      "target": "### 步骤 2：Hann 窗\n"
+    },
+    {
+      "segment_id": "06-02:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 2: Hann window"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 2: Hann window"
+      ],
+      "ordinal": 23,
+      "source_sha256": "5539d11d65e9a1cff6a3b6fd466d3913d67a80dc5ec09b0adfa076a08a4ab471",
+      "target": "```python\nimport math\n\ndef hann(N):\n    return [0.5 * (1 - math.cos(2 * math.pi * n / (N - 1))) for n in range(N)]\n```\n"
+    },
+    {
+      "segment_id": "06-02:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 2: Hann window"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 2: Hann window"
+      ],
+      "ordinal": 24,
+      "source_sha256": "1473bf55d72c76768990d7881894795dc0888b8da365f5671eb80a596d72394f",
+      "target": "在 FFT 之前逐元素相乘。这样可以消除在非零端点处截断所导致的频谱泄漏。\n"
+    },
+    {
+      "segment_id": "06-02:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 2: Hann window"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 3: STFT magnitude"
+      ],
+      "ordinal": 25,
+      "source_sha256": "4fb8c5efee893c6eb62e55468a98f80b5396691c0aa2fd257a4ad521f5492952",
+      "target": "### 步骤 3：STFT 幅度\n"
+    },
+    {
+      "segment_id": "06-02:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 3: STFT magnitude"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 3: STFT magnitude"
+      ],
+      "ordinal": 26,
+      "source_sha256": "48b8bb5d8b0285e388132514fc8f15d8218d7efb63cedcd189d3210e165da85d",
+      "target": "```python\ndef stft_magnitude(signal, frame_len=400, hop=160):\n    win = hann(frame_len)\n    frames = frame(signal, frame_len, hop)\n    return [magnitudes(dft([w * s for w, s in zip(win, f)])) for f in frames]\n```\n"
+    },
+    {
+      "segment_id": "06-02:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 3: STFT magnitude"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 3: STFT magnitude"
+      ],
+      "ordinal": 27,
+      "source_sha256": "8cb8815a71aed222f85fcd76e1b014a43a62aebc68e3c1c12cc6d284846e7d11",
+      "target": "生产环境使用 `torch.stft` 或 `librosa.stft`（基于 FFT，采用向量化实现）。这里的循环用于教学，会在 `code/main.py` 中对短音频片段运行。\n"
+    },
+    {
+      "segment_id": "06-02:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 3: STFT magnitude"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 4: mel filterbank"
+      ],
+      "ordinal": 28,
+      "source_sha256": "cf6f288f479e770143ee769ff4e46e8bd2f3c8b66a8d1ef6a6e84ddd752bb12f",
+      "target": "### 步骤 4：mel 滤波器组\n"
+    },
+    {
+      "segment_id": "06-02:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 4: mel filterbank"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0057",
+      "kind": "fence",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 4: mel filterbank"
+      ],
+      "ordinal": 29,
+      "source_sha256": "348781ad2ba97002bf26ae83f070ffd4e497f0066817e140fb1c97fb99b6177d",
+      "target": "```python\ndef hz_to_mel(f):\n    return 2595.0 * math.log10(1.0 + f / 700.0)\n\ndef mel_to_hz(m):\n    return 700.0 * (10 ** (m / 2595.0) - 1)\n\ndef mel_filterbank(n_mels, n_fft, sr, fmin=0, fmax=None):\n    fmax = fmax or sr / 2\n    mels = [hz_to_mel(fmin) + (hz_to_mel(fmax) - hz_to_mel(fmin)) * i / (n_mels + 1)\n            for i in range(n_mels + 2)]\n    hzs = [mel_to_hz(m) for m in mels]\n    bins = [int(h * n_fft / sr) for h in hzs]\n    fb = [[0.0] * (n_fft // 2 + 1) for _ in range(n_mels)]\n    for m in range(n_mels):\n        for k in range(bins[m], bins[m + 1]):\n            fb[m][k] = (k - bins[m]) / max(1, bins[m + 1] - bins[m])\n        for k in range(bins[m + 1], bins[m + 2]):\n            fb[m][k] = (bins[m + 2] - k) / max(1, bins[m + 2] - bins[m + 1])\n    return fb\n```\n"
+    },
+    {
+      "segment_id": "06-02:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 4: mel filterbank"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 4: mel filterbank"
+      ],
+      "ordinal": 30,
+      "source_sha256": "fc59a1b59dcccb05e85eaa5b5bc730e84368f19d1c7743604aafc7ced85fc119",
+      "target": "当 `n_fft=400` 时，覆盖 0–8 kHz 的 80 个 mel 频带会得到一个 `(80, 201)` 矩阵。将形状为 `(n_frames, 201)` 的 STFT 幅度矩阵与滤波器组矩阵的转置相乘，得到形状为 `(n_frames, 80)` 的 mel 频谱图。\n"
+    },
+    {
+      "segment_id": "06-02:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 4: mel filterbank"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 5: log-mel"
+      ],
+      "ordinal": 31,
+      "source_sha256": "f584e44eb501d8b8094c886d442e823eb9b2742dcb899c64a4b21a0a59e6582f",
+      "target": "### 步骤 5：log-mel\n"
+    },
+    {
+      "segment_id": "06-02:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 5: log-mel"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 5: log-mel"
+      ],
+      "ordinal": 32,
+      "source_sha256": "bddb90c21a01c9f82efe83b2fdf48c2bca6fefcdf300ff758adec28add13fd0f",
+      "target": "```python\ndef log_mel(mel_spec, eps=1e-10):\n    return [[math.log(max(v, eps)) for v in frame] for frame in mel_spec]\n```\n"
+    },
+    {
+      "segment_id": "06-02:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 5: log-mel"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 5: log-mel"
+      ],
+      "ordinal": 33,
+      "source_sha256": "04e03d15005ff09c00e1ec15b3bd3935db0fe4370943095f337c29b37f62cb61",
+      "target": "常见替代方法包括 `librosa.power_to_db`（按参考值归一化的 dB）和 `10 * log10(power + eps)`。Whisper 使用更复杂的裁剪 + 归一化流程（参见 Whisper 的 `log_mel_spectrogram`）。\n"
+    },
+    {
+      "segment_id": "06-02:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 5: log-mel"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 6: MFCCs"
+      ],
+      "ordinal": 34,
+      "source_sha256": "5f2db43e77f30df4f5a2d1d909e4209755f9510b91dac057215baf43935b0b23",
+      "target": "### 步骤 6：MFCC\n"
+    },
+    {
+      "segment_id": "06-02:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 6: MFCCs"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 6: MFCCs"
+      ],
+      "ordinal": 35,
+      "source_sha256": "a2f91a2fc9d53a27acf7dd251259212f46f363dd87f66bce4d7434cb5fff3327",
+      "target": "```python\ndef dct_ii(x, n_coeffs):\n    N = len(x)\n    return [\n        sum(x[n] * math.cos(math.pi * k * (2 * n + 1) / (2 * N)) for n in range(N))\n        for k in range(n_coeffs)\n    ]\n```\n"
+    },
+    {
+      "segment_id": "06-02:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 6: MFCCs"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 6: MFCCs"
+      ],
+      "ordinal": 36,
+      "source_sha256": "e69471bcca7e58b9343f8a8a1a9bd71f328007634f5c6a35039f16731f902345",
+      "target": "对每个 log-mel 帧应用 DCT，保留前 13 个系数，这就得到 MFCC 矩阵。通常会丢弃第一个系数，因为它编码了整体能量。\n"
+    },
+    {
+      "segment_id": "06-02:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Build It",
+        "### Step 6: MFCCs"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "06-02:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "b5f6d498dc25c78d94f60b46a9aaaab318a7bb444048551be1450bf0d7abfac3",
+      "target": "2026 年的技术栈：\n"
+    },
+    {
+      "segment_id": "06-02:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0077",
+      "kind": "table",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "ad8fb03d688de8614436a532d023499a88f337a3afbb297960bf508419fa184c",
+      "target": "| 任务 | 特征 |\n|------|----------|\n| ASR（Whisper、Parakeet、SeamlessM4T） | 80 个 log-mel 频带，10 ms 帧移，25 ms 窗长 |\n| TTS 声学模型（VITS、F5-TTS、Kokoro） | 80 个 mel 频带，5–12 ms 帧移，用于精细的时间控制 |\n| 音频分类（AST、PANNs、BEATs） | 128 个 log-mel 频带，10 ms 帧移 |\n| 说话人嵌入（embedding）（ECAPA-TDNN、WavLM） | 80 个 log-mel 频带，或基于原始波形的自监督学习（SSL） |\n| 音乐（MusicGen、Stable Audio 2） | EnCodec 离散 token（词元），而非 mel 特征 |\n| 关键词检测 | 面向小型设备的 40 个 MFCC 系数 |\n"
+    },
+    {
+      "segment_id": "06-02:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "40e8ebf2ff8f1a6e7ad20b5adbb4de94b4d7755ac377a504ad2e3eed7c3f4d11",
+      "target": "经验法则：**只要不是处理音乐，就从 80 个 log-mel 频带开始。** 采用其他选择需要充分理由。\n"
+    },
+    {
+      "segment_id": "06-02:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Pitfalls that still ship in 2026"
+      ],
+      "ordinal": 41,
+      "source_sha256": "d73b01854a80cb145d82ffe27e5e3bd7e209ae4038ae4fd2c3416445fd28041c",
+      "target": "## 2026 年仍会带入生产环境的陷阱\n"
+    },
+    {
+      "segment_id": "06-02:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Pitfalls that still ship in 2026"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0083",
+      "kind": "list",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Pitfalls that still ship in 2026"
+      ],
+      "ordinal": 42,
+      "source_sha256": "a39d78b98b6837ec8657aa3eb312bc0d9fb7c92e7ce1ddb93de6667fafa02c23",
+      "target": "- **mel 数量不匹配。** 训练时使用 80 个 mel 频带，推理时使用 128 个。故障可能悄无声息地发生。两端都应记录特征形状。\n- **上游采样率不匹配。** 以 22.05 kHz 计算的 mel 特征与以 16 kHz 计算的不同。应在特征化*之前*修正采样率（SR）。\n- **dB 与对数。** Whisper 需要 log-mel，而非 dB-mel。部分 HF 流水线会自动检测，你自己编写的代码则不会。\n- **归一化漂移。** 训练时对每条语音单独归一化，推理时却使用全局归一化。这种生产环境错误会让词错误率（WER）翻倍。\n- **填充导致的泄漏。** 在音频末尾补零，会使末尾帧产生平坦频谱。应使用对称填充或复制填充。\n"
+    },
+    {
+      "segment_id": "06-02:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Pitfalls that still ship in 2026"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Ship It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "06-02:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Ship It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "8ee22049f60a8db3d62593372a532b7e24c5cbf3c916b3b9bb325d270bc0f779",
+      "target": "保存为 `outputs/skill-feature-extractor.md`。这个技能文件会根据给定的目标模型，选择特征类型、mel 数量、帧长/帧移和归一化方式。\n"
+    },
+    {
+      "segment_id": "06-02:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Exercises"
+      ],
+      "ordinal": 45,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "06-02:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Exercises"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0091",
+      "kind": "list",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "8e555606add3f1691c8a248d7bdb5ea14e6511169f07b3a743cf3745f6885d90",
+      "target": "1. **简单。** 运行 `code/main.py`。它会合成一个啁啾信号（频率从 200 → 4000 Hz 扫过），并打印每帧最大值所在的 mel 频带索引。可以选择绘图，确认它与扫频过程一致。\n2. **中等。** 将 `n_mels` 分别设为 `{40, 80, 128}`，将 `frame_len` 分别设为 `{200, 400, 800}`，重新运行。沿时间轴测量尖峰带宽。哪种组合最能分辨这个啁啾信号？\n3. **困难。** 实现 `power_to_db`，并在 AudioMNIST 上比较小型 CNN 分类器使用以下特征时的 ASR 准确率：(a) 原始 log-mel，(b) 使用 `ref=max` 的 dB-mel，(c) MFCC-13 + delta + delta-delta。报告 top-1 准确率。\n"
+    },
+    {
+      "segment_id": "06-02:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Key Terms"
+      ],
+      "ordinal": 47,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "06-02:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Key Terms"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0095",
+      "kind": "table",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Key Terms"
+      ],
+      "ordinal": 48,
+      "source_sha256": "36edc1a80468530e86b90fc2e6bfb575f5e80dc2a3dfdd71691f10e8d0a2ddbf",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 帧 | 一个切片 | 输入一次 FFT 的 25 ms 波形片段。 |\n| 帧移 | 步长 | 相邻帧之间间隔的采样点数；10 ms 是 ASR 的默认值。 |\n| 窗 | Hann/Hamming 那类函数 | 逐点相乘的系数，使帧边缘逐渐衰减到零。 |\n| STFT | 频谱图生成器 | 分帧 + 加窗后的 FFT，产生时间 × 频率矩阵。 |\n| mel | 经过变换的频率 | 对数感知尺度；`m = 2595·log10(1 + f/700)`。 |\n| 滤波器组 | 那个矩阵 | 将 STFT 投影到 mel 频带的三角滤波器。 |\n| log-mel | Whisper 的输入 | `log(mel_spec + eps)`；在 2026 年已标准化。 |\n| MFCC | 传统特征 | 对 log-mel 做 DCT，得到去相关的 13 个系数。 |\n"
+    },
+    {
+      "segment_id": "06-02:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Key Terms"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Further Reading"
+      ],
+      "ordinal": 49,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "06-02:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Further Reading"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-02:b0099",
+      "kind": "list",
+      "heading_path": [
+        "# Spectrograms, Mel Scale & Audio Features",
+        "## Further Reading"
+      ],
+      "ordinal": 50,
+      "source_sha256": "9c58ae0dbfb983e07ed1cde7285cda0983a4b451d4ad7e1c8ebbfc221df9f864",
+      "target": "- [Davis、Mermelstein（1980）：用于单音节词识别的参数化表示比较](https://ieeexplore.ieee.org/document/1163420) - 提出 MFCC 的论文。\n- [Stevens、Volkmann、Newman（1937）：用于测量音高心理量的尺度](https://pubs.aip.org/asa/jasa/article-abstract/8/3/185/735757/) - 最初的 mel 尺度。\n- [OpenAI：Whisper 源码，log_mel_spectrogram](https://github.com/openai/whisper/blob/main/whisper/audio.py) - 阅读参考实现。\n- [librosa 特征提取文档](https://librosa.org/doc/latest/api/feature.html) - `mfcc`、`melspectrogram` 以及帧移/窗长的参考资料。\n- [NVIDIA NeMo：音频预处理](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/main/asr/asr_all.html#featurizers) - 面向 Parakeet + Canary 模型的生产规模流水线。\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": [
+    {
+      "source_path": "phases/06-speech-and-audio/02-spectrograms-mel-features/assets/mel-features.svg",
+      "target_path": "i18n/zh/phases/06-speech-and-audio/02-spectrograms-mel-features/assets/mel-features.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "1e23a06bebb059151e815d967988b5a330de71d7879997eca3fc4c83a99b871b",
+      "translation": "unchanged English SVG, byte-identical copy preserves relative Markdown image destination"
+    }
+  ]
+}
