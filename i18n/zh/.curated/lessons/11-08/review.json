@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "lesson_id": "11-08",
+  "batch": "P4",
+  "source_path": "phases/11-llm-engineering/08-fine-tuning-lora/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "d98f380b52ebe70bf2d32568eb28383a2d870bb4",
+  "source_sha256": "6e6752387e06906ae70b2300d8bf5f2457b2a4f25c85895b10c724db9bee083a",
+  "target_path": "i18n/zh/phases/11-llm-engineering/08-fine-tuning-lora/docs/zh.md",
+  "reviewed_target_sha256": "9d5fa88822783ddd012745bff1cceede48226f143ab2bcaf03d9ee367df7aa2f",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S2",
+      "issue": "A fraction of a percent was rendered as percentage points",
+      "resolution": "Restored percentage wording, with no change to numerical source claims"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "lines": [
+        3,
+        22,
+        128,
+        129,
+        130,
+        474
+      ],
+      "detail": "Intro attributes 6GB training to LoRA, while the table reserves it for QLoRA and gives fp16 LoRA ~18GB. Source 8B training sum 16GB+16GB+32GB=64GB even before activations, not 56GB. The 7B table uses a different model scale. Preserved, not silently corrected."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        96,
+        98,
+        99,
+        100,
+        101,
+        144,
+        146,
+        147,
+        148,
+        149,
+        151,
+        155,
+        159,
+        160,
+        161,
+        162,
+        163
+      ],
+      "detail": "Exact target-module counts, benchmark scores, quality gaps and costs lack complete experiment/model/rank/hardware/sequence settings and traceable per-value citations. Values are faithfully preserved, not endorsed as measured results."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        250
+      ],
+      "detail": "Theory uses column-vector BA with A:(r,d_in), B:(d_out,r); code uses transposed storage A:(d_in,r), B:(r,d_out) and x@A@B. Prose following code still says product BA, dimensionally incompatible with code variables in general. Retained."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        276,
+        277,
+        282,
+        285,
+        313,
+        325
+      ],
+      "detail": "Doc snippets mutate model.named_modules() traversal while iterating; code/lora.py uses list(model.named_modules()) snapshots. Doc snippets preserved unchanged."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        331,
+        334,
+        339,
+        346
+      ],
+      "detail": "quantize_to_nf4 is a uniform integer quantization simulation, not actual nonuniform NF4; it stores int8, not packed 4-bit. Doc reshape requires size divisible by 64, while code/lora.py pads. Actual model remains dequantized floating point in quantize_model. Source does call it a simulation; all code and wording retained."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        428
+      ],
+      "detail": "Demo dimensions imply 14,336 adapter parameters and 399,370 base parameters, about 3.47% of total including adapters, not ~1%. Preserved."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        474,
+        476,
+        481,
+        498,
+        502
+      ],
+      "detail": "Real-model Trainer snippet passes raw Alpaca rows without tokenization, labels or a collator. It is not a complete runnable SFT recipe. It also configures bfloat16 compute earlier while prose states fp16 adapters, and 6GB feasibility depends on unprovided setup. Not executed."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        24,
+        59,
+        85,
+        103,
+        118,
+        134,
+        136,
+        138,
+        151,
+        165,
+        173,
+        178,
+        192,
+        193,
+        194,
+        517,
+        525,
+        550
+      ],
+      "detail": "Costs, throughput, memory/quality percentages, recommended rank, exact NF4 quantile characterization, scaling-as-learning-rate language, merging guarantees and speed simplifications are broad or time-sensitive claims. No live verification under frozen-source scope; preserved."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        136
+      ],
+      "detail": "For 7B weights, one 4-byte scale per 64 weights is 0.4375GB decimal; one byte per scale is 0.109375GB before secondary metadata. Source 0.4GB and 0.1GB are rounded. Correct block-of-64 relationship retained."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [
+    {
+      "kind": "escaped literal arithmetic multiplication",
+      "target_lines": [
+        14,
+        88,
+        186,
+        538
+      ],
+      "proof": "Only Markdown escape backslashes added outside code/bold; removing them restores exact previous mathematical text"
+    }
+  ],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 14,
+      "tables": 7,
+      "code_blocks": 14,
+      "figures": 1,
+      "mermaid_sources": 2,
+      "browser_verified": false
+    },
+    "github_gfm": "passed: actual GitHub desktop DOM and screenshot; headings, tables, protected code and relevant math/assets checked",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "not run: torch unavailable; no dependencies installed",
+    "deterministic_replay": "two isolated runs; byte-identical",
+    "rendering_limit": "GitHub GFM only; interactive figure IDs remain code blocks on GitHub. Actual application browser rendering, mobile and complete navigation are unverified."
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves.",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+}

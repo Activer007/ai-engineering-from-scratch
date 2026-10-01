@@ -1,0 +1,2249 @@
+{
+  "schema_version": 1,
+  "lesson_id": "10-01",
+  "source_path": "phases/10-llms-from-scratch/01-tokenizers/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "f8969be6c0baa07c45db92e7e5d145f899a5bc5f",
+  "source_sha256": "a610edfbc9557f582cfcc1fddeefe3e3f34b3dd62da00341836af00579156669",
+  "target_path": "i18n/zh/phases/10-llms-from-scratch/01-tokenizers/docs/zh.md",
+  "target_sha256": "1f87b524058e92f9080daddc469f14e6be41492e38239a20fe989dafa03f8324",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "10-01:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece"
+      ],
+      "ordinal": 1,
+      "source_sha256": "760d122748f1957a1a143d82ad8dfde5dd6fa83d1546a21eec399c56e0e1d808",
+      "target": "# 分词器：BPE、WordPiece、SentencePiece\n"
+    },
+    {
+      "segment_id": "10-01:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece"
+      ],
+      "ordinal": 2,
+      "source_sha256": "bdb5f5bfb5a89766a22d30594483dea75fd41e6cf747870f55a5fc84f406f168",
+      "target": "> 你的大语言模型（LLM）读不懂英语，它读取的是整数。分词器（tokenizer）负责将文本与 token（词元）ID 相互映射，决定这些整数是在承载意义，还是在浪费表达能力。\n"
+    },
+    {
+      "segment_id": "10-01:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece"
+      ],
+      "ordinal": 3,
+      "source_sha256": "858fecf16a69b8ea19637a3468f90c0cc9a58cb5dfc4bf15ff966d7d49a16cea",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 05（自然语言处理基础）\n**Time:** ~90 分钟\n"
+    },
+    {
+      "segment_id": "10-01:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "10-01:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "5544b62e1f247232d2e8ca84c08968d52b9b1d5f90c612316f8e409594a81e6d",
+      "target": "- 从零实现 BPE（字节对编码）、WordPiece 和 Unigram 分词算法，并比较它们的合并策略\n- 解释词表大小如何影响模型效率：太小会导致序列过长，太大则会浪费嵌入（embedding）参数\n- 分析不同语言和代码中的分词结果，找出特定分词器失效的情况\n- 使用 tiktoken 和 sentencepiece 库对文本分词，并检查生成的 token ID\n"
+    },
+    {
+      "segment_id": "10-01:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "10-01:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "1faa328a2c505384662fbc7a6abbcdfecd956cdbe546a0aa94ebd6c868e9fc08",
+      "target": "你的 LLM 不读取英语，也不读取任何语言。它读取的是数字。\n"
+    },
+    {
+      "segment_id": "10-01:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "d3fba584b56a0da920d4fd82d107a0a06e353641ee6fce5b2e950ba11a0d14e5",
+      "target": "将 \"Hello, world!\" 变成 [15496, 11, 995, 0] 的，就是分词器。每个单词、每个空格、每个标点符号，都必须先转换成整数，模型才能处理。这种转换并非中性的：它把一些假设固化进模型，之后无法撤销。\n"
+    },
+    {
+      "segment_id": "10-01:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "157ffa854ab676c42a3a81b509d700eb526bffde0b77e0ccd94e088644c8922a",
+      "target": "这一步做错了，模型就会浪费容量，用多个 token 编码常见单词。\"unfortunately\" 会变成四个 token，而不是一个。对于包含大量多音节词的文本，原本 128K 的上下文窗口就相当于缩小了 75%。做对了，同样的上下文窗口就能承载两倍的信息。“这个模型擅长处理代码”和“这个模型一遇到 Python 就应付不来”之间的差异，往往取决于分词器的训练方式。\n"
+    },
+    {
+      "segment_id": "10-01:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "5ba657a1329f73b12ca926695c1a5f3638b8a118b74c21ab54383a57055bff0e",
+      "target": "你向 GPT-4 或 Claude 发起的每次 API（应用程序编程接口）调用，都是按 token 计费的。模型每生成一个 token 都要消耗计算资源。表示同一段输出所需的 token 越少，端到端推理就越快。分词不只是预处理，它是架构的一部分。\n"
+    },
+    {
+      "segment_id": "10-01:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "10-01:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 12,
+      "source_sha256": "0e4b6639dd97efc4c5e5acd064a762587565838ad796bb9c533b47b6914fc048",
+      "target": "### 三种失败的方法，以及一种胜出的方法\n"
+    },
+    {
+      "segment_id": "10-01:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 13,
+      "source_sha256": "872be35fa9e33d09be88a1dd4035d67bd01b899e3fa56f1b13f2aa6df5b5e5c0",
+      "target": "将文本转换为数字，有三种显而易见的方法。其中两种无法适应大规模应用。\n"
+    },
+    {
+      "segment_id": "10-01:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 14,
+      "source_sha256": "3936cee7e0b4699d2a6729329c978d59b4137a8ef152a5b4564bf9b45fc9c78d",
+      "target": "**词级分词**按空格和标点符号切分。\"The cat sat\" 会变成 [\"The\", \"cat\", \"sat\"]，很简单。但 \"tokenization\" 怎么办？\"GPT-4o\" 呢？像 \"Geschwindigkeitsbegrenzung\" 这样的德语复合词呢？词级分词需要庞大的词表，才能覆盖每种语言的每一个词。漏掉一个词，就会出现令人头疼的 `[UNK]` token，相当于模型在说“我完全不知道这是什么”。仅英语就有超过一百万种词形。再加上代码、URL、科学记数法和其他 100 种语言，你就需要一个无限大的词表。\n"
+    },
+    {
+      "segment_id": "10-01:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "517143ef1e5c9a954a4789441ded3db31aaa9757194f3e08579cb58be6b9e22d",
+      "target": "**字符级分词**则走向另一个方向。\"hello\" 会变成 [\"h\", \"e\", \"l\", \"l\", \"o\"]。词表很小，只有几百个字符，永远不会出现未知 token。但序列会变得极长。一个在词级分词下只需 10 个 token 的句子，会变成 50 个字符级 token。模型还必须学会 \"t\"、\"h\"、\"e\" 合在一起就是 \"the\"，把注意力容量耗费在人类三岁就能学会的事情上。\n"
+    },
+    {
+      "segment_id": "10-01:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "bf771cbc57acd3711f2c0dc968b1486c133cf2e690aa891f6e1441ace07e4c4d",
+      "target": "**子词分词**找到了折中点。常见词保持完整：\"the\" 是一个 token。生僻词则拆成有意义的片段：\"unhappiness\" 变成 [\"un\", \"happi\", \"ness\"]。词表规模可控，包含 30K 到 128K 个 token，序列也保持较短。未知 token 基本消失，因为任何单词都可以由子词片段构成。\n"
+    },
+    {
+      "segment_id": "10-01:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "c5462a2603c548d1042d86e94f3e9d578cd6d7c65ec098178d55b1a757198dca",
+      "target": "所有现代 LLM 都采用子词分词，GPT-2、GPT-4、BERT、Llama 3、Claude 都是如此。区别在于使用哪种算法。\n"
+    },
+    {
+      "segment_id": "10-01:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "157e915e7f4e6ba5dad0f653e46e806e5e4c216d568faf963f3d876e1952b5f7",
+      "target": "```mermaid\ngraph TD\n    A[\"Text: 'unhappiness'\"] --> B{\"Tokenization Strategy\"}\n    B -->|Word-level| C[\"['unhappiness']\\n1 token if in vocab\\n[UNK] if not\"]\n    B -->|Character-level| D[\"['u','n','h','a','p','p','i','n','e','s','s']\\n11 tokens\"]\n    B -->|Subword BPE| E[\"['un','happi','ness']\\n3 tokens\"]\n\n    style C fill:#ff6b6b,color:#fff\n    style D fill:#ffa500,color:#fff\n    style E fill:#51cf66,color:#fff\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Three Approaches That Failed (and One That Won)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 19,
+      "source_sha256": "4798d71274ea06796094e8bae71b546f1eb926d6b3a27d5772e741678d52b154",
+      "target": "### BPE：字节对编码\n"
+    },
+    {
+      "segment_id": "10-01:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 20,
+      "source_sha256": "f361d578c98b364707fafe8870cacae7e3db2d48d22643182f8170a46927923d",
+      "target": "BPE 原本是一种贪心压缩算法，后来被用于分词。它的思路简单到一张索引卡就能写下。\n"
+    },
+    {
+      "segment_id": "10-01:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 21,
+      "source_sha256": "b4c52ddad0f7ac129a76ab3bc00f8781e6b2806e501d1c51c0e1a20b040f25d6",
+      "target": "从单个字符开始，统计训练语料中每一对相邻 token 的出现次数。将最常见的一对合并为一个新 token。反复执行，直到达到目标词表大小。\n"
+    },
+    {
+      "segment_id": "10-01:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 22,
+      "source_sha256": "418e40dc12622e368e656e454ec3f42059f09c1150013f0f1837d59b83bfa9dd",
+      "target": "```figure\ntokenizer-bpe\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 23,
+      "source_sha256": "202d068670bda6b2d6288ca2057b2f9e55ca866ca965c61d2e3ebe5c4aadc074",
+      "target": "下面是在由 \"lower\"、\"lowest\" 和 \"newest\" 构成的微型语料上运行 BPE 的过程：\n"
+    },
+    {
+      "segment_id": "10-01:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 24,
+      "source_sha256": "623845af3ce4006793ed2380d2099450f179d15eec412c1eb365aefc63e5e992",
+      "target": "```text\nCorpus (with word frequencies):\n  \"lower\"  x5\n  \"lowest\" x2\n  \"newest\" x6\n\nStep 0 -- Start with characters:\n  l o w e r       (x5)\n  l o w e s t     (x2)\n  n e w e s t     (x6)\n\nStep 1 -- Count adjacent pairs:\n  (e,s): 8    (s,t): 8    (l,o): 7    (o,w): 7\n  (w,e): 13   (e,r): 5    (n,e): 6    ...\n\nStep 2 -- Merge most frequent pair (w,e) -> \"we\":\n  l o we r        (x5)\n  l o we s t      (x2)\n  n e we s t      (x6)\n\nStep 3 -- Recount and merge (e,s) -> \"es\":\n  l o we r        (x5)\n  l o we s t      (x2)    <- 'es' only forms from 'e'+'s', not 'we'+'s'\n  n e we s t      (x6)    <- wait, the 'e' before 'we' and 's' after 'we'\n\nActually tracking this precisely:\n  After \"we\" merge, remaining pairs:\n  (l,o): 7   (o,we): 7   (we,r): 5   (we,s): 8\n  (s,t): 8   (n,e): 6    (e,we): 6\n\nStep 3 -- Merge (we,s) -> \"wes\" or (s,t) -> \"st\" (tied at 8, pick first):\n  Merge (we,s) -> \"wes\":\n  l o we r        (x5)\n  l o wes t       (x2)\n  n e wes t       (x6)\n\nStep 4 -- Merge (wes,t) -> \"west\":\n  l o we r        (x5)\n  l o west        (x2)\n  n e west        (x6)\n\n...continue until target vocab size reached.\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 25,
+      "source_sha256": "ad1266be0a22a6bc5cce32636da3b15870c9e8f6ddbbf89739654c0efced1e11",
+      "target": "合并表就是分词器。编码新文本时，按照训练时学到的顺序执行合并。训练语料决定有哪些合并规则，而这些选择会永久影响模型看到的内容。\n"
+    },
+    {
+      "segment_id": "10-01:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 26,
+      "source_sha256": "7f0624f040b24a1c5fe91710cc1f025c63a36e656cac702dfe85418605241322",
+      "target": "```mermaid\ngraph LR\n    subgraph Training[\"BPE Training Loop\"]\n        direction TB\n        T1[\"Start: character vocabulary\"] --> T2[\"Count all adjacent pairs\"]\n        T2 --> T3[\"Merge most frequent pair\"]\n        T3 --> T4[\"Add merged token to vocab\"]\n        T4 --> T5{\"Reached target\\nvocab size?\"}\n        T5 -->|No| T2\n        T5 -->|Yes| T6[\"Done: save merge table\"]\n    end\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### BPE: Byte Pair Encoding"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Byte-Level BPE (GPT-2, GPT-3, GPT-4)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "466ae033e8ecfae3361fb27b1c274210bd9137c8f4a863b6020a7ecbfd96b837",
+      "target": "### 字节级 BPE（GPT-2、GPT-3、GPT-4）\n"
+    },
+    {
+      "segment_id": "10-01:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Byte-Level BPE (GPT-2, GPT-3, GPT-4)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Byte-Level BPE (GPT-2, GPT-3, GPT-4)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "b7ff9d34c3f2ed647be3c0346835ac0c6c3d5efefb25655dfba95d386618e16f",
+      "target": "标准 BPE 操作 Unicode 字符，字节级 BPE 操作原始字节（0-255）。这样，基础词表恰好包含 256 项，能够处理任何语言或编码，并且永远不会产生未知 token。\n"
+    },
+    {
+      "segment_id": "10-01:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Byte-Level BPE (GPT-2, GPT-3, GPT-4)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Byte-Level BPE (GPT-2, GPT-3, GPT-4)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "acf15ae71c4e9b23e7dad860a7a976bb4b315f9c27060d4fb51b8f6e5b77d076",
+      "target": "GPT-2 引入了这种做法。基础词表涵盖所有可能的字节，BPE 合并在此基础上继续构建。OpenAI 的 tiktoken 库实现了字节级 BPE，其词表大小如下：\n"
+    },
+    {
+      "segment_id": "10-01:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Byte-Level BPE (GPT-2, GPT-3, GPT-4)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0059",
+      "kind": "list",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Byte-Level BPE (GPT-2, GPT-3, GPT-4)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "2633e3b786c111d994b6d9145c0c6ccdc77bc82824c8ede51c9c25f6468df229",
+      "target": "- GPT-2：50,257 个 token\n- GPT-3.5/GPT-4：~100,256 个 token（cl100k_base 编码）\n- GPT-4o：200,019 个 token（o200k_base 编码）\n"
+    },
+    {
+      "segment_id": "10-01:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Byte-Level BPE (GPT-2, GPT-3, GPT-4)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 31,
+      "source_sha256": "402faa158cd72fe3c65fa69335af55fcdb07b5cc2f2a7f2f07d9bf124c509dd0",
+      "target": "### WordPiece（BERT）\n"
+    },
+    {
+      "segment_id": "10-01:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "7925c8929928fd9d62809a41d2e3a4e251ae0d387950474807e33b6a1760a357",
+      "target": "WordPiece 看起来与 BPE 相似，但选择合并对象的方式不同。它不直接依据出现频率，而是使训练数据的似然最大化：\n"
+    },
+    {
+      "segment_id": "10-01:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "1bddb25abc8634f45d3143fc949361efd400f87d0a54036b8d61a85b62e2a462",
+      "target": "```text\nBPE merge criterion:      count(A, B)\nWordPiece merge criterion: count(AB) / (count(A) * count(B))\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "4c5dd8ec512a4d21ea09fa16a8718948c102c0336d6dd16bfe62bba9af4cc8e9",
+      "target": "BPE 问的是：“哪一对出现得最多？”WordPiece 问的是：“哪一对共同出现的频率，比随机情况下的预期更高？”这个细微差别会产生不同的词表。WordPiece 倾向于合并共现程度出乎预期的组合，而不只是频繁出现的组合。\n"
+    },
+    {
+      "segment_id": "10-01:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "7184b9396390c265a5d77a9a046dd7b6616ddfd45004cd7cbe516440e68f3cdd",
+      "target": "WordPiece 还使用 \"##\" 前缀表示接续前一个片段的子词：\n"
+    },
+    {
+      "segment_id": "10-01:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0071",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 36,
+      "source_sha256": "d8f72e6cd4c8d179db6786fece023f8652a80c18785297f5883ffb1fe7f9981a",
+      "target": "```text\n\"unhappiness\" -> [\"un\", \"##happi\", \"##ness\"]\n\"embedding\"   -> [\"em\", \"##bed\", \"##ding\"]\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 37,
+      "source_sha256": "918d7e23a083ef236401d9e92a23ca3fc3772bba9af0a4d89532291f74fa9205",
+      "target": "\"##\" 前缀表示这个片段延续了前一个 token。BERT 使用 WordPiece，词表包含 30,522 个 token。BERT 的各种变体，例如 DistilBERT……不过，RoBERTa 的分词器实际上是 BPE，BERT 本身则使用 WordPiece。\n"
+    },
+    {
+      "segment_id": "10-01:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### WordPiece (BERT)"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### SentencePiece (Llama, T5)"
+      ],
+      "ordinal": 38,
+      "source_sha256": "b9e4165d7bb8cdd5b6522a75e1cefe51016d8e2068a788bc6d26f0aa01c675fa",
+      "target": "### SentencePiece（Llama、T5）\n"
+    },
+    {
+      "segment_id": "10-01:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### SentencePiece (Llama, T5)"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### SentencePiece (Llama, T5)"
+      ],
+      "ordinal": 39,
+      "source_sha256": "386d641e86ad1e3885f76c453570cbf8075fe5ff9ff60df7ed12a9dcaa324217",
+      "target": "SentencePiece 将输入视为原始 Unicode 字符流，其中也包括空白字符。它没有预分词步骤，也没有针对特定语言的词边界规则。因此，它真正做到了与语言无关，可以处理中文、日语、泰语等不用空格分隔词语的语言。\n"
+    },
+    {
+      "segment_id": "10-01:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### SentencePiece (Llama, T5)"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### SentencePiece (Llama, T5)"
+      ],
+      "ordinal": 40,
+      "source_sha256": "ea10275e6e02ed623dad3d2fbb114187b8f1a633a34519954d1dc138ea8912ba",
+      "target": "SentencePiece 支持两种算法：\n- **BPE 模式**：与标准 BPE 使用相同的合并逻辑，但直接作用于原始字符序列\n- **Unigram 模式**：从一个较大的词表出发，迭代删除对整体似然影响最小的 token。它与 BPE 的方向相反：采用剪枝，而不是合并。\n"
+    },
+    {
+      "segment_id": "10-01:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### SentencePiece (Llama, T5)"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### SentencePiece (Llama, T5)"
+      ],
+      "ordinal": 41,
+      "source_sha256": "5db00c023acb1e07b16cc7afbc2bffb11c33541bc7d546f443e03798a8a9b396",
+      "target": "Llama 2 使用 SentencePiece BPE，词表包含 32,000 个 token。T5 使用 SentencePiece Unigram，词表也包含 32,000 个 token。注意：Llama 3 已改用基于 tiktoken 的字节级 BPE 分词器，词表包含 128,256 个 token。\n"
+    },
+    {
+      "segment_id": "10-01:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### SentencePiece (Llama, T5)"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 42,
+      "source_sha256": "20b21a4630f0dc440311e6ac63c24b21f368986b1981c6c0f8a6a9f1e5137365",
+      "target": "### 词表大小的权衡\n"
+    },
+    {
+      "segment_id": "10-01:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 43,
+      "source_sha256": "dadb9b1041dda0b3d2dea7bb1bbb20ed81e1d2433fef670f651659547a08ae67",
+      "target": "这是一项切实的工程决策，产生的影响可以量化。\n"
+    },
+    {
+      "segment_id": "10-01:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 44,
+      "source_sha256": "507f7fcca8b16ed67de3b87a7fd62eac475a66fb9b4b83d77aa269fe1b48281e",
+      "target": "```mermaid\ngraph LR\n    subgraph Small[\"Small Vocab (32K)\\ne.g., BERT, T5\"]\n        S1[\"More tokens per text\"]\n        S2[\"Longer sequences\"]\n        S3[\"Smaller embedding matrix\"]\n        S4[\"Better rare-word handling\"]\n    end\n    subgraph Large[\"Large Vocab (128K+)\\ne.g., Llama 3, GPT-4o\"]\n        L1[\"Fewer tokens per text\"]\n        L2[\"Shorter sequences\"]\n        L3[\"Larger embedding matrix\"]\n        L4[\"Faster inference\"]\n    end\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 45,
+      "source_sha256": "f76f00fea2429145fc61f6df42d056da2701b478d36644bf0a5012d74efe47d2",
+      "target": "来看具体数字。对于 128K 的词表和 4,096 维嵌入，仅嵌入矩阵就有 128,000 x 4,096 = 524 million（百万）个参数。对于 32K 的词表，则为 131 million 个参数。仅分词器的选择，就造成了 400M 个参数的差异。\n"
+    },
+    {
+      "segment_id": "10-01:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 46,
+      "source_sha256": "c9d10b839ba9bf2ccf2cf284130735e35475cbfc36047046295fb91b3d5acbf6",
+      "target": "但更大的词表能更充分地压缩文本。同一段英文，在 32K 词表下需要 100 个 token，在 128K 词表下可能只需 70 个。这意味着生成时的前向传播次数减少 30%。对于服务数百万次请求的模型，这会直接降低计算成本。\n"
+    },
+    {
+      "segment_id": "10-01:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 47,
+      "source_sha256": "979cf77757381e1c8f321d563c35c87aa702d0018d1fe338e61affed6ed59530",
+      "target": "趋势很明确：词表在不断扩大。GPT-2 使用 50,257 项，GPT-4 使用 ~100K 项，Llama 3 使用 128K 项，GPT-4o 使用 200K 项。\n"
+    },
+    {
+      "segment_id": "10-01:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0095",
+      "kind": "table",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 48,
+      "source_sha256": "4b2b90365f7aea5a1ec14fda343f2262f9f9c85d6cd52955c47f23a4422aa381",
+      "target": "| 模型 | 词表大小 | 分词器类型 | 每个英文单词的平均 token 数 |\n|-------|-----------|----------------|---------------------------|\n| BERT | 30,522 | WordPiece | ~1.4 |\n| GPT-2 | 50,257 | 字节级 BPE | ~1.3 |\n| Llama 2 | 32,000 | SentencePiece BPE | ~1.4 |\n| GPT-4 | ~100,256 | 字节级 BPE | ~1.2 |\n| Llama 3 | 128,256 | 字节级 BPE（tiktoken） | ~1.1 |\n| GPT-4o | 200,019 | 字节级 BPE | ~1.0 |\n"
+    },
+    {
+      "segment_id": "10-01:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### Vocabulary Size Tradeoffs"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### The Multilingual Tax"
+      ],
+      "ordinal": 49,
+      "source_sha256": "5ee97b1da81bc6d5afeb55b7fb152ca252b7714cfec6c44263de150e49761582",
+      "target": "### 多语言的额外开销\n"
+    },
+    {
+      "segment_id": "10-01:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### The Multilingual Tax"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### The Multilingual Tax"
+      ],
+      "ordinal": 50,
+      "source_sha256": "901c9660b96de1842259c722286ecdb2a0f743f69c904865564918ca1b119596",
+      "target": "主要用英语训练的分词器，对其他语言很不友好。GPT-2 的分词器处理韩语时，平均每个词需要 2-3 个 token，中文可能更糟。这意味着，韩语用户实际可用的上下文窗口只有英语用户的一半：付出相同价格，却获得更低的信息密度。\n"
+    },
+    {
+      "segment_id": "10-01:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### The Multilingual Tax"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### The Multilingual Tax"
+      ],
+      "ordinal": 51,
+      "source_sha256": "f3dc635a467fd1de6c528d3806b43b9ae0bebf4b71095040d7f5cde4d42e8f29",
+      "target": "这就是 Llama 3 将词表从 32K 扩大四倍至 128K 的原因。为非英语文字分配更多 token，可以让不同语言获得更公平的压缩效果。\n"
+    },
+    {
+      "segment_id": "10-01:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### The Multilingual Tax"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### The Multilingual Tax"
+      ],
+      "ordinal": 52,
+      "source_sha256": "2b45f2da88e7592c476f655ad57949c1ed12fe46f539304fd15c7e1aa62e774a",
+      "target": "```figure\ntokenizer-tradeoff\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## The Concept",
+        "### The Multilingual Tax"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0105",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "10-01:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 1: Character-Level Tokenizer"
+      ],
+      "ordinal": 54,
+      "source_sha256": "7108c39dabab10f0089243045f71376005bbe0a7b57759a0aed02d0bf88508f7",
+      "target": "### 第 1 步：字符级分词器\n"
+    },
+    {
+      "segment_id": "10-01:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 1: Character-Level Tokenizer"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 1: Character-Level Tokenizer"
+      ],
+      "ordinal": 55,
+      "source_sha256": "9f23832bcf007d8204fd61d63b591c455ca65623186eb625d8476d83d670c31b",
+      "target": "从基础开始。字符级分词器将每个字符映射到它的 Unicode 码点。不需要训练，不会出现未知 token，只做直接映射。\n"
+    },
+    {
+      "segment_id": "10-01:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 1: Character-Level Tokenizer"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0111",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 1: Character-Level Tokenizer"
+      ],
+      "ordinal": 56,
+      "source_sha256": "32b4952cce9d1878076e902baacecda9bbf8ffabdb6d7ef1647f2ff166be180f",
+      "target": "```python\nclass CharTokenizer:\n    def encode(self, text):\n        return [ord(c) for c in text]\n\n    def decode(self, tokens):\n        return \"\".join(chr(t) for t in tokens)\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 1: Character-Level Tokenizer"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 1: Character-Level Tokenizer"
+      ],
+      "ordinal": 57,
+      "source_sha256": "8a197a43d7a3ae7d4697ab55cc4224d9e8f4f03099868d5059542a525768a546",
+      "target": "\"hello\" 会变成 [104, 101, 108, 108, 111]。每个字符各自对应一个 token。这就是我们要改进的基线。\n"
+    },
+    {
+      "segment_id": "10-01:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 1: Character-Level Tokenizer"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0115",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 58,
+      "source_sha256": "6bf290a2ccbeee0da02e3f85cb0fae35fd87eff32f57e867a75d2a80023611f1",
+      "target": "### 第 2 步：从零实现 BPE 分词器\n"
+    },
+    {
+      "segment_id": "10-01:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 59,
+      "source_sha256": "0918046c196cedd4d571fde19653428d24c9fc60036cabec9e2ee47f0d5cfc1c",
+      "target": "现在开始真正的实现。我们像 GPT-2 一样，在原始字节上训练，统计相邻对，合并最常见的一对，并按顺序记录每次合并。合并表就是分词器。\n"
+    },
+    {
+      "segment_id": "10-01:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0119",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 60,
+      "source_sha256": "c856337ef11a3de3ed1b7ce75d8d20f749df35cc4f7e73fda1ec20d17ed68db2",
+      "target": "```python\nfrom collections import Counter\n\nclass BPETokenizer:\n    def __init__(self):\n        self.merges = {}\n        self.vocab = {}\n\n    def _get_pairs(self, tokens):\n        pairs = Counter()\n        for i in range(len(tokens) - 1):\n            pairs[(tokens[i], tokens[i + 1])] += 1\n        return pairs\n\n    def _merge_pair(self, tokens, pair, new_token):\n        merged = []\n        i = 0\n        while i < len(tokens):\n            if i < len(tokens) - 1 and tokens[i] == pair[0] and tokens[i + 1] == pair[1]:\n                merged.append(new_token)\n                i += 2\n            else:\n                merged.append(tokens[i])\n                i += 1\n        return merged\n\n    def train(self, text, num_merges):\n        tokens = list(text.encode(\"utf-8\"))\n        self.vocab = {i: bytes([i]) for i in range(256)}\n\n        for i in range(num_merges):\n            pairs = self._get_pairs(tokens)\n            if not pairs:\n                break\n            best_pair = max(pairs, key=pairs.get)\n            new_token = 256 + i\n            tokens = self._merge_pair(tokens, best_pair, new_token)\n            self.merges[best_pair] = new_token\n            self.vocab[new_token] = self.vocab[best_pair[0]] + self.vocab[best_pair[1]]\n\n        return self\n\n    def encode(self, text):\n        tokens = list(text.encode(\"utf-8\"))\n        for pair, new_token in self.merges.items():\n            tokens = self._merge_pair(tokens, pair, new_token)\n        return tokens\n\n    def decode(self, tokens):\n        byte_sequence = b\"\".join(self.vocab[t] for t in tokens)\n        return byte_sequence.decode(\"utf-8\", errors=\"replace\")\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 61,
+      "source_sha256": "764bbfb8320f82fe04f4454907cfcb958bca609c98be29e7621c7fb11c233d07",
+      "target": "训练循环就是 BPE 的核心：统计相邻对、合并频率最高的一对、重复。每次合并都会减少 token 总数。经过 `num_merges` 轮后，词表从 256 个基础字节扩展到 256 + num_merges 项。\n"
+    },
+    {
+      "segment_id": "10-01:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 62,
+      "source_sha256": "99c1a2847b4a4134eadcd923251f221be19d014e051a37062ab2ada6f2dad637",
+      "target": "编码时，严格按照学习顺序执行合并。这一点很重要。如果第 1 次合并创建了 \"th\"，第 5 次合并创建了 \"the\"，那么编码时必须先执行第 1 次合并，这样到第 5 次合并时，才能由 \"th\" + \"e\" 组成 \"the\"。\n"
+    },
+    {
+      "segment_id": "10-01:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 63,
+      "source_sha256": "9ab79c8c6ba6d7279d70ba619ee1fc3a84781cee34d8bdd6ab04b49e9719d80c",
+      "target": "解码则是逆过程：在词表中查询每个 token ID，拼接对应字节，再按 UTF-8 解码。\n"
+    },
+    {
+      "segment_id": "10-01:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 2: BPE Tokenizer from Scratch"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0127",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 3: Encode and Decode Roundtrip"
+      ],
+      "ordinal": 64,
+      "source_sha256": "4d63d97138fca0e23b743817c379779b1d01445697089e38e707af04af18e6c0",
+      "target": "### 第 3 步：编码与解码往返验证\n"
+    },
+    {
+      "segment_id": "10-01:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 3: Encode and Decode Roundtrip"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0129",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 3: Encode and Decode Roundtrip"
+      ],
+      "ordinal": 65,
+      "source_sha256": "86b38db0d88aa3e745b0af317ecc7013ca6ad067a5ae529258ddc2a8e300f507",
+      "target": "```python\ncorpus = (\n    \"The cat sat on the mat. The cat ate the rat. \"\n    \"The dog sat on the log. The dog ate the frog. \"\n    \"Natural language processing is the study of how computers \"\n    \"understand and generate human language. \"\n    \"Tokenization is the first step in any NLP pipeline.\"\n)\n\ntokenizer = BPETokenizer()\ntokenizer.train(corpus, num_merges=40)\n\ntest_sentences = [\n    \"The cat sat on the mat.\",\n    \"Natural language processing\",\n    \"tokenization pipeline\",\n    \"unhappiness\",\n]\n\nfor sentence in test_sentences:\n    encoded = tokenizer.encode(sentence)\n    decoded = tokenizer.decode(encoded)\n    raw_bytes = len(sentence.encode(\"utf-8\"))\n    ratio = len(encoded) / raw_bytes\n    print(f\"'{sentence}'\")\n    print(f\"  Tokens: {len(encoded)} (from {raw_bytes} bytes) -- ratio: {ratio:.2f}\")\n    print(f\"  Roundtrip: {'PASS' if decoded == sentence else 'FAIL'}\")\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 3: Encode and Decode Roundtrip"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0131",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 3: Encode and Decode Roundtrip"
+      ],
+      "ordinal": 66,
+      "source_sha256": "631bcb38c0c80ba979b1e9f1f0ecc01145ab1539ced4814c311748d48e0fd891",
+      "target": "压缩率能反映分词器的效果。压缩率为 0.50，表示分词后得到的 token 数量只有原始字节数的一半。这个值越低越好。在训练语料上，压缩率会表现良好；在 \"unhappiness\" 这种分布外文本上，由于它没有出现在语料中，压缩率会变差：对于未见过的模式，分词器会退回字符级编码。\n"
+    },
+    {
+      "segment_id": "10-01:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 3: Encode and Decode Roundtrip"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0133",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 4: Compare with tiktoken"
+      ],
+      "ordinal": 67,
+      "source_sha256": "f9c50b6c07cb73f25065ee757415d9313543ef2a41dd12e71ce4b73ddd7c6552",
+      "target": "### 第 4 步：与 tiktoken 比较\n"
+    },
+    {
+      "segment_id": "10-01:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 4: Compare with tiktoken"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0135",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 4: Compare with tiktoken"
+      ],
+      "ordinal": 68,
+      "source_sha256": "a2992ee1bc96ec4e37fe5fdc96218fd01b6a815917961b5aef7fd250138b410f",
+      "target": "```python\nimport tiktoken\n\nenc = tiktoken.get_encoding(\"cl100k_base\")\n\ntexts = [\n    \"The cat sat on the mat.\",\n    \"unhappiness\",\n    \"Hello, world!\",\n    \"def fibonacci(n): return n if n < 2 else fibonacci(n-1) + fibonacci(n-2)\",\n    \"Geschwindigkeitsbegrenzung\",\n]\n\nfor text in texts:\n    our_tokens = tokenizer.encode(text)\n    tiktoken_tokens = enc.encode(text)\n    tiktoken_pieces = [enc.decode([t]) for t in tiktoken_tokens]\n    print(f\"'{text}'\")\n    print(f\"  Our BPE:   {len(our_tokens)} tokens\")\n    print(f\"  tiktoken:  {len(tiktoken_tokens)} tokens -> {tiktoken_pieces}\")\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 4: Compare with tiktoken"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0137",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 4: Compare with tiktoken"
+      ],
+      "ordinal": 69,
+      "source_sha256": "8d4ef0eaab31ee74a07d9ed3f064073e7c404f9fdc5f0f4275fef0c10f7de3d1",
+      "target": "tiktoken 使用完全相同的算法，只是在数百 gigabytes 的文本上训练，并执行了 100,000 次合并。算法相同，差异在于训练数据和合并次数。你的分词器只在一段文本上训练了 40 次合并，自然无法与 tiktoken 在海量语料上进行的 100K 次合并相抗衡。但两者的机制是一样的。\n"
+    },
+    {
+      "segment_id": "10-01:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 4: Compare with tiktoken"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0139",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 5: Vocabulary Analysis"
+      ],
+      "ordinal": 70,
+      "source_sha256": "52939f006d7124ee904c3091db9493244002b76bff0301c8a6cf5fb389ee642b",
+      "target": "### 第 5 步：词表分析\n"
+    },
+    {
+      "segment_id": "10-01:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 5: Vocabulary Analysis"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0141",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 5: Vocabulary Analysis"
+      ],
+      "ordinal": 71,
+      "source_sha256": "df547b7ec2df35c99af5877727b53b2a19d2a0b6866b572ecb4eb4c5891a0be1",
+      "target": "```python\ndef analyze_vocabulary(tokenizer, test_texts):\n    total_tokens = 0\n    total_chars = 0\n    token_usage = Counter()\n\n    for text in test_texts:\n        encoded = tokenizer.encode(text)\n        total_tokens += len(encoded)\n        total_chars += len(text)\n        for t in encoded:\n            token_usage[t] += 1\n\n    print(f\"Vocabulary size: {len(tokenizer.vocab)}\")\n    print(f\"Total tokens across all texts: {total_tokens}\")\n    print(f\"Total characters: {total_chars}\")\n    print(f\"Avg tokens per character: {total_tokens / total_chars:.2f}\")\n\n    print(f\"\\nMost used tokens:\")\n    for token_id, count in token_usage.most_common(10):\n        token_bytes = tokenizer.vocab[token_id]\n        display = token_bytes.decode(\"utf-8\", errors=\"replace\")\n        print(f\"  Token {token_id:4d}: '{display}' (used {count} times)\")\n\n    unused = [t for t in tokenizer.vocab if t not in token_usage]\n    print(f\"\\nUnused tokens: {len(unused)} out of {len(tokenizer.vocab)}\")\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 5: Vocabulary Analysis"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0143",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 5: Vocabulary Analysis"
+      ],
+      "ordinal": 72,
+      "source_sha256": "a120f1d2f128bb4b67c9ae1625341034ea52f644b280ee098b90ca2742600cf3",
+      "target": "这会展示词表中的 Zipf 分布。少数 token 占据主要份额，例如空格、\"the\" 和 \"e\"，而大多数 token 很少使用。生产级分词器会针对这种分布进行优化：常见模式获得较短的 token ID，罕见模式则用更长的表示。\n"
+    },
+    {
+      "segment_id": "10-01:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Build It",
+        "### Step 5: Vocabulary Analysis"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0145",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "10-01:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0147",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "e266ff48a88a41a2ba1a5995755fe6cff851c8a5f8324030c8b002a6be828a1a",
+      "target": "你从零实现的 BPE 已经能工作了。现在来看看生产级工具。\n"
+    },
+    {
+      "segment_id": "10-01:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0149",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### tiktoken (OpenAI)"
+      ],
+      "ordinal": 75,
+      "source_sha256": "029ebfe0d07012885f9bfb44cb866121daae302d3267aa337939875439ef16fc",
+      "target": "### tiktoken（OpenAI）\n"
+    },
+    {
+      "segment_id": "10-01:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### tiktoken (OpenAI)"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0151",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### tiktoken (OpenAI)"
+      ],
+      "ordinal": 76,
+      "source_sha256": "d18db1089af67c79ac7403330e02ecea19c7214625eee405ce187f196f2530a0",
+      "target": "```python\nimport tiktoken\n\nenc = tiktoken.get_encoding(\"cl100k_base\")\n\ntext = \"Tokenizers convert text to integers\"\ntokens = enc.encode(text)\nprint(f\"Tokens: {tokens}\")\nprint(f\"Pieces: {[enc.decode([t]) for t in tokens]}\")\nprint(f\"Roundtrip: {enc.decode(tokens)}\")\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### tiktoken (OpenAI)"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### tiktoken (OpenAI)"
+      ],
+      "ordinal": 77,
+      "source_sha256": "33b7f7e5e4912bc73663c2f6b50a527ddade6985d2212369478c47ef02e6681f",
+      "target": "tiktoken 用 Rust 编写，并提供 Python 绑定。它每秒可以编码数百万个 token。算法仍是 BPE，实现则达到了工业级强度。\n"
+    },
+    {
+      "segment_id": "10-01:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### tiktoken (OpenAI)"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0155",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Hugging Face tokenizers"
+      ],
+      "ordinal": 78,
+      "source_sha256": "dadaefad596cbeb5e8ee0345629752d5317865b15b9138559e3bd8cab42416fc",
+      "target": "### Hugging Face tokenizers\n"
+    },
+    {
+      "segment_id": "10-01:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Hugging Face tokenizers"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0157",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Hugging Face tokenizers"
+      ],
+      "ordinal": 79,
+      "source_sha256": "8c686faa45508f19f4f73c12033852ea2d56372a5b61c0ac7bd11c70493770c9",
+      "target": "```python\nfrom tokenizers import Tokenizer\nfrom tokenizers.models import BPE\nfrom tokenizers.trainers import BpeTrainer\nfrom tokenizers.pre_tokenizers import ByteLevel\n\ntokenizer = Tokenizer(BPE())\ntokenizer.pre_tokenizer = ByteLevel()\n\ntrainer = BpeTrainer(vocab_size=1000, special_tokens=[\"<pad>\", \"<eos>\", \"<unk>\"])\ntokenizer.train([\"corpus.txt\"], trainer)\n\noutput = tokenizer.encode(\"The cat sat on the mat.\")\nprint(f\"Tokens: {output.tokens}\")\nprint(f\"IDs: {output.ids}\")\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Hugging Face tokenizers"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0159",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Hugging Face tokenizers"
+      ],
+      "ordinal": 80,
+      "source_sha256": "722b716dafbc97403c322bcc702627764ad19fce9144f06ab84846543a42cbb4",
+      "target": "Hugging Face tokenizers 库的底层同样使用 Rust。它能在几秒内对 gigabyte 级语料完成 BPE 训练。训练自己的模型时，就可以使用这个工具。\n"
+    },
+    {
+      "segment_id": "10-01:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Hugging Face tokenizers"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0161",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Loading Llama's Tokenizer"
+      ],
+      "ordinal": 81,
+      "source_sha256": "7de6696e7f3b377ee9f9be0d9915f7ea78ec96277c96baf402ea0f5f44ca04d8",
+      "target": "### 加载 Llama 的分词器\n"
+    },
+    {
+      "segment_id": "10-01:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Loading Llama's Tokenizer"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0163",
+      "kind": "fence",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Loading Llama's Tokenizer"
+      ],
+      "ordinal": 82,
+      "source_sha256": "a281e708f78b6304d73a9dcc31bb6efe0d18108a7c1f2fa89bd794a3c8b12be2",
+      "target": "```python\nfrom transformers import AutoTokenizer\n\ntokenizer = AutoTokenizer.from_pretrained(\"meta-llama/Llama-3.1-8B\")\n\ntext = \"Tokenizers are the unsung heroes of LLMs\"\ntokens = tokenizer.encode(text)\nprint(f\"Token IDs: {tokens}\")\nprint(f\"Tokens: {tokenizer.convert_ids_to_tokens(tokens)}\")\nprint(f\"Vocab size: {tokenizer.vocab_size}\")\n\nmultilingual = [\"Hello world\", \"Hola mundo\", \"Bonjour le monde\"]\nfor text in multilingual:\n    ids = tokenizer.encode(text)\n    print(f\"'{text}' -> {len(ids)} tokens\")\n```\n"
+    },
+    {
+      "segment_id": "10-01:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Loading Llama's Tokenizer"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0165",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Loading Llama's Tokenizer"
+      ],
+      "ordinal": 83,
+      "source_sha256": "58c89622c6cec07e09bdf87a496e71743a5533d3debba0ff972fd98a3d76180e",
+      "target": "Llama 3 的 128K 词表对非英语文本的压缩效果，明显优于 GPT-2 的 50K 词表。你可以自行验证：将同一个句子写成多种语言，分别编码并统计 token 数量。\n"
+    },
+    {
+      "segment_id": "10-01:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Use It",
+        "### Loading Llama's Tokenizer"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0167",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Ship It"
+      ],
+      "ordinal": 84,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "10-01:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Ship It"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0169",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Ship It"
+      ],
+      "ordinal": 85,
+      "source_sha256": "2b656d33d5a8b861923b95e9699676170c9e0ed7c090c00452f74cd2e7cdbb25",
+      "target": "本课将产出 `outputs/prompt-tokenizer-analyzer.md`，这是一份可复用的提示词（prompt），用于分析任意文本与模型组合的分词效率。给它一份文本样本，它就会告诉你哪个模型的分词器处理得最好。\n"
+    },
+    {
+      "segment_id": "10-01:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Ship It"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0171",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "10-01:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0173",
+      "kind": "list",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "2d810c58e1a6e5cf19e9d50d375717e3246068ff7a259a5af6cf21c8ddf5ab07",
+      "target": "1. 修改 BPE 分词器，让它在每次合并时打印词表。观察 \"t\" + \"h\" 如何变成 \"th\"，再由 \"th\" + \"e\" 变成 \"the\"。追踪常见英文单词如何逐片组装起来。\n"
+    },
+    {
+      "segment_id": "10-01:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0175",
+      "kind": "list",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 88,
+      "source_sha256": "173562a1fd498c47f0a02e8c6d76a7a2d41d31b5a14f4725984cddd978dcdc71",
+      "target": "2. 为 BPE 分词器添加特殊 token（`<pad>`、`<eos>`、`<unk>`）。将它们的 ID 分别设为 0、1、2，并相应调整其他所有 token 的 ID。实现一个预分词步骤，在运行 BPE 之前按空白字符切分。\n"
+    },
+    {
+      "segment_id": "10-01:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0177",
+      "kind": "list",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 89,
+      "source_sha256": "976b3f65eb2215435ac012635f60f104c585c1c4d4fadeb937374a0870a9b28a",
+      "target": "3. 实现 WordPiece 的合并准则，使用似然比，而不是频率。在相同语料上，用相同的合并次数分别训练 BPE 和 WordPiece。比较得到的词表：哪一种产生的子词更符合语言学意义？\n"
+    },
+    {
+      "segment_id": "10-01:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0179",
+      "kind": "list",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 90,
+      "source_sha256": "758dad4dfdbf88d4cb6df0cd03def0d42508511d2431d90bdc501127e60bdfd7",
+      "target": "4. 构建一个多语言分词效率基准。选取英语、西班牙语、中文、韩语和阿拉伯语的 10 个句子。用 tiktoken（cl100k_base）分别分词，并测量平均每个字符对应的 token 数。量化每种语言的“多语言额外开销”。\n"
+    },
+    {
+      "segment_id": "10-01:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0181",
+      "kind": "list",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 91,
+      "source_sha256": "260a5c8d66304738a81a544d659738f1fb8b619a2db86c02ef0510b1fc72ded7",
+      "target": "5. 在更大的语料上训练 BPE 分词器，例如下载一篇 Wikipedia 文章。调整合并次数，使其在同一文本上的压缩率与 tiktoken 相差不超过 10%。这会促使你理解语料规模、合并次数和压缩效果之间的关系。\n"
+    },
+    {
+      "segment_id": "10-01:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Exercises"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0183",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Key Terms"
+      ],
+      "ordinal": 92,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "10-01:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Key Terms"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0185",
+      "kind": "table",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Key Terms"
+      ],
+      "ordinal": 93,
+      "source_sha256": "8c0a700a3eb45f8001d87103c1fdae3658566c05578285f67dd61504ae371a21",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| token | “一个单词” | 模型词表中的一个单位，可能是字符、子词、单词，也可能是包含多个词的片段 |\n| BPE | “某种压缩方法” | 字节对编码：迭代合并最频繁的相邻 token 对，直到达到目标词表大小 |\n| WordPiece | “BERT 的分词器” | 类似 BPE，但合并时最大化似然比 count(AB)/(count(A)\\*count(B))，而不是直接依据出现频率 |\n| SentencePiece | “一个分词器库” | 与语言无关的分词器，直接处理原始 Unicode，无需预分词，支持 BPE 和 Unigram 算法 |\n| 词表大小 | “它认识多少个词” | 不同 token 的总数：GPT-2 有 50,257 个，BERT 有 30,522 个，Llama 3 有 128,256 个 |\n| Fertility（平均每词 token 数） | “不是分词器术语” | 平均每个词对应的 token 数，用于衡量分词器在不同语言上的效率（1.0 为理想值，3.0 表示模型要付出三倍的工作量） |\n| 字节级 BPE | “GPT 的分词器” | 在原始字节（0-255）上而非 Unicode 字符上运行的 BPE，保证任何输入都不会出现未知 token |\n| 合并表 | “分词器文件” | 训练中学到的相邻对合并规则的有序列表；这就是分词器本身，而且顺序很重要 |\n| 预分词 | “按空格切分” | 在子词分词前应用的规则，包括按空白字符切分、数字分隔和标点处理 |\n| 压缩率 | “分词器的效率” | 输出 token 数除以输入字节数；越低表示压缩效果越好、推理越快 |\n"
+    },
+    {
+      "segment_id": "10-01:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Key Terms"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0187",
+      "kind": "heading",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Further Reading"
+      ],
+      "ordinal": 94,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "10-01:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Further Reading"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "10-01:b0189",
+      "kind": "list",
+      "heading_path": [
+        "# Tokenizers: BPE, WordPiece, SentencePiece",
+        "## Further Reading"
+      ],
+      "ordinal": 95,
+      "source_sha256": "48b528cc15180eef7744c702ead795a6e07de5e3753037df0da87affc3d0b834",
+      "target": "- [Sennrich 等，2016：《使用子词单元进行生僻词的神经机器翻译》](https://arxiv.org/abs/1508.07909) -- 将 BPE 引入自然语言处理的论文，使一种 1994 年的压缩算法成为现代分词的基础\n- [Kudo 与 Richardson，2018：《SentencePiece：一种简单且与语言无关的子词分词器》](https://arxiv.org/abs/1808.06226) -- 与语言无关的分词方法，让多语言模型具备了实用性\n- [OpenAI tiktoken 仓库](https://github.com/openai/tiktoken) -- 用 Rust 实现、提供 Python 绑定的生产级 BPE，供 GPT-3.5/4/4o 使用\n- [Hugging Face Tokenizers 文档](https://huggingface.co/docs/tokenizers) -- 具有 Rust 性能的生产级分词器训练工具\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "format_repairs": [
+    {
+      "kind": "escaped literal arithmetic multiplication",
+      "target_lines": [
+        464
+      ],
+      "proof": "Only Markdown escape backslashes added outside code/bold; removing them restores exact previous mathematical text"
+    }
+  ],
+  "assets": []
+}

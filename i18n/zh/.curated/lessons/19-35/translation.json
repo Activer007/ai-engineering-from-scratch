@@ -1,0 +1,954 @@
+{
+  "schema_version": 1,
+  "lesson_id": "19-35",
+  "source_path": "phases/19-capstone-projects/35-gpt-model-assembly/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "7c5ba7fab32dcac0d7975b9c3ea3749c21f4ddfc",
+  "source_sha256": "3ca888a42c783fc815deac07b4e992d6b4531c9a85a0f9ad2c7cf8b154e46227",
+  "target_path": "i18n/zh/phases/19-capstone-projects/35-gpt-model-assembly/docs/zh.md",
+  "target_sha256": "3cf87a942f8e350cd871bd73e3751ae32493923c5ec01d282a078b786301a090",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "19-35:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly"
+      ],
+      "ordinal": 1,
+      "source_sha256": "7737ac407e6ace503f5e375be18b4caeab2f7aa3c42fc9c4ee9367abc9c9e6d1",
+      "target": "# 组装 GPT 模型\n"
+    },
+    {
+      "segment_id": "19-35:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# GPT Model Assembly"
+      ],
+      "ordinal": 2,
+      "source_sha256": "05f6d399e3c0fc95110ed199e5d09db16c789d090ef2563b56f45306495f5233",
+      "target": "> 堆叠十二个块，再加上 token（词元，即模型处理文本的单位）嵌入（embedding）、一个可学习的位置嵌入、最后的 LayerNorm，以及一个共享权重的语言模型输出头，这就是整个拥有 124 million（百万）个参数的 GPT 模型。本课会将这些组件组装成一个可用的类，统计参数量以确认模型结构与 124M 参考模型一致，并通过多项式采样、温度参数和 top-k 生成文本。\n"
+    },
+    {
+      "segment_id": "19-35:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly"
+      ],
+      "ordinal": 3,
+      "source_sha256": "c2b7cc2a47ff325cadbf7805eaa771f0023abc79418fb692e4a9d10ca1fa4e48",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 19，第 30 至 34 课\n**Time:** ~90 分钟\n"
+    },
+    {
+      "segment_id": "19-35:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "19-35:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "b07e4a0643849e45c62f2f1e90ebf9571587a0075075d2de9e02d04d5f00b225",
+      "target": "- 将第 34 课的 Transformer 块组装成完整的 GPT 模型：token 嵌入、位置嵌入、N 个块、最后的 LayerNorm，以及语言模型输出头。\n- 复现拥有 124 million 个参数的配置：词表大小为 50257，上下文长度为 1024，嵌入维度为 768，十二个注意力头，十二层。\n- 将语言模型输出头的权重与 token 嵌入绑定，并解释为什么在这一规模下可节省 ~38 million 个参数。\n- 根据提示词（prompt）使用多项式采样、温度缩放和 top-k 截断生成文本，并利用滑动窗口控制上下文长度。\n- 以 124M 为目标，衡量参数量与前向传播的计算开销。\n"
+    },
+    {
+      "segment_id": "19-35:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "19-35:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "4eb46fd55ce580f2a50c6d5e53e46a5bb88fd0fdb5d4f83a3b94425a8609e04d",
+      "target": "单个 Transformer 块无法独立发挥作用。你需要将 token ID 转换为向量，融入位置信息，使其通过堆叠的块，再投影回词表上的 logits（未经归一化的分数）。漏掉这四步中的任何一步，模型就可能无法执行前向传播、丢失准确的位置信息，或无法输出文本。\n"
+    },
+    {
+      "segment_id": "19-35:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "a94ff8aada2d9010625740cdba8ee0c1ad691a2b4273a0f85655503df2764f43",
+      "target": "模型的结构也很重要。参考模型 GPT-2 small 采用的正是上述配置，参数量为 124 million。这些数字并不神秘。词表大小 50257 乘以嵌入维度 768，就是 token 嵌入表。位置数 1024 乘以 768，就是位置嵌入表。十二个块，每块约有 7 million 个参数，总计 84 million。最后的输出头通过权重共享复用 token 嵌入表。把各部分加起来，就得到 124 million。如果构建的模型参数量与参考模型不符，就说明组件连接可能有误。\n"
+    },
+    {
+      "segment_id": "19-35:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "19-35:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0019",
+      "kind": "fence",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "83049ae608d79d8c3d227ab0458c03ffadec30878813f36699cde25434d76d77",
+      "target": "```mermaid\nflowchart TB\n  T[Token ids<br/>shape B, T] --> E[Token embedding<br/>50257, 768]\n  T --> P[Position lookup<br/>0 to T-1]\n  P --> PE[Position embedding<br/>1024, 768]\n  E --> A[Add]\n  PE --> A\n  A --> D[Embedding dropout]\n  D --> B1[Block 1]\n  B1 --> B2[Block 2]\n  B2 --> Bk[...]\n  Bk --> B12[Block 12]\n  B12 --> L[Final LayerNorm]\n  L --> H[LM head<br/>tied to token embedding]\n  H --> O[Logits<br/>shape B, T, 50257]\n```\n"
+    },
+    {
+      "segment_id": "19-35:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "707d2cdad7d5126a863746c99c1d65c330a29db74b4b3d2dccc2a599ce6aa846",
+      "target": "token ID 转换成 token 向量，位置 ID 转换成位置向量。两者相加后送入堆叠的块。最后的 LayerNorm 是位于这些块之外、在所有现代变体中都保留下来的组件。语言模型输出头（LM head）复用 token 嵌入矩阵，这就是权重共享的含义。\n"
+    },
+    {
+      "segment_id": "19-35:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Weight tying"
+      ],
+      "ordinal": 12,
+      "source_sha256": "fcd81b2ab481b22d12bab5f2f373619cf6a26129bc2feb54f66ae665d95ca5fb",
+      "target": "### 权重共享\n"
+    },
+    {
+      "segment_id": "19-35:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Weight tying"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Weight tying"
+      ],
+      "ordinal": 13,
+      "source_sha256": "ee1ca9c525470a5deea88f7681dd90f4554837d10c47e0488a00e0d93dfece04",
+      "target": "token 嵌入的形状为 `(vocab, d_model)`。语言模型输出头需要将 `d_model` 投影回 `vocab`。这两个映射互为转置。将两者绑定，就是让同一个参数张量真正被使用两次。当 vocab 为 50257、d_model 为 768 时，该矩阵包含 38 million 个参数。不共享权重，就要为它支付两份开销；共享权重，就只需一份开销。由于嵌入层和输出头会同步更新，梯度信号也会稍微更清晰。\n"
+    },
+    {
+      "segment_id": "19-35:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Weight tying"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Position embedding is learned, not sinusoidal"
+      ],
+      "ordinal": 14,
+      "source_sha256": "dfe7e368d18c2f666bab30d39a79cc9c9b8701d35accd9afa275760cbc4165d9",
+      "target": "### 位置嵌入通过学习获得，而非使用正弦函数\n"
+    },
+    {
+      "segment_id": "19-35:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Position embedding is learned, not sinusoidal"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Position embedding is learned, not sinusoidal"
+      ],
+      "ordinal": 15,
+      "source_sha256": "84fcaed3391709329c9d7649832a54e069d639af7ed00c1206f512fd1fd09f0c",
+      "target": "GPT-2 采用可学习的位置嵌入。位置表是形状为 `(1024, 768)` 的单个参数张量。每次前向传播时，模型都会查询位置 0 到 T-1 的嵌入，并将查询结果加到 token 嵌入上。这是最简单的位置编码方案（其他方案包括 RoPE、ALiBi 和 T5 相对位置偏置），也是 124M 参考模型所使用的方案。\n"
+    },
+    {
+      "segment_id": "19-35:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Position embedding is learned, not sinusoidal"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 16,
+      "source_sha256": "2d16c7dce669a30852863b6ffda0160efc33df257051ed59b278d81c35a3db37",
+      "target": "### 生成：温度、top-k 与多项式采样\n"
+    },
+    {
+      "segment_id": "19-35:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 17,
+      "source_sha256": "56560f872ebfc909376140433d586f45f9b64b2d7f4b097b4642fd8628176ddc",
+      "target": "生成采用自回归方式。每一步，模型都会返回每个位置上覆盖整个词表的 logits。只取最后一个位置的 logits，除以温度；也可以选择将前 k 大之外的所有 logits 都屏蔽为负无穷，再用 softmax 得到概率，最后从所得分布中采样一个 token。\n"
+    },
+    {
+      "segment_id": "19-35:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 18,
+      "source_sha256": "8601560ff6c7ece6767efe65c0a43df65ac359c5c6e7d1c9597c5037a3bb2476",
+      "target": "```mermaid\nflowchart LR\n  P[Prompt tokens] --> M[Model forward]\n  M --> Last[Take last position logits]\n  Last --> T[Divide by temperature]\n  T --> K[Mask to top k]\n  K --> S[Softmax]\n  S --> MN[Multinomial sample]\n  MN --> A[Append to context]\n  A --> Slide[Slide context if > ctx_len]\n  Slide --> M\n```\n"
+    },
+    {
+      "segment_id": "19-35:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 19,
+      "source_sha256": "418aacbe714da4922d8a0bda17484042d30d087055eb41de3e9759338b6092bf",
+      "target": "三个调节项，对应三种不同的行为。温度接近零时，会趋于贪心选择。温度为一时，保持模型原本的分布。Top-k 为一时，就是贪心选择。Top-k 为四十时，会滤除长尾。这些参数的组合很重要；下一课讲训练时，会把生成结果作为定性评估信号。\n"
+    },
+    {
+      "segment_id": "19-35:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 20,
+      "source_sha256": "f9deebe29e6ba968ad7d8049b9c88324398663d53893cd8c949a83bd2c1fedd4",
+      "target": "```figure\ncc-gpt-assembly\n```\n"
+    },
+    {
+      "segment_id": "19-35:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## The Concept",
+        "### Generation: temperature, top-k, multinomial"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 21,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "19-35:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 22,
+      "source_sha256": "af5f20217861f8d9f142cd8513cfb0d9c533101884490d56c616d03dfa1f4fa9",
+      "target": "`code/main.py` 实现了以下内容：\n"
+    },
+    {
+      "segment_id": "19-35:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0045",
+      "kind": "list",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 23,
+      "source_sha256": "819eeca9f56fd4682c35417168fa439bd55dc9854bfcc141a309eefb03841c18",
+      "target": "- `class GPTConfig` 数据类，用于保存 124M 的默认配置：`vocab_size=50257`、`context_length=1024`、`d_model=768`、`num_heads=12`、`num_layers=12`、`mlp_expansion=4`、`dropout=0.1`、`use_bias=True`、`weight_tying=True`。\n- `class GPTModel` 模型类，包含 token 嵌入、位置嵌入、嵌入层 dropout、十二个 `TransformerBlock`、最后的 LayerNorm，以及一个 `lm_head`；相应标志开启时，该输出头与 token 嵌入共享权重。\n- 一个 `count_parameters` 辅助函数，返回去重后的参数量，因此统计结果会正确计入权重共享的影响。\n- 一个 `generate` 函数，实现温度、top-k、多项式采样和滑动窗口上下文。\n- 一个演示程序，构建模型，打印参数量并与 124M 参考值并列展示，再根据固定提示词生成一小段序列，展示完整流程。\n"
+    },
+    {
+      "segment_id": "19-35:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 24,
+      "source_sha256": "936bc51db6511ea885c12022f0e1271632a7d165e0848edeaf255b3a5786e28d",
+      "target": "运行：\n"
+    },
+    {
+      "segment_id": "19-35:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 25,
+      "source_sha256": "6fe59b750977b521bbd15c9652ae3cc166374f901cb95f15c82098d0bba5368b",
+      "target": "```bash\npython3 code/main.py\n```\n"
+    },
+    {
+      "segment_id": "19-35:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 26,
+      "source_sha256": "e5a5c16a9f9b8e7502c7860b7a25181e8f58345e8ab12676b7126cbb1df28d25",
+      "target": "输出包括：与 124M 参考值并列显示的参数量、从随机提示词生成的 token ID，以及开启权重共享时语言模型输出头和 token 嵌入是否共用存储空间的确认结果。\n"
+    },
+    {
+      "segment_id": "19-35:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 27,
+      "source_sha256": "db40bc6d305983f6be47b4a7f4ba2381a73def209d9023561bb70a1d4bc00aa7",
+      "target": "为了让演示快速运行，脚本还会用一个微型配置（`d_model=64`、`num_layers=2`）跑通完整流程，并直接打印生成的 token 序列。对于 124M 配置，脚本会构建模型，但只统计参数量并执行一次前向传播。\n"
+    },
+    {
+      "segment_id": "19-35:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Build It"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Stack"
+      ],
+      "ordinal": 28,
+      "source_sha256": "d95c9f81ef0a32e15c3b471b4534628b1a56bbc26f5327ede041c08413c287e7",
+      "target": "## 技术栈\n"
+    },
+    {
+      "segment_id": "19-35:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Stack"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0057",
+      "kind": "list",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Stack"
+      ],
+      "ordinal": 29,
+      "source_sha256": "590137b2add1d4564b0ca1944fabe8407833ac0e13e19e864a685e7e1db9b42f",
+      "target": "- 使用 `torch` 进行张量计算、自动微分和模块组装。\n- `code/main.py` 在本地重新实现了第 34 课的块结构。\n"
+    },
+    {
+      "segment_id": "19-35:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Stack"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 30,
+      "source_sha256": "fd0da009b5da595f36df91c69cb041b5e435a2310d1a8e10afaf5cb3e1f4fb7e",
+      "target": "## 生产环境中的实践模式\n"
+    },
+    {
+      "segment_id": "19-35:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 31,
+      "source_sha256": "1129caf097b9b9bc0a42c226efc9221b300a97f2072131f652c91a13f2fa9ca5",
+      "target": "下面三种做法，决定了模型只是能运行，还是能真正交付使用。\n"
+    },
+    {
+      "segment_id": "19-35:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 32,
+      "source_sha256": "bc507bb6a46c69233e3b220ad39b965bc28d9d64edb1a947734c3b480daf6fd6",
+      "target": "**将残差投影初始化为较小的值。** 注意力的输出投影和 MLP 的第二个线性层都会直接参与残差相加。如果用与其他线性层相同的标准差初始化它们，残差流的幅值就会随深度增长，使最后的 LayerNorm 进入数值偏大的工作区间。将这两个投影的标准差乘以 `1 / sqrt(2 * num_layers)`，残差流就能在经过十二层时始终保持在合理范围内。\n"
+    },
+    {
+      "segment_id": "19-35:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 33,
+      "source_sha256": "19c85ea4d7389cf30d1c21795799cf530997b65d87ceb29b06d63ab33040dcee",
+      "target": "**缓存位置 ID 张量，不要重复计算。** `torch.arange(T)` 在每次前向传播时都会分配新的内存。在 `__init__` 中按最大上下文长度分配一次，每次调用时切出前 T 项，即可省去反复调用内存分配器的开销。\n"
+    },
+    {
+      "segment_id": "19-35:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 34,
+      "source_sha256": "fe1ac25acc0042d71492652586eb49fd60a8a0bd75023a7bb7a7cdd2e8693cc9",
+      "target": "**在参数层面共享权重，而不是仅仅复制数值。** 设置 `lm_head.weight = token_embedding.weight` 会共享张量；复制则不会。优化器应只更新一个参数，自动微分图也应只进行一次梯度累积。如果只是复制，输出头就会逐渐偏离嵌入层，权重共享也就失去了意义。\n"
+    },
+    {
+      "segment_id": "19-35:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "19-35:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0071",
+      "kind": "list",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "7eb7a0ea64176574c7400567f99c0b8de722fa1e87ce16551c1bfd4adfe124bb",
+      "target": "- 本课模型类的结构，与下一课要训练的模型相同。\n- 将可学习的位置嵌入替换为 RoPE，就能得到 LLaMA 系列模型，无需改动块或输出头。\n- 将 GELU 替换为 SiLU、将 LayerNorm 替换为 RMSNorm，就能完成 LLaMA 系列的其余改动。\n- 生成函数适用于任何来源的 logits，不仅限于本课模型。你可以在第 37 课中从预训练 GPT-2 文件获取 logits，并复用同一个生成循环。\n"
+    },
+    {
+      "segment_id": "19-35:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Exercises"
+      ],
+      "ordinal": 37,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "19-35:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Exercises"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0075",
+      "kind": "list",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Exercises"
+      ],
+      "ordinal": 38,
+      "source_sha256": "eeb6c6c192068dc0b0b9d11c7f06bbc5eefe22a795987c42fcccb2f32cdcdf2a",
+      "target": "1. 解除语言模型输出头与 token 嵌入之间的权重共享，重新统计参数量。验证增量为 50257 乘以 768 = 38 million。\n2. 将可学习的位置嵌入替换为在构造时计算的正弦位置表。确认模型仍能执行前向传播，且参数量减少 786,432。\n3. 为生成函数添加 `greedy=True` 标志，跳过采样，直接选择 argmax。确认多次运行生成的序列一致。\n4. 添加一个 `repetition_penalty` 调节项，在 softmax 之前，将提示词或已生成历史中出现过的任意 token 的 logit 除以一个常数。用固定提示词展示：该值大于一时，输出中的重复次数会减少。\n5. 在 `top_k` 之外添加 `top_p`（核采样）选项。用两行代码检查保留 token 的概率之和是否超过 `top_p`。\n"
+    },
+    {
+      "segment_id": "19-35:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Exercises"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Key Terms"
+      ],
+      "ordinal": 39,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "19-35:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Key Terms"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0079",
+      "kind": "table",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Key Terms"
+      ],
+      "ordinal": 40,
+      "source_sha256": "20bb600a236cf03b7cca44f31e7da6bdec9f2331262022c7830a609e01d14470",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|------------------------|\n| 权重共享 | “绑定嵌入” | 语言模型输出头与 token 嵌入共享同一个参数张量；节省 vocab 乘以 d_model 个参数，并与 GPT-2 参考模型保持一致 |\n| 位置嵌入 | “学习得到的位置表示” | 一个形状为 (context length, d_model) 的独立表，与 token 向量相加；通过端到端训练学习得到 |\n| 滑动窗口上下文 | “上下文上限” | 当提示词与已生成 token 的总长度超过上下文长度时，丢弃最早的 token，使当前窗口不超出限制 |\n| Top-k 采样 | “K 截断” | 保留数值最大的 K 个 logits，将其余值屏蔽为负无穷，再对保留部分执行 softmax |\n| 温度 | “采样温度” | 在 softmax 之前将 logits 除以 T；T 小于 1 时分布变尖锐，T 等于 1 时保持原本的分布，T 大于 1 时分布变平坦 |\n"
+    },
+    {
+      "segment_id": "19-35:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Key Terms"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Further Reading"
+      ],
+      "ordinal": 41,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "19-35:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Further Reading"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-35:b0083",
+      "kind": "list",
+      "heading_path": [
+        "# GPT Model Assembly",
+        "## Further Reading"
+      ],
+      "ordinal": 42,
+      "source_sha256": "f07c0b24a8d36af3bcac9329285d00f1a9c18d6390ef1876c136fd045e026d19",
+      "target": "- 阶段 19 第 34 课：介绍本模型所堆叠的块。\n- 阶段 19 第 36 课：介绍使用交叉熵损失训练本模型的训练循环。\n- 阶段 19 第 37 课：介绍如何将预训练 GPT-2 权重加载到这一完全相同的架构中。\n- 阶段 7 第 07 课（GPT 因果语言建模）：介绍下一个 token 预测的数学原理。\n- 阶段 10 第 04 课（预训练微型 GPT）：介绍同一架构上的原始训练流程。\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": []
+}

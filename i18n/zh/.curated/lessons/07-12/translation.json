@@ -1,0 +1,1550 @@
+{
+  "schema_version": 1,
+  "lesson_id": "07-12",
+  "source_path": "phases/07-transformers-deep-dive/12-kv-cache-flash-attention/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "71daf9790d09693209b72a88b6fc846b9465f711",
+  "source_sha256": "b93352bcfa28b0ae8b1a60fe52a6078d37066e2df8b291c428fa3422a4ab79dc",
+  "target_path": "i18n/zh/phases/07-transformers-deep-dive/12-kv-cache-flash-attention/docs/zh.md",
+  "target_sha256": "5373d74001697081ac92e1de6a989d0c8782da49be25e586c445e3a2d315ffb0",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "07-12:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization"
+      ],
+      "ordinal": 1,
+      "source_sha256": "86ead0df04e3eebdd2933ed795e70a67082772b946d044304775553cdc4b00f3",
+      "target": "# KV Cache、Flash Attention 与推理优化\n"
+    },
+    {
+      "segment_id": "07-12:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization"
+      ],
+      "ordinal": 2,
+      "source_sha256": "5a1be2d9f3934fa67ea750e5bb9c1b76571435d7b9b3b43ffd34072aa795eb5f",
+      "target": "> 训练可并行，瓶颈在浮点运算量。推理是串行的，瓶颈在内存。瓶颈不同，优化手段也不同。\n"
+    },
+    {
+      "segment_id": "07-12:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization"
+      ],
+      "ordinal": 3,
+      "source_sha256": "a3d809e34b639fea1a77c6bafa98a1450ba5bfba7fb6826bf9048ec9dc6a617a",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 7 · 02（自注意力）、阶段 7 · 05（完整 Transformer）、阶段 7 · 07（GPT）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "07-12:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "07-12:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "781b2152140e52dd224a614f445cab98310113b66d933773d7a5fa2b0ab5955e",
+      "target": "朴素的自回归解码器需要完成 `O(N²)` 的计算才能生成 `N` 个 token（词元，即模型处理文本的单位）：每一步都会重新计算整个前缀上的注意力。对于包含 4K 个 token 的响应，这意味着 16M 次注意力运算，其中大部分都是重复计算。前缀中每个 token 的隐藏状态一经算出就已确定；你只需要将新 token 的查询与此前所有 token 缓存下来的键和值进行计算。\n"
+    },
+    {
+      "segment_id": "07-12:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "8c691105cb5caef40af97993c167425bb498e71824d423984433eec5adb1fb36",
+      "target": "此外，注意力计算本身就需要搬运大量数据。标准注意力会实际生成 N×N 的分数矩阵、N×d 的 softmax 输出和 N×d 的最终输出，对 HBM（高带宽内存）的读写次数过多。当 N≥2K 时，注意力会先受到内存瓶颈限制，然后才受到浮点运算量限制。传统注意力内核对现代 GPU 的利用率不足，造成 4–10× 的性能差距。\n"
+    },
+    {
+      "segment_id": "07-12:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "422420edd206eaa622021fdf0fbf62913530574adfec513d634f86e744af7f0c",
+      "target": "两项均来自 Dao 等人的优化，让前沿模型的推理从“慢”变成了“快”：\n"
+    },
+    {
+      "segment_id": "07-12:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0015",
+      "kind": "list",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "8ffeb8f6e3f99d98b1fe85bd35f6d021bb742c86dd84d68601bf56ef7bb96f6d",
+      "target": "1. **KV cache（键值缓存）。** 保存前缀中每个 token 的 K 和 V 向量。对每个新 token，只需用一次查询与缓存的键计算注意力。每个生成步骤的推理复杂度从 `O(N²)` 降至 `O(N)`。\n2. **Flash Attention。** 将注意力计算分块，使完整的 N×N 矩阵始终不写入 HBM。softmax + matmul 全部在 SRAM（静态随机存取存储器）中完成。在 A100 上，实际运行时间可获得 2–4× 加速；在采用 FP8 的 H100 上可获得 5–10× 加速。\n"
+    },
+    {
+      "segment_id": "07-12:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "2d98ca0fb66f61655990148fe4591b800d51ec6308f3f3245c11daf132303ae6",
+      "target": "到 2026 年，两者都已普及。所有生产级推理技术栈（vLLM、TensorRT-LLM、SGLang、llama.cpp）都以它们为基础。所有前沿模型交付时都启用了 Flash Attention。\n"
+    },
+    {
+      "segment_id": "07-12:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "07-12:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c50d9129ead491e548fb7ea1d20af48c57a8acf5f7ce2eac25dfb051f84dd4fa",
+      "target": "![KV cache 的增长与 Flash Attention 的分块计算](../assets/kv-cache-flash-attn.svg)\n"
+    },
+    {
+      "segment_id": "07-12:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 12,
+      "source_sha256": "bb4d3f3072b2bbbe4577aedad05f2b88218a4ee0dda8894d62f035000cb8ef94",
+      "target": "### KV cache 的数学计算\n"
+    },
+    {
+      "segment_id": "07-12:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 13,
+      "source_sha256": "eeb0bc33bace15bf7798968bcb24058f711affc5187cffe8247c445382838be1",
+      "target": "对于每个解码器层、每个 token、每个注意力头：\n"
+    },
+    {
+      "segment_id": "07-12:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0027",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 14,
+      "source_sha256": "e6c58977dc9451421e609b0fdb82c9f9c316c6850605730d06d119a8a4988346",
+      "target": "```text\nbytes_per_token_per_layer = 2 * d_head * dtype_size\n                          ^\n                          K and V\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 15,
+      "source_sha256": "ef08e5701c29bf73a2e56d12d9ce420cb0701cfb40bc769dcbc98e1a62437896",
+      "target": "对于一个有 32 层、32 个注意力头、d_head=128、采用 fp16 的 7B 模型：\n"
+    },
+    {
+      "segment_id": "07-12:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 16,
+      "source_sha256": "caf5fcea3747387d654b9c04f6e0fb381b2f676f386446352521cb2ffe15d86a",
+      "target": "```text\nper token per layer = 2 * 128 * 2 = 512 bytes\nper token (32 layers) = 16 KB\nper 32K context = 512 MB\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 17,
+      "source_sha256": "4b2f96ceb69b0bd4952952e2c4ffe06db35aec5db42626756a344d4d02b96924",
+      "target": "对于 Llama 3 70B（80 层、d_head=128、采用 GQA，即分组查询注意力，包含 8 个 KV 头）：\n"
+    },
+    {
+      "segment_id": "07-12:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 18,
+      "source_sha256": "284bb7cd8cffe58402bb8cbb63418d615eb5676dcd631c7c7434f083af63ac45",
+      "target": "```text\nper token per layer = 2 * 8 * 128 * 2 = 4096 bytes (4 KB)\nper 32K context = 10.4 GB\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 19,
+      "source_sha256": "37a83bb3748e4852aa3fe6bc8c096d23971f9371e940c789431ba360926df07f",
+      "target": "正是这 10 GB 的开销，使 Llama 3 70B 在 128K 上下文、批大小为 1 时，仅 KV cache 就需要占用一张 40 GB A100 的大部分显存。\n"
+    },
+    {
+      "segment_id": "07-12:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 20,
+      "source_sha256": "bc3a1ebe46145adac9ed806f109f2b7b08b65ea479f2e05c0bb5cd6bd0dbfb21",
+      "target": "**GQA 的优势在于节省 KV cache。** 若采用具有 64 个头的 MHA（多头注意力），则会占用 32 GB。MLA（多头潜在注意力）还能进一步压缩。\n"
+    },
+    {
+      "segment_id": "07-12:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 21,
+      "source_sha256": "160b230509f7c3ddc3f8b6d3631df1bb2f709003554da370f69fdd8e33de6e69",
+      "target": "拖动各维度参数，观察缓存大小的变化。调高序列长度或批大小，看看它多快就会超出单张 GPU 的容量：\n"
+    },
+    {
+      "segment_id": "07-12:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 22,
+      "source_sha256": "3c4ecf831e18960ac8b39d109b55cf913f696156a45aeb419e2ff243c2cba689",
+      "target": "```figure\nkv-cache-sizer\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### KV cache math"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 23,
+      "source_sha256": "da37525e04221b9ebd829ac88c0086ae4874d3e9db3d6d9c614046fa648d6b8a",
+      "target": "### Flash Attention：分块技巧\n"
+    },
+    {
+      "segment_id": "07-12:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 24,
+      "source_sha256": "36f2377a46fcf422bf56e5f5caaf2d82118a1d4979534bb09ce1888424536e49",
+      "target": "标准注意力：\n"
+    },
+    {
+      "segment_id": "07-12:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 25,
+      "source_sha256": "5b1fd2f33bd9223cf33ae71800132cbcf3ff522939a0d03ea502dc478b7b77e0",
+      "target": "```text\nS = Q @ K^T          (HBM read, N×N, HBM write)\nP = softmax(S)       (HBM read, HBM write)\nO = P @ V            (HBM read, HBM write)\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 26,
+      "source_sha256": "e4c5d5768f00c5130f56f771343ef5179f0cf32c6911f133edaf9d23b3544347",
+      "target": "需要往返访问 HBM 三次。在 H100 上，HBM 带宽为 3 TB/s，SRAM 带宽为 30 TB/s。与将所有数据留在芯片上相比，每次访问 HBM 都会慢 10 倍。\n"
+    },
+    {
+      "segment_id": "07-12:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 27,
+      "source_sha256": "558ad2e3ad93c43a382d3fb50be57f13138e110b3cc0303764610c80f9cb0b2a",
+      "target": "Flash Attention：\n"
+    },
+    {
+      "segment_id": "07-12:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 28,
+      "source_sha256": "3d0067ae0e53aa1450cc9c1f01eef7665de37d71f8b041e9ca698f82ada3c516",
+      "target": "```text\nfor each block of Q (tile size ~128 × 128):\n    load Q_tile into SRAM\n    for each block of K, V:\n        load K_tile, V_tile into SRAM\n        compute S_tile = Q_tile @ K_tile^T     (SRAM)\n        running softmax aggregation             (SRAM)\n        accumulate into O_tile                  (SRAM)\n    write O_tile to HBM\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 29,
+      "source_sha256": "14c521559e6abc4934a636fcfc431cedcf1ce13ac3073427c78dd61fc203a0bb",
+      "target": "每个分块只需往返访问 HBM 一次。总内存占用从 `O(N²)` 降至 `O(N)`。反向传播时会重新计算前向传播中的部分值，而不是将其存储下来，这又进一步节省了内存。\n"
+    },
+    {
+      "segment_id": "07-12:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 30,
+      "source_sha256": "460d5c70c11d446b25824bb7dde4e278043e7c8f6ab44a9c495319f73e4f1f13",
+      "target": "**数值技巧。** 在线 softmax 跨分块维护 `(max, sum)`，从而使最终归一化结果保持精确。这不是近似计算：Flash Attention 与标准注意力的输出逐位相同（不计 fp16 运算不满足结合律的影响）。\n"
+    },
+    {
+      "segment_id": "07-12:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 31,
+      "source_sha256": "1738bdea4b389d67f3781cefdb4964365ba8be3e0c9566ce177ec3a4533eea28",
+      "target": "**版本演进：**\n"
+    },
+    {
+      "segment_id": "07-12:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0063",
+      "kind": "table",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 32,
+      "source_sha256": "5c3c484afa563420ca445cf2fe9a385dd1a682cc71b1d1c9cef227037eb68e54",
+      "target": "| 版本 | 年份 | 关键变化 | 在参考硬件上的加速比 |\n|---------|------|-----------|-------------------------------|\n| Flash 1 | 2022 | 分块 SRAM 内核 | A100 上为 2× |\n| Flash 2 | 2023 | 更好的并行性、因果优先的处理顺序 | A100 上为 3× |\n| Flash 3 | 2024 | Hopper 异步执行、FP8 | H100 上为 1.5–2×（~740 TFLOPs FP16） |\n| Flash 4 | 2026 | Blackwell 的 5 级流水线、软件实现的 exp2 | 优先面向推理（最初仅支持前向传播） |\n"
+    },
+    {
+      "segment_id": "07-12:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 33,
+      "source_sha256": "57919223a9ad8010323eeb3f18cda42a5232e28942ede9016e853f3e2040bbb3",
+      "target": "Flash 4 刚发布时仅支持前向传播。训练仍使用 Flash 3。Flash 4 对 GQA 和变长序列（varlen）的支持尚未就绪（2026 年中）。\n"
+    },
+    {
+      "segment_id": "07-12:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Flash Attention — the tiling trick"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Speculative decoding — the other latency win"
+      ],
+      "ordinal": 34,
+      "source_sha256": "056cc5ddbf59cd9b344812d47451e794b80ed49ff6e25747f3778a2619b0d972",
+      "target": "### 推测解码：另一项降低延迟的优化\n"
+    },
+    {
+      "segment_id": "07-12:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Speculative decoding — the other latency win"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Speculative decoding — the other latency win"
+      ],
+      "ordinal": 35,
+      "source_sha256": "f624c9b94189dec335540f5fa92e30b74c7af99ce53d23ba08938735206c3ed4",
+      "target": "低成本模型提出 N 个候选 token。大模型并行验证全部 N 个。如果验证接受了 k 个 token，那么只需付出 1 次大模型前向传播的代价，就能生成 k 个 token。在代码和普通文本上，典型值为 k=3–5。\n"
+    },
+    {
+      "segment_id": "07-12:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Speculative decoding — the other latency win"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Speculative decoding — the other latency win"
+      ],
+      "ordinal": 36,
+      "source_sha256": "07ffcb3ef622f1ae97866a38ef8bfc3ad4d4bf5e302b95e7c0e1729fd6c840db",
+      "target": "2026 年的常用方案：\n- **EAGLE 2 / Medusa。** 内置的草稿头共享验证模型的隐藏状态。在不损失质量的情况下获得 2–3× 加速。\n- **采用草稿模型的推测解码。** 在消费级硬件上获得 2–4× 加速。\n- **前瞻解码。** 采用 Jacobi 迭代，不需要草稿模型。较为小众，但免费。\n"
+    },
+    {
+      "segment_id": "07-12:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Speculative decoding — the other latency win"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Continuous batching"
+      ],
+      "ordinal": 37,
+      "source_sha256": "e1354ef1d93595b0f501fe353bcff0d967ba1b31047b1607fed2ce42a5a828fd",
+      "target": "### 连续批处理\n"
+    },
+    {
+      "segment_id": "07-12:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Continuous batching"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Continuous batching"
+      ],
+      "ordinal": 38,
+      "source_sha256": "b6d5f8acf6e8dd54286eaad01b85c051a97cdd6f8fac4a37a3aa369c7cb26b99",
+      "target": "传统的批量推理需要等最慢的序列完成，才能开始处理下一个批次。当较短的响应提前完成时，GPU 资源就被浪费了。\n"
+    },
+    {
+      "segment_id": "07-12:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Continuous batching"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Continuous batching"
+      ],
+      "ordinal": 39,
+      "source_sha256": "ec2329c6ff17538665ffe1efe3e3f219c0c3bc082acf0a0c2185747165968bff",
+      "target": "连续批处理（最早由 Orca 实现，如今已用于 vLLM、TensorRT-LLM、SGLang）：一旦旧请求完成，就立即将新请求加入批次。在典型聊天工作负载上，吞吐量可提升 5–10×。\n"
+    },
+    {
+      "segment_id": "07-12:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### Continuous batching"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### PagedAttention — KV cache as virtual memory"
+      ],
+      "ordinal": 40,
+      "source_sha256": "433702db9f1f3ad782421d9f761cf0ed0d50381210da5f04cab8902233b2a127",
+      "target": "### PagedAttention：将 KV cache 视为虚拟内存\n"
+    },
+    {
+      "segment_id": "07-12:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### PagedAttention — KV cache as virtual memory"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### PagedAttention — KV cache as virtual memory"
+      ],
+      "ordinal": 41,
+      "source_sha256": "26fee57022ae2fa47eea02a2033de23704f48bf9157ae63401d56991c40c73d1",
+      "target": "这是 vLLM 的招牌功能。KV cache 按每块 16 个 token 分配；页表将逻辑位置映射到物理块。这样就能在并行样本之间共享 KV（束搜索、并行采样），通过热切换前缀来缓存提示词（prompt，即提供给模型的指令或输入），并整理内存碎片。相较于朴素的连续内存分配，吞吐量可提升 4×。\n"
+    },
+    {
+      "segment_id": "07-12:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### PagedAttention — KV cache as virtual memory"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0083",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### PagedAttention — KV cache as virtual memory"
+      ],
+      "ordinal": 42,
+      "source_sha256": "c1c42ffc070d417c90a2e521a458545ad50ba81983a6db42f61d89e908c85f4c",
+      "target": "```figure\nflash-attention-memory\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## The Concept",
+        "### PagedAttention — KV cache as virtual memory"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "07-12:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "88481ce77caf98dadacb39974e53d856cb326ff026f80d72b81fdbf477a961c0",
+      "target": "参见 `code/main.py`。我们将实现：\n"
+    },
+    {
+      "segment_id": "07-12:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0089",
+      "kind": "list",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "fb8d470d02cc33d277394ca28fea4e91ed127ff7b127d7b074445a85100d52fc",
+      "target": "1. 一个朴素的 `O(N²)` 增量解码器。\n2. 一个使用 KV cache 的 `O(N)` 解码器。\n3. 一个分块 softmax，用来模拟 Flash Attention 的动态最大值算法。\n"
+    },
+    {
+      "segment_id": "07-12:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 1: KV cache"
+      ],
+      "ordinal": 46,
+      "source_sha256": "2c101a26639efda6315eb3599008ad5892f39a5787f6ffdb253900dd5b327cd5",
+      "target": "### 第 1 步：KV cache\n"
+    },
+    {
+      "segment_id": "07-12:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 1: KV cache"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 1: KV cache"
+      ],
+      "ordinal": 47,
+      "source_sha256": "e0763d7e29306a9e64179753c5116ccd376d66d56e69a8bdc30da1f9e76bc477",
+      "target": "```python\nclass KVCache:\n    def __init__(self, n_layers, n_heads, d_head):\n        self.K = [[[] for _ in range(n_heads)] for _ in range(n_layers)]\n        self.V = [[[] for _ in range(n_heads)] for _ in range(n_layers)]\n\n    def append(self, layer, head, k, v):\n        self.K[layer][head].append(k)\n        self.V[layer][head].append(v)\n\n    def read(self, layer, head):\n        return self.K[layer][head], self.V[layer][head]\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 1: KV cache"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 1: KV cache"
+      ],
+      "ordinal": 48,
+      "source_sha256": "dab14aa2a5325ab4fd5cdde7273ac0b4effc6404126cc8db7cb6f0c754d3def4",
+      "target": "很简单：按层、按头分别维护列表，不断追加每个 token 的 K、V 向量。\n"
+    },
+    {
+      "segment_id": "07-12:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 1: KV cache"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 2: tiled softmax"
+      ],
+      "ordinal": 49,
+      "source_sha256": "083af7d58cc58cbb59fc31f2eca7031b2684d338787839aa3dd616d2faed57ae",
+      "target": "### 第 2 步：分块 softmax\n"
+    },
+    {
+      "segment_id": "07-12:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 2: tiled softmax"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 2: tiled softmax"
+      ],
+      "ordinal": 50,
+      "source_sha256": "ee9b4d1d6aaaacbb4f175ee73ef0d91174bff8c6e035d87f190b664ea2cacb19",
+      "target": "```python\ndef tiled_softmax_dot(q, K, V, tile=4):\n    \"\"\"Flash-attention-style softmax(qK^T)V with running max/sum.\"\"\"\n    m = float(\"-inf\")\n    s = 0.0\n    out = [0.0] * len(V[0])\n    for start in range(0, len(K), tile):\n        k_block = K[start:start + tile]\n        v_block = V[start:start + tile]\n        scores = [sum(qi * ki for qi, ki in zip(q, k)) for k in k_block]\n        new_m = max(m, *scores)\n        exp_old = math.exp(m - new_m) if m != float(\"-inf\") else 0.0\n        exp_new = [math.exp(sc - new_m) for sc in scores]\n        s = s * exp_old + sum(exp_new)\n        for j in range(len(out)):\n            out[j] = out[j] * exp_old + sum(e * v[j] for e, v in zip(exp_new, v_block))\n        m = new_m\n    return [o / s for o in out]\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 2: tiled softmax"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 2: tiled softmax"
+      ],
+      "ordinal": 51,
+      "source_sha256": "e3f6bd2bfe452024a4132a4eb882ea1ee7329d9abcfe8fb0032848317b699a73",
+      "target": "输出与一次性计算 `softmax(qK) V` 的结果逐位相同，但任意时刻的工作集都只是一个 `tile × d_head` 块，而不是完整的 `N × d_head`。\n"
+    },
+    {
+      "segment_id": "07-12:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 2: tiled softmax"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 3: compare naive vs cached decoding on 100-token generation"
+      ],
+      "ordinal": 52,
+      "source_sha256": "030d362f0257495ed168870bfad908b73d8f597878c3b15a659a8ae6dca41dfa",
+      "target": "### 第 3 步：比较生成 100 个 token 时的朴素解码与缓存解码\n"
+    },
+    {
+      "segment_id": "07-12:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 3: compare naive vs cached decoding on 100-token generation"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 3: compare naive vs cached decoding on 100-token generation"
+      ],
+      "ordinal": 53,
+      "source_sha256": "57fa7827dfd43407da94870aeced4c896a81f7baa31fac17098571ffb70f3157",
+      "target": "统计注意力运算次数。朴素方法：`O(N²)` = 5050。缓存方法：`O(N)` = 100。代码会将两者都打印出来。\n"
+    },
+    {
+      "segment_id": "07-12:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Build It",
+        "### Step 3: compare naive vs cached decoding on 100-token generation"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "07-12:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0109",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "58bb15b0c7e5d790d4b5480dc20acef05b6051596c8c30dc56e04292d4ad0a5d",
+      "target": "```python\n# HuggingFace transformers auto-enables KV cache on decoder-only generate().\nfrom transformers import AutoModelForCausalLM\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"meta-llama/Llama-3.2-3B\",\n    attn_implementation=\"flash_attention_2\",  # use FA3 if Hopper\n    torch_dtype=\"bfloat16\",\n)\n# generate() uses KV cache automatically\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "2d9cbab28ae28582182c76b3acd4f709ca367f43058676766eef866d9d7fcad8",
+      "target": "vLLM 的生产环境用法：\n"
+    },
+    {
+      "segment_id": "07-12:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0113",
+      "kind": "fence",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "457f5b59813ee153720d64c6b8c834b93f8cd5831033b903a3affb3a7c45f6f1",
+      "target": "```bash\npip install vllm\nvllm serve meta-llama/Llama-3.1-70B-Instruct \\\n    --tensor-parallel-size 4 \\\n    --max-model-len 32768 \\\n    --enable-prefix-caching \\\n    --kv-cache-dtype fp8\n```\n"
+    },
+    {
+      "segment_id": "07-12:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "cad2002fd1fc9a5885e8ff846c47a5979ab4c58594d3eb68d6e5bb49ef34fde2",
+      "target": "跨请求的前缀缓存是 2026 年的一项重要优化：相同的系统提示词、少样本示例或长上下文文档，可在多次调用之间复用 KV。对于反复使用工具提示词的智能体（agent）工作负载，前缀缓存通常能带来 5× 的吞吐量提升。\n"
+    },
+    {
+      "segment_id": "07-12:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Ship It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "07-12:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Ship It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Ship It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "33212684b7a4da68ec9f6bce6bd6e5b24fa6e49112f80b10a15efc48008592cb",
+      "target": "参见 `outputs/skill-inference-optimizer.md`。这个技能会为新的推理部署选择注意力实现、KV cache 策略、量化（quantization，即降低数值表示精度）方案和推测解码方案。\n"
+    },
+    {
+      "segment_id": "07-12:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Ship It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 61,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "07-12:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0123",
+      "kind": "list",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 62,
+      "source_sha256": "0906e5746ea78a33fda12f9bf7bd130bbbe26bfebbaa7a7cf7401e164890ab81",
+      "target": "1. **简单。** 运行 `code/main.py`。确认朴素解码器和缓存解码器产生相同输出，并记录运算次数的差异。\n2. **中等。** 实现前缀缓存：给定提示词 P 和多个补全文本，对 P 执行一次前向传播以填充 KV cache，然后为每个补全文本分别建立分支。测量其相较于为每个补全文本重新编码 P 的加速比。\n3. **困难。** 实现一个简化版 PagedAttention：将 KV cache 放在固定大小、每块容纳 16 个 token 的块中，并维护空闲块列表。序列完成时，将其占用的块归还到池中。模拟 1,000 次长度不同的聊天补全。比较这种方式与连续分配方式的内存碎片情况。\n"
+    },
+    {
+      "segment_id": "07-12:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Key Terms"
+      ],
+      "ordinal": 63,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "07-12:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Key Terms"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0127",
+      "kind": "table",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Key Terms"
+      ],
+      "ordinal": 64,
+      "source_sha256": "c311706d3acc94c75da98729e8dad9bd8c641abcd0c6c92aa6b3b4c4da28c2f6",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| KV cache | “让解码变快的技巧” | 保存前缀中每个 token 的 K 和 V；新查询直接对它们计算注意力，无需重新计算。 |\n| HBM | “GPU 主内存” | 高带宽内存；H100 上为 80 GB，B200 上为 192 GB。带宽为 ~3 TB/s。 |\n| SRAM | “片上内存” | 每个 SM 上的高速内存，H100 上每个 SM 有 ~256 KB。带宽为 ~30 TB/s。 |\n| Flash Attention | “分块注意力内核” | 计算注意力时，无需在 HBM 中实际生成 N×N 矩阵。 |\n| 连续批处理 | “无需等待的批处理” | 无需等整个批次清空，就可移出已完成序列、加入新序列。 |\n| PagedAttention | “vLLM 的招牌功能” | 按固定大小的块分配 KV cache，并使用页表管理；消除碎片。 |\n| 前缀缓存 | “复用长提示词” | 跨请求缓存共享前缀的 KV；可大幅降低智能体的成本。 |\n| 推测解码 | “起草 + 验证” | 低成本草稿模型提出候选 token；大模型在一次前向传播中验证 k 个。 |\n"
+    },
+    {
+      "segment_id": "07-12:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Key Terms"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0129",
+      "kind": "heading",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Further Reading"
+      ],
+      "ordinal": 65,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "07-12:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Further Reading"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "07-12:b0131",
+      "kind": "list",
+      "heading_path": [
+        "# KV Cache, Flash Attention & Inference Optimization",
+        "## Further Reading"
+      ],
+      "ordinal": 66,
+      "source_sha256": "98d03cd046572636d4110dee2f973f640fa9789e09e54cd136ff7cfba56b7e61",
+      "target": "- [Dao 等（2022）。FlashAttention：具有 IO 感知能力的快速、内存高效的精确注意力](https://arxiv.org/abs/2205.14135) — Flash 1。\n- [Dao（2023）。FlashAttention-2：通过改进并行性与工作划分实现更快的注意力](https://arxiv.org/abs/2307.08691) — Flash 2。\n- [Shah 等（2024）。FlashAttention-3：利用异步执行与低精度实现快速、准确的注意力](https://arxiv.org/abs/2407.08608) — Flash 3。\n- [FlashAttention-4 发布说明（Dao-AILab，2026）](https://github.com/Dao-AILab/flash-attention) — Blackwell 的 5 级流水线和软件 exp2 技巧；本课提到的首发版本仅支持前向传播等注意事项，请参阅仓库 README。\n- [Kwon 等（2023）。利用 PagedAttention 高效管理大语言模型（LLM）服务的内存](https://arxiv.org/abs/2309.06180) — vLLM 论文。\n- [Leviathan 等（2023）。通过推测解码加速 Transformer 推理](https://arxiv.org/abs/2211.17192) — 推测解码。\n- [Li 等（2024）。EAGLE：推测采样需要重新思考特征不确定性](https://arxiv.org/abs/2401.15077) — EAGLE-1/2 论文，介绍了本课引用的内置草稿方案。\n- [Cai 等（2024）。Medusa：采用多个解码头的简单 LLM 推理加速框架](https://arxiv.org/abs/2401.10774) — 与 EAGLE 一同提到的 Medusa 方案。\n- [vLLM 文档：PagedAttention](https://docs.vllm.ai/en/latest/design/kernel/paged_attention.html) — 深入介绍 16 个 token 一块的分块方式和页表设计的权威资料。\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": [
+    {
+      "source_path": "phases/07-transformers-deep-dive/12-kv-cache-flash-attention/assets/kv-cache-flash-attn.svg",
+      "target_path": "i18n/zh/phases/07-transformers-deep-dive/12-kv-cache-flash-attention/assets/kv-cache-flash-attn.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "33f7afe5af5bedb83c425d0437a10e330541c1000a9527eb1ff6bdc635a9e874",
+      "translation": "unchanged English SVG, byte-identical copy preserves relative Markdown image destination"
+    }
+  ]
+}

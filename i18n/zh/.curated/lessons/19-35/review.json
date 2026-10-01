@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "lesson_id": "19-35",
+  "batch": "P4",
+  "source_path": "phases/19-capstone-projects/35-gpt-model-assembly/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "7c5ba7fab32dcac0d7975b9c3ea3749c21f4ddfc",
+  "source_sha256": "3ca888a42c783fc815deac07b4e992d6b4531c9a85a0f9ad2c7cf8b154e46227",
+  "target_path": "i18n/zh/phases/19-capstone-projects/35-gpt-model-assembly/docs/zh.md",
+  "reviewed_target_sha256": "3cf87a942f8e350cd871bd73e3751ae32493923c5ec01d282a078b786301a090",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "lines": [
+        114,
+        115
+      ],
+      "detail": "Claims that swapping position embeddings for RoPE, GELU for SiLU and LayerNorm for RMSNorm yields the LLaMA family omit necessary attention-block changes and gated MLP changes. Current code has ordinary GELU two-linear FeedForward, not gated SwiGLU. Translation retains claims rather than silently correcting."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        123
+      ],
+      "detail": "Dividing every repeated-token logit by a constant >1 does not always penalize repetition: negative logits increase toward zero. Retained as source exercise; no corrected algorithm added."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        22,
+        47,
+        120
+      ],
+      "detail": "38 million is rounded; 50257*768=38,597,376. The exact-equality phrasing in exercise is imprecise; retained. 124M is also a rounded target."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        43
+      ],
+      "detail": "Claim that final LayerNorm survives every modern variant is overly broad and conflicts with later mention of RMSNorm replacement. Preserved."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        84,
+        92,
+        94
+      ],
+      "detail": "Source says fixed prompt in one place and random prompt in another. Code's first tiny-model prompt is fixed [1,2,3,4,5]; long-window check is random. Retained both descriptions."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        55,
+        70,
+        133
+      ],
+      "detail": "Code masks logits below kth threshold, so ties may leave more than k candidates; top-k one is not strictly greedy if maximum logits tie. Source simplification retained."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 12,
+      "tables": 1,
+      "code_blocks": 1,
+      "figures": 1,
+      "mermaid_sources": 2,
+      "browser_verified": false
+    },
+    "github_gfm": "passed: actual GitHub desktop DOM and screenshot; headings, tables, protected code and relevant math/assets checked",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "not run: torch unavailable; no dependencies installed",
+    "deterministic_replay": "two isolated runs; byte-identical",
+    "rendering_limit": "GitHub GFM only; interactive figure IDs remain code blocks on GitHub. Actual application browser rendering, mobile and complete navigation are unverified."
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves.",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+}
