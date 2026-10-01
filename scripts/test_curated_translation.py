@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 import json
+import subprocess
+import shutil
+import sys
 from pathlib import Path
 import tempfile
 import unittest
@@ -9,7 +12,7 @@ EN='# Title\n\nA `key` has 64 values and $5 credit.\n\n```python\nx = 1\n```\n'
 ZH='# 标题\n\n一个 `key` 有 64 个值和 $5 额度。\n\n```python\nx = 1\n```\n'
 
 def record(source=EN,target=ZH):
- return {'source_path':'en.md','target_path':'zh.md','source_sha256':sha(source),'target_sha256':sha(target),'segments':[{'segment_id':f'00-04:b{i}','source_sha256':sha(a),'target':b} for i,(a,b) in enumerate(zip(blocks(source),blocks(target)))]}
+ return {'lesson_id':'00-04','status':'draft','schema_version':1,'source_path':'en.md','target_path':'zh.md','source_sha256':sha(source),'target_sha256':sha(target),'segments':[{'segment_id':f'00-04:b{i}','source_sha256':sha(a),'target':b} for i,(a,b) in enumerate(zip(blocks(source),blocks(target)))]}
 
 class CuratedTest(unittest.TestCase):
  def test_lossless_blocks(self):self.assertEqual(''.join(blocks(EN)),EN)
@@ -62,6 +65,23 @@ class CuratedTest(unittest.TestCase):
    p=Path(d)/'zh.md';p.write_text(ZH)
    for status in ('unknown','language-reviewed','tech-reviewed','approved'):
     with self.assertRaises(ValueError):safe_write(p,ZH,sha(ZH),status)
+ def test_real_cli_render_refuses_clobber_and_replays(self):
+  with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as output:
+   root=Path(d);(root/'scripts').mkdir();shutil.copyfile(Path(__file__).with_name('curated_translation.py'),root/'scripts/curated_translation.py')
+   control=root/'i18n/zh/.curated/lessons/00-04';control.mkdir(parents=True)
+   (root/'en.md').write_text(EN);(root/'zh.md').write_text(ZH);(control/'translation.json').write_text(json.dumps(record()))
+   command=[sys.executable,str(root/'scripts/curated_translation.py'),'render','--output-dir',output]
+   first=subprocess.run(command,capture_output=True,text=True);self.assertEqual(first.returncode,0,first.stderr)
+   rendered=Path(output)/'zh.md';self.assertEqual(rendered.read_text(),ZH)
+   again=subprocess.run(command,capture_output=True,text=True);self.assertEqual(again.returncode,0,again.stderr)
+   rendered.write_text('人工改稿')
+   refused=subprocess.run(command,capture_output=True,text=True);self.assertNotEqual(refused.returncode,0);self.assertEqual(rendered.read_text(),'人工改稿')
+ def test_signed_arithmetic_and_lexical_hyphens(self):
+  self.assertTrue(validate('# X\n\nUse -2 ms.\n','# 标题\n\n使用 2 ms。\n'))
+  self.assertEqual(validate('# X\n\nA factor-of-10 in mid-2026.\n','# 标题\n\n2026 年中为 10 倍。\n'),[])
+ def test_numeric_reordering_requires_same_block_multiset(self):
+  self.assertEqual(validate('# X\n\nSubtract 5 from 3.\n','# 标题\n\n从 3 中减去 5。\n'),[])
+  self.assertTrue(validate('# X\n\nThe first is 3.\n\nThe second is 5.\n','# 标题\n\n第一个是 5。\n\n第二个是 3。\n'))
  def test_replay_and_rollback(self):
   r=record();self.assertEqual(assemble(r),assemble(json.loads(json.dumps(r))));self.assertEqual(assemble(r),ZH)
   with tempfile.TemporaryDirectory() as d:

@@ -86,6 +86,16 @@ def without_protected(text):
     return ''.join(result)
 
 
+def numeric_tokens(prose):
+    values=[]
+    for m in re.finditer(r'[-−+]?\d+(?:[.,]\d+)*(?:%)?',prose):
+        value=m[0]
+        # Hyphens in lexical compounds (factor-of-10, mid-2026) are not minus signs.
+        if value.startswith('-') and re.search(r'[A-Za-z]{2,}$',prose[:m.start()]):value=value[1:]
+        values.append(value)
+    return values
+
+
 def signature(text):
     bs=blocks(text)
     prose=without_protected(text)
@@ -93,14 +103,14 @@ def signature(text):
         'kinds':[kind(b) for b in bs],
         'headings':[len(m[1]) for m in re.finditer(r'^(#{1,6}) ',prose,re.M)],
         'inline_code':[m[2] for b in bs if kind(b) not in ('fence','display_math') for m in INLINE.finditer(b)],
-        'math':re.findall(r'(?<!\\)\$[^$\n]+?(?<!\\)\$',prose),
+        'math':re.findall(r'(?<!\\)\$[^$\n]+?(?<!\\)\$(?!\d)',prose),
         'latex_math':re.findall(r'\\\([^\n]+?\\\)|\\\[[\s\S]+?\\\]',prose),
         'links':re.findall(r'\]\(([^)]+)\)',prose),
-        'urls':re.findall(r'https?://[^\s<>]+',prose),
-        'numbers':re.findall(r'(?<![A-Za-z])[-−+]?\d+(?:[.,]\d+)*(?:%)?',prose),
+        'urls':re.findall(r'https?://[^\s<>)\]，。；：、]+',prose),
+        'numbers':numeric_tokens(prose),
         'symbolic_units':re.findall(r'(?<![A-Za-z])(?:ns|μs|ms|Hz|kHz|MHz|GHz|KiB|MiB|GiB|KB|MB|GB|TB|FLOPs|TFLOPS)(?![A-Za-z])',prose),
-        'metadata':re.findall(r'^\*\*(Type|Languages|Prerequisites|Time):\*\*',prose,re.M),
-        'immutable_metadata':re.findall(r'^\*\*(Type|Languages):\*\*(.*)$',prose,re.M),
+        'metadata':re.findall(r'^\*\*(Type|Languages|Language|Prerequisites|Time):\*\*',prose,re.M),
+        'immutable_metadata':re.findall(r'^\*\*(Type|Languages|Language):\*\*(.*)$',prose,re.M),
         'table_columns':[len(re.split(r'(?<!\\)\|', INLINE.sub('',line)))-2 for line in prose.splitlines() if line.startswith('|')],
     }
 
@@ -121,10 +131,17 @@ def validate(source,target):
         if kind(a)=='separator' and a!=b: errors.append(f'{i}: separator changed')
     sa,ta=signature(source),signature(target)
     for key in sa:
-        if sa[key]!=ta[key]:errors.append(f'{key} mismatch')
+        if key in ('numbers','inline_code','symbolic_units'):
+            if collections.Counter(sa[key])!=collections.Counter(ta[key]):errors.append(f'{key} mismatch')
+        elif sa[key]!=ta[key]:errors.append(f'{key} mismatch')
+    for i,(a,b) in enumerate(zip(sb,tb),1):
+        if kind(a) in ('separator','fence','display_math'):continue
+        aa,bb=signature(a),signature(b)
+        for key in ('numbers','inline_code','symbolic_units'):
+            if collections.Counter(aa[key])!=collections.Counter(bb[key]):errors.append(f'{i}: {key} moved across a block or changed')
     for i,(a,b) in enumerate(zip(sb,tb),1):
         if kind(a) not in ('separator','fence','display_math') and a==b:
-            words=re.sub(r'^\*\*(?:Type|Languages):\*\*.*$', '', a, flags=re.M)
+            words=re.sub(r'^\*\*(?:Type|Languages|Language):\*\*.*$', '', a, flags=re.M)
             words=INLINE.sub('',words)
             if len(re.findall(r'[A-Za-z]{2,}',words))>=4:errors.append(f'{i}: unchanged translatable segment needs explicit review')
     if re.search(r'PROTECT\d|TODO_TRANSLATE|\[TRANSLATE\]',target):errors.append('Unresolved translation placeholder')

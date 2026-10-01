@@ -31,6 +31,7 @@
 ```bash
 python3 scripts/test_curated_translation.py
 python3 scripts/curated_translation.py check
+node scripts/check_curated_render.js i18n/zh/phases/00-setup-and-tooling/04-apis-and-keys/docs/zh.md
 python3 scripts/curated_translation.py render --output-dir /tmp/curated-run-a
 python3 scripts/curated_translation.py render --output-dir /tmp/curated-run-b
 diff -rq /tmp/curated-run-a /tmp/curated-run-b
@@ -44,6 +45,8 @@ python3 scripts/check_readme_counts.py
 `check` 为只读，验证固定源、内容 hash、术语版本、结构及受保护 token；不会联系任何模型。`render` 仅在仓库外离线重放作者记录，拒绝覆盖不同内容，重复输出应字节相同。它不是自动翻译模型，也不是发布器。新的 `.curated` 记录不会读写旧 `.cache`，没有自动英文回退。
 
 `drift` 只输出保守的变更候选，不自动改写课文。完全相同的唯一块可保留 ID 并标为移动；重复块标为不确定。修改/新增/删除必须人工确认。文件改名目前只有 helper 夹具验证，尚未实现跨路径自动发现；不声称完整增量同步系统已完成。
+
+数字与行内代码按每个源文块的多重集合核对；块内为中文语序所作的重排必须经人工逐项确认，不能借此交换语义角色。检查器区分 factor-of-10 等词语连接号与负号，并补充真实 CLI 重放/防覆盖回归。
 
 自动检查无法判断所有语义、自然语言单位换算或术语歧义，不能替代逐课双审。模型精确版本、采样参数和 token 用量不由当前运行时提供，记录为 unavailable，不虚构成本或质量分。
 
