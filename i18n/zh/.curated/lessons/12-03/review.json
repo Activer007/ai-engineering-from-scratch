@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "lesson_id": "12-03",
+  "batch": "P2",
+  "source_path": "phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "8dc13ac9ee1fb4e64f999e7d57947e55e7654be4",
+  "source_sha256": "8849ac3172d4edecb50891b890d4a3080f6efd1a7af17ea6c79c86b410a63c28",
+  "target_path": "i18n/zh/phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/zh.md",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "reviewed_target_sha256": "96c48b2b12c87e0b1a157a307e4e612a5f651f7c5e2f1338dc7e0ebe0cb513f5",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S2",
+      "issue": "Fixed-size learnable query set could be mistaken for frozen parameter values",
+      "resolution": "Explicitly uses 一组数量固定的参数; independently rechecked"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "source_lines": [
+        35,
+        59
+      ],
+      "status": "confirmed_internal_inconsistency",
+      "finding": "Architecture describes Q-Former as ~100M parameters, whereas hook and parameter-economics section use 188M. Both retained."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        96,
+        98,
+        99,
+        101,
+        102,
+        104
+      ],
+      "status": "confirmed_from_referenced_code",
+      "finding": "Prose says main.py simulates 256 patches, 32 queries, dim 128 and projection dim 512; actual constants are NUM_PATCH=64, NUM_QUERY=8, PATCH_DIM=QUERY_DIM=16, LLM_DIM=24. It prints attention summaries, not the entire weight matrix, and contains no trained decoder or artifact writer. English values/claims retained."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        120
+      ],
+      "status": "confirmed_arithmetic_issue",
+      "finding": "10 minutes at 1 FPS yields 600 frames unless additional subsampling is specified, not 60. Source says 60; retained."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        59,
+        61
+      ],
+      "status": "confirmed_unsupported_comparison_basis",
+      "finding": "Immediately after an 8B total model, the source says BLIP-2 is 50x smaller than Flamingo-80B; total-model arithmetic would be 10x. The intended trainable-parameter comparison basis is not stated. Retained without inventing clarification."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        40,
+        47,
+        73,
+        79,
+        83,
+        84,
+        86,
+        135
+      ],
+      "status": "requires_separate_primary_source_review",
+      "finding": "Potential original-model inaccuracies in ITG query/text attention direction, pooled-query ITC, original LLaVA projector chronology, and Flamingo resampler-vs-layer cross-attention descriptions. Broad 2026 family/descendant claims and Gemini statements are not established by the lesson code. Translation keeps frozen English; no external sources consulted or silent correction."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        53,
+        55
+      ],
+      "status": "confirmed_sequence_wording_inconsistency",
+      "finding": "Queries are said to be prepended to the text prompt, but loss sequence is written prompt + image + caption. Retained both as in source."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; Chinese syntax reordering manually reviewed",
+    "links": "same destinations",
+    "metadata": "original keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "github_gfm": "passed: actual GitHub desktop DOM and screenshot; headings, tables, protected code and relevant math/assets checked",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "deterministic_replay": "two isolated runs; byte-identical",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 12,
+      "tables": 1,
+      "code_blocks": 0,
+      "figures": 1,
+      "mermaid_sources": 0,
+      "browser_verified": false
+    },
+    "lesson_runtime": "isolated Python demo exit0; no checked-in unit suite",
+    "rendering_limit": "GitHub GFM only; interactive figure IDs remain code blocks on GitHub. Actual application browser rendering, mobile and complete navigation are unverified."
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering unavailable; no fabricated cost/time/quality score. This is not current product-fact verification."
+  },
+  "acceptance": "Draft only. Source caveats and actual-site acceptance remain open; repository-owner approval required."
+}

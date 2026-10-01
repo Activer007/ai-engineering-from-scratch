@@ -1,0 +1,867 @@
+{
+  "schema_version": 1,
+  "lesson_id": "19-70",
+  "source_path": "phases/19-capstone-projects/70-task-spec-format/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "4e96d7b083736ccf97324fb5fe9c3398e19339f3",
+  "source_sha256": "1728076774826c06143b03f2b3cf823492ac69e07b89455944092835674174fd",
+  "target_path": "i18n/zh/phases/19-capstone-projects/70-task-spec-format/docs/zh.md",
+  "target_sha256": "713e9ba1b6a04f5062c3ed9f6b4a83acc5aefc4e3f93b887f0c03b052655cfa1",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "19-70:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format"
+      ],
+      "ordinal": 1,
+      "source_sha256": "0a715fb133d6a024eebda31a304bca024fdf4b5125faa6c341b26e7daab6bd22",
+      "target": "# 任务规范格式\n"
+    },
+    {
+      "segment_id": "19-70:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Task Spec Format"
+      ],
+      "ordinal": 2,
+      "source_sha256": "e96e79726b299420c39cef406c9b55859340c6bffe6fee1eaac29453f66325e4",
+      "target": "> 评测框架的质量，取决于其任务所遵守的契约。在编写任何评分函数之前，先固定 JSONL 的结构和指标名称集合。\n"
+    },
+    {
+      "segment_id": "19-70:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format"
+      ],
+      "ordinal": 3,
+      "source_sha256": "2ab7c366a8827408200c36ff9ff37850ba9d3fda416c37828a6c7f92b19c17cc",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 19 路线 B 基础内容\n**Time:** ~90 分钟\n"
+    },
+    {
+      "segment_id": "19-70:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Learning objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "65a968af6542947dc2a4f93867f6a1582b935859d4d3982055abc399128cb202",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "19-70:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Learning objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Learning objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "ac569c749e3874ab50b4007db29a8b25771ed80552ebe1c75b8a163267a6c135",
+      "target": "- 定义 JSONL 任务记录的 schema（结构定义），用同一种结构涵盖算术、选择题、代码执行、分类和自由文本摘要任务。\n- 固定一组封闭的指标名称，让后续课程（71-73）可以根据单个字段分派处理。\n- 将少样本示例和后处理规则定义为任务的一部分，而非运行器的一部分，从而让同一个提示词（prompt）在不同模型下对应同一个目标。\n- 实现严格的验证器，在格式有误的记录到达运行器之前将其拒绝。\n- 交付一个包含 10 个任务的测试样例集，覆盖规范中的每个分支，让验证器有真实材料可供检验。\n"
+    },
+    {
+      "segment_id": "19-70:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Learning objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0011",
+      "kind": "fence",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Learning objectives"
+      ],
+      "ordinal": 6,
+      "source_sha256": "65856ebb939c081c2b52704b2810799fe95b9f9ce38077b8f473785163e83f11",
+      "target": "```figure\nci-task-spec-gate\n```\n"
+    },
+    {
+      "segment_id": "19-70:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Learning objectives"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0013",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Why a frozen spec"
+      ],
+      "ordinal": 7,
+      "source_sha256": "58fababbe8d2759119af618917c98666a9991c5bf3729dd8886d60113e8e2fad",
+      "target": "## 为什么要固定规范\n"
+    },
+    {
+      "segment_id": "19-70:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Why a frozen spec"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Why a frozen spec"
+      ],
+      "ordinal": 8,
+      "source_sha256": "ce8f638a3bafd7949618dcd57347094f0d2c7f7806c07fa2ede7eee4d3c91305",
+      "target": "研究代码库积累评测脚本的速度，往往比积累测试的速度更快。六个月后，每个 notebook 都有自己的 JSON 结构，每个指标都被重复实现了两次，不同运行之间也无从比较。解决方法很朴素：选定一个 schema，编写验证器，拒绝其他所有不符合要求的内容。这就是本课要做的事。\n"
+    },
+    {
+      "segment_id": "19-70:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Why a frozen spec"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Why a frozen spec"
+      ],
+      "ordinal": 9,
+      "source_sha256": "d1e740c9683aefa1c97b361f7f1fc110cd8f855f707be8325d69ca9dad50d32a",
+      "target": "这个结构借鉴了 BIG-bench、HELM 和 lm-eval 风格评测框架的思路，但字段名由我们自己定义。每个字段都只有一个负责处理它的组件。运行器读取任务，指标读取目标列表，后处理步骤对生成结果进行规范化。流水线运行过程中不允许修改任何字段。\n"
+    },
+    {
+      "segment_id": "19-70:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Why a frozen spec"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## The record shape"
+      ],
+      "ordinal": 10,
+      "source_sha256": "a8e1a93e2870e842039c7ce935861d268c81c4f36e33f4aaf41fe9d953abaaa1",
+      "target": "## 记录结构\n"
+    },
+    {
+      "segment_id": "19-70:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## The record shape"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## The record shape"
+      ],
+      "ordinal": 11,
+      "source_sha256": "3e685922d260e53cd6d533742aa3d3c8923e61a0248a9e80e1f3a9d8d19622bd",
+      "target": "一个任务就是占据单行的 JSON 对象。评测框架读取 `tasks.jsonl`，逐行独立验证。某一行有误时，只中止该记录的处理，不中止整次运行。\n"
+    },
+    {
+      "segment_id": "19-70:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## The record shape"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Task Spec Format",
+        "## The record shape"
+      ],
+      "ordinal": 12,
+      "source_sha256": "6a2551b90c8edff87ac8216e649756fcd66d06ef13f54f933f26151bdd8bb813",
+      "target": "```json\n{\n  \"task_id\": \"arith_001\",\n  \"category\": \"arithmetic\",\n  \"prompt\": \"Compute the result. Question: 17 + 24\\nAnswer:\",\n  \"targets\": [\"41\"],\n  \"metric_name\": \"exact_match\",\n  \"few_shot_examples\": [\n    {\"prompt\": \"Question: 2 + 2\\nAnswer:\", \"completion\": \"4\"}\n  ],\n  \"post_process\": \"strip_whitespace\",\n  \"metadata\": {\"difficulty\": \"easy\"}\n}\n```\n"
+    },
+    {
+      "segment_id": "19-70:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## The record shape"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## The record shape"
+      ],
+      "ordinal": 13,
+      "source_sha256": "03f4e060d08e8f0010aa9cb5256f382770a035665edd2a06120a1995231e44dc",
+      "target": "必填字段为 `task_id`、`category`、`prompt`、`targets`、`metric_name`、`post_process`。`few_shot_examples` 和 `metadata` 为可选字段。出现未知的顶层字段时，验证失败。\n"
+    },
+    {
+      "segment_id": "19-70:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## The record shape"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 14,
+      "source_sha256": "1aff378e1ccad82b34353f6fd2c13f44433e7141f7c4bb348783d60055c7fbc6",
+      "target": "## 字段规则\n"
+    },
+    {
+      "segment_id": "19-70:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 15,
+      "source_sha256": "1a15e9087df3f0e96123998c83fcbce7b2e20cd463c799b0d9e013f678d619dd",
+      "target": "`task_id` 是不含空白字符的字符串。验证器确保它在整个文件中唯一。\n"
+    },
+    {
+      "segment_id": "19-70:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 16,
+      "source_sha256": "50a5d15f334bfc6481516ab284023ab15c150c3a47f185b23dcd3e7da9ec8933",
+      "target": "`category` 必须为 `arithmetic`、`mcq`、`code_exec`、`classification`、`summary` 之一。类别决定哪些指标与后处理规则的组合是合法的。`code_exec` 任务必须使用 `metric_name = code_exec`，而 `mcq` 任务必须使用 `metric_name = exact_match`，并与单个字母的目标进行比较。\n"
+    },
+    {
+      "segment_id": "19-70:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 17,
+      "source_sha256": "4a6e2b2e96ccbaae94cddb243ac6608ecad1ea38be27209e7ef989dec71bd9fe",
+      "target": "`prompt` 是非空字符串。验证器禁止尾随空白字符，并拒绝提示词正文中已经包含少样本示例块的记录。少样本示例由运行器负责拼接，而不是由任务作者直接写入提示词。\n"
+    },
+    {
+      "segment_id": "19-70:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 18,
+      "source_sha256": "c536d25d2f0531710e62e0e9d0017044b17f06af9d1bd01a99b03dcbc23124dc",
+      "target": "`targets` 是非空的字符串列表。对于 `exact_match`，匹配其中任意一个元素即算匹配成功。对于 `f1` 和 `rouge_l`，取分数最高的目标。对于 `mcq`，列表恰好包含一个元素。\n"
+    },
+    {
+      "segment_id": "19-70:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 19,
+      "source_sha256": "e69868ee342142d372e9251e2d3d08a0e801dd716eed9e3e7d95c2b72b2cad80",
+      "target": "`metric_name` 必须为 `exact_match`、`f1`、`bleu_4`、`rouge_l`、`accuracy`、`code_exec` 之一。这个名称集合是封闭的。新增指标需要新增一课，并在这里添加一个条目。\n"
+    },
+    {
+      "segment_id": "19-70:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 20,
+      "source_sha256": "cc9276f7e3e9957590315b9e1196c84aa104f19295bbb79244c85650b3487e93",
+      "target": "`few_shot_examples` 是由 `{prompt, completion}` 对组成的列表。验证器将列表长度限制为最多八项，以控制提示词长度。\n"
+    },
+    {
+      "segment_id": "19-70:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 21,
+      "source_sha256": "87059d8c0460e88c23b366fdd58c828083225e05cf14db6b335761260f70b783",
+      "target": "`post_process` 必须为 `none`、`strip_whitespace`、`lower`、`extract_letter`、`extract_code_block`、`extract_first_line` 之一。每条规则都只有一种确定的行为。验证器禁止组合使用多条规则。\n"
+    },
+    {
+      "segment_id": "19-70:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Field rules"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Validator behaviour"
+      ],
+      "ordinal": 22,
+      "source_sha256": "1a608973eb1fdefe12aa2a0d0c94a92dbd820611bd0a5d1b4c8d1fdd0e11b43f",
+      "target": "## 验证器的行为\n"
+    },
+    {
+      "segment_id": "19-70:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Validator behaviour"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Validator behaviour"
+      ],
+      "ordinal": 23,
+      "source_sha256": "030d8650566ba955856968d3719bba9ef481047448aa1300cb68377d881e8969",
+      "target": "```mermaid\nflowchart TD\n    A[read tasks.jsonl] --> B[parse line as JSON]\n    B -->|error| Z[record error, continue]\n    B --> C[check required fields]\n    C -->|missing| Z\n    C --> D[check field types]\n    D -->|bad type| Z\n    D --> E[check category-metric pair]\n    E -->|illegal| Z\n    E --> F[check task_id uniqueness]\n    F -->|dup| Z\n    F --> G[append to validated set]\n    Z --> H{more lines?}\n    G --> H\n    H -->|yes| B\n    H -->|no| I[return validated, errors]\n```\n"
+    },
+    {
+      "segment_id": "19-70:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Validator behaviour"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Validator behaviour"
+      ],
+      "ordinal": 24,
+      "source_sha256": "d7f391dac174ebd2022fdc363b903f44a00094e49fc978b2bcbcd47b94467ca1",
+      "target": "验证器返回两个列表：通过验证的记录，以及包含出错行、违反的规则和出错字段的错误记录。如果错误列表非空，运行器将拒绝启动，除非显式设置了 `--allow-bad-tasks` 标志。\n"
+    },
+    {
+      "segment_id": "19-70:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Validator behaviour"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Few-shot rendering"
+      ],
+      "ordinal": 25,
+      "source_sha256": "195e92a78558fcaa93b3f3855a59a010dcd0734293207d11908cc641c3381d78",
+      "target": "## 少样本示例的拼接\n"
+    },
+    {
+      "segment_id": "19-70:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Few-shot rendering"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Few-shot rendering"
+      ],
+      "ordinal": 26,
+      "source_sha256": "fc0eb64fac8be9418163d9e5350783d9cb774505afde28e7e932c0118ada8db7",
+      "target": "运行器将少样本示例拼接在提示词之前，以空行分隔。所有模型都使用同一条代码路径，因此唯一的差异来源就是模型本身。作者只需编写一次示例，不必为每家提供商各写一遍。\n"
+    },
+    {
+      "segment_id": "19-70:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Few-shot rendering"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Few-shot rendering"
+      ],
+      "ordinal": 27,
+      "source_sha256": "74821a5fca53f5a5a774a5ed15303a7dd54161c013d22ca7ab7ce60a9cdefbf1",
+      "target": "```python\ndef render(task):\n    parts = []\n    for ex in task.get(\"few_shot_examples\", []):\n        parts.append(ex[\"prompt\"] + \" \" + ex[\"completion\"])\n    parts.append(task[\"prompt\"])\n    return \"\\n\\n\".join(parts)\n```\n"
+    },
+    {
+      "segment_id": "19-70:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Few-shot rendering"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Post-process rules"
+      ],
+      "ordinal": 28,
+      "source_sha256": "0745ce71d1e17b2c1a1aee1aae6b72026accafd0e5ebc22d1d63e85ecc13330f",
+      "target": "## 后处理规则\n"
+    },
+    {
+      "segment_id": "19-70:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Post-process rules"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Post-process rules"
+      ],
+      "ordinal": 29,
+      "source_sha256": "07dbdd772164c1ff68e281f1fc35c314b36c35a6618e0087802cee82887c80b3",
+      "target": "后处理步骤在生成之后、指标计算之前运行。它是确定性的，并且无状态。\n"
+    },
+    {
+      "segment_id": "19-70:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Post-process rules"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0059",
+      "kind": "list",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Post-process rules"
+      ],
+      "ordinal": 30,
+      "source_sha256": "15e78e4658145fbd0a501df3498a1dce1a74425112828aa24186faeb3efd4088",
+      "target": "- `none` 原样返回字符串。\n- `strip_whitespace` 去除开头和结尾的空白字符。\n- `lower` 将字符串转换为小写。\n- `extract_letter` 返回第一个匹配 `[A-E]` 的字符，用于选择题。\n- `extract_code_block` 返回第一个由三个反引号围起的代码块的正文，用于代码执行任务。\n- `extract_first_line` 返回第一个非空行，用于摘要分类。\n"
+    },
+    {
+      "segment_id": "19-70:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Post-process rules"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Post-process rules"
+      ],
+      "ordinal": 31,
+      "source_sha256": "3ff0e94dabc085019bbd5aa2943abaa639bdcd5a9c086f071e3932bda067648e",
+      "target": "如果任务需要此列表之外的规则，就应该放入新的一课。\n"
+    },
+    {
+      "segment_id": "19-70:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Post-process rules"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## What this lesson does not do"
+      ],
+      "ordinal": 32,
+      "source_sha256": "37662256fcca86f2c549ed048deb02f0a96b162fecedd2711950a6c50ac977dc",
+      "target": "## 本课不涉及的内容\n"
+    },
+    {
+      "segment_id": "19-70:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## What this lesson does not do"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## What this lesson does not do"
+      ],
+      "ordinal": 33,
+      "source_sha256": "3d6e24473b1a60698adccf0a7db4156de497df6e1eb81ef1fd5b3ef9fde69ce6",
+      "target": "本课不评分、不调用模型，也不运行代码。这些内容将在第 71、72 和 75 课中介绍。本课固定的是它们共同遵守的契约。\n"
+    },
+    {
+      "segment_id": "19-70:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## What this lesson does not do"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## What this lesson does not do"
+      ],
+      "ordinal": 34,
+      "source_sha256": "16696f577a857e9360658cd88b52b39ae5ae7815b1b179d62943499f411e9e1e",
+      "target": "包含 10 个任务的测试样例集涵盖两道算术题、两道选择题、两项代码执行任务、两项分类任务和两项摘要任务。全部 10 个任务都能通过验证。另一个独立的测试样例集（`tasks_bad.jsonl`）会触发每条规则，验证器返回的错误数量与之准确对应。\n"
+    },
+    {
+      "segment_id": "19-70:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## What this lesson does not do"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## How to read the code"
+      ],
+      "ordinal": 35,
+      "source_sha256": "e5a56fe03b05ceb5355f03d2f90ab752d64799720341ce6af50a2d09c785e903",
+      "target": "## 如何阅读代码\n"
+    },
+    {
+      "segment_id": "19-70:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## How to read the code"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## How to read the code"
+      ],
+      "ordinal": 36,
+      "source_sha256": "774b431c140134eac59bff395dae6ba6c1e4a891841613e1c87c7a979289c173",
+      "target": "`main.py` 定义了 `TaskSpec`、`validate_task`、`validate_file` 和一个命令行接口（CLI）入口。测试样例加载器是 `load_fixtures`。拼接和后处理辅助函数与验证逻辑放在一起，因此第 75 课的运行器只需导入一个模块。\n"
+    },
+    {
+      "segment_id": "19-70:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## How to read the code"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## How to read the code"
+      ],
+      "ordinal": 37,
+      "source_sha256": "7069586116486d9152c31b0c406db87d9daaba9270783d7260911907ff33f159",
+      "target": "从头到尾阅读 `main.py`，然后阅读 `code/tests/test_spec.py`。测试固定了每条验证规则和每种后处理行为。`main.py` 底部的演示会验证随附的测试样例集，并打印摘要。\n"
+    },
+    {
+      "segment_id": "19-70:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## How to read the code"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Going further"
+      ],
+      "ordinal": 38,
+      "source_sha256": "f8c1ee0325c2b2e64c6605507730d2ddb63d15344981c62c130c44a2d53dfa33",
+      "target": "## 进一步探索\n"
+    },
+    {
+      "segment_id": "19-70:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Going further"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "19-70:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Task Spec Format",
+        "## Going further"
+      ],
+      "ordinal": 39,
+      "source_sha256": "635b2d3db91e8254c5eb66a200cb19c7c4947d5ab489f417ea3de1b9edfd6bd1",
+      "target": "真实评测套件增加类别，就像 schema 增加列一样。稳妥的做法是：除非同时增加一个指标、一条后处理规则以及至少一个测试样例任务，否则不添加类别。像对待数据库迁移一样对待这份规范。每次变更都要经过审查、纳入版本管理，并配套测试。本课的验证器就是把关环节。\n"
+    }
+  ]
+}

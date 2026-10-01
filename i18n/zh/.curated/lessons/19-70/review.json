@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "lesson_id": "19-70",
+  "batch": "P2",
+  "source_path": "phases/19-capstone-projects/70-task-spec-format/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "4e96d7b083736ccf97324fb5fe9c3398e19339f3",
+  "source_sha256": "1728076774826c06143b03f2b3cf823492ac69e07b89455944092835674174fd",
+  "target_path": "i18n/zh/phases/19-capstone-projects/70-task-spec-format/docs/zh.md",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "reviewed_target_sha256": "713e9ba1b6a04f5062c3ed9f6b4a83acc5aefc4e3f93b887f0c03b052655cfa1",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "source_lines": [
+        53
+      ],
+      "status": "confirmed_from_referenced_code",
+      "finding": "Prose requires MCQ metric_name=exact_match, but LEGAL_CATEGORY_METRIC permits exact_match and accuracy. The code checks category/metric pairs, not category/post-process compatibility despite prose implying the latter."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        55
+      ],
+      "status": "confirmed_from_referenced_code",
+      "finding": "Embedded few-shot prompt text is rejected by code only when heuristic markers exceed one AND few_shot_examples is absent/empty. Source describes unconditional rejection; retained."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        108
+      ],
+      "status": "confirmed_from_referenced_code",
+      "finding": "extract_letter first searches for a standalone A-E letter, then falls back to the first A-E anywhere. The source says first matching character; e.g. Answer: C has A before C but code returns C."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        30,
+        86
+      ],
+      "status": "source_scope_ambiguity",
+      "finding": "Earlier prose says a bad line does not abort the run, later says runner refuses to start if errors exist absent --allow-bad-tasks. These can refer to validation vs model-running phases, but are not clarified in source. main.py has no such CLI flag; it is a demo entrypoint."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        51,
+        109,
+        110,
+        118
+      ],
+      "status": "confirmed_from_referenced_code",
+      "finding": "task_id is further limited to ASCII letters/digits/_/-; extract_code_block returns original text if no fence; extract_first_line strips surrounding whitespace. The 10 bad fixtures do not exercise every validation rule. These omitted/overbroad source claims were not expanded or fixed in translation."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; Chinese syntax reordering manually reviewed",
+    "links": "same destinations",
+    "metadata": "original keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "github_gfm": "passed: actual GitHub desktop DOM and screenshot; headings, tables, protected code and relevant math/assets checked",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "deterministic_replay": "two isolated runs; byte-identical",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 11,
+      "tables": 0,
+      "code_blocks": 2,
+      "figures": 1,
+      "mermaid_sources": 1,
+      "browser_verified": false
+    },
+    "lesson_runtime": "isolated demo exit0;23 unit tests passed",
+    "rendering_limit": "GitHub GFM only; interactive figure IDs remain code blocks on GitHub. Actual application browser rendering, mobile and complete navigation are unverified."
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering unavailable; no fabricated cost/time/quality score. This is not current product-fact verification."
+  },
+  "acceptance": "Draft only. Source caveats and actual-site acceptance remain open; repository-owner approval required."
+}
