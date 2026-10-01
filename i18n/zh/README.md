@@ -243,7 +243,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ### 备考 MCP Associate（MCPA）认证
 
-[MCPA Certification Curriculum](../../certifications/mcpa/README.md) 是免费的开源备考项目，面向 Agentic AI Foundation 的 Model Context Protocol Associate 考试，该考试通过 Linux Foundation Training 提供。课程共 34 课，围绕无状态的 2026-07-28 版协议，覆盖五个考试领域：以每次请求中的 `_meta` 和 `server/discover` 取代旧版握手流程、多轮往返请求、订阅、缓存、tasks 和 MCP Apps 扩展、OAuth 授权，以及注册表和 SDK 的分级。每课都提供可运行的标准库实验，并检查实验交互记录是否符合当前的线协议消息格式。这条路线还包含水平诊断测试、综合项目，以及三套完整的原创模拟试卷，题目比例遵循已公布的考试大纲权重。
+[MCPA Certification Curriculum](../../certifications/mcpa/README.md) 是免费的开源备考项目，面向 Agentic AI Foundation 的 Model Context Protocol Associate 考试，该考试通过 Linux Foundation Training 提供。课程共 34 课，围绕无状态的 2026-07-28 版协议，覆盖五个考试领域：以每次请求中的 `_meta` 和 `server/discover` 取代旧版握手流程、多轮往返请求、订阅、缓存、tasks 和 MCP Apps 扩展、OAuth 授权，以及注册表和 SDK 的分级。每课都提供可运行的标准库实验，并检查实验交互记录是否符合当前的协议消息格式。这条路线还包含水平诊断测试、综合项目，以及三套完整的原创模拟试卷，题目比例遵循已公布的考试大纲权重。
 
 使用 Claude Code、Codex、ChatGPT、Cursor 或其他智能体，按照 [AI 原生 GitHub 入门指南](../../certifications/mcpa/GETTING_STARTED.md) 开始学习。在 Codex 中运行 `mcpa-certification`，在 Claude Code 中运行 `/mcpa-certification`，或让其他宿主使用 `mcpa-certification`。它会将学习路线持久保存在 `MCPA-CERTIFICATION.md` 中，逐步教学、运行真实实验，并根据你的成果给出反馈。同一套课程也可以在 [MCPA 路线页面](https://aiengineeringfromscratch.com/certification?id=mcpa-f)上学习。
 
@@ -290,7 +290,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## 每课都有可交付成果
 
-其他课程以*“恭喜，你学会了 X”*结束。这里的每一课都会产出一个**可复用工具**，你可以安装它，或直接粘贴到日常工作流程中使用。
+其他课程以 *“恭喜，你学会了 X”* 结束。这里的每一课都会产出一个**可复用工具**，你可以安装它，或直接粘贴到日常工作流程中使用。
 
 <table>
 <tr>
