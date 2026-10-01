@@ -149,7 +149,10 @@ def validate(source,target):
     return errors
 
 
-def record_path(lesson_id): return ROOT/CONTROL/'lessons'/lesson_id/'translation.json'
+def record_path(lesson_id):
+    if not re.fullmatch(r'\d{2}-\d{2}', lesson_id):
+        raise ValueError('Expected lesson ID NN-MM')
+    return ROOT/CONTROL/'lessons'/lesson_id/'translation.json'
 
 
 def capture(lesson):
@@ -179,28 +182,134 @@ def capture(lesson):
 def assemble(record): return ''.join(s['target'] for s in record['segments'])
 
 
+def contained_path(root, value):
+    """Validate every record-controlled path before reading it, including symlinks."""
+    if not isinstance(value, str) or not value or '\\' in value:
+        raise ValueError('Unsafe record path')
+    p=Path(value)
+    if p.is_absolute() or '..' in p.parts or not (root/p).resolve().is_relative_to(root.resolve()):
+        raise ValueError('Unsafe record path')
+    return root/p
+
+
+def check_review(record, root):
+    """Reviewed status is meaningful only when a separate review binds these bytes."""
+    if record['status']=='draft': return []
+    try:
+        path=contained_path(root,str(CONTROL/'lessons'/record['lesson_id']/'review.json'))
+        review=json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return ['Missing, unsafe or invalid review.json for reviewed record']
+    if not isinstance(review,dict):return ['Invalid review.json object']
+    errors=[]
+    for key in ('lesson_id','source_path','source_commit','source_blob','source_sha256','target_path',
+                'glossary_version','glossary_sha256','status'):
+        if review.get(key)!=record[key]:errors.append('Review binding mismatch: '+key)
+    if review.get('reviewed_target_sha256')!=record['target_sha256']:
+        errors.append('REVIEW_STALE: reviewed target hash differs')
+    return errors
+
+
+def check_assets(record, source, root):
+    """Require manifests for relative SVGs and compare source, frozen Git and copy."""
+    errors=[]
+    assets=record.get('assets',[])
+    if not isinstance(assets,list):return ['Invalid assets manifest']
+    source_base=Path(record['source_path']).parent
+    target_base=Path(record['target_path']).parent
+    expected={}
+    for link in re.findall(r'\]\(([^)]+)\)',source):
+        clean=link.split('#',1)[0].split('?',1)[0]
+        if not clean.endswith('.svg') or re.match(r'[A-Za-z][A-Za-z0-9+.-]*:|/',clean):continue
+        sp=os.path.normpath(source_base/clean);tp=os.path.normpath(target_base/clean)
+        expected[sp]=tp
+    seen=set()
+    for asset in assets:
+        if not isinstance(asset,dict):errors.append('Invalid asset entry');continue
+        try:
+            sp=contained_path(root,asset.get('source_path'))
+            tp=contained_path(root,asset.get('target_path'))
+        except ValueError:
+            errors.append('Unsafe asset path');continue
+        source_path=asset['source_path']
+        if source_path in seen:errors.append('Duplicate asset entry')
+        seen.add(source_path)
+        if expected.get(source_path)!=asset['target_path']:errors.append('Asset is not a matching relative SVG destination')
+        if asset.get('source_commit')!=SOURCE_COMMIT:errors.append('Unapproved asset source commit')
+        digest=asset.get('sha256')
+        if not isinstance(digest,str) or not re.fullmatch(r'[0-9a-f]{64}',digest):
+            errors.append('Missing or invalid asset hash');continue
+        try:
+            original=sp.read_bytes();translated=tp.read_bytes()
+            pinned=subprocess.check_output(['git','-C',str(root),'show',f'{SOURCE_COMMIT}:{source_path}'],stderr=subprocess.DEVNULL)
+        except (OSError,subprocess.CalledProcessError):
+            errors.append('Missing or unavailable asset source/target');continue
+        if original!=pinned:errors.append('Asset source differs from pinned Git commit')
+        if original!=translated:errors.append('Asset target differs from source')
+        if any(hashlib.sha256(data).hexdigest()!=digest for data in (original,translated,pinned)):
+            errors.append('Asset hash mismatch')
+    if seen!=set(expected):errors.append('Relative SVG assets missing from manifest or unexpected assets present')
+    return errors
+
+
 def check_record(record, root=ROOT):
     errors=[]
-    for pathkey in ('source_path','target_path'):
-        p=Path(record[pathkey])
-        if p.is_absolute() or '..' in p.parts or not (root/p).resolve().is_relative_to(root.resolve()):
-            return ['Unsafe record path']
-    source=(root/record['source_path']).read_text()
-    target=(root/record['target_path']).read_text()
+    if not isinstance(record,dict):return ['Invalid authoring record object']
+    required=('schema_version','lesson_id','source_path','source_commit','source_blob','source_sha256',
+              'target_path','target_sha256','glossary_version','glossary_sha256','status','segments')
+    missing=[key for key in required if key not in record]
+    if missing:return ['Missing required record fields: '+', '.join(missing)]
+    if record['schema_version']!=1:errors.append('Unsupported schema version')
+    if record['status'] not in ('draft','tech-reviewed','language-reviewed'):errors.append('Unsupported record status')
+    if not isinstance(record['lesson_id'],str) or not re.fullmatch(r'\d{2}-\d{2}',record['lesson_id']):
+        errors.append('Invalid lesson ID')
+    for key,length in (('source_blob',40),('source_sha256',64),('target_sha256',64),('glossary_sha256',64)):
+        if not isinstance(record[key],str) or not re.fullmatch('[0-9a-f]{'+str(length)+'}',record[key]):
+            errors.append('Missing or invalid '+key)
+    if errors:return errors
+    try:
+        sp=contained_path(root,record['source_path']);tp=contained_path(root,record['target_path'])
+        glossary=contained_path(root,str(CONTROL/'TERMINOLOGY.md'))
+    except ValueError:return ['Unsafe record path']
+    match=re.fullmatch(r'phases/(\d{2}-[^/]+)/(\d{2}-[^/]+)/docs/en\.md',record['source_path'])
+    if not match or record['lesson_id']!=match[1][:2]+'-'+match[2][:2]:
+        errors.append('Source path does not match lesson ID')
+    if record['target_path']!='i18n/zh/'+str(Path(record['source_path']).with_name('zh.md')):
+        errors.append('Target path does not match source lesson')
+    try:
+        source_bytes=sp.read_bytes();target_bytes=tp.read_bytes()
+        source=source_bytes.decode('utf-8');target=target_bytes.decode('utf-8')
+    except (OSError,UnicodeError):return errors+['Missing or invalid UTF-8 source/target file']
+    if record['source_commit']!=SOURCE_COMMIT:errors.append('Unapproved source commit')
+    try:
+        pinned=subprocess.check_output(['git','-C',str(root),'show',f"{SOURCE_COMMIT}:{record['source_path']}"],stderr=subprocess.DEVNULL)
+        if source_bytes!=pinned:errors.append('Source differs from pinned Git commit')
+    except (OSError,subprocess.CalledProcessError):errors.append('Pinned Git source unavailable')
+    blob=hashlib.sha1(b'blob '+str(len(source_bytes)).encode()+b'\0'+source_bytes).hexdigest()
+    if blob!=record['source_blob']:errors.append('Source blob mismatch')
+    if record['glossary_version']!='1.0':errors.append('Unsupported core glossary version')
+    try:
+        if hashlib.sha256(glossary.read_bytes()).hexdigest()!=record['glossary_sha256']:
+            errors.append('Glossary changed; review invalidated')
+    except OSError:errors.append('Core glossary unavailable')
+    has_addendum=[key in record for key in ('additional_glossary_path','additional_glossary_sha256')]
+    if any(has_addendum):
+        if not all(has_addendum):errors.append('Additional glossary path/hash must be paired')
+        else:
+            try:
+                addendum=contained_path(root,record['additional_glossary_path'])
+                if hashlib.sha256(addendum.read_bytes()).hexdigest()!=record['additional_glossary_sha256']:
+                    errors.append('Additional glossary changed; review invalidated')
+            except (OSError,ValueError):errors.append('Missing or unsafe additional glossary')
+    errors.extend(check_review(record,root))
+    errors.extend(check_assets(record,source,root))
+    segments=record['segments']
+    required_segment=('segment_id','kind','heading_path','ordinal','source_sha256','target')
+    if not isinstance(segments,list) or any(not isinstance(s,dict) or any(k not in s for k in required_segment) for s in segments):
+        return errors+['Missing or invalid authoring segments']
+    if any(not isinstance(s['target'],str) or not isinstance(s['segment_id'],str) for s in segments):
+        return errors+['Invalid segment target or identity']
     generated=assemble(record)
-    if record.get('schema_version',1)!=1: errors.append('Unsupported schema version')
-    if 'source_commit' in record and record['source_commit'] != SOURCE_COMMIT: errors.append('Unapproved source commit')
-    if 'source_commit' in record:
-        try:
-            pinned=subprocess.check_output(['git','-C',str(root),'show',f"{SOURCE_COMMIT}:{record['source_path']}"],stderr=subprocess.DEVNULL).decode()
-            if source!=pinned:errors.append('Source differs from pinned Git commit')
-        except subprocess.CalledProcessError:errors.append('Pinned Git source unavailable')
-    if 'source_blob' in record:
-        raw=source.encode('utf-8'); blob=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
-        if blob != record['source_blob']: errors.append('Source blob mismatch')
-    if 'glossary_sha256' in record:
-        glossary=root/CONTROL/'TERMINOLOGY.md'
-        if not glossary.exists() or sha(glossary.read_text()) != record['glossary_sha256']: errors.append('Glossary changed; review invalidated')
     ids=[s['segment_id'] for s in record['segments']]
     if len(ids)!=len(set(ids)): errors.append('Duplicate stable segment IDs')
     if sha(source)!=record['source_sha256']:errors.append('SOURCE_STALE: approval invalidated')
@@ -215,9 +324,9 @@ def check_record(record, root=ROOT):
             if k=='heading':
                 level=len(re.match(r'#+',b)[0]);heading=heading[:level-1]+[b.strip()]
             if k!='separator':ordinal+=1
-            if 'kind' in segment and segment['kind']!=k:errors.append('Invalid segment kind')
-            if 'heading_path' in segment and segment['heading_path']!=heading:errors.append('Invalid source heading context')
-            if 'ordinal' in segment and segment['ordinal']!=ordinal:errors.append('Invalid segment ordinal')
+            if segment['kind']!=k:errors.append('Invalid segment kind')
+            if segment['heading_path']!=heading:errors.append('Invalid source heading context')
+            if segment['ordinal']!=ordinal:errors.append('Invalid segment ordinal')
     if len(sb)!=len(record['segments']):errors.append('Source segment count changed')
     elif any(sha(b)!=s['source_sha256'] for b,s in zip(sb,record['segments'])):errors.append('Source segment identity/content changed')
     errors.extend(validate(source,target))
