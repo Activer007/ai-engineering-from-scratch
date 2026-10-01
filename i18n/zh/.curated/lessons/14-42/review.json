@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "lesson_id": "14-42",
+  "batch": "P5",
+  "source_path": "phases/14-agent-engineering/42-agent-workbench-capstone/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "3a541fd0f80d34dd9d566c9a230b37f6ef7e2727",
+  "source_sha256": "8e282c077084bd9c8d596d2e23d11742af2da20390507f4e0e27e59c03330323",
+  "target_path": "i18n/zh/phases/14-agent-engineering/42-agent-workbench-capstone/docs/zh.md",
+  "reviewed_target_sha256": "891eed30d611f833df88f861503075c3bef28eff97c34bf006141294ffa4a9fe",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S2",
+      "issue": "The first workbench mention lacks the first-use English pairing required by the glossary.",
+      "resolution": "Applied every exact correction and independently rechecked; all resolved"
+    },
+    {
+      "severity": "S3",
+      "issue": "非简单状态 / 非简单的历史记录 is overly literal Chinese. Retain the source’s intentionally open-ended criterion without inventing a new deletion rule.",
+      "resolution": "Applied every exact correction and independently rechecked; all resolved"
+    },
+    {
+      "severity": "S3",
+      "issue": "范围 glob 模式匹配仓库 is hard to parse and leaves a generic technical term unexplained.",
+      "resolution": "Applied every exact correction and independently rechecked; all resolved"
+    },
+    {
+      "severity": "S3",
+      "issue": "哪一份可选的第五份文档 duplicates the counting phrase and obscures the selection action.",
+      "resolution": "Applied every exact correction and independently rechecked; all resolved"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "WB-SRC-01",
+      "severity": "S2",
+      "source_lines": [
+        79,
+        106,
+        108,
+        110
+      ],
+      "problem": "The prose describes implemented CI wiring, lint_pack.py version enforcement, symlink generation and an uninstaller, but the frozen shipped pack and generated installer do not supply those behaviors. Exercises later ask learners to add two of them.",
+      "static_evidence": [
+        "outputs/agent-workbench-pack/bin/install.sh:19-32 only guards AGENTS.md overwrite, copies docs/schemas/scripts, writes .workbench-version and prints next steps.",
+        "code/main.py:598-613 generates that same installer and a fixed four-script set; no CI, symlink, lint_pack.py or uninstall.sh generation occurs.",
+        "The frozen git tree contains no lint_pack.py or uninstall.sh under this lesson.",
+        "English exercises at lines 132-133 ask learners to add uninstall.sh and lint_pack.py."
+      ],
+      "source_only_recommendation": "Change English present-tense implementation claims to proposed extensions or implement the missing features in a separate engineering change. Keep their frozen-source meaning in the candidate and disclose the source mismatch in the review.",
+      "candidate_action": "Keep the frozen-source meaning and protected literals unchanged; track this upstream rather than silently repairing the translation."
+    },
+    {
+      "id": "WB-SRC-02",
+      "severity": "S2",
+      "source_lines": [
+        84
+      ],
+      "problem": "The English source says agent_state.json records the pack version it was initialized against, but the shipped schema has no pack-version property and init_agent.py only probes state freshness; it does not initialize/version the state.",
+      "static_evidence": [
+        "code/main.py:STATE_SCHEMA includes schema_version, active_task_id, touched_files, assumptions, blockers and next_action, not pack version.",
+        "outputs/agent-workbench-pack/scripts/init_agent.py reads the state path’s existence/mtime and writes init_report.json, not agent_state.json.",
+        "The installer writes .workbench-version separately."
+      ],
+      "source_only_recommendation": "Correct the English to identify .workbench-version as the installed version marker, or implement explicit state pack-version recording. Do not silently modify the protected agent_state.json reference in translation.",
+      "candidate_action": "Keep the frozen-source meaning and protected literals unchanged; track this upstream rather than silently repairing the translation."
+    },
+    {
+      "id": "WB-SRC-03",
+      "severity": "S3",
+      "source_lines": [
+        37,
+        56,
+        84
+      ],
+      "problem": "The printed source pack tree omits VERSION even though the following prose, generated pack and shipped tree require it; it also uses an untagged box-drawing fence contrary to AGENTS.md.",
+      "static_evidence": [
+        "code/main.py:612 writes VERSION; the tracked pack contains VERSION.",
+        "The candidate faithfully preserves the source tree payload and adds a text tag."
+      ],
+      "source_only_recommendation": "Repair the source layout illustration in a separate coordinated change; do not add VERSION or rewrite diagram payload only in the translation.",
+      "candidate_action": "Keep the frozen-source meaning and protected literals unchanged; track this upstream rather than silently repairing the translation."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 15,
+      "tables": 1,
+      "code_blocks": 2,
+      "figures": 1,
+      "mermaid_sources": 1,
+      "browser_verified": false
+    },
+    "github_gfm": "pending",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated pack assembly demo exit 0; installer not executed",
+    "deterministic_replay": "two isolated runs; byte-identical"
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves."
+}
