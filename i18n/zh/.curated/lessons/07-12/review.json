@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "lesson_id": "07-12",
+  "batch": "P4",
+  "source_path": "phases/07-transformers-deep-dive/12-kv-cache-flash-attention/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "71daf9790d09693209b72a88b6fc846b9465f711",
+  "source_sha256": "b93352bcfa28b0ae8b1a60fe52a6078d37066e2df8b291c428fa3422a4ab79dc",
+  "target_path": "i18n/zh/phases/07-transformers-deep-dive/12-kv-cache-flash-attention/docs/zh.md",
+  "reviewed_target_sha256": "5373d74001697081ac92e1de6a989d0c8782da49be25e586c445e3a2d315ffb0",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S3",
+      "issue": "free paraphrase added an interpretation",
+      "resolution": "Retains free meaning; ambiguous referent recorded separately in source issues"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "lines": [
+        12,
+        18,
+        129,
+        130,
+        175,
+        177
+      ],
+      "detail": "Complexity accounting is inconsistent. Intro gives O(N²) total, then claims O(N²) to O(N) per step; both decoder implementations call single-query attention over all cached keys and increment ops by prefix length, so both total N(N+1)/2 attention dot products, not 5050 versus 100. main() uses N=10, not the claimed 100. Claims retained without correction."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        37,
+        39,
+        40,
+        41,
+        42
+      ],
+      "detail": "7B cache arithmetic states 32 heads but omits that factor: 512 bytes is per head per token per layer; 16 KB/token and 512 MB/32K are therefore not whole-model cache sizes. Preserved."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        45,
+        49,
+        50,
+        52,
+        54
+      ],
+      "detail": "70B 32K estimate is approximately 10.7 decimal GB or 10 GiB, not an exact 10.4 GB; at 128K cache is approximately 42.95 GB/40 GiB. With the stated 80 layers, 64 MHA heads, d_head=128 and fp16 at 32K, 32 GB is not the implied value. Decimal/binary units and the cited hardware capacity are mixed. Preserved."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        14
+      ],
+      "detail": "Standard softmax score output is N×N, whereas source says N×d softmax output. Preserved."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        89,
+        173
+      ],
+      "detail": "Exact mathematical attention is not a guarantee of bit-identical floating-point output. Source itself qualifies reassociation and code prints numerical error. Preserved."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        16,
+        19,
+        21,
+        72,
+        87,
+        95,
+        96,
+        97,
+        98,
+        100,
+        107,
+        115,
+        119,
+        203,
+        224
+      ],
+      "detail": "Attribution of both KV caching and FlashAttention to Dao et al.; universal adoption, hardware bandwidth/round-trip simplifications, fixed speedups, Flash 4 mid-2026 feature status, no-quality-loss statement, and fragmentation elimination are broad or time-sensitive source claims. No live factual verification was attempted under frozen-source scope; these claims are retained, not endorsed."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        109
+      ],
+      "detail": "Niche but free does not identify which cost is free. Translation keeps 免费 without expanding it to licensing, absence of compute, or no extra model; ambiguity remains in source."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [
+    {
+      "source_path": "phases/07-transformers-deep-dive/12-kv-cache-flash-attention/assets/kv-cache-flash-attn.svg",
+      "target_path": "i18n/zh/phases/07-transformers-deep-dive/12-kv-cache-flash-attention/assets/kv-cache-flash-attn.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "33f7afe5af5bedb83c425d0437a10e330541c1000a9527eb1ff6bdc635a9e874",
+      "translation": "unchanged English SVG, byte-identical copy preserves relative Markdown image destination"
+    }
+  ],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 10,
+      "tables": 2,
+      "code_blocks": 9,
+      "figures": 2,
+      "mermaid_sources": 0,
+      "browser_verified": false
+    },
+    "github_gfm": "pending",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated stdlib demo exit 0",
+    "deterministic_replay": "two isolated runs; byte-identical"
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves."
+}
