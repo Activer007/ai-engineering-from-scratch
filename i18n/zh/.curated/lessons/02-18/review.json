@@ -1,0 +1,208 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-18",
+  "batch": "P3",
+  "source_path": "phases/02-ml-fundamentals/18-feature-selection/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "ab8bae02e2ff015c908fd6153c380be74fa1a3de",
+  "source_sha256": "b4f79a2e5880be45c0b77713c11805a39b853b2852e15eda314ee1997a107161",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/18-feature-selection/docs/zh.md",
+  "reviewed_target_sha256": "8be7f4e179de7067494e90f5cd089befad3b823e672faf13bc62e230adfa0134",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S3",
+      "issue": "First-use feature selection expansion",
+      "resolution": "Added English pairing at first body occurrence"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S2",
+      "source_lines": [
+        6,
+        7
+      ],
+      "status": "confirmed_metadata_issue",
+      "finding": "Source uses singular Language and lists prerequisite 08 redundantly inside 01-09. Preserved."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        61,
+        63,
+        73,
+        530
+      ],
+      "status": "confirmed_overgeneralization",
+      "finding": "A nearly constant feature can identify a rare class, so no model can use it is too strong. With one unspecified outlier, near-zero variance is not guaranteed either. Variance thresholding is not universally necessary. Source claims retained."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        135,
+        137
+      ],
+      "status": "confirmed_scope_issue",
+      "finding": "L1 regularization is not limited to linear models; correlated-feature selection need not choose exactly one and zero all others. Linear Lasso is the lesson example, but source claim is broader. Preserved."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        145,
+        151
+      ],
+      "status": "confirmed_formula_omission",
+      "finding": "Importance expression averages sample-weighted impurity decreases but omits the final normalization needed for normalized scores. Actual code divides by the total. Formula fence and prose retained."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        117,
+        174,
+        250
+      ],
+      "status": "confirmed_missing_conditions",
+      "finding": "RFE interaction capture depends on the base model; this lesson uses linear logistic regression without interaction features. Informative/correlated feature groups need not always rank with all 0-4 above 5-9. Source generalizations retained."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        69,
+        253,
+        257,
+        464
+      ],
+      "status": "confirmed_code_boundary_and_table_scope",
+      "finding": "Prose drops variance below threshold, while code retains only strictly greater values (equal values dropped too). All five methods run, but METHOD AGREEMENT table contains MI/RFE/L1/Tree, not variance threshold. Preserved."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        470
+      ],
+      "status": "confirmed_dependency_policy_difference",
+      "finding": "Use It imports scikit-learn, outside AGENTS allowlist. Existing source example retained as an immutable fence; not installed or executed."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        6,
+        7
+      ],
+      "finding": "English metadata uses singular Language and redundantly includes prerequisite 08 inside 01-09. Source spelling and range are retained.",
+      "evidence": "en.md:6-7"
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        61,
+        63,
+        73,
+        530
+      ],
+      "finding": "A nearly constant feature can identify a rare class; variance need not be near zero when the lone remaining value is unspecified; variance thresholding is not universally necessary. All source claims remain unchanged.",
+      "evidence": "en.md:61-73,530"
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        135,
+        137
+      ],
+      "finding": "L1 penalties are not restricted to linear models, and correlated-feature solutions need not retain exactly one feature. The implementation is a linear logistic model, but the prose states a broader restriction.",
+      "evidence": "en.md:135-137; code/feature_selection.py:l1_feature_selection"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        146,
+        148,
+        151
+      ],
+      "finding": "The displayed sample-weighted impurity sum lacks the normalization needed by the following normalized-score claim. The linked tree_importance implementation does divide by the total.",
+      "evidence": "en.md:145-151; code/feature_selection.py:tree_importance"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        117,
+        174,
+        250
+      ],
+      "finding": "RFE captures interactions only when its base model/features can; the code uses linear logistic regression without explicit interactions. The data construction also does not guarantee every 0-4 feature ranks above every correlated feature.",
+      "evidence": "en.md:117,174,250; code/feature_selection.py:rfe,simple_logistic_importance,make_feature_selection_data"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        69,
+        257,
+        464
+      ],
+      "finding": "Prose says drop below the variance threshold while code keeps only strictly greater values. The demo runs five methods but its METHOD AGREEMENT table includes only MI, RFE, L1 and Tree.",
+      "evidence": "code/feature_selection.py:variance_threshold and all_masks"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        470,
+        471
+      ],
+      "finding": "The existing sklearn example imports a dependency outside AGENTS allowlist. The immutable source fence was preserved; no installation or execution was performed.",
+      "evidence": "AGENTS.md dependency allowlist; en.md:470-497"
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 17,
+      "tables": 2,
+      "code_blocks": 11,
+      "figures": 1,
+      "mermaid_sources": 4,
+      "browser_verified": false
+    },
+    "github_gfm": "passed: actual GitHub desktop DOM and screenshot; headings, tables, protected code and relevant math/assets checked",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated Python demo exit 0",
+    "deterministic_replay": "two isolated runs; byte-identical",
+    "rendering_limit": "GitHub GFM only; interactive figure IDs remain code blocks on GitHub. Actual application browser rendering, mobile and complete navigation are unverified."
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves.",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+}

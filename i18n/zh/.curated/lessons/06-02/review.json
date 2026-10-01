@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "lesson_id": "06-02",
+  "batch": "P3",
+  "source_path": "phases/06-speech-and-audio/02-spectrograms-mel-features/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "0602755bc120b7d0ab3d015d8895b671285f23df",
+  "source_sha256": "c3ccb984a9bcf8aefcfb077ccafee53704c504b5cc8c7bf3e394f2ccf48af525",
+  "target_path": "i18n/zh/phases/06-speech-and-audio/02-spectrograms-mel-features/docs/zh.md",
+  "reviewed_target_sha256": "175fa5a866d7d4d0b3b04dffc2c3491c896a7052d34d4f4eefe768decf41edde",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S1",
+      "issue": "Transpose antecedent could refer to STFT matrix instead of filterbank",
+      "resolution": "Explicitly names the filterbank matrix; independently rechecked. Matrix-risk review expanded to SVD, BLIP-2, LoRA and GPT prose with no other same-kind defect."
+    },
+    {
+      "severity": "S3",
+      "issue": "Timeline sentence syntax",
+      "resolution": "Rephrased without changing the year or source claim"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "source_lines": [
+        151
+      ],
+      "status": "confirmed_from_referenced_code",
+      "finding": "main.py chirp uses sin(2*pi*f(t)*t), where f(t) is linearly interpolated. Its instantaneous frequency is f0+2*(f1-f0)*t/T, so it does not implement the claimed 200→4000 Hz sweep and aliases at sr=8000. The demo prints sampled frames rather than every frame. Source instructions retained."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        28,
+        30,
+        107
+      ],
+      "status": "confirmed_internal_pipeline_difference",
+      "finding": "Toy pipeline computes magnitude-filterbank features with natural log, while source identifies log(mel_spec + 1e-10) broadly with named models and later acknowledges Whisper has more involved normalization. Do not interpret simplified toy as model-exact preprocessing; source unchanged."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        34,
+        61,
+        143,
+        161
+      ],
+      "status": "confirmed_signal_processing_scope_issue",
+      "finding": "Increasing FFT length alone via zero-padding does not improve true spectral resolution; Hann reduces leakage rather than eliminating it; zero-padded tail frames are not necessarily flat spectra; Hamming endpoints are not zero. Source statements retained."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        32,
+        120,
+        166
+      ],
+      "status": "confirmed_ambiguity",
+      "finding": "Keep first 13 coefficients followed by dropping the first leaves 12 unless a replacement is retained. Source does not clarify final count; translation preserves both instructions and does not silently change 13."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        3,
+        24,
+        26,
+        128,
+        129,
+        130,
+        131,
+        132,
+        142
+      ],
+      "status": "requires_separate_model_specific_review",
+      "finding": "Universal 2026/raw-waveform/log-mel/model-table claims and guaranteed WER doubling are overbroad or model/version dependent. No external verification or silent correction performed."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        151
+      ],
+      "finding": "The source chirp computes sin(2*pi*f(t)*t) with linearly increasing f(t), rather than integrating the frequency. Its instantaneous frequency is f0 + 2*(f1-f0)*t/T, so it overshoots the stated 200 to 4000 Hz sweep and aliases at sr=8000. The demo prints selected rather than all frames.",
+      "evidence": "code/main.py:14-21,113,146-155"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        28,
+        30,
+        104,
+        107,
+        165
+      ],
+      "finding": "Toy features use magnitude spectra, and code computes log(max(v,eps)), while the explanatory formula says log(v+eps). Named-model frontend equivalence is oversimplified; exact current model preprocessing was not externally audited.",
+      "evidence": "code/main.py:28-40,85-101; en.md:28-30,102-107,165"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        34,
+        61,
+        143,
+        161
+      ],
+      "finding": "FFT zero-padding alone does not improve true resolution; Hann reduces rather than eliminates leakage; partially zero-padded tail frames need not have flat spectra; Hamming endpoints are nonzero. Source wording is faithfully retained.",
+      "evidence": "en.md:34,61,143,161 and Hann formula"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        32,
+        120,
+        166
+      ],
+      "finding": "Keeping the first 13 coefficients and then dropping the first leaves 12 unless another coefficient is retained. The source gives no final-count clarification; translation correctly keeps both claims and does not silently change 13.",
+      "evidence": "en.md:32,120,166; code/main.py:104-109,158-161"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        3,
+        24,
+        26,
+        128,
+        129,
+        130,
+        131,
+        132,
+        142
+      ],
+      "finding": "Universal frontend/model-table claims and guaranteed WER doubling are broad, model- and version-sensitive source assertions. No new present-day guarantees were introduced by translation; current model-specific verification remains a separate source task.",
+      "evidence": "en.md:3,24,26,128-142",
+      "status": "external_version_verification_not_performed"
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [
+    {
+      "source_path": "phases/06-speech-and-audio/02-spectrograms-mel-features/assets/mel-features.svg",
+      "target_path": "i18n/zh/phases/06-speech-and-audio/02-spectrograms-mel-features/assets/mel-features.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "1e23a06bebb059151e815d967988b5a330de71d7879997eca3fc4c83a99b871b",
+      "translation": "unchanged English SVG, byte-identical copy preserves relative Markdown image destination"
+    }
+  ],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 8,
+      "tables": 2,
+      "code_blocks": 6,
+      "figures": 1,
+      "mermaid_sources": 0,
+      "browser_verified": false
+    },
+    "github_gfm": "passed: actual GitHub desktop DOM and screenshot; headings, tables, protected code and relevant math/assets checked",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated Python demo exit 0",
+    "deterministic_replay": "two isolated runs; byte-identical",
+    "rendering_limit": "GitHub GFM only; interactive figure IDs remain code blocks on GitHub. Actual application browser rendering, mobile and complete navigation are unverified."
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves.",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+}

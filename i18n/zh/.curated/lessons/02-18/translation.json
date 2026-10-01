@@ -1,0 +1,2210 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-18",
+  "source_path": "phases/02-ml-fundamentals/18-feature-selection/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "ab8bae02e2ff015c908fd6153c380be74fa1a3de",
+  "source_sha256": "b4f79a2e5880be45c0b77713c11805a39b853b2852e15eda314ee1997a107161",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/18-feature-selection/docs/zh.md",
+  "target_sha256": "8be7f4e179de7067494e90f5cd089befad3b823e672faf13bc62e230adfa0134",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "02-18:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection"
+      ],
+      "ordinal": 1,
+      "source_sha256": "61f8f16e5b6e79fd6674f280e0c117aeb61a415873aa40659359fbd39e16d093",
+      "target": "# 特征选择\n"
+    },
+    {
+      "segment_id": "02-18:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Feature Selection"
+      ],
+      "ordinal": 2,
+      "source_sha256": "920059c3c1e2e8367197b2aaa861946c6f70200bf5d129098845ad69f63c116d",
+      "target": "> 特征并非越多越好，选对特征才更好。\n"
+    },
+    {
+      "segment_id": "02-18:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection"
+      ],
+      "ordinal": 3,
+      "source_sha256": "6bee532b6e1550da1eb9e7a21bf01a6c7150fd1a0d76e55e4c11b1c416fdd62c",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 阶段 2，第 01-09、08 课（特征工程）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "02-18:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "02-18:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "64ac39a5dcc984acd04a4c57205f55ecc6ca57b762a67de57f2121dbf389a51e",
+      "target": "- 从零实现过滤法（filter method，如方差阈值、互信息、卡方检验）和包裹法（wrapper method，如 RFE、前向选择）\n- 解释为什么互信息能够捕捉相关性所遗漏的特征与目标之间的非线性关系\n- 比较 L1 正则化（嵌入式选择）与 RFE（包裹式选择），评估它们在计算成本上的取舍\n- 构建结合多种方法的特征选择（feature selection）流水线，并在留出数据上展示泛化能力的提升\n"
+    },
+    {
+      "segment_id": "02-18:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "02-18:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "e0c46f15b52cc9587620420fb080dc86640bbfbaf1e1258c41e29e26ac6f4ebf",
+      "target": "你有 500 个特征。模型训练缓慢，经常过拟合，也没人能解释它学到了什么。你希望通过增加更多特征来改善性能，结果却更糟。\n"
+    },
+    {
+      "segment_id": "02-18:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "7b41bb467cc6cdbb8c27358f0dfcf1d1d34ce60aa5ff414d7d178837a4910fce",
+      "target": "这就是维度灾难在起作用。随着特征数量增加，特征空间的体积急剧膨胀，数据点变得稀疏，点与点之间的距离趋于接近。模型需要多得多的数据，且所需数据量呈指数增长，才能找到真正的模式。噪声特征淹没了信号特征，过拟合成为常态。\n"
+    },
+    {
+      "segment_id": "02-18:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "9d39408b4e8ece0e1f5660c4bece99403e9d0c7f79554939febd05819ba215da",
+      "target": "特征选择（feature selection）就是解药。剥离噪声，去除冗余，保留真正携带目标相关信息的特征。结果是训练更快、泛化更好，而且模型真正可以解释。\n"
+    },
+    {
+      "segment_id": "02-18:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "296aedc441e682f5e5d2524acb9ae783403f62ddb6e1492300d7ec1c2d95e121",
+      "target": "目标不是利用所有可用信息，而是利用正确的信息。\n"
+    },
+    {
+      "segment_id": "02-18:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "02-18:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 12,
+      "source_sha256": "12dd2518e537e1cfb7cc0ef434e6dce48ea7c239e40d12eff526865c245fd334",
+      "target": "### 特征选择的三大类别\n"
+    },
+    {
+      "segment_id": "02-18:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 13,
+      "source_sha256": "849644977a9d16bf5b411cbab4f2e9c169a3ce306b4e046310cf5e82d291d4f1",
+      "target": "每种特征选择方法都属于以下三类之一：\n"
+    },
+    {
+      "segment_id": "02-18:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0027",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 14,
+      "source_sha256": "d6935c34626df44e3448ea8e16c0dffa61d0ea4bb3e63defc6ae73cdcd3d5ce9",
+      "target": "```mermaid\nflowchart TD\n    A[Feature Selection Methods] --> B[Filter Methods]\n    A --> C[Wrapper Methods]\n    A --> D[Embedded Methods]\n\n    B --> B1[\"Variance Threshold\"]\n    B --> B2[\"Mutual Information\"]\n    B --> B3[\"Chi-squared Test\"]\n    B --> B4[\"Correlation Filtering\"]\n\n    C --> C1[\"Recursive Feature Elimination\"]\n    C --> C2[\"Forward Selection\"]\n    C --> C3[\"Backward Elimination\"]\n\n    D --> D1[\"L1 / Lasso Regularization\"]\n    D --> D2[\"Tree-based Importance\"]\n    D --> D3[\"Elastic Net\"]\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 15,
+      "source_sha256": "b97534a3e27febe674436e3d278d137c037b04ac113eb3181083afd41a54da47",
+      "target": "**过滤法**使用统计度量，独立地为每个特征评分。它们不使用模型。速度快，但会遗漏特征之间的交互作用。\n"
+    },
+    {
+      "segment_id": "02-18:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 16,
+      "source_sha256": "f2793c1ead6e9c7f12a3a3ae9aa3f90b9a17bf140017eb8b0ed28ef57e0062d7",
+      "target": "**包裹法**通过训练模型来评估特征子集，使用模型性能作为评分依据。结果更好，但由于需要多次重新训练模型，成本较高。\n"
+    },
+    {
+      "segment_id": "02-18:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 17,
+      "source_sha256": "e3bbbb3e99cb488743943f9005fc177fa4c0657d66d2be4fc546c33909d651a5",
+      "target": "**嵌入法（embedded method）**将特征选择作为模型训练的一部分。L1 正则化使权重变为零，决策树依据最有用的特征进行划分。选择发生在拟合过程中，而不是作为独立步骤进行。\n"
+    },
+    {
+      "segment_id": "02-18:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Three Categories of Feature Selection"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 18,
+      "source_sha256": "f4668a40d1f576d8931841f1dae763045ea6ffe6b8ea1179414b3b435a1c1ef6",
+      "target": "### 方差阈值\n"
+    },
+    {
+      "segment_id": "02-18:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 19,
+      "source_sha256": "1743b5bd70c9fb5cffab69ad5918df69ba65108643b2ea5ce481fac57cbf06a0",
+      "target": "这是最简单的过滤方法。如果一个特征在不同样本间几乎不变，它就几乎不携带信息。\n"
+    },
+    {
+      "segment_id": "02-18:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01d7c6c5a01c4bf6e0795208ccd7b2ad788d83347333f0a931850e906a8a808a",
+      "target": "假设一个特征在 1000 个样本中的 999 个上都为 0.0，那么它的方差接近零。任何模型都无法利用它区分类别。把它删除。\n"
+    },
+    {
+      "segment_id": "02-18:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 21,
+      "source_sha256": "d9dcd06d4f8c7c4e23751a9bb874af9e433324cdd15f2481d277d4c2869bc51a",
+      "target": "```text\nvariance(x) = mean((x - mean(x))^2)\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 22,
+      "source_sha256": "2e2ff26d92b13d98cd75cb6d9e260859f8b9492bea6b91ad6defa237e5dc29de",
+      "target": "设定一个阈值（例如 0.01），删除所有方差低于阈值的特征。这样完全不需要查看目标变量，就能移除常量或近似常量特征。\n"
+    },
+    {
+      "segment_id": "02-18:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 23,
+      "source_sha256": "a5b080c18c2e62ff0334b3f617c3685f6b0e96d2c00db7e3053d3a3b680243fc",
+      "target": "适用时机：在其他方法之前，作为预处理步骤使用。它能以接近零的成本筛出明显无用的特征。\n"
+    },
+    {
+      "segment_id": "02-18:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 24,
+      "source_sha256": "f57f465680dd4affcbe10848a5b91255f3718e98aff8e168f7b3599e05849687",
+      "target": "局限：一个特征即使方差很高，也仍然可能是纯噪声。方差阈值是必要条件，但不是充分条件。\n"
+    },
+    {
+      "segment_id": "02-18:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Variance Threshold"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 25,
+      "source_sha256": "0f0e022e52b1bccc10068ed2b176f245f076a0c34ee531a4ea994183978246e2",
+      "target": "### 互信息\n"
+    },
+    {
+      "segment_id": "02-18:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 26,
+      "source_sha256": "67b4a92dcd3d9f541f0a52583f65deda2d7b7144e8ed50f8b5ee13aae6e10366",
+      "target": "互信息（mutual information）衡量：知道特征 X 的值，能在多大程度上减少目标 Y 的不确定性。\n"
+    },
+    {
+      "segment_id": "02-18:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 27,
+      "source_sha256": "d50eea3d55d5be5eae9ed8c8fd791307ed68957958376e1389626c54e9074c24",
+      "target": "```text\nI(X; Y) = sum_x sum_y p(x, y) * log(p(x, y) / (p(x) * p(y)))\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 28,
+      "source_sha256": "5a0722538a441d9b2008b2f5563c12f0a10f1e30d90adc6956647246255fb724",
+      "target": "如果 X 与 Y 相互独立，则 p(x, y) = p(x) * p(y)，因此对数项为零，且 I(X; Y) = 0。X 提供的 Y 相关信息越多，互信息就越高。\n"
+    },
+    {
+      "segment_id": "02-18:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 29,
+      "source_sha256": "1da9f3cf4324b799f7433febc9422aaa1c5d83e0fe81218ae24097220bd00247",
+      "target": "相对于相关性的关键优势在于：互信息可以捕捉非线性关系。某个特征与目标的相关性可能为零，但互信息很高，因为它们之间可能存在二次关系或周期关系。\n"
+    },
+    {
+      "segment_id": "02-18:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 30,
+      "source_sha256": "3f9d2b4c97e4ee516f2a6a449aeba9cbbb6065a516db566f0381c7545a3f01e0",
+      "target": "对于连续特征，先通过分箱将其离散化（基于直方图的估计）。箱数会影响估计结果：箱数太少会丢失信息，太多则会引入噪声。常见选择是使用 sqrt(n) 个箱，或采用 Sturges 规则 (1 + log2(n))。\n"
+    },
+    {
+      "segment_id": "02-18:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 31,
+      "source_sha256": "73c9b82ca937143302af1ed03fd7fd58715e8042497e3926f44f7ee5a79e02df",
+      "target": "```mermaid\nflowchart LR\n    A[Feature X] --> B[Discretize into Bins]\n    B --> C[\"Compute Joint Distribution p(x,y)\"]\n    C --> D[\"Compute MI = sum p(x,y) * log(p(x,y) / p(x)p(y))\"]\n    D --> E[\"Rank Features by MI Score\"]\n    E --> F[Select Top K]\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Mutual Information"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "12da3e87dc61e7e109ee9fd7b3b1dbc90bc4399bade9d084b5fa04f9e103ae36",
+      "target": "### 递归特征消除（RFE）\n"
+    },
+    {
+      "segment_id": "02-18:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "5d5b89dfd4421f4ec233e3a90105a0821d712685177b04120359d9cdcfe0254e",
+      "target": "RFE 是一种包裹法。它利用模型自身的特征重要性，迭代地删减特征：\n"
+    },
+    {
+      "segment_id": "02-18:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0067",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "2fb9a2d7fa2552e9900460e443fa31d2f5f0a611e7157ec36ffc4da8f311af7c",
+      "target": "1. 使用所有特征训练模型\n2. 按重要性对特征排序（线性模型使用系数，树模型使用不纯度下降量）\n3. 删除最不重要的一个或多个特征\n4. 重复这一过程，直到剩余特征达到所需数量\n"
+    },
+    {
+      "segment_id": "02-18:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "451bdbc8aac9ba5690db73d0d28d0d9e752b19fad49b4a1925eb1da6daee15cd",
+      "target": "```mermaid\nflowchart TD\n    A[\"Start: All N Features\"] --> B[\"Train Model\"]\n    B --> C[\"Rank Feature Importances\"]\n    C --> D[\"Remove Least Important\"]\n    D --> E{\"Features == Target Count?\"}\n    E -->|No| B\n    E -->|Yes| F[\"Return Selected Features\"]\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 36,
+      "source_sha256": "4fa1445ee3fab64239ebeace2bd2fc3ea3a81a9892b1f628e519d52f4863a6a8",
+      "target": "RFE 会考虑特征之间的交互作用，因为模型会同时看到所有剩余特征。删除一个特征会改变其他特征的重要性。这使它比过滤法更全面。\n"
+    },
+    {
+      "segment_id": "02-18:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 37,
+      "source_sha256": "dd5d0b8a3acd635ea796693718d2883568a78209d38b86c88824464597f053f8",
+      "target": "代价是：需要训练模型 N - target 次。对于 500 个特征，若目标是保留 10 个，就需要训练 490 次。对于计算成本高的模型，这会很慢。你可以在每一步删除多个特征来加速，例如每轮删除重要性最低的 10%。\n"
+    },
+    {
+      "segment_id": "02-18:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Recursive Feature Elimination (RFE)"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 38,
+      "source_sha256": "83aaa1ac5673f5a8ff7bbf31c7ed426b422ca672a061b4229686afb04acd91c9",
+      "target": "### L1（Lasso）正则化\n"
+    },
+    {
+      "segment_id": "02-18:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 39,
+      "source_sha256": "37ae46ff3c9f414619e71f0bc5a62141602c4b49e1919daa3b50afd9fc536830",
+      "target": "L1 正则化将权重的绝对值加入损失函数：\n"
+    },
+    {
+      "segment_id": "02-18:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 40,
+      "source_sha256": "085c2a7c51c12f20ddf90242c12ba643e91bb2be899748776cd1c46c59790765",
+      "target": "```text\nloss = prediction_error + alpha * sum(|w_i|)\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 41,
+      "source_sha256": "2932286a026b462df6d3a811a9e7063f199a427211a3dc1a24412891fb12409d",
+      "target": "alpha 参数控制特征删减的强度。alpha 越高，就有越多权重会恰好变为零。\n"
+    },
+    {
+      "segment_id": "02-18:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 42,
+      "source_sha256": "2e1f3855096ddc092dc15aad09436dc29af90357d22e75c9eaa8721748393f9f",
+      "target": "为什么会恰好为零？L1 惩罚在权重空间中形成菱形约束区域。最优解往往落在这个菱形的顶点，其中一个或多个权重为零。L2 正则化（岭正则化）形成圆形约束，权重会缩小，但很少恰好变为零。\n"
+    },
+    {
+      "segment_id": "02-18:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 43,
+      "source_sha256": "e3a65c1e5f849954ee1ab3411dcc84783d404a7d099e3768c55b2afbcc2efbbb",
+      "target": "这就是嵌入式特征选择：模型在训练过程中学习应该忽略哪些特征。权重为零的特征实际上就被移除了。\n"
+    },
+    {
+      "segment_id": "02-18:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 44,
+      "source_sha256": "e840752e4d9c7ecdefe5f90bc43c5932d9050e541207a28ea76f1458c48f9dcd",
+      "target": "优点：只需训练一次，能够处理相关特征（选取一个，将其他特征的权重归零），并且已内置于大多数线性模型实现中。\n"
+    },
+    {
+      "segment_id": "02-18:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 45,
+      "source_sha256": "a1d224d9be6f6d5b77f17bc3c088fa7edb44523f7e0047d57721c7979cac74da",
+      "target": "局限：只适用于线性模型，无法捕捉非线性的特征重要性。\n"
+    },
+    {
+      "segment_id": "02-18:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### L1 (Lasso) Regularization"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 46,
+      "source_sha256": "c4d6c71f8d6e78e16bb3c9df60dc7856b204e2612377fe913f04a7e770125c43",
+      "target": "### 基于树的特征重要性\n"
+    },
+    {
+      "segment_id": "02-18:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 47,
+      "source_sha256": "6e60c528836bca9ef3d203ae0dc834b22deb801d047ab39ea83c48275062b803",
+      "target": "决策树及其集成方法（随机森林、梯度提升）天然能够对特征排序。每次划分都会降低不纯度（分类任务使用 Gini 不纯度或熵，回归任务使用方差）。带来更大不纯度下降的特征更重要。\n"
+    },
+    {
+      "segment_id": "02-18:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 48,
+      "source_sha256": "7545bd073866511e69056aa31e50960e3ffca1d49a77db3c17ccfe562de3f9f9",
+      "target": "对于一个包含 T 棵树的随机森林：\n"
+    },
+    {
+      "segment_id": "02-18:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0097",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 49,
+      "source_sha256": "6b20ee6eeaa6e22a16ba2663adf745101b833aa2943363f27993b7b6321750c6",
+      "target": "```text\nimportance(feature_j) = (1/T) * sum over all trees of\n    sum over all nodes splitting on feature_j of\n        (n_samples * impurity_decrease)\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 50,
+      "source_sha256": "7c417c40a299bff173f46d7d158dc1edabe03c5481d47e011d9b3db5ba72b702",
+      "target": "这样就能得到每个特征归一化后的重要性分数。它能自动处理非线性关系和特征交互。\n"
+    },
+    {
+      "segment_id": "02-18:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 51,
+      "source_sha256": "2744a5665b4bf4efabddb02e2f2a40006f550a1bbf1092f8bcad9859a8ae218f",
+      "target": "注意：基于树的重要性偏向具有大量不同取值的特征，即高基数特征。随机 ID 列会显得很重要，因为它能完美地将每个样本区分开。使用置换重要性进行合理性检查。\n"
+    },
+    {
+      "segment_id": "02-18:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Tree-Based Feature Importance"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 52,
+      "source_sha256": "5d1c10875ae8c110ede713afa8ee64f0c41fe1710877c12fc4aaeecb415d0e51",
+      "target": "### 置换重要性\n"
+    },
+    {
+      "segment_id": "02-18:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 53,
+      "source_sha256": "39b43e0cb8bfec584b6b75468cc499fb3ff3fdca15f26d8a743b657d7f35a644",
+      "target": "这是一种与模型类型无关的方法：\n"
+    },
+    {
+      "segment_id": "02-18:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0107",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 54,
+      "source_sha256": "52f3b1dc01647892ea015b9dcaffba453dd17763b11dc945a1e142b33ca2f1fe",
+      "target": "1. 训练模型，并记录其在验证数据上的基准性能\n2. 对每个特征，随机打乱其值，并测量性能下降幅度\n3. 下降幅度越大，该特征越重要\n"
+    },
+    {
+      "segment_id": "02-18:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 55,
+      "source_sha256": "f89d2cfeae44f878946f46147b3427c6435dba47d82999371676cc6870f07873",
+      "target": "如果打乱某个特征不会损害性能，说明模型不依赖它。如果性能大幅下滑，则该特征至关重要。\n"
+    },
+    {
+      "segment_id": "02-18:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 56,
+      "source_sha256": "d6f10eac3b7b274b30e36da779b68ec99ea92f39df58dbec1ba44d7091ce0d32",
+      "target": "置换重要性避免了基于树的重要性所具有的基数偏差。但它很慢：每个特征都需要一次完整评估，并且为了稳定性还要重复多次。\n"
+    },
+    {
+      "segment_id": "02-18:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Permutation Importance"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Comparison Table"
+      ],
+      "ordinal": 57,
+      "source_sha256": "b8ec8926a4d5d33582075c5bbec53b1ed11d5dbce084e96bcab1086c2671b536",
+      "target": "### 方法对比表\n"
+    },
+    {
+      "segment_id": "02-18:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Comparison Table"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0115",
+      "kind": "table",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Comparison Table"
+      ],
+      "ordinal": 58,
+      "source_sha256": "cc35960d47aaaf5ecdeb128770da00bc62ec2ac68b77c55413824c2503b622db",
+      "target": "| 方法 | 类型 | 速度 | 非线性 | 特征交互 |\n|--------|------|-------|-----------|---------------------|\n| 方差阈值 | 过滤法 | 很快 | 否 | 否 |\n| 互信息 | 过滤法 | 快 | 是 | 否 |\n| 相关性过滤 | 过滤法 | 快 | 否 | 否 |\n| RFE | 包裹法 | 慢 | 取决于模型 | 是 |\n| L1 / Lasso | 嵌入法 | 快 | 否（线性） | 否 |\n| 树重要性 | 嵌入法 | 中等 | 是 | 是 |\n| 置换重要性 | 与模型类型无关 | 慢 | 是 | 是 |\n"
+    },
+    {
+      "segment_id": "02-18:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Comparison Table"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 59,
+      "source_sha256": "1736ef2141f33e9c4e01e3916b919bb7ecc108d71c5d9ab3fdbc77b38b8c1887",
+      "target": "### 决策流程图\n"
+    },
+    {
+      "segment_id": "02-18:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0119",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 60,
+      "source_sha256": "b1e94ec95a394d4dce48c5623f72d4d92723bdc137a15d4d32b0d68c44ee9c6e",
+      "target": "```mermaid\nflowchart TD\n    A[Start: Feature Selection] --> B{How many features?}\n    B -->|\"< 50\"| C[\"Start with variance threshold + mutual information\"]\n    B -->|\"50-500\"| D[\"Variance threshold, then L1 or tree importance\"]\n    B -->|\"> 500\"| E[\"Variance threshold, then mutual info filter, then RFE on survivors\"]\n\n    C --> F{Using linear model?}\n    D --> F\n    E --> F\n\n    F -->|Yes| G[\"L1 regularization for final selection\"]\n    F -->|No - trees| H[\"Tree importance + permutation importance\"]\n    F -->|No - other| I[\"RFE with your model\"]\n\n    G --> J[Validate: compare selected vs all features]\n    H --> J\n    I --> J\n\n    J --> K{Performance improved?}\n    K -->|Yes| L[\"Ship with selected features\"]\n    K -->|No| M[\"Try different method or keep all features\"]\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0121",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 61,
+      "source_sha256": "05ab7d6bcea49d169e01b78fa756a9ebe2d907ede4d572472b9e5532ec212968",
+      "target": "```figure\nf3-feature-prune\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0123",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "02-18:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 1: Generate synthetic data with known feature structure"
+      ],
+      "ordinal": 63,
+      "source_sha256": "5ea606956ea151bbac7538b7d23e3480aa4a123e0335e49f013554eb0f12db5d",
+      "target": "### 步骤 1：生成特征结构已知的合成数据\n"
+    },
+    {
+      "segment_id": "02-18:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 1: Generate synthetic data with known feature structure"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 1: Generate synthetic data with known feature structure"
+      ],
+      "ordinal": 64,
+      "source_sha256": "c18fc918bc6c05974bfaa5f564ee522499d77d227e6a781bdbc5f68cd428840e",
+      "target": "```python\nimport numpy as np\n\n\ndef make_feature_selection_data(n_samples=500, seed=42):\n    rng = np.random.RandomState(seed)\n\n    x1 = rng.randn(n_samples)\n    x2 = rng.randn(n_samples)\n    x3 = rng.randn(n_samples)\n    x4 = x1 + 0.1 * rng.randn(n_samples)\n    x5 = x2 + 0.1 * rng.randn(n_samples)\n\n    informative = np.column_stack([x1, x2, x3, x4, x5])\n\n    correlated = np.column_stack([\n        x1 * 0.9 + 0.1 * rng.randn(n_samples),\n        x2 * 0.8 + 0.2 * rng.randn(n_samples),\n        x3 * 0.7 + 0.3 * rng.randn(n_samples),\n        x1 * 0.5 + x2 * 0.5 + 0.1 * rng.randn(n_samples),\n        x2 * 0.6 + x3 * 0.4 + 0.1 * rng.randn(n_samples),\n    ])\n\n    noise = rng.randn(n_samples, 10) * 0.5\n\n    X = np.hstack([informative, correlated, noise])\n    y = (2 * x1 - 1.5 * x2 + x3 + 0.5 * rng.randn(n_samples) > 0).astype(int)\n\n    feature_names = (\n        [f\"info_{i}\" for i in range(5)]\n        + [f\"corr_{i}\" for i in range(5)]\n        + [f\"noise_{i}\" for i in range(10)]\n    )\n\n    return X, y, feature_names\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 1: Generate synthetic data with known feature structure"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 1: Generate synthetic data with known feature structure"
+      ],
+      "ordinal": 65,
+      "source_sha256": "ace6a2451ee54b0459dfc8a8c92817ef3cd69d9235690d1f4dcea24e8bb6d01b",
+      "target": "我们知道真实情况：特征 0-4 含有信息（其中 3 和 4 还是 0 和 1 的相关副本），特征 5-9 与信息特征相关，特征 10-19 是纯噪声。好的选择方法应将 0-4 排在最前面，将 10-19 排在最后面。\n"
+    },
+    {
+      "segment_id": "02-18:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 1: Generate synthetic data with known feature structure"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 2: Variance threshold"
+      ],
+      "ordinal": 66,
+      "source_sha256": "eebc1bf0d009f631fd4925f7cfb17d4e4e6877ad60c4f9a7756a4b84025de0ec",
+      "target": "### 步骤 2：方差阈值\n"
+    },
+    {
+      "segment_id": "02-18:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 2: Variance threshold"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0133",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 2: Variance threshold"
+      ],
+      "ordinal": 67,
+      "source_sha256": "1a5da816956d57bcc6f90c3aa57fab00622d3add086e9f9724c236e3fdf90678",
+      "target": "```python\ndef variance_threshold(X, threshold=0.01):\n    variances = np.var(X, axis=0)\n    mask = variances > threshold\n    return mask, variances\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 2: Variance threshold"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 3: Mutual information (discrete)"
+      ],
+      "ordinal": 68,
+      "source_sha256": "0a1d9e116ebfe26529dfc9d5c5ed96be8ad53739a220dbb88cec9f037a7b5055",
+      "target": "### 步骤 3：互信息（离散）\n"
+    },
+    {
+      "segment_id": "02-18:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 3: Mutual information (discrete)"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0137",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 3: Mutual information (discrete)"
+      ],
+      "ordinal": 69,
+      "source_sha256": "08649795d207b7fe5390faada43e24c1c3977c54ae383081b08600dc5acd89e5",
+      "target": "```python\ndef discretize(x, n_bins=10):\n    min_val, max_val = x.min(), x.max()\n    if max_val == min_val:\n        return np.zeros_like(x, dtype=int)\n    bin_edges = np.linspace(min_val, max_val, n_bins + 1)\n    binned = np.digitize(x, bin_edges[1:-1])\n    return binned\n\n\ndef mutual_information(X, y, n_bins=10):\n    n_samples, n_features = X.shape\n    mi_scores = np.zeros(n_features)\n\n    y_vals, y_counts = np.unique(y, return_counts=True)\n    p_y = y_counts / n_samples\n\n    for f in range(n_features):\n        x_binned = discretize(X[:, f], n_bins)\n        x_vals, x_counts = np.unique(x_binned, return_counts=True)\n        p_x = dict(zip(x_vals, x_counts / n_samples))\n\n        mi = 0.0\n        for xv in x_vals:\n            for yi, yv in enumerate(y_vals):\n                joint_mask = (x_binned == xv) & (y == yv)\n                p_xy = np.sum(joint_mask) / n_samples\n                if p_xy > 0:\n                    mi += p_xy * np.log(p_xy / (p_x[xv] * p_y[yi]))\n        mi_scores[f] = mi\n\n    return mi_scores\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 3: Mutual information (discrete)"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0139",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 4: Recursive Feature Elimination"
+      ],
+      "ordinal": 70,
+      "source_sha256": "d5170b5d318ac8cd4407f0e04dc30c40803d1178b05298899dfe2a18213225d9",
+      "target": "### 步骤 4：递归特征消除\n"
+    },
+    {
+      "segment_id": "02-18:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 4: Recursive Feature Elimination"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0141",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 4: Recursive Feature Elimination"
+      ],
+      "ordinal": 71,
+      "source_sha256": "5717327310e1a01c25a6673f15299df88a4a366b2c32abce121d9d327f371fd1",
+      "target": "```python\ndef simple_logistic_importance(X, y, lr=0.1, epochs=100):\n    n_samples, n_features = X.shape\n    w = np.zeros(n_features)\n    b = 0.0\n\n    for _ in range(epochs):\n        z = X @ w + b\n        pred = 1.0 / (1.0 + np.exp(-np.clip(z, -500, 500)))\n        error = pred - y\n        w -= lr * (X.T @ error) / n_samples\n        b -= lr * np.mean(error)\n\n    return w, b\n\n\ndef rfe(X, y, n_features_to_select=5, lr=0.1, epochs=100):\n    n_total = X.shape[1]\n    remaining = list(range(n_total))\n    rankings = np.ones(n_total, dtype=int)\n    rank = n_total\n\n    while len(remaining) > n_features_to_select:\n        X_subset = X[:, remaining]\n        w, _ = simple_logistic_importance(X_subset, y, lr, epochs)\n        importances = np.abs(w)\n\n        least_idx = np.argmin(importances)\n        original_idx = remaining[least_idx]\n        rankings[original_idx] = rank\n        rank -= 1\n        remaining.pop(least_idx)\n\n    for idx in remaining:\n        rankings[idx] = 1\n\n    selected_mask = rankings == 1\n    return selected_mask, rankings\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 4: Recursive Feature Elimination"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0143",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 5: L1 feature selection"
+      ],
+      "ordinal": 72,
+      "source_sha256": "d3ca79abb60d75ad1d5f99d3e358a5cb211ad7ead14722f6be2deb115ef2122a",
+      "target": "### 步骤 5：L1 特征选择\n"
+    },
+    {
+      "segment_id": "02-18:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 5: L1 feature selection"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0145",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 5: L1 feature selection"
+      ],
+      "ordinal": 73,
+      "source_sha256": "03a07fd992abb2a04ddb40a075bf6ba87f269ba37994050add111bf9707e61f6",
+      "target": "```python\ndef soft_threshold(w, alpha):\n    return np.sign(w) * np.maximum(np.abs(w) - alpha, 0)\n\n\ndef l1_feature_selection(X, y, alpha=0.1, lr=0.01, epochs=500):\n    n_samples, n_features = X.shape\n    w = np.zeros(n_features)\n    b = 0.0\n\n    for _ in range(epochs):\n        z = X @ w + b\n        pred = 1.0 / (1.0 + np.exp(-np.clip(z, -500, 500)))\n        error = pred - y\n\n        gradient_w = (X.T @ error) / n_samples\n        gradient_b = np.mean(error)\n\n        w -= lr * gradient_w\n        w = soft_threshold(w, lr * alpha)\n        b -= lr * gradient_b\n\n    selected_mask = np.abs(w) > 1e-6\n    return selected_mask, w\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 5: L1 feature selection"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 6: Tree-based importance (simple decision tree)"
+      ],
+      "ordinal": 74,
+      "source_sha256": "3131e8c242bf9f77907ab7bba68c9de4241e0c7a1a8111b6db02aa6d39dbbc72",
+      "target": "### 步骤 6：基于树的重要性（简单决策树）\n"
+    },
+    {
+      "segment_id": "02-18:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 6: Tree-based importance (simple decision tree)"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0149",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 6: Tree-based importance (simple decision tree)"
+      ],
+      "ordinal": 75,
+      "source_sha256": "7fa1c67b87b16a73552032d4b8f4e13f9eac5e7b0fcac124d9fa4efaef7e277d",
+      "target": "```python\ndef gini_impurity(y):\n    if len(y) == 0:\n        return 0.0\n    classes, counts = np.unique(y, return_counts=True)\n    probs = counts / len(y)\n    return 1.0 - np.sum(probs ** 2)\n\n\ndef best_split(X, y, feature_idx):\n    values = np.unique(X[:, feature_idx])\n    if len(values) <= 1:\n        return None, -1.0\n\n    best_threshold = None\n    best_gain = -1.0\n    parent_gini = gini_impurity(y)\n    n = len(y)\n\n    for i in range(len(values) - 1):\n        threshold = (values[i] + values[i + 1]) / 2.0\n        left_mask = X[:, feature_idx] <= threshold\n        right_mask = ~left_mask\n\n        n_left = np.sum(left_mask)\n        n_right = np.sum(right_mask)\n\n        if n_left == 0 or n_right == 0:\n            continue\n\n        gain = parent_gini - (n_left / n) * gini_impurity(y[left_mask]) - (n_right / n) * gini_impurity(y[right_mask])\n\n        if gain > best_gain:\n            best_gain = gain\n            best_threshold = threshold\n\n    return best_threshold, best_gain\n\n\ndef tree_importance(X, y, n_trees=50, max_depth=5, seed=42):\n    rng = np.random.RandomState(seed)\n    n_samples, n_features = X.shape\n    importances = np.zeros(n_features)\n\n    for _ in range(n_trees):\n        sample_idx = rng.choice(n_samples, size=n_samples, replace=True)\n        feature_subset = rng.choice(n_features, size=max(1, int(np.sqrt(n_features))), replace=False)\n\n        X_boot = X[sample_idx]\n        y_boot = y[sample_idx]\n\n        tree_imp = _build_tree_importance(X_boot, y_boot, feature_subset, max_depth)\n        importances += tree_imp\n\n    total = importances.sum()\n    if total > 0:\n        importances /= total\n\n    return importances\n\n\ndef _build_tree_importance(X, y, feature_subset, max_depth, depth=0):\n    n_features = X.shape[1]\n    importances = np.zeros(n_features)\n\n    if depth >= max_depth or len(np.unique(y)) <= 1 or len(y) < 4:\n        return importances\n\n    best_feature = None\n    best_threshold = None\n    best_gain = -1.0\n\n    for f in feature_subset:\n        threshold, gain = best_split(X, y, f)\n        if gain > best_gain:\n            best_gain = gain\n            best_feature = f\n            best_threshold = threshold\n\n    if best_feature is None or best_gain <= 0:\n        return importances\n\n    importances[best_feature] += best_gain * len(y)\n\n    left_mask = X[:, best_feature] <= best_threshold\n    right_mask = ~left_mask\n\n    importances += _build_tree_importance(X[left_mask], y[left_mask], feature_subset, max_depth, depth + 1)\n    importances += _build_tree_importance(X[right_mask], y[right_mask], feature_subset, max_depth, depth + 1)\n\n    return importances\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 6: Tree-based importance (simple decision tree)"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0151",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 7: Run all methods and compare"
+      ],
+      "ordinal": 76,
+      "source_sha256": "480ef6b86c6b873f03351589d1b5323537a32a6843ea6b06d9eac5dda64f4ea2",
+      "target": "### 步骤 7：运行所有方法并比较\n"
+    },
+    {
+      "segment_id": "02-18:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 7: Run all methods and compare"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 7: Run all methods and compare"
+      ],
+      "ordinal": 77,
+      "source_sha256": "07d0f943d5c95acfdaddb7765e187474d8fb82edbc9e3021662ad00348a24afd",
+      "target": "代码文件会在同一个合成数据集上运行全部五种方法，并打印对比表，展示每种方法选中了哪些特征。\n"
+    },
+    {
+      "segment_id": "02-18:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Build It",
+        "### Step 7: Run all methods and compare"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0155",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "02-18:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "9e6fc1f71b52270c63d42a0145c3b6b1d1896dd05ea7dbee054847e60b03ae82",
+      "target": "在 scikit-learn 中，特征选择内置于流水线中：\n"
+    },
+    {
+      "segment_id": "02-18:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0159",
+      "kind": "fence",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "469f9df9fb1983ff9932569fa8407e7b7abb3b8962a02740ab024f9feb31ebee",
+      "target": "```python\nfrom sklearn.feature_selection import (\n    VarianceThreshold,\n    mutual_info_classif,\n    RFE,\n    SelectFromModel,\n)\nfrom sklearn.linear_model import Lasso, LogisticRegression\nfrom sklearn.ensemble import RandomForestClassifier\n\nvt = VarianceThreshold(threshold=0.01)\nX_filtered = vt.fit_transform(X)\n\nmi_scores = mutual_info_classif(X, y)\ntop_k = np.argsort(mi_scores)[-10:]\n\nrfe_selector = RFE(LogisticRegression(), n_features_to_select=10)\nrfe_selector.fit(X, y)\nX_rfe = rfe_selector.transform(X)\n\nlasso_selector = SelectFromModel(Lasso(alpha=0.01))\nlasso_selector.fit(X, y)\nX_lasso = lasso_selector.transform(X)\n\nrf = RandomForestClassifier(n_estimators=100)\nrf.fit(X, y)\nimportances = rf.feature_importances_\n```\n"
+    },
+    {
+      "segment_id": "02-18:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0161",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "1354791dc244c6b696feb904914a0711286bdd79416b30665cf4513fa555a0c8",
+      "target": "从零实现能清楚展示每种方法内部发生的事情。方差阈值不过是计算 `var(X, axis=0)`，然后应用掩码。互信息是在列联表中统计联合频数与边缘频数。RFE 是训练、排序、删减的循环。L1 是带有软阈值步骤的梯度下降。树重要性累计各次划分带来的不纯度下降量。没有魔法，只有统计和循环。\n"
+    },
+    {
+      "segment_id": "02-18:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0163",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 82,
+      "source_sha256": "d8acae7355ccd36b5d2f98575ee22d2cdaff6bfdc507678c77ed48751e63376c",
+      "target": "sklearn 版本增加了稳健性（例如 mutual_info_classif 使用 k-NN 密度估计，而不是分箱）、速度（C 实现）以及与流水线的集成。\n"
+    },
+    {
+      "segment_id": "02-18:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Use It"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0165",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Ship It"
+      ],
+      "ordinal": 83,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "02-18:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Ship It"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0167",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Feature Selection",
+        "## Ship It"
+      ],
+      "ordinal": 84,
+      "source_sha256": "c506788035ffd5e6051e4c9d8911960f1971335c2f41277c73e3ac24eade1314",
+      "target": "本课会生成：\n- `outputs/skill-feature-selector.md` - 用于选择合适特征选择方法的速查决策树\n"
+    },
+    {
+      "segment_id": "02-18:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Ship It"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0169",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "02-18:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0171",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "d5735b5ecf370e907698348dd013412fe9253f5afba3087ad4dd4317af93e6de",
+      "target": "1. **前向选择**：实现与 RFE 相反的过程。从零个特征开始，每一步加入最能提升模型性能的特征。增加特征不再带来帮助时停止。将选出的特征与 RFE 的结果比较。哪一种更快？哪一种效果更好？\n"
+    },
+    {
+      "segment_id": "02-18:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0173",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "0fd7715fc53a44ec511e0caee39723359e9b284d1ae374c1ca16732983219c71",
+      "target": "2. **稳定性选择**：运行 50 次 L1 特征选择，每次随机抽取 80% 的数据作为子样本，并使用略有不同的 alpha 值。统计每个特征被选中的次数。被选中的运行占比 > 80% 的特征被视为“稳定”。将这些稳定特征与单次 L1 选择的结果比较。哪一种更可靠？\n"
+    },
+    {
+      "segment_id": "02-18:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0175",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 88,
+      "source_sha256": "34c2bd5c7552f444de27117b7d61363cf44803073ff0e893951cf3c2b0ac3ec7",
+      "target": "3. **多重共线性检测**：计算所有特征的相关矩阵。实现一个函数，在给定相关性阈值（例如 0.9）后，从每对高度相关的特征中删除一个，保留与目标互信息更高的那个。在合成数据集上测试，并验证它会移除冗余的相关特征。\n"
+    },
+    {
+      "segment_id": "02-18:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0177",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 89,
+      "source_sha256": "5c20f3e2a02bab5d1e03e116cb6c9bf943081b715730f4071c1f986c058abe3b",
+      "target": "4. **特征选择流水线**：将方差阈值、互信息过滤和 RFE 串成一条流水线。先移除方差接近零的特征，再保留互信息最高的 50%，最后对剩余特征运行 RFE。将这条流水线与直接对全部特征运行 RFE 进行比较。流水线是否更快？准确性是否相同？\n"
+    },
+    {
+      "segment_id": "02-18:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0179",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 90,
+      "source_sha256": "1b121de439f6612ed4ff8e0ae0e3e5970936fd621ae67373fff386a113bc516f",
+      "target": "5. **从零实现置换重要性**：实现置换重要性。对每个特征，将其值打乱 10 次，测量 F1 分数的平均下降幅度。将得到的排序与基于树的重要性排序比较。找出两者不一致的情况，并解释原因（提示：相关特征）。\n"
+    },
+    {
+      "segment_id": "02-18:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Exercises"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0181",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Key Terms"
+      ],
+      "ordinal": 91,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "02-18:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Key Terms"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0183",
+      "kind": "table",
+      "heading_path": [
+        "# Feature Selection",
+        "## Key Terms"
+      ],
+      "ordinal": 92,
+      "source_sha256": "6086f09421120881edc4551729d57548ffe875d753f5bde0e9307f6267151abf",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 过滤法 | “独立地为特征评分” | 一种不训练模型、使用统计度量为特征排序的特征选择方法，单独评估每个特征 |\n| 包裹法 | “用模型挑选特征” | 一种通过训练模型评估特征子集，并以模型性能作为选择标准的特征选择方法 |\n| 嵌入法 | “模型在训练过程中选择特征” | 作为模型拟合的一部分进行的特征选择，例如 L1 正则化使权重变为零 |\n| 互信息 | “一个变量能提供多少关于另一个变量的信息” | 衡量已知 X 后 Y 的不确定性减少了多少，能够捕捉线性和非线性依赖关系 |\n| 递归特征消除 | “训练、排序、删减、重复” | 一种迭代式包裹法：训练模型，删除最不重要的一个或多个特征，重复直到达到目标数量 |\n| L1 / Lasso 正则化 | “使特征失效的惩罚项” | 将权重绝对值之和加入损失函数，使不重要特征的权重恰好变为零 |\n| 方差阈值 | “移除常量特征” | 删除样本间方差低于指定阈值的特征，过滤掉不携带信息的特征 |\n| 特征重要性 | “哪些特征最重要” | 表示每个特征对模型预测贡献程度的分数，由划分增益（树模型）或系数绝对值（线性模型）计算得到 |\n| 置换重要性 | “打乱后测量损害” | 随机打乱每个特征的值，并测量由此导致的模型性能下降，以评估特征重要性 |\n| 维度灾难 | “特征太多，数据太少” | 增加特征使特征空间体积呈指数增长，导致数据稀疏、距离失去意义的现象 |\n"
+    },
+    {
+      "segment_id": "02-18:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Key Terms"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0185",
+      "kind": "heading",
+      "heading_path": [
+        "# Feature Selection",
+        "## Further Reading"
+      ],
+      "ordinal": 93,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "02-18:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# Feature Selection",
+        "## Further Reading"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-18:b0187",
+      "kind": "list",
+      "heading_path": [
+        "# Feature Selection",
+        "## Further Reading"
+      ],
+      "ordinal": 94,
+      "source_sha256": "b223683ee2f40b369a416c6cd32ce2a5104df03f5d49a753fe0141000eb87f36",
+      "target": "- [变量与特征选择入门（Guyon & Elisseeff，2003）](https://jmlr.org/papers/v3/guyon03a.html) - 关于特征选择方法的奠基性综述，至今仍被广泛引用\n- [scikit-learn 特征选择指南](https://scikit-learn.org/stable/modules/feature_selection.html) - 过滤法、包裹法和嵌入法的实用参考，附代码示例\n- [稳定性选择（Meinshausen & Buhlmann，2010）](https://arxiv.org/abs/0809.2932) - 将子采样与特征选择结合，获得稳健、可复现的结果\n- [警惕默认的随机森林重要性（Strobl 等，2007）](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25) - 展示基于树的重要性中的基数偏差，并提出条件重要性作为替代方法\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": []
+}

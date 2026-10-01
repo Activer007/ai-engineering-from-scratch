@@ -1,0 +1,2574 @@
+{
+  "schema_version": 1,
+  "lesson_id": "01-11",
+  "source_path": "phases/01-math-foundations/11-singular-value-decomposition/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "79ea8819c7902c8002b2d6bd65979a7c6234f612",
+  "source_sha256": "8cd08bd71af0e84ef70159d67acf7b0781860dd567dd060b037c3923ae27c214",
+  "target_path": "i18n/zh/phases/01-math-foundations/11-singular-value-decomposition/docs/zh.md",
+  "target_sha256": "629aca4d03912b5f771f5ebd9c733945df70ec28b03e9cf1faaf931a0ed877bd",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "01-11:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition"
+      ],
+      "ordinal": 1,
+      "source_sha256": "e2489538375a07a4994486dba0d931b652cdaa88324e957c04594fcf787d48e8",
+      "target": "# 奇异值分解\n"
+    },
+    {
+      "segment_id": "01-11:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Singular Value Decomposition"
+      ],
+      "ordinal": 2,
+      "source_sha256": "7515cfe9710fbe7c2697661fb5db8c047a88cead171c72d937823c3445feea23",
+      "target": "> 奇异值分解（SVD）是线性代数中的瑞士军刀。每个矩阵都有 SVD，每位数据科学家都需要掌握它。\n"
+    },
+    {
+      "segment_id": "01-11:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition"
+      ],
+      "ordinal": 3,
+      "source_sha256": "48eb80ac9978e43a70ddc276e9539da31a41aa8294dac5fdfd7231afbc8538ea",
+      "target": "**Type:** Build\n**Languages:** Python, Julia\n**Prerequisites:** 阶段 1，第 01 课（线性代数直觉）、第 02 课（向量与矩阵运算）、第 03 课（矩阵变换）\n**Time:** ~120 分钟\n"
+    },
+    {
+      "segment_id": "01-11:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "01-11:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "40168d93b6c4003e211ec37a40484b3a9bef12b1c8818edbd8c41bdb75b5a1e9",
+      "target": "- 通过幂迭代实现 SVD，并解释 U、Sigma 和 V^T 的几何意义\n- 将截断 SVD 用于图像压缩，并衡量压缩比与重建误差之间的关系\n- 通过 SVD 计算 Moore-Penrose 伪逆，以求解超定最小二乘系统\n- 将 SVD 与主成分分析（PCA）、推荐系统（潜在因子）以及自然语言处理（NLP）中的潜在语义分析联系起来\n"
+    },
+    {
+      "segment_id": "01-11:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "01-11:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "40578720fd8389ad01c33fe473c27402207a1d72fa7c12e7b40d1d90eebf2752",
+      "target": "你有一个 1000x2000 的矩阵。它可能是用户对电影的评分，也可能是文档与词语的频次表，或者一幅图像的像素值。你需要压缩它、去除噪声、发现隐藏结构，或者用它求解最小二乘系统。特征分解只适用于方阵。即便如此，它也要求矩阵具有一组完整的线性无关特征向量。\n"
+    },
+    {
+      "segment_id": "01-11:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "4ea8871bb0457a360b0ad47713dad62110672174c765a6b1edfcbb5c5a1375f5",
+      "target": "SVD 适用于任意矩阵，不限形状、不限秩，无须附加条件。它将矩阵分解为三个因子，揭示矩阵如何变换空间的几何本质。它是整个线性代数中最通用、最有用的分解方式。\n"
+    },
+    {
+      "segment_id": "01-11:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "01-11:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 10,
+      "source_sha256": "6fe379ea7246b7fbde898acf6ef93ebe0bee35570bd078b0f03f64a62f37eeed",
+      "target": "### SVD 的几何作用\n"
+    },
+    {
+      "segment_id": "01-11:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 11,
+      "source_sha256": "4d41a60132efc6ce909ae016a193e562b82b9eb90fbed4540193fb9babe6160b",
+      "target": "每个矩阵，无论形状如何，都依次执行三种操作：旋转、缩放、旋转。SVD 将这种分解明确地表示出来。\n"
+    },
+    {
+      "segment_id": "01-11:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 12,
+      "source_sha256": "173df7217eff2f5bcd050b70de535c1f8b3e9e6e251c83d27ec1aade8b278f5d",
+      "target": "```text\nA = U * Sigma * V^T\n\n      m x n     m x m    m x n    n x n\n     (any)    (rotate)  (scale)  (rotate)\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 13,
+      "source_sha256": "fa34d834a72fe90303cf49a51940b31e487ead52fa1b103af15fd652ac28fc79",
+      "target": "给定任意矩阵 A，SVD 将其分解为：\n- V^T 旋转输入空间（n 维）中的向量\n- Sigma 沿各条轴缩放（拉伸或压缩）\n- U 将结果旋转到输出空间（m 维）中\n"
+    },
+    {
+      "segment_id": "01-11:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0027",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 14,
+      "source_sha256": "fb0d3f5c07be28b2d0790840c148204adc5ca14cc2f8f0165c2117a4d760d6d3",
+      "target": "```mermaid\ngraph LR\n    A[\"Input space (n-dim)\\nData cloud\\n(arbitrary orientation)\"] -->|\"V^T\\n(rotate)\"| B[\"Scaled space\\nAligned with axes\\nthen scaled by Sigma\"]\n    B -->|\"U\\n(rotate)\"| C[\"Output space (m-dim)\\nRotated to output\\norientation\"]\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 15,
+      "source_sha256": "9a0ba01ca6b2598c1ce1379ece552ecd6729b2087b824a3c118ae644eeddd63a",
+      "target": "可以这样理解：你把一个矩阵交给 SVD，它告诉你：“这个矩阵对一个球面上的输入，先通过 V^T 进行旋转，再通过 Sigma 将其拉伸为椭球面，最后通过 U 旋转这个椭球面。”奇异值就是椭球各轴的长度。\n"
+    },
+    {
+      "segment_id": "01-11:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### What SVD does geometrically"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### The full decomposition"
+      ],
+      "ordinal": 16,
+      "source_sha256": "3ebca25550de2ab50382e17e5f47e1d40d3bec9996ebd33903d8461b7e0f31cc",
+      "target": "### 完整分解\n"
+    },
+    {
+      "segment_id": "01-11:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### The full decomposition"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### The full decomposition"
+      ],
+      "ordinal": 17,
+      "source_sha256": "eb3bc15b4d809cf6f2cbd39a4de0715ed63de5a40076fe78b1a125043a86752b",
+      "target": "对于形状为 m x n 的矩阵 A：\n"
+    },
+    {
+      "segment_id": "01-11:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### The full decomposition"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### The full decomposition"
+      ],
+      "ordinal": 18,
+      "source_sha256": "cad809e892fc5b11e73595e79a4a298444d20f38637169db4567c4ea564927b6",
+      "target": "```text\nA = U * Sigma * V^T\n\nwhere:\n  U     is m x m, orthogonal (U^T U = I)\n  Sigma is m x n, diagonal (singular values on the diagonal)\n  V     is n x n, orthogonal (V^T V = I)\n\nThe singular values sigma_1 >= sigma_2 >= ... >= sigma_r > 0\nwhere r = rank(A)\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### The full decomposition"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### The full decomposition"
+      ],
+      "ordinal": 19,
+      "source_sha256": "9204c2e556f69689f9f39ef2aeb3a4c21797899a478406f5c062c6f97fbb35be",
+      "target": "U 的列称为左奇异向量，V 的列称为右奇异向量，Sigma 的对角元素称为奇异值。奇异值始终非负，通常按降序排列。\n"
+    },
+    {
+      "segment_id": "01-11:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### The full decomposition"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01f27834169ade3e2540dce8e4b9ce5c906facc05623b6fa90feedcf77b479ae",
+      "target": "### 左奇异向量、奇异值与右奇异向量\n"
+    },
+    {
+      "segment_id": "01-11:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 21,
+      "source_sha256": "7f6c6a92a3565f2fb0c1aabb6bc495819238a044c97620e4a0a2351c33710cef",
+      "target": "SVD 的每个组成部分都有各自明确的几何意义。\n"
+    },
+    {
+      "segment_id": "01-11:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 22,
+      "source_sha256": "3c94f040883693b100d089882436ec9bce1b276293daa676dfe062d04730fbc8",
+      "target": "**右奇异向量（V 的列）：** 它们构成输入空间 (R^n) 的一组标准正交基。矩阵会将输入空间中的这些方向映射为输出空间中的正交方向。可以把它们看作定义域的自然坐标系。\n"
+    },
+    {
+      "segment_id": "01-11:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 23,
+      "source_sha256": "017688a23500a893dbd316ac3c93c55ec2e6c849dea5c570bfc233982ffea7f9",
+      "target": "**奇异值（Sigma 的对角元素）：** 它们是缩放系数。第 i 个奇异值表示，矩阵会将沿第 i 个右奇异向量方向的向量拉伸多少。奇异值为零，意味着矩阵将该方向完全压扁。\n"
+    },
+    {
+      "segment_id": "01-11:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 24,
+      "source_sha256": "bd7bf3a912cbee854b1b58b87b8a722d30a3e9030bd7d4c175e919ec7f022e5b",
+      "target": "**左奇异向量（U 的列）：** 它们构成输出空间 (R^m) 的一组标准正交基。第 i 个左奇异向量是第 i 个右奇异向量在缩放后映射到的输出空间方向。\n"
+    },
+    {
+      "segment_id": "01-11:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 25,
+      "source_sha256": "f63d095d41020b01a2dccd0518a266876db03889fa7032196e9fd06598a42b88",
+      "target": "它们之间的关系为：\n"
+    },
+    {
+      "segment_id": "01-11:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 26,
+      "source_sha256": "d145c60388bc7c4f42766087bdd41a46e2a13b35873ac239b7df8ff829c267e3",
+      "target": "```text\nA * v_i = sigma_i * u_i\n\nThe matrix A takes the i-th right singular vector v_i,\nscales it by sigma_i, and maps it to the i-th left singular vector u_i.\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 27,
+      "source_sha256": "2d5e6b3739274c884f98000724ccaf650a78581fc5a7911166beface1e953b5f",
+      "target": "这样，你就能逐个坐标方向地理解任意矩阵的作用。\n"
+    },
+    {
+      "segment_id": "01-11:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Left singular vectors, singular values, right singular vectors"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 28,
+      "source_sha256": "2a672b661a78b73239832bffa059a5d3b626522711d72f3f078ce45283526f2c",
+      "target": "### 外积形式\n"
+    },
+    {
+      "segment_id": "01-11:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 29,
+      "source_sha256": "1cfd327c6ee51ca40196ac72bee9961fd171620c4d2a370a7aafef6e92585611",
+      "target": "SVD 可以写成若干个秩为 1 的矩阵之和：\n"
+    },
+    {
+      "segment_id": "01-11:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0059",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 30,
+      "source_sha256": "0b07aa626b2252412230013fca8732994e334e0f43efbe1dbb1504cdb630bd68",
+      "target": "```text\nA = sigma_1 * u_1 * v_1^T + sigma_2 * u_2 * v_2^T + ... + sigma_r * u_r * v_r^T\n\nEach term sigma_i * u_i * v_i^T is a rank-1 matrix (an outer product).\nThe full matrix is the sum of r such matrices, where r is the rank.\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 31,
+      "source_sha256": "a892084e2c6c4134407fb04008be05ab14376e2286d69ce3ff1c6400eb905d36",
+      "target": "这种形式是低秩近似的基础。每一项都增加一层结构。第一项捕捉最重要的单个模式，第二项捕捉次重要的模式，以此类推。截断这个和式，就能得到任意给定秩下的最佳近似。\n"
+    },
+    {
+      "segment_id": "01-11:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 32,
+      "source_sha256": "1deb424b7019df12cc96d493d529b9ab5011b39c4761a59dd7e73039267f831f",
+      "target": "```text\nRank-1 approx:    A_1 = sigma_1 * u_1 * v_1^T\n                  (captures the dominant pattern)\n\nRank-2 approx:    A_2 = sigma_1 * u_1 * v_1^T + sigma_2 * u_2 * v_2^T\n                  (captures the two most important patterns)\n\nRank-k approx:    A_k = sum of top k terms\n                  (optimal by the Eckart-Young theorem)\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Outer product form"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Relationship to eigendecomposition"
+      ],
+      "ordinal": 33,
+      "source_sha256": "4a4b4de3fbee328b9afd84900afd200bb7fc7c5705e3452f1b09a58475fd0b50",
+      "target": "### 与特征分解的关系\n"
+    },
+    {
+      "segment_id": "01-11:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Relationship to eigendecomposition"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Relationship to eigendecomposition"
+      ],
+      "ordinal": 34,
+      "source_sha256": "ce1291a556a18bb3eb45c9adad238b7031d2b71d1c77a023f6e3b4884bab7cc6",
+      "target": "SVD 与特征分解有着深刻的联系。A 的奇异值和奇异向量直接来自 A^T A 与 A A^T 的特征值和特征向量。\n"
+    },
+    {
+      "segment_id": "01-11:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Relationship to eigendecomposition"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Relationship to eigendecomposition"
+      ],
+      "ordinal": 35,
+      "source_sha256": "e57fc46a6e3b32859e1ef72cf1479e81f249a8425bc7bb8f9f0634d1b03bcb69",
+      "target": "```text\nA^T A = V * Sigma^T * U^T * U * Sigma * V^T\n      = V * Sigma^T * Sigma * V^T\n      = V * D * V^T\n\nwhere D = Sigma^T * Sigma is a diagonal matrix with sigma_i^2 on the diagonal.\n\nSo:\n- The right singular vectors (V) are eigenvectors of A^T A\n- The singular values squared (sigma_i^2) are eigenvalues of A^T A\n\nSimilarly:\nA A^T = U * Sigma * V^T * V * Sigma^T * U^T\n      = U * Sigma * Sigma^T * U^T\n\nSo:\n- The left singular vectors (U) are eigenvectors of A A^T\n- The eigenvalues of A A^T are also sigma_i^2\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Relationship to eigendecomposition"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Relationship to eigendecomposition"
+      ],
+      "ordinal": 36,
+      "source_sha256": "9a36312becde98abdb3de0f8f31f7be2872921e5375a7c6b579e116e8ed9c1d6",
+      "target": "这种联系说明了三点：\n1. 奇异值始终是非负实数，因为它们是半正定矩阵特征值的平方根。\n2. 你可以通过对 A^T A 做特征分解来计算 SVD，但这会使条件数平方，损失数值精度。专门的 SVD 算法可以避免这个问题。\n3. 当 A 是对称半正定方阵时，SVD 与特征分解就是同一回事。\n"
+    },
+    {
+      "segment_id": "01-11:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Relationship to eigendecomposition"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 37,
+      "source_sha256": "527006563ddd6ff6064289155f4cd70624b6b7f91c816078ca8ebed219df46f7",
+      "target": "### 截断 SVD：低秩近似\n"
+    },
+    {
+      "segment_id": "01-11:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 38,
+      "source_sha256": "205997fed7f259ae22c0b2cb5cab98a5b8e04136ef1f015ac75cd7b62fb6d8af",
+      "target": "Eckart-Young-Mirsky 定理指出，只保留最大的 k 个奇异值及其对应向量，就能得到 A 的最佳秩 k 近似，对 Frobenius 范数和谱范数都成立：\n"
+    },
+    {
+      "segment_id": "01-11:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0077",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 39,
+      "source_sha256": "ea742c73352692982791d03bbc4beac184452fff4f8102da22514fa8d98f4412",
+      "target": "```text\nA_k = U_k * Sigma_k * V_k^T\n\nwhere:\n  U_k     is m x k  (first k columns of U)\n  Sigma_k is k x k  (top-left k x k block of Sigma)\n  V_k     is n x k  (first k columns of V)\n\nApproximation error = sigma_{k+1}  (in spectral norm)\n                    = sqrt(sigma_{k+1}^2 + ... + sigma_r^2)  (in Frobenius norm)\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 40,
+      "source_sha256": "3475e02e3498869723167da223c5a5a1e278c226d33d66ee183604dfe5a1ce1b",
+      "target": "这不仅是一个“不错的”近似，而是可以证明的最佳秩 k 近似。没有其他秩为 k 的矩阵能比它更接近 A。\n"
+    },
+    {
+      "segment_id": "01-11:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0081",
+      "kind": "table",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 41,
+      "source_sha256": "020c36da3a76c56d9c2c5e23d249775609758697f9869aaa9aaf2a1c5ee28cb6",
+      "target": "| 分量 | 相对大小 | 是否保留在秩 3 近似中？ |\n|-----------|-------------------|------------------------|\n| sigma_1 | 最大 | 是 |\n| sigma_2 | 大 | 是 |\n| sigma_3 | 中等偏大 | 是 |\n| sigma_4 | 中等 | 否（计入误差） |\n| sigma_5 | 中等偏小 | 否（计入误差） |\n| sigma_6 | 小 | 否（计入误差） |\n| sigma_7 | 很小 | 否（计入误差） |\n| sigma_8 | 极小 | 否（计入误差） |\n"
+    },
+    {
+      "segment_id": "01-11:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 42,
+      "source_sha256": "4d5a3af313dd8dc3fec350fce570604f394e1ed05a2a04dac444571a301f2a0d",
+      "target": "保留最大的 3 个：A_3 捕捉三个最大的奇异值。误差 = 剩余的值（从 sigma_4 到 sigma_8）。\n"
+    },
+    {
+      "segment_id": "01-11:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 43,
+      "source_sha256": "3b42b98c379e9846b172462dce66744698b9c54cdfa9c4cfb123122314e8a97c",
+      "target": "如果奇异值衰减很快，较小的 k 就能捕捉矩阵的大部分信息。如果它们衰减缓慢，矩阵就不具有低秩结构。\n"
+    },
+    {
+      "segment_id": "01-11:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Truncated SVD: low-rank approximation"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Image compression with SVD"
+      ],
+      "ordinal": 44,
+      "source_sha256": "1f4dde5df2cffce689ba7fd9739512e2998eefc85b916a29f51d4820f062120b",
+      "target": "### 用 SVD 压缩图像\n"
+    },
+    {
+      "segment_id": "01-11:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Image compression with SVD"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Image compression with SVD"
+      ],
+      "ordinal": 45,
+      "source_sha256": "7468c10dd1708a55c429d7d57994e1018936d542fd24cf6f5931af53cdd426d5",
+      "target": "灰度图像是由像素强度组成的矩阵。一幅 800x600 的图像包含 480,000 个值。SVD 能让你用少得多的值来近似表示它。\n"
+    },
+    {
+      "segment_id": "01-11:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Image compression with SVD"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0091",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Image compression with SVD"
+      ],
+      "ordinal": 46,
+      "source_sha256": "a7d305bd6a90da939f4cf808960f2ac45ef1a244908941ec23fb1ff180815826",
+      "target": "```text\nOriginal image: 800 x 600 = 480,000 values\n\nSVD with rank k:\n  U_k:      800 x k values\n  Sigma_k:  k values\n  V_k:      600 x k values\n  Total:    k * (800 + 600 + 1) = k * 1401 values\n\n  k=10:   14,010 values   (2.9% of original)\n  k=50:   70,050 values  (14.6% of original)\n  k=100: 140,100 values  (29.2% of original)\n\n  The compression ratio improves as k gets smaller,\n  but visual quality degrades.\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Image compression with SVD"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Image compression with SVD"
+      ],
+      "ordinal": 47,
+      "source_sha256": "3a50a45e10268392b3ed6eab571802ef111f9fbee40f55d5b4a0a43620b00e4e",
+      "target": "关键在于：自然图像的奇异值会迅速衰减。最前面的几个奇异值捕捉整体结构（形状、渐变），后面的奇异值捕捉精细细节和噪声。截断到秩 50，往往就能生成一幅看起来与原图几乎相同的图像，同时减少 85% 的存储量。\n"
+    },
+    {
+      "segment_id": "01-11:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Image compression with SVD"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 48,
+      "source_sha256": "108f5d1f7530575983fc4b4a88fe34c66d8b8db921aacf46f4afea55daa5ea66",
+      "target": "### SVD 在推荐系统中的应用\n"
+    },
+    {
+      "segment_id": "01-11:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 49,
+      "source_sha256": "cd52fc06f43ea31d693030c526f83af5d524457fb839ea8242ba855c4d1bebfd",
+      "target": "Netflix Prize 让这种方法广为人知。你有一个用户与电影的评分矩阵，其中大多数元素缺失。\n"
+    },
+    {
+      "segment_id": "01-11:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 50,
+      "source_sha256": "70bc2bf9ea8ae91b9c92b23f4d84bc1fc0a26a8488a85cbed3153582d780a065",
+      "target": "```text\n             Movie1  Movie2  Movie3  Movie4  Movie5\n  User1      [  5      ?       3       ?       1  ]\n  User2      [  ?      4       ?       2       ?  ]\n  User3      [  3      ?       5       ?       ?  ]\n  User4      [  ?      ?       ?       4       3  ]\n\n  ? = unknown rating\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 51,
+      "source_sha256": "5713b07e4c72f9587f7c5754d5e7ca3d58f62275d94255591aef36759017753c",
+      "target": "思路是：这个评分矩阵具有低秩结构。用户的喜好并非完全独立。少量潜在因子（latent factor），例如偏好动作片还是剧情片、老片还是新片、烧脑体验还是感官刺激，就能解释大多数偏好。\n"
+    },
+    {
+      "segment_id": "01-11:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 52,
+      "source_sha256": "31db21c885a58829835a0711cf1e16f3135c18224b7c57236c511481ee954f11",
+      "target": "对填补后的评分矩阵做 SVD，会将其分解为：\n- U：潜在因子空间中的用户画像\n- Sigma：每个潜在因子的重要性\n- V^T：潜在因子空间中的电影画像\n"
+    },
+    {
+      "segment_id": "01-11:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 53,
+      "source_sha256": "c89a0f9fc3e0adee5a9951c1f063b36c1a57e55d9bf02ecf78bd3109244e6982",
+      "target": "用户对某部电影的预测评分，就是其用户画像与电影画像的点积，并由奇异值加权。低秩近似会填补缺失的元素。\n"
+    },
+    {
+      "segment_id": "01-11:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 54,
+      "source_sha256": "44a303a94593d01121dce68e85bcadddb23dc9cbf0c74255144133e636a74c7a",
+      "target": "实践中，你会使用 Simon Funk 的增量式 SVD 或 ALS（交替最小二乘）等变体，直接处理缺失数据。但核心思路相同：通过 SVD 进行潜在因子分解。\n"
+    },
+    {
+      "segment_id": "01-11:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for recommendation systems"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD in NLP: Latent Semantic Analysis"
+      ],
+      "ordinal": 55,
+      "source_sha256": "f61bc09e40273cbee9977ec09f919b5a2a870d47016707e18af6c808d68641d2",
+      "target": "### SVD 在 NLP 中的应用：潜在语义分析\n"
+    },
+    {
+      "segment_id": "01-11:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD in NLP: Latent Semantic Analysis"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD in NLP: Latent Semantic Analysis"
+      ],
+      "ordinal": 56,
+      "source_sha256": "179f6ad0d03808d564d50b5085c728401ab9060434192da0fd8ea5df6ff43c67",
+      "target": "潜在语义分析（Latent Semantic Analysis，LSA），也称潜在语义索引（Latent Semantic Indexing，LSI），将 SVD 应用于词语与文档构成的矩阵。\n"
+    },
+    {
+      "segment_id": "01-11:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD in NLP: Latent Semantic Analysis"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0113",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD in NLP: Latent Semantic Analysis"
+      ],
+      "ordinal": 57,
+      "source_sha256": "08034b12906e9a22007fa03bd40950f8f1b8984e52b05865f27e62ee962ffb4f",
+      "target": "```text\n             Doc1   Doc2   Doc3   Doc4\n  \"cat\"      [  3      0      1      0  ]\n  \"dog\"      [  2      0      0      1  ]\n  \"fish\"     [  0      4      1      0  ]\n  \"pet\"      [  1      1      1      1  ]\n  \"ocean\"    [  0      3      0      0  ]\n\nAfter SVD with rank k=2:\n\n  Each document becomes a point in 2D \"concept space.\"\n  Each term becomes a point in the same 2D space.\n  Documents about similar topics cluster together.\n  Terms with similar meanings cluster together.\n\n  \"cat\" and \"dog\" end up near each other (land pets).\n  \"fish\" and \"ocean\" end up near each other (water concepts).\n  Doc1 and Doc3 cluster if they share similar topics.\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD in NLP: Latent Semantic Analysis"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD in NLP: Latent Semantic Analysis"
+      ],
+      "ordinal": 58,
+      "source_sha256": "7857551066294bc7e5bf7f08e6ae4cecd1e9dc213b37cb7b953cf69675ca7ead",
+      "target": "LSA 是最早成功从原始文本中捕捉语义相似性的方法之一。它之所以有效，是因为同义词往往出现在相似的文档中，因此 SVD 会将它们归入相同的潜在维度。现代词嵌入（embedding）方法（Word2Vec、GloVe）可以看作这一思路的后继者。\n"
+    },
+    {
+      "segment_id": "01-11:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD in NLP: Latent Semantic Analysis"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 59,
+      "source_sha256": "c9bbf86ce19033a8256e7dbb2d4da54fcdff49efcbc5208e1bea22b45a3f73da",
+      "target": "### 用 SVD 降噪\n"
+    },
+    {
+      "segment_id": "01-11:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 60,
+      "source_sha256": "a627d612ea3cc0434828dc441861793afb8b025657fc2187c871141701040eef",
+      "target": "在含噪数据中，信号集中在最大的奇异值中，而噪声分散在所有奇异值中。截断可以去除噪声底。\n"
+    },
+    {
+      "segment_id": "01-11:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 61,
+      "source_sha256": "7ac9f79a5c67167f5bfca1ff01b33ca9122ec2f8a947d7d84eb84f36294e7a20",
+      "target": "**无噪声信号的奇异值：**\n"
+    },
+    {
+      "segment_id": "01-11:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0123",
+      "kind": "table",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 62,
+      "source_sha256": "bd6a290bdb5a2584d95a3221e33d5229525505d558704da8a39a44a8c205c25e",
+      "target": "| 分量 | 大小 | 类型 |\n|-----------|-----------|------|\n| sigma_1 | 很大 | 信号 |\n| sigma_2 | 大 | 信号 |\n| sigma_3 | 中等 | 信号 |\n| sigma_4 | 接近零 | 可忽略 |\n| sigma_5 | 接近零 | 可忽略 |\n"
+    },
+    {
+      "segment_id": "01-11:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 63,
+      "source_sha256": "3d40c01d957e5ff455f97e2839519001068087781c2dc1e4b1d4beee45a2711e",
+      "target": "**含噪信号的奇异值（噪声会影响所有奇异值）：**\n"
+    },
+    {
+      "segment_id": "01-11:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0127",
+      "kind": "table",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 64,
+      "source_sha256": "bba0035673d1960f092443bd88b3de03db534fce09108410f53c5909f9ecb027",
+      "target": "| 分量 | 大小 | 类型 |\n|-----------|-----------|------|\n| sigma_1 | 很大 | 信号 |\n| sigma_2 | 大 | 信号 |\n| sigma_3 | 中等 | 信号 |\n| sigma_4 | 小 | 噪声 |\n| sigma_5 | 小 | 噪声 |\n| sigma_6 | 小 | 噪声 |\n| sigma_7 | 小 | 噪声 |\n"
+    },
+    {
+      "segment_id": "01-11:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0129",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 65,
+      "source_sha256": "bfd0efa8718d4487a9d07ca92b28e234575e935b7e1ad9178fccdef10dbbcf00",
+      "target": "```mermaid\ngraph TD\n    A[\"All singular values\"] --> B{\"Clear gap?\"}\n    B -->|\"Above gap\"| C[\"Signal: keep these (top k)\"]\n    B -->|\"Below gap\"| D[\"Noise: discard these\"]\n    C --> E[\"Reconstruct with A_k to get denoised version\"]\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0131",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 66,
+      "source_sha256": "13100d96ca3e624d5edfce12a6b53dc9a9c4031e064086dc8889dbd9cb842d27",
+      "target": "这种方法用于信号处理、科学测量和数据清洗。只要矩阵受到加性噪声干扰，截断 SVD 就是一种有理论依据的信噪分离方法。\n"
+    },
+    {
+      "segment_id": "01-11:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### SVD for noise reduction"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0133",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 67,
+      "source_sha256": "448ec0628023dfb5a48b83a025ae17d78a10550dfaa5dbcdc780ff99ec56f309",
+      "target": "### 通过 SVD 求伪逆\n"
+    },
+    {
+      "segment_id": "01-11:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0135",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 68,
+      "source_sha256": "4072ed6afa2ac0eeaf8573c20770b441ee87ef50b017eef15a88efde0e8875d5",
+      "target": "Moore-Penrose 伪逆 A+ 将矩阵求逆推广到非方阵和奇异矩阵。SVD 让它的计算变得非常简单。\n"
+    },
+    {
+      "segment_id": "01-11:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0137",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 69,
+      "source_sha256": "d47e88b4606bdc1e40fc130d516142c98c90f82c3458c2e3ffa691e55373aa50",
+      "target": "```text\nIf A = U * Sigma * V^T, then:\n\nA+ = V * Sigma+ * U^T\n\nwhere Sigma+ is formed by:\n  1. Transpose Sigma (swap rows and columns)\n  2. Replace each non-zero diagonal entry sigma_i with 1/sigma_i\n  3. Leave zeros as zeros\n\nFor A (m x n):      A+ is (n x m)\nFor Sigma (m x n):  Sigma+ is (n x m)\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0139",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 70,
+      "source_sha256": "6a533a389f3de12abdb24f7e86cc12726f5d4f61428749e21edc76a5f90f188e",
+      "target": "伪逆可以求解最小二乘问题。如果 Ax = b 没有精确解（超定系统），那么 x = A+ b 就是最小二乘解（使 ||Ax - b|| 最小）。\n"
+    },
+    {
+      "segment_id": "01-11:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0141",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 71,
+      "source_sha256": "e31a152643b38c6e70bcdac312329cbd928b7e938e69a54d6e3491a0346aacd3",
+      "target": "```text\nOverdetermined system (more equations than unknowns):\n\n  [1  1]         [3]\n  [2  1] x   =   [5]       No exact solution exists.\n  [3  1]         [6]\n\n  x_ls = A+ b = V * Sigma+ * U^T * b\n\n  This gives the x that minimizes the sum of squared residuals.\n  Same result as the normal equations (A^T A)^(-1) A^T b,\n  but numerically more stable.\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Pseudoinverse via SVD"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0143",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Numerical stability advantages"
+      ],
+      "ordinal": 72,
+      "source_sha256": "1c5563a76030dcb1c9ebd626fe72668ed04dcf71caacd9a3588c7cbfcf0a0bec",
+      "target": "### 数值稳定性优势\n"
+    },
+    {
+      "segment_id": "01-11:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Numerical stability advantages"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0145",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Numerical stability advantages"
+      ],
+      "ordinal": 73,
+      "source_sha256": "34b73c1dce25bb7b61d1b550a942af211e8a9754162299c5773a54abb77602a4",
+      "target": "对 A^T A 做特征分解，会将奇异值平方（A^T A 的特征值为 sigma_i^2）。这会使条件数平方，从而放大数值误差。\n"
+    },
+    {
+      "segment_id": "01-11:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Numerical stability advantages"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0147",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Numerical stability advantages"
+      ],
+      "ordinal": 74,
+      "source_sha256": "8399b96d9ef5c33e5dfeccc8b66c3266917c09f5b721a3102d5e4d34fad9082f",
+      "target": "```text\nExample:\n  A has singular values [1000, 1, 0.001]\n  Condition number of A: 1000 / 0.001 = 10^6\n\n  A^T A has eigenvalues [10^6, 1, 10^{-6}]\n  Condition number of A^T A: 10^6 / 10^{-6} = 10^{12}\n\n  Computing SVD directly: works with condition number 10^6\n  Computing via A^T A:     works with condition number 10^{12}\n                           (6 extra digits of precision lost)\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Numerical stability advantages"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0149",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Numerical stability advantages"
+      ],
+      "ordinal": 75,
+      "source_sha256": "0d8aef6b49f18d9875a334635f96880c86864be8bf6de09029eeddfb2063a1fb",
+      "target": "现代 SVD 算法（Golub-Kahan 双对角化）直接作用于 A，完全不构造 A^T A。因此，你应当始终优先使用 `np.linalg.svd(A)`，而不是 `np.linalg.eig(A.T @ A)`。\n"
+    },
+    {
+      "segment_id": "01-11:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Numerical stability advantages"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0151",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 76,
+      "source_sha256": "1befa2edb73471d580562711e24145ceaa21502524f2e5bdc3890e412ac79e2d",
+      "target": "### 与 PCA 的联系\n"
+    },
+    {
+      "segment_id": "01-11:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 77,
+      "source_sha256": "9cb9bc2d2c71e2a0ebc93543e7bff4b93030805b7c1bcf236a6a403651426926",
+      "target": "PCA 就是对中心化数据进行 SVD。这不是类比，而是完全相同的计算。\n"
+    },
+    {
+      "segment_id": "01-11:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0155",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 78,
+      "source_sha256": "10094dcbb6b2013e877ba169d1f9fd1a9f9b10aefff6fe9c1ad323a9be8ef961",
+      "target": "```text\nGiven data matrix X (n_samples x n_features), centered (mean subtracted):\n\nCovariance matrix: C = (1/(n-1)) * X^T X\n\nPCA finds eigenvectors of C. But:\n\n  X = U * Sigma * V^T    (SVD of X)\n\n  X^T X = V * Sigma^2 * V^T\n\n  C = (1/(n-1)) * V * Sigma^2 * V^T\n\nSo the principal components are exactly the right singular vectors V.\nThe explained variance for each component is sigma_i^2 / (n-1).\n\nIn sklearn, PCA is implemented using SVD, not eigendecomposition.\nIt is faster and more numerically stable.\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 79,
+      "source_sha256": "8a52816fc9db0946777fe96214ac73abbf371a7a49c81bf8d54948c9b3500ff1",
+      "target": "这意味着，你在第 10 课学到的所有降维内容，底层都是 SVD。PCA 是 SVD 在机器学习中最常见的应用。\n"
+    },
+    {
+      "segment_id": "01-11:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0159",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 80,
+      "source_sha256": "119a385111349a09b896cfe4d303f30e73dfdf44844fc0b4654d50cb14411efb",
+      "target": "```figure\nsvd-rank-reconstruction\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## The Concept",
+        "### Connection to PCA"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0161",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "01-11:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0163",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 1: SVD from scratch using power iteration"
+      ],
+      "ordinal": 82,
+      "source_sha256": "cd1426cba165b73c847506c79ae2459dff5662ced17432a3087d9268bcd87dd0",
+      "target": "### 步骤 1：用幂迭代从零实现 SVD\n"
+    },
+    {
+      "segment_id": "01-11:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 1: SVD from scratch using power iteration"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0165",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 1: SVD from scratch using power iteration"
+      ],
+      "ordinal": 83,
+      "source_sha256": "9b22dd57d592291f24bb7dd9d744708690d76370e43d91513f2e42fb652985ec",
+      "target": "思路是：对 A^T A（或 A A^T）进行幂迭代，求出最大的奇异值及其向量。然后从矩阵中减去对应分量，再重复这一过程，求下一个奇异值。\n"
+    },
+    {
+      "segment_id": "01-11:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 1: SVD from scratch using power iteration"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0167",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 1: SVD from scratch using power iteration"
+      ],
+      "ordinal": 84,
+      "source_sha256": "9af9d8e299de1a4914515f53f10d5abedc944e2c56a6554bc5af2a4866b9b444",
+      "target": "```python\nimport numpy as np\n\ndef power_iteration(M, num_iters=100):\n    n = M.shape[1]\n    v = np.random.randn(n)\n    v = v / np.linalg.norm(v)\n\n    for _ in range(num_iters):\n        Mv = M @ v\n        v = Mv / np.linalg.norm(Mv)\n\n    eigenvalue = v @ M @ v\n    return eigenvalue, v\n\ndef svd_from_scratch(A, k=None):\n    m, n = A.shape\n    if k is None:\n        k = min(m, n)\n\n    sigmas = []\n    us = []\n    vs = []\n\n    A_residual = A.copy().astype(float)\n\n    for _ in range(k):\n        AtA = A_residual.T @ A_residual\n        eigenvalue, v = power_iteration(AtA, num_iters=200)\n\n        if eigenvalue < 1e-10:\n            break\n\n        sigma = np.sqrt(eigenvalue)\n        u = A_residual @ v / sigma\n\n        sigmas.append(sigma)\n        us.append(u)\n        vs.append(v)\n\n        A_residual = A_residual - sigma * np.outer(u, v)\n\n    U = np.column_stack(us) if us else np.empty((m, 0))\n    S = np.array(sigmas)\n    V = np.column_stack(vs) if vs else np.empty((n, 0))\n\n    return U, S, V\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 1: SVD from scratch using power iteration"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0169",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 2: Test and compare with NumPy"
+      ],
+      "ordinal": 85,
+      "source_sha256": "a98964882db9a5fb0dc4bddd4be025fd4771a38a8b20a225c8af7fd9b7f2884d",
+      "target": "### 步骤 2：测试并与 NumPy 比较\n"
+    },
+    {
+      "segment_id": "01-11:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 2: Test and compare with NumPy"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0171",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 2: Test and compare with NumPy"
+      ],
+      "ordinal": 86,
+      "source_sha256": "b1ada7528fd9c478cb2b5c96656d14779ff5d5b8f65b1f0234f3b54b3655de8c",
+      "target": "```python\nnp.random.seed(42)\nA = np.random.randn(5, 4)\n\nU_ours, S_ours, V_ours = svd_from_scratch(A)\nU_np, S_np, Vt_np = np.linalg.svd(A, full_matrices=False)\n\nprint(\"Our singular values:\", np.round(S_ours, 4))\nprint(\"NumPy singular values:\", np.round(S_np, 4))\n\nA_reconstructed = U_ours @ np.diag(S_ours) @ V_ours.T\nprint(f\"Reconstruction error: {np.linalg.norm(A - A_reconstructed):.8f}\")\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 2: Test and compare with NumPy"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0173",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 3: Image compression demo"
+      ],
+      "ordinal": 87,
+      "source_sha256": "b385c03bacbd66fdb804ea607b1ba4e6ea2e001f4db0bd3d23be6d80767ff3d5",
+      "target": "### 步骤 3：图像压缩演示\n"
+    },
+    {
+      "segment_id": "01-11:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 3: Image compression demo"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0175",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 3: Image compression demo"
+      ],
+      "ordinal": 88,
+      "source_sha256": "623401c1458ef7af7515c29455d34846b39070e3293229e58dcf82108ddcb06e",
+      "target": "```python\ndef compress_image_svd(image_matrix, k):\n    U, S, Vt = np.linalg.svd(image_matrix, full_matrices=False)\n    compressed = U[:, :k] @ np.diag(S[:k]) @ Vt[:k, :]\n    return compressed\n\nimage = np.random.seed(42)\nrows, cols = 200, 300\nimage = np.random.randn(rows, cols)\n\nfor k in [1, 5, 10, 20, 50]:\n    compressed = compress_image_svd(image, k)\n    error = np.linalg.norm(image - compressed) / np.linalg.norm(image)\n    original_size = rows * cols\n    compressed_size = k * (rows + cols + 1)\n    ratio = compressed_size / original_size\n    print(f\"k={k:>3d}  error={error:.4f}  storage={ratio:.1%}\")\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 3: Image compression demo"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0177",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 4: Noise reduction"
+      ],
+      "ordinal": 89,
+      "source_sha256": "d9418200b76c96b8b532a5f31a753d8704e69f89c2376e173c057cb47853c9bf",
+      "target": "### 步骤 4：降噪\n"
+    },
+    {
+      "segment_id": "01-11:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 4: Noise reduction"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0179",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 4: Noise reduction"
+      ],
+      "ordinal": 90,
+      "source_sha256": "e74abd10be401cf97b84f2669b84cd6ed7fed01b30b162c18246f9b442d141db",
+      "target": "```python\nnp.random.seed(42)\nclean = np.outer(np.sin(np.linspace(0, 4*np.pi, 100)),\n                 np.cos(np.linspace(0, 2*np.pi, 80)))\nnoise = 0.3 * np.random.randn(100, 80)\nnoisy = clean + noise\n\nU, S, Vt = np.linalg.svd(noisy, full_matrices=False)\ndenoised = U[:, :5] @ np.diag(S[:5]) @ Vt[:5, :]\n\nprint(f\"Noisy error:    {np.linalg.norm(noisy - clean):.4f}\")\nprint(f\"Denoised error: {np.linalg.norm(denoised - clean):.4f}\")\nprint(f\"Improvement:    {(1 - np.linalg.norm(denoised - clean) / np.linalg.norm(noisy - clean)):.1%}\")\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 4: Noise reduction"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0181",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 5: Pseudoinverse"
+      ],
+      "ordinal": 91,
+      "source_sha256": "ef4532b47e47123dbc45c20d393707d4b20ca6a4f110ea7d9d7e6f1075143e49",
+      "target": "### 步骤 5：伪逆\n"
+    },
+    {
+      "segment_id": "01-11:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 5: Pseudoinverse"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0183",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 5: Pseudoinverse"
+      ],
+      "ordinal": 92,
+      "source_sha256": "b08080c3044c8a26c67d8a4f84dd0fa446cc9d3f693a657e23487e8f797389c0",
+      "target": "```python\nA = np.array([[1, 1], [2, 1], [3, 1]], dtype=float)\nb = np.array([3, 5, 6], dtype=float)\n\nU, S, Vt = np.linalg.svd(A, full_matrices=False)\nS_inv = np.diag(1.0 / S)\nA_pinv = Vt.T @ S_inv @ U.T\n\nx_svd = A_pinv @ b\nx_lstsq = np.linalg.lstsq(A, b, rcond=None)[0]\nx_pinv = np.linalg.pinv(A) @ b\n\nprint(f\"SVD pseudoinverse solution:  {x_svd}\")\nprint(f\"np.linalg.lstsq solution:   {x_lstsq}\")\nprint(f\"np.linalg.pinv solution:    {x_pinv}\")\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Build It",
+        "### Step 5: Pseudoinverse"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0185",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 93,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "01-11:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0187",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 94,
+      "source_sha256": "66c0cb3955fc65a12e8708f98ea0ef04faf7714d2e3613a2e6f62d77dabcaf1c",
+      "target": "完整可运行的演示位于 `code/svd.py`。运行它，查看 SVD 在图像压缩、推荐系统、潜在语义分析和降噪中的应用。\n"
+    },
+    {
+      "segment_id": "01-11:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0189",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 95,
+      "source_sha256": "4c2c6b635f105fe6d6e59f7fd79bcd0fa80e3c1d3aa120589975a7191977130b",
+      "target": "```bash\npython svd.py\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0191",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 96,
+      "source_sha256": "65bda34f16969f5acaf5bde5f71dc0c5f949aa11361a4e17770b5849b76f39e5",
+      "target": "`code/svd.jl` 中的 Julia 版本使用 Julia 原生的 `svd()` 函数和 `LinearAlgebra` 包，演示相同的概念。\n"
+    },
+    {
+      "segment_id": "01-11:b0192",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 96,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0193",
+      "kind": "fence",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 97,
+      "source_sha256": "7c3beaed969766da32c6b9387bd4cef397392129b453567e0e3e84b9d16a64b5",
+      "target": "```bash\njulia svd.jl\n```\n"
+    },
+    {
+      "segment_id": "01-11:b0194",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Use It"
+      ],
+      "ordinal": 97,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0195",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Ship It"
+      ],
+      "ordinal": 98,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "01-11:b0196",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Ship It"
+      ],
+      "ordinal": 98,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0197",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Ship It"
+      ],
+      "ordinal": 99,
+      "source_sha256": "ff10c71bcd394db43dd6904140663ff340797f9891be8070018d23c9f93ee18e",
+      "target": "本课会生成：\n- `outputs/skill-svd.md` - 一个帮助你判断何时以及如何在实际项目中应用 SVD 的技能文件\n"
+    },
+    {
+      "segment_id": "01-11:b0198",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Ship It"
+      ],
+      "ordinal": 99,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0199",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 100,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "01-11:b0200",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 100,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0201",
+      "kind": "list",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 101,
+      "source_sha256": "11d26c40278ad95d10c1c4aa11a5b43497729ceb67adbee494efcd4970e18c00",
+      "target": "1. 不使用幂迭代，从零实现完整的 SVD。改为对 A^T A 做特征分解，得到 V 和奇异值，再计算 U = A V Sigma^{-1}。将其数值精度与你的幂迭代版本和 NumPy 进行比较。\n"
+    },
+    {
+      "segment_id": "01-11:b0202",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 101,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0203",
+      "kind": "list",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 102,
+      "source_sha256": "6a872114056997ab20889286b3b657299d919289213ee80038861d431c0d7b61",
+      "target": "2. 加载一幅真实的灰度图像（或将图像转换为灰度图）。分别以秩 1、5、10、25、50、100 进行压缩。对每个秩计算压缩比和相对误差，找出图像在视觉上变得可接受时的秩。\n"
+    },
+    {
+      "segment_id": "01-11:b0204",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 102,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0205",
+      "kind": "list",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 103,
+      "source_sha256": "6b6a27ebd988e3132c8583166707dde189ded9b5c83ac861d2ae7934ea87675d",
+      "target": "3. 构建一个小型推荐系统。创建一个 10x8 的用户与电影评分矩阵，其中部分元素已知。用行均值填补缺失元素。计算 SVD 并重建秩 3 近似。用重建后的矩阵预测缺失评分，验证预测是否合理。\n"
+    },
+    {
+      "segment_id": "01-11:b0206",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 103,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0207",
+      "kind": "list",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 104,
+      "source_sha256": "009458c2e83cd4c08c821653c521bb1cdbc1ad2834010add28a67ad114743d9b",
+      "target": "4. 创建一个包含 3 个合成主题的 100x50 文档与词语矩阵。每个主题有 5 个相关词语。添加噪声，应用 SVD，并验证最大的 3 个奇异值远大于其他奇异值。将文档投影到 3D 潜在空间，检查同一主题的文档是否聚集在一起。\n"
+    },
+    {
+      "segment_id": "01-11:b0208",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 104,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0209",
+      "kind": "list",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 105,
+      "source_sha256": "189665b4c749e8cdf9c05e09170a686421156f32d812ab21eee81eae589be1b3",
+      "target": "5. 生成一个无噪声的低秩矩阵（秩 3，大小为 50x40），并添加不同强度的高斯噪声（sigma = 0.1, 0.5, 1.0, 2.0）。对于每种噪声强度，将 k 从 1 遍历到 40，并测量相对于无噪声矩阵的重建误差，以找出最优截断秩。绘制最优 k 随噪声强度变化的图。\n"
+    },
+    {
+      "segment_id": "01-11:b0210",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Exercises"
+      ],
+      "ordinal": 105,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0211",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Key Terms"
+      ],
+      "ordinal": 106,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "01-11:b0212",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Key Terms"
+      ],
+      "ordinal": 106,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0213",
+      "kind": "table",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Key Terms"
+      ],
+      "ordinal": 107,
+      "source_sha256": "92805d8c1eac4dff6f0bbc2ed671367021ca4c25ca0da3931ef23a199be8ddeb",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| SVD | “分解任意矩阵” | 将 A 分解为 U Sigma V^T，其中 U 和 V 为正交矩阵，Sigma 为对角元素非负的对角矩阵。适用于任意形状的任意矩阵。 |\n| 奇异值 | “这个分量有多重要” | Sigma 的第 i 个对角元素，衡量矩阵沿第 i 个主方向的拉伸程度。始终非负，按降序排列。 |\n| 左奇异向量 | “输出方向” | U 的一列。第 i 个右奇异向量经 sigma_i 缩放后映射到的输出空间方向。 |\n| 右奇异向量 | “输入方向” | V 的一列。矩阵将这个输入空间方向经 sigma_i 缩放后，映射到第 i 个左奇异向量。 |\n| 截断 SVD | “低秩近似” | 只保留最大的 k 个奇异值及其向量。它产生原矩阵的最佳秩 k 近似，这一点可由 Eckart-Young 定理证明。 |\n| 秩 | “真正的维数” | 非零奇异值的数量，说明矩阵实际使用了多少个独立方向。 |\n| 伪逆 | “广义逆” | V Sigma+ U^T。对非零奇异值取倒数，零仍保持为零。用于求解非方阵或奇异矩阵的最小二乘问题。 |\n| 条件数 | “对误差有多敏感” | sigma_max / sigma_min。条件数较大意味着输入的微小变化会导致输出的巨大变化。SVD 能直接揭示这一点。 |\n| 潜在因子 | “隐藏变量” | SVD 发现的低秩空间中的一个维度。在推荐系统中，潜在因子可能对应某种类型偏好；在 NLP 中，它可能对应一个主题。 |\n| Frobenius 范数 | “矩阵的整体大小” | 所有元素的平方和再开平方根，等于所有奇异值的平方和再开平方根。用于度量近似误差。 |\n| Eckart-Young 定理 | “SVD 给出最佳压缩” | 对于任意目标秩 k，截断 SVD 在所有可能的秩 k 矩阵中使近似误差最小。 |\n| 幂迭代 | “找最大的特征向量” | 反复将一个随机向量乘以矩阵并归一化，收敛到最大特征值对应的特征向量。它是许多 SVD 算法的基础组成部分。 |\n"
+    },
+    {
+      "segment_id": "01-11:b0214",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Key Terms"
+      ],
+      "ordinal": 107,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0215",
+      "kind": "heading",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Further Reading"
+      ],
+      "ordinal": 108,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "01-11:b0216",
+      "kind": "separator",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Further Reading"
+      ],
+      "ordinal": 108,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-11:b0217",
+      "kind": "list",
+      "heading_path": [
+        "# Singular Value Decomposition",
+        "## Further Reading"
+      ],
+      "ordinal": 109,
+      "source_sha256": "b0fb8e5afe30d919ddedb95b0c46a5604512abf52448caa0723753743af7d26e",
+      "target": "- [Gilbert Strang：线性代数及其应用，第 7 章](https://math.mit.edu/~gs/linearalgebra/) - 全面介绍 SVD 及其应用\n- [3Blue1Brown：SVD 究竟是什么？](https://www.youtube.com/watch?v=vSczTbgc8Rc) - SVD 的几何直觉\n- [我们推荐奇异值分解](https://www.ams.org/publicoutreach/feature-column/fcarc-svd) - 美国数学学会提供的通俗概述\n- [Netflix Prize 与矩阵分解](https://sifter.org/~simon/journal/20061211.html) - Simon Funk 关于将 SVD 用于推荐的原始博客文章\n- [潜在语义分析](https://en.wikipedia.org/wiki/Latent_semantic_analysis) - SVD 最初在 NLP 中的应用\n- [Trefethen 与 Bau 的《数值线性代数》](https://people.maths.ox.ac.uk/trefethen/text.html) - 理解 SVD 算法及其数值性质的权威教材\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": []
+}

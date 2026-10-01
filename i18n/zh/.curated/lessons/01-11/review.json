@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "lesson_id": "01-11",
+  "batch": "P3",
+  "source_path": "phases/01-math-foundations/11-singular-value-decomposition/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "79ea8819c7902c8002b2d6bd65979a7c6234f612",
+  "source_sha256": "8cd08bd71af0e84ef70159d67acf7b0781860dd567dd060b037c3923ae27c214",
+  "target_path": "i18n/zh/phases/01-math-foundations/11-singular-value-decomposition/docs/zh.md",
+  "reviewed_target_sha256": "629aca4d03912b5f771f5ebd9c733945df70ec28b03e9cf1faaf931a0ed877bd",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "source_lines": [
+        350,
+        352,
+        516
+      ],
+      "status": "confirmed_dimension_and_rank_scope_issue",
+      "finding": "The full-decomposition convention defines rectangular Sigma; Sigma^2 in the PCA block is dimensionally undefined unless silently switching to a square reduced Sigma. Exercise U = A V Sigma^{-1} likewise is not a general full-SVD recipe for rectangular/rank-deficient matrices. All formula text preserved."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        27,
+        37,
+        39,
+        47,
+        71,
+        75
+      ],
+      "status": "confirmed_geometric_scope_issue",
+      "finding": "Orthogonal factors may include reflection, not only rotation. For zero singular values, the mapped vector is zero with no direction. The source omits these qualifications; no silent correction."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        21,
+        530
+      ],
+      "status": "confirmed_domain_scope_issue",
+      "finding": "Source says any matrix but uses transpose/orthogonal forms suited to real matrices. Complex-matrix SVD uses conjugate transpose and unitary factors. No scope added to translation."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        250,
+        282,
+        314,
+        537,
+        541
+      ],
+      "status": "confirmed_scope_or_missing_conditions",
+      "finding": "Noise/signal separation assumptions are overbroad; normal-equation inverse requires full column rank; condition number describes sensitivity of solving/inversion rather than unconditional forward output changes; generic power iteration targets largest-modulus eigenvalue and needs spectral/start conditions. Source wording preserved."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        377,
+        382,
+        383,
+        487
+      ],
+      "status": "confirmed_from_referenced_code",
+      "finding": "Lesson code block power iteration divides by norm without zero guard; linked svd.py guards small norm. Pseudoinverse example divides all singular values, while linked function thresholds zeros. Example is full rank, but not a generic singular-matrix implementation."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        357
+      ],
+      "status": "requires_separate_versioned_source_review",
+      "finding": "Blanket sklearn PCA uses SVD, not eigendecomposition is version/solver dependent. Frozen source claim retained; no current-library verification performed."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        350,
+        352,
+        516
+      ],
+      "finding": "Full SVD defines Sigma as m x n. Sigma^2 in the PCA block and Sigma^{-1} in the full-SVD exercise are not general rectangular-matrix operations. A reduced square Sigma and nonzero-value/rank restrictions would be needed. The source formula bytes are preserved.",
+      "evidence": "en.md:53-63,145-155,341-359,516"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        27,
+        37,
+        39,
+        47,
+        71,
+        75
+      ],
+      "finding": "Orthogonal factors may reflect as well as rotate; zero singular values map vectors to zero, which has no output direction. Source simplifications are retained.",
+      "evidence": "en.md:27-84"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        21,
+        530
+      ],
+      "finding": "The any-matrix claim is broader than the real-matrix transpose/orthogonal convention shown; complex SVD needs conjugate transpose and unitary factors. Source scope is unchanged.",
+      "evidence": "en.md:21,53-63,530"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        250,
+        282,
+        314,
+        537,
+        541
+      ],
+      "finding": "The source omits assumptions behind low-rank signal/noise separation, full-column-rank normal-equation inversion, condition-number sensitivity statements, and convergence to the largest-modulus eigenvalue for power iteration. These are source qualifications, not translation corrections.",
+      "evidence": "en.md:250,282,304-316,537,541"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        383,
+        483
+      ],
+      "finding": "The embedded power iteration has no zero-norm guard, and the embedded pseudoinverse divides every singular value without thresholding. Linked Python routines guard small values; the displayed least-squares example itself is full rank.",
+      "evidence": "code/svd.py:4-21,77-80 versus en.md:376-419,478-493"
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        503,
+        506
+      ],
+      "finding": "The referenced Julia script imports LinearAlgebra and Random but uses mean without importing Statistics. A normal standalone Julia run reaches mean in demo_image_compression; this is a source-code runtime defect, not a translation defect. Not executed.",
+      "evidence": "code/svd.jl imports at file start; mean calls in demo_image_compression, demo_pca_is_svd, and demo_recommendation"
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        357
+      ],
+      "finding": "The blanket claim about sklearn PCA always using SVD rather than eigendecomposition is solver/version-dependent. Current library versions were not externally audited; preserve as a separate source-review item.",
+      "evidence": "en.md:357",
+      "status": "external_version_verification_not_performed"
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 15,
+      "tables": 4,
+      "code_blocks": 21,
+      "figures": 1,
+      "mermaid_sources": 2,
+      "browser_verified": false
+    },
+    "github_gfm": "passed: actual GitHub desktop DOM and screenshot; headings, tables, protected code and relevant math/assets checked",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated Python demo exit 0; Julia not run",
+    "deterministic_replay": "two isolated runs; byte-identical",
+    "rendering_limit": "GitHub GFM only; interactive figure IDs remain code blocks on GitHub. Actual application browser rendering, mobile and complete navigation are unverified."
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves.",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+}
