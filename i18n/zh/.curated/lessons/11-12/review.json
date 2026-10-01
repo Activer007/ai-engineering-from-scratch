@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "lesson_id": "11-12",
+  "batch": "P4",
+  "source_path": "phases/11-llm-engineering/12-guardrails/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "50146acc96ea27ed1b867ebd5375b67e1a894d81",
+  "source_sha256": "7bca84f499c6a75c2f97253f3fa4cf85befb0fbcf66e4c882e125279686ad73f",
+  "target_path": "i18n/zh/phases/11-llm-engineering/12-guardrails/docs/zh.md",
+  "reviewed_target_sha256": "5cb3bea4e0f14ab29c640a49e9c80778fe53a065a61eff459a298ea738aa4be6",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S2",
+      "issue": "Sexual content category was narrowed to pornography",
+      "resolution": "Uses 性相关内容 consistently; executable English category identifiers untouched"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "lines": [
+        159,
+        171,
+        173,
+        174,
+        175,
+        176
+      ],
+      "detail": "Source says combined defense rows are 100%, contradicting its statement that no defense is perfect. Layering does not imply a total guarantee. Exact confidence/coverage/latency claims lack evaluation setup. All claims retained as frozen source, not endorsed."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        90,
+        120,
+        132,
+        773
+      ],
+      "detail": "Source inconsistently says Moderation has 11 versus 13 categories; unlimited usage/no-rate-limits are unconditional product claims that require current verification. No live verification under English-only frozen scope."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        78,
+        122,
+        133,
+        796
+      ],
+      "detail": "LlamaGuard model versions, sizes and category counts differ across sections (3 1B/8B/7B versus 4 2B/8B; 13 versus 14). General content-safety classification is presented as a dedicated prompt-injection detector. All names/numbers retained, not corrected or verified."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        234,
+        269,
+        270,
+        284,
+        286
+      ],
+      "detail": "detect_injection lowercases text but several regex literals retain uppercase DAN, INST or system-marker casing. They can fail to match. Encoding-evasion confidence is 0.70, below rejection threshold 0.75, so encoding flag alone passes. Code is unchanged."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        301,
+        304,
+        305
+      ],
+      "detail": "PII regex re.findall can return capturing-group values rather than full phone/DOB matches, so recorded value hashes may not represent the detected full value. Broad regexes also lack validation and can produce false positives/negatives. Unchanged."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        88,
+        94,
+        431,
+        440,
+        872
+      ],
+      "detail": "Example relevance/hallucination checks use token overlap, not factual verification or embeddings. High overlap can coexist with wrong negation or $50,000 versus $500. Empty meaningful word sets pass. The numerical example is explained but no factual-balance checker is implemented. Preserved."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        734
+      ],
+      "detail": "Demo All blocked uses all(True for ... if blocked), which returns True even when some or all attacks pass, and processes all attacks a second time. This is not a valid all-attacks-blocked assertion. Retained unchanged."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        6
+      ],
+      "detail": "Languages metadata is Python, but code/main.ts also exists; frozen metadata retained per task instructions."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        14,
+        82,
+        102,
+        107,
+        178,
+        899
+      ],
+      "detail": "Lesson objectives/diagram mention hallucinated URLs and rate limiting absent from the implemented pipeline (rate limiter is left as an exercise); last reading refers to a human-in-the-loop escalation pattern not developed in the lesson. Source prose retained."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        3,
+        28,
+        30,
+        32,
+        56,
+        76,
+        78,
+        80,
+        82,
+        116,
+        120,
+        122,
+        124,
+        126,
+        128,
+        130,
+        142,
+        152,
+        154,
+        156,
+        157,
+        163,
+        165,
+        167,
+        178,
+        773,
+        829,
+        856,
+        895
+      ],
+      "detail": "Unconditional attack timeline, historical attributions, model/tool support and availability, fixed latency/accuracy, PII counts and language counts, canary success implication, three-category taxonomy versus five-row table, and cost recommendations are time-sensitive or oversimplified source assertions. None were externally verified or silently fixed."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        607,
+        615,
+        624
+      ],
+      "detail": "GuardrailMonitor.summary empty-event shape lacks total_requests, while print_dashboard indexes it. Unchanged; not exercised."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 19,
+      "tables": 4,
+      "code_blocks": 9,
+      "figures": 1,
+      "mermaid_sources": 2,
+      "browser_verified": false
+    },
+    "github_gfm": "pending",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated mock guardrails demo exit 0; no provider API",
+    "deterministic_replay": "two isolated runs; byte-identical"
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves."
+}
