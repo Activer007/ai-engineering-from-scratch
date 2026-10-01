@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "lesson_id": "17-22",
+  "batch": "P5",
+  "source_path": "phases/17-infrastructure-and-production/22-load-testing-llm-apis/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "24f8b680647cc070162e49d0616b66f85023fbbe",
+  "source_sha256": "c1e295fcaa091d1c729005d2964d52e29321902f2630e80a663ad7f5fa004802",
+  "target_path": "i18n/zh/phases/17-infrastructure-and-production/22-load-testing-llm-apis/docs/zh.md",
+  "reviewed_target_sha256": "3e7f2582fb10aaff610fb6026bcc52c8048b34a04759f3ef736eef61c47ba5bc",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S2",
+      "issue": "Required first-use expansions are missing for load test, LLM, API, endpoint, tokenizer and rate limit. Existing token/GIL/RPS/TTFT/ITL/TPOT explanations are good.",
+      "resolution": "Applied every exact correction and independently rechecked; all resolved"
+    },
+    {
+      "severity": "S3",
+      "issue": "Vegeta 用于 Go 实现的恒定速率饱和测试 can suggest that the tested service must be implemented in Go. The source means the load generator is Go-based; line 61 already makes this clearer.",
+      "resolution": "Applied every exact correction and independently rechecked; all resolved"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "LOAD-SRC-01",
+      "severity": "S2",
+      "source_lines": [
+        91
+      ],
+      "problem": "The English says code/main.py measures effective TPOT, but the source simulator only produces synthetic TTFT and cache-hit results. TPOT_MS is defined but unused, and there is no generated-token timing or TPOT result.",
+      "static_evidence": [
+        "code/main.py:16 defines TPOT_MS = 15.",
+        "code/main.py:40-62 computes ttft_samples and returns n, p50, p99, mean, cache_hits only.",
+        "code/main.py:72-82 prints TTFT_P50, TTFT_P99, mean and cache_hits only."
+      ],
+      "source_only_recommendation": "Change the English claim to “simulates TTFT and prefix-cache effects” or implement an actual TPOT model in a separate source change. Leave the candidate’s faithful TPOT statement and flag the inherited defect.",
+      "candidate_action": "Keep the frozen-source meaning and protected literals unchanged; track this upstream rather than silently repairing the translation."
+    },
+    {
+      "id": "LOAD-SRC-02",
+      "severity": "S2",
+      "source_lines": [
+        15,
+        91,
+        99
+      ],
+      "problem": "The toy source stores prompt_tokens and batches by concurrency, but neither prompt length nor computed unique_prefixes affects its timing model. Changing concurrency in the printed loop does not model saturation or concurrent decode effects. This limits the realistic-distribution/concurrency demonstration.",
+      "static_evidence": [
+        "code/main.py:21-23 stores prompt_tokens and prefix_hash.",
+        "code/main.py:35-36 varies prompt_tokens, but simulate never reads that field.",
+        "code/main.py:46 computes unique_prefixes but never uses it.",
+        "code/main.py:48-52 assigns only fixed cache-hit/cache-miss TTFT, with a persistent cache over the same ordered requests."
+      ],
+      "source_only_recommendation": "Document the simulation’s limited scope explicitly in the English lesson, or add length/concurrency effects and tests upstream. Do not embellish the Chinese with unsupported simulation capabilities.",
+      "candidate_action": "Keep the frozen-source meaning and protected literals unchanged; track this upstream rather than silently repairing the translation."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 12,
+      "tables": 1,
+      "code_blocks": 0,
+      "figures": 1,
+      "mermaid_sources": 0,
+      "browser_verified": false
+    },
+    "github_gfm": "passed: actual GitHub desktop DOM and screenshot; headings, tables, protected code and relevant math/assets checked",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated simulation demo exit 0; no real load tests",
+    "deterministic_replay": "two isolated runs; byte-identical",
+    "rendering_limit": "GitHub GFM only; interactive figure IDs remain code blocks on GitHub. Actual application browser rendering, mobile and complete navigation are unverified."
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves.",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+}

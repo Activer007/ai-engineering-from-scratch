@@ -1,0 +1,1050 @@
+{
+  "schema_version": 1,
+  "lesson_id": "14-42",
+  "source_path": "phases/14-agent-engineering/42-agent-workbench-capstone/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "3a541fd0f80d34dd9d566c9a230b37f6ef7e2727",
+  "source_sha256": "8e282c077084bd9c8d596d2e23d11742af2da20390507f4e0e27e59c03330323",
+  "target_path": "i18n/zh/phases/14-agent-engineering/42-agent-workbench-capstone/docs/zh.md",
+  "target_sha256": "891eed30d611f833df88f861503075c3bef28eff97c34bf006141294ffa4a9fe",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "14-42:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack"
+      ],
+      "ordinal": 1,
+      "source_sha256": "930d8411a678885577ae69fdbd9217d7b1539a9815bdcdbd5f681a45c22a1a1c",
+      "target": "# 综合项目：交付可复用的智能体工作台包\n"
+    },
+    {
+      "segment_id": "14-42:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack"
+      ],
+      "ordinal": 2,
+      "source_sha256": "0228303d713b5f5e764b83f7982d90d17893c40d9b563f9c5a16a418eb95e305",
+      "target": "> 这个小专题以一个可放进任意仓库的工作台包（workbench pack）收尾。十一课介绍的工作台要素浓缩在一个目录中，执行 `cp -r` 复制后，第二天早上就能让智能体（agent）可靠地工作。这个综合项目产物正是本课程的价值所在。\n"
+    },
+    {
+      "segment_id": "14-42:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack"
+      ],
+      "ordinal": 3,
+      "source_sha256": "640c65a7531e6905c62fd837435348f7bc6c361f334627ed644d03a9cc7a82d6",
+      "target": "**Type:** Build\n**Languages:** Python (stdlib)\n**Prerequisites:** 阶段 14 · 31 至 14 · 41\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "14-42:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "14-42:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "a4f3ce2087e335d05c947e6a32fe21aa475119ccf7c06b51f6e27796652db404",
+      "target": "- 将工作台的七个组成要素打包到一个可直接使用的目录中。\n- 固定 schema（结构定义）、脚本和模板的版本，让新仓库获得已知可用的基线。\n- 添加一个安装脚本，以幂等方式安装工作台包。\n- 决定哪些内容应纳入包中、哪些应排除，并逐项说明取舍理由。\n"
+    },
+    {
+      "segment_id": "14-42:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "14-42:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "ad2923c13a88b179e7cb58f7089714b96a631e5d46f7efcb09d6a6035f0b777a",
+      "target": "如果工作台散落在一份 Google 文档、一段聊天记录和三个记不太清的脚本里，你每个季度都得重建一次。解决办法是带版本的工作台包：用一个仓库或目录保存各个组成要素、schema、脚本，以及一条命令即可运行的安装程序。\n"
+    },
+    {
+      "segment_id": "14-42:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "9b3b168f7f654d98db8a27b50441ecd3cccd2f0029abbd206782fc338b41646e",
+      "target": "完成本课后，你将在磁盘上得到 `outputs/agent-workbench-pack/`，以及能够将它安装到任意目标仓库的 `bin/install.sh`。\n"
+    },
+    {
+      "segment_id": "14-42:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "14-42:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0019",
+      "kind": "fence",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "bae6a5b1fb3e7f355c2bd3fa1ee6dbb1912abc73c6b047be3db21ccb61c3842c",
+      "target": "```mermaid\nflowchart TD\n  Pack[agent-workbench-pack/] --> Docs[AGENTS.md + docs/]\n  Pack --> Schemas[schemas/]\n  Pack --> Scripts[scripts/]\n  Pack --> Bin[bin/install.sh]\n  Bin --> Repo[target repo]\n  Repo --> Surfaces[all seven workbench surfaces wired]\n```\n"
+    },
+    {
+      "segment_id": "14-42:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The pack layout"
+      ],
+      "ordinal": 11,
+      "source_sha256": "26f7eb9b02182578a10f59446b1a9c74a7c1126fd4108c1cbd0ca438e7ebdc9a",
+      "target": "### 工作台包的目录布局\n"
+    },
+    {
+      "segment_id": "14-42:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The pack layout"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The pack layout"
+      ],
+      "ordinal": 12,
+      "source_sha256": "a8d837873dfedda8f7fc4038cb16ef584e40827d8fef3f7297094e9428b2a9e6",
+      "target": "```text\noutputs/agent-workbench-pack/\n├── AGENTS.md\n├── docs/\n│   ├── agent-rules.md\n│   ├── reliability-policy.md\n│   ├── handoff-protocol.md\n│   └── reviewer-rubric.md\n├── schemas/\n│   ├── agent_state.schema.json\n│   ├── task_board.schema.json\n│   └── scope_contract.schema.json\n├── scripts/\n│   ├── init_agent.py\n│   ├── run_with_feedback.py\n│   ├── verify_agent.py\n│   └── generate_handoff.py\n├── bin/\n│   └── install.sh\n└── README.md\n```\n"
+    },
+    {
+      "segment_id": "14-42:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The pack layout"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 13,
+      "source_sha256": "58a2c12a9be303d414c11c2dbe2578f30ac8289ea2e70f53d3b4995ff76482f9",
+      "target": "### 哪些内容纳入，哪些排除\n"
+    },
+    {
+      "segment_id": "14-42:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 14,
+      "source_sha256": "6c312c6ddd94f9b1d6b8ac284994e39d250cc754a653fde1eac38bae474a3b43",
+      "target": "纳入：\n"
+    },
+    {
+      "segment_id": "14-42:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0029",
+      "kind": "list",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 15,
+      "source_sha256": "28b2e9dc79696f4f46278f09141543ad7860c3f7026ec3e1816cae473ce7f131",
+      "target": "- 各个组成要素的 schema。它们定义了契约。\n- 上述四个脚本。它们构成运行时。\n- 四份文档。它们提供规则和评审准则。\n"
+    },
+    {
+      "segment_id": "14-42:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 16,
+      "source_sha256": "7fb2bbbef51893c49239e12ea69038a890b5672db5991c85fd505ba0d9267f1b",
+      "target": "排除：\n"
+    },
+    {
+      "segment_id": "14-42:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0033",
+      "kind": "list",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 17,
+      "source_sha256": "7cc706af19b748763c4e2dd522b3dd7881f837df13b6e1c58920f727034bf7ba",
+      "target": "- 项目专属任务。任务应放在目标仓库的任务看板中，不应放进工作台包。\n- 厂商 SDK（软件开发工具包）调用。工作台包不依赖特定框架。\n- 入门说明文字。工作台包与团队现有的入门材料并列存在，不嵌入其中。\n"
+    },
+    {
+      "segment_id": "14-42:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### What stays in, what stays out"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The installer"
+      ],
+      "ordinal": 18,
+      "source_sha256": "75587cf96cba52693e285edc1cb63a658e52c4e737a26fd203276f86643e433c",
+      "target": "### 安装程序\n"
+    },
+    {
+      "segment_id": "14-42:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The installer"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The installer"
+      ],
+      "ordinal": 19,
+      "source_sha256": "45ae341084dde8b70fea30359973d9f10d935ccf7e9f8bb237972454b15c7db2",
+      "target": "一个简短的 `bin/install.sh`（或 `bin/install.py`）应执行以下步骤：\n"
+    },
+    {
+      "segment_id": "14-42:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The installer"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0039",
+      "kind": "list",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The installer"
+      ],
+      "ordinal": 20,
+      "source_sha256": "03c217487a44796a6fb3bec6b057da71a5c2cf116969825212fca2d924a1dc20",
+      "target": "1. 未指定 `--force` 时，拒绝覆盖已有工作台包。\n2. 将包复制到目标仓库。\n3. 如果存在 `.github/workflows/`，则接入 CI（持续集成）。\n4. 打印后续步骤：填写任务看板、设置验收命令、运行初始化脚本。\n"
+    },
+    {
+      "segment_id": "14-42:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### The installer"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### Versioning"
+      ],
+      "ordinal": 21,
+      "source_sha256": "0d53940649e1efff1f5daa787ef6871d121becf46ae66f96e73868678c5c5cd5",
+      "target": "### 版本管理\n"
+    },
+    {
+      "segment_id": "14-42:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### Versioning"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### Versioning"
+      ],
+      "ordinal": 22,
+      "source_sha256": "a00f0f91cc10a61446e993f2b748a2af824698ada5557886392e1aec88cd5e22",
+      "target": "包中包含一个 `VERSION` 文件。需要迁移的 schema 升级和脚本变更应提升主版本号；仅涉及文档的变更提升补丁版本号。目标仓库的 `agent_state.json` 记录初始化时使用的工作台包版本。\n"
+    },
+    {
+      "segment_id": "14-42:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### Versioning"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### Versioning"
+      ],
+      "ordinal": 23,
+      "source_sha256": "784e486a04089e04b49799eaf7e218a7ca1fa59f7c0eec28631a19d30a92b7b6",
+      "target": "```figure\nwb-pack-install\n```\n"
+    },
+    {
+      "segment_id": "14-42:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## The Concept",
+        "### Versioning"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0047",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 24,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "14-42:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 25,
+      "source_sha256": "b7a38af598ad32fa622fbe9e41810e8e80861412ba879065a84148a51aa2f73e",
+      "target": "`code/main.py` 在本课目录中的 `outputs/agent-workbench-pack/` 下组装工作台包，以这个小专题前面课程中的 schema、脚本和你已编写的文档为基础。\n"
+    },
+    {
+      "segment_id": "14-42:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 26,
+      "source_sha256": "936bc51db6511ea885c12022f0e1271632a7d165e0848edeaf255b3a5786e28d",
+      "target": "运行：\n"
+    },
+    {
+      "segment_id": "14-42:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 27,
+      "source_sha256": "2b11889f93c0782398b09d152e929afa595931801ff18ec85374f752a13e31bd",
+      "target": "```text\npython3 code/main.py\n```\n"
+    },
+    {
+      "segment_id": "14-42:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 28,
+      "source_sha256": "52905f45e4f23809fa3a1e75e3cb28e0ec4b7c1cf5e7f03c9b06075ae9d87463",
+      "target": "脚本复制并固定各组成要素，写入 README，打印目录树，然后以退出码零结束。重复运行是幂等的。\n"
+    },
+    {
+      "segment_id": "14-42:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Build It"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 29,
+      "source_sha256": "fd0da009b5da595f36df91c69cb041b5e435a2310d1a8e10afaf5cb3e1f4fb7e",
+      "target": "## 实际生产中的模式\n"
+    },
+    {
+      "segment_id": "14-42:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 30,
+      "source_sha256": "5094bb6a7789cec66b8f125dde47a9c62900dd847f4fd03ea7333e295ce0625c",
+      "target": "一个包只有经得起 fork、更新和不友好的上游变化才有价值。下面四种模式帮助你做到这一点。\n"
+    },
+    {
+      "segment_id": "14-42:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 31,
+      "source_sha256": "ad14456fb384b87d0ca7c325d4d3cbae4eff67cc7735fae2dbc78dfa98edef71",
+      "target": "**`VERSION` 是契约，不是营销标签。** 主版本号提升要求迁移状态；次版本号提升要求重新运行检查器；补丁版本号提升仅涉及文档。安装程序每次安装时都会在目标仓库中写入 `.workbench-version`；`lint_pack.py` 会在目标仓库锁定的版本与包的 `VERSION` 不一致时拒绝交付。`npm`、`Cargo` 和 `pyproject.toml` 正是靠这种方式应对 10 年间的持续变化；智能体并不会改变这些规则。\n"
+    },
+    {
+      "segment_id": "14-42:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 32,
+      "source_sha256": "55815e5d3d31b31762870d695975a7ba49cafff5aa427f05b65fe8e3c99cfeae",
+      "target": "**用单一来源跨工具分发。** Nx 提供一条 `nx ai-setup` 命令，从同一份配置生成 `AGENTS.md`、`CLAUDE.md`、`.cursor/rules/`、`.github/copilot-instructions.md` 和一个 MCP 服务器。工作台包也应如此；安装程序生成符号链接（`ln -s AGENTS.md CLAUDE.md`），将同一份权威内容分发给每个编程智能体。为了支持不同工具而分别 fork 工作台包，是一种容易出问题的做法。\n"
+    },
+    {
+      "segment_id": "14-42:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 33,
+      "source_sha256": "2e03bba0e078e98e14f41cbf26f237d09d30788eaaf606c6e04c2cbc787faa45",
+      "target": "**存在不可忽略的状态时拒绝执行的 `uninstall.sh`。** 卸载工作台包不得删除用户的 `agent_state.json`、`task_board.json` 或 `outputs/`。卸载程序移除 schema、脚本、文档和 `AGENTS.md`（可用 `--keep-agents-md` 选择保留该文件）；只要状态文件存在任何未提交的修改，就拒绝继续。状态属于用户，不属于工作台包。\n"
+    },
+    {
+      "segment_id": "14-42:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 34,
+      "source_sha256": "a5856f7e6a5973e9040618075eb0cd3338b4e652f78c1d2a96e9e2fd8a92690c",
+      "target": "**将技能作为可发布单元，按 SkillKit 的方式分发。** 工作台包以 SkillKit 技能的形式交付：`skillkit install agent-workbench-pack` 从同一来源为 32 个 AI 智能体安装它。包的仓库是权威来源，SkillKit 是分发渠道。这样可以摆脱厂商锁定，而七个组成要素保持不变。\n"
+    },
+    {
+      "segment_id": "14-42:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Production patterns in the wild"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "14-42:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "fe91f94f5e41a638f67ace7f986434e1a830969b49894f611d1b0f82e47482dc",
+      "target": "工作台包有三种交付方式：\n"
+    },
+    {
+      "segment_id": "14-42:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "c4d78aaf1c7ae3b355681fc7afb222bd007cce84fd2f19744b48155b8fe085f7",
+      "target": "- **作为可直接放进仓库的目录。** `cp -r outputs/agent-workbench-pack /path/to/repo`。\n- **作为公开的模板仓库。** 先 fork 再定制，用 `VERSION` 控制漂移。\n- **作为 SkillKit 技能。** 接入你的智能体产品，一条命令即可安装。\n"
+    },
+    {
+      "segment_id": "14-42:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "4cd685760c2a5c89d8324bd5039b21e4947a5d4df476565b943e46fe33973901",
+      "target": "工作台包好比食谱，每次安装就是按食谱做出的一份成品。\n"
+    },
+    {
+      "segment_id": "14-42:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "14-42:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Ship It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "91591c2a8ab6466a60b71f290268b00b2e51fc5b343060cb5a54ba6824acd3a0",
+      "target": "`outputs/skill-workbench-pack.md` 生成针对项目调整的工作台包：根据团队的历史经验完善规则，让用于限定范围的 glob（通配模式）适配仓库结构，并在评审维度中补充一项领域专属条目。\n"
+    },
+    {
+      "segment_id": "14-42:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Ship It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Exercises"
+      ],
+      "ordinal": 41,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "14-42:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Exercises"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0083",
+      "kind": "list",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Exercises"
+      ],
+      "ordinal": 42,
+      "source_sha256": "3de55174d69ace70f9180c89c51ea78d76f737ea7ac7b5fb2ea0e00612a52701",
+      "target": "1. 决定应将哪一份可选文档作为第五份文档纳入标准工作台包，并说明取舍理由。\n2. 用 Python 重写安装程序，添加 `--dry-run` 标志，并与 bash 版本比较使用体验。\n3. 添加 `bin/uninstall.sh`，安全移除工作台包；如果状态文件存在不可忽略的历史记录，则拒绝执行。什么情况算“不可忽略”？\n4. 添加 `lint_pack.py`，在工作台包偏离 `VERSION` 时检查失败，并将它接入包自身仓库的 CI。\n5. 编写从手工搭建的工作台迁移到本工作台包的操作手册。怎样安排步骤才能尽量减少停机时间？\n"
+    },
+    {
+      "segment_id": "14-42:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Exercises"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Key Terms"
+      ],
+      "ordinal": 43,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "14-42:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Key Terms"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0087",
+      "kind": "table",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Key Terms"
+      ],
+      "ordinal": 44,
+      "source_sha256": "b2c610925dc57c9f51ba6becbe631d96b157aef9125db08b11ce7441a9382f6d",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|------------------------|\n| 工作台包 | “入门套件” | 包含全部七个组成要素的版本化目录 |\n| 安装程序 | “设置脚本” | 以幂等方式安装工作台包的 `bin/install.sh` |\n| 工作台包版本 | “VERSION” | schema/脚本变更提升主版本号，仅文档变更提升补丁版本号 |\n| 可直接使用的包 | “cp -r 后就能用” | 第一天使用时无须针对每个仓库定制 |\n| 可 fork 的模板 | “GitHub 模板” | 可通过 GitHub 的“Use this template”功能克隆的公开仓库 |\n"
+    },
+    {
+      "segment_id": "14-42:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Key Terms"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Further Reading"
+      ],
+      "ordinal": 45,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "14-42:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Further Reading"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-42:b0091",
+      "kind": "list",
+      "heading_path": [
+        "# Capstone: Ship a Reusable Agent Workbench Pack",
+        "## Further Reading"
+      ],
+      "ordinal": 46,
+      "source_sha256": "39ca163b6f349cc980e98ae99c74c9ab5fc640fb040a7b93bde5d83ba81a9e08",
+      "target": "- 阶段 14 · 31 至 14 · 41：本工作台包包含的全部组成要素\n- [SkillKit](https://github.com/rohitg00/skillkit)：为 32 个 AI 智能体安装此技能\n- [Nx 博客：教你的 AI 智能体在 Monorepo 中工作](https://nx.dev/blog/nx-ai-agent-skills)：覆盖六种工具的单一来源生成器\n- [agents.md：开放规范](https://agents.md/)：工作台包中的路由器必须实现的规范\n- [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness)：与工作台包同类的参考实现\n- [Augment Code：好的 AGENTS.md 相当于升级模型](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files)：工作台包文档的质量标准\n- [Anthropic：面向长时间运行智能体的有效运行框架](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)\n- [Anthropic：面向长时间运行应用开发的运行框架设计](https://www.anthropic.com/engineering/harness-design-long-running-apps)\n- 阶段 14 · 30：使用工作台包验证门禁的评测驱动智能体开发\n- 阶段 14 · 41：工作台包要改善的前后对比基准\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": []
+}
