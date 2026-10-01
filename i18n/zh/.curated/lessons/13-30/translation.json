@@ -1,0 +1,2400 @@
+{
+  "schema_version": 1,
+  "lesson_id": "13-30",
+  "source_path": "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "db2dab0c4ffe7ed2e5552d70582b5767e4260926",
+  "source_sha256": "734698d661d450db141c54509144cf914443f3b335e4b18a14d175bad520d60b",
+  "target_path": "i18n/zh/phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/docs/zh.md",
+  "target_sha256": "bb90e0822fc1c8287e93cba9b8395c844c21a7a1aff42122d3ff72d0cc947c98",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "13-30:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback"
+      ],
+      "ordinal": 1,
+      "source_sha256": "5d44b334bec2d2b3af5f9977ce471f7ac1c9b1af6b2cdabf5e6ec5c672b6ccb2",
+      "target": "# MCP Registry 供应链：准入、漂移与回滚\n"
+    },
+    {
+      "segment_id": "13-30:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback"
+      ],
+      "ordinal": 2,
+      "source_sha256": "4ddb7c426dbc0a484d557694b427eeca8cb990fe28634298349973209220b8b7",
+      "target": "> 注册表（registry）条目告诉你发布者声明了什么。生产环境的准入流程则要证明你获取了什么、观察到了什么、批准了什么，以及能够安全恢复到什么状态。\n"
+    },
+    {
+      "segment_id": "13-30:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback"
+      ],
+      "ordinal": 3,
+      "source_sha256": "16aa1ed2142fa0bbdd6eaf6bd97d625272eaf97bb86d5fe2b22ac6c7e6232aa4",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 13 · 17（网关与注册表）、阶段 13 · 18（生产环境身份验证）\n**Time:** ~90 分钟\n"
+    },
+    {
+      "segment_id": "13-30:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "13-30:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "1da6ecfebf1bed81938625fc284a865737387b15feb50f56f9a129c4e58f65c5",
+      "target": "- 区分 Registry 发布、包来源信息（provenance）、运行时发现和本地审批。\n- 验证 MCP 服务器的命名空间，不信任其自身记录中的名称。\n- 固定不可变的发布记录、执行源、来源信息和实时描述符证据。\n- 在准入后检测注册表状态变化和运行时漂移。\n- 将路由回滚到此前获准的版本，同时不改写历史。\n- 维护可检测篡改的准入台账，解释每一项决策。\n"
+    },
+    {
+      "segment_id": "13-30:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "13-30:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "2142bd799f7b9d42e23c3cbc8f3d5b3c4ea91c58be8afe626076d4f90d572e65",
+      "target": "你在注册表中发现 `com.example/inventory`。描述看起来符合需求，软件包确实存在，服务器也会响应 `server/discover`。\n"
+    },
+    {
+      "segment_id": "13-30:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "69b26d893a888d5956cd904e27852c7d75a91f8248b30e5b64961ee439566d54",
+      "target": "这不是一个事实，而是来自不同权威来源的一串事实：\n"
+    },
+    {
+      "segment_id": "13-30:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0017",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "63ac9fc52e3a1736648f36171ac0bfe9c74396aa62f152fee8a835954aea7280",
+      "target": "1. 通过某个命名空间身份验证的发布者提交了一条记录。\n2. 包注册表提供了具有特定身份和摘要的产物。\n3. 正在运行的端点（endpoint）报告了协议版本、能力、工具以及服务器诊断信息。\n4. 你的组织决定允许使用这一确切组合。\n"
+    },
+    {
+      "segment_id": "13-30:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "659e5e1759261a670f7562d40c6c1f302cef4b1ebbec17419207efdec965b8a3",
+      "target": "如果把这些事实简化为“它在注册表里，所以可以信任”，供应链就会出现盲区。有效的发布记录仍可能被弃用。如果没有固定摘要，包标签可能指向非预期产物。服务器可能在评审后新增具有破坏性的工具。回滚还可能悄悄选中一个从未获准的版本。\n"
+    },
+    {
+      "segment_id": "13-30:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "afce1a9844fffda914b764af0b956106afdba6018da35f0d20b94bed4485ceae",
+      "target": "解决办法是使用准入控制器（admission controller），在每个边界保留证据。\n"
+    },
+    {
+      "segment_id": "13-30:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 12,
+      "source_sha256": "8ec1dd4a2f8b7df619ecfb380c8440529a511c597aefecf9ed0669a38db02752",
+      "target": "## Registry 是索引，不是你的审批系统\n"
+    },
+    {
+      "segment_id": "13-30:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 13,
+      "source_sha256": "a7ee2405a8263f9240d9ac93344b27fa19b20c69c422d0f9c5c6af0b275c1567",
+      "target": "官方 MCP Registry（MCP 注册表）存储服务器元数据。MCP 是 Model Context Protocol（模型上下文协议）。Registry 的 `server.json` 记录指定服务器版本，并声明一个或多个包或远程端点。发布规则还包括命名空间身份验证、包所有权检查、受限制注册表的规则，以及严格限定的发布者元数据存放位置。\n"
+    },
+    {
+      "segment_id": "13-30:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 14,
+      "source_sha256": "42b48fd46fe2de86055c529ca1c010eed1d74413ea8bfdaf01583ebb6e85283f",
+      "target": "这些控制措施回答的是发布层面的问题。部署层面的问题仍要由你的生产策略回答：\n"
+    },
+    {
+      "segment_id": "13-30:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0029",
+      "kind": "table",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 15,
+      "source_sha256": "4f2cbf045ac1a9d47ef367d6a93ba0d72d8cd41c137f632d680b3ebf009eb5d0",
+      "target": "| 边界 | 问题 | 证据责任方 |\n|---|---|---|\n| 命名空间 | 发布者是否有权使用该名称？ | Registry 身份验证，以及你提供的已验证命名空间输入 |\n| 记录 | 发布者为此版本声明了什么？ | 不可变的 `server.json` 摘要 |\n| 执行源 | 将执行哪个包，或调用哪个远程端点？ | 声明的源字段、已验证的所有权结果、传输方式和可信摘要 |\n| 运行时 | 端点目前暴露了什么？ | `server/discover` 和工具描述符 |\n| 准入 | 你的策略是否批准了这一确切组合？ | 本地锁定记录和台账条目 |\n| 运维 | 它是否仍然安全，可以用什么替换？ | 漂移检查、状态同步、健康状况和回滚路由 |\n"
+    },
+    {
+      "segment_id": "13-30:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 16,
+      "source_sha256": "05f20228efdf7c7f307a8fe83cf7f2c575ebf01f953858b2c26c38a3fcd8fad1",
+      "target": "Registry 的 schema（结构定义）版本与 MCP 协议版本彼此独立。一条记录可能使用已发布的 `2025-12-11` 服务器 schema，而实际运行的服务器支持 MCP `2026-07-28`。绝不能从其中一个推断另一个。\n"
+    },
+    {
+      "segment_id": "13-30:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 17,
+      "source_sha256": "a2009e2fab22f33b7577a8f829fbb4212fd1e2093c584aeeffd48053c45fad00",
+      "target": "```figure\nmcp-registry-admission\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## The Registry Is an Index, Not Your Approval System"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision"
+      ],
+      "ordinal": 18,
+      "source_sha256": "02343a74b2269ba85c40860d0bf57aa557112a99b255337e2807222e5608ccbe",
+      "target": "## 一次准入决策中的七项控制\n"
+    },
+    {
+      "segment_id": "13-30:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 19,
+      "source_sha256": "ec4719dcfc31de14071cccd3814d3021ec5369fa68971c3afe0ddb6100dccc01",
+      "target": "### 1. 命名空间验证\n"
+    },
+    {
+      "segment_id": "13-30:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 20,
+      "source_sha256": "d950386a81328e8c8215adbc405f08fa6392e904f6285db52c7b4da96d45f249",
+      "target": "官方 Registry 名称使用经过身份验证的命名空间。已验证域名可以映射为反向域名前缀。例如，对 `example.com` 的控制权可以确立 `com.example/*` 命名空间。\n"
+    },
+    {
+      "segment_id": "13-30:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 21,
+      "source_sha256": "373016a645bd13519adcdd3aaad116118e92b43ff77fe5577c08eb7211964310",
+      "target": "不要只做字符串前缀检查：\n"
+    },
+    {
+      "segment_id": "13-30:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 22,
+      "source_sha256": "2a15f31f405d35873c7752d64fbdbef66942d74298030239b163e509f1ecf4a0",
+      "target": "```python\nserver_name.startswith(\"com.example\")\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 23,
+      "source_sha256": "9c174020ea24b56f01a80a3a35485365d8862515e16c0543c8923ac1b788893e",
+      "target": "这种检查也会接受 `com.exampleevil/tool`。应在 `/` 处分割名称，要求名称中斜杠后的部分（slug）非空，并对命名空间部分进行精确比较。更重要的是，应将身份验证结果中的已验证命名空间作为准入输入，不要根据非可信记录建立信任。\n"
+    },
+    {
+      "segment_id": "13-30:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 24,
+      "source_sha256": "74acc203e6f9f9ef842df582c14060d2d62c7c1010230f4aaf440dd6b00ef179",
+      "target": "基于 GitHub 的命名空间与基于域名的命名空间使用不同的身份验证路径。无论哪条路径，都应统一为同一种准入输入：确切的已验证命名空间字符串。\n"
+    },
+    {
+      "segment_id": "13-30:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 1. Namespace verification"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 25,
+      "source_sha256": "65c97404236f5198185885071a2d037de4b2ed4fece57265c7337a30cafb608b",
+      "target": "### 2. 关联来源证据\n"
+    },
+    {
+      "segment_id": "13-30:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 26,
+      "source_sha256": "dce76858ce149cea1de35ab9f5d492ee4cfb8204106ce45f93cc3121f01a4833",
+      "target": "对于包记录，声明与获取到的产物必须通过明确字段关联：\n"
+    },
+    {
+      "segment_id": "13-30:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0053",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 27,
+      "source_sha256": "4321b269cc90445b8cb5ac0ed1eac4245cdde5a54d8f8629f63ee21c902ca180",
+      "target": "- 包注册表类型\n- 包标识符\n- 包版本\n- 已验证的所有权结果\n- 下载产物的摘要\n"
+    },
+    {
+      "segment_id": "13-30:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 28,
+      "source_sha256": "39dc9015385d3c6a056e80fc9cc9190db3c1a110f4c3e0a50f545337619f48d7",
+      "target": "还要验证声明的包传输方式。只包含远程端点的记录也是有效的，不能因缺少包而拒绝它。对于远程源，应将声明的 URL 和传输类型，与独立验证的端点所有权、可信连接或部署证据的摘要关联起来。\n"
+    },
+    {
+      "segment_id": "13-30:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 29,
+      "source_sha256": "ce39dfa6b47631f9d568c3f36be98f4a2767140693a464f14790920685a18774",
+      "target": "本课代码支持这两种源，并将选定的源与 Registry 来源、服务器名称、Registry 版本、记录摘要和证据摘要一起计算哈希。得到的来源信息摘要是指向完整证据集的紧凑标识，不能代替证据本身的留存。\n"
+    },
+    {
+      "segment_id": "13-30:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 30,
+      "source_sha256": "da28f21d88bb885d2ae96fd4dabb95725f0fd7f5f662662344b21c533b71138b",
+      "target": "绝不能接受仅由待验证产物自身提供的摘要。应在可信的获取边界计算摘要，或从包服务获取摘要，并验证该服务提供的验证结果。\n"
+    },
+    {
+      "segment_id": "13-30:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 2. Provenance join"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 31,
+      "source_sha256": "0c0b834726506db7a26395d1517b0d60b4cf026538b236ca7ed9753b3dad9620",
+      "target": "### 3. 锁定决策，而不只是版本\n"
+    },
+    {
+      "segment_id": "13-30:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 32,
+      "source_sha256": "2f1b42e3c66dc9562f90b74f5a97116bb3d4558b9ce5cca2cce8734b8602bc69",
+      "target": "Registry 版本是唯一的发布标识符。已发布的元数据不可变；记录发生变化就必须使用新版本。虽然推荐语义化版本，但 Registry 并不强制使用，也不接受版本范围。\n"
+    },
+    {
+      "segment_id": "13-30:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 33,
+      "source_sha256": "19e440ccf2a16f527ed845e1e97805ff4f689ee91686f00e6b1100c4afcbfac0",
+      "target": "因此，`^1.4` 不是准入锁定记录，“latest”也不是。一份有用的锁定记录应包含：\n"
+    },
+    {
+      "segment_id": "13-30:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 34,
+      "source_sha256": "38e4634edeb749da984c63830cc26260600c9d2252154710f66423a135e7b78b",
+      "target": "```json\n{\n  \"server\": \"com.example/inventory\",\n  \"version\": \"1.0.0\",\n  \"recordDigest\": \"...\",\n  \"source\": {\"kind\": \"package\", \"registryType\": \"pypi\"},\n  \"sourceDigest\": \"...\",\n  \"toolsetDigest\": \"...\",\n  \"provenanceDigest\": \"...\",\n  \"registryStatus\": \"active\"\n}\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 35,
+      "source_sha256": "10ff3bcc60a01d831ec947c3545d888b2560c502945aeba5b99290ffbdf80aea",
+      "target": "同时锁定多个层面，可以识别发生变化的边界。同一 Registry 版本下的记录摘要发生变化，说明 Registry 的完整性出了问题；同一包坐标或远程部署下的源摘要发生变化，说明执行源的完整性出了问题；工具集摘要发生变化，则是运行时漂移。\n"
+    },
+    {
+      "segment_id": "13-30:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 3. Pin the decision, not only the version"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 36,
+      "source_sha256": "0a8a9104f6d6214919f9229e2838895ccad8953912402d9a45e5ac9266d11efa",
+      "target": "### 4. 实时漂移检测\n"
+    },
+    {
+      "segment_id": "13-30:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 37,
+      "source_sha256": "a087794c2fc695c058beaf2d786f126aef5ff575c2b7056d241161c92a2f2610",
+      "target": "准入流程应观察真正接收流量的服务器。调用 `server/discover`，并通过可信路径列出或以其他方式获取暴露的工具描述符，验证以下事项：\n"
+    },
+    {
+      "segment_id": "13-30:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0075",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 38,
+      "source_sha256": "37177a83feb178561df046acb2d40cfdf2c4ae90da7b5ab74e3622ac0f8aafa7",
+      "target": "- `supportedVersions` 中包含 `2026-07-28`\n- 本地要求的所有能力均已具备\n- 每个工具描述符均具有必需的身份信息和 schema 字段\n- 在后续检查中，规范化后的描述符摘要与获准的锁定记录相符\n"
+    },
+    {
+      "segment_id": "13-30:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 39,
+      "source_sha256": "606098154a2cbc4c1ccc46ae3dd931fa1da3918417362d047379b1f0359a27db",
+      "target": "可选结果 `_meta[\"io.modelcontextprotocol/serverInfo\"]` 的值，是服务器自行报告的显示、日志和调试上下文。应将其记录为诊断证据，但绝不能据此确定命名空间、包所有权、端点所有权、准入资格或作出任何其他安全决策。位于 `_meta` 之外的直接 `serverInfo` 别名并不是契约规定的字段，不应被提升为诊断证据。\n"
+    },
+    {
+      "segment_id": "13-30:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 40,
+      "source_sha256": "a550aa26e28dff1f680dcafd9677e040a1e0edbc8d18021f3ee24386cd871487",
+      "target": "只规范化顺序不影响含义的字段。示例在计算哈希前，按稳定名称对工具列表排序，因此无害的列表顺序变化不会造成漂移。它不会丢弃描述符字段。新增工具、schema 变更、描述变更或新增注解，都会改变锁定记录。\n"
+    },
+    {
+      "segment_id": "13-30:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 41,
+      "source_sha256": "ca224c070a47d77c77431ac0f74f2fe2bf6d83000163a480c4134c29ee6dbedc",
+      "target": "示例将格式不合法的描述符以及任何描述符摘要变化都视为漂移：隔离锁定记录，移除其活动路由，并禁止将该版本作为回滚目标。生产策略若要允许文字编辑类变更，也只能在重新评审后放行，因为描述会影响模型的工具选择。看似“表面”的元数据也会改变智能体（agent）行为。\n"
+    },
+    {
+      "segment_id": "13-30:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 4. Live drift detection"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 42,
+      "source_sha256": "a6cb8ab20216907cc148374371c4e1a576849b6603cca67968d68962ba220f26",
+      "target": "### 5. Registry 状态是实时状态\n"
+    },
+    {
+      "segment_id": "13-30:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 43,
+      "source_sha256": "9c5de315266d672ef0a72660abab2fca685754325900b9def0820daa31f8b563",
+      "target": "Registry API（应用程序编程接口）会在每条服务器记录旁附加一个响应级 `_meta` 对象。由 Registry 管理的字段位于 `_meta[\"io.modelcontextprotocol.registry/official\"]` 下。应将响应的 `_meta` 对象传入准入流程，并读取 `_meta[\"io.modelcontextprotocol.registry/official\"].status`。直接使用 `_meta.status` 并不是官方协议消息格式。不要将响应元数据与发布记录自身的 `_meta` 混淆。状态可能是：\n"
+    },
+    {
+      "segment_id": "13-30:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0087",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 44,
+      "source_sha256": "7652b83c01308b183cb2d3fc1b86fdca9fe20f12c5fca0519202f19ae018c907",
+      "target": "- `active`：默认返回，并具备接受本地准入审批的资格\n- `deprecated`：仍可被发现，但带有警告，不再适合作为安全的自动选择\n- `deleted`：默认隐藏，但历史记录仍可通过已删除记录视图或增量视图获取\n"
+    },
+    {
+      "segment_id": "13-30:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 45,
+      "source_sha256": "73d39ca9b88f79c1129b8505d91b841d917cff76a1514d504ad71a057b203d22",
+      "target": "准入后仍要同步状态。如果一个活动版本变为已弃用或已删除，应隔离其锁定记录，并停止向它路由新任务。证据必须保留。从默认列表中删除，并不意味着可以抹掉你的审计轨迹。\n"
+    },
+    {
+      "segment_id": "13-30:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 46,
+      "source_sha256": "86010df5609a695e5b6122939cb5854118e3043c7ab3fd79c2f793849feb15e4",
+      "target": "发布者提供的自定义元数据只能放在发布记录的 `_meta.io.modelcontextprotocol.registry/publisher-provided` 下。Registry 管理的响应元数据与其分开。不能让发布者自行设置官方状态。\n"
+    },
+    {
+      "segment_id": "13-30:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 5. Registry status is live state"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 47,
+      "source_sha256": "269acc727efa1c8b3dd24521243002ffe8f22e69d13c193a08355f4e1c0b403a",
+      "target": "### 6. 回滚意味着恢复路由\n"
+    },
+    {
+      "segment_id": "13-30:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 48,
+      "source_sha256": "36a1f48f797433bfe6cd22ae395386c1d9b92faad6a19f140185227c8ecc3d6c",
+      "target": "回滚时不编辑不可变的发布记录，而是选择一个先前已获准、当前仍符合条件的锁定记录，并更改活动路由。\n"
+    },
+    {
+      "segment_id": "13-30:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 49,
+      "source_sha256": "f852e21ab73a8fca1668b4abab918e82ddb77896a10bae983a4b16929a721ca7",
+      "target": "安全的回滚目标必须满足：\n"
+    },
+    {
+      "segment_id": "13-30:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0099",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 50,
+      "source_sha256": "cde796b2663b54e5f0e399a2655927969104e6995466a2d53fa3e4c312719b25",
+      "target": "1. 具有完整的准入记录。\n2. 按照你的策略，其 Registry 状态仍为活动状态。\n3. 未因运行时证据或安全证据而被隔离。\n4. 仍能解析到锁定的包和实时描述符集合。\n5. 通过当前健康检查。\n"
+    },
+    {
+      "segment_id": "13-30:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 51,
+      "source_sha256": "04c9674abc06779c57bcb387b0a7fcd3fc3dbe0205328c708575fa99dbeb4de2",
+      "target": "示例重点实现前三项条件。真实的协调器在激活前还应重新获取包，并再次检查实时端点。\n"
+    },
+    {
+      "segment_id": "13-30:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 6. Rollback means route restoration"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 7. Append an admission ledger"
+      ],
+      "ordinal": 52,
+      "source_sha256": "2a53c76a8c451783861e8ee4c2d52b4802cea092809c4c293c8b69d85a2973f0",
+      "target": "### 7. 追加准入台账\n"
+    },
+    {
+      "segment_id": "13-30:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 7. Append an admission ledger"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 7. Append an admission ledger"
+      ],
+      "ordinal": 53,
+      "source_sha256": "12b203db01b108cc74d01e2aaae2005b335bec832121e9fe47eed4eb5605c6f0",
+      "target": "准入数据库记录哪些内容处于活动状态，台账解释为什么。\n"
+    },
+    {
+      "segment_id": "13-30:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 7. Append an admission ledger"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 7. Append an admission ledger"
+      ],
+      "ordinal": 54,
+      "source_sha256": "bbebeeb26ef5baa5e8d7f4791ac25e78563f97db9cfcc8ceaaad7b901634fe61",
+      "target": "示例中的每个条目包含序号、时间、事件、服务器、版本、结果、原因、证据、前一条目的哈希和自身哈希。修改较早条目的结果，会使该条目及其后的整条链验证失败。\n"
+    },
+    {
+      "segment_id": "13-30:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 7. Append an admission ledger"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 7. Append an admission ledger"
+      ],
+      "ordinal": 55,
+      "source_sha256": "7f691de66bbfa5149d266075346570e5468942f52540815ce6ebcc3f825a96c3",
+      "target": "这能让篡改被检测出来，并不意味着篡改绝无可能。应定期将台账链头锚定到独立的信任域，例如签名发布元数据或一次写入存储。限制谁能追加记录。证据中不得包含授权令牌、包凭据、工具参数或私有端点数据。\n"
+    },
+    {
+      "segment_id": "13-30:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Seven Controls in One Admission Decision",
+        "### 7. Append an admission ledger"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "13-30:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "8f338db10f2d6f502ab65c73198e6aa7d830502ed34f8514f66b0f43aa47adb4",
+      "target": "可运行的控制器位于 `code/main.py`，仅使用 Python 标准库。\n"
+    },
+    {
+      "segment_id": "13-30:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "e4a71851d1872069ed93f7ae8b1a5d07d72f823c79c5de2d60b953877bd86f1b",
+      "target": "先运行会自行结束的演示：\n"
+    },
+    {
+      "segment_id": "13-30:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0117",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "6e5ae1ad8a69873b68d821a56b9e3e78bb1a6f2bc18e8dc12ae8e140389a9bbb",
+      "target": "```bash\ncd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift\npython3 code/main.py\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "23bc78ad25470ea16d1d83c56c4651c49f0187befd00e5d541cc162fe62ff0a4",
+      "target": "演示执行五项操作：\n"
+    },
+    {
+      "segment_id": "13-30:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0121",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "5dcbfe88276635565d3267281c2ba683bb5ab02cee4578fd73805854c27204a9",
+      "target": "1. 在命名空间、包来源信息、协议、能力和工具均匹配时，准入 `1.0.0`。\n2. 准入 `1.1.0` 并将其设为活动版本。\n3. 观察运行时出现的非预期删除工具。\n4. 观察 Registry 中 `1.1.0` 的状态变为 `deprecated`。\n5. 将路由恢复到仍然获准的 `1.0.0` 锁定记录。\n"
+    },
+    {
+      "segment_id": "13-30:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "188f2b55e02689dc1a69d9c8ffc9f6259a1b7321eedba2e9dad8a97ceeae81f6",
+      "target": "预期输出结构：\n"
+    },
+    {
+      "segment_id": "13-30:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0125",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "30804736cf285e41de3321517b8f340bb0b3ea7ddb677e875af353199271bbbe",
+      "target": "```json\n{\n  \"admitted\": [true, true],\n  \"driftAllowed\": false,\n  \"rollbackAllowed\": true,\n  \"activeVersion\": \"1.0.0\",\n  \"ledgerValid\": true\n}\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0127",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "69ca059a793b45ccfc8af57864a4105ba51136ddbb69c38b628fa4c9e2b4673c",
+      "target": "按以下顺序阅读实现：\n"
+    },
+    {
+      "segment_id": "13-30:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0129",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "b48c62792c5c6eff20a4f5febcf9302a10bd9208474ed10d6d39027483e742b2",
+      "target": "1. `namespace_for_domain()` 和 `namespace_matches()` 确立对名称的确切使用权限。\n2. `digest()` 和 `normalized_tools()` 生成确定性证据。\n3. `RegistryAdmissionController.admit()` 关联发布记录、来源信息、运行时和策略。\n4. `check_live()` 将新观察结果与锁定记录比较。\n5. `observe_registry_status()` 隔离 Registry 状态发生变化的版本。\n6. `rollback()` 只激活此前获准且符合条件的目标。\n7. `AdmissionLedger.verify()` 检测已记录历史是否被改动。\n"
+    },
+    {
+      "segment_id": "13-30:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Build It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 66,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "13-30:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 67,
+      "source_sha256": "9936d3a5c3eef00902aed0b683bc5b09dd11675182eff198ad8990d9ecf6ecae",
+      "target": "将控制器放在发现与路由之间：\n"
+    },
+    {
+      "segment_id": "13-30:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0135",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 68,
+      "source_sha256": "d5a0b145c7e04e52d0cdee226c78cf1fad41b32edecd9a1c65b4cde636aa8743",
+      "target": "```text\nRegistry sync -> artifact verifier -> live discovery -> admission controller -> route table\n                                               |                 |\n                                               v                 v\n                                          evidence store    admission ledger\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0137",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 69,
+      "source_sha256": "2a6a26a533107afd02cc64cd5841d0905697c8a4acb9d0947fad0dcafd7f326a",
+      "target": "为这些工作使用不同的身份。Registry 同步任务需要元数据读取权限；产物验证器需要包获取权限；路由协调器需要激活获准锁定记录的权限。它们中的任何一个都不需要掌握所有凭据。\n"
+    },
+    {
+      "segment_id": "13-30:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0139",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 70,
+      "source_sha256": "60b30d2922d95972c99f0b5232ae15c7596c690bcf687d380b19a8b3e370b254",
+      "target": "明确区分上线过程中的状态。“已批准”表示证据通过策略检查；“活动”表示当前路由选中了它；“已隔离”表示它不能接收新任务；“已替代”表示另一个获准版本处于活动状态。不要把这四层含义压缩进一个布尔值。\n"
+    },
+    {
+      "segment_id": "13-30:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0141",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 71,
+      "source_sha256": "e257ca7dbb31b842b202871f2a65be50cca170b4f9fc9fb17313e90910ccff57",
+      "target": "在通过 `tools/list` 暴露服务器之前执行准入检查。否则，客户端可能在发布与策略评估之间的空档发现工具。\n"
+    },
+    {
+      "segment_id": "13-30:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Use It"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0143",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab"
+      ],
+      "ordinal": 72,
+      "source_sha256": "c03bac70f49d9e4b1079a48fac85b1ced0aebebb93c30298d5199a5e89385603",
+      "target": "## 交互实验\n"
+    },
+    {
+      "segment_id": "13-30:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0145",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab"
+      ],
+      "ordinal": 73,
+      "source_sha256": "3d9830b6e15b3779c0f65d398645b51b911b552a1c83ecd8208672ff353f58ea",
+      "target": "你将逐一观察每个边界失效的情况。\n"
+    },
+    {
+      "segment_id": "13-30:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 74,
+      "source_sha256": "ffd4da1e92b1b2290597c398139ad3df54dc0d9b753b938367e4c422d4b312ac",
+      "target": "### 实验 A：命名空间碰撞\n"
+    },
+    {
+      "segment_id": "13-30:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0149",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 75,
+      "source_sha256": "3593d9cdfb980ae22dbf9731ffa388ca6b5b966b96201cf99994808a19fe2bcc",
+      "target": "从代码目录启动 Python 交互环境：\n"
+    },
+    {
+      "segment_id": "13-30:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0151",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 76,
+      "source_sha256": "3b1113a4e844901ee200506aa7fb42cd4b7de2538cbc1d877d3835c5b8dd26f3",
+      "target": "```bash\ncd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/code\npython3 -q\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 77,
+      "source_sha256": "321b4a66a7fb1d7e5a3a3a336d056be7ffdd373efa674562fb41891209c20181",
+      "target": "然后运行：\n"
+    },
+    {
+      "segment_id": "13-30:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0155",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 78,
+      "source_sha256": "486e3a469d15d0bf06eefa5646494b35b012bd87c1d124f277146e8b36a35d26",
+      "target": "```python\nfrom main import namespace_matches\nnamespace_matches(\"com.example/inventory\", \"com.example\")\nnamespace_matches(\"com.exampleevil/inventory\", \"com.example\")\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 79,
+      "source_sha256": "7cbcaccea542a8d355a4e25480e622511b5cb1f544f10e5f79f6e7d5b8a8efb9",
+      "target": "第一个结果为 `True`，第二个为 `False`。在本地把精确比较替换为 `startswith`，观察第二个名称为何越过了边界。继续之前，务必恢复精确比较。\n"
+    },
+    {
+      "segment_id": "13-30:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab A: namespace collision"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0159",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab B: descriptor drift"
+      ],
+      "ordinal": 80,
+      "source_sha256": "2086e8f33543d419faa9cd0d4af1df1d79f8b557df98292edb5fad3feaec85c1",
+      "target": "### 实验 B：描述符漂移\n"
+    },
+    {
+      "segment_id": "13-30:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab B: descriptor drift"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0161",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab B: descriptor drift"
+      ],
+      "ordinal": 81,
+      "source_sha256": "827f39d3f9e70517ecb5e4bb2e91a069b60f85b7e46930410fbd75cdf3fc76fd",
+      "target": "```python\nfrom main import *\ntimes = iter(f\"2026-08-21T12:00:{n:02d}+00:00\" for n in range(10))\nc = RegistryAdmissionController(clock=lambda: next(times))\nmeta = {OFFICIAL_META_KEY: {\"status\": \"active\"}}\nc.admit(sample_record(\"1.0.0\"), meta, \"com.example\", evidence_for(\"1.0.0\"), sample_live(\"1.0.0\"))\nc.check_live(\"com.example/inventory\", \"1.0.0\", sample_live(\"1.0.0\", True))\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab B: descriptor drift"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0163",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab B: descriptor drift"
+      ],
+      "ordinal": 82,
+      "source_sha256": "dfb37aa172a2b55d8e1aff3cb4f880e5c4ea1de4129ee35176a2b709b621d846",
+      "target": "检查原因和路由状态。包和 Registry 记录没有变化，但运行时暴露的工具接口发生了变化，因此控制器隔离并停用了锁定记录。这就是安装完成后仍须持续进行供应链控制的原因。\n"
+    },
+    {
+      "segment_id": "13-30:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab B: descriptor drift"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0165",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab C: status and rollback"
+      ],
+      "ordinal": 83,
+      "source_sha256": "224f33fa2a4e49bd7d116053e8f29310826ed5c2ae9bf05bc3772f372c68779a",
+      "target": "### 实验 C：状态与回滚\n"
+    },
+    {
+      "segment_id": "13-30:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab C: status and rollback"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0167",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab C: status and rollback"
+      ],
+      "ordinal": 84,
+      "source_sha256": "e1777117fdb832e0ca270099799360cba624a320209292ee1add94d7d33bdffe",
+      "target": "准入 `1.1.0`，将其标为已弃用，然后尝试两个回滚目标：\n"
+    },
+    {
+      "segment_id": "13-30:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab C: status and rollback"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0169",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab C: status and rollback"
+      ],
+      "ordinal": 85,
+      "source_sha256": "0299990436c65dda56a9fa4dbce267101151cba76ae9644ac6a7ef3a2980ddd4",
+      "target": "```python\nc.admit(sample_record(\"1.1.0\"), meta, \"com.example\", evidence_for(\"1.1.0\"), sample_live(\"1.1.0\"))\nc.observe_registry_status(\"com.example/inventory\", \"1.1.0\", \"deprecated\")\nc.rollback(\"com.example/inventory\", \"1.1.0\", \"unsafe retry\")\nc.rollback(\"com.example/inventory\", \"1.0.0\", \"restore known release\")\nc.ledger.verify()\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab C: status and rollback"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0171",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab C: status and rollback"
+      ],
+      "ordinal": 86,
+      "source_sha256": "983e66d421423c4327d28d824e6828aaafff7e3bba40274af7021b28216dcf34",
+      "target": "已隔离的目标会被拒绝，先前的活动锁定记录会被接受，台账仍然有效。\n"
+    },
+    {
+      "segment_id": "13-30:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Interactive Lab",
+        "### Lab C: status and rollback"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0173",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 87,
+      "source_sha256": "eec20bedba3d3e31d87816834fcf8d78cd42da64768b647fd690eb69dac6a86e",
+      "target": "## 实践实验\n"
+    },
+    {
+      "segment_id": "13-30:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0175",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 88,
+      "source_sha256": "360fab6edfec2d0191d1cba1d6084185a60e9b8651e6e6c998ae2f39183e0640",
+      "target": "为控制器扩展一个双人审批门禁。\n"
+    },
+    {
+      "segment_id": "13-30:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0177",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 89,
+      "source_sha256": "2415b2e3a6745d07cc6d676b8f3ea136b99a74a76434c699c90b9679595f1a8c",
+      "target": "要求：\n"
+    },
+    {
+      "segment_id": "13-30:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0179",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 90,
+      "source_sha256": "a4beea57b23018347a1676e049089836ef33a670a6d1b47687f96f043cd7dc71",
+      "target": "- 将审批保存为指向已签名证据的引用，而不是锁定记录中可修改的姓名。\n- 如果工具集包含带有 `destructiveHint: true` 的工具，要求两个不同的评审者身份批准。\n- 拒绝重复的评审者身份。\n- 审批尚未完成时，在台账中保留原始准入尝试。\n- 为零次审批、一次审批、重复审批和两个不同身份的审批添加测试。\n- 不要记录签名、凭据或完整的私有工具参数。\n"
+    },
+    {
+      "segment_id": "13-30:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0181",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 91,
+      "source_sha256": "8bca301e1879d3dcbea21e8910877dfa65fb35e29a1992a0c618e8428d7c958d",
+      "target": "只有两个身份都批准了完全相同的记录摘要、包摘要和工具集摘要后，破坏性工具才能成为活动工具；做到这一点才算成功。\n"
+    },
+    {
+      "segment_id": "13-30:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Practice Lab"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0183",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Shipped Artifact"
+      ],
+      "ordinal": 92,
+      "source_sha256": "ccd75bdcdd985e7f0875aa62cc2e11e76daaaec94dc028e5daff3c27db89a4ff",
+      "target": "## 已交付产物\n"
+    },
+    {
+      "segment_id": "13-30:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Shipped Artifact"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0185",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Shipped Artifact"
+      ],
+      "ordinal": 93,
+      "source_sha256": "399d121ee566e51cf93ab182042f34b72a0d7f09aca8e03f8d00bc87337b5bcf",
+      "target": "本课交付 `outputs/skill-mcp-registry-admission.md`。评审新的 Registry 版本或调查漂移时，可将它作为扁平、可复用的操作手册。它规定了输入、拒绝规则、证据包、状态协调和回滚证明，不依赖示例中的类名。\n"
+    },
+    {
+      "segment_id": "13-30:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Shipped Artifact"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0187",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 94,
+      "source_sha256": "39ecaaa4f3a3223547baa0bfa1148a50f2475e6da7b0e2d5c768143f51d3dad1",
+      "target": "## 验证\n"
+    },
+    {
+      "segment_id": "13-30:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0189",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 95,
+      "source_sha256": "5de0d519e662d1d08f7dfb9a2dc9ae89aebe23add439ba318a925fb1ae99e193",
+      "target": "运行演示和确定性测试套件：\n"
+    },
+    {
+      "segment_id": "13-30:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0191",
+      "kind": "fence",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 96,
+      "source_sha256": "4b29f111d5744d46acb992532721a0e79f9451a9947f6c8e3d484556f4ce7be9",
+      "target": "```bash\ncd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift\npython3 code/main.py\npython3 -m unittest discover -s code/tests -v\n```\n"
+    },
+    {
+      "segment_id": "13-30:b0192",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 96,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0193",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 97,
+      "source_sha256": "10f1b3e27e3b138de267925db0fcecb46f75fc5f840137fa609628cbc2b4ee41",
+      "target": "验证应证明以下事项：\n"
+    },
+    {
+      "segment_id": "13-30:b0194",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 97,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0195",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 98,
+      "source_sha256": "1de244078b8255d3cfa3b98eea4dd5204bfb711fdf78e4f90265a663dec0fb97",
+      "target": "- 精确的命名空间边界会拒绝相似前缀\n- 只有官方命名空间下的 Registry 状态才能使版本获得资格\n- 未验证或不匹配的包证据和远程端点证据会被拒绝\n- 发布者元数据不能冒充 Registry 管理的元数据\n- 对工具顺序进行规范化，同时不掩盖描述符变更\n- 包或工具结构格式不合法时，会安全地拒绝\n- `serverInfo` 仅用于诊断，绝不提供准入授权依据\n- 描述符漂移会触发隔离、停用，并阻止回滚到该锁定记录\n- 状态变更会隔离活动锁定记录\n- 回滚不能选择已隔离或未知版本\n- 台账篡改能够被检测到\n"
+    },
+    {
+      "segment_id": "13-30:b0196",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Verify It"
+      ],
+      "ordinal": 98,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0197",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Production Failure Modes"
+      ],
+      "ordinal": 99,
+      "source_sha256": "6ae4f08bb351c73cdbf0bc19234095e0fa0fbf93f4e203f940412ce2021f0a93",
+      "target": "## 生产环境故障模式\n"
+    },
+    {
+      "segment_id": "13-30:b0198",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Production Failure Modes"
+      ],
+      "ordinal": 99,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0199",
+      "kind": "table",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Production Failure Modes"
+      ],
+      "ordinal": 100,
+      "source_sha256": "1dc1f18a28c19c9f7187cf45a2578d43d052a2b6aa88cabd6fcb266469860bc0",
+      "target": "| 故障 | 原因 | 必须采取的措施 |\n|---|---|---|\n| 名称看似有效，但命名空间从未经过身份验证 | 策略信任了记录中的文字 | 在可信命名空间验证器提供确切前缀之前，拒绝准入 |\n| 相同包坐标返回了不同字节 | 上游内容可变，或分发渠道遭入侵 | 停止激活，保留两个摘要，调查获取边界 |\n| “Latest”未经评审就发生变化 | 浮动选择绕过了锁定记录 | 只解析确切的已获准版本及摘要 |\n| 审批后出现新工具 | 运行时漂移，或实际是另一套部署 | 隔离路由，并采集新的描述符观察结果 |\n| 已弃用版本仍处于活动状态 | 缺少状态同步，或同步有延迟 | 定期协调状态，并在激活前再次协调 |\n| 已删除记录从默认同步中消失 | 客户端只请求活动记录 | 使用增量协调或能识别删除的协调机制，并保留本地历史 |\n| 回滚目标从未获准 | 路由控制与审批状态脱节 | 拒绝回滚，对目标重新执行准入流程 |\n| 攻击者改写全部条目后，台账仍能在本地通过验证 | 哈希链没有外部锚点 | 将已签名的台账链头发布到独立信任域 |\n| 证据包含 bearer token（持有者令牌）或工具参数 | 日志复制了完整请求 | 在采集时脱敏，只保存所需的最少证据 |\n"
+    },
+    {
+      "segment_id": "13-30:b0200",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Production Failure Modes"
+      ],
+      "ordinal": 100,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0201",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Operational Rule"
+      ],
+      "ordinal": 101,
+      "source_sha256": "341484b2d3a594f851e4e4bf84e25ba71131f68c3241501223239179c1bc8b17",
+      "target": "## 运维准则\n"
+    },
+    {
+      "segment_id": "13-30:b0202",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Operational Rule"
+      ],
+      "ordinal": 101,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0203",
+      "kind": "paragraph",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Operational Rule"
+      ],
+      "ordinal": 102,
+      "source_sha256": "43ebe6727709305b4ab923086d06696f04d81a5e52780425bbb106a0b53d6301",
+      "target": "发布回答“这个身份能否用这个名称发布？”，准入回答“我们是否执行这个确切产物，并暴露这些确切行为？”。这两项决策必须分开，每个关联关系都要锁定；回滚应依据证据选择目标，而不是凭记忆。\n"
+    },
+    {
+      "segment_id": "13-30:b0204",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Operational Rule"
+      ],
+      "ordinal": 102,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0205",
+      "kind": "heading",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Further Reading"
+      ],
+      "ordinal": 103,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "13-30:b0206",
+      "kind": "separator",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Further Reading"
+      ],
+      "ordinal": 103,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "13-30:b0207",
+      "kind": "list",
+      "heading_path": [
+        "# MCP Registry Supply Chain: Admission, Drift, and Rollback",
+        "## Further Reading"
+      ],
+      "ordinal": 104,
+      "source_sha256": "d56f6051a1854b70a5005697c42f44513a9aeae19fcbe3c44a4ccd064fc93a08",
+      "target": "- [官方 Registry 的 server.json 要求](https://github.com/modelcontextprotocol/registry/blob/main/docs/reference/server-json/official-registry-requirements.md)\n- [官方 Registry 的 OpenAPI 契约](https://registry.modelcontextprotocol.io/openapi.yaml)\n- [MCP 2026-07-28 服务器发现](https://modelcontextprotocol.io/specification/2026-07-28/server/discover)\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": []
+}

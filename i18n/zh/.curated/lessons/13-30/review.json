@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "lesson_id": "13-30",
+  "batch": "P5",
+  "source_path": "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "db2dab0c4ffe7ed2e5552d70582b5767e4260926",
+  "source_sha256": "734698d661d450db141c54509144cf914443f3b335e4b18a14d175bad520d60b",
+  "target_path": "i18n/zh/phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/docs/zh.md",
+  "reviewed_target_sha256": "bb90e0822fc1c8287e93cba9b8395c844c21a7a1aff42122d3ff72d0cc947c98",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S2",
+      "issue": "Several first body uses omit the glossary-required English/Chinese pairing. The security meaning is intact, but the candidate does not yet meet the first-use terminology contract.",
+      "resolution": "Applied every exact correction and independently rechecked; all resolved"
+    },
+    {
+      "severity": "S3",
+      "issue": "slug is introduced without explanation. It is a generic naming term, not a protected identifier, and the security rule becomes clearer if the exact name component is stated.",
+      "resolution": "Applied every exact correction and independently rechecked; all resolved"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "REG-SRC-01",
+      "severity": "S2",
+      "source_lines": [
+        240,
+        246,
+        253,
+        263
+      ],
+      "problem": "Lab C reuses controller c from Lab B. Lab B quarantines 1.0.0 through descriptor drift, so Lab C cannot successfully roll back to 1.0.0 as its closing prose claims. Both targets are ineligible in the written sequence.",
+      "static_evidence": [
+        "code/main.py:395-402 sets pin[quarantined]=True on changed descriptors and removes its active route.",
+        "code/main.py:438-444 rejects rollback whenever the pin is quarantined.",
+        "Lab C does not reset c or re-admit a clean 1.0.0 before selecting it."
+      ],
+      "source_only_recommendation": "In a separate source fix, initialize a fresh controller and admit a clean 1.0.0 at the start of Lab C before admitting/deprecating 1.1.0; alternatively explicitly state that continuing the Lab B state causes both rollback attempts to be rejected.",
+      "candidate_action": "Keep the frozen-source meaning and protected literals unchanged; track this upstream rather than silently repairing the translation."
+    },
+    {
+      "id": "REG-SRC-02",
+      "severity": "S3",
+      "source_lines": [
+        202,
+        207
+      ],
+      "problem": "The source contains an ASCII flow diagram despite the repository’s Mermaid/SVG-only diagram policy. The translation correctly preserves its protected fence.",
+      "static_evidence": [
+        "The text fence contains arrow and pipe diagram payloads, identical in English and Chinese."
+      ],
+      "source_only_recommendation": "Convert the diagram in a separate coordinated source-maintenance change; leave the translation fence unchanged for this frozen-source review.",
+      "candidate_action": "Keep the frozen-source meaning and protected literals unchanged; track this upstream rather than silently repairing the translation."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 12,
+      "tables": 2,
+      "code_blocks": 10,
+      "figures": 1,
+      "mermaid_sources": 0,
+      "browser_verified": false
+    },
+    "github_gfm": "pending",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated demo exit 0; 25 unit tests passed",
+    "deterministic_replay": "two isolated runs; byte-identical"
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves."
+}
