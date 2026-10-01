@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "lesson_id": "10-01",
+  "batch": "P4",
+  "source_path": "phases/10-llms-from-scratch/01-tokenizers/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "f8969be6c0baa07c45db92e7e5d145f899a5bc5f",
+  "source_sha256": "a610edfbc9557f582cfcc1fddeefe3e3f34b3dd62da00341836af00579156669",
+  "target_path": "i18n/zh/phases/10-llms-from-scratch/01-tokenizers/docs/zh.md",
+  "reviewed_target_sha256": "1f87b524058e92f9080daddc469f14e6be41492e38239a20fe989dafa03f8324",
+  "status": "language-reviewed",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-01",
+  "review_coverage": {
+    "technical": "Full English-to-Chinese prose comparison, all table rows and high-risk statements; protected code checked separately",
+    "chinese": "Complete Chinese-only reading and terminology consistency pass",
+    "independence": "Translation and final review performed as separate passes by separate reviewers"
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S2",
+      "issue": "BPE iteration described pairs as characters only",
+      "resolution": "Use adjacent token pairs, valid after the initial character/byte stage"
+    },
+    {
+      "severity": "S3",
+      "issue": "Nested first-use definition",
+      "resolution": "Flattened tokenizer/token explanation without content change"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "severity": "S1",
+      "lines": [
+        12,
+        15
+      ],
+      "detail": "Learning objectives promise implementing BPE, WordPiece and Unigram, but supplied main.py and lesson build steps implement CharTokenizer/BPETokenizer only; WordPiece is an exercise and no Unigram implementation or sentencepiece-library usage is supplied. Preserved."
+    },
+    {
+      "severity": "S1",
+      "lines": [
+        378
+      ],
+      "detail": "Claim that common patterns get short token IDs conflates frequency/compression with ID representation length. The shown BPE allocates merged IDs sequentially (256+i), not by shorter bit-length. Preserved."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        29,
+        31
+      ],
+      "detail": "Heading says three failed approaches and one winner, while body introduces three approaches, two failing. Both preserved."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        33,
+        35,
+        37,
+        126,
+        156,
+        201,
+        203,
+        398,
+        419,
+        440,
+        467
+      ],
+      "detail": "Broad claims about no unknown tokens, language-agnostic behavior, multilingual ratios, exact context penalty, throughput and fairness depend on vocabulary, preprocessing, implementation, text and hardware. Frozen claims retained without live verification."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        80,
+        86,
+        89,
+        93
+      ],
+      "detail": "Fenced BPE worked example contains an explicitly retracted intermediate (e,s) merge after (w,e); entire explanatory payload remains untouched as required."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        131,
+        132,
+        162,
+        190,
+        195,
+        197
+      ],
+      "detail": "Model vocabulary sizes and averages conflate ordinary mergeable vocabulary, special/reserved IDs and vocabulary upper bounds; numbers are preserved and not live-verified."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        152
+      ],
+      "detail": "Source sentence about every BERT variant is syntactically interrupted before the RoBERTa BPE caveat. Translation keeps the interruption and caveat rather than silently inventing a complete universal claim."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        184
+      ],
+      "detail": "128,000*4,096=524,288,000 and 32,000*4,096=131,072,000, a difference of 393,216,000. Source 524/131 million and 400M are rounded; retained."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        283
+      ],
+      "detail": "Vocabulary growth 256+num_merges holds only if training completes every requested merge; code exits early if no pairs remain."
+    },
+    {
+      "severity": "S2",
+      "lines": [
+        320,
+        346
+      ],
+      "detail": "Toy byte-level tokenizer falls back to bytes, not generally Unicode characters; ASCII example hides distinction. Production tiktoken also has regex pre-tokenization and special-token handling beyond the toy algorithm. Exact-same-algorithm claim and simplified 100,000 merges retained."
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "inline_code_numbers_units": "same within-block inventory; any Chinese syntax reordering manually reviewed",
+    "links": "same destinations; relative SVG assets mirrored byte-identically where needed",
+    "metadata": "original technical keys and type/language values retained",
+    "fence_language": "untagged source fences annotated text only"
+  },
+  "format_repairs": [
+    {
+      "kind": "escaped literal arithmetic multiplication",
+      "target_lines": [
+        464
+      ],
+      "proof": "Only Markdown escape backslashes added outside code/bold; removing them restores exact previous mathematical text"
+    }
+  ],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "offline_site_parser": {
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "empty_heading_id_count": 12,
+      "tables": 2,
+      "code_blocks": 11,
+      "figures": 2,
+      "mermaid_sources": 3,
+      "browser_verified": false
+    },
+    "github_gfm": "pending",
+    "actual_site_browser": "blocked-environment; not passed",
+    "hosted_ci": "not run; fork Actions disabled",
+    "lesson_runtime": "isolated stdlib demos exit 0; optional tiktoken/network-backed integration not run",
+    "deterministic_replay": "two isolated runs; byte-identical"
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Runtime metering not exposed. No fabricated cost/time/quality score; this is not current product-fact verification."
+  },
+  "acceptance": "Keep draft until source caveats and actual-site acceptance are resolved and the repository owner approves."
+}
