@@ -1,0 +1,2736 @@
+{
+  "schema_version": 1,
+  "lesson_id": "11-08",
+  "source_path": "phases/11-llm-engineering/08-fine-tuning-lora/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "d98f380b52ebe70bf2d32568eb28383a2d870bb4",
+  "source_sha256": "6e6752387e06906ae70b2300d8bf5f2457b2a4f25c85895b10c724db9bee083a",
+  "target_path": "i18n/zh/phases/11-llm-engineering/08-fine-tuning-lora/docs/zh.md",
+  "target_sha256": "9d5fa88822783ddd012745bff1cceede48226f143ab2bcaf03d9ee367df7aa2f",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "11-08:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA"
+      ],
+      "ordinal": 1,
+      "source_sha256": "17ad35cfc6229c6ac920030ac6d0bc5808d502f69d052b00408eed37a094bd9c",
+      "target": "# 使用 LoRA 与 QLoRA 进行微调\n"
+    },
+    {
+      "segment_id": "11-08:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA"
+      ],
+      "ordinal": 2,
+      "source_sha256": "02da92391741bf5977adb47e1f51051762ccbb69b54b8bd7e5df85056db63fea",
+      "target": "> 对一个 7B 模型进行全参数微调（fine-tuning）需要 56GB 显存。你没有这么多显存，大多数公司也没有。LoRA（低秩适配）只训练不到 1% 的参数，就能让你在 6GB 显存中微调同一个模型。这并非妥协：在大多数任务上，它的质量可与全参数微调相当。整个开源微调生态都建立在这一技巧之上。\n"
+    },
+    {
+      "segment_id": "11-08:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA"
+      ],
+      "ordinal": 3,
+      "source_sha256": "4d419cedd772c72bc8cdd7a8938c97393290a31cd176ccce64435ceeb435c7c0",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 10，第 06 课（指令微调 / SFT）\n**Time:** ~75 分钟\n**相关内容:** 阶段 10 从零实现 SFT/DPO 循环。本课将这些流程接入 2026 年的参数高效微调（PEFT）工具包（PEFT、TRL、Unsloth、Axolotl、LLaMA-Factory）。\n"
+    },
+    {
+      "segment_id": "11-08:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "11-08:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "3e24c2341504c2fa344fe5f58f47b600f9415c53cd09fe6a6ff1cbb2f250c988",
+      "target": "- 将低秩适配器矩阵（A 和 B）注入预训练模型的注意力层，实现 LoRA\n- 计算 LoRA 相比全参数微调节省的参数量：当秩为 r、维度为 d_model 时，训练的参数量为 2\\*r\\*d，而不是 d^2\n- 使用 QLoRA（将量化与低秩适配结合，即 4-bit 量化基座模型 + LoRA 适配器）微调模型，使其适配消费级 GPU 的显存容量；量化（quantization）用于降低数值表示精度\n- 将 LoRA 权重合并回基座模型以进行部署，并比较使用与不使用适配器时的推理速度\n"
+    },
+    {
+      "segment_id": "11-08:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "11-08:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "638e798d2aab7c9ad2a9fed3f088fe4b4cd2c7b42a98f75e0a24616562d29563",
+      "target": "你有一个基座模型 Llama 3 8B，希望它用公司的语气回复客户支持工单。监督微调（SFT）可以解决这个问题，但 SFT 存在成本问题。\n"
+    },
+    {
+      "segment_id": "11-08:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "7cc515b541c4ec3dc858fccc73cd3d911209de5d1d1e1da1900f0893897e1657",
+      "target": "全参数微调会更新模型中的每一个参数。Llama 3 8B 有 8 billion（十亿）个参数。在 fp16 下，每个参数占用 2 bytes，仅加载权重就需要 16GB。训练时还需要梯度（16GB）、Adam 优化器状态（动量 + 方差需要 32GB），以及激活值。总计：一个 8B 模型大约需要 56GB 显存。\n"
+    },
+    {
+      "segment_id": "11-08:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "10372a59ebfc8ffadb6ac623a464d487f5a387c5085fbaf9b03d77d6873806f9",
+      "target": "一张 A100 80GB 也只能勉强容纳。在云服务商处，两张 A100 的费用为 $3-4/hour。在 50,000 个样本上训练 3 epochs，需要 6-10 hours，也就是每次实验 $30-40。为了调好超参数做 10 次实验，还没部署任何东西，就已经花了 $400。\n"
+    },
+    {
+      "segment_id": "11-08:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "5063a568237cd08a105bebd7d53e97fa831949365721bf2a9bfe88246f477697",
+      "target": "如果扩展到 Llama 3 70B，数字就会高得惊人。仅权重就需要 140GB。你需要一个集群，每次实验的费用为 $100+。\n"
+    },
+    {
+      "segment_id": "11-08:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "ac51a2e09dda6307a9fce0086c03d00d92c0982efe13566bdcec10c959b1e343",
+      "target": "还有一个更深层的问题：全参数微调会修改模型的每个权重。如果在客户支持数据上微调，可能会削弱模型的通用能力。这称为灾难性遗忘。模型会更擅长你的任务，却更不擅长其他事情。\n"
+    },
+    {
+      "segment_id": "11-08:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 12,
+      "source_sha256": "c2ef52cdc9fe58a2a26b95f54ec9fe18d44adb9185c01fe6f1b77f34414593ec",
+      "target": "你需要一种方法，训练更少的参数、使用更少的内存，同时不破坏模型已有的知识。\n"
+    },
+    {
+      "segment_id": "11-08:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Problem"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "11-08:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 14,
+      "source_sha256": "3a25c31f9e19c9d21bc59b9414de42dc16faa57b584bf0e589898a601d5dbf95",
+      "target": "### LoRA：低秩适配\n"
+    },
+    {
+      "segment_id": "11-08:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 15,
+      "source_sha256": "d1907f45e27af1e15c097eb2987791f505488425e3b44e6463f80d95d1f1658a",
+      "target": "Microsoft 的 Edward Hu 及其同事于 2021 年六月发表了 LoRA 论文。论文的核心洞见是：微调过程中的权重更新具有较低的内在秩。你无需更新一个 4096x4096 权重矩阵中的全部 16.7 million（百万）个参数。更新中的有效信息，可以由一个秩为 16 或 32 的矩阵表示。\n"
+    },
+    {
+      "segment_id": "11-08:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 16,
+      "source_sha256": "a295304eaadabd5c1d34e1d3fe71e37096dc51f759c4d4d21630854082d05144",
+      "target": "来看数学表达式。标准线性层的计算为：\n"
+    },
+    {
+      "segment_id": "11-08:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 17,
+      "source_sha256": "dd0761252df343c5efde8eaca437545a627cfff47d45de02c1e05330bbeca2f6",
+      "target": "```text\ny = Wx\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 18,
+      "source_sha256": "9d7f495c5a04d0e6b724a8c6e4d7d271e7a1599f56fd1663881cc0bbb4fb4f75",
+      "target": "其中 W 是一个 d_out x d_in 矩阵。对于 4096x4096 的注意力投影，共有 16,777,216 个参数。\n"
+    },
+    {
+      "segment_id": "11-08:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 19,
+      "source_sha256": "68fa05053ab9d80255f0348fd8f07dd1f5b80397e325e749139c0ef2c55284a5",
+      "target": "LoRA 冻结 W，并加入一个低秩分解：\n"
+    },
+    {
+      "segment_id": "11-08:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 20,
+      "source_sha256": "d2f9da0d070eebed8fa0dfa47477f0245db1e0e1d27878d3ee6079d0db62acb2",
+      "target": "```text\ny = Wx + BAx\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 21,
+      "source_sha256": "b98eacf1b8c83a6332e91a57344098b2c7e671ef6176774d129170a2b4fa61a3",
+      "target": "其中 B 的形状为 (d_out x r)，A 的形状为 (r x d_in)。秩 r 远小于 d，通常取 8、16 或 32。\n"
+    },
+    {
+      "segment_id": "11-08:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 22,
+      "source_sha256": "cfb452c97b422d4faa5e26096ec4f61ed8b6c4cd0591442a9c7c538d6c338753",
+      "target": "对于一个 4096x4096 的层，当 r=16 时：\n- 原始参数量：4096 x 4096 = 16,777,216\n- LoRA 参数量：(4096 x 16) + (16 x 4096) = 65,536 + 65,536 = 131,072\n- 缩减后的占比：131,072 / 16,777,216 = 0.78%\n"
+    },
+    {
+      "segment_id": "11-08:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 23,
+      "source_sha256": "7472481258a4467b665746463bab79265ad6fdac38db3a3a3681fe3d63500e82",
+      "target": "你只训练 0.78% 的参数，却能获得 95-100% 的质量。\n"
+    },
+    {
+      "segment_id": "11-08:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 24,
+      "source_sha256": "3938778900b287b462bdc22c0175fbdd566e7e7c1b3addfbc04659d3b8e97a3d",
+      "target": "```mermaid\ngraph LR\n    X[\"Input x\"] --> W[\"Frozen W (d x d)\"]\n    X --> A[\"A (r x d)\"]\n    A --> B[\"B (d x r)\"]\n    W --> Plus[\"+ (merge)\"]\n    B --> Plus\n    Plus --> Y[\"Output y\"]\n\n    style W fill:#1a1a2e,stroke:#e94560,color:#fff\n    style A fill:#0f3460,stroke:#16213e,color:#fff\n    style B fill:#0f3460,stroke:#16213e,color:#fff\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 25,
+      "source_sha256": "28e145a092a98ae8739d34535270a8c778df30bde28188498871d067a834fded",
+      "target": "A 使用高斯随机值初始化，B 初始化为零。这意味着 LoRA 分支的初始贡献为零：模型从原有行为开始训练，再逐步学会适配。\n"
+    },
+    {
+      "segment_id": "11-08:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### LoRA: Low-Rank Adaptation"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 26,
+      "source_sha256": "f0f37c992c8d8cdae99fbdcf93d0745fd34ef8001a403a76fab72f89ea04557d",
+      "target": "### 缩放因子：Alpha\n"
+    },
+    {
+      "segment_id": "11-08:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 27,
+      "source_sha256": "f5e0c10a899de6a7d7337a0a2ae2235e33f9544f655ec28e858c4ec15faeb697",
+      "target": "LoRA 引入缩放因子 alpha，用来控制低秩更新对输出的影响程度：\n"
+    },
+    {
+      "segment_id": "11-08:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 28,
+      "source_sha256": "f7132d8fc36fd923797f3d7f83c0faa70c8c464f44078c7dc4974ddd44d1ffef",
+      "target": "```text\ny = Wx + (alpha / r) * BAx\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 29,
+      "source_sha256": "54b5dc64197b3af1b316b529f0fe117f976f7b356d57ccd676c1f430317cca76",
+      "target": "当 alpha = r 时，缩放为 1x。当 alpha = 2r（常见默认值）时，缩放为 2x。这个超参数可以独立于基础学习率，控制 LoRA 分支的学习率。\n"
+    },
+    {
+      "segment_id": "11-08:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 30,
+      "source_sha256": "67fac54cc4bccbd6bed75575bc22c8a1480e9cbc5c407b178c6ef640c9644b59",
+      "target": "实践建议：\n- alpha = 2 \\* rank 是社区常见的约定（原论文在大多数实验中使用 alpha = rank）\n- alpha = rank 对应 1x 缩放，较保守但稳定\n- 更高的 alpha 意味着每步更新更大，可能加快收敛，也可能导致不稳定\n"
+    },
+    {
+      "segment_id": "11-08:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Scaling Factor: Alpha"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Where to Apply LoRA"
+      ],
+      "ordinal": 31,
+      "source_sha256": "1701615699ca5ffe9d2a4d4f1b2dbb08d57fb77e241ee93be5c644ba1d5ab523",
+      "target": "### 在哪些位置应用 LoRA\n"
+    },
+    {
+      "segment_id": "11-08:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Where to Apply LoRA"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Where to Apply LoRA"
+      ],
+      "ordinal": 32,
+      "source_sha256": "f0bb435869c19c0e124aba970587ed4e4d8b098e03ad4e10409231043a25bb11",
+      "target": "Transformer 中有很多线性层，但你不必给每一层都添加 LoRA。原论文测试了不同组合：\n"
+    },
+    {
+      "segment_id": "11-08:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Where to Apply LoRA"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0065",
+      "kind": "table",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Where to Apply LoRA"
+      ],
+      "ordinal": 33,
+      "source_sha256": "62b8c775df898f25c1c53a398c3a57807bb96c5c70b9833c59166f56a5609359",
+      "target": "| 目标层 | 可训练参数量（7B） | 质量 |\n|--------------|----------------------|---------|\n| 仅 q_proj | 4.7M | 良好 |\n| q_proj + v_proj | 9.4M | 更好 |\n| q_proj + k_proj + v_proj + o_proj | 18.9M | 注意力层中的最佳选择 |\n| 所有线性层（注意力 + MLP） | 37.7M | 提升有限，参数量为 2x |\n"
+    },
+    {
+      "segment_id": "11-08:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Where to Apply LoRA"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Where to Apply LoRA"
+      ],
+      "ordinal": 34,
+      "source_sha256": "1e528af887dbaeb62a6b91d961a224adcb1dd646d2f2e1cb5e85a9f28c8b1ad7",
+      "target": "对大多数任务，较好的折中是 q_proj + v_proj。它们分别对应自注意力中的查询投影和值投影，控制模型关注什么，以及提取什么信息。对于代码生成等复杂任务，加入 MLP 层有帮助；但对于较简单的任务，它会让参数量翻倍，而收益递减。\n"
+    },
+    {
+      "segment_id": "11-08:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Where to Apply LoRA"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Rank Selection"
+      ],
+      "ordinal": 35,
+      "source_sha256": "2c140f01b6a5357a73a139b990947a71017227e2d782f2abf4357b8cf16bede0",
+      "target": "### 秩的选择\n"
+    },
+    {
+      "segment_id": "11-08:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Rank Selection"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Rank Selection"
+      ],
+      "ordinal": 36,
+      "source_sha256": "5a08e8403067688250cc6d79ef0e73427ae77e8d1ff4c400ef354448090362d8",
+      "target": "秩 r 决定适配的表达能力：\n"
+    },
+    {
+      "segment_id": "11-08:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Rank Selection"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0073",
+      "kind": "table",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Rank Selection"
+      ],
+      "ordinal": 37,
+      "source_sha256": "5a546e6e31f87c2f835865f33e89b55d6313f9389638de4b2908c7da4da8ef67",
+      "target": "| 秩 | 可训练参数量（每层） | 最适合的场景 |\n|------|---------------------------|----------|\n| 4 | 32,768 | 简单分类、情感分析 |\n| 8 | 65,536 | 单领域问答、摘要 |\n| 16 | 131,072 | 多领域任务、指令遵循 |\n| 32 | 262,144 | 复杂推理、代码生成 |\n| 64 | 524,288 | 大多数任务上的收益开始递减 |\n| 128 | 1,048,576 | 很少有充分理由采用 |\n"
+    },
+    {
+      "segment_id": "11-08:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Rank Selection"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Rank Selection"
+      ],
+      "ordinal": 38,
+      "source_sha256": "c9b4c5cc16d1263d31d082cea30a84bc4048ad5bac6acf8f3bbd5cbf9e635751",
+      "target": "Hu 等人表明，对于简单任务，r=4 就已能捕捉大部分适配信息。实践中最常见的选择是 r=8 和 r=16。超过 r=64 后，质量很少进一步改善，还会开始削弱 LoRA 的内存优势。\n"
+    },
+    {
+      "segment_id": "11-08:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Rank Selection"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 39,
+      "source_sha256": "dfdba6947e87a05e911a7da14b22326bb2d569100d71cd184b402252a92afeda",
+      "target": "### QLoRA：4-Bit 量化 + LoRA\n"
+    },
+    {
+      "segment_id": "11-08:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 40,
+      "source_sha256": "0cd2f8905f6ea9c649adfb8e2c70c42a0f4b069931198f219796ac8c88784ba4",
+      "target": "University of Washington 的 Tim Dettmers 及其同事于 2023 年五月发表了 QLoRA 论文。思路是：将冻结的基座模型量化为 4-bit 精度，再在其上添加 fp16 的 LoRA 适配器。\n"
+    },
+    {
+      "segment_id": "11-08:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 41,
+      "source_sha256": "92ff8ca38473f1b246c8b5c4ec022f8cce69f8229b0e4c8492ad92fc6dae2118",
+      "target": "这会大幅改变内存需求：\n"
+    },
+    {
+      "segment_id": "11-08:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0083",
+      "kind": "table",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 42,
+      "source_sha256": "25adf8ae82e35ccb146c00815a566a62ac02b3c481e80d504f0b755001548d82",
+      "target": "| 方法 | 权重内存（7B） | 训练内存（7B） | 所需 GPU |\n|--------|-------------------|---------------------|-------------|\n| 全参数微调（fp16） | 14GB | ~56GB | 1x A100 80GB |\n| LoRA（fp16 基座） | 14GB | ~18GB | 1x A100 40GB |\n| QLoRA（4-bit 基座） | 3.5GB | ~6GB | 1x RTX 3090 24GB |\n"
+    },
+    {
+      "segment_id": "11-08:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 43,
+      "source_sha256": "146ba82487ca00d1334411c185bf9f1c200e81a2086726c18bd3d2f1183b33c6",
+      "target": "QLoRA 有三项技术贡献：\n"
+    },
+    {
+      "segment_id": "11-08:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 44,
+      "source_sha256": "f3e7262430e4666d34600df819de977ab8482e4678c85c3ef96ef216de2fe1a0",
+      "target": "**NF4（Normal Float 4-bit，正态浮点格式）**：一种专为神经网络权重设计的新数据类型。神经网络权重大致服从正态分布。NF4 将其 16 个量化级别设置在标准正态分布的分位点上。对于正态分布的数据，这在信息论意义上是最优的。它造成的信息损失小于均匀 4-bit 量化（INT4）或标准 Float4。\n"
+    },
+    {
+      "segment_id": "11-08:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 45,
+      "source_sha256": "bb9efce10f204139d72c4427b890254a98ed38aa860ba47449ab40a1a583d680",
+      "target": "**双重量化**：量化常数本身也会占用内存。每个包含 64 个权重的块都需要一个 fp32 缩放因子（4 bytes）。对于 7B 模型，这会额外占用 0.4GB。双重量化将这些常数量化为 fp8，把额外开销降到 0.1GB。单看很小，累积起来也很可观。\n"
+    },
+    {
+      "segment_id": "11-08:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 46,
+      "source_sha256": "8752f786d8ef2ef6fc814e5423bd3708c129cd6b344c3a78bc87c6b3535ef793",
+      "target": "**分页优化器**：在长序列训练中，优化器状态（Adam 的动量和方差）可能超出 GPU 显存容量。分页优化器利用 NVIDIA 的统一内存，在 GPU 显存耗尽时自动将优化器状态换页到 CPU RAM，需要时再换回。这样可避免内存不足（OOM）导致崩溃，但会牺牲一些吞吐量。\n"
+    },
+    {
+      "segment_id": "11-08:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### QLoRA: 4-Bit Quantization + LoRA"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Quality Question"
+      ],
+      "ordinal": 47,
+      "source_sha256": "82f6359f6f56326ec0517343f3b3460f0b724af0d6d97d901b1bbce06207a1ce",
+      "target": "### 质量是否受影响\n"
+    },
+    {
+      "segment_id": "11-08:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Quality Question"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Quality Question"
+      ],
+      "ordinal": 48,
+      "source_sha256": "a32d1bc6097a2450387ad3aa0e35f4635b7b12b319def23414f223aef5df6032",
+      "target": "减少参数或量化基座模型，会损害质量吗？多篇论文的结果如下：\n"
+    },
+    {
+      "segment_id": "11-08:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Quality Question"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0097",
+      "kind": "table",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Quality Question"
+      ],
+      "ordinal": 49,
+      "source_sha256": "551922090855f6b54d3500a17f56ef2d76f960591cdedc196ef2f471cc6ae17c",
+      "target": "| 方法 | MMLU（5-shot） | MT-Bench | HumanEval |\n|--------|--------------|----------|-----------|\n| 全参数微调（Llama 2 7B） | 48.3 | 6.72 | 14.6 |\n| LoRA r=16 | 47.9 | 6.68 | 14.0 |\n| QLoRA r=16（NF4） | 47.5 | 6.61 | 13.4 |\n| QLoRA r=64（NF4） | 48.1 | 6.70 | 14.2 |\n"
+    },
+    {
+      "segment_id": "11-08:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Quality Question"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Quality Question"
+      ],
+      "ordinal": 50,
+      "source_sha256": "6cd2d15142829f37d4badfadc600b62138e900499acf2b1a3bc9acd2a96da3a2",
+      "target": "在大多数基准上，r=16 的 LoRA 与全参数微调相差不到 1%。r=16 的 QLoRA 还会有不到百分之一的额外损失。r=64 的 QLoRA 基本可以匹配全参数微调，同时减少 90% 的内存使用量。\n"
+    },
+    {
+      "segment_id": "11-08:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The Quality Question"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0101",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Real-World Costs"
+      ],
+      "ordinal": 51,
+      "source_sha256": "4e4cbb738fa849b00e7386ef19e9b002458b0b0e9086507e34833dbbec187c57",
+      "target": "### 实际成本\n"
+    },
+    {
+      "segment_id": "11-08:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Real-World Costs"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Real-World Costs"
+      ],
+      "ordinal": 52,
+      "source_sha256": "8423cd9e2d1d562e7a035b19a05787ea4adc387adffd6ad2b45533be91ba3615",
+      "target": "在 50,000 个样本上微调 Llama 3 8B（3 epochs）：\n"
+    },
+    {
+      "segment_id": "11-08:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Real-World Costs"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0105",
+      "kind": "table",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Real-World Costs"
+      ],
+      "ordinal": 53,
+      "source_sha256": "64a715b9b942d7a54ad94a4eab8e83a2f0fb6c28881817ef31bf94f73d7c98f0",
+      "target": "| 方法 | GPU | 时间 | 成本 |\n|--------|-----|------|------|\n| 全参数微调 | 2x A100 80GB | 8 hours | ~$32 |\n| LoRA r=16 | 1x A100 40GB | 4 hours | ~$8 |\n| QLoRA r=16 | 1x RTX 4090 24GB | 6 hours | ~$5 |\n| QLoRA r=16（Unsloth） | 1x RTX 4090 24GB | 2.5 hours | ~$2 |\n| QLoRA r=16 | 1x T4 16GB | 12 hours | ~$4 |\n"
+    },
+    {
+      "segment_id": "11-08:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Real-World Costs"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Real-World Costs"
+      ],
+      "ordinal": 54,
+      "source_sha256": "9b84039342544b0f0e49ad68818d59e9dd3dc4279643d28503f402ddfbf92996",
+      "target": "在单张消费级 GPU 上使用 QLoRA，成本还不到一顿午饭。这就是开放权重微调社区在 2023 年迅速壮大的原因，也解释了为何下面列出的所有训练框架在 2026 年都默认提供 QLoRA。\n"
+    },
+    {
+      "segment_id": "11-08:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Real-World Costs"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The 2026 PEFT stack"
+      ],
+      "ordinal": 55,
+      "source_sha256": "dbc7bb5df32cec7e675038458da32a9e7782dea0b69707a6503d4f4419224095",
+      "target": "### 2026 年的 PEFT 技术栈\n"
+    },
+    {
+      "segment_id": "11-08:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The 2026 PEFT stack"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0111",
+      "kind": "table",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The 2026 PEFT stack"
+      ],
+      "ordinal": 56,
+      "source_sha256": "2b218581231c1a140752119653f11c9dc15b1b4b17f1ae8a54103745ac29cd40",
+      "target": "| 框架 | 是什么 | 适用情况 |\n|-----------|-----------|-----------|\n| **Hugging Face PEFT** | LoRA/QLoRA/DoRA/IA3 的标准库 | 你希望直接掌控细节，且训练循环已使用 `transformers.Trainer` |\n| **TRL** | HF 的反馈驱动强化学习训练器（SFT、DPO、GRPO、PPO、ORPO） | 你需要在 SFT 之后进行 DPO/GRPO；它构建在 PEFT 之上 |\n| **Unsloth** | 用 Triton 内核重写前向与反向传播 | 你希望在不损失精度的情况下获得 2-5x 加速，并将显存占用减半；适用于 Llama/Mistral/Qwen 系列 |\n| **Axolotl** | 通过 YAML 配置封装 PEFT + TRL + DeepSpeed + Unsloth | 你希望训练运行可复现，并纳入版本控制 |\n| **LLaMA-Factory** | 基于 PEFT + TRL 的 GUI/CLI/API（图形界面/命令行界面/应用程序编程接口） | 你希望零代码微调；支持 100+ 个模型系列 |\n| **torchtune** | 原生 PyTorch 方案，不依赖 `transformers` | 你希望尽量减少依赖，且组织已统一使用 PyTorch |\n"
+    },
+    {
+      "segment_id": "11-08:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The 2026 PEFT stack"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The 2026 PEFT stack"
+      ],
+      "ordinal": 57,
+      "source_sha256": "7c9113e4fcd9e77b911078a26748efca1bf474c6b02ed9aea33fd6f34dac69c6",
+      "target": "经验法则：研究或一次性实验 → PEFT。可重复的生产流程 → 启用 Unsloth 内核的 Axolotl。一次性原型验证 → LLaMA-Factory。\n"
+    },
+    {
+      "segment_id": "11-08:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### The 2026 PEFT stack"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0115",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 58,
+      "source_sha256": "9d1adca111765c0c474c68aa99345ed65738e1f043cb09e4dbc301806fa54727",
+      "target": "### 合并适配器\n"
+    },
+    {
+      "segment_id": "11-08:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 59,
+      "source_sha256": "f35984e6ba994256203155fa8060cd65a551ac53eccacd8143e4c540692bff39",
+      "target": "训练后，你会得到两样东西：冻结的基座模型，以及一个小型 LoRA 适配器（通常为 10-100MB）。你可以选择：\n"
+    },
+    {
+      "segment_id": "11-08:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0119",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 60,
+      "source_sha256": "a0ae3408ac45977d8f071a59b969edf3541f01c6e668fd2d954f2bba117c4007",
+      "target": "1. **保持分离**：加载基座模型，再加载适配器。面对不同任务时切换适配器。这样就能用一个基座模型提供多个微调变体。\n"
+    },
+    {
+      "segment_id": "11-08:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0121",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 61,
+      "source_sha256": "edf6f06d104b6fbb96841d83c6497f06aa1cd938688342b63a0b44de7eb7a422",
+      "target": "2. **永久合并**：计算 W' = W + (alpha/r) \\* BA，并将结果保存为一个新的完整模型。合并后的模型与原模型大小相同，没有额外的推理开销，也无需再管理适配器。\n"
+    },
+    {
+      "segment_id": "11-08:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 62,
+      "source_sha256": "2be6fb85952bf6a6fe65c73d440c6727a472170a6b72a720ff815406d816bbcc",
+      "target": "如果要服务多个任务，例如客户支持、代码和翻译各使用一个适配器，就保持分离。如果要部署单个专用模型，就进行合并。\n"
+    },
+    {
+      "segment_id": "11-08:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 63,
+      "source_sha256": "c3bf02f8fdb2bc8e0a728ef07e85711bfad29130dc520d1b682bd253c5acf050",
+      "target": "组合多个适配器的高级合并技术：\n"
+    },
+    {
+      "segment_id": "11-08:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0127",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 64,
+      "source_sha256": "d02339a5b88072684d46f4f9452e408efef697a059ba7dc3be6a8e394c749141",
+      "target": "- **TIES-Merging**（Yadav 等，2023）：裁去幅值较小的参数，解决符号冲突，然后合并，从而减少适配器之间的干扰。\n- **DARE**（Yu 等，2023）：合并前随机丢弃适配器参数，并重新缩放剩余参数。在组合不同能力时，效果出奇地好。\n- **任务算术**：直接对适配器权重做加减。将一个“代码”适配器与一个“数学”适配器相加，往往可以得到两者兼擅的模型。\n"
+    },
+    {
+      "segment_id": "11-08:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### Merging Adapters"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0129",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 65,
+      "source_sha256": "0e83ce8a203da9421a344234db386b5b659c30a8a3b2116a16f1bcda49ec9199",
+      "target": "### 什么时候不该微调\n"
+    },
+    {
+      "segment_id": "11-08:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0131",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 66,
+      "source_sha256": "b534a99c79041848519572cf45641f31da96029c307281d8c06e729589908ec4",
+      "target": "微调应该是第三个选项，而不是第一个。\n"
+    },
+    {
+      "segment_id": "11-08:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 67,
+      "source_sha256": "994a58945db7f901b9e03d8b3b99ae1b326404b1cad58f0dcd280e61de5c8938",
+      "target": "**第一步：提示词工程。** 编写更好的系统提示词（prompt，即给模型的指令或输入），加入少样本示例，使用思维链。这不需要花钱，只需几分钟。如果提示词已经能满足 80% 的需求，你大概就不需要微调。\n"
+    },
+    {
+      "segment_id": "11-08:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0135",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 68,
+      "source_sha256": "a3cfd51fd2eb9e02e93284dc8eb2d389040baa220726d51279bb95dd46fbc882",
+      "target": "**第二步：RAG（检索增强生成）。** 如果模型需要了解你的特定数据，例如文档、知识库或产品目录，检索比将这些内容固化进权重更便宜，也更容易维护。参见第 06 课。\n"
+    },
+    {
+      "segment_id": "11-08:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0137",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 69,
+      "source_sha256": "18618d858cc648debfd9787a697fe410783da54cefb7e5c6fd281ea480a83d8a",
+      "target": "**第三步：微调。** 当你需要模型采用特定风格、格式或推理模式，而提示词无法实现时，就可以使用微调。其他适用情况包括：需要稳定一致的结构化输出；需要将较大模型蒸馏成较小模型；延迟很重要，无法承担少样本提示带来的额外 token（词元）开销。\n"
+    },
+    {
+      "segment_id": "11-08:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0139",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 70,
+      "source_sha256": "8191ea7565c520b0ca6aa3f0e99b36b239d1d8cd3b3f663512c2706cd54f19b4",
+      "target": "```mermaid\ngraph TD\n    Start[\"Need better model behavior?\"] --> PE[\"Try prompt engineering\"]\n    PE -->|\"Works\"| Done[\"Ship it\"]\n    PE -->|\"Not enough\"| RAG[\"Need external knowledge?\"]\n    RAG -->|\"Yes\"| RAGBuild[\"Build RAG pipeline\"]\n    RAG -->|\"No, need style/format change\"| FT[\"Fine-tune with LoRA/QLoRA\"]\n    RAGBuild -->|\"Works\"| Done\n    RAGBuild -->|\"Also need style change\"| FT\n    FT --> Done\n\n    style Start fill:#1a1a2e,stroke:#e94560,color:#fff\n    style Done fill:#0f3460,stroke:#16213e,color:#fff\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0141",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 71,
+      "source_sha256": "6f3704154490ef3708399652c8af39f831761b202f3a89a78856f94dee791f37",
+      "target": "```figure\nlora-params\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## The Concept",
+        "### When NOT to Fine-Tune"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0143",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It"
+      ],
+      "ordinal": 72,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "11-08:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0145",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "80685873b6cf2a11c8ab3dab1de94706df0036e7d3d42daa17e72add05c6c9a1",
+      "target": "我们将仅使用 PyTorch，从零实现 LoRA。不借助其他库，也没有黑箱技巧。你会构建 LoRA 层，将它注入模型、完成训练，再把权重合并回去。\n"
+    },
+    {
+      "segment_id": "11-08:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 1: The LoRA Layer"
+      ],
+      "ordinal": 74,
+      "source_sha256": "0cd73f808552f0a04e47e9825277d7a4da98cda4ff438602b0e1115f38a62dd1",
+      "target": "### 第 1 步：LoRA 层\n"
+    },
+    {
+      "segment_id": "11-08:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 1: The LoRA Layer"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0149",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 1: The LoRA Layer"
+      ],
+      "ordinal": 75,
+      "source_sha256": "eff9b5d5a1893c35bbc53319fe49b9c00cc72eedd4ffdaf5ea511ae4c66978b5",
+      "target": "```python\nimport torch\nimport torch.nn as nn\nimport math\n\nclass LoRALayer(nn.Module):\n    def __init__(self, in_features, out_features, rank=8, alpha=16):\n        super().__init__()\n        self.rank = rank\n        self.alpha = alpha\n        self.scaling = alpha / rank\n\n        self.A = nn.Parameter(torch.randn(in_features, rank) * (1 / math.sqrt(rank)))\n        self.B = nn.Parameter(torch.zeros(rank, out_features))\n\n    def forward(self, x):\n        return (x @ self.A @ self.B) * self.scaling\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 1: The LoRA Layer"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 1: The LoRA Layer"
+      ],
+      "ordinal": 76,
+      "source_sha256": "8bcb5d00b61e5f50a7ef08a098d2918e2b37f546e138bf3e49509f4738065883",
+      "target": "A 使用缩放后的随机值初始化，B 初始化为零。乘积 BA 的初始值为零，因此模型从原有行为开始训练。\n"
+    },
+    {
+      "segment_id": "11-08:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 1: The LoRA Layer"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0153",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 2: LoRA-Wrapped Linear Layer"
+      ],
+      "ordinal": 77,
+      "source_sha256": "74a84f4ff2d6eba4e7d65a4174f8435c04459eeca82f4f6007baf03aaed5f69c",
+      "target": "### 第 2 步：用 LoRA 包装线性层\n"
+    },
+    {
+      "segment_id": "11-08:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 2: LoRA-Wrapped Linear Layer"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0155",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 2: LoRA-Wrapped Linear Layer"
+      ],
+      "ordinal": 78,
+      "source_sha256": "0b7384abe7d6d85e3a5db32ce67561751c97477fbd8d72543d5b770d4b17129d",
+      "target": "```python\nclass LinearWithLoRA(nn.Module):\n    def __init__(self, linear, rank=8, alpha=16):\n        super().__init__()\n        self.linear = linear\n        self.lora = LoRALayer(\n            linear.in_features, linear.out_features, rank, alpha\n        )\n\n        for param in self.linear.parameters():\n            param.requires_grad = False\n\n    def forward(self, x):\n        return self.linear(x) + self.lora(x)\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 2: LoRA-Wrapped Linear Layer"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 2: LoRA-Wrapped Linear Layer"
+      ],
+      "ordinal": 79,
+      "source_sha256": "9db33049361f1da8bbcdd5b32d20a77007e3cd815a3b9bf7c18e94869391b466",
+      "target": "原始线性层被冻结。只有 LoRA 参数（A 和 B）可以训练。\n"
+    },
+    {
+      "segment_id": "11-08:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 2: LoRA-Wrapped Linear Layer"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0159",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 3: Inject LoRA into a Model"
+      ],
+      "ordinal": 80,
+      "source_sha256": "30c5486938965f9d288395bd6fd6dca13a1946daa983ff03f29cb2fa32616ada",
+      "target": "### 第 3 步：将 LoRA 注入模型\n"
+    },
+    {
+      "segment_id": "11-08:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 3: Inject LoRA into a Model"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0161",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 3: Inject LoRA into a Model"
+      ],
+      "ordinal": 81,
+      "source_sha256": "12761051a4e8cf868e19bfe9a3ed3c5eb452ce73c1774dba0763b7d297ca69be",
+      "target": "```python\ndef inject_lora(model, target_modules, rank=8, alpha=16):\n    for param in model.parameters():\n        param.requires_grad = False\n\n    lora_layers = {}\n    for name, module in model.named_modules():\n        if isinstance(module, nn.Linear):\n            if any(t in name for t in target_modules):\n                parent_name = \".\".join(name.split(\".\")[:-1])\n                child_name = name.split(\".\")[-1]\n                parent = dict(model.named_modules())[parent_name]\n                lora_linear = LinearWithLoRA(module, rank, alpha)\n                setattr(parent, child_name, lora_linear)\n                lora_layers[name] = lora_linear\n    return lora_layers\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 3: Inject LoRA into a Model"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0163",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 3: Inject LoRA into a Model"
+      ],
+      "ordinal": 82,
+      "source_sha256": "e773f275d91f37be25825d1860311d192b838dc9f3cfc0db93213c6f20e4195e",
+      "target": "首先冻结模型中的每个参数，然后遍历模型树，找到与目标名称匹配的线性层，并替换为经 LoRA 包装的版本。整个模型中，只有 LoRA 的 A 和 B 矩阵可以训练。\n"
+    },
+    {
+      "segment_id": "11-08:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 3: Inject LoRA into a Model"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0165",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 4: Count Parameters"
+      ],
+      "ordinal": 83,
+      "source_sha256": "115aef5f21799d108d2047bf752bb776dd3463858c6f601cd4e6798720bdd71b",
+      "target": "### 第 4 步：统计参数量\n"
+    },
+    {
+      "segment_id": "11-08:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 4: Count Parameters"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0167",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 4: Count Parameters"
+      ],
+      "ordinal": 84,
+      "source_sha256": "57be518bcc2268619181c349141a638472cdff31ad08f34856752d84201541af",
+      "target": "```python\ndef count_parameters(model):\n    total = sum(p.numel() for p in model.parameters())\n    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)\n    frozen = total - trainable\n    return {\n        \"total\": total,\n        \"trainable\": trainable,\n        \"frozen\": frozen,\n        \"trainable_pct\": 100 * trainable / total if total > 0 else 0\n    }\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 4: Count Parameters"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0169",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 5: Merge Weights Back"
+      ],
+      "ordinal": 85,
+      "source_sha256": "f01eef6e89e3d65d7bb49f1463c4f365575fd499aa110c8bea5b8e03b605473e",
+      "target": "### 第 5 步：将权重合并回去\n"
+    },
+    {
+      "segment_id": "11-08:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 5: Merge Weights Back"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0171",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 5: Merge Weights Back"
+      ],
+      "ordinal": 86,
+      "source_sha256": "2aa1726f486b9ed0628b0c81dbab48e066ea42da1445c2a4c487d0deff66e058",
+      "target": "```python\ndef merge_lora_weights(model):\n    for name, module in model.named_modules():\n        if isinstance(module, LinearWithLoRA):\n            with torch.no_grad():\n                merged = (\n                    module.lora.A @ module.lora.B\n                ) * module.lora.scaling\n                module.linear.weight.data += merged.T\n            parent_name = \".\".join(name.split(\".\")[:-1])\n            child_name = name.split(\".\")[-1]\n            if parent_name:\n                parent = dict(model.named_modules())[parent_name]\n            else:\n                parent = model\n            setattr(parent, child_name, module.linear)\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 5: Merge Weights Back"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0173",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 5: Merge Weights Back"
+      ],
+      "ordinal": 87,
+      "source_sha256": "14a7915b43ef7fc335c35bdf5a6a203222cab13e7ed81f779b0a401ba9179cdb",
+      "target": "合并后，LoRA 层就不再存在。模型与原模型大小相同，适配结果已经融入权重，不会带来额外的推理开销。\n"
+    },
+    {
+      "segment_id": "11-08:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 5: Merge Weights Back"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0175",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 6: Simulated QLoRA Quantization"
+      ],
+      "ordinal": 88,
+      "source_sha256": "a5a760aeab6e4d83184cf369fc0f03c00c00e4b169f675d865e938408d2e046b",
+      "target": "### 第 6 步：模拟 QLoRA 量化\n"
+    },
+    {
+      "segment_id": "11-08:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 6: Simulated QLoRA Quantization"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0177",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 6: Simulated QLoRA Quantization"
+      ],
+      "ordinal": 89,
+      "source_sha256": "a85410e383e9da2e686391bc3fed7545927408f903edc2ef609dbd93279f466d",
+      "target": "```python\ndef quantize_to_nf4(tensor, block_size=64):\n    blocks = tensor.reshape(-1, block_size)\n    scales = blocks.abs().max(dim=1, keepdim=True).values / 7.0\n    scales = torch.clamp(scales, min=1e-8)\n    quantized = torch.round(blocks / scales).clamp(-8, 7).to(torch.int8)\n    return quantized, scales\n\ndef dequantize_from_nf4(quantized, scales, original_shape):\n    dequantized = quantized.float() * scales\n    return dequantized.reshape(original_shape)\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 6: Simulated QLoRA Quantization"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0179",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 6: Simulated QLoRA Quantization"
+      ],
+      "ordinal": 90,
+      "source_sha256": "bbbd252840256d05a3d4f21dc6405a07c6cb1930ca6ef37c9a5cb9bd75d86bee",
+      "target": "这里将权重按每块 64 个分组，并在每个块内映射到 16 个离散级别，以模拟 4-bit 量化。生产环境中的 QLoRA 使用 bitsandbytes 库，在 GPU 上实现真正的 NF4。\n"
+    },
+    {
+      "segment_id": "11-08:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 6: Simulated QLoRA Quantization"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0181",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 7: Training Loop"
+      ],
+      "ordinal": 91,
+      "source_sha256": "290cc4e32d7beebff1b8a196f40a287a6c9090ab80b70a6e35e109329fe4eb2d",
+      "target": "### 第 7 步：训练循环\n"
+    },
+    {
+      "segment_id": "11-08:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 7: Training Loop"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0183",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 7: Training Loop"
+      ],
+      "ordinal": 92,
+      "source_sha256": "b98f3556f13961c73011b116ce0f6a796133eefc42bcc9ea9d77dba9fb5bc527",
+      "target": "```python\ndef train_lora(model, data, epochs=5, lr=1e-3, batch_size=4):\n    optimizer = torch.optim.AdamW(\n        [p for p in model.parameters() if p.requires_grad], lr=lr\n    )\n    criterion = nn.MSELoss()\n\n    losses = []\n    for epoch in range(epochs):\n        epoch_loss = 0.0\n        n_batches = 0\n        indices = torch.randperm(len(data[\"inputs\"]))\n\n        for i in range(0, len(indices), batch_size):\n            batch_idx = indices[i:i + batch_size]\n            x = data[\"inputs\"][batch_idx]\n            y = data[\"targets\"][batch_idx]\n\n            output = model(x)\n            loss = criterion(output, y)\n\n            optimizer.zero_grad()\n            loss.backward()\n            optimizer.step()\n\n            epoch_loss += loss.item()\n            n_batches += 1\n\n        avg_loss = epoch_loss / n_batches\n        losses.append(avg_loss)\n\n    return losses\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 7: Training Loop"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0185",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 8: Full Demo"
+      ],
+      "ordinal": 93,
+      "source_sha256": "558fd29f5fb37a2781212454c8f934b33934d85c0df3959f078f244c274326b5",
+      "target": "### 第 8 步：完整演示\n"
+    },
+    {
+      "segment_id": "11-08:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 8: Full Demo"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0187",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 8: Full Demo"
+      ],
+      "ordinal": 94,
+      "source_sha256": "23defeecc8d3cc1b42ca83ed8d08e5a88e97daba75b67eaea6fa4846bfe4c09f",
+      "target": "```python\ndef demo():\n    torch.manual_seed(42)\n    d_model = 256\n    n_classes = 10\n\n    model = nn.Sequential(\n        nn.Linear(d_model, 512),\n        nn.ReLU(),\n        nn.Linear(512, 512),\n        nn.ReLU(),\n        nn.Linear(512, n_classes),\n    )\n\n    n_samples = 500\n    x = torch.randn(n_samples, d_model)\n    y = torch.randint(0, n_classes, (n_samples,))\n    y_onehot = torch.zeros(n_samples, n_classes).scatter_(1, y.unsqueeze(1), 1.0)\n\n    data = {\"inputs\": x, \"targets\": y_onehot}\n\n    params_before = count_parameters(model)\n\n    lora_layers = inject_lora(\n        model, target_modules=[\"0\", \"2\"], rank=8, alpha=16\n    )\n\n    params_after = count_parameters(model)\n\n    losses = train_lora(model, data, epochs=20, lr=1e-3)\n\n    merge_lora_weights(model)\n    params_merged = count_parameters(model)\n\n    return {\n        \"params_before\": params_before,\n        \"params_after\": params_after,\n        \"params_merged\": params_merged,\n        \"losses\": losses,\n    }\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 8: Full Demo"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0189",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 8: Full Demo"
+      ],
+      "ordinal": 95,
+      "source_sha256": "3aacae7e2321f2a7e620a5c1221788ecd78a2e76f058afa5b9e1afaef2687a02",
+      "target": "演示会创建一个小模型，向其中两个层注入 LoRA，完成训练，再将权重合并回去。在 LoRA 训练期间，可训练参数量从全部参数降到 ~1%，合并后则恢复原始架构。\n"
+    },
+    {
+      "segment_id": "11-08:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Build It",
+        "### Step 8: Full Demo"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0191",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 96,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "11-08:b0192",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 96,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0193",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 97,
+      "source_sha256": "b18e18ee4463a45bc09ef0e15561a0af370177dfb48ae5b4dad123f9d45d04ae",
+      "target": "借助 Hugging Face 生态，在真实模型上应用 LoRA 只需大约 20 行代码：\n"
+    },
+    {
+      "segment_id": "11-08:b0194",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 97,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0195",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 98,
+      "source_sha256": "a57919189a0453cde6f353a601110f200b82fbb41361b0f0c7bee76b74743f34",
+      "target": "```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nfrom peft import LoraConfig, get_peft_model, TaskType\n\nmodel = AutoModelForCausalLM.from_pretrained(\"meta-llama/Llama-3.1-8B\")\ntokenizer = AutoTokenizer.from_pretrained(\"meta-llama/Llama-3.1-8B\")\n\nlora_config = LoraConfig(\n    task_type=TaskType.CAUSAL_LM,\n    r=16,\n    lora_alpha=32,\n    lora_dropout=0.05,\n    target_modules=[\"q_proj\", \"v_proj\"],\n)\n\nmodel = get_peft_model(model, lora_config)\nmodel.print_trainable_parameters()\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0196",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 98,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0197",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 99,
+      "source_sha256": "e714705428928abd7f305d4d392dcbfaf3802ca925ff3446bb9936d093a5ee36",
+      "target": "对于 QLoRA，再加入 bitsandbytes 量化：\n"
+    },
+    {
+      "segment_id": "11-08:b0198",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 99,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0199",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 100,
+      "source_sha256": "89aa3eeb04d8504c82dccfc880bef93c87ed65f53121cb9d5ccabeef86ec8305",
+      "target": "```python\nfrom transformers import BitsAndBytesConfig\n\nbnb_config = BitsAndBytesConfig(\n    load_in_4bit=True,\n    bnb_4bit_quant_type=\"nf4\",\n    bnb_4bit_compute_dtype=torch.bfloat16,\n    bnb_4bit_use_double_quant=True,\n)\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"meta-llama/Llama-3.1-8B\",\n    quantization_config=bnb_config,\n    device_map=\"auto\",\n)\n\nmodel = get_peft_model(model, lora_config)\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0200",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 100,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0201",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 101,
+      "source_sha256": "4ea3bf7ddc69156171712995c0033ae804b0c4ed0c04e301ebebf838bfa6fd61",
+      "target": "这样就完成了。训练循环相同，数据流程也相同。基座模型现在以 4-bit 存储，LoRA 适配器以 fp16 训练，整套流程可容纳在 6GB 显存中。\n"
+    },
+    {
+      "segment_id": "11-08:b0202",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 101,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0203",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 102,
+      "source_sha256": "bba71a6091467d5fe3762d2537f8d8d503b1d7fcdced149b444829ca950233de",
+      "target": "使用 Hugging Face Trainer 训练：\n"
+    },
+    {
+      "segment_id": "11-08:b0204",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 102,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0205",
+      "kind": "fence",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 103,
+      "source_sha256": "aafe8ee36926fef051735990993b798439d69af6e7cfee26071388fe4b3a9f8d",
+      "target": "```python\nfrom transformers import TrainingArguments, Trainer\nfrom datasets import load_dataset\n\ndataset = load_dataset(\"tatsu-lab/alpaca\", split=\"train[:5000]\")\n\ntraining_args = TrainingArguments(\n    output_dir=\"./lora-llama\",\n    num_train_epochs=3,\n    per_device_train_batch_size=4,\n    gradient_accumulation_steps=4,\n    learning_rate=2e-4,\n    fp16=True,\n    logging_steps=10,\n    save_strategy=\"epoch\",\n    optim=\"paged_adamw_8bit\",\n)\n\ntrainer = Trainer(\n    model=model,\n    args=training_args,\n    train_dataset=dataset,\n)\n\ntrainer.train()\n\nmodel.save_pretrained(\"./lora-adapter\")\n```\n"
+    },
+    {
+      "segment_id": "11-08:b0206",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 103,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0207",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 104,
+      "source_sha256": "d94b5289beb52581fa36dcdb694d334197fbe6a7f18f6080bfa2c85f1da70e15",
+      "target": "保存下来的适配器大小为 10-100MB，基座模型保持不变。你可以在 Hugging Face Hub 上分享适配器，无需重新分发完整模型。\n"
+    },
+    {
+      "segment_id": "11-08:b0208",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Use It"
+      ],
+      "ordinal": 104,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0209",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Ship It"
+      ],
+      "ordinal": 105,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "11-08:b0210",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Ship It"
+      ],
+      "ordinal": 105,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0211",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Ship It"
+      ],
+      "ordinal": 106,
+      "source_sha256": "f048bfc20e6ca05e7c13cb648b86260535386903736a4c38b0a26cbedd01bc9d",
+      "target": "本课将产出：\n- `outputs/prompt-lora-advisor.md` -- 一份提示词，帮助你根据具体任务决定 LoRA 的秩、目标模块和超参数\n- `outputs/skill-fine-tuning-guide.md` -- 一项技能，教智能体（agent）用决策树判断何时微调以及如何微调\n"
+    },
+    {
+      "segment_id": "11-08:b0212",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Ship It"
+      ],
+      "ordinal": 106,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0213",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 107,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "11-08:b0214",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 107,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0215",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 108,
+      "source_sha256": "7e6b471817e07a2d8cbcbfc47006fcefea36eb4782535cfa380f1228ecf1fdf0",
+      "target": "1. **秩的消融研究。** 分别使用 2、4、8、16、32、64 的秩运行演示，绘制最终损失随秩变化的曲线。找出收益递减的转折点，即秩翻倍已无法让损失减半的位置。对于基于 256 维特征的简单分类任务，这个点应在 r=8-16 左右。\n"
+    },
+    {
+      "segment_id": "11-08:b0216",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 108,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0217",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 109,
+      "source_sha256": "b4a9acb3976a6ef1a12740d2b201de80934d1e94c6229a6a1c0a0d58dac297cb",
+      "target": "2. **目标模块比较。** 修改 inject_lora，分别只选择层 \"0\"、只选择层 \"2\"、只选择层 \"4\"，以及同时选择这三层。每个变体训练 20 epochs，比较收敛速度和最终损失。这对应于实际中选择 q_proj、v_proj 或所有线性层的决策。\n"
+    },
+    {
+      "segment_id": "11-08:b0218",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 109,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0219",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 110,
+      "source_sha256": "fc4c972ec1a4e1ec2e62db2bfd175db642f4546738fbbc8bafa9c6e6f9c56752",
+      "target": "3. **量化误差分析。** 取训练后模型的权重矩阵，比较经过 quantize_to_nf4 / dequantize_from_nf4 前后的结果。计算均方误差、最大绝对误差，以及原始权重与重建权重之间的相关性。尝试将 block_size 分别设为 32、64、128 和 256。\n"
+    },
+    {
+      "segment_id": "11-08:b0220",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 110,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0221",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 111,
+      "source_sha256": "6e97b1a7be83d03788fbd97bb79d55ace038167d0fb09caceca868a870a4c620",
+      "target": "4. **多适配器服务。** 在数据的不同子集上，分别训练两个 LoRA 适配器，例如一个使用偶数索引样本，另一个使用奇数索引样本。保存两个适配器。只加载一次基座模型，再切换适配器，验证它们对相同输入会产生不同输出。生产系统正是这样用一个基座模型提供多个微调模型的。\n"
+    },
+    {
+      "segment_id": "11-08:b0222",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 111,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0223",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 112,
+      "source_sha256": "d6fbc5dd7a366cee59d201132a779ccbc73e1d8988fd0ed7b98b6f1fb41797e7",
+      "target": "5. **合并与未合并状态下的推理。** 对相同的 100 个输入，比较 LoRA 模型在 merge_lora_weights 前后的输出。验证输出一致，允许 1e-5 的浮点误差。然后测试两者的推理速度：合并后应该略快，因为它只需一次矩阵乘法，而不是两次。\n"
+    },
+    {
+      "segment_id": "11-08:b0224",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Exercises"
+      ],
+      "ordinal": 112,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0225",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Key Terms"
+      ],
+      "ordinal": 113,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "11-08:b0226",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Key Terms"
+      ],
+      "ordinal": 113,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0227",
+      "kind": "table",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Key Terms"
+      ],
+      "ordinal": 114,
+      "source_sha256": "e0c8d1ec86855d9ffcda3b17d63d9d657a52f02e190f3f3985e7be1168c5f4a8",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| LoRA | “高效微调” | 低秩适配：冻结基座权重，训练两个小矩阵 A 和 B，用它们的乘积近似完整的权重更新 |\n| QLoRA | “在笔记本上微调” | 量化 LoRA：以 4-bit NF4 加载基座模型，在其上训练 fp16 的 LoRA 适配器，从而能在 6GB 显存中微调 7B 模型 |\n| 秩（r） | “模型能学到多少” | A 和 B 矩阵的内部维度；控制表达能力与参数量之间的权衡 |\n| Alpha | “LoRA 学习率” | 作用于 LoRA 输出的缩放因子；alpha/r 决定适配分支对最终输出的贡献大小 |\n| NF4 | “4-bit 量化” | Normal Float 4：一种 4-bit 数据类型，量化级别位于正态分布分位点上，对神经网络权重最优 |\n| 适配器 | “训练过的那一小部分” | 单独保存为文件的 LoRA A、B 矩阵（10-100MB），可加载到基座模型的任意副本之上 |\n| 目标模块 | “给哪些层加 LoRA” | 注入 LoRA 适配器的特定线性层，例如 q_proj、v_proj 等 |\n| 合并 | “融入模型” | 计算 W + (alpha/r) \\* BA 并替换原始权重，消除推理时的适配器开销 |\n| 分页优化器 | “训练时别发生 OOM” | GPU 显存耗尽时，将优化器状态（Adam 动量、方差）卸载到 CPU |\n| 灾难性遗忘 | “微调把其他能力都搞坏了” | 更新全部权重导致模型丧失先前学到的能力 |\n"
+    },
+    {
+      "segment_id": "11-08:b0228",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Key Terms"
+      ],
+      "ordinal": 114,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0229",
+      "kind": "heading",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Further Reading"
+      ],
+      "ordinal": 115,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "11-08:b0230",
+      "kind": "separator",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Further Reading"
+      ],
+      "ordinal": 115,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "11-08:b0231",
+      "kind": "list",
+      "heading_path": [
+        "# Fine-Tuning with LoRA & QLoRA",
+        "## Further Reading"
+      ],
+      "ordinal": 116,
+      "source_sha256": "cb51a222ad306093e5cb3d213ca6d830b471c1aa65d809988fe200a7ab434e7a",
+      "target": "- Hu 等，《LoRA：大语言模型的低秩适配》（2021）-- 首次提出低秩分解方法的论文，在 GPT-3 175B 上测试时，秩最低仅为 4\n- Dettmers 等，《QLoRA：量化语言模型的高效微调》（2023）-- 引入 NF4、双重量化和分页优化器，使单张 48GB GPU 可以微调 65B 模型\n- PEFT 库文档（huggingface.co/docs/peft）-- Hugging Face 生态中用于 LoRA、QLoRA 及其他参数高效方法的标准库\n- Yadav 等，《TIES-Merging：解决模型合并时的干扰》（2023）-- 在不降低质量的情况下组合多个 LoRA 适配器的技术\n- [Rafailov 等，《直接偏好优化：你的语言模型其实就是奖励模型》（NeurIPS 2023）](https://arxiv.org/abs/2305.18290) -- DPO 的推导；这是 SFT 之后的偏好微调阶段，不需要奖励模型。\n- [TRL 文档](https://huggingface.co/docs/trl/) -- `SFTTrainer`、`DPOTrainer`、`KTOTrainer`，以及与 PEFT/bitsandbytes/Unsloth 集成接口的官方参考资料。\n- [Unsloth 文档](https://docs.unsloth.ai/) -- 融合内核，使微调吞吐量翻倍、内存减半；它是 TRL 底层的性能优化层。\n- [Axolotl 文档](https://axolotl-ai-cloud.github.io/axolotl/) -- 通过 YAML 配置的多 GPU SFT/DPO/QLoRA 训练器；以“配置即代码”的方式替代手写脚本。\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "format_repairs": [
+    {
+      "kind": "escaped literal arithmetic multiplication",
+      "target_lines": [
+        14,
+        88,
+        186,
+        538
+      ],
+      "proof": "Only Markdown escape backslashes added outside code/bold; removing them restores exact previous mathematical text"
+    }
+  ],
+  "assets": []
+}
