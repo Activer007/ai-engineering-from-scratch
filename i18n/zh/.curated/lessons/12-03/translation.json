@@ -1,0 +1,1277 @@
+{
+  "schema_version": 1,
+  "lesson_id": "12-03",
+  "source_path": "phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "8dc13ac9ee1fb4e64f999e7d57947e55e7654be4",
+  "source_sha256": "8849ac3172d4edecb50891b890d4a3080f6efd1a7af17ea6c79c86b410a63c28",
+  "target_path": "i18n/zh/phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/zh.md",
+  "target_sha256": "96c48b2b12c87e0b1a157a307e4e612a5f651f7c5e2f1338dc7e0ebe0cb513f5",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "control_script_sha256": "5ffaa9d71e45f05b5ac51674470b3f29dd121c9bded7fe0d57379802372bcd68"
+  },
+  "segments": [
+    {
+      "segment_id": "12-03:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge"
+      ],
+      "ordinal": 1,
+      "source_sha256": "f65c0ffbb55656d98a119f822ad540c2a1e52d7e5fef787ac586943caaa3e029",
+      "target": "# 从 CLIP 到 BLIP-2：作为模态桥梁的 Q-Former\n"
+    },
+    {
+      "segment_id": "12-03:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge"
+      ],
+      "ordinal": 2,
+      "source_sha256": "56a9563174c776bc177fa0070e9e5bffb2fd9204fce9ec8e42eb9e3c12e9a2c2",
+      "target": "> CLIP 能对齐图像和文本，却无法生成图像描述、回答问题或进行对话。BLIP-2（Salesforce，2023）通过一个小型可训练桥接模块解决了这个问题：32 个可学习查询向量通过交叉注意力访问冻结的 ViT 特征，随后直接接入冻结的大语言模型（LLM）的输入流。这个拥有 188M 参数的桥接模块将一个 11B 的 LLM 与 ViT-g/14 连接起来。截至 2026 年，所有基于适配器的视觉语言模型（VLM），包括 MiniGPT-4、InstructBLIP 以及与 LLaVA 类似的模型，都是这一思路的后继者。本课将剖析桥接模块 Q-Former 的架构，解释其两阶段训练过程，并构建一个将视觉 token（词元）输入冻结文本解码器的简化版本。\n"
+    },
+    {
+      "segment_id": "12-03:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge"
+      ],
+      "ordinal": 3,
+      "source_sha256": "cd2371d74e3c3fb47b212a1e485ef48677ff1aaa408af47d2ade7809b469fc29",
+      "target": "**Type:** Build\n**Languages:** Python (stdlib, cross-attention + learnable-query demo)\n**Prerequisites:** 阶段 12 · 02（CLIP），阶段 7（Transformer）\n**Time:** ~180 分钟\n"
+    },
+    {
+      "segment_id": "12-03:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "12-03:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "4783ee1e51cdffab605fd23808a230c92a12c603c20d59bf1a088ab7c248a6ce",
+      "target": "- 解释为什么在冻结的视觉编码器与冻结的 LLM 之间设置可训练的瓶颈模块，在成本和稳定性上优于端到端微调（fine-tuning）。\n- 实现一个交叉注意力块，让一组固定数量的可学习查询关注外部图像特征。\n- 逐步梳理 BLIP-2 的两阶段预训练：先进行表示学习（ITC + ITM + ITG），再进行生成学习（使用冻结解码器的 LM 损失）。\n- 将 Q-Former 与 LLaVA 使用的更简单的 MLP 投影器进行比较，并论证各自适用的场景。\n"
+    },
+    {
+      "segment_id": "12-03:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "12-03:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "ededcbd7c8ae29938dc898d716eedb217c655ff096580c5028de351d333fbea3",
+      "target": "你有一个冻结的 ViT，它为每张图像生成 256 个维度为 1408 的图像块 token。你还有一个冻结的 7B LLM，它接收维度为 4096 的 token 嵌入（embedding）。最直接的桥接方法是使用一个从 1408 维映射到 4096 维的线性层。这种方法可行，但将全部 256 个图像块 token 输入 LLM 的上下文，会让每张图像额外占用 256 个 token。对于一个含 32 张图像的批次，仅视觉模态就会消耗 8192 个 token。\n"
+    },
+    {
+      "segment_id": "12-03:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "68bee190e713106782649c4f370a9959dfd4b33cca9cf772304a3be4ba48d1d3",
+      "target": "BLIP-2 要回答的问题是：能否将包含 256 个 token 的图像表示压缩为少得多的 token（例如 32 个），同时保留足够的信息，让 LLM 为图像生成描述、回答问题并进行推理？能否在不改动冻结主干网络的前提下训练这个桥接模块，让训练成本仅限于桥接模块自身的参数？\n"
+    },
+    {
+      "segment_id": "12-03:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "1e2b54ad40a7058e4596a1831d433fd771d25f0d245d8fd3a780312486ee1631",
+      "target": "答案是 Q-Former。32 个可学习的“查询”向量通过交叉注意力访问 ViT 的图像块 token，生成供 LLM 使用的、包含 32 个 token 的视觉摘要。总计 188M 个参数。在接入 LLM 之前，就已经使用对比、匹配和生成目标完成训练。\n"
+    },
+    {
+      "segment_id": "12-03:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "12-03:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Learnable queries"
+      ],
+      "ordinal": 11,
+      "source_sha256": "d00d980b6955caef675361f39df82a8dd6da326577e008e6c10e00e6ce39929d",
+      "target": "### 可学习查询\n"
+    },
+    {
+      "segment_id": "12-03:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Learnable queries"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Learnable queries"
+      ],
+      "ordinal": 12,
+      "source_sha256": "8906b7e35a9b4cf064fe8e748a261699cc244904d537a4eb8591487cbd8e87b1",
+      "target": "Q-Former 的核心技巧是：不让 LLM 的文本 token 直接关注图像块，而是引入一组新的、包含 32 个可学习查询向量的 `Q`，让*它们*来关注图像块。查询是模型的参数，会在训练过程中学习；每张图像都使用同一组 32 个查询。\n"
+    },
+    {
+      "segment_id": "12-03:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Learnable queries"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Learnable queries"
+      ],
+      "ordinal": 13,
+      "source_sha256": "c7b049245d5d7e3f732ae72976ec6f05b47a3be443ba38267e41ea464d963ec5",
+      "target": "经过交叉注意力后，每个查询都保存了一份压缩的图像摘要，例如“描述主要物体”“描述背景”“统计物体数量”等。查询并不会真的专门对应某个语义标签，而是学习任何能降低下游损失的编码方式。\n"
+    },
+    {
+      "segment_id": "12-03:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Learnable queries"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Architecture"
+      ],
+      "ordinal": 14,
+      "source_sha256": "ba358007fa16e8263d13b9f844297712fa4e8521ab50602862be7b75fb8d4fc4",
+      "target": "### 架构\n"
+    },
+    {
+      "segment_id": "12-03:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Architecture"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Architecture"
+      ],
+      "ordinal": 15,
+      "source_sha256": "37313d300878e742deb4a17955c804d8c97090995589f20f0c984a706e3429f6",
+      "target": "Q-Former 是一个小型 Transformer（12 层，~100M 个参数），包含两条路径：\n"
+    },
+    {
+      "segment_id": "12-03:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Architecture"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0031",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Architecture"
+      ],
+      "ordinal": 16,
+      "source_sha256": "b2fb8d24079fa39670ae345135acf40aedbb637e8976796bb4f8b0e304df7865",
+      "target": "1. 查询路径：32 个查询向量先经过彼此之间的自注意力，再通过交叉注意力访问冻结 ViT 的图像块 token，最后经过前馈网络（FFN）。\n2. 文本路径：一个类似 BERT 的文本编码器，与查询路径共享自注意力和 FFN 的权重。文本路径不启用交叉注意力。\n"
+    },
+    {
+      "segment_id": "12-03:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Architecture"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Architecture"
+      ],
+      "ordinal": 17,
+      "source_sha256": "3264c6cde330b257d2aa66cd112bb9c06fc03631e565adf2a1dc6ce065e8cd2a",
+      "target": "训练时，两条路径都会运行。查询和文本通过共享的自注意力交互，这意味着在需要的任务中（ITM、ITG），查询可以以文本为条件。推理时，在向 VLM 传递信息的环节中，只有查询通过该模块，产生 32 个视觉 token。\n"
+    },
+    {
+      "segment_id": "12-03:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Architecture"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 18,
+      "source_sha256": "0e2e767a33a779b4b6128e177667d8495039d5a3b2e8f93591f59fefcbbbc9be",
+      "target": "### 两阶段训练\n"
+    },
+    {
+      "segment_id": "12-03:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 19,
+      "source_sha256": "e20f0330ad675883c4b7794ab37d3625e1a3c2c5a297407cac9f78d14e1d77c2",
+      "target": "BLIP-2 分两个阶段进行预训练：\n"
+    },
+    {
+      "segment_id": "12-03:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 20,
+      "source_sha256": "e0c7074bae5763d8f5ff09792930a2ff74e9c0c21e4004b74c9ebc432fbf37c2",
+      "target": "阶段 1：表示学习（不使用 LLM）。包含三种损失：\n- ITC（图文对比）：在池化后的查询 token 与文本 CLS token 之间进行 CLIP 式对比。\n- ITM（图文匹配）：二分类器，判断这个图文对是否匹配。采用困难负样本挖掘。\n- ITG（基于图像的文本生成）：以查询为条件，在文本侧使用因果语言模型（LM）输出头。迫使查询编码能够用于生成文本的内容。\n"
+    },
+    {
+      "segment_id": "12-03:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 21,
+      "source_sha256": "fbed6a79cc52bfe696aa909ccfd151d0e38368e4a0b8ce0866a7138e3cab4d97",
+      "target": "只有 Q-Former 参与训练。ViT 保持冻结，不涉及 LLM。\n"
+    },
+    {
+      "segment_id": "12-03:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 22,
+      "source_sha256": "8263fb63b6d47b31ab71478abc2fd60f76f4171ef8243d1922d014abdf3931f2",
+      "target": "阶段 2：生成学习。接入一个冻结的 LLM（OPT-2.7B 或 Flan-T5-XL 等）。通过一个小型线性层，将 32 个查询输出投影到 LLM 的嵌入维度。将它们放在文本提示词（prompt）前面。对拼接后的提示词 + 图像 + 图像描述序列计算 LM 损失，仅训练线性投影层和 Q-Former。\n"
+    },
+    {
+      "segment_id": "12-03:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 23,
+      "source_sha256": "4b02a7fc022026125920753fc0e7273dbfb77e766048dfcaff75c684d6d6ee44",
+      "target": "阶段 2 结束后，Q-Former + 投影层就构成了完整的视觉适配器。推理流程为：图像 → ViT → Q-Former → 线性投影 → 前置于文本 → 冻结的 LLM 生成输出。\n"
+    },
+    {
+      "segment_id": "12-03:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Two-stage training"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0047",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Parameter economics"
+      ],
+      "ordinal": 24,
+      "source_sha256": "5b599429e6708a05412c8a1a6d0dcd551163d40cce93a0874bb2be58d8a288c9",
+      "target": "### 参数成本\n"
+    },
+    {
+      "segment_id": "12-03:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Parameter economics"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Parameter economics"
+      ],
+      "ordinal": 25,
+      "source_sha256": "5b7db8e8ec07fa77a6315c1246276c31df7b5fede1b8092a7dfe9c7e161169f8",
+      "target": "采用 ViT-g/14（1.1B，冻结）+ OPT-6.7B（6.7B，冻结）+ Q-Former（188M，训练）的 BLIP-2，总计 = 8B 个参数，其中训练 188M 个。单独的 Q-Former 约占整个系统参数量的 ~2.4%。训练成本也体现了这一点：只需少量 A100 训练几天，而端到端训练则需要数周。\n"
+    },
+    {
+      "segment_id": "12-03:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Parameter economics"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Parameter economics"
+      ],
+      "ordinal": 26,
+      "source_sha256": "b983bee851cb1f99b7141279be0fdc0cac6f2a2f653d3cd7a9680b8b1926af81",
+      "target": "质量方面：BLIP-2 在零样本视觉问答（VQA）上达到或超过 Flamingo-80B 的表现，而规模小了 50x。这个桥接模块确实有效。\n"
+    },
+    {
+      "segment_id": "12-03:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Parameter economics"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### InstructBLIP and the instruction-aware Q-Former"
+      ],
+      "ordinal": 27,
+      "source_sha256": "e206eaa209d53cc33d1c0dcdee40678d85da709ed15716557bc144723c42816e",
+      "target": "### InstructBLIP 与可感知指令的 Q-Former\n"
+    },
+    {
+      "segment_id": "12-03:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### InstructBLIP and the instruction-aware Q-Former"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### InstructBLIP and the instruction-aware Q-Former"
+      ],
+      "ordinal": 28,
+      "source_sha256": "b16a6fa8946c8f5d6cbcdbfb07336ee443fe6905db753b7972394badeb7f22a1",
+      "target": "InstructBLIP（2023）为 Q-Former 增加了一个输入：指令文本本身。在计算交叉注意力时，查询现在可以同时访问图像块和指令。查询可以针对每条指令调整关注内容（“数一数汽车”“描述氛围”），而不是只学习一种固定的摘要方式。它在留出任务上的基准测试中获得了提升。\n"
+    },
+    {
+      "segment_id": "12-03:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### InstructBLIP and the instruction-aware Q-Former"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### MiniGPT-4 and the projector-only approach"
+      ],
+      "ordinal": 29,
+      "source_sha256": "de345074284c5838a4dad50b09f0fe6c1c13f2dae0137f60bd8b1727d72fa214",
+      "target": "### MiniGPT-4 与仅训练投影器的方法\n"
+    },
+    {
+      "segment_id": "12-03:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### MiniGPT-4 and the projector-only approach"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### MiniGPT-4 and the projector-only approach"
+      ],
+      "ordinal": 30,
+      "source_sha256": "be85ffb006bc10914568ca884ba6040a25076bf8988b6a1d1086b180c8a87080",
+      "target": "MiniGPT-4 保留了 Q-Former，但冻结其他所有部分，只训练输出线性投影层。这种方法成本低，但代价是质量：这些查询来自 BLIP-2，并非为你自己的任务学到的。它适合快速迭代，却不是最佳架构。\n"
+    },
+    {
+      "segment_id": "12-03:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### MiniGPT-4 and the projector-only approach"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Why LLaVA went simpler"
+      ],
+      "ordinal": 31,
+      "source_sha256": "c6fee1630415e64af256222b642262e968f063bdba5f2f92a2f6ccfee000f446",
+      "target": "### LLaVA 为什么选择更简单的方法\n"
+    },
+    {
+      "segment_id": "12-03:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Why LLaVA went simpler"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Why LLaVA went simpler"
+      ],
+      "ordinal": 32,
+      "source_sha256": "6cb2fad617057f8129a54d961f9745144a4dc8a337eb086b6f5f3f5de8d5e848",
+      "target": "LLaVA（2023，第 12.05 课）用一个普通的 2 层多层感知机（MLP）取代了 Q-Former，将 ViT 的每个图像块 token 投影到 LLM 空间。对于 24x24 的网格，每张图像会产生 576 个 token，全部输入 LLM。压缩程度更低，但允许 LLM 直接关注原始图像块。当时这一选择颇有争议；到 2023 年末，它已占据主导地位，因为视觉指令数据（LLaVA-Instruct-150k）证明，MLP 经过训练能够保留足够的信号。取舍在于：LLaVA 的上下文会更快被填满，但它能自然地扩展到多图像和视频场景。\n"
+    },
+    {
+      "segment_id": "12-03:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Why LLaVA went simpler"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Why LLaVA went simpler"
+      ],
+      "ordinal": 33,
+      "source_sha256": "b3103bb930b939006d9fb66df67d3a9aa5231baf1bd1d433b13e02a3389836f5",
+      "target": "到 2026 年，这一领域分成了两条路线：在 token 预算很重要的场景中（长视频、大量图像），Q-Former 依然有用；在优先考虑每个 token 所带来的原始质量时，MLP 投影器占据主导地位。\n"
+    },
+    {
+      "segment_id": "12-03:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Why LLaVA went simpler"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Gated cross-attention: Flamingo, the ancestor"
+      ],
+      "ordinal": 34,
+      "source_sha256": "9066ce9fbd2ab9f2dfaeffefbb417ce22414152a54498ed954901deb8f17763c",
+      "target": "### 门控交叉注意力：先行者 Flamingo\n"
+    },
+    {
+      "segment_id": "12-03:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Gated cross-attention: Flamingo, the ancestor"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Gated cross-attention: Flamingo, the ancestor"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01c1a6fabb028feb91cde0468e5437e7fb77d19d136e26846face11c2d7468bb",
+      "target": "Flamingo（第 12.04 课）早于 BLIP-2，使用了相同的交叉注意力思路，但将其用于冻结 LLM 的每一层，而非单个桥接模块。BLIP-2 表明，仅在输入层进行压缩也能奏效。Gemini 和 Idefics 将两者结合：交错排列的输入 token，加上可选的门控交叉注意力，用于上下文内少样本学习。\n"
+    },
+    {
+      "segment_id": "12-03:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### Gated cross-attention: Flamingo, the ancestor"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### The 2026 descendants"
+      ],
+      "ordinal": 36,
+      "source_sha256": "5efdcf89b40ef6f95924dba152a3d499c6bb8063c6fc1d8d9d18e0764567a4ff",
+      "target": "### 2026 年的后继方案\n"
+    },
+    {
+      "segment_id": "12-03:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### The 2026 descendants"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### The 2026 descendants"
+      ],
+      "ordinal": 37,
+      "source_sha256": "62b969c660910156e8b63e6f61a665b05d654961f4414351adc06b922a715c94",
+      "target": "- Q-Former：BLIP-2、InstructBLIP、MiniGPT-4，以及出于 token 预算考虑采用这一方案的大多数视频语言模型。\n- Perceiver 重采样器：Flamingo 的变体（第 12.04 课）；Idefics 系列、Eagle、OmniMAE。\n- MLP 投影器：LLaVA、LLaVA-NeXT、LLaVA-OneVision、Cambrian-1。\n- 注意力池化：VILA、PaliGemma。\n"
+    },
+    {
+      "segment_id": "12-03:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### The 2026 descendants"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### The 2026 descendants"
+      ],
+      "ordinal": 38,
+      "source_sha256": "a2cfadc8c881e4a0e512db775c44eeb9944b112c2b5f9a8389672ee552642175",
+      "target": "这四种方案都可行。决定性问题在于：你受到的是 token 预算限制，还是每个 token 所能提供的质量限制。\n"
+    },
+    {
+      "segment_id": "12-03:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### The 2026 descendants"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0077",
+      "kind": "fence",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### The 2026 descendants"
+      ],
+      "ordinal": 39,
+      "source_sha256": "7fcef267df621d436b35f8659e49e1a01763a3ca50de64bc124debc94562c481",
+      "target": "```figure\nmodality-projection\n```\n"
+    },
+    {
+      "segment_id": "12-03:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## The Concept",
+        "### The 2026 descendants"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "12-03:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "e095d27738ee7b8a2ef0e4f2a10f98d70ff2b9f29bf01c5252dae71d6e825a1e",
+      "target": "`code/main.py` 使用标准库构建一个 Q-Former 风格的交叉注意力模块：\n"
+    },
+    {
+      "segment_id": "12-03:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0083",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "2e91cdbb5a45f7db3284950ffcfe39d1357ff3c2c86856c4bf67c43816351707",
+      "target": "1. 模拟 256 个图像块 token（维度 128）。\n2. 实例化 32 个可学习查询（维度 128）。\n3. 运行缩放点积交叉注意力（Q 来自查询，K/V 来自图像块）。\n4. 通过线性层投影到 LLM 的维度（512）。\n5. 输出 32 个可直接交给 LLM 的视觉 token。\n"
+    },
+    {
+      "segment_id": "12-03:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "ccf1ed6349c8322a92e5bebf97a999617b4b976eeee86e9c5d4d097bb067646f",
+      "target": "所有数学运算都用纯 Python 实现（对向量使用嵌套循环）。虽然是简化示例，但形状正确。程序会打印注意力权重矩阵，便于你查看每个查询从哪些图像块提取了信息。\n"
+    },
+    {
+      "segment_id": "12-03:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "12-03:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "229ceab768ce742cafdb9a5dc4b4f7030340aa092a81304c3bc110b6f7c99ccb",
+      "target": "本课会生成 `outputs/skill-modality-bridge-picker.md`。给定一个目标 VLM 配置（视觉编码器的 token 数量、LLM 上下文预算、部署约束、质量目标），它会在 Q-Former、MLP 和 Perceiver 重采样器之间给出建议，附上简短理由，并估算每种桥接模块的参数量。\n"
+    },
+    {
+      "segment_id": "12-03:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "12-03:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0093",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 47,
+      "source_sha256": "9d742b5b93691c1be25218fb2d8212b113d3f4e8f375d83804a5cbf95c76b70f",
+      "target": "1. 用 PyTorch 实现交叉注意力块。验证：在 32 个查询和 256 个键/值的情况下，注意力权重矩阵为 32 x 256，且经过 softmax 后每行之和为 1。\n"
+    },
+    {
+      "segment_id": "12-03:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0095",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "5e1b3ef66aaf3dc19ab7c8520e91799f07c577f6fd81f6ca1796c82757a8f44f",
+      "target": "2. 在 BLIP-2 的阶段 1 中，Q-Former 同时计算三种损失：ITC、ITM、ITG。用伪代码写出每一种损失对应的前向计算签名。哪一种要求启用文本编码器路径？\n"
+    },
+    {
+      "segment_id": "12-03:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "098059ba4e2152c58ca50d05b9620681114a5f17041180c3c1f79e930acfaaa6",
+      "target": "3. 比较参数量：Q-Former（12 层，隐藏维度 768）与 2 层 MLP 投影器（1408 → 4096，两层）。LLM 达到多大规模时，188M 参数的 Q-Former 才能通过训练效率的提升抵消自身成本？\n"
+    },
+    {
+      "segment_id": "12-03:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0099",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 50,
+      "source_sha256": "aa00b7ae11b0a8cce133a01e2741b66ea4e2cae462e700002a6b70402a1bcbc7",
+      "target": "4. 阅读 BLIP-2 论文（arXiv:2301.12597）第 3.2 节，了解 Q-Former 的初始化方式。解释为什么使用 BERT-base 初始化（而非随机初始化）能加快收敛。\n"
+    },
+    {
+      "segment_id": "12-03:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0101",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 51,
+      "source_sha256": "c21a223ea68393b4c7e3a941be86d80f74815ee7a201bd6e96d3e7a508db7423",
+      "target": "5. 对于一个 10 分钟的视频，以 1 FPS 采样得到 60 帧，计算两种方案的每帧 token 成本：（Q-Former → 32 tokens/frame）与（MLP 投影器 → 576 tokens/frame）。哪一种能装进 128k-token 的 LLM 上下文窗口？\n"
+    },
+    {
+      "segment_id": "12-03:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Exercises"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Key Terms"
+      ],
+      "ordinal": 52,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "12-03:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Key Terms"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0105",
+      "kind": "table",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Key Terms"
+      ],
+      "ordinal": 53,
+      "source_sha256": "2cde647d1901959dbf9c673b518112c60ab8ee456ce6eeb4ca494d8ae9871bd6",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|------------------------|\n| Q-Former | “查询式 Transformer” | 小型 Transformer，包含 32 个可学习查询向量，通过交叉注意力访问冻结的 ViT 特征 |\n| 可学习查询 | “视觉的软提示词” | 充当交叉注意力查询端的一组数量固定的参数；在每个模型中学习，在所有输入之间共享 |\n| 交叉注意力 | “Q 来自这里，K/V 来自那里” | 查询、键和值来自不同来源的注意力；查询通过这种机制从 ViT 图像块中提取信息 |\n| ITC | “图文对比” | 对 Q-Former 池化后的查询与文本 CLS 应用的 CLIP 式损失 |\n| ITM | “图文匹配” | 在经过困难负样本挖掘的样本对上运行的二分类器；迫使查询区分细粒度的不匹配 |\n| ITG | “基于图像的文本生成” | 以查询为条件生成文本的因果 LM 损失；迫使查询编码可解码为文本的内容 |\n| 两阶段预训练 | “先表示学习，再生成学习” | 阶段 1 仅训练 Q-Former（ITC/ITM/ITG）；阶段 2 接入冻结的 LLM，仅训练投影层 + Q-Former |\n| 冻结的主干网络 | “不做微调” | 视觉编码器和 LLM 的权重固定不变；只有桥接模块参与训练 |\n| 投影头 | “线性映射到 LLM 维度” | 将 Q-Former 输出映射到 LLM 嵌入维度的最后一个线性层 |\n| Perceiver 重采样器 | “Flamingo 的版本” | 类似的可学习查询交叉注意力机制，Flamingo 将其用于每一层，而不是作为单个桥接模块 |\n"
+    },
+    {
+      "segment_id": "12-03:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Key Terms"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Further Reading"
+      ],
+      "ordinal": 54,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "12-03:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Further Reading"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "12-03:b0109",
+      "kind": "list",
+      "heading_path": [
+        "# From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+        "## Further Reading"
+      ],
+      "ordinal": 55,
+      "source_sha256": "7afdecffa7e698b70490aa7048b0ef20c14de280732ae54f9f1680a6c7e75a6c",
+      "target": "- [Li 等：BLIP-2（arXiv:2301.12597）](https://arxiv.org/abs/2301.12597) - 核心论文。\n- [Li 等：BLIP（arXiv:2201.12086）](https://arxiv.org/abs/2201.12086) - 同样采用 ITC/ITM/ITG 三种目标的前代模型。\n- [Li 等：ALBEF（arXiv:2107.07651）](https://arxiv.org/abs/2107.07651) - “先对齐，再融合”，是阶段 1 训练思路的先行者。\n- [Dai 等：InstructBLIP（arXiv:2305.06500）](https://arxiv.org/abs/2305.06500) - 可感知指令的 Q-Former。\n- [Zhu 等：MiniGPT-4（arXiv:2304.10592）](https://arxiv.org/abs/2304.10592) - 仅训练投影器的方法。\n- [Jaegle 等：Perceiver IO（arXiv:2107.14795）](https://arxiv.org/abs/2107.14795) - 可学习查询交叉注意力的通用架构。\n"
+    }
+  ]
+}

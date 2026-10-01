@@ -1,0 +1,160 @@
+{
+  "lesson": "12-multimodal-ai/03-blip2-qformer-bridge",
+  "batch": "P2",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "8849ac3172d4edecb50891b890d4a3080f6efd1a7af17ea6c79c86b410a63c28",
+  "translation_sha256": "96c48b2b12c87e0b1a157a307e4e612a5f651f7c5e2f1338dc7e0ebe0cb513f5",
+  "translation_path": "/workspace/scratch/c917beb8059e/curated_batches/math_schema/i18n/zh/phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/zh.md",
+  "source_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/1bafaa88bb4668356791150bec3a6d7df38387eb/phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/en.md",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "self_review": {
+    "technical_meaning": "passed against frozen English with source issues separated",
+    "chinese_fluency": "passed entire lesson",
+    "independent_review": "Parent reports full English/Chinese review complete; requested S2 clarification and navigation-label alignment applied; final acceptance pending parent",
+    "remaining_translation_issues": {
+      "S0": [],
+      "S1": [],
+      "S2": []
+    }
+  },
+  "structural_checks": {
+    "source_matches_frozen_git_blob": true,
+    "line_count_and_blank_positions_equal": true,
+    "fence_payloads_identical": true,
+    "inline_code_sequence_identical": true,
+    "link_targets_identical": true,
+    "heading_levels_and_positions_equal": true,
+    "metadata_type_and_language_values_unchanged": true,
+    "numeric_digit_tokens_per_line_match_as_multiset": true
+  },
+  "limits": [
+    "No prior Chinese translation, old Chinese PR, or translation cache was read.",
+    "No lesson executable, external paid API, or networked code example was run.",
+    "Only text/structure and read-only referenced English code were inspected. GitHub GFM preview has not been performed on these candidates.",
+    "Actual website browser rendering is blocked and remains UNPASSED. No browser work attempted.",
+    "Frozen-source defects are intentionally retained and require a separate English-source decision."
+  ],
+  "focus_checks": [
+    "Full technical/Chinese prose review completed; BLIP-2 is the architecture and Q-Former its trainable bridge, not synonyms. Frozen ViT, frozen LLM and trained bridge distinctions retained.",
+    "All 32/256/128/512 values, model names and parameter quantities retained; source/code discrepancies recorded separately.",
+    "The 3-column terminology table retains all 10 data rows, with every ordinary-prose cell translated.",
+    "First body occurrence explains LLM, VLM, token, Q-Former role, fine-tuning, embedding, prompt and MLP naturally."
+  ],
+  "exceptions": [],
+  "source_issues": [
+    {
+      "severity": "S1",
+      "source_lines": [
+        35,
+        59
+      ],
+      "status": "confirmed_internal_inconsistency",
+      "finding": "Architecture describes Q-Former as ~100M parameters, whereas hook and parameter-economics section use 188M. Both retained."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        96,
+        98,
+        99,
+        101,
+        102,
+        104
+      ],
+      "status": "confirmed_from_referenced_code",
+      "finding": "Prose says main.py simulates 256 patches, 32 queries, dim 128 and projection dim 512; actual constants are NUM_PATCH=64, NUM_QUERY=8, PATCH_DIM=QUERY_DIM=16, LLM_DIM=24. It prints attention summaries, not the entire weight matrix, and contains no trained decoder or artifact writer. English values/claims retained."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        120
+      ],
+      "status": "confirmed_arithmetic_issue",
+      "finding": "10 minutes at 1 FPS yields 600 frames unless additional subsampling is specified, not 60. Source says 60; retained."
+    },
+    {
+      "severity": "S1",
+      "source_lines": [
+        59,
+        61
+      ],
+      "status": "confirmed_unsupported_comparison_basis",
+      "finding": "Immediately after an 8B total model, the source says BLIP-2 is 50x smaller than Flamingo-80B; total-model arithmetic would be 10x. The intended trainable-parameter comparison basis is not stated. Retained without inventing clarification."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        40,
+        47,
+        73,
+        79,
+        83,
+        84,
+        86,
+        135
+      ],
+      "status": "requires_separate_primary_source_review",
+      "finding": "Potential original-model inaccuracies in ITG query/text attention direction, pooled-query ITC, original LLaVA projector chronology, and Flamingo resampler-vs-layer cross-attention descriptions. Broad 2026 family/descendant claims and Gemini statements are not established by the lesson code. Translation keeps frozen English; no external sources consulted or silent correction."
+    },
+    {
+      "severity": "S2",
+      "source_lines": [
+        53,
+        55
+      ],
+      "status": "confirmed_sequence_wording_inconsistency",
+      "finding": "Queries are said to be prepended to the text prompt, but loss sequence is written prompt + image + caption. Retained both as in source."
+    }
+  ],
+  "glossary_additions_proposed": [
+    {
+      "en": "learnable query",
+      "zh": "可学习查询",
+      "context": "Model parameter vector shared across images"
+    },
+    {
+      "en": "cross-attention / self-attention",
+      "zh": "交叉注意力 / 自注意力",
+      "context": "Sources of Q, K and V"
+    },
+    {
+      "en": "projector / projection head",
+      "zh": "投影器 / 投影头",
+      "context": "Mapping visual features to LLM embedding dimension"
+    },
+    {
+      "en": "frozen backbone",
+      "zh": "冻结的主干网络",
+      "context": "Weights fixed while the bridge trains"
+    },
+    {
+      "en": "VLM",
+      "zh": "视觉语言模型（VLM）",
+      "context": "Multimodal model family"
+    }
+  ],
+  "read_only_code_inspected": [
+    "phases/12-multimodal-ai/03-blip2-qformer-bridge/code/main.py: complete file, constants, cross_attention, linear_project, demos"
+  ],
+  "parent_requested_edits_applied": [
+    "The Problem → 要解决的问题",
+    "Build It → 动手实现",
+    "BLIP-2 learnable-query table clarifies fixed number of trainable parameters, not fixed values"
+  ],
+  "independent_review": {
+    "technical": "Entire source/target prose compared by independent reviewer; protected bodies checked mechanically",
+    "language": "Entire Chinese prose checked; common section labels standardized",
+    "reviewed_target_sha256": "96c48b2b12c87e0b1a157a307e4e612a5f651f7c5e2f1338dc7e0ebe0cb513f5",
+    "fixed_findings": [
+      "Learnable queries means a fixed-size trainable set, not frozen parameter values"
+    ],
+    "numeric_order": "Within-block reorderings inspected and equivalent, including 3 minus 5 in 01/19"
+  },
+  "checks_after_independent_review": {
+    "safe_demo": "exit 0 on isolated copy",
+    "unit_tests": "no test suite present",
+    "github_gfm": "pending",
+    "actual_site": "blocked-environment; not accepted",
+    "hosted_ci": "not run; Actions disabled"
+  }
+}
