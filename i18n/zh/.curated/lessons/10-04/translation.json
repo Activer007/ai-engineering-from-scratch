@@ -6,7 +6,7 @@
   "source_blob": "86ca3b1cb084bc1b8835fb0541835cfb42771dcc",
   "source_sha256": "5c3f2214d795c44638f037e6b2493e3190516a5bf89202060467298dc2f39dbb",
   "target_path": "i18n/zh/phases/10-llms-from-scratch/04-pre-training-mini-gpt/docs/zh.md",
-  "target_sha256": "a9aa040423614427864d971cc83ec07154bdcc84ce05e082c11a577ff69e04ee",
+  "target_sha256": "3df2739bcbc1c72a390863db70dd804b4300f50ee1564b49179ae8d9e46aaf7d",
   "glossary_version": "1.0",
   "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
   "status": "language-reviewed",
@@ -703,8 +703,8 @@
       ],
       "ordinal": 28,
       "source_sha256": "c60280e5f32c4d50e620f95bb1b7241eaee86b9e9b04ac03c974dd73554c2f6e",
-      "target": "**多头注意力（multi-head attention）**将 768 维空间拆分为 12 个头，每个头 64 维。每个头学习不同的注意力模式：一个头可能追踪句法关系（主谓一致），另一个可能追踪语义相似性（同义词），还有一个可能追踪位置上的接近程度（相邻词）。将全部 12 个头的输出拼接起来，再投影回 768 维。\n",
-      "target_sha256": "241403fde9bc31b1e5686189c6d743f323d9abffa0c519df7a5d2df5a471dcc5"
+      "target": "**多头注意力（multi-head attention）** 将 768 维空间拆分为 12 个头，每个头 64 维。每个头学习不同的注意力模式：一个头可能追踪句法关系（主谓一致），另一个可能追踪语义相似性（同义词），还有一个可能追踪位置上的接近程度（相邻词）。将全部 12 个头的输出拼接起来，再投影回 768 维。\n",
+      "target_sha256": "df75c2f67de1492a2b5fcc081c8202a432a4575506b302919f5fbf7f0f41e97b"
     },
     {
       "segment_id": "10-04:b0056",
@@ -937,8 +937,8 @@
       ],
       "ordinal": 37,
       "source_sha256": "6df9f33de40276f1aacc6398d73b6294685674ec532f005effe6b50dc2d9cb09",
-      "target": "**预填充（Prefill）**并行处理整段提示词。所有 token 都已知，因此模型可以同时计算所有位置的注意力。这个阶段受算力限制（compute-bound），GPU 会以最大吞吐量执行矩阵乘法。在 A100 上，处理含 1000 个 token 的提示词，预填充大约需要 20-50ms。\n",
-      "target_sha256": "7d813c93fcd68aef8e5741f38e7a935f22de1117d03c1af6029a2099add6f10d"
+      "target": "**预填充（Prefill）** 并行处理整段提示词。所有 token 都已知，因此模型可以同时计算所有位置的注意力。这个阶段受算力限制（compute-bound），GPU 会以最大吞吐量执行矩阵乘法。在 A100 上，处理含 1000 个 token 的提示词，预填充大约需要 20-50ms。\n",
+      "target_sha256": "f56113a2e863e6621b794ad528b181bead4af177fc014a86712d51f8a2a6e066"
     },
     {
       "segment_id": "10-04:b0074",
@@ -963,8 +963,8 @@
       ],
       "ordinal": 38,
       "source_sha256": "f87c37212e6f5fae1b7bcd4acbcec7caa3594a5613ca11b8eb7e99c6c0893320",
-      "target": "**解码（Decode）**每次生成一个 token。每个新 token 都依赖之前的所有 token。这个阶段受内存带宽限制：瓶颈在于从 GPU 内存读取模型权重和 KV cache，而不是矩阵运算本身。GPU 的计算核心大部分时间都在空等内存读取。对于 GPT-2，无论矩阵乘法需要多少 FLOPs，每个解码步骤的耗时都差不多，因为限制因素是内存带宽。\n",
-      "target_sha256": "9ba347b94d686459bcace3bbe09301831563c67c3fac90ef3b4f3bda16e18a6e"
+      "target": "**解码（Decode）** 每次生成一个 token。每个新 token 都依赖之前的所有 token。这个阶段受内存带宽限制：瓶颈在于从 GPU 内存读取模型权重和 KV cache，而不是矩阵运算本身。GPU 的计算核心大部分时间都在空等内存读取。对于 GPT-2，无论矩阵乘法需要多少 FLOPs，每个解码步骤的耗时都差不多，因为限制因素是内存带宽。\n",
+      "target_sha256": "b9e3fb24b0ffcc9b026b3108a9a9deb2786a47557635b5fe95f6776058f2d907"
     },
     {
       "segment_id": "10-04:b0076",
@@ -2822,5 +2822,39 @@
     }
   ],
   "dependency_manifest_path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/DEPENDENCIES.json",
-  "dependency_manifest_sha256": "f2ee0315957d81b0af2ab64ef17da1c253396eedc899c57ac8d884bd9b057db7"
+  "dependency_manifest_sha256": "f2ee0315957d81b0af2ab64ef17da1c253396eedc899c57ac8d884bd9b057db7",
+  "format_revisions": [
+    {
+      "at_utc": "2026-10-02T14:52:37.877836+00:00",
+      "reason": "actual fixed-commit GitHub GFM rendered three labels as literal ** text",
+      "old_target_sha256": "a9aa040423614427864d971cc83ec07154bdcc84ce05e082c11a577ff69e04ee",
+      "new_target_sha256": "3df2739bcbc1c72a390863db70dd804b4300f50ee1564b49179ae8d9e46aaf7d",
+      "changed_segments": [
+        {
+          "segment_id": "10-04:b0055",
+          "before_sha256": "241403fde9bc31b1e5686189c6d743f323d9abffa0c519df7a5d2df5a471dcc5",
+          "after_sha256": "df75c2f67de1492a2b5fcc081c8202a432a4575506b302919f5fbf7f0f41e97b",
+          "change": "insert one ASCII space after opening label closing **"
+        },
+        {
+          "segment_id": "10-04:b0073",
+          "before_sha256": "7d813c93fcd68aef8e5741f38e7a935f22de1117d03c1af6029a2099add6f10d",
+          "after_sha256": "f56113a2e863e6621b794ad528b181bead4af177fc014a86712d51f8a2a6e066",
+          "change": "insert one ASCII space after opening label closing **"
+        },
+        {
+          "segment_id": "10-04:b0075",
+          "before_sha256": "9ba347b94d686459bcace3bbe09301831563c67c3fac90ef3b4f3bda16e18a6e",
+          "after_sha256": "b9e3fb24b0ffcc9b026b3108a9a9deb2786a47557635b5fe95f6776058f2d907",
+          "change": "insert one ASCII space after opening label closing **"
+        }
+      ],
+      "inserted_ascii_spaces": 3,
+      "inverse_removal_restores_old_bytes": true,
+      "b0177_unchanged": true,
+      "source_unchanged": true,
+      "raw_strict_errors": [],
+      "public_review_binding_pending": true
+    }
+  ]
 }
