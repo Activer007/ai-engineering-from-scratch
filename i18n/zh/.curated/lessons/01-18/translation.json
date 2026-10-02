@@ -1,0 +1,3720 @@
+{
+  "schema_version": 1,
+  "lesson_id": "01-18",
+  "source_path": "phases/01-math-foundations/18-convex-optimization/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "a8663e56a87b570083e48f16190cc15d73480b34",
+  "source_sha256": "061158e46d86c18ffeb43b730c98c52994ae863629445f6431942a368cfdb952",
+  "target_path": "i18n/zh/phases/01-math-foundations/18-convex-optimization/docs/zh.md",
+  "target_sha256": "eedc57205b5fcacba6c3f9db7bfd803387331084b858de232b7b2958cfc38002",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "old_chinese_or_cache_used": false
+  },
+  "segments": [
+    {
+      "segment_id": "01-18:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization"
+      ],
+      "ordinal": 1,
+      "source_sha256": "7af81db5a9c9a5699eafa5e67bd55b22446642fb281faf6d95f3a49d8a0e08f3",
+      "target": "# 凸优化\n",
+      "target_sha256": "c5067d9aaa5ed125ca832c0b596314fa7e8849c71d760a2020a1f2d5d16b579f"
+    },
+    {
+      "segment_id": "01-18:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Convex Optimization"
+      ],
+      "ordinal": 2,
+      "source_sha256": "cf32cc4a8e6638b2e0977f771ec1b57f5f1ce8642aab133028533ed05670bfd7",
+      "target": "> 凸问题只有一个谷底，神经网络却有 millions（数百万）个。理解两者的区别很重要。\n",
+      "target_sha256": "87cac7d41874b7f3bd2f3635cd8fce31692d242dba030e3bdd6b468a2cc93c70"
+    },
+    {
+      "segment_id": "01-18:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization"
+      ],
+      "ordinal": 3,
+      "source_sha256": "a2a3c177eb73b60741bea5c0e5c895e86bf3c8ae7c43f20802190b765260176b",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 阶段 1，第 04 课（机器学习微积分）、第 08 课（优化）\n**Time:** ~90 分钟\n",
+      "target_sha256": "884d1d7c855debbfe0708a30aef5e87a0b5ae68e135c213afe539b0a626b62af"
+    },
+    {
+      "segment_id": "01-18:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "01-18:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "06d2a70a3a5c02c392f83e99c2777e76c97445bcb8c0019735f2da6d54e73c6b",
+      "target": "- 使用定义、二阶导数和 Hessian 判据检验函数是否为凸函数\n- 实现 Newton 法，并将它的二次收敛特性与梯度下降进行比较\n- 使用 Lagrange 乘子求解约束优化问题，并解释 KKT 条件\n- 解释为什么神经网络的损失曲面是非凸的，而 SGD 仍能找到好的解\n",
+      "target_sha256": "13d45297c87a6e1432b28d70d4635bed3e856aebcdbfc2860d5880e47361d25f"
+    },
+    {
+      "segment_id": "01-18:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "01-18:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "c0e034a01339d8876db333e243f0a6b14cb2a9ff33ff78d279f30e551b52a7fd",
+      "target": "第 08 课介绍了梯度下降、动量和 Adam。这些优化器会沿着任意曲面向下走，但不提供保证。在非凸曲面上，梯度下降可能落入较差的局部极小值，停在鞍点，或者永远振荡下去。你仍然使用它，因为神经网络是非凸的，别无选择。\n",
+      "target_sha256": "88abe810981b11381407749952252da5bd22376c10fba5e1bf9b1d457ee81e7d"
+    },
+    {
+      "segment_id": "01-18:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "32bd7c0674fa303efa63fa3b7d3b52f0d11a7cdd5b782ac79059508da33d7cd8",
+      "target": "但机器学习中的许多问题是凸的，例如线性回归、逻辑回归、SVM、LASSO 和岭回归。对这些问题，有一种更强的工具：具备数学保证的优化。一个凸问题恰好只有一个谷底。任何沿着下坡走的算法都会到达全局极小值，不需要重新启动，不需要学习率调度，也不需要祈祷。\n",
+      "target_sha256": "2d88be0eb2b9af5e8ab04c0c8313d2bf61a9cbc5bd129a3589c20b184e8c99ec"
+    },
+    {
+      "segment_id": "01-18:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "3391fac8ef45d3d67f0fcca0b795eb18ba293982faceef53f98c251c97f36fff",
+      "target": "理解凸性有三个作用。首先，它能告诉你，问题是容易的凸问题，还是困难的非凸问题。其次，它为凸问题提供了 Newton 法这样的更快工具。最后，它能解释贯穿机器学习（ML）的概念：作为约束的正则化、SVM 中的对偶性，以及深度学习为什么在不具备凸性带来的那些良好性质时仍然有效。\n",
+      "target_sha256": "5aaa398d08022d9e63f1cccaf7cfa56731e135860a63f411253a762172b6b91a"
+    },
+    {
+      "segment_id": "01-18:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "01-18:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c309e1512a269b48bb73da6cae65cd60e8fc7c3d20a66e121dc71263d511826f",
+      "target": "### 凸集\n",
+      "target_sha256": "6f32d4a737e33714ad14a0189a28584af439b17aad7848bd5b6a176a93f7f312"
+    },
+    {
+      "segment_id": "01-18:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 12,
+      "source_sha256": "32220225ab3be5cb325afd392d59ee4f53c357523e3d2506cb32da07acc98d78",
+      "target": "如果集合 S 内任意两点之间的线段也完全位于 S 内，那么 S 就是凸集（convex set）。\n",
+      "target_sha256": "dc2b845037e41e123e8aad9f5cb52ea334403142f097bc52ac3b8cb082b11c83"
+    },
+    {
+      "segment_id": "01-18:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0025",
+      "kind": "table",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 13,
+      "source_sha256": "b1113ecf90966c1bfea55c6c606a0b507e3e2126031390dd229d668e2ea933e9",
+      "target": "| 凸集 | 非凸集 |\n|---|---|\n| **矩形**：任意两个内部点之间的线段都留在集合内部 | **星形或月牙形**：两个内部点之间的线段可能经过集合外部 |\n| **三角形**：所有内部点都满足同样的性质 | **甜甜圈形或圆环**：中间的孔洞会使某些线段离开集合 |\n| 任意两点之间的线段都留在集合内部 | 某些点对之间的线段会离开集合 |\n",
+      "target_sha256": "8080e56033296cdeef47949b30becb6f8cd62b5c740458fe44a06bcf42686e0f"
+    },
+    {
+      "segment_id": "01-18:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 14,
+      "source_sha256": "6e350f6473c11aeffd2d33b1685606a23be762619f5c63127b9f816161eb33e6",
+      "target": "形式化判据：对于 S 内任意两点 x、y，以及 [0, 1] 内任意 t，点 tx + (1-t)y 也属于 S。\n",
+      "target_sha256": "9f3e20ee9d1c9e0224b56ce0c6e9b36dadc1bfa74cd65525823709da9aef70fb"
+    },
+    {
+      "segment_id": "01-18:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 15,
+      "source_sha256": "2ffbb2f3233ffd0c490f51147d518e98fd54022254c8ed89b4108d510de89d62",
+      "target": "凸集的例子：\n- 一条直线、一个平面、整个 R^n\n- 一个球（圆、球体、超球体）\n- 一个半空间：{x : a^T x <= b}\n- 任意多个凸集的交集\n",
+      "target_sha256": "cf1ce7cf5868e0fbd64119ca2dae10f6601f6a7689b8df63cb8451ad350f263f"
+    },
+    {
+      "segment_id": "01-18:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 16,
+      "source_sha256": "cfb557924a98509004f70dcec394011f3a9ecd48fdfce14aa5082b701ad8da72",
+      "target": "非凸集的例子：\n- 甜甜圈形区域（圆环）\n- 两个不相交圆的并集\n- 任何带有“凹陷”或“孔洞”的集合\n",
+      "target_sha256": "7de1bd8024ad06b72396ccaa63ecd6efcf809ac5464c083c19530d329d5ce8b5"
+    },
+    {
+      "segment_id": "01-18:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex sets"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 17,
+      "source_sha256": "db157e4ee7e9daf012c4b8691e53ab23642ab8abbe85a6c83e03d145f88eb1e7",
+      "target": "### 凸函数\n",
+      "target_sha256": "7284fafdcf82596e465bf9b72c8abda2aa21e5a5b08a9f898239324685b1204c"
+    },
+    {
+      "segment_id": "01-18:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 18,
+      "source_sha256": "deb3ec20234d5f402f1ee98d2a5b9081c55d71c5f3ffc1a2030474f5d84ce212",
+      "target": "如果函数 f 的定义域是凸集，并且对于定义域内任意两点 x、y，以及 [0, 1] 内任意 t，都满足下式，那么 f 就是凸函数（convex function）：\n",
+      "target_sha256": "296ba5ccac7df9a678283ba01cdd59fd7957ef0bd305af41863700e3b23bb853"
+    },
+    {
+      "segment_id": "01-18:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 19,
+      "source_sha256": "a170dbfb3a8d2672afab2bbbf1b2ac9a2deb849a7725aaa045195fde4c894b89",
+      "target": "```text\nf(tx + (1-t)y) <= t*f(x) + (1-t)*f(y)\n```\n",
+      "target_sha256": "9ba99c61550f434122fbaf5125d03410e2382f6597215b5368dcc66848071420"
+    },
+    {
+      "segment_id": "01-18:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 20,
+      "source_sha256": "d3beb1c0e6b1db884aa655550118b2dc6788fd82085aaeee3cda1940a52e7f04",
+      "target": "从几何上看，函数图像上任意两点之间的线段，都位于图像上方或图像上。\n",
+      "target_sha256": "9b1efaa56d263b7b1413d1950f78cf3533e67361cd4b9cfef76bde4a48544ef2"
+    },
+    {
+      "segment_id": "01-18:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0041",
+      "kind": "table",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 21,
+      "source_sha256": "edfa1ddd467da2fa5db97ac94a05f5f26d2ac4297e4900f7a44aa0d2615e3a00",
+      "target": "| 性质 | 凸函数 | 非凸函数 |\n|---|---|---|\n| **线段判据** | 图像上任意两点之间的线段都位于曲线 **上方或曲线上** | 图像上某些点之间的线段会降到曲线 **下方** |\n| **形状** | 向上弯曲的单个碗状或谷状曲面 | 多个峰谷混杂，曲率有正有负 |\n| **局部极小值** | 每个局部极小值都是全局极小值 | 可能存在多个高度不同的局部极小值 |\n",
+      "target_sha256": "d47b0a903bd06a79dcf8253124a331a7f112d5d4080608fb52e0b19bb719ee6b"
+    },
+    {
+      "segment_id": "01-18:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 22,
+      "source_sha256": "a7fb0db6c576df28c5d69d6c138c9399ef5fa9128483177259b0f5b0865f0a24",
+      "target": "常见的凸函数：\n- f(x) = x^2（抛物线）\n- f(x) = |x|（绝对值）\n- f(x) = e^x（指数函数）\n- f(x) = max(0, x)（ReLU，虽然它是分段线性的）\n- x > 0 时的 f(x) = -log(x)（负对数）\n- 任意线性函数 f(x) = a^T x + b（既凸又凹）\n",
+      "target_sha256": "3a97a7ba55a0297e10385f78c349300001ad061bf354bf0e884560cbbe2ff95f"
+    },
+    {
+      "segment_id": "01-18:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex functions"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 23,
+      "source_sha256": "8d00840e26051f3d787701ba694642de3ff63a30a85d441088971c9fea187466",
+      "target": "### 检验凸性\n",
+      "target_sha256": "cb3ba39f9e76b0367d287eb661fb793268c68478887dd27018c27a188ed0f743"
+    },
+    {
+      "segment_id": "01-18:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 24,
+      "source_sha256": "b04c000d9d8db5dd735153f8f6284f5c10f8a70ec9b687040b6e3b40c17d055f",
+      "target": "下面是三种实用判据，依次从最容易使用到最严谨。\n",
+      "target_sha256": "726f3f5dc8b59024c98356d8ba63c5ad41cce764ac24de2d9b26e068f19d3eee"
+    },
+    {
+      "segment_id": "01-18:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 25,
+      "source_sha256": "9e0d08429870e5d13870fe18ff9ab5cc3edd63f4cf6d19e6c11be99462e5fee8",
+      "target": "**判据 1：二阶导数判据（1D）。** 如果对所有 x 都有 f''(x) >= 0，那么 f 就是凸函数。\n",
+      "target_sha256": "aec90d6dc458d0d6a9d77dc6f9f0ed3d5a66d2a1e730c220f7b320d6d7c2f8e4"
+    },
+    {
+      "segment_id": "01-18:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0051",
+      "kind": "list",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 26,
+      "source_sha256": "39b2bca62dce1d7e7348190ea2dd03b780be3cbbe6f8fd1224ecfc5a1bd93b4c",
+      "target": "- f(x) = x^2：f''(x) = 2 >= 0，是凸函数\n- f(x) = x^3：f''(x) = 6x，在 x < 0 时为负，因此不是凸函数\n- f(x) = e^x：f''(x) = e^x > 0，是凸函数\n",
+      "target_sha256": "ca20ab5853d08b7fe5d73e092b9f204a584425d79a30495ad29ef3f68173f70e"
+    },
+    {
+      "segment_id": "01-18:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 27,
+      "source_sha256": "f74558e31b74b87299b7a0d4c4fc75a71616bb7147929e6e5bd606d928d692be",
+      "target": "**判据 2：Hessian 判据（多变量）。** 如果对所有 x，Hessian 矩阵 H(x) 都是半正定的，那么 f 就是凸函数。Hessian 矩阵是由二阶偏导数组成的矩阵。\n",
+      "target_sha256": "831ffec788f9ec7e58ac25086dcad8ff1bc1f4ddee269046e2fb6dbd441dddd3"
+    },
+    {
+      "segment_id": "01-18:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 28,
+      "source_sha256": "38d98128578a00c490a8a584a4d65e3ab5746cb4cf2452b790a4f59303081072",
+      "target": "**判据 3：定义判据。** 直接检查不等式 f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y)。对于导数难以计算的函数，这种方法很有用。\n",
+      "target_sha256": "12ceec330d21d8d75dcd2c1f171c4be4cb486e3b72637dc535b858a101ed309e"
+    },
+    {
+      "segment_id": "01-18:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Testing for convexity"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 29,
+      "source_sha256": "1d48a13f01f5f0ea95d01cbf09e35ad85dabe854b2fcff6bedd513cd5786c0d0",
+      "target": "### 为什么凸性很重要\n",
+      "target_sha256": "6f134be8bcbcbf89948ee4f1c02941fc4722ae8f8e8410e7018ea2dc24c291e1"
+    },
+    {
+      "segment_id": "01-18:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 30,
+      "source_sha256": "67b5c6595d0539fbc77cb6c3aa7e6c0ef638471f98c5ea26b4250bfd5a3efaa0",
+      "target": "凸优化的核心定理是：\n",
+      "target_sha256": "6a54117fc275e8539f9ed98fa427cc1e7e7fef2be408ce478d059d6f39100519"
+    },
+    {
+      "segment_id": "01-18:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 31,
+      "source_sha256": "49122a51035c356239976f4dee5bc7bf33c98559a78fa45286e21b46f4557b2a",
+      "target": "**对于凸函数，每个局部极小值都是全局极小值。**\n",
+      "target_sha256": "e9e0d95ff946aa23e04ba8bfa5709ed9eccfa23577362821af6fb504301e9730"
+    },
+    {
+      "segment_id": "01-18:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 32,
+      "source_sha256": "3eebb1ec3908e1f5c008f1a67b7c8a7aa574918e4c4b159cc56543205fa31c96",
+      "target": "这意味着梯度下降不会陷入困境。任何下坡路径都通向同一个答案，算法保证会收敛到最优解。\n",
+      "target_sha256": "3b0ae405d4d29a427863a188268d3d62e8c8297a50888eca316aecdf043398bf"
+    },
+    {
+      "segment_id": "01-18:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 33,
+      "source_sha256": "0c056ae4e331f8bc52e83c957d252ecba87256b653385e1d0b5e344efebb07ad",
+      "target": "```mermaid\ngraph LR\n    subgraph \"Convex: ONE answer\"\n        direction TB\n        C1[\"Loss surface has a single valley\"] --> C2[\"Gradient descent ALWAYS finds the global minimum\"]\n    end\n    subgraph \"Non-convex: MANY traps\"\n        direction TB\n        N1[\"Loss surface has multiple valleys and peaks\"] --> N2[\"Gradient descent may get stuck in a local minimum\"]\n        N2 --> N3[\"Global minimum might be missed\"]\n    end\n```\n",
+      "target_sha256": "0c056ae4e331f8bc52e83c957d252ecba87256b653385e1d0b5e344efebb07ad"
+    },
+    {
+      "segment_id": "01-18:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 34,
+      "source_sha256": "c8e4e2e4c4b08d441d59a068f47bec6c18f4cbc8fc4b6d11162ac553f15c997c",
+      "target": "由此可得：\n- 不需要随机重新启动\n- 不需要复杂的学习率调度\n- 可以证明收敛性，收敛速度取决于函数的性质\n- 解是唯一的，平坦区域中的等价解除外\n",
+      "target_sha256": "fca6e66cc7c6604c68b7361e2bffe0a4ee62c566196bd8760b19eead9a163a29"
+    },
+    {
+      "segment_id": "01-18:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why convexity matters"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex vs non-convex in ML"
+      ],
+      "ordinal": 35,
+      "source_sha256": "24bddbb14d2049a5002517cf4bbf33a33e98594fcb41f8f6f541d643a5503b2a",
+      "target": "### ML 中的凸问题与非凸问题\n",
+      "target_sha256": "53e622fdfbc6e8af75b0e06fe0ef96e38a7b1d679882c2b92f9cc2d572247d29"
+    },
+    {
+      "segment_id": "01-18:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex vs non-convex in ML"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0071",
+      "kind": "table",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex vs non-convex in ML"
+      ],
+      "ordinal": 36,
+      "source_sha256": "dd078448e0913fc3d468536da07a3e8c99fc3cc964e03aeb7496a56acc6e5c07",
+      "target": "| 问题 | 是否为凸问题？ | 原因 |\n|---------|---------|-----|\n| 线性回归（MSE） | 是 | 损失是权重的二次函数 |\n| 逻辑回归 | 是 | 对数损失是权重的凸函数 |\n| SVM（合页损失） | 是 | 线性函数的最大值 |\n| LASSO（L1 回归） | 是 | 凸函数之和仍为凸函数 |\n| 岭回归（L2） | 是 | 二次函数 + 二次函数 = 凸函数 |\n| 神经网络（任意损失） | 否 | 非线性激活构成非凸曲面 |\n| k-means 聚类 | 否 | 包含离散的分配步骤 |\n| 矩阵分解 | 否 | 包含未知量的乘积 |\n",
+      "target_sha256": "94aabf51716b7f725a43b761ac6ee4051498ecb1d1d378f7abb74fe62ced63eb"
+    },
+    {
+      "segment_id": "01-18:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex vs non-convex in ML"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex vs non-convex in ML"
+      ],
+      "ordinal": 37,
+      "source_sha256": "06f0957eb7da996fdef0e8a30503449ad97581ccc88945656bfe6f6b2cfdfd59",
+      "target": "使用凸损失的线性模型是凸的。一旦加入带非线性激活的隐藏层，凸性就被破坏了。\n",
+      "target_sha256": "af95e955abc75a0c6cb83efbd0ae5dff3475995c2dfa0a36e2eb3cc1ecf4091a"
+    },
+    {
+      "segment_id": "01-18:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Convex vs non-convex in ML"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 38,
+      "source_sha256": "86f88fba5755c640399461560ce5a0250f4f9f7690ba59613cf20d5c1612208c",
+      "target": "### Hessian 矩阵\n",
+      "target_sha256": "34e32efbe3858282234dabafe58351a557a9ea4993d3542110efa116fb696f10"
+    },
+    {
+      "segment_id": "01-18:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 39,
+      "source_sha256": "4c27fe96030d31e14176076fff93f531cb31380aaf6c5bf2c64e39dc0b35d6b7",
+      "target": "函数 f: R^n -> R 的 Hessian 矩阵 H，是由二阶偏导数组成的 n x n 矩阵。\n",
+      "target_sha256": "863b148acdbd5dcee3b2d85dc785a8a62795334796f1759a68b6fb7b81e039d7"
+    },
+    {
+      "segment_id": "01-18:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 40,
+      "source_sha256": "f27ed2acff2258acaeb2a95cbd9c366165581e5dd3e88a9847cecf6e69f17b9a",
+      "target": "```text\nH[i][j] = d^2 f / (dx_i dx_j)\n```\n",
+      "target_sha256": "f34c593c374dbbb0a9c38c9576869b4a46f7c94bbd3d4e5323d85451ee195355"
+    },
+    {
+      "segment_id": "01-18:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 41,
+      "source_sha256": "c99ccc666f789b067e1720832b18832cf5c964e234ab0b30f4a552f1ee1806db",
+      "target": "对于 f(x, y) = x^2 + 3xy + y^2：\n",
+      "target_sha256": "b50f86a237a59f2e37563762b1e954c4075352115448428bb8f850cc11921999"
+    },
+    {
+      "segment_id": "01-18:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0083",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 42,
+      "source_sha256": "0aa1623ab78d5cb27d14b8813b04d292a34fbedea342c8c7d439688a6e9a89d4",
+      "target": "```text\ndf/dx = 2x + 3y       d^2f/dx^2 = 2      d^2f/dxdy = 3\ndf/dy = 3x + 2y       d^2f/dydx = 3      d^2f/dy^2 = 2\n\nH = [ 2  3 ]\n    [ 3  2 ]\n```\n",
+      "target_sha256": "ee33de3b4a9c038fdc1f5ca25c13d605f4b30b77a26a29c5b31c6e92d2565e4d"
+    },
+    {
+      "segment_id": "01-18:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 43,
+      "source_sha256": "08af5981c0c32ca631af8e1a87a4917af8023e17e2e324b7a770144185f1bafa",
+      "target": "Hessian 矩阵反映曲率信息：\n- 特征值全部为正：函数沿每个方向都向上弯曲，即在该点是凸的\n- 特征值全部为负：沿每个方向都向下弯曲，即为凹，对应局部极大值\n- 特征值有正有负：鞍点，某些方向向上弯曲，另一些方向向下弯曲\n- 存在零特征值：对应方向是平坦的，也就是退化的\n",
+      "target_sha256": "ca4d8908afc974b47359f4ad725e037c5c69e34086a15f7f91dcfd56616652c5"
+    },
+    {
+      "segment_id": "01-18:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 44,
+      "source_sha256": "2485a030b31751bf632348fee3c59743f8bca791e627a5c404dd7eaf8f108e39",
+      "target": "要保证凸性，Hessian 矩阵必须处处半正定，即所有特征值都 >= 0，而不能只在某个点满足条件。\n",
+      "target_sha256": "0c3694dcdbce76024aa0f0ba1b08ca8ea0e8d655c7ed7d5d12dbf9ab1a74f133"
+    },
+    {
+      "segment_id": "01-18:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### The Hessian matrix"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 45,
+      "source_sha256": "bb90624b362a92e1e887efc29a11d9114f2997ad5693d039c97f45fb9bffd5b2",
+      "target": "### Newton 法\n",
+      "target_sha256": "faf24109b8c86d8cd307f438a1a9e19a5c0cdb48917a21dc11fe4d96a2b110de"
+    },
+    {
+      "segment_id": "01-18:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 46,
+      "source_sha256": "84e05987ff2130f45edf811c63f90c7353e554ca8457e9a409857f5214e9753f",
+      "target": "梯度下降使用一阶信息，也就是梯度；Newton 法（牛顿法）使用二阶信息，也就是 Hessian 矩阵。它在当前点拟合一个二次近似，然后直接跳到这个二次模型的极小值点。\n",
+      "target_sha256": "8929120ec0f1012d7add799c7699c86f894f6389e23979533834ab1618cda555"
+    },
+    {
+      "segment_id": "01-18:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 47,
+      "source_sha256": "2a0c44904dac9f53a3016c92109e9bbf53a23424d2a251d72b398c424372e801",
+      "target": "```text\nUpdate rule:\n  x_new = x - H^(-1) * gradient\n\nCompare to gradient descent:\n  x_new = x - lr * gradient\n```\n",
+      "target_sha256": "dbd6c05a117f82e71f321769ec7d5b23dab8b7978c3923a6515f5c6d039ec2ec"
+    },
+    {
+      "segment_id": "01-18:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 48,
+      "source_sha256": "fb86efc26c8afbe4ebe43a00100e0a59675966e398354bb3de03f5894b8e1988",
+      "target": "Newton 法用逆 Hessian 矩阵代替标量学习率，从而根据局部曲率自动调整步长和方向。\n",
+      "target_sha256": "00f7a05d900e06a7ade0b1d12e813c80bca5d5076f414c5396436192dcb42b2b"
+    },
+    {
+      "segment_id": "01-18:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0097",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 49,
+      "source_sha256": "d3244bce3bf6066b4895e710cfbf5ada63834229304963efb1f7c97e0b4221ed",
+      "target": "```mermaid\ngraph TD\n    subgraph \"Gradient Descent\"\n        GD1[\"Start\"] --> GD2[\"Step 1\"]\n        GD2 --> GD3[\"Step 2\"]\n        GD3 --> GD4[\"...\"]\n        GD4 --> GD5[\"Step ~500: Converged\"]\n        GD_note[\"Follows gradient blindly — many small steps\"]\n    end\n    subgraph \"Newton's Method\"\n        NM1[\"Start\"] --> NM2[\"Step 1\"]\n        NM2 --> NM3[\"...\"]\n        NM3 --> NM4[\"Step ~5: Converged\"]\n        NM_note[\"Uses curvature for optimal steps\"]\n    end\n```\n",
+      "target_sha256": "d3244bce3bf6066b4895e710cfbf5ada63834229304963efb1f7c97e0b4221ed"
+    },
+    {
+      "segment_id": "01-18:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 50,
+      "source_sha256": "d79462577994728f0a3408ef011f17f4078456cc43be51a4ffb1b182c5cca6f7",
+      "target": "优点：\n- 在极小值附近二次收敛，即每一步的误差都会变成上一步误差的平方\n- 没有需要调节的学习率\n- 具有尺度不变性，不受问题参数化方式的影响\n",
+      "target_sha256": "ebbd6bfd7e449dc2def7f6a3506e8ded901dc12daedf7bb5b4413ae592ecee73"
+    },
+    {
+      "segment_id": "01-18:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 51,
+      "source_sha256": "91f8838946605200eb007105e4f4406135bff4b98d4ef35ad40c047dfe70c357",
+      "target": "缺点：\n- 计算 Hessian 矩阵需要 O(n^2) 内存，求逆需要 O(n^3) 运算\n- 对于含 1 million（百万）个权重的神经网络，需要存储 10^12 个元素并进行 10^18 次运算\n- 不适合实际用于深度学习\n",
+      "target_sha256": "29bc408c140e0076198c327bb66895d29ed4a0860ffa6253f551fa2206a18ef8"
+    },
+    {
+      "segment_id": "01-18:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Newton's method"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Constrained optimization"
+      ],
+      "ordinal": 52,
+      "source_sha256": "a8f5a17fab466d0c0275ddf4c93a4ce660d66016dc2c1ca8f93dea9e65193c83",
+      "target": "### 约束优化\n",
+      "target_sha256": "e570d384cb9bfb7c68bfdaa6524cf4fc952eb10fb723de01ec4d099833e60f19"
+    },
+    {
+      "segment_id": "01-18:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Constrained optimization"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Constrained optimization"
+      ],
+      "ordinal": 53,
+      "source_sha256": "59f42b58290bca90579e7183cdf2d1af30761935bfdee5f981ffd93b9b533536",
+      "target": "无约束优化：在所有 x 中最小化 f(x)。\n约束优化：在满足约束的前提下最小化 f(x)。\n",
+      "target_sha256": "17e491cda6275f3a64b5f87e16e5e861abe14ca2b30a1e9ddbaad30f4ef99533"
+    },
+    {
+      "segment_id": "01-18:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Constrained optimization"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Constrained optimization"
+      ],
+      "ordinal": 54,
+      "source_sha256": "be494254d5df0bca55a923743efcd2f26ec70e981b11c880c92bf52b9aa99e0c",
+      "target": "实际问题通常有约束。例如，你希望降低成本，但预算有限；或者希望减小误差，但模型复杂度有上限。\n",
+      "target_sha256": "6a4b11c0c7b91d23b3836b17673ad6da8fbbafbfed0f85cd4a9b585eb3dbc123"
+    },
+    {
+      "segment_id": "01-18:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Constrained optimization"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0109",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Constrained optimization"
+      ],
+      "ordinal": 55,
+      "source_sha256": "100a5a98455125a9a11e566e36ab831f10e9b2347507d8f5a7f06b887612e50d",
+      "target": "```mermaid\ngraph LR\n    subgraph \"Unconstrained\"\n        U1[\"Loss function\"] --> U2[\"Free minimum: lowest point of the loss surface\"]\n    end\n    subgraph \"Constrained\"\n        C1[\"Loss function\"] --> C2[\"Constrained minimum: lowest point within the feasible region\"]\n        C3[\"Constraint boundary limits the search space\"]\n    end\n```\n",
+      "target_sha256": "100a5a98455125a9a11e566e36ab831f10e9b2347507d8f5a7f06b887612e50d"
+    },
+    {
+      "segment_id": "01-18:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Constrained optimization"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 56,
+      "source_sha256": "8bb2891eab0b45fd93882d2c6797a274c4d207ff64812ca1eaa11422fe263da8",
+      "target": "### Lagrange 乘子\n",
+      "target_sha256": "da2fab113629d551affa5b3a0c93d6281a5b8a4db83f8f50644e1b1264bc981b"
+    },
+    {
+      "segment_id": "01-18:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 57,
+      "source_sha256": "33ec1fd8bfa4b55fde77deb76fd31cf29cde16f5e7c9a94bd93798da933bfd22",
+      "target": "Lagrange 乘子法（拉格朗日乘子法）将约束问题转化为无约束问题。\n",
+      "target_sha256": "2aca8d75d0cf73a7c8455207eb2513543d80180c22907f5fde1dc0aea54e0f40"
+    },
+    {
+      "segment_id": "01-18:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 58,
+      "source_sha256": "ef82ebfa3d3bda0126abe540f4d8f2f3ca1681f53fed7efa1784062ed0cdffb9",
+      "target": "问题：在满足 g(x) = 0 的条件下最小化 f(x)。\n",
+      "target_sha256": "078c04f101466b5dc6d22fd356797cd7974b19b2e50c22261c03adcbacef76a3"
+    },
+    {
+      "segment_id": "01-18:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 59,
+      "source_sha256": "95502653a4f0058981e8a0ff54b8a4dac0ab5d4d4694dd697aa20392b187a8c2",
+      "target": "解决办法：引入一个新变量，也就是 Lagrange 乘子 lambda，并求解下面的无约束问题：\n",
+      "target_sha256": "9846e78b993ca6972e4679df1e526a099e4a67fe4f2b22407822d6369b4cf37a"
+    },
+    {
+      "segment_id": "01-18:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0119",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 60,
+      "source_sha256": "6a47cf26e282c9b9e95762cfb12d7dfec59407c0bf45362de4cc98e33897d03a",
+      "target": "```text\nL(x, lambda) = f(x) + lambda * g(x)\n```\n",
+      "target_sha256": "7b5222f9025862ffd0242c570373568c4eb9091fdd91c83ccfeabca8e6ae023c"
+    },
+    {
+      "segment_id": "01-18:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 61,
+      "source_sha256": "eadef1b45bf7510581d494d878d018e4c29d507806d945de42744fe67cb9c787",
+      "target": "在解处，L 的梯度为零：\n",
+      "target_sha256": "b76703f9d363c84f2514fe67f8d2ab9ebfca8496891ab04e64a500fe88742ea8"
+    },
+    {
+      "segment_id": "01-18:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0123",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 62,
+      "source_sha256": "111c961fb182ed17a8285e34a270f0c538783c6a22668a45484a7d7dade021a1",
+      "target": "```text\ndL/dx = df/dx + lambda * dg/dx = 0\ndL/dlambda = g(x) = 0\n```\n",
+      "target_sha256": "51e7667fbe988de8fe37ea92582a08df07d96478185c18b3c8f884d3d094cbae"
+    },
+    {
+      "segment_id": "01-18:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 63,
+      "source_sha256": "824a18626bb747c46ace3efa828d73a682e3de1d5804f2f4c254e30a7485cded",
+      "target": "几何直觉是：在约束极小值点，f 的梯度必须与约束函数 g 的梯度平行。否则，你就可以沿着约束曲面移动，让 f 进一步减小。\n",
+      "target_sha256": "19cffad76e739f67bdb5194334946c419a10bcbbbbac95a154c671c0ae4bdca0"
+    },
+    {
+      "segment_id": "01-18:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 64,
+      "source_sha256": "d16355e550169187c5d8d7a5c0e5924b250e9d7b9b640fd781051ee623c86f46",
+      "target": "```mermaid\ngraph LR\n    A[\"Contours of f(x,y): concentric ellipses\"] --- S[\"Solution point\"]\n    B[\"Constraint curve g(x,y) = 0\"] --- S\n    S --- C[\"At the solution, gradient of f is parallel to gradient of g\"]\n```\n",
+      "target_sha256": "d16355e550169187c5d8d7a5c0e5924b250e9d7b9b640fd781051ee623c86f46"
+    },
+    {
+      "segment_id": "01-18:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 65,
+      "source_sha256": "5584e5bcfbee5447950418f3d981563475254f0916436de57a1bfca72cabace5",
+      "target": "例如，在满足 x + y = 1 的条件下，最小化 f(x,y) = x^2 + y^2。\n",
+      "target_sha256": "ed204e01673255547f52b7020dd33bf885f5b344318fd5f7ecca4548a1dec742"
+    },
+    {
+      "segment_id": "01-18:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0131",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 66,
+      "source_sha256": "d79bbcc590a3c01aeac2eec842f50444695c88f708964beddaacf322194f7bb4",
+      "target": "```text\nL = x^2 + y^2 + lambda(x + y - 1)\n\ndL/dx = 2x + lambda = 0  =>  x = -lambda/2\ndL/dy = 2y + lambda = 0  =>  y = -lambda/2\ndL/dlambda = x + y - 1 = 0\n\nFrom first two: x = y\nSubstituting: 2x = 1, so x = y = 0.5, lambda = -1\n```\n",
+      "target_sha256": "d737fb3b9a28fa07bafb28286230e0a1026588b59ee857a8386357b3dca08b09"
+    },
+    {
+      "segment_id": "01-18:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 67,
+      "source_sha256": "900d0d73ba53ffd27149896c983d0048543c4b7d708dd43320bf65c258144cfc",
+      "target": "直线 x + y = 1 上距离原点最近的点是 (0.5, 0.5)。\n",
+      "target_sha256": "8560d2d0f076cf371ee9ecd989f09d79811b66156d4160eb8d86827e8fc2f250"
+    },
+    {
+      "segment_id": "01-18:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Lagrange multipliers"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 68,
+      "source_sha256": "6ce32f07194998aa9bd8c818a1c85ce712e893e43137553adfbf7652768a010a",
+      "target": "### KKT 条件\n",
+      "target_sha256": "17d4c174c52e46608aef046e6f3d2bcb8d7dd83b0901fc5848c17447248b8b70"
+    },
+    {
+      "segment_id": "01-18:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0137",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 69,
+      "source_sha256": "69aca97542f0e277dda29e75bfd2da93157fb783d74d2a9d5f9322652951667a",
+      "target": "Karush-Kuhn-Tucker（KKT）条件将 Lagrange 乘子法扩展到不等式约束。\n",
+      "target_sha256": "98ace26065fec6ed4232aefbd29875443fadf86f082f212239b492aec3dce60b"
+    },
+    {
+      "segment_id": "01-18:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0139",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 70,
+      "source_sha256": "36343aa5dacdc5e0d81da850f6b1ddf47ce8703e328be325aafc281505f80e56",
+      "target": "问题：在满足 g_i(x) <= 0（i = 1, ..., m）的条件下最小化 f(x)。\n",
+      "target_sha256": "968a50933feb7f7071d8561de01a7644635c07a66d0eabd4088d47910975a533"
+    },
+    {
+      "segment_id": "01-18:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0141",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 71,
+      "source_sha256": "a36eee302cd20f29f52a05bd538c6e5a425f03ad85675a0ebaf63f22f96cd165",
+      "target": "KKT 条件，也就是最优性的必要条件，如下：\n",
+      "target_sha256": "9e355b5aa0cb223804c5d96e2617b75b81bbe583eca95f8d64c0aa66f6b54a2c"
+    },
+    {
+      "segment_id": "01-18:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0143",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 72,
+      "source_sha256": "90068686e6405aeee47442e4a04fc76ddef564f1494853a3dd17942562c65da5",
+      "target": "```text\n1. Stationarity:    df/dx + sum(lambda_i * dg_i/dx) = 0\n2. Primal feasibility:  g_i(x) <= 0  for all i\n3. Dual feasibility:    lambda_i >= 0  for all i\n4. Complementary slackness:  lambda_i * g_i(x) = 0  for all i\n```\n",
+      "target_sha256": "15338a80e91b5d92da4e99d18500b92d4d6012a8895a8da14873a65b13949e02"
+    },
+    {
+      "segment_id": "01-18:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0145",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 73,
+      "source_sha256": "2b641a4bf0df7e821bc273f8f7b3bd11f4c1eef483052f777cad29c44b41e02d",
+      "target": "关键在于互补松弛（complementary slackness）：约束是活跃的（g_i = 0，解位于边界上），或者乘子为零（约束不起作用）。不影响解的约束，其 lambda = 0。\n",
+      "target_sha256": "880e193f3915f53e1af595d6167fa6eccfe0123be0fc93b3e67663cab0ab48ea"
+    },
+    {
+      "segment_id": "01-18:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0147",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 74,
+      "source_sha256": "a99b470ea4f90f0384cc59e81f97f5ed2b3db024b544b534df7bee9613281656",
+      "target": "KKT 条件是 SVM 的核心。支持向量就是约束处于活跃状态的数据点（lambda > 0）。其他数据点的 lambda = 0，不会影响决策边界。\n",
+      "target_sha256": "819fbe190043971e3bc9b4c92b76f0c1221c77b6377c8000850d6b4e4e5cfea2"
+    },
+    {
+      "segment_id": "01-18:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### KKT conditions"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0149",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 75,
+      "source_sha256": "02568eec540b5930e8f7086dcb93570d152f269100d6a7d02327edee151cef40",
+      "target": "### 将正则化看作约束优化\n",
+      "target_sha256": "147b9041f68281e18ce73fa965d0e005e7c975eda5acf9507a01bc388ab26615"
+    },
+    {
+      "segment_id": "01-18:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 76,
+      "source_sha256": "81299ef915e0ae5b099789497318dd72370fa0be6a8b7405a188946bdcd85a64",
+      "target": "L1 和 L2 正则化并不是随意想出的技巧，它们实际上是换了一种形式的约束优化问题。\n",
+      "target_sha256": "2beb63377776b2e4b0aa3a18200de742b127243157996b5ee8aaa8193ea8b023"
+    },
+    {
+      "segment_id": "01-18:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 77,
+      "source_sha256": "abc95782957f55d5322de9981fb59bb440dbec76b7c056769c511d74af3d1469",
+      "target": "**L2 正则化（Ridge）：**\n",
+      "target_sha256": "1f4a8034fa0c36adef3fe3d7a01628755960ba7b90457c5159464061bb4d90df"
+    },
+    {
+      "segment_id": "01-18:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0155",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 78,
+      "source_sha256": "261cb1696c787e0de0b130adadf20aed28aac9577a23b760d0f2bbf4afb49d3e",
+      "target": "```text\nminimize  Loss(w)  subject to  ||w||^2 <= t\n\nEquivalent unconstrained form:\nminimize  Loss(w) + lambda * ||w||^2\n```\n",
+      "target_sha256": "f535882f665b100fffd11c40f838af14d02530bae8bc4f0e4570d6ac84e8e10d"
+    },
+    {
+      "segment_id": "01-18:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 79,
+      "source_sha256": "7fe80b88b432572b3f08eec491e56f6bda85878e9f9a0e4af758bbcb677457e7",
+      "target": "约束 ||w||^2 <= t 定义了一个球，2D 中为圆，3D 中为球体。解位于损失等高线最先接触这个球的位置。\n",
+      "target_sha256": "37c0ffdc21cf4bb031f76151b12fb5e778fc1e3e2c1b184c37cb46b97d93eda1"
+    },
+    {
+      "segment_id": "01-18:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0159",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 80,
+      "source_sha256": "cc691f401559bfdb4907b8f18a630f66a6b6aa8a412dd3109f47f353f981b4f7",
+      "target": "**L1 正则化（LASSO）：**\n",
+      "target_sha256": "d0282ec4806567efb43f480657729d2040c6913cbfd94d158eb822efd08d0b36"
+    },
+    {
+      "segment_id": "01-18:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0161",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 81,
+      "source_sha256": "840b66e4e7dbebe6929bc429002d567c15644e4c877642bad395245e0f17ca9b",
+      "target": "```text\nminimize  Loss(w)  subject to  ||w||_1 <= t\n\nEquivalent unconstrained form:\nminimize  Loss(w) + lambda * ||w||_1\n```\n",
+      "target_sha256": "a1a7da607776edc2eed4598bd7b17081770834475bc407b9c7534ba63d3e06e9"
+    },
+    {
+      "segment_id": "01-18:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0163",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 82,
+      "source_sha256": "4325ce62356c5710f512dcbfbb8318e80c1624dbb2b73cd6d16b0a7a1d5f4f98",
+      "target": "约束 ||w||_1 <= t 定义了一个菱形，也就是 2D 中旋转后的正方形。\n",
+      "target_sha256": "122a87461927b257bfaaee653aacc8d3cf6898e1fb4388cdff1dc6befefad03b"
+    },
+    {
+      "segment_id": "01-18:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0165",
+      "kind": "table",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 83,
+      "source_sha256": "55a8c7528f92f9d7d8a65608dbf4bb51af4526a92996bc27b06df298f9a4dc65",
+      "target": "| 性质 | L2 约束（圆形） | L1 约束（菱形） |\n|---|---|---|\n| **约束形状** | 圆形，高维中为球体 | 菱形，2D 中旋转后的正方形 |\n| **损失等高线接触的位置** | 光滑边界，即圆上的任意点 | 与坐标轴对齐的顶点 |\n| **解的表现** | 权重较小，但不为零 | 部分权重精确为零，即具有稀疏性 |\n| **结果** | 权重收缩 | 特征选择 |\n",
+      "target_sha256": "8aaf113620516cbad0e000223aaaea5287b8baa9d7bf989c88fea2f1f6a84cad"
+    },
+    {
+      "segment_id": "01-18:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0167",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 84,
+      "source_sha256": "caefde3429665b2ba086d97eea1e8350d2a5d080dfd2de08b4b30cc026fe62be",
+      "target": "这解释了为什么 L1 会产生稀疏模型，即进行特征选择，而 L2 只会收缩权重。菱形的顶点与坐标轴对齐，损失等高线更容易接触顶点，从而使一个或多个权重精确为零。\n",
+      "target_sha256": "7fa47a2039c58275ee60818c03e0c0d718f733d319101c1d278a9e1be2615f19"
+    },
+    {
+      "segment_id": "01-18:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Regularization as constrained optimization"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0169",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 85,
+      "source_sha256": "5aaad5971f6589aa42909287fd2ebd9974ae756e225f56bb8e2dc95dfbb8bd10",
+      "target": "### 对偶性\n",
+      "target_sha256": "ddbc00531fc45c4b116f03ad9ee928e39c7de79a02c1aa7a4ee59b3a9ffa9de1"
+    },
+    {
+      "segment_id": "01-18:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0171",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 86,
+      "source_sha256": "691e8ea708aab8e89d927a0fe89ca14cc4a69c350e464007d72dd75d15547956",
+      "target": "每个约束优化问题，也就是原始问题（primal），都有一个与之对应的对偶问题（dual）。对于凸问题，原始问题与对偶问题具有相同的最优值，这就是强对偶（strong duality）。\n",
+      "target_sha256": "2d994001256a775c0efb023e0b3ff952e0a87f82e9cb7de673250cd33ff7a4a2"
+    },
+    {
+      "segment_id": "01-18:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0173",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 87,
+      "source_sha256": "1e559e64dc6636bd645b497fd21e4ad321466e24f90edb501ff2f2789b6ec7fa",
+      "target": "Lagrange 对偶函数如下：\n",
+      "target_sha256": "4c8b78712dc58c16cf98fc5d440fa6f3dd55f954c6906282f0a916cfd69f1cef"
+    },
+    {
+      "segment_id": "01-18:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0175",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 88,
+      "source_sha256": "3d944948e01af94fb0044e56000aa91cf00a11b833c706f19508ad7c10cc9fbd",
+      "target": "```text\nPrimal: minimize f(x) subject to g(x) <= 0\nLagrangian: L(x, lambda) = f(x) + lambda * g(x)\nDual function: d(lambda) = min_x L(x, lambda)\nDual problem: maximize d(lambda) subject to lambda >= 0\n```\n",
+      "target_sha256": "44f8bd229bc2deed2e4cb485735ec76a63db8cc7318d7f9ffe83a254887e4bf1"
+    },
+    {
+      "segment_id": "01-18:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0177",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 89,
+      "source_sha256": "14d8fd609510f2693dd25f93f8f9b0aafd09d88afda7d9b055e004f22cd90340",
+      "target": "对偶性的重要性：\n- 对偶问题有时比原始问题更容易求解\n- SVM 使用对偶形式求解，此时问题依赖于数据点之间的点积，因此可以使用核技巧\n- 对偶问题为原始问题的最优值提供了下界，可用于检查解的质量\n",
+      "target_sha256": "3f5d472ffad57ca9404f5f0a00c7cba0dcf27e22b3a2c0e9aebdd8f392bf1eeb"
+    },
+    {
+      "segment_id": "01-18:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0179",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 90,
+      "source_sha256": "abde5c5491c076276df784a3080fb5336bf50f03e15c4eea594bb399b85517c5",
+      "target": "具体到 SVM：\n",
+      "target_sha256": "03cade4629dc520fea6fcebf11bdae90410e411eff590b2576ef44edddc93474"
+    },
+    {
+      "segment_id": "01-18:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0181",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 91,
+      "source_sha256": "0657afea1c444f31ecaa2b24c939d7a9d0a480264323b3d312be4fb33cc9c799",
+      "target": "```text\nPrimal: find w, b that maximize the margin 2/||w|| subject to\n        y_i(w^T x_i + b) >= 1 for all i\n\nDual:   maximize sum(alpha_i) - 0.5 * sum_ij(alpha_i * alpha_j * y_i * y_j * x_i^T x_j)\n        subject to alpha_i >= 0 and sum(alpha_i * y_i) = 0\n\nThe dual only involves dot products x_i^T x_j.\nReplace x_i^T x_j with K(x_i, x_j) to get the kernel trick.\n```\n",
+      "target_sha256": "23ead8bd8046dae4d2908f74b3edfc1fd524b0997dafb91c7f2e0f107033eacb"
+    },
+    {
+      "segment_id": "01-18:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Duality"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0183",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 92,
+      "source_sha256": "0ab8a7f20c7f66a6209af06be87eb2ed7d7945ff508bf43d1a1f36f043321a63",
+      "target": "### 为什么深度学习在非凸情况下仍然有效\n",
+      "target_sha256": "72238b36633063b4b4753cfa656ed1d6d5dabf747996425fb6fe00007f6ad5b7"
+    },
+    {
+      "segment_id": "01-18:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0185",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 93,
+      "source_sha256": "8fe421658e551bc34dd2ff11f7996e144ff8555ee9ee5632111ea8eeecfdd93a",
+      "target": "神经网络的损失函数高度非凸。按照各种经典衡量标准，对它们进行优化都应当失败。然而，随机梯度下降却能可靠地找到好的解。下面几个因素可以解释这一点。\n",
+      "target_sha256": "a79600a5d61d435c6ccaca125645670fbabe841bd47d8cae777d103d4392acce"
+    },
+    {
+      "segment_id": "01-18:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0187",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 94,
+      "source_sha256": "59b1c839b02461f0ceba7b05b2fc59b13e3ffa624f000c87bcda15e927bc5796",
+      "target": "**大多数局部极小值已经足够好。** 在高维空间中，随机临界点，也就是梯度为零的点，绝大多数是鞍点，而不是局部极小值点。数量不多的局部极小值，其损失值往往接近全局极小值。当参数空间具有 millions（数百万）个维度时，陷入非常差的局部极小值的可能性极低。\n",
+      "target_sha256": "2eeadad40a2488c8071d1c42bd659e4509d17dbc010343d3c4c051d1c502b77c"
+    },
+    {
+      "segment_id": "01-18:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0189",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 95,
+      "source_sha256": "f8cbc2d35fd5352406455419571131fc229bcc04b57ba60eb5f974cc56c642d0",
+      "target": "**真正的障碍是鞍点，而非局部极小值。** 对于含 n 个参数的函数，鞍点处既有正曲率方向，也有负曲率方向。在高维空间的随机临界点处，全部 n 个特征值都为正，也就是局部极小值的概率，大约为 2^(-n)。几乎所有临界点都是鞍点，SGD 的噪声有助于逃离它们。\n",
+      "target_sha256": "dc4836fd81598fdf66b694a38a610846516b737d75e0be6a75a265b0a01bb8be"
+    },
+    {
+      "segment_id": "01-18:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0191",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 96,
+      "source_sha256": "39e083f973fab517f0ae1f62d3aff7885859cecfbb375a3174c5eedb5a312ef6",
+      "target": "**过参数化（overparameterization）使曲面更平滑。** 参数数量多于训练样本的网络，其损失曲面更平滑，连通性也更好。更宽的网络具有更少的差局部极小值。这看似违反直觉，却与经验观察一致。\n",
+      "target_sha256": "89913eb293fb86e1a07daf3e65498ba1a18662b5abf7297d01e1f697093cf72b"
+    },
+    {
+      "segment_id": "01-18:b0192",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 96,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0193",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 97,
+      "source_sha256": "0c90a00dd3824f0c40a9e532f8bee1bcb324094985e5919d08038281d150c845",
+      "target": "**损失曲面的结构：**\n",
+      "target_sha256": "0a932b6db6b96a9bb14e1716e206c63f6aacf3c98feabf9162ed89c7a29dac8c"
+    },
+    {
+      "segment_id": "01-18:b0194",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 97,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0195",
+      "kind": "table",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 98,
+      "source_sha256": "4e0e067da9d3a9d01561cd43955ed3a1be9f44042371cc537812a4fc4a45502b",
+      "target": "| 性质 | 低维空间 | 高维空间 |\n|---|---|---|\n| **曲面形态** | 许多相互分离的峰与谷 | 平滑连通的谷地 |\n| **极小值** | 许多相互分离的局部极小值 | 差的局部极小值很少，大多数都接近最优 |\n| **寻优过程** | 难以找到全局极小值 | 许多路径都能通向好的解 |\n| **临界点** | 局部极小值点与鞍点混合存在 | 绝大多数是鞍点，而不是局部极小值点 |\n",
+      "target_sha256": "10286f259f25ef402759d828e52822c7c6b1d3c565c3334b2f965965764e3165"
+    },
+    {
+      "segment_id": "01-18:b0196",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 98,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0197",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 99,
+      "source_sha256": "d0e842a00afd571bc15423c995daee5d5394e4afc5635eea6f49d02b96636cdd",
+      "target": "**随机噪声起到隐式正则化的作用。** 小批量 SGD 引入的噪声会防止优化过程停留在尖锐极小值处。尖锐极小值导致过拟合，平坦极小值则具有泛化能力。噪声使优化更倾向于损失曲面中的平坦区域。\n",
+      "target_sha256": "85b13893d410bf659d6b3f7578abeb2dade6ee02ceb85aed8cbb253c4ed43b7d"
+    },
+    {
+      "segment_id": "01-18:b0198",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Why deep learning works despite non-convexity"
+      ],
+      "ordinal": 99,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0199",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 100,
+      "source_sha256": "22d8ef3185312bf87d6ddc9060163ec069b7da77673183870400ad127512df66",
+      "target": "### 二阶方法的实际使用\n",
+      "target_sha256": "cc4af6d713b864a851b13f207ab38bd478485b1e4fa88fd2f718f9442674aa93"
+    },
+    {
+      "segment_id": "01-18:b0200",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 100,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0201",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 101,
+      "source_sha256": "b167329d85f53faa3c8e07eab8d22cd167292453e47a421509b1d8be529bd7ff",
+      "target": "直接使用 Newton 法不适合大型模型。有几种近似方法，可以让二阶信息变得可用。\n",
+      "target_sha256": "d7be2689f51ee08dbe55d58588aabb83d110e2366720867b2bb7b0fa9042f7af"
+    },
+    {
+      "segment_id": "01-18:b0202",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 101,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0203",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 102,
+      "source_sha256": "e6d2b4a7b9896f5eae177571d0a1130812df34f13bc9202332d40987cbdcd309",
+      "target": "**L-BFGS（Limited-memory BFGS，有限内存 BFGS）：** 使用最近 m 次梯度差来近似逆 Hessian 矩阵，只需要 O(mn) 内存，而不是 O(n^2)。对于参数量不超过 ~10,000 的问题，它表现良好。它用于传统 ML，例如逻辑回归和 CRF，但不用于深度学习。\n",
+      "target_sha256": "5c15e2f0b16cf7e2aaff37a195422ddcb47cc1cff73e36804aa8de7341a493c9"
+    },
+    {
+      "segment_id": "01-18:b0204",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 102,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0205",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 103,
+      "source_sha256": "9afbc8480643908477b235a08782267b10523fa64d23ef3fe2c4ef480b36b879",
+      "target": "**自然梯度（natural gradient）：** 用 Fisher 信息矩阵，也就是对数似然的期望 Hessian 矩阵，代替通常的 Hessian 矩阵，从而考虑概率分布的几何结构。K-FAC（Kronecker-Factored Approximate Curvature）用 Kronecker 积近似 Fisher 矩阵，使其可以实际用于神经网络。\n",
+      "target_sha256": "88b9a1c50120947282318822f8a8268be692e2228e143a6a775101cce95cfa7e"
+    },
+    {
+      "segment_id": "01-18:b0206",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 103,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0207",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 104,
+      "source_sha256": "1b7d5762cac5f48103171af11100b9737622a0e96a4ac4418d6731fcbc4e318a",
+      "target": "**无 Hessian 优化（Hessian-free optimization）：** 使用共轭梯度求解 Hx = g，而不显式构造 H。它只需要 Hessian 与向量的乘积，这可以通过自动微分在 O(n) 时间内计算。\n",
+      "target_sha256": "2d4ae79564e8871385fee0951d6f57440a3558e8d7916b1ecc40ee73dc2d1aed"
+    },
+    {
+      "segment_id": "01-18:b0208",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 104,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0209",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 105,
+      "source_sha256": "f70d0a89c10469288d46d8fe07140878f783915b06c9d4a48f1afbf1dfc8e2de",
+      "target": "**对角近似：** Adam 的二阶矩是 Hessian 对角线的对角近似。AdaHessian 在此基础上，利用 Hutchinson 估计器获得实际的 Hessian 对角元素。\n",
+      "target_sha256": "05a4036bae05ce8eb766f276b910a55bddfa5146dd1b7fe3044142b0037ef7a2"
+    },
+    {
+      "segment_id": "01-18:b0210",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 105,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0211",
+      "kind": "table",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 106,
+      "source_sha256": "808f349646f2aedd70167c96086e39bef763f7df6beac7e29da93514290a727d",
+      "target": "| 方法 | 内存 | 每步开销 | 适用场景 |\n|--------|--------|--------------|-------------|\n| 梯度下降 | O(n) | O(n) | 基线、大型模型 |\n| Newton 法 | O(n^2) | O(n^3) | 小型凸问题 |\n| L-BFGS | O(mn) | O(mn) | 中型凸问题 |\n| Adam | O(n) | O(n) | 深度学习的默认选择 |\n| K-FAC | O(n) | 每层 O(n) | 研究、大批量训练 |\n",
+      "target_sha256": "32e77db06b2d702377dc0ca96c719a197d91cab2d7490fc7e402aab8a71ed2f1"
+    },
+    {
+      "segment_id": "01-18:b0212",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 106,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0213",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 107,
+      "source_sha256": "117e9004ebe3d873442bc23b337f967da64ccf6b0707ea55aa3be27e1dcbaaae",
+      "target": "```figure\nconvex-vs-nonconvex\n```\n",
+      "target_sha256": "117e9004ebe3d873442bc23b337f967da64ccf6b0707ea55aa3be27e1dcbaaae"
+    },
+    {
+      "segment_id": "01-18:b0214",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## The Concept",
+        "### Second-order methods in practice"
+      ],
+      "ordinal": 107,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0215",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It"
+      ],
+      "ordinal": 108,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "01-18:b0216",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It"
+      ],
+      "ordinal": 108,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0217",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 1: Convexity checker"
+      ],
+      "ordinal": 109,
+      "source_sha256": "a0c98f24815eb27fec451a951749f7dd5462cd3b61626fa74427697b2d8d9334",
+      "target": "### 步骤 1：凸性检查器\n",
+      "target_sha256": "9f16d52588c65749b9dc7b00ec39096dcfb2bf7ce22535586790e0fbf436f672"
+    },
+    {
+      "segment_id": "01-18:b0218",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 1: Convexity checker"
+      ],
+      "ordinal": 109,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0219",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 1: Convexity checker"
+      ],
+      "ordinal": 110,
+      "source_sha256": "1acebbd926bce9cea44ee0f31abac145ad351e7f68d7b0a99356e468dd9a946d",
+      "target": "编写一个函数，通过抽取点并检查定义，以经验方式检验凸性。\n",
+      "target_sha256": "54d41e29fe27c10354278dfcc8de72a8b6415c7a1fa37f30d45d42ea3dadd951"
+    },
+    {
+      "segment_id": "01-18:b0220",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 1: Convexity checker"
+      ],
+      "ordinal": 110,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0221",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 1: Convexity checker"
+      ],
+      "ordinal": 111,
+      "source_sha256": "01df88803e0d369b279a53744ee8a6556da66de982dbdf0b5aa6c31dbc0b9552",
+      "target": "```python\nimport random\nimport math\n\ndef check_convexity(f, dim, bounds=(-5, 5), samples=1000):\n    violations = 0\n    for _ in range(samples):\n        x = [random.uniform(*bounds) for _ in range(dim)]\n        y = [random.uniform(*bounds) for _ in range(dim)]\n        t = random.uniform(0, 1)\n        mid = [t * xi + (1 - t) * yi for xi, yi in zip(x, y)]\n        lhs = f(mid)\n        rhs = t * f(x) + (1 - t) * f(y)\n        if lhs > rhs + 1e-10:\n            violations += 1\n    return violations == 0, violations\n```\n",
+      "target_sha256": "01df88803e0d369b279a53744ee8a6556da66de982dbdf0b5aa6c31dbc0b9552"
+    },
+    {
+      "segment_id": "01-18:b0222",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 1: Convexity checker"
+      ],
+      "ordinal": 111,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0223",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 2: Newton's method for 2D"
+      ],
+      "ordinal": 112,
+      "source_sha256": "7e6365fd13a03e81e63911034877e15cace5d54f32ec99716d7c48180c9443b7",
+      "target": "### 步骤 2：用于 2D 的 Newton 法\n",
+      "target_sha256": "3824a54f62516382ef493c6c1934db14c2022bde9db85665464965c6244d13fa"
+    },
+    {
+      "segment_id": "01-18:b0224",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 2: Newton's method for 2D"
+      ],
+      "ordinal": 112,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0225",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 2: Newton's method for 2D"
+      ],
+      "ordinal": 113,
+      "source_sha256": "7b779044284c6d9ab6148656195af9a32e5c71ae5782fbc2fa211d43edd72661",
+      "target": "使用显式 Hessian 矩阵实现 Newton 法，并与梯度下降比较收敛速度。\n",
+      "target_sha256": "622c0afc833a5db4e4ac3f6665e13390c0173a26314d3f9217f8a39bd818909d"
+    },
+    {
+      "segment_id": "01-18:b0226",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 2: Newton's method for 2D"
+      ],
+      "ordinal": 113,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0227",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 2: Newton's method for 2D"
+      ],
+      "ordinal": 114,
+      "source_sha256": "a5158e1562b3af914f215687e4abd37d4c579e22a3d1c70b931d85ea4e7cdc60",
+      "target": "```python\ndef newtons_method(f, grad_f, hessian_f, x0, steps=50, tol=1e-12):\n    x = list(x0)\n    history = [x[:]]\n    for _ in range(steps):\n        g = grad_f(x)\n        H = hessian_f(x)\n        det = H[0][0] * H[1][1] - H[0][1] * H[1][0]\n        if abs(det) < 1e-15:\n            break\n        H_inv = [\n            [H[1][1] / det, -H[0][1] / det],\n            [-H[1][0] / det, H[0][0] / det],\n        ]\n        dx = [\n            H_inv[0][0] * g[0] + H_inv[0][1] * g[1],\n            H_inv[1][0] * g[0] + H_inv[1][1] * g[1],\n        ]\n        x = [x[0] - dx[0], x[1] - dx[1]]\n        history.append(x[:])\n        if sum(gi ** 2 for gi in g) < tol:\n            break\n    return history\n```\n",
+      "target_sha256": "a5158e1562b3af914f215687e4abd37d4c579e22a3d1c70b931d85ea4e7cdc60"
+    },
+    {
+      "segment_id": "01-18:b0228",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 2: Newton's method for 2D"
+      ],
+      "ordinal": 114,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0229",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 3: Lagrange multiplier solver"
+      ],
+      "ordinal": 115,
+      "source_sha256": "2ae9d9ba81754cd4706c71932488788049261088840ba5bca2942dc63ae5b01f",
+      "target": "### 步骤 3：Lagrange 乘子求解器\n",
+      "target_sha256": "7a30c88546175572257589970cbc887a1694bc0daf80e75c8c5b22d78848a312"
+    },
+    {
+      "segment_id": "01-18:b0230",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 3: Lagrange multiplier solver"
+      ],
+      "ordinal": 115,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0231",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 3: Lagrange multiplier solver"
+      ],
+      "ordinal": 116,
+      "source_sha256": "a508846390bec71056178e0103809664f9280b05e1db721da72190a45e119d3f",
+      "target": "对 Lagrange 函数进行梯度下降，求解约束优化问题。\n",
+      "target_sha256": "e7176999d6df45258341b6caae1f18407357db363d7b1a85b2baa3e00e6593a3"
+    },
+    {
+      "segment_id": "01-18:b0232",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 3: Lagrange multiplier solver"
+      ],
+      "ordinal": 116,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0233",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 3: Lagrange multiplier solver"
+      ],
+      "ordinal": 117,
+      "source_sha256": "6cf74d1d26b3ba8afa57d4d854be458536ac65bb72cf373ef3e50ec7ed14acf8",
+      "target": "```python\ndef lagrange_solve(f_grad, g_val, g_grad, x0, lr=0.01,\n                   lr_lambda=0.01, steps=5000):\n    x = list(x0)\n    lam = 0.0\n    history = []\n    for _ in range(steps):\n        fg = f_grad(x)\n        gv = g_val(x)\n        gg = g_grad(x)\n        x = [\n            xi - lr * (fgi + lam * ggi)\n            for xi, fgi, ggi in zip(x, fg, gg)\n        ]\n        lam = lam + lr_lambda * gv\n        history.append((x[:], lam, gv))\n    return history\n```\n",
+      "target_sha256": "6cf74d1d26b3ba8afa57d4d854be458536ac65bb72cf373ef3e50ec7ed14acf8"
+    },
+    {
+      "segment_id": "01-18:b0234",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 3: Lagrange multiplier solver"
+      ],
+      "ordinal": 117,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0235",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 4: Compare first-order vs second-order"
+      ],
+      "ordinal": 118,
+      "source_sha256": "45780b7614078473fd2fe8a4b06c8fc1c0b6d5bb0a8451f55bcfd2d125d14b63",
+      "target": "### 步骤 4：比较一阶方法与二阶方法\n",
+      "target_sha256": "7c909ea42e394433633ad01dbafc7675d1a93bcaf4ed5a0eb14539ddee58d4bd"
+    },
+    {
+      "segment_id": "01-18:b0236",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 4: Compare first-order vs second-order"
+      ],
+      "ordinal": 118,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0237",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 4: Compare first-order vs second-order"
+      ],
+      "ordinal": 119,
+      "source_sha256": "deffff4bb659e9ce737f3456d24d6cba713ff636aa6a42cd9899621e0781c5a8",
+      "target": "在同一个二次函数上运行梯度下降和 Newton 法，统计达到收敛所需的步数。\n",
+      "target_sha256": "67da47ed61586a20da726354a1bf353a839123ec47749688e6a7994374a1d862"
+    },
+    {
+      "segment_id": "01-18:b0238",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 4: Compare first-order vs second-order"
+      ],
+      "ordinal": 119,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0239",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 4: Compare first-order vs second-order"
+      ],
+      "ordinal": 120,
+      "source_sha256": "9be4b91b638b2584e863c4dc13d35dce09e3315d3a927aad6a7067a10046a55c",
+      "target": "```python\ndef quadratic(x):\n    return 5 * x[0] ** 2 + x[1] ** 2\n\ndef quadratic_grad(x):\n    return [10 * x[0], 2 * x[1]]\n\ndef quadratic_hessian(x):\n    return [[10, 0], [0, 2]]\n```\n",
+      "target_sha256": "9be4b91b638b2584e863c4dc13d35dce09e3315d3a927aad6a7067a10046a55c"
+    },
+    {
+      "segment_id": "01-18:b0240",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 4: Compare first-order vs second-order"
+      ],
+      "ordinal": 120,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0241",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 4: Compare first-order vs second-order"
+      ],
+      "ordinal": 121,
+      "source_sha256": "c77316286af6e9e61b7a5fb9f5ad1bc0df9c0faee2a6d03cf67e48e846a8fc8d",
+      "target": "Newton 法会在 1 步内收敛，因为它对二次函数是精确的。梯度下降则需要数百步，因为 Hessian 矩阵的特征值相差 5 倍，形成了一个狭长的谷地。\n",
+      "target_sha256": "bf489df5ce8c0aa49c6515e1619bf0ff21d2f1c6c91f2ee97f17127af9fd6865"
+    },
+    {
+      "segment_id": "01-18:b0242",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Build It",
+        "### Step 4: Compare first-order vs second-order"
+      ],
+      "ordinal": 121,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0243",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 122,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "01-18:b0244",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 122,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0245",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 123,
+      "source_sha256": "d905861a96214eba0339027dfde36410b71917925c64f6cb922a1bf4f1da2723",
+      "target": "选择 ML 模型和求解器时，可以直接应用凸性分析。\n",
+      "target_sha256": "e5aa56fb3269f59f31e42c0993079d0a6874edb0a921b828522b65b1b1a9ff77"
+    },
+    {
+      "segment_id": "01-18:b0246",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 123,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0247",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 124,
+      "source_sha256": "1636edb79a6e35dd183ee8231e702c6d665c8d59609711002545885563ead3c0",
+      "target": "对于凸问题，例如逻辑回归、SVM 和 LASSO：\n- 使用专门的求解器，例如 liblinear、CVXPY，以及采用 method='L-BFGS-B' 的 scipy.optimize.minimize\n- 预期得到唯一的全局解\n- 二阶方法既实用又快速\n",
+      "target_sha256": "105118fefac199561b4c9ef8793da098ea8fc28339fa9fdc5cc0b46be2bd4c50"
+    },
+    {
+      "segment_id": "01-18:b0248",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 124,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0249",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 125,
+      "source_sha256": "b67c146b6d7252e44702e848f84ac6405beff98f37aeda51ee45c34cad17d53b",
+      "target": "对于非凸问题，例如神经网络：\n- 使用一阶方法，例如 SGD、Adam\n- 接受解会依赖初始化和随机性这一事实\n- 将过参数化、噪声和学习率调度用作隐式正则化\n- 不要浪费时间寻找全局极小值，一个好的局部极小值就足够了\n",
+      "target_sha256": "8a1dccccb9e3bef4b63cbd426329727a6b346b2a536dee443f4f757947a84462"
+    },
+    {
+      "segment_id": "01-18:b0250",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 125,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0251",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 126,
+      "source_sha256": "134b030e351485d112b2605b047c96eaed6a493de7c403cbb4fa73723edca155",
+      "target": "```python\nfrom scipy.optimize import minimize\n\nresult = minimize(\n    fun=lambda w: sum((y - X @ w) ** 2) + 0.1 * sum(w ** 2),\n    x0=np.zeros(d),\n    method='L-BFGS-B',\n    jac=lambda w: -2 * X.T @ (y - X @ w) + 0.2 * w,\n)\n```\n",
+      "target_sha256": "134b030e351485d112b2605b047c96eaed6a493de7c403cbb4fa73723edca155"
+    },
+    {
+      "segment_id": "01-18:b0252",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 126,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0253",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 127,
+      "source_sha256": "082bf151c2bb984d1978a82a2a8346f86128827517b8e5c0f1dfb44f3278557e",
+      "target": "对于 SVM，对偶形式可以让你使用核技巧：\n",
+      "target_sha256": "8e3f93c7b8b4966ad14d91bee2501108657fdca3bc536b90a95aa7bd474d93d1"
+    },
+    {
+      "segment_id": "01-18:b0254",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 127,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0255",
+      "kind": "fence",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 128,
+      "source_sha256": "067640a7ecb7d1391fd935a55c06c1155c7bb84f1a298b8b55f40d30229857b2",
+      "target": "```python\nfrom sklearn.svm import SVC\n\nsvm = SVC(kernel='rbf', C=1.0)\nsvm.fit(X_train, y_train)\nprint(f\"Support vectors: {svm.n_support_}\")\n```\n",
+      "target_sha256": "067640a7ecb7d1391fd935a55c06c1155c7bb84f1a298b8b55f40d30229857b2"
+    },
+    {
+      "segment_id": "01-18:b0256",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Use It"
+      ],
+      "ordinal": 128,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0257",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 129,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "01-18:b0258",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 129,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0259",
+      "kind": "list",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 130,
+      "source_sha256": "0e6b922036c5c6b1c66a1bb17f4bef56eca08365b7b617f4af5baf51d10c4293",
+      "target": "1. **凸性示例集。** 使用检查器检验以下函数的凸性：f(x) = x^4、f(x) = sin(x)、f(x,y) = x^2 + y^2、f(x,y) = x*y、f(x) = max(x, 0)。解释为什么每个结果都合理。\n",
+      "target_sha256": "d43b8b49c90e605c8c53940e90b3f11f6ba2c2da1f9c28aa9779d05aaf390ff2"
+    },
+    {
+      "segment_id": "01-18:b0260",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 130,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0261",
+      "kind": "list",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 131,
+      "source_sha256": "33eb57067764bf755684b55c0eb166fb1484af11ffbd5441a33b997598f10d2c",
+      "target": "2. **Newton 法与梯度下降竞速。** 从起点 (10, 10) 出发，在 f(x,y) = 50*x^2 + y^2 上运行两种方法。各需要多少步才能达到 loss < 1e-10？当条件数（Hessian 最大特征值与最小特征值的比值）增大时，梯度下降会怎样？\n",
+      "target_sha256": "dd222e016b8b339280c8f015e518c372de8c24d759a3d6b073847040ade8e854"
+    },
+    {
+      "segment_id": "01-18:b0262",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 131,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0263",
+      "kind": "list",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 132,
+      "source_sha256": "ad204803c34b5b14092c5c267b419cf47b399b48c7f57c618b830304fc12a381",
+      "target": "3. **Lagrange 乘子的几何意义。** 在满足 x + 2y = 4 的条件下，最小化 f(x,y) = (x-3)^2 + (y-3)^2。检查解处 f 的梯度是否与 g 的梯度平行，以此验证结果。\n",
+      "target_sha256": "93784f1aa4bb840219f34eb53dcf721956f672bb95807f97f9944b1702e38abc"
+    },
+    {
+      "segment_id": "01-18:b0264",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 132,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0265",
+      "kind": "list",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 133,
+      "source_sha256": "d7d6b36244fdee2911ce0509a7ee75821198c30a2df6cd4ec3711a3881739e8e",
+      "target": "4. **正则化约束。** 实现带 L1 约束的优化：在满足 |x| + |y| <= 1 的条件下，最小化 (x-3)^2 + (y-2)^2。展示解的某个坐标等于零，也就是菱形约束带来的稀疏性。\n",
+      "target_sha256": "0a17c2908a53321c9884ce943ba43574e215867d528a5d135107e27c677844ff"
+    },
+    {
+      "segment_id": "01-18:b0266",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 133,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0267",
+      "kind": "list",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 134,
+      "source_sha256": "77957c973a6bb442c12b72906905bb2fce7325d0928a965137afa92585fe7600",
+      "target": "5. **Hessian 特征值分析。** 计算 Rosenbrock 函数在 (1,1) 和 (-1,1) 处的 Hessian 矩阵，再计算这两点处的特征值。它们分别说明了极小值点与远离极小值的位置处，曲率有何特点？\n",
+      "target_sha256": "801c49c9ff20bd77a98515c5eb813dd2f0168b5ef083e04bd71ab2c28fa9f929"
+    },
+    {
+      "segment_id": "01-18:b0268",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Exercises"
+      ],
+      "ordinal": 134,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0269",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Key Terms"
+      ],
+      "ordinal": 135,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "01-18:b0270",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Key Terms"
+      ],
+      "ordinal": 135,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0271",
+      "kind": "table",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Key Terms"
+      ],
+      "ordinal": 136,
+      "source_sha256": "c2f84e070abccd891dc5db7aae90c47293e3472c3dfe796f8e09fd382e56baac",
+      "target": "| 术语 | 含义 |\n|------|---------------|\n| 凸集 | 集合内任意两点之间的线段都留在集合内部。 |\n| 凸函数 | 图像上任意两点之间的线段都位于图像上方或图像上的函数。等价地说，Hessian 矩阵处处半正定。 |\n| 局部极小值 | 低于附近所有点的点。对于凸函数，每个局部极小值都是全局极小值。 |\n| 全局极小值 | 函数在整个定义域上的最低点。 |\n| Hessian 矩阵 | 由所有二阶偏导数组成的矩阵，包含曲率信息。 |\n| 半正定 | 矩阵的所有特征值都非负，是“二阶导数 >= 0”在多维情形下的对应概念。 |\n| 条件数 | Hessian 最大特征值与最小特征值的比值。条件数高意味着谷地狭长，梯度下降缓慢。 |\n| Newton 法 | 使用逆 Hessian 矩阵确定更新方向与步长的二阶优化器，在极小值附近二次收敛。 |\n| Lagrange 乘子 | 为将约束优化问题转化为无约束问题而引入的变量。 |\n| KKT 条件 | 带不等式约束的最优性必要条件，是 Lagrange 乘子法的推广。 |\n| 互补松弛 | 在解处，约束是活跃的，或者其乘子为零；约束值与乘子不可能同时非零。 |\n| 对偶性 | 每个约束问题都有相应的对偶问题。对于凸问题，两者具有相同的最优值。 |\n| 强对偶 | 原始问题与对偶问题的最优值相等，对满足 Slater 条件的凸问题成立。 |\n| L-BFGS | 近似二阶方法，存储最近 m 次梯度差，而不存储完整 Hessian 矩阵。 |\n| 鞍点 | 梯度为零，但在某些方向是极小值、在另一些方向是极大值的点。 |\n| 过参数化 | 参数数量多于训练样本数量，会使损失曲面更平滑，并减少差的局部极小值。 |\n",
+      "target_sha256": "deec639f656e0f67cfa15aa828a07d398a0f0793a57d8d5a51c02d70f63f81f8"
+    },
+    {
+      "segment_id": "01-18:b0272",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Key Terms"
+      ],
+      "ordinal": 136,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0273",
+      "kind": "heading",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Further Reading"
+      ],
+      "ordinal": 137,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "01-18:b0274",
+      "kind": "separator",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Further Reading"
+      ],
+      "ordinal": 137,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "01-18:b0275",
+      "kind": "list",
+      "heading_path": [
+        "# Convex Optimization",
+        "## Further Reading"
+      ],
+      "ordinal": 138,
+      "source_sha256": "60e8f2f0c08893731d701f47c277053762c9b927b285709e7cd9c2001858001e",
+      "target": "- [Boyd 与 Vandenberghe：Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/) - 标准教材，可免费在线阅读\n- [Bottou、Curtis、Nocedal：Optimization Methods for Large-Scale Machine Learning（2018）](https://arxiv.org/abs/1606.04838) - 连接凸优化理论与深度学习实践\n- [Choromanska 等：The Loss Surfaces of Multilayer Networks（2015）](https://arxiv.org/abs/1412.0233) - 为什么非凸神经网络的损失曲面没有看起来那么糟\n- [Nocedal 与 Wright：Numerical Optimization](https://link.springer.com/book/10.1007/978-0-387-40065-5) - 全面介绍 Newton 法、L-BFGS 和约束优化的参考书\n",
+      "target_sha256": "afc25e19089a610c20142723df41b746d816511d83ca10376fcf4d44d93b7064"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+  "additional_glossary_sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a",
+  "consulted_terminology": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S20-convex-optimization/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "d4bd7e5e055806928e4fb500a7df0f8fc598518bd88554d89547a2bce90b5ab1"
+}
