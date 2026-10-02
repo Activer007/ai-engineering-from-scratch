@@ -1,0 +1,1359 @@
+{
+  "schema_version": 1,
+  "lesson_id": "00-10",
+  "source_path": "phases/00-setup-and-tooling/10-terminal-and-shell/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "b7e145665f7552770ae40aa5677a9eb630886538",
+  "source_sha256": "fac7d401a57bbbedba9b980e33524364562d8ef8dcd4ee716be50d7d8aa1e2ea",
+  "target_path": "i18n/zh/phases/00-setup-and-tooling/10-terminal-and-shell/docs/zh.md",
+  "target_sha256": "ce9f8c3a495a1c5c9551b242b36dc454b635d58ccadccb5ad48538e4df225798",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "00-10:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell"
+      ],
+      "ordinal": 1,
+      "source_sha256": "3bbc637c3d6cb16655e024ce480a8da57cc73095e6c973a94d7da558173a47ec",
+      "target": "# 终端与 Shell\n"
+    },
+    {
+      "segment_id": "00-10:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Terminal & Shell"
+      ],
+      "ordinal": 2,
+      "source_sha256": "497a14d9b92f29397d0082b94830e5ea65e57d2b6ae47c30d881b29e595982a1",
+      "target": "> 终端（terminal）是 AI 工程师的日常工作场所。先在这里练到得心应手。\n"
+    },
+    {
+      "segment_id": "00-10:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell"
+      ],
+      "ordinal": 3,
+      "source_sha256": "a7bd30539c8886a06a1afdb9c80873b328b9839432c2eeae2d3c77787fa37108",
+      "target": "**Type:** Learn\n**Languages:** --\n**Prerequisites:** 阶段 0，第 01 课\n**Time:** ~35 分钟\n"
+    },
+    {
+      "segment_id": "00-10:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "00-10:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "af4e1b1000b023734a5a260beacc1a08cb456554568e2f46841200a82da6d32c",
+      "target": "- 使用管道（pipe）、重定向和 `grep`，在命令行中过滤和处理训练日志\n- 创建含有多个窗格（pane）、可持续运行的 tmux 会话，同时进行训练和 GPU 监控\n- 使用 `htop`、`nvtop` 和 `nvidia-smi` 监控系统及 GPU 资源\n- 使用 SSH（安全 Shell）、`scp` 和 `rsync` 在本地与远程机器之间传输文件\n"
+    },
+    {
+      "segment_id": "00-10:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "00-10:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "2ef46dc10916e3458eb00b3cbb20aac34fa2087c3a6c993a0037f8ca0f90e9a0",
+      "target": "你花在终端里的时间，会比花在任何编辑器里的时间都多：运行训练、监控 GPU、跟踪日志末尾的更新、建立远程 SSH 会话、管理环境。每一种 AI 工作流都会用到 Shell（命令解释器）。在这里操作慢，处处都会慢。\n"
+    },
+    {
+      "segment_id": "00-10:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "a6d157fce245ca6b8803ff508375d9603c4659784f450388acedec3a3a3d4dcb",
+      "target": "本课介绍 AI 工作中真正用得上的终端技能。不讲 Unix 历史，也不深入讲解 Bash 脚本编写，只讲你需要的内容。\n"
+    },
+    {
+      "segment_id": "00-10:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "00-10:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0019",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "5452c7589153b5b0a7525a5ad6ca58fc159cb877af8d99a393d8b97c97b00b1b",
+      "target": "```mermaid\ngraph TD\n    subgraph tmux[\"tmux session: training\"]\n        subgraph top[\"Top row\"]\n            P1[\"Pane 1: Training run<br/>python train.py<br/>Epoch 12/100 ...\"]\n            P2[\"Pane 2: GPU monitor<br/>watch -n1 nvidia-smi<br/>GPU: 78% | Mem: 14/24G\"]\n        end\n        P3[\"Pane 3: Logs + experiments<br/>tail -f logs/train.log | grep loss\"]\n    end\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "37e7a8b7f58d26ddab69e8768fb1e9c47afaa590af34a57b0097136a9cdcec34",
+      "target": "一个终端，同时运行三项任务。你可以分离会话，回家后通过 SSH 重新连入，再重新连接会话。训练会一直运行。\n"
+    },
+    {
+      "segment_id": "00-10:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "9043f5ad54255b332c82ebbfeb08ef06a35f77254ff70a796121ebac8d3d6fcc",
+      "target": "```figure\ns0-shell-pipeline\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It"
+      ],
+      "ordinal": 13,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "00-10:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 14,
+      "source_sha256": "8b05800ecbbc026e3778762054542ea5ee3d0e867b4d7c70f31cc0ac0433d142",
+      "target": "### 步骤 1：了解你使用的 Shell\n"
+    },
+    {
+      "segment_id": "00-10:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 15,
+      "source_sha256": "49e9c8d7ff1ea0c8a3bb9472845af053e791ee5938ca4d1d78c5d4b0111cc7ea",
+      "target": "检查你正在运行哪一种 Shell：\n"
+    },
+    {
+      "segment_id": "00-10:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 16,
+      "source_sha256": "4248fb0376ef8c444e91cfe3a4477357022e228dcca100dec2b8695f450da079",
+      "target": "```bash\necho $SHELL\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 17,
+      "source_sha256": "9913f6260ff652b1470b5fe82611cd98486425052ddc8ffc1597a993dcb72406",
+      "target": "大多数系统使用 `bash` 或 `zsh`。两者都很好用。本课程中的命令在这两种 Shell 中都能运行。\n"
+    },
+    {
+      "segment_id": "00-10:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 18,
+      "source_sha256": "66f49f880a90161afa3bf92f1c444e0af32dface71d97d96208aacea4f7badd0",
+      "target": "需要掌握的基本操作：\n"
+    },
+    {
+      "segment_id": "00-10:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 19,
+      "source_sha256": "981a4164d737f12738c5747fe2e1e8b416d9062cce79753e467ab988c65e0c3e",
+      "target": "```bash\n# Move around\ncd ~/projects/ai-engineering-from-scratch\npwd\nls -la\n\n# History search (most useful shortcut you'll learn)\n# Ctrl+R then type part of a previous command\n# Press Ctrl+R again to cycle through matches\n\n# Clear terminal\nclear   # or Ctrl+L\n\n# Cancel a running command\n# Ctrl+C\n\n# Suspend a running command (resume with fg)\n# Ctrl+Z\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 1: Know your shell"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 20,
+      "source_sha256": "0844137c6d2591b13e54ea101a9fb0205050eebb4b6b6f37ed9a730127ce7e36",
+      "target": "### 步骤 2：管道与重定向\n"
+    },
+    {
+      "segment_id": "00-10:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 21,
+      "source_sha256": "339c54affbb74810ff19b0e50b971bbf7a286764af4ff7bb49036965416fb062",
+      "target": "管道把多个命令连接起来。你可以借此处理日志、过滤输出、串联工具。这些操作会经常用到。\n"
+    },
+    {
+      "segment_id": "00-10:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 22,
+      "source_sha256": "f6dd50cbfe2c9bcb48205103ec9350f9adc8762fff6942ed97094a35da2b122a",
+      "target": "```bash\n# Count how many times \"loss\" appears in a log\ncat train.log | grep \"loss\" | wc -l\n\n# Extract just the loss values from training output\ngrep \"loss:\" train.log | awk '{print $NF}' > losses.txt\n\n# Watch a log file update in real time, filtering for errors\ntail -f train.log | grep --line-buffered \"ERROR\"\n\n# Sort experiments by final accuracy\ngrep \"final_accuracy\" results/*.log | sort -t= -k2 -n -r\n\n# Redirect stdout and stderr to separate files\npython train.py > output.log 2> errors.log\n\n# Redirect both to the same file\npython train.py > train_full.log 2>&1\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 23,
+      "source_sha256": "ade1ad39e36c5a04c96e7c4c67723f1b8cfa4c2dd2eba97450f4509b47cd4267",
+      "target": "你需要掌握的三种重定向：\n"
+    },
+    {
+      "segment_id": "00-10:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0047",
+      "kind": "table",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 24,
+      "source_sha256": "82168f99e3951fb103ffaacdcbc0d93acf39c083dc87cee3b52fe3ff7bfada51",
+      "target": "| 符号 | 作用 |\n|--------|-------------|\n| `>` | 将标准输出（stdout）写入文件（覆盖原内容） |\n| `>>` | 将标准输出追加到文件末尾 |\n| `2>` | 将标准错误（stderr）写入文件 |\n| `2>&1` | 将标准错误发送到与标准输出相同的目的地 |\n| `\\|` | 将一个命令的标准输出作为下一个命令的标准输入（stdin） |\n"
+    },
+    {
+      "segment_id": "00-10:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 2: Piping and redirects"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 25,
+      "source_sha256": "1a6174299307ae014b8acaac0b177aaea37ca2a42214e5dcebbc260c9024023f",
+      "target": "### 步骤 3：后台进程\n"
+    },
+    {
+      "segment_id": "00-10:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 26,
+      "source_sha256": "d684e4c3a33dee1dd6aed6523156d619620a32f2e25c8a7f49d53e8af9379106",
+      "target": "训练往往要运行数小时。你不会想在这段时间里一直开着终端。\n"
+    },
+    {
+      "segment_id": "00-10:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 27,
+      "source_sha256": "26d734da2edd4da31e49cc0658629300466e1fcf6d02d0dabf6d666537331b82",
+      "target": "```bash\n# Run in background (output still goes to terminal)\npython train.py &\n\n# Run in background, immune to hangup (closing terminal won't kill it)\nnohup python train.py > train.log 2>&1 &\n\n# Check what's running in background\njobs\nps aux | grep train.py\n\n# Bring a background job to foreground\nfg %1\n\n# Kill a background process\nkill %1\n# or find its PID and kill that\nkill $(pgrep -f \"train.py\")\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 28,
+      "source_sha256": "eaa7716cf1849dd85e10aa1ed61da4f7718856461634b1edf3bd1e58fa76f62f",
+      "target": "`&`、`nohup` 与 `screen`/`tmux` 的区别：\n"
+    },
+    {
+      "segment_id": "00-10:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0057",
+      "kind": "table",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 29,
+      "source_sha256": "1734d1b12e8f508a7d558fe9b2f18e40acd1d800c4786a99f66a482df3973abe",
+      "target": "| 方法 | 关闭终端后仍能运行？ | 可以重新连接？ |\n|--------|-------------------------|---------------|\n| `command &` | 否 | 否 |\n| `nohup command &` | 是 | 否（查看日志文件） |\n| `screen` / `tmux` | 是 | 是 |\n"
+    },
+    {
+      "segment_id": "00-10:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 30,
+      "source_sha256": "bccd0168f19f6c200c2cfa5f777ad0da3cb391fb5bc29a4ef9487b5f9f340e50",
+      "target": "只要任务需要运行几分钟以上，就使用 tmux。\n"
+    },
+    {
+      "segment_id": "00-10:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 3: Background processes"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 31,
+      "source_sha256": "662a6b7453bd6870d1458a5bb82e9fb42ed04cbb7e392f6004a1ef6b5484d0f2",
+      "target": "### 步骤 4：tmux\n"
+    },
+    {
+      "segment_id": "00-10:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 32,
+      "source_sha256": "46d469b7b4e41e4469e825bd3d06a1057057ec2156c6a2e465679b41e76186a9",
+      "target": "tmux 让你能够创建含有多个窗格、可持续运行的终端会话。在管理训练任务时，它是最有用的工具。\n"
+    },
+    {
+      "segment_id": "00-10:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 33,
+      "source_sha256": "b1885eff3105b958c2e44ca9a34c19af6cd08b823d9da372e23c3600a82b5c02",
+      "target": "```bash\n# Install\n# macOS\nbrew install tmux\n# Ubuntu\nsudo apt install tmux\n\n# Start a named session\ntmux new -s training\n\n# Split horizontally\n# Ctrl+B then \"\n\n# Split vertically\n# Ctrl+B then %\n\n# Navigate between panes\n# Ctrl+B then arrow keys\n\n# Detach (session keeps running)\n# Ctrl+B then d\n\n# Reattach\ntmux attach -t training\n\n# List sessions\ntmux ls\n\n# Kill a session\ntmux kill-session -t training\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 34,
+      "source_sha256": "3639db82f2b3a00c3aaad428c32be24804ae940d6291964366ebc0d57d71aa86",
+      "target": "一个典型的 AI 工作流会话：\n"
+    },
+    {
+      "segment_id": "00-10:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 35,
+      "source_sha256": "47789dad21d424be562cd12719918d4502ba288199650e53f70c4e5b2d9b8a1c",
+      "target": "```bash\ntmux new -s train\n\n# Pane 1: start training\npython train.py --epochs 100 --lr 1e-4\n\n# Ctrl+B, \" to split, then run GPU monitor\nwatch -n1 nvidia-smi\n\n# Ctrl+B, % to split vertically, tail the logs\ntail -f logs/experiment.log\n\n# Now detach with Ctrl+B, d\n# SSH out, go get coffee, come back\n# tmux attach -t train\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 4: tmux"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 5: Monitoring with htop and nvtop"
+      ],
+      "ordinal": 36,
+      "source_sha256": "a95b9c6ac1115a3a3a3fa9ee99ef4593b17ffd098b2b83ebacc27a5f4895f415",
+      "target": "### 步骤 5：使用 htop 和 nvtop 进行监控\n"
+    },
+    {
+      "segment_id": "00-10:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 5: Monitoring with htop and nvtop"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 5: Monitoring with htop and nvtop"
+      ],
+      "ordinal": 37,
+      "source_sha256": "73b43d8ae2671fdd43b1e97f102f710b3d9d64820b3eb89ca471370beca04323",
+      "target": "```bash\n# System processes (better than top)\nhtop\n\n# GPU processes (if you have NVIDIA GPU)\n# Install: sudo apt install nvtop (Ubuntu) or brew install nvtop (macOS)\nnvtop\n\n# Quick GPU check without nvtop\nnvidia-smi\n\n# Watch GPU usage update every second\nwatch -n1 nvidia-smi\n\n# See which processes are using the GPU\nnvidia-smi --query-compute-apps=pid,name,used_memory --format=csv\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 5: Monitoring with htop and nvtop"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 5: Monitoring with htop and nvtop"
+      ],
+      "ordinal": 38,
+      "source_sha256": "e99a629386e76d0bcda58bc49e2388671350e7b7fd8853f967acfc2eacbbb6b0",
+      "target": "你会用到的 `htop` 快捷键：\n- `F6` 或 `>`：按列排序（按内存排序可查找内存泄漏）\n- `F5`：切换树状视图（查看子进程）\n- `F9`：终止进程\n- `/`：搜索进程名\n"
+    },
+    {
+      "segment_id": "00-10:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 5: Monitoring with htop and nvtop"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 6: SSH for remote GPU boxes"
+      ],
+      "ordinal": 39,
+      "source_sha256": "b082f1879dd3f060cc14720c75920dd9958df124d08aeb6e584d57a5fa879ece",
+      "target": "### 步骤 6：通过 SSH 连接远程 GPU 机器\n"
+    },
+    {
+      "segment_id": "00-10:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 6: SSH for remote GPU boxes"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 6: SSH for remote GPU boxes"
+      ],
+      "ordinal": 40,
+      "source_sha256": "cfab24c77d4fa8e044b01e17a0e7a219f9959f8877b759eef03c8476475f9c7a",
+      "target": "租用云端 GPU（Lambda、RunPod、Vast.ai）时，你会通过 SSH 连接。\n"
+    },
+    {
+      "segment_id": "00-10:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 6: SSH for remote GPU boxes"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 6: SSH for remote GPU boxes"
+      ],
+      "ordinal": 41,
+      "source_sha256": "ae8486d7c74d6381a8112d0988cd7a8429802d47050bb6f12e4c102296c59dab",
+      "target": "```bash\n# Basic connection\nssh user@gpu-box-ip\n\n# With a specific key\nssh -i ~/.ssh/my_gpu_key user@gpu-box-ip\n\n# Copy files to remote\nscp model.pt user@gpu-box-ip:~/models/\n\n# Copy files from remote\nscp user@gpu-box-ip:~/results/metrics.json ./\n\n# Sync a whole directory (faster for many files)\nrsync -avz ./data/ user@gpu-box-ip:~/data/\n\n# Port forward (access remote Jupyter/TensorBoard locally)\nssh -L 8888:localhost:8888 user@gpu-box-ip\n# Now open localhost:8888 in your browser\n\n# SSH config for convenience\n# Add to ~/.ssh/config:\n# Host gpu\n#     HostName 192.168.1.100\n#     User ubuntu\n#     IdentityFile ~/.ssh/gpu_key\n#\n# Then just:\n# ssh gpu\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 6: SSH for remote GPU boxes"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 42,
+      "source_sha256": "d14aa4f21bb9d3d4022246ad50ce387be1d1a0e92c2072e36a9f837e21e67cac",
+      "target": "### 步骤 7：AI 工作中实用的别名\n"
+    },
+    {
+      "segment_id": "00-10:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 43,
+      "source_sha256": "f7947102f5bc0aa4450eecb54fd350f4057633eeac6b773fa9a70b6eb3e5b6e7",
+      "target": "将以下内容添加到你的 `~/.bashrc` 或 `~/.zshrc` 中：\n"
+    },
+    {
+      "segment_id": "00-10:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 44,
+      "source_sha256": "efab979b0b64c8bcf3a96d6c1d9553b2387a9cee19425895f0778617a353c3d3",
+      "target": "```bash\nsource phases/00-setup-and-tooling/10-terminal-and-shell/code/shell_aliases.sh\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 45,
+      "source_sha256": "4bde4be52a1eb7d7d3bf0ff8d396a5b901be6dbec830522ecd945761fbad9f0e",
+      "target": "也可以只复制你需要的别名（alias）。主要别名如下：\n"
+    },
+    {
+      "segment_id": "00-10:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0091",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 46,
+      "source_sha256": "380e1f24553da66a04578b93894ac4879a1ee8874da052cc2947670b3f32d45b",
+      "target": "```bash\n# GPU status at a glance\nalias gpu='nvidia-smi --query-gpu=index,name,utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader'\n\n# Kill all Python training processes\nalias killtraining='pkill -f \"python.*train\"'\n\n# Quick virtual environment activate\nalias ae='source .venv/bin/activate'\n\n# Watch training loss\nalias watchloss='tail -f logs/*.log | grep --line-buffered \"loss\"'\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 47,
+      "source_sha256": "7ea66af2d8b991d56bc45f52eef2fc73935cad0775e969886c5109cfb927c957",
+      "target": "完整的别名集合见 `code/shell_aliases.sh`。\n"
+    },
+    {
+      "segment_id": "00-10:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 7: Useful aliases for AI work"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 8: Common AI terminal patterns"
+      ],
+      "ordinal": 48,
+      "source_sha256": "74d3106a3aba0eb9fab699b10ad027f3cb57689ae2e8969aaf5f54e3f2f338f9",
+      "target": "### 步骤 8：AI 工作中常见的终端用法\n"
+    },
+    {
+      "segment_id": "00-10:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 8: Common AI terminal patterns"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 8: Common AI terminal patterns"
+      ],
+      "ordinal": 49,
+      "source_sha256": "0084943e2c897434f9673eb6eee5a7d8304be92150b66570004fc00a96225c8d",
+      "target": "以下用法在实践中会反复出现：\n"
+    },
+    {
+      "segment_id": "00-10:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 8: Common AI terminal patterns"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 8: Common AI terminal patterns"
+      ],
+      "ordinal": 50,
+      "source_sha256": "a0e6c97bd6ef4cbb83b386b64b024d8c1810c22a073cf5bf5560b066bf9ced1e",
+      "target": "```bash\n# Run training, log everything, notify when done\npython train.py 2>&1 | tee train.log; echo \"DONE\" | mail -s \"Training complete\" you@email.com\n\n# Compare two experiment logs side by side\ndiff <(grep \"accuracy\" exp1.log) <(grep \"accuracy\" exp2.log)\n\n# Find the largest model files (clean up disk space)\nfind . -name \"*.pt\" -o -name \"*.safetensors\" | xargs du -h | sort -rh | head -20\n\n# Download a model from Hugging Face\nwget https://huggingface.co/model/resolve/main/model.safetensors\n\n# Untar a dataset\ntar xzf dataset.tar.gz -C ./data/\n\n# Count lines in all Python files (see how big your project is)\nfind . -name \"*.py\" | xargs wc -l | tail -1\n\n# Check disk space (training data fills disks fast)\ndf -h\ndu -sh ./data/*\n\n# Environment variable check before training\nenv | grep -i cuda\nenv | grep -i torch\n```\n"
+    },
+    {
+      "segment_id": "00-10:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Build It",
+        "### Step 8: Common AI terminal patterns"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0101",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Use It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "00-10:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Use It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Use It"
+      ],
+      "ordinal": 52,
+      "source_sha256": "f0aa187708c2b2136fb0572bb75da259679b0a600d5d2f387862e485ebb5ddf1",
+      "target": "本课程中，各工具的使用场景如下：\n"
+    },
+    {
+      "segment_id": "00-10:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Use It"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0105",
+      "kind": "table",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Use It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "e854d2cd0f801c6d709b52346fd89dcb79bd31414c42095bff2cf9c02de72add",
+      "target": "| 工具 | 使用场景 |\n|------|----------------|\n| tmux | 每次训练运行（阶段 3+） |\n| `tail -f` + `grep` | 监控训练日志 |\n| `nohup` / `&` | 快速执行后台任务 |\n| `htop` / `nvtop` | 排查训练缓慢和 OOM（内存不足）错误 |\n| SSH + `rsync` | 使用云端 GPU 开展工作 |\n| 管道 + 重定向 | 处理实验结果 |\n| 别名 | 为重复执行的命令节省时间 |\n"
+    },
+    {
+      "segment_id": "00-10:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Use It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Exercises"
+      ],
+      "ordinal": 54,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "00-10:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Exercises"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0109",
+      "kind": "list",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Exercises"
+      ],
+      "ordinal": 55,
+      "source_sha256": "24122ec20237bcb636982f5d1c3cc3d1d03ef4b49e7e464fe6e9801fe2b999f0",
+      "target": "1. 安装 tmux，创建一个含有三个窗格的会话，在其中一个窗格运行 `htop`，另一个运行 `watch -n1 date`，第三个运行 Python 脚本。分离会话，再重新连接。\n2. 将 `code/shell_aliases.sh` 中的别名添加到你的 Shell 配置中，并使用 `source ~/.zshrc`（或 `~/.bashrc`）重新加载。\n3. 使用 `for i in $(seq 1 100); do echo \"epoch $i loss: $(echo \"scale=4; 1/$i\" | bc)\"; sleep 0.1; done > fake_train.log` 生成一份模拟训练日志，再用 `grep`、`tail` 和 `awk` 仅提取损失值。\n4. 为你有权访问的服务器设置一条 SSH 配置（也可以使用 `localhost` 练习语法）。\n"
+    },
+    {
+      "segment_id": "00-10:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Exercises"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Key Terms"
+      ],
+      "ordinal": 56,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "00-10:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Key Terms"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-10:b0113",
+      "kind": "table",
+      "heading_path": [
+        "# Terminal & Shell",
+        "## Key Terms"
+      ],
+      "ordinal": 57,
+      "source_sha256": "e2de35c1db8e1b566b48be762ba055d4334dae43d024164902dc6c20e1d1492b",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| Shell | “终端” | 解释你所输入命令的程序（bash、zsh、fish） |\n| tmux | “终端复用器” | 让你在一个窗口中运行多个终端会话，并可分离或重新连接会话的程序 |\n| 管道 | “那根竖线” | 将一个命令的输出作为另一个命令输入的 `\\|` 运算符 |\n| PID | “进程 ID” | 分配给每个运行中进程的唯一编号，用于监控或终止该进程 |\n| nohup | “不挂断” | 让命令不受挂断信号影响地运行，因此关闭终端不会终止它 |\n| SSH | “连接服务器” | Secure Shell，一种用于在远程机器上运行命令的加密协议 |\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+  "additional_glossary_sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    }
+  ]
+}
