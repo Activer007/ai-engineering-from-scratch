@@ -1,0 +1,574 @@
+{
+  "schema_version": 1,
+  "lesson_id": "01-03",
+  "batch": "S06",
+  "source_path": "phases/01-math-foundations/03-matrix-transformations/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "ea0ea17c4d71b209c4d8d3b7dc843c94b6d8b481",
+  "source_sha256": "bd248b5462edccab7838ef32e303839811157e453873fb6b19421e4f3d5f2365",
+  "target_path": "i18n/zh/phases/01-math-foundations/03-matrix-transformations/docs/zh.md",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+  "additional_glossary_sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+      "version": "S06-v1.0",
+      "pin": "stage-scoped glossary frozen by SHA-256"
+    }
+  ],
+  "dependencies_manifest": {
+    "path": "i18n/zh/.curated/stages/S06-matrix-transformations/DEPENDENCIES.json",
+    "sha256": "0fef598a97d592197d0dfd7fe4de6eb36548e89d90e3008669dce0ff651e44fb"
+  },
+  "status": "language-reviewed",
+  "reviewed_target_sha256": "99e5d8610f217f930f184ce56bc259b69cf25c014025f0aa14f24030928f2098",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-02",
+  "review_coverage": {
+    "technical": "Full independent English-to-Chinese review of149/149 blocks and57/57 translatable blocks, not sampling",
+    "chinese": "Separate full Chinese-only reading, followed by final full reading after correction",
+    "independence": "Reviewer was not author and did not edit target; final exact hash reverified",
+    "human_approval": "not requested or claimed"
+  },
+  "self_review_only": false,
+  "resolved_translation_findings": [
+    {
+      "id": "TR-01",
+      "severity": "S3",
+      "mandatory": true,
+      "block_id": "01-03:b0141",
+      "source_line": 444,
+      "target_line": 444,
+      "issue": "源单位 degrees 被只译成度，违反本阶段数值和单位保持原形的约定。",
+      "before": "旋转 30 度",
+      "after": "旋转 30 degrees（度）",
+      "status": "resolved_and_rechecked",
+      "final_target_sha256": "99e5d8610f217f930f184ce56bc259b69cf25c014025f0aa14f24030928f2098"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "SRC-01",
+      "source_lines": [
+        221,
+        223,
+        230,
+        232,
+        458
+      ],
+      "issue": "行列式与面积/体积缩放绝对值混淆，且绝对值被写成负数",
+      "evidence": "反射矩阵 diag(-1,1) 的 det=-1，而 abs(det)=1；sx=-2,sy=3 时 abs(det)=6，sx*sy=-6。源232把 abs(det(reflection)) 写为 -1，源230省略右侧乘积的绝对值。",
+      "target_handling": "译文与围栏忠实保留；不可在翻译中暗改。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入"
+    },
+    {
+      "id": "SRC-02",
+      "source_lines": [
+        199,
+        208,
+        404,
+        408
+      ],
+      "issue": "一般特征分解的换基不一定是正交旋转",
+      "evidence": "源示例 B=[[3,1],[0,2]] 的单位特征向量可选 [1,0] 与 [1,-1]/sqrt(2)，点积为 0.7071067811865475；V 非正交，V^-1 不可一般解释成旋转。",
+      "target_handling": "保留 n 个线性无关特征向量的条件；保护围栏中的 rotate 原样。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入"
+    },
+    {
+      "id": "SRC-03",
+      "source_lines": [
+        315,
+        341
+      ],
+      "issue": "复特征向量按分量平方和归一化会除零",
+      "evidence": "精确90度旋转矩阵 [[0,-1],[1,0]]、lambda=i 时，源构造 v=[-1,i]，v[0]**2+v[1]**2=0，mag=0j，随后的除法触发 ZeroDivisionError。应使用共轭绝对值范数是源代码修正范围，不能改译文载荷。",
+      "target_handling": "代码保持逐字相同。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入"
+    },
+    {
+      "id": "SRC-04",
+      "source_lines": [
+        231,
+        253,
+        254,
+        452
+      ],
+      "issue": "双参数 shearing_2d 实现并不一般保持面积",
+      "evidence": "[[1,kx],[ky,1]] 的行列式是 1-kx*ky；kx=ky=1 时 det=0。正文关于单轴剪切的性质不能无条件覆盖该双参数实现。",
+      "target_handling": "单轴正文、双参数代码、术语表原义均保留，没有替源限制参数。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入"
+    },
+    {
+      "id": "SRC-05",
+      "source_lines": [
+        177,
+        455,
+        456
+      ],
+      "issue": "特征向量“从不旋转”的口语表述未说明负特征值翻转",
+      "evidence": "diag(-1,1) 作用于特征向量 [1,0] 得 [-1,0]，方向翻转；源456承认负数 flip，与177/455的绝对化说法有教学表述张力。",
+      "target_handling": "保留“从不旋转”和负数（翻转），不擅自统一或修正。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入"
+    },
+    {
+      "id": "SRC-06",
+      "source_lines": [
+        19,
+        215
+      ],
+      "issue": "用特征值模直接概括 RNN 输出及梯度稳定性过宽",
+      "evidence": "线性无输入重复映射的谱条件不等于一般非线性RNN的完整梯度判据；例如 h_next=tanh(2*h) 的权重为2但输出有界。实际递推还依赖激活导数、Jacobian乘积及输入等。",
+      "target_handling": "中文保留源“导致”和一句话概括，没有增写成严格充要判据。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入"
+    },
+    {
+      "id": "SRC-07",
+      "source_lines": [
+        21
+      ],
+      "issue": "把神经网络所有变换概括为所列线性变换或其复合",
+      "evidence": "旋转、缩放、剪切、反射及其复合为线性变换；一般神经网络还包含非线性激活等，不能全部归入这组线性操作。",
+      "target_handling": "中文忠实保留 every transformation 的范围，未偷偷加入“线性层”等限制。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入"
+    },
+    {
+      "id": "SRC-08",
+      "source_lines": [
+        310,
+        315,
+        341,
+        436
+      ],
+      "issue": "将本文手写2x2闭式算法称为生产系统通用算法，表述夸大",
+      "evidence": "本文函数专门解2x2特征方程并构造向量，不能按字面代表高维降维、谱聚类与稳定性求解器的完整算法；源代码还存在SRC-03所述复数缺陷。",
+      "target_handling": "中文保留源 same algorithm 的强度，单列源问题。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入",
+      "official_reference": {
+        "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html",
+        "checked_on": "2026-10-02",
+        "supported_points": [
+          "uses LAPACK geev for general square arrays",
+          "columns are corresponding normalized right eigenvectors",
+          "general eig output not guaranteed unitary"
+        ]
+      }
+    },
+    {
+      "id": "SRC-09",
+      "source_lines": [
+        15,
+        213
+      ],
+      "issue": "学习目标把 PCA 方向说成由特征值决定",
+      "evidence": "diag(3,1) 与 [[2,1],[1,2]] 均有特征值3和1，主特征方向分别是 [1,0] 与 [1,1]；方向来自特征向量，值用于方差和排序。",
+      "target_handling": "目标句与后文各按源表达保留，不将目标暗改为特征向量。",
+      "translation_blocker": false,
+      "basis": "固定英文原文与独立数学核验；非翻译引入"
+    },
+    {
+      "id": "SRC-10",
+      "source_lines": [
+        36,
+        39,
+        40
+      ],
+      "issue": "Mermaid labels standard-basis images as new basis vectors without an invertibility qualification",
+      "evidence": "For a singular map those images can be dependent, so need not form a basis of the original space",
+      "target_handling": "Mermaid payload unchanged; no hidden invertibility correction",
+      "translation_blocker": false,
+      "basis": "Fixed English and elementary linear-map reasoning"
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "All 18 payloads byte-identical to pinned English: 7 Mermaid, 6 Python, 4 text/math, 1 figure",
+    "inline_code_numbers_units": "Within-block inventories match; formulas, signs, axes, coordinate tuples, 2D/3D/2x2, 3x and operator roles manually compared",
+    "links": "All three destinations unchanged",
+    "metadata": "Keys and Type/Languages values unchanged; natural-language prerequisites and minutes translated",
+    "structure": "149 blocks, all 25 heading levels, 74 separators, 1 table and all list structure retained",
+    "assets": "No relative SVG assets in source"
+  },
+  "format_repairs": [
+    {
+      "kind": "fence-language",
+      "segment_id": "01-03:b0033",
+      "source_line": 69,
+      "change": "Add text language tag only; fenced payload unchanged",
+      "source_block_sha256": "d096b4d2647c10f83efa9d7df0bb1ec0a7d7de1cd9181248eb540b6ef296a569",
+      "target_block_sha256": "e3ab607069748a6946b9f772563656e3d568099bb59e800f1a4e43cca7853dfe"
+    },
+    {
+      "kind": "fence-language",
+      "segment_id": "01-03:b0075",
+      "source_line": 179,
+      "change": "Add text language tag only; fenced payload unchanged",
+      "source_block_sha256": "8fa1ed663c21851e24b1233e8c275aaac6d57211347c2950361adf9bcc91e629",
+      "target_block_sha256": "9df9f151a9f315098ef1134c0247c8b856d7dd6da234ac01f2cd79f6c6401f3a"
+    },
+    {
+      "kind": "fence-language",
+      "segment_id": "01-03:b0083",
+      "source_line": 201,
+      "change": "Add text language tag only; fenced payload unchanged",
+      "source_block_sha256": "20a5cfb42678d483bc3689871c0a6ccc44a6b7d5c50c1b39ad61cabef2478c21",
+      "target_block_sha256": "eac7e55a45f96a14c6c93cf0e7cdfa4059f43d8788423bd41a9c3c4fad6a8fa2"
+    },
+    {
+      "kind": "fence-language",
+      "segment_id": "01-03:b0097",
+      "source_line": 223,
+      "change": "Add text language tag only; fenced payload unchanged",
+      "source_block_sha256": "7272ebcf32334db400715ee6684def500d616c857e6c1950e78c7d927b21d4ea",
+      "target_block_sha256": "1dd83d4a2b4f35de3c9e24ff74764b7ab3341e9f56a7bae897224d9aa8e1ef98"
+    }
+  ],
+  "terminology_exceptions": [],
+  "coverage_counts": {
+    "source_lines": 465,
+    "target_lines": 465,
+    "total_segments": 149,
+    "non_separator_segments": 75,
+    "translated_prose_segments": 57,
+    "segment_kinds": {
+      "heading": 25,
+      "separator": 74,
+      "blockquote": 1,
+      "paragraph": 25,
+      "list": 5,
+      "fence": 18,
+      "table": 1
+    },
+    "fences_by_source_language": {
+      "mermaid": 7,
+      "bare": 4,
+      "figure": 1,
+      "python": 6
+    },
+    "translatable_english_words": 939,
+    "word_count_method": "Exclude fences, display math, inline code, fixed Type/Language(s) metadata, link destinations and URLs; count [A-Za-z]+(?:['’-][A-Za-z]+)* across remaining prose including headings, prerequisites, time, table cells and link labels.",
+    "target_chinese_characters": 1697,
+    "translatable_english_words_excluding_all_metadata": 928,
+    "alternate_word_count_method": "Same tokenizer as translatable_english_words, additionally excluding the complete Prerequisites/Time metadata lines; metadata is nevertheless fully translated where permitted."
+  },
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "pinned_support_dependency_hashes": "all 10 manifest entries verified",
+    "block_structure_and_protected_content": "passed: curated_translation.py check --id 01-03 after glossary binding and two replays",
+    "deterministic_replay": "passed: final two isolated outputs byte-identical",
+    "technical_independent_review": "passed-full-final-hash",
+    "chinese_independent_review": "passed-separate-full-reading-and-final-recheck",
+    "github_gfm": "passed-desktop: actual DOM, Chinese anchor navigation and screenshots of all7 Mermaid diagrams,25 headings and complete three-column term table",
+    "actual_site_browser": "not passed; inherited source parser limitations",
+    "lesson_runtime": "canonical Python+NumPy demo and all6 inline Python payloads in document order exit0;10 focused assertions; source failures separately reproduced; Julia unavailable",
+    "hosted_ci": "not run; Actions disabled",
+    "independent_review": "passed-full-technical-and-separate-Chinese-final-hash",
+    "offline_site_parser": {
+      "file": "i18n/zh/phases/01-math-foundations/03-matrix-transformations/docs/zh.md",
+      "parser_executed": true,
+      "html_bytes": 35209,
+      "tables": 1,
+      "code_blocks": 10,
+      "figures": 1,
+      "mermaid_sources": 7,
+      "empty_heading_ids": [
+        "矩阵变换",
+        "学习目标",
+        "要解决的问题",
+        "核心概念",
+        "用矩阵表示变换",
+        "旋转",
+        "缩放",
+        "剪切",
+        "反射",
+        "复合：串联多个变换",
+        "特征值与特征向量",
+        "特征分解",
+        "特征值为什么重要",
+        "行列式作为体积缩放因子",
+        "动手实现",
+        "实际使用",
+        "交付成果",
+        "练习",
+        "关键术语",
+        "延伸阅读"
+      ],
+      "duplicate_heading_ids": [],
+      "browser_verified": false,
+      "result": "BLOCKED_SOURCE_RENDERER"
+    }
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "direct_external_model_api_cost": 0,
+    "exact_runtime_model_id": null,
+    "token_usage": null,
+    "human_review_minutes": null,
+    "note": "Independent full review completed; exact model/metering/human minutes unavailable, no fabricated timing or score"
+  },
+  "acceptance": {
+    "translation_draft": "independently reviewed",
+    "github_gfm": "passed-desktop",
+    "website_mobile": "not passed",
+    "hosted_ci": "not run; Actions disabled",
+    "user_release": "not approved"
+  },
+  "independent_focus_checks": [
+    {
+      "topic": "复合顺序",
+      "result": "A后B在153与454均为B @ A；S@R与R@S数值及两图路径保持；自写离线矩阵计算给出[0,0.5]与[0,2]。"
+    },
+    {
+      "topic": "行列、轴和符号",
+      "result": "列为基向量像与特征向量列保留；x/y反射矩阵未互换；3D各轴矩阵的sin符号和固定分量、2D尺寸与所有数值一致。"
+    },
+    {
+      "topic": "剪切位移",
+      "result": "Shx使x偏移k*y，Shy使y偏移k*x，目标未交换被修改坐标与乘数。"
+    },
+    {
+      "topic": "特征值、特征向量与奇异值",
+      "result": "eigenvalue/eigenvector始终对应特征值/特征向量，未替换成奇异值/奇异向量；源未教学投影公式或SVD，译文也未新增。"
+    },
+    {
+      "topic": "特征分解条件",
+      "result": "n个线性无关特征向量条件完整，V/D/V^-1公式及列对应不变；一般换基误称旋转归SRC-02。"
+    },
+    {
+      "topic": "模与取向",
+      "result": "特征值magnitude译模适合本文实/复语境；反射负号、行列式绝对值错误、orientation原文在保护围栏内全保留，没有静默纠错。"
+    },
+    {
+      "topic": "PCA与应用叙述",
+      "result": "方差、按特征值排序保留top k主成分、RNN/谱方法及交付强度均对源；源教学泛化单列。"
+    },
+    {
+      "topic": "练习与术语表",
+      "result": "三个练习指令、所有点坐标、特征方程、30 degrees、缩放[1.5,0.8]、kx=0.3、8点和行列式乘积不变；十行术语表与三条链接完整。"
+    },
+    {
+      "topic": "自然中文",
+      "result": "叙述连贯、语序自然，首现关键术语有中英对应；元数据与标题命名遵循表。未发现需进一步修改的直译、指代或歧义。"
+    }
+  ],
+  "runtime_checks": {
+    "canonical_demo_exit": 0,
+    "numpy_branch_executed": true,
+    "focused_assertions": [
+      {
+        "name": "rotate2D90",
+        "actual": [
+          6.123233995736766e-17,
+          1.0
+        ],
+        "expected": [
+          0,
+          1
+        ],
+        "passed": true
+      },
+      {
+        "name": "scale2D",
+        "actual": [
+          2,
+          3
+        ],
+        "expected": [
+          2,
+          3
+        ],
+        "passed": true
+      },
+      {
+        "name": "reflection_y",
+        "actual": [
+          -2,
+          1
+        ],
+        "expected": [
+          -2,
+          1
+        ],
+        "passed": true
+      },
+      {
+        "name": "reflection_x",
+        "actual": [
+          2,
+          -1
+        ],
+        "expected": [
+          2,
+          -1
+        ],
+        "passed": true
+      },
+      {
+        "name": "rotate_then_scale",
+        "actual": [
+          1.2246467991473532e-16,
+          0.5
+        ],
+        "expected": [
+          0,
+          0.5
+        ],
+        "passed": true
+      },
+      {
+        "name": "scale_then_rotate",
+        "actual": [
+          1.2246467991473532e-16,
+          2.0
+        ],
+        "expected": [
+          0,
+          2
+        ],
+        "passed": true
+      },
+      {
+        "name": "rotate3Dy90",
+        "actual": [
+          6.123233995736766e-17,
+          0.0,
+          -1.0
+        ],
+        "expected": [
+          0,
+          0,
+          -1
+        ],
+        "passed": true
+      },
+      {
+        "name": "eigenvalues_symmetric",
+        "actual": [
+          3.0,
+          1.0
+        ],
+        "expected": [
+          3,
+          1
+        ],
+        "passed": true
+      },
+      {
+        "name": "eigen_identity_3",
+        "actual": [
+          2.1213203435596424,
+          2.1213203435596424
+        ],
+        "expected": [
+          2.1213203435596424,
+          2.1213203435596424
+        ],
+        "passed": true
+      },
+      {
+        "name": "eigen_identity_1",
+        "actual": [
+          0.7071067811865475,
+          -0.7071067811865475
+        ],
+        "expected": [
+          0.7071067811865475,
+          -0.7071067811865475
+        ],
+        "passed": true
+      }
+    ],
+    "confirmed_source_issues": [
+      {
+        "source_issue": "complex eigenvector Euclidean normalization",
+        "result": "ZeroDivisionError reproduced for 90-degree rotation, eigenvalue i"
+      },
+      {
+        "source_issue": "eigenbasis need not be rotation",
+        "eigenvector_dot": 0.7071067811865475,
+        "result": "nonorthogonal"
+      },
+      {
+        "source_issue": "two-parameter shear area",
+        "kx": 1,
+        "ky": 1,
+        "det": 0,
+        "result": "collapses area"
+      },
+      {
+        "source_issue": "absolute determinant sign",
+        "det": -1,
+        "abs_det": 1
+      }
+    ],
+    "inline_python": {
+      "blocks": 6,
+      "execution": "all exact payloads in document order in one isolated Python process",
+      "ast": "6/6 passed",
+      "exit_code": 0,
+      "limits": "source demonstrated inputs only; no comprehensive domain/input validation or Julia execution"
+    },
+    "canonical_source_sha256": "0122b6f794cfa6906b551dc01316baaad91b834f9314ae9b3782ad72ba060384",
+    "python_runtime": "Python3 with preinstalled NumPy",
+    "julia": "not available; not installed or run",
+    "official_reference": {
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html",
+      "checked_on": "2026-10-02",
+      "supported_points": [
+        "uses LAPACK geev for general square arrays",
+        "columns are corresponding normalized right eigenvectors",
+        "general eig output not guaranteed unitary"
+      ]
+    }
+  },
+  "github_gfm_evidence": {
+    "date": "2026-10-02",
+    "observed_commit": "d25c180f14ae8c260204f853eccdc5a6de8fec4f",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/d25c180f14ae8c260204f853eccdc5a6de8fec4f/i18n/zh/phases/01-math-foundations/03-matrix-transformations/docs/zh.md",
+    "target_sha256": "99e5d8610f217f930f184ce56bc259b69cf25c014025f0aa14f24030928f2098",
+    "browser": "dot cloud Chrome desktop",
+    "headings": 25,
+    "tables": 1,
+    "table_column_counts": [
+      3
+    ],
+    "table_rows_including_header": 11,
+    "chinese_permalink_clicked": true,
+    "mermaid_rendered": 7,
+    "mermaid_review": "All7 diagrams visually inspected; initial basis/rotation/scaling/shear view zoomed out using GitHub controls to inspect all nodes; reflection and both composition paths verified",
+    "figure": "matrix-transform shown as code, not site interactive acceptance",
+    "focused_checks": "Matrix signs, rotation axes, reflection coordinate, S@R versus R@S paths and outputs, determinant literal source errors, all table rows, bold labels and links preserved",
+    "mobile": "not tested"
+  }
+}
