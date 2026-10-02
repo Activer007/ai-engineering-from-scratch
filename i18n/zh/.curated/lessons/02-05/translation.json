@@ -1,0 +1,2458 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-05",
+  "source_path": "phases/02-ml-fundamentals/05-support-vector-machines/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "f4b2f9d07df3a9982b9470cb8b025e2fc9d8eadd",
+  "source_sha256": "4032f704f9675d31f9c0a1dfbf768283b9c50b5699ccebc90fa5813819136ddd",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/05-support-vector-machines/docs/zh.md",
+  "target_sha256": "681de24e73856ec0b24c5bf7d228b0550ee589c4c9b5eeba16a8d51172abeaeb",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "old_chinese_or_cache_used": false
+  },
+  "segments": [
+    {
+      "segment_id": "02-05:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines"
+      ],
+      "ordinal": 1,
+      "source_sha256": "11ed596c960267382cf8c4afc5f46a9e16bb224e8da0df35d5e4c059229d114e",
+      "target": "# 支持向量机\n",
+      "target_sha256": "8240bd7d0e226eb48c9d00d2306253833dbf9cd884b8ca66de34d09c9c1ea1c5"
+    },
+    {
+      "segment_id": "02-05:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Support Vector Machines"
+      ],
+      "ordinal": 2,
+      "source_sha256": "fda7e06420329ce9bde8745666e66d2ea82e9fdd17e1c6a2d0d6b82e2a457ff6",
+      "target": "> 找出两个类别之间最宽的街道。全部思路就是这么简单。\n",
+      "target_sha256": "d4fa5d603955bf21e89668152bcd8cfd76ccb19d7755c3d60c17f4c6e91eb779"
+    },
+    {
+      "segment_id": "02-05:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines"
+      ],
+      "ordinal": 3,
+      "source_sha256": "9fd1441d2c02ceb19f112f7614939ec12550ccd9041cf891ed47ee38e935c6b1",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 阶段 1（课程 08 优化、14 范数与距离、18 凸优化）\n**Time:** ~90 分钟\n",
+      "target_sha256": "8bfec2157e4c5464a196695ef7c3223fe1ce8b768f81929dd716e2f02510a845"
+    },
+    {
+      "segment_id": "02-05:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "02-05:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "b00f2b01e12cabe105d94053db1f9b6e1c190fe4fc7256740dcb46763d5e4627",
+      "target": "- 使用合页损失（hinge loss），在原始形式上进行梯度下降，从零实现线性 SVM\n- 解释最大间隔原理，并从训练好的模型中识别支持向量\n- 比较线性核、多项式核和 RBF 核，解释核技巧如何避免显式映射到高维空间\n- 评估参数 C 所控制的间隔宽度与分类错误之间的权衡\n",
+      "target_sha256": "c91db5979fafe6d3cacda17beabdaf29cc9852a92b57904a1d6438d0222f58eb"
+    },
+    {
+      "segment_id": "02-05:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "02-05:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "e23817ae365c06edebf54aa16a25ba9ab9cd156d8344bb1bc9feb6a380d89fda",
+      "target": "你有两个类别的数据点，需要画一条直线（或一个超平面）将它们分开。可能有无穷多条直线都能做到。你该选哪一条？\n",
+      "target_sha256": "5a40eff5984cc5129e706047a2ea438b4aa148a07809e0047270baa0c13210ac"
+    },
+    {
+      "segment_id": "02-05:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "5810ebe7baedf1eb84b02609421fa787dd95f8197450918c6cfad566dd5ff1ad",
+      "target": "选择间隔最大的那一条。间隔（margin）是决策边界与两侧最近数据点之间的距离。间隔越宽，意味着分类器越有把握，对未见数据的泛化也越好。\n",
+      "target_sha256": "87509b9fd52c0b8dff99a035a6ece0dd95d4fb4d07ec55784cdc0704983321f5"
+    },
+    {
+      "segment_id": "02-05:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "f538345bc28107d58a344197b2c374030779b4e88ef805b8c237c07dea53aace",
+      "target": "这一直觉引出了支持向量机（Support Vector Machines，SVM），它是机器学习（ML）中数学形式最优美的算法之一。在深度学习出现之前，SVM 曾是占主导地位的分类方法。对于小数据集、高维数据，以及需要原理清晰、理解充分且具有理论保证的模型的问题，SVM 至今仍是最佳选择。\n",
+      "target_sha256": "de2657bfb5b15703d83d27dba4df9512bb22ed6765df7461473881a35f928c16"
+    },
+    {
+      "segment_id": "02-05:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "3b04ba3b1f86bcb26a5cf8e2b1c97c6067a110c50476cd1e7c84fe3cdbead900",
+      "target": "SVM 与阶段 1 的内容直接相连：它的优化问题是凸的（课程 18），间隔用范数衡量（课程 14），核技巧（kernel trick）则利用点积来处理非线性边界，全程无需在高维空间中直接计算。\n",
+      "target_sha256": "9217f607f325cab8be511868ceebe17f8cdd86a65576604bf0cf8c523a26c6c1"
+    },
+    {
+      "segment_id": "02-05:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "02-05:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 12,
+      "source_sha256": "aa13930b2d653c7699ac2aa448182e101e55d722db101a9eb8c11eef0145380c",
+      "target": "### 最大间隔分类器\n",
+      "target_sha256": "92fcb3a032e5f2184e4725ffcb1539dfd57ca178e1434ba0b3c7b9be1a571b7f"
+    },
+    {
+      "segment_id": "02-05:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 13,
+      "source_sha256": "18fffc3946abb058dace62e13f44402e400fac7ee6d1fd8ba539da018d7dfda5",
+      "target": "给定线性可分的数据，其标签 y_i 属于 {-1, +1}，特征向量为 x_i。我们希望找到一个将两个类别分开的超平面 w^T x + b = 0。\n",
+      "target_sha256": "3c8540d43bef9cf5f06e0d7f40f9acd89486f1a49287db838fc659ed915ee88e"
+    },
+    {
+      "segment_id": "02-05:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 14,
+      "source_sha256": "9c24ce76a10884093d98dce0554848a07c3a8976304943da16218a33a5209eb0",
+      "target": "点 x_i 到超平面的距离为：\n",
+      "target_sha256": "bd0ad9864c41f42395d8c78020afaf8fb81bb8aa8556544b0ab328f1934e094b"
+    },
+    {
+      "segment_id": "02-05:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0029",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 15,
+      "source_sha256": "a5aed7f06b9bcf955f3bd0c0aa1f84910591849c2582efdaef97f8672fd01419",
+      "target": "```text\ndistance = |w^T x_i + b| / ||w||\n```\n",
+      "target_sha256": "06287c69b327c86e44496042b7c468f784a91a10ff26b6feacd5417e63281ca5"
+    },
+    {
+      "segment_id": "02-05:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 16,
+      "source_sha256": "25009621573cea10e3de2ac3f4e3ed95bb0ba7e7c4ad97687831a2cdfc9e5303",
+      "target": "对于分类正确的点，y_i * (w^T x_i + b) > 0。间隔是超平面到任一侧最近点的距离的两倍。\n",
+      "target_sha256": "9b4566a126f2b2c0b79be1c0a73b814e25193f4cdcb019108d60cff894fae7d8"
+    },
+    {
+      "segment_id": "02-05:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 17,
+      "source_sha256": "15e99df15383ab7f50099ceff610763b7ba5e93f6415ec73198015b755b1f942",
+      "target": "```mermaid\ngraph LR\n    subgraph Margin\n        direction TB\n        A[\"w^T x + b = +1\"] ~~~ B[\"w^T x + b = 0\"] ~~~ C[\"w^T x + b = -1\"]\n    end\n    D[\"+ class points\"] --> A\n    E[\"- class points\"] --> C\n    B --- F[\"Decision boundary\"]\n```\n",
+      "target_sha256": "15e99df15383ab7f50099ceff610763b7ba5e93f6415ec73198015b755b1f942"
+    },
+    {
+      "segment_id": "02-05:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 18,
+      "source_sha256": "684f62c0419294e783c3ca99b20ad03446ed58ca8dfb6913cdbebf34dbb487a1",
+      "target": "优化问题如下：\n",
+      "target_sha256": "37ce330c27357dc50236c7b3ecc49899e89db71da0641391cbd86296325867e0"
+    },
+    {
+      "segment_id": "02-05:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 19,
+      "source_sha256": "8aee6fdfb9cacc3b010a38320fcb0df90a5df8df2bb4dc8f5dcbced89468f8ec",
+      "target": "```text\nmaximize    2 / ||w||     (the margin width)\nsubject to  y_i * (w^T x_i + b) >= 1  for all i\n```\n",
+      "target_sha256": "0d8eda2f29a6d1bf05fe3b82b06e40566d6036de8661d7680dd77ec905383485"
+    },
+    {
+      "segment_id": "02-05:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 20,
+      "source_sha256": "ca1788ed166399e91ae45c907ac5df91cd5e0210fd96bd56697bd778ad3bba2f",
+      "target": "等价地（最小化 ||w||^2 更容易求解）：\n",
+      "target_sha256": "58bc35b88d27296d63dbf5f63aef3254b5eecc4a3b76df1d76320af439b8de3c"
+    },
+    {
+      "segment_id": "02-05:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 21,
+      "source_sha256": "20f11503862a2be7ba3e7427baf33da162de979f35eb86dbef7d61ffbaf354c8",
+      "target": "```text\nminimize    (1/2) ||w||^2\nsubject to  y_i * (w^T x_i + b) >= 1  for all i\n```\n",
+      "target_sha256": "d49370d6ba969a5537bf5783636e40acb98e66e28cfc75c90e050dd280c2122b"
+    },
+    {
+      "segment_id": "02-05:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 22,
+      "source_sha256": "27bf19184ca969c148679c1581a8bc29a8d9124e330bfa956f435048ce1eaa57",
+      "target": "这是一个凸二次规划（convex quadratic program，QP）问题，具有唯一的全局解。恰好位于间隔边界上的数据点（即 y_i * (w^T x_i + b) = 1 的点）称为支持向量（support vectors）。只有这些点决定决策边界。移动或移除任何非支持向量的数据点，边界都不会改变。\n",
+      "target_sha256": "88e5c17897ffd87f63b35b791aee87f94072597ffb5cf9ec3b6a3e9df6961943"
+    },
+    {
+      "segment_id": "02-05:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The maximum margin classifier"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Support vectors: the critical few"
+      ],
+      "ordinal": 23,
+      "source_sha256": "76be8cfd59af5ce5a511356f55ec5c9b45cdd61ddcd7be17657055c0917e50b6",
+      "target": "### 支持向量：关键的少数点\n",
+      "target_sha256": "b3bf46b22f1249c3d545df6f6fe88ecadd1acdd073111b0633fb7cc246dad1cf"
+    },
+    {
+      "segment_id": "02-05:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Support vectors: the critical few"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Support vectors: the critical few"
+      ],
+      "ordinal": 24,
+      "source_sha256": "9f915546958bd8e9c92d4046f00e6433a2ebbed0def814128d918391cd314a96",
+      "target": "```mermaid\ngraph TD\n    subgraph Classification\n        SV1[\"Support Vector (+ class)<br>y(w'x+b) = 1\"] --- DB[\"Decision Boundary<br>w'x+b = 0\"]\n        DB --- SV2[\"Support Vector (- class)<br>y(w'x+b) = 1\"]\n    end\n    O1[\"Other + points<br>(do not affect boundary)\"] -.-> SV1\n    O2[\"Other - points<br>(do not affect boundary)\"] -.-> SV2\n```\n",
+      "target_sha256": "9f915546958bd8e9c92d4046f00e6433a2ebbed0def814128d918391cd314a96"
+    },
+    {
+      "segment_id": "02-05:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Support vectors: the critical few"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Support vectors: the critical few"
+      ],
+      "ordinal": 25,
+      "source_sha256": "1e4678a83a7b0a0fa95837c130114e316da59b3eaed084725862694554b6012a",
+      "target": "大多数训练点都无关紧要，只有支持向量起作用。这就是 SVM 在预测时节省内存的原因：只需存储支持向量，而不必保存整个训练集。\n",
+      "target_sha256": "6de04457da70d18fc2cfaf33e351283014bfb0428408140e3808a97e4f7f482c"
+    },
+    {
+      "segment_id": "02-05:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Support vectors: the critical few"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Support vectors: the critical few"
+      ],
+      "ordinal": 26,
+      "source_sha256": "8dde0f83e46b918d12e5abca5c450ae144ccbac0fa61d50f08e304a93ad8d0dc",
+      "target": "支持向量的数量还能给出泛化误差的界。相对于数据集大小，支持向量越少，泛化就越好。\n",
+      "target_sha256": "5c2c83ae3334bf8678b05eb3918356f40bc0263610f9bdff2b97825a6aa0ddf7"
+    },
+    {
+      "segment_id": "02-05:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Support vectors: the critical few"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 27,
+      "source_sha256": "c41add7271ae88c30b351ea348f320660bd50e57cd7a9717ba1a8e4bed6e4b64",
+      "target": "### 软间隔：用参数 C 处理噪声\n",
+      "target_sha256": "7d7dd03d3cf16a9098406e984d8e0b078c4a7088f75852673be76448737df44f"
+    },
+    {
+      "segment_id": "02-05:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 28,
+      "source_sha256": "6842ede46005645884487cf7eeae63e0149d20f46825e8352c93664d327d74f1",
+      "target": "真实数据很少能完美分开。有些点可能落在边界的错误一侧，或者落在间隔内部。软间隔（soft margin）形式通过引入松弛变量（slack variables），允许违反间隔约束。\n",
+      "target_sha256": "7bf7ab650f3150bf579d7aa42c476285eb283f32736748b0353e538b3ae3e645"
+    },
+    {
+      "segment_id": "02-05:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0057",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 29,
+      "source_sha256": "7b1b27dcf70f459baaa612ba420c07b3052ac636762618c5a6f0b194d474e7b5",
+      "target": "```text\nminimize    (1/2) ||w||^2 + C * sum(xi_i)\nsubject to  y_i * (w^T x_i + b) >= 1 - xi_i\n            xi_i >= 0  for all i\n```\n",
+      "target_sha256": "162ea2e065c1388b2fb632bcad127a66c21139ec2ba345f6eb7f95234ad4214a"
+    },
+    {
+      "segment_id": "02-05:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 30,
+      "source_sha256": "a79ac2d799c8c7ba3a804cab3782eea7ee89cb42aa7534271b0b182d8865c9a3",
+      "target": "松弛变量 xi_i 衡量点 i 违反间隔约束的程度。C 控制如下权衡：\n",
+      "target_sha256": "209cec6aa01259f098ff83b7c35072caa58aebe8c59cf2a245c2c9004506427b"
+    },
+    {
+      "segment_id": "02-05:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0061",
+      "kind": "table",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 31,
+      "source_sha256": "91146418dd4285409f024f1efcf9fb0d23cc2b360ba007dc3092782fc051a6ed",
+      "target": "| C 的取值 | 行为 |\n|---------|----------|\n| 较大的 C | 对违反约束的惩罚很重。间隔窄，误分类少。过拟合 |\n| 较小的 C | 允许更多违反约束的情况。间隔宽，误分类多。欠拟合 |\n",
+      "target_sha256": "11a9a102a43605a19db6732fd0a0ce7ea1508945cc3606ebc31bcf00e900987a"
+    },
+    {
+      "segment_id": "02-05:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 32,
+      "source_sha256": "184135a9ebc7bc00edb99e069ebf3dbb4024f003f93ab65b4097fd40d1a17a94",
+      "target": "C 与正则化强度呈反向关系。较大的 C = 较弱的正则化。较小的 C = 较强的正则化。\n",
+      "target_sha256": "99d7913901abeda1713550f5b528246ee508fe0866d02b40ab43db570f74e431"
+    },
+    {
+      "segment_id": "02-05:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Soft margin: handling noise with the C parameter"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 33,
+      "source_sha256": "eddae77727144d8c011c36ae78b824ddc49855245a8137233ee7499c5f8a8e52",
+      "target": "### 合页损失：SVM 的损失函数\n",
+      "target_sha256": "d301458de9db5947a6ae0c398294aed355716e85c7e4f5334df515785375c0ae"
+    },
+    {
+      "segment_id": "02-05:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 34,
+      "source_sha256": "4c3c38889c1f16644aa87fb0d3ed326a46062361d7bcdbbcacb04bb16ba51839",
+      "target": "软间隔 SVM 可以改写成无约束优化问题：\n",
+      "target_sha256": "fb8340c6b138d1887ca2fbc3d6063b90a7cd5bdacb40b452761762dc8af2856c"
+    },
+    {
+      "segment_id": "02-05:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 35,
+      "source_sha256": "73256aa4c184c46b02881d4686f53b884c5eaf48df37900f6334204da62d0302",
+      "target": "```text\nminimize    (1/2) ||w||^2 + C * sum(max(0, 1 - y_i * (w^T x_i + b)))\n```\n",
+      "target_sha256": "159d6a97b630800860b2a5766bdbe1c70ad6c71f43a41a98dc5a0a07c3756704"
+    },
+    {
+      "segment_id": "02-05:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 36,
+      "source_sha256": "45faddde484e02a531b18bd292c7ca475504dd894413089eb5989a8575a87ba8",
+      "target": "max(0, 1 - y_i * f(x_i)) 这一项就是合页损失。当一个点分类正确且位于间隔之外时，损失为零；当点位于间隔内部或被错误分类时，损失呈线性变化。\n",
+      "target_sha256": "c9d1e44a4b699d6f40cabdfaab92cbeee7e62e9cc671d29f34430d4b7c867fd3"
+    },
+    {
+      "segment_id": "02-05:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 37,
+      "source_sha256": "d509c8ebdc340d2ccd4554cc4fe27e01d70b9f496ba9edd8ccf57b21f0a7c0c1",
+      "target": "```text\nHinge loss for a single point:\n\nloss\n  |\n  | \\\n  |  \\\n  |   \\\n  |    \\\n  |     \\_______________\n  |\n  +-----|-----|-------->  y * f(x)\n       0     1\n\nZero loss when y*f(x) >= 1 (correctly classified, outside margin).\nLinear penalty when y*f(x) < 1.\n```\n",
+      "target_sha256": "5d3cd6594e29af0fa1e5f69d6ca8d5ddc7df8198c47166f85687d41f0282b367"
+    },
+    {
+      "segment_id": "02-05:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 38,
+      "source_sha256": "2ee9a63588d5600a30daaeff5554785e162ec05ab01078f0dd8e01935b049e44",
+      "target": "与 logistic 损失（logistic 回归所用的损失）比较：\n",
+      "target_sha256": "77ddd678768d08e3bd32cfd7924806fb562c9dc3558c9f8179b5c5afaf4b2589"
+    },
+    {
+      "segment_id": "02-05:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0077",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 39,
+      "source_sha256": "6946551859972df6398269c49a3a45775cceae45049ca9d83b185ad2716dd3a3",
+      "target": "```text\nHinge:     max(0, 1 - y*f(x))          Hard cutoff at margin\nLogistic:  log(1 + exp(-y*f(x)))        Smooth, never exactly zero\n```\n",
+      "target_sha256": "7d40b062d92cfe055ca3b965f290d51e3be0ca1420bc5f690f57c3563948c78b"
+    },
+    {
+      "segment_id": "02-05:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 40,
+      "source_sha256": "8307793d4aca7b94e0918ca01f3d13013f45e0d0c9fa2935958f9c51473ebadc",
+      "target": "合页损失会产生稀疏解（只有支持向量有非零贡献），而 logistic 损失会使用所有数据点。因此，SVM 在预测时更节省内存。\n",
+      "target_sha256": "61f4aeeaa2cc120d51edc130773fc60bf2901e11912c080bbdf07e5a7013e566"
+    },
+    {
+      "segment_id": "02-05:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Hinge loss: the SVM loss function"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Training a linear SVM with gradient descent"
+      ],
+      "ordinal": 41,
+      "source_sha256": "ae964bccb76e52c884919667ceeffe15542e9f2c88c1d352bb5502bdfdf81046",
+      "target": "### 用梯度下降训练线性 SVM\n",
+      "target_sha256": "ba987e1c4571ea0a5dbbad2f8348c12cd85dc01e7388beb9038fcebce7dc0a03"
+    },
+    {
+      "segment_id": "02-05:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Training a linear SVM with gradient descent"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Training a linear SVM with gradient descent"
+      ],
+      "ordinal": 42,
+      "source_sha256": "97028a58245efbbe562aaca0c5007b8f6a41797eacd0d4bdbe3e96aa77e920c1",
+      "target": "可以对合页损失加 L2 正则化后的目标进行梯度下降，训练线性 SVM，而无需求解带约束的 QP：\n",
+      "target_sha256": "8bef57cc315c2f8e9ec50d57f595b30c8e0c866aa7cb935dc13749ba79bf0bca"
+    },
+    {
+      "segment_id": "02-05:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Training a linear SVM with gradient descent"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Training a linear SVM with gradient descent"
+      ],
+      "ordinal": 43,
+      "source_sha256": "1b947c0798d28f8c1a09d65ccaa899a4290432a31d0f4d155590df481f34aec0",
+      "target": "```text\nL(w, b) = (lambda/2) * ||w||^2 + (1/n) * sum(max(0, 1 - y_i * (w^T x_i + b)))\n\nGradient with respect to w:\n  If y_i * (w^T x_i + b) >= 1:  dL/dw = lambda * w\n  If y_i * (w^T x_i + b) < 1:   dL/dw = lambda * w - y_i * x_i\n\nGradient with respect to b:\n  If y_i * (w^T x_i + b) >= 1:  dL/db = 0\n  If y_i * (w^T x_i + b) < 1:   dL/db = -y_i\n```\n",
+      "target_sha256": "1aeb1581d4b1645504f066935f9c22616eb1d36b3477bf040d5d1e45dab10075"
+    },
+    {
+      "segment_id": "02-05:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Training a linear SVM with gradient descent"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Training a linear SVM with gradient descent"
+      ],
+      "ordinal": 44,
+      "source_sha256": "8441fc6243922f75ebe5d378476492041bd651402bdc2053073689df1619d9f8",
+      "target": "这称为原始形式（primal formulation）。每个训练轮次（epoch）的运行成本是 O(n * d)，其中 n 为样本数，d 为特征数。对于大规模、稀疏、高维的数据（例如文本分类数据），这种方法很快。\n",
+      "target_sha256": "49641d5734bd5cba4331e447e9a8d58bec2c098164fa15d40a31a950afa31bef"
+    },
+    {
+      "segment_id": "02-05:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Training a linear SVM with gradient descent"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 45,
+      "source_sha256": "5a9559cc581846a28e0adb1122f6c6f79785e10f9e9b8a6abac28936e0bbf54b",
+      "target": "### 对偶形式与核技巧\n",
+      "target_sha256": "41c710bb800366fab1b97cf976faaf722cb7093585b7d92efcca45d6ccdd2988"
+    },
+    {
+      "segment_id": "02-05:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 46,
+      "source_sha256": "12f84051c87c9bd78bf808597c1f8f71b39d50ddd31c9b3badbf5a99718c4bd3",
+      "target": "SVM 问题的 Lagrange 对偶形式（来自阶段 1 课程 18 的 KKT 条件）为：\n",
+      "target_sha256": "8138a256494e30de2a2871b282295c670fc3eef3e33f8c7b6604873b086349ec"
+    },
+    {
+      "segment_id": "02-05:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 47,
+      "source_sha256": "34b136a71165f82417be75d2ac830ac84c3d2869b0ec62377effe6224bf4a0c3",
+      "target": "```text\nmaximize    sum(alpha_i) - (1/2) * sum_ij(alpha_i * alpha_j * y_i * y_j * (x_i . x_j))\nsubject to  0 <= alpha_i <= C\n            sum(alpha_i * y_i) = 0\n```\n",
+      "target_sha256": "3017f98ef4583aadf65697b2e1f9156df8d42f344973bce36db687fcef03637f"
+    },
+    {
+      "segment_id": "02-05:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 48,
+      "source_sha256": "3b4ef5c099bc1d2993917abcafce1522e8794747f8e449be4c8d0f0067850a2c",
+      "target": "对偶形式只涉及数据点之间的点积 x_i . x_j。这是关键所在。将每个点积替换为核函数 K(x_i, x_j)，SVM 就能学习非线性边界，而无需显式计算变换。\n",
+      "target_sha256": "6529da00350847407650985280515f527cc860838df1bdaff1e0c3f3d7b344ac"
+    },
+    {
+      "segment_id": "02-05:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0097",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 49,
+      "source_sha256": "c2e4e0c3f005e0060c108b61038be18f59faf3440a5dd58548480fb51089937e",
+      "target": "```text\nLinear kernel:      K(x, z) = x . z\nPolynomial kernel:  K(x, z) = (x . z + c)^d\nRBF (Gaussian):     K(x, z) = exp(-gamma * ||x - z||^2)\n```\n",
+      "target_sha256": "7bb4f51d513b8d5e744747d3831864d5f4d40ffa4eef265d22a579367b46582c"
+    },
+    {
+      "segment_id": "02-05:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 50,
+      "source_sha256": "7e8e0f1ad3abcb1e5655a860f0f8754796e705bd51e85438752c00767141452e",
+      "target": "径向基函数（RBF）核将数据映射到无限维空间。在输入空间中相近的点，其核值接近 1；相距较远的点，其核值接近 0。它能学习任意平滑的决策边界。\n",
+      "target_sha256": "117301a2eccc5339c2b776b8453cc92ca90de75787a2971428700c4c02c0b4e1"
+    },
+    {
+      "segment_id": "02-05:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0101",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 51,
+      "source_sha256": "2e1ac28720332b4d75343746d5c2e0816990e577f3dd73846d9d22333bf2bfde",
+      "target": "```mermaid\ngraph LR\n    subgraph \"Input Space (not separable)\"\n        A[\"Data points in 2D<br>circular boundary\"]\n    end\n    subgraph \"Feature Space (separable)\"\n        B[\"Data points in higher dim<br>linear boundary\"]\n    end\n    A -->|\"Kernel trick<br>K(x,z) = phi(x).phi(z)\"| B\n```\n",
+      "target_sha256": "2e1ac28720332b4d75343746d5c2e0816990e577f3dd73846d9d22333bf2bfde"
+    },
+    {
+      "segment_id": "02-05:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 52,
+      "source_sha256": "d98be3f4aeeea69afcfb36360639f974b03695a9fa5c2ecb2c81504ff99c5ce3",
+      "target": "核技巧无需真正进入高维空间，就能计算其中的点积。对于 D 维输入上的 d 次多项式核，显式特征空间有 O(D^d) 个维度，但计算 K(x, z) 只需 O(D) 时间。\n",
+      "target_sha256": "3b527271a37b31009e386b3308b9517147531433c82d107e25f31c67d8dc1317"
+    },
+    {
+      "segment_id": "02-05:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### The dual formulation and the kernel trick"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0105",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### SVM for regression (SVR)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "ed054c06e9467399f6f9de8613e14e4d616d14d586dfa6fdc531abe1abde8f79",
+      "target": "### 用于回归的 SVM（SVR）\n",
+      "target_sha256": "d6b27e8863e16e21d439abfd54ecb99b89ac3432c910811e400b44033566a1f0"
+    },
+    {
+      "segment_id": "02-05:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### SVM for regression (SVR)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### SVM for regression (SVR)"
+      ],
+      "ordinal": 54,
+      "source_sha256": "2ba129a96b010bde36d6c9e9a4ed6b0f1abff2294f3858311bd1dc99791923b7",
+      "target": "支持向量回归（Support Vector Regression，SVR）在数据周围拟合一条宽度为 epsilon 的管。管内的点损失为零，管外的点则受到线性惩罚。\n",
+      "target_sha256": "5c811a26adfab849510d9523b6c85314db6dbb7225901458e58f01115fd7bc24"
+    },
+    {
+      "segment_id": "02-05:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### SVM for regression (SVR)"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0109",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### SVM for regression (SVR)"
+      ],
+      "ordinal": 55,
+      "source_sha256": "b52bdf4518ab8982badf69d46b3aa10093b6a2b17381103eec7f60a00f4c9bc9",
+      "target": "```text\nminimize    (1/2) ||w||^2 + C * sum(xi_i + xi_i*)\nsubject to  y_i - (w^T x_i + b) <= epsilon + xi_i\n            (w^T x_i + b) - y_i <= epsilon + xi_i*\n            xi_i, xi_i* >= 0\n```\n",
+      "target_sha256": "0a72c5d5a6c1507905b495c782f401f0b31b44f1f0d56aaaf9f1617110907139"
+    },
+    {
+      "segment_id": "02-05:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### SVM for regression (SVR)"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### SVM for regression (SVR)"
+      ],
+      "ordinal": 56,
+      "source_sha256": "7daf17f91e522fb5325c20912e5abbeb3d49d84d82d56514fe5d320e1105f3cf",
+      "target": "参数 epsilon 控制管的宽度。管越宽 = 支持向量越少 = 拟合越平滑。管越窄 = 支持向量越多 = 拟合越贴近数据。\n",
+      "target_sha256": "2bd683adc75766bfc0fa29f44641fb4a323f61423ea5ef16a700b83c1449a304"
+    },
+    {
+      "segment_id": "02-05:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### SVM for regression (SVR)"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 57,
+      "source_sha256": "7d3f4fc5234b5f46f8df12f4a47d9d12f1f4f18ba966a29f7e7f26f69d1c4f60",
+      "target": "### SVM 为何输给深度学习（以及它何时仍能胜出）\n",
+      "target_sha256": "968088cbd919e538a4e043132022f4f494924e1a17c8550d1aa484d3d817137d"
+    },
+    {
+      "segment_id": "02-05:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 58,
+      "source_sha256": "5b5b36c70368e33adee91238481b22c6501d4a5b662bdda6dd436e9112969b19",
+      "target": "从 1990 年代末到 2010 年代初，SVM 曾主导机器学习。深度学习后来超越了它，原因有以下几项：\n",
+      "target_sha256": "75bd638e60e93e7a128fa3d27c9f90f38d0a61c81562f207d7f5471f2625f35e"
+    },
+    {
+      "segment_id": "02-05:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0117",
+      "kind": "table",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 59,
+      "source_sha256": "e1666274b556f795bf9370a178238c784c3b277dd7b36d25db1b5bb7511845b4",
+      "target": "| 因素 | SVM | 深度学习 |\n|--------|------|---------------|\n| 特征工程 | 需要 | 自行学习特征 |\n| 可扩展性 | 核方法为 O(n^2) 到 O(n^3) | 使用 SGD 时每个训练轮次为 O(n) |\n| 图像/文本/音频 | 需要手工设计特征 | 从原始数据学习 |\n| 大数据集（>100k） | 慢 | 扩展性好 |\n| GPU 加速 | 收益有限 | 大幅提速 |\n",
+      "target_sha256": "6ee22370b429315b1823c552cd84938c520e9e3836d87e0780873c77aa87f6c6"
+    },
+    {
+      "segment_id": "02-05:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 60,
+      "source_sha256": "df6292f2ed0cc233c3f42bd60e59c33b72676034a2fd7c620b6550a054e351f7",
+      "target": "在以下情况下，SVM 仍能胜出：\n- 小数据集（几百到数千个样本）\n- 高维稀疏数据（使用 TF-IDF 特征的文本）\n- 需要数学保证（间隔界）\n- 训练时间必须尽量短（线性 SVM 非常快）\n- 间隔结构清晰的二分类问题\n- 异常检测（单类 SVM，即 one-class SVM）\n",
+      "target_sha256": "a8c386fc466c0c90c33536fe9568539a4da9cf44f33fd6bfeeffaafd74907917"
+    },
+    {
+      "segment_id": "02-05:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0121",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 61,
+      "source_sha256": "7a9641f08ceda1dd56ad02cd2a6c0825fc9d13fa6e6bc8f17faf0e7563d596c5",
+      "target": "```figure\nsvm-margin\n```\n",
+      "target_sha256": "7a9641f08ceda1dd56ad02cd2a6c0825fc9d13fa6e6bc8f17faf0e7563d596c5"
+    },
+    {
+      "segment_id": "02-05:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## The Concept",
+        "### Why SVMs lost to deep learning (and when they still win)"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0123",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "02-05:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 1: Hinge loss and gradient"
+      ],
+      "ordinal": 63,
+      "source_sha256": "df1735dd776ed5d4d5354b03660e37fa6853dc9f805323d8bf75fdf97bf6f4e2",
+      "target": "### 步骤 1：合页损失与梯度\n",
+      "target_sha256": "5c11734e32706c5d9b25a5ea0941ecb280d3a13b9faaab18910e887365502739"
+    },
+    {
+      "segment_id": "02-05:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 1: Hinge loss and gradient"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0127",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 1: Hinge loss and gradient"
+      ],
+      "ordinal": 64,
+      "source_sha256": "615473f093e6027017031d2628afc993d2bfff3fe427b6788909e6e235c47f17",
+      "target": "先打好基础：计算一个批次的合页损失及其梯度。\n",
+      "target_sha256": "00b03dab19cdcaab08d0b6f77dd3d8bd1337f753f950d7aae78d87504280c1e4"
+    },
+    {
+      "segment_id": "02-05:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 1: Hinge loss and gradient"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0129",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 1: Hinge loss and gradient"
+      ],
+      "ordinal": 65,
+      "source_sha256": "3b1816e69e758a5c3ea8d6e19ad2f765c260f15823d97368643a3b947922013c",
+      "target": "```python\ndef hinge_loss(X, y, w, b):\n    n = len(X)\n    total_loss = 0.0\n    for i in range(n):\n        margin = y[i] * (dot(w, X[i]) + b)\n        total_loss += max(0.0, 1.0 - margin)\n    return total_loss / n\n```\n",
+      "target_sha256": "3b1816e69e758a5c3ea8d6e19ad2f765c260f15823d97368643a3b947922013c"
+    },
+    {
+      "segment_id": "02-05:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 1: Hinge loss and gradient"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 2: Linear SVM via gradient descent"
+      ],
+      "ordinal": 66,
+      "source_sha256": "5122225448b5444956931bba64a0b7d018c5fcf49e6b3f9c64253cc55442abc7",
+      "target": "### 步骤 2：通过梯度下降训练线性 SVM\n",
+      "target_sha256": "e88751ebd98989014b9ab1a01215cc8692da2f831626280d483848bde64fae89"
+    },
+    {
+      "segment_id": "02-05:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 2: Linear SVM via gradient descent"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 2: Linear SVM via gradient descent"
+      ],
+      "ordinal": 67,
+      "source_sha256": "39c7343fa9cf6a257c170dbd9b0b85035c17fe6b065e3f3a4b5e28786b5b911d",
+      "target": "通过最小化正则化后的合页损失来训练，无需 QP 求解器。\n",
+      "target_sha256": "a6df8831fd0cdc6949ab86178755589ea252133ee50488eb7d382ef39fc47986"
+    },
+    {
+      "segment_id": "02-05:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 2: Linear SVM via gradient descent"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0135",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 2: Linear SVM via gradient descent"
+      ],
+      "ordinal": 68,
+      "source_sha256": "16fdaf8a8f8d5df301a737fa9a81359f5681bc5397e25d98f71f7b222a53ff55",
+      "target": "```python\nclass LinearSVM:\n    def __init__(self, lr=0.001, lambda_param=0.01, n_epochs=1000):\n        self.lr = lr\n        self.lambda_param = lambda_param\n        self.n_epochs = n_epochs\n        self.w = None\n        self.b = 0.0\n\n    def fit(self, X, y):\n        n_features = len(X[0])\n        self.w = [0.0] * n_features\n        self.b = 0.0\n\n        for epoch in range(self.n_epochs):\n            for i in range(len(X)):\n                margin = y[i] * (dot(self.w, X[i]) + self.b)\n                if margin >= 1:\n                    self.w = [wj - self.lr * self.lambda_param * wj\n                              for wj in self.w]\n                else:\n                    self.w = [wj - self.lr * (self.lambda_param * wj - y[i] * X[i][j])\n                              for j, wj in enumerate(self.w)]\n                    self.b -= self.lr * (-y[i])\n\n    def predict(self, X):\n        return [1 if dot(self.w, x) + self.b >= 0 else -1 for x in X]\n```\n",
+      "target_sha256": "16fdaf8a8f8d5df301a737fa9a81359f5681bc5397e25d98f71f7b222a53ff55"
+    },
+    {
+      "segment_id": "02-05:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 2: Linear SVM via gradient descent"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0137",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 3: Kernel functions"
+      ],
+      "ordinal": 69,
+      "source_sha256": "05a61637a4f55d89c9eb3e92edaf07378ec82683b0dbe62afceef11334c205e4",
+      "target": "### 步骤 3：核函数\n",
+      "target_sha256": "58bd0960a2867ad87ff48fb144a4a99666202757f756838aa412cfc581a8893d"
+    },
+    {
+      "segment_id": "02-05:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 3: Kernel functions"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0139",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 3: Kernel functions"
+      ],
+      "ordinal": 70,
+      "source_sha256": "09c34599c273bbdaa716328276791f38de079d53b4052ad963cc20bca8d5befe",
+      "target": "实现线性核、多项式核和 RBF 核。\n",
+      "target_sha256": "5bbc5dc33f4d3a2e03af099aad330c4e80a31727ce131cdd38eee325984c485f"
+    },
+    {
+      "segment_id": "02-05:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 3: Kernel functions"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0141",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 3: Kernel functions"
+      ],
+      "ordinal": 71,
+      "source_sha256": "db3ed466e2d58dd79b1b4bf7b49a44e17def1333b7ffacb915a806ab3fab635f",
+      "target": "```python\ndef linear_kernel(x, z):\n    return dot(x, z)\n\ndef polynomial_kernel(x, z, degree=3, c=1.0):\n    return (dot(x, z) + c) ** degree\n\ndef rbf_kernel(x, z, gamma=0.5):\n    diff = [xi - zi for xi, zi in zip(x, z)]\n    return math.exp(-gamma * dot(diff, diff))\n```\n",
+      "target_sha256": "db3ed466e2d58dd79b1b4bf7b49a44e17def1333b7ffacb915a806ab3fab635f"
+    },
+    {
+      "segment_id": "02-05:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 3: Kernel functions"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0143",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 4: Margin and support vector identification"
+      ],
+      "ordinal": 72,
+      "source_sha256": "1dfe9aa90b1a8eabb1f4ab6f413258ae7856b49477f077e4b42df007733e129d",
+      "target": "### 步骤 4：间隔与支持向量识别\n",
+      "target_sha256": "2ace5427a94f62ee47eb6dbb5ad4e1b508952e654579524c866ecba60bede6c1"
+    },
+    {
+      "segment_id": "02-05:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 4: Margin and support vector identification"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0145",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 4: Margin and support vector identification"
+      ],
+      "ordinal": 73,
+      "source_sha256": "904c23e8cc6200c79ef1ba80966bd614a7789b564e2372d3ab8b3e11ef0f1d6d",
+      "target": "训练后，识别哪些点是支持向量，并计算间隔宽度。\n",
+      "target_sha256": "7ce9694d3c38b4472b5cefc13e8219a4568ce3995e7a0873f37c76af5a0bc62e"
+    },
+    {
+      "segment_id": "02-05:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 4: Margin and support vector identification"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0147",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 4: Margin and support vector identification"
+      ],
+      "ordinal": 74,
+      "source_sha256": "022dc2f04dc83b229817f4284fa1f3f52f6b8a0517e3231dc96e70ddaf857f25",
+      "target": "```python\ndef find_support_vectors(X, y, w, b, tol=1e-3):\n    support_vectors = []\n    for i in range(len(X)):\n        margin = y[i] * (dot(w, X[i]) + b)\n        if abs(margin - 1.0) < tol:\n            support_vectors.append(i)\n    return support_vectors\n```\n",
+      "target_sha256": "022dc2f04dc83b229817f4284fa1f3f52f6b8a0517e3231dc96e70ddaf857f25"
+    },
+    {
+      "segment_id": "02-05:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 4: Margin and support vector identification"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0149",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 4: Margin and support vector identification"
+      ],
+      "ordinal": 75,
+      "source_sha256": "6259a9e3679d820cf690565266f6c00889f81a43ddda3842711bf413b80bda4a",
+      "target": "完整实现及全部演示见 `code/svm.py`。\n",
+      "target_sha256": "c03aa38e839a77ff0b148384ebaf95e3a235b6e4113d4cfdbae2959bc04a99e8"
+    },
+    {
+      "segment_id": "02-05:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Build It",
+        "### Step 4: Margin and support vector identification"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0151",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "02-05:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 77,
+      "source_sha256": "23d2a3ffc6e7006e4122c9dec90d1131545678df4989c605964c219de5f48f92",
+      "target": "使用 scikit-learn：\n",
+      "target_sha256": "bb147258ec12dadb4bc92b250cea167449f4ee8a735b85e74593ebd9b564c2b9"
+    },
+    {
+      "segment_id": "02-05:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0155",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "6666b139e7aea49460d420faf33d35fa2e7b12760419e007c52632ef89290062",
+      "target": "```python\nfrom sklearn.svm import SVC, LinearSVC, SVR\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import Pipeline\n\nclf = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"svm\", SVC(kernel=\"rbf\", C=1.0, gamma=\"scale\")),\n])\nclf.fit(X_train, y_train)\nprint(f\"Accuracy: {clf.score(X_test, y_test):.4f}\")\nprint(f\"Support vectors: {clf['svm'].n_support_}\")\n```\n",
+      "target_sha256": "6666b139e7aea49460d420faf33d35fa2e7b12760419e007c52632ef89290062"
+    },
+    {
+      "segment_id": "02-05:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "55ddf8676fc4c12a0f0802ca23e6bbf9319484a44406a65754b1c832d1b61559",
+      "target": "注意：训练 SVM 前，始终要先缩放特征。SVM 对特征的数值大小敏感，因为间隔取决于 ||w||，未经缩放的特征会扭曲几何结构。\n",
+      "target_sha256": "be14dcc006b1fc1c974b786f4130f78c9d4e1eb97f3f70c7a2c929343b0c610e"
+    },
+    {
+      "segment_id": "02-05:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0159",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "2cc53e29fe05b37c340be5b7b51018eb00ad172c3dec4d471806012ee4162ac9",
+      "target": "对于大型数据集，使用 `LinearSVC`（原始形式，每个训练轮次 O(n)），而不是 `SVC`（对偶形式，O(n^2) 到 O(n^3)）：\n",
+      "target_sha256": "c6cd13d231f413c5019edb3ba90458ea5c2e39fbc3a0470a439bd0c7c05dcaae"
+    },
+    {
+      "segment_id": "02-05:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0161",
+      "kind": "fence",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "75e6a424d74ad11b16f64cc3592919aa39ca50685fbbed2f58a6c96094cfd069",
+      "target": "```python\nfrom sklearn.svm import LinearSVC\n\nclf = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"svm\", LinearSVC(C=1.0, max_iter=10000)),\n])\n```\n",
+      "target_sha256": "75e6a424d74ad11b16f64cc3592919aa39ca50685fbbed2f58a6c96094cfd069"
+    },
+    {
+      "segment_id": "02-05:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Use It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0163",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "02-05:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0165",
+      "kind": "list",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "bf933a13475bcc20d1ac287411276724dacc4d0cc1ac92a2285d56eb63c2f2e5",
+      "target": "1. 生成一个 2D 线性可分数据集。训练你的 LinearSVM 并识别支持向量。验证支持向量就是离决策边界最近的点。\n",
+      "target_sha256": "79ff853762a1b9ef6f86a4a4f1712c9b74c0f4e7a6166d2e911735fc68b8ade8"
+    },
+    {
+      "segment_id": "02-05:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0167",
+      "kind": "list",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "5ee763cf138d1c825466229e60f58d9aa00651c940ce9f45a96ed81ffbfe8afd",
+      "target": "2. 在一个带噪声的数据集上，让 C 从 0.001 变化到 1000。绘制每个 C 值对应的决策边界。观察从宽间隔（欠拟合）到窄间隔（过拟合）的变化。\n",
+      "target_sha256": "2925978927c8784d103b77ee42c844aae292396805dadeaa4db2588359ef8013"
+    },
+    {
+      "segment_id": "02-05:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0169",
+      "kind": "list",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "764d8aef931a792dd8276944d7e4a35a6ecd1ccd398249d1418c1b98a7603a80",
+      "target": "3. 创建一个类别边界为圆形（非线性）的数据集，展示线性 SVM 会失败。计算 RBF 核矩阵，并展示两个类别在核诱导的特征空间中变得可分。\n",
+      "target_sha256": "22ae3d4ec0d6a2ede674706953e7fae0b27fad32582abe049dd17d3cd3611d98"
+    },
+    {
+      "segment_id": "02-05:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0171",
+      "kind": "list",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "93850bc81d0ab91075ba9bba6287ff4f687dc67d6f8b8faafa66ba11677f67e7",
+      "target": "4. 在同一个数据集上比较合页损失与 logistic 损失。训练一个线性 SVM 和一个 logistic 回归模型。统计各有多少个训练点对模型的决策边界作出贡献（支持向量与全部数据点）。\n",
+      "target_sha256": "6f750c5b39ddaeb8d10620d9bb86b29a0e8d68112f3c9a9c777dbb48e7ecf919"
+    },
+    {
+      "segment_id": "02-05:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0173",
+      "kind": "list",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "8b53f3da68a6c9441d70fb3d4b35b09d40287fb4d76647b1a80c5acedfb39ccf",
+      "target": "5. 实现 SVR（epsilon 不敏感损失）。用它拟合 y = sin(x) + noise。画出预测曲线周围的 epsilon 管，并突出显示支持向量（管外的点）。\n",
+      "target_sha256": "ff91750d9fa2c33ddb7ebf698f1be620e604fb5bf827f3a44979ca439485263d"
+    },
+    {
+      "segment_id": "02-05:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0175",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Key Terms"
+      ],
+      "ordinal": 88,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "02-05:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Key Terms"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0177",
+      "kind": "table",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Key Terms"
+      ],
+      "ordinal": 89,
+      "source_sha256": "c0dfe8ca81e3aa16ca5b35ab54901e0915233ccb3ee73bd625c91eea2a555404",
+      "target": "| 术语 | 实际含义 |\n|------|----------------------|\n| 支持向量 | 距离决策边界最近的训练点。只有它们决定超平面 |\n| 间隔 | 决策边界到最近支持向量的距离。SVM 将其最大化 |\n| 合页损失 | max(0, 1 - y*f(x))。分类正确且位于间隔之外时为零，否则施加线性惩罚 |\n| 参数 C | 控制间隔宽度与分类错误之间的权衡。较大的 C = 窄间隔，较小的 C = 宽间隔 |\n| 软间隔 | 通过松弛变量允许违反间隔约束的 SVM 形式，用于处理不可分数据 |\n| 核技巧 | 无需显式映射到高维特征空间，即可计算该空间中的点积 |\n| 线性核 | K(x, z) = x . z。等价于标准点积，用于线性可分数据 |\n| RBF 核 | K(x, z) = exp(-gamma * \\|\\|x-z\\|\\|^2)。映射到无限维空间，能学习任意平滑边界 |\n| 多项式核 | K(x, z) = (x . z + c)^d。映射到由多项式组合构成的特征空间 |\n| 对偶形式 | 将 SVM 问题改写为仅依赖数据点间点积的形式，从而能够使用核函数 |\n| SVR | 支持向量回归。在数据周围拟合一条 epsilon 管，管内点的损失为零 |\n| 松弛变量 | xi_i：衡量一个点违反间隔约束的程度。对于分类正确且位于间隔之外的点，其值为零 |\n| 最大间隔 | 选择使超平面到各类别最近点的距离最大的超平面的原则 |\n",
+      "target_sha256": "fa9959b0ea5ad8314ce710705b365ca419c43cb1798a2c54069b08f460522d2a"
+    },
+    {
+      "segment_id": "02-05:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Key Terms"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0179",
+      "kind": "heading",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Further Reading"
+      ],
+      "ordinal": 90,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "02-05:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Further Reading"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-05:b0181",
+      "kind": "list",
+      "heading_path": [
+        "# Support Vector Machines",
+        "## Further Reading"
+      ],
+      "ordinal": 91,
+      "source_sha256": "c0abcba9a221035edb0b1c8aeed61e22285690616f94a5f6cd6e7816c9d45258",
+      "target": "- [Vapnik: The Nature of Statistical Learning Theory (1995)](https://link.springer.com/book/10.1007/978-1-4757-3264-1) - 关于 SVM 和统计学习的奠基著作\n- [Cortes & Vapnik: Support-vector networks (1995)](https://link.springer.com/article/10.1007/BF00994018) - SVM 的原始论文\n- [Platt: Sequential Minimal Optimization (1998)](https://www.microsoft.com/en-us/research/publication/sequential-minimal-optimization-a-fast-algorithm-for-training-support-vector-machines/) - 让 SVM 训练变得实用的 SMO 算法\n- [scikit-learn SVM 文档](https://scikit-learn.org/stable/modules/svm.html) - 包含实现细节的实用指南\n- [LIBSVM: A Library for Support Vector Machines](https://www.csie.ntu.edu.tw/~cjlin/libsvm/) - 多数 SVM 实现底层使用的 C++ 库\n",
+      "target_sha256": "d87c6ba63779e315f6301b1cdfa5776475c8dc90737a83a5850ece92b6606555"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+  "additional_glossary_sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S26-support-vector-machines/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "90e24a92560d1da7f52c343f180b3822e816eb86888a912e4c043749038ddd84"
+}
