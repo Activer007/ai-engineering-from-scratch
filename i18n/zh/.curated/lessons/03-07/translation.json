@@ -1,0 +1,2785 @@
+{
+  "schema_version": 1,
+  "lesson_id": "03-07",
+  "source_path": "phases/03-deep-learning-core/07-regularization/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "f2857b50cfcd7dc395d3b756aca1826ec7f5244a",
+  "source_sha256": "c6e31ead99cce8cf40dda09a94a3a2b95978f162e4fe67bc3f3e1b9763ae170d",
+  "target_path": "i18n/zh/phases/03-deep-learning-core/07-regularization/docs/zh.md",
+  "target_sha256": "be1bfd10a147facdf50a60c4b11973113d8241852a5347605e5366f99c1638f3",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "03-07:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization"
+      ],
+      "ordinal": 1,
+      "source_sha256": "166a7725ad37bfa6b0a51c59beb6cc59940896972224f5841634943b185eccdc",
+      "target": "# 正则化\n",
+      "target_sha256": "e3d686458d3e7defb2c58ff245927154dc3c86ee50272da1ac0315020823b1ef"
+    },
+    {
+      "segment_id": "03-07:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Regularization"
+      ],
+      "ordinal": 2,
+      "source_sha256": "16187d7e4aa3586c2455d987290fde3e6f457c9067d7008d630f9a5c09f1e89e",
+      "target": "> 你的模型在训练数据上达到 99%，在测试数据上却只有 60%。它做的是记忆，而不是学习。正则化（regularization）就像给复杂性征税，迫使模型具备泛化能力。\n",
+      "target_sha256": "dfa4c876da86f2f1110b711a83034e135fedfe1271c2e8d7b71e2f7b0700adf1"
+    },
+    {
+      "segment_id": "03-07:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization"
+      ],
+      "ordinal": 3,
+      "source_sha256": "6b77caccdf9ac8f4dc5270dd2c299c7b06fe9b1f479ef3df173446a5df55493d",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 第 03.06 课（优化器）\n**Time:** ~75 分钟\n",
+      "target_sha256": "869fead4b249667d83ae2b9f020c131c337e50fd620f590e390edfccb5d9e43f"
+    },
+    {
+      "segment_id": "03-07:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "03-07:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "a0b36a8f948491b26b47e0fbe884dc2cd2f0550c02225d0485a7557c8e0e2879",
+      "target": "- 从零实现带反向缩放的 Dropout（随机失活）、L2 权重衰减（weight decay）、批量归一化（batch normalization）、层归一化（layer normalization）和 RMSNorm（均方根归一化）\n- 测量训练与测试准确率之间的差距，并通过正则化实验诊断过拟合（overfitting）\n- 解释为什么 Transformer 使用 LayerNorm 而非 BatchNorm，以及为什么现代大语言模型（LLM）更偏好 RMSNorm\n- 根据过拟合的严重程度，应用恰当的正则化技术组合\n",
+      "target_sha256": "ad524b189e54c6915cb1288793dca9f130455d01b6ec173d0519d01c9e137b0e"
+    },
+    {
+      "segment_id": "03-07:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "03-07:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "c0572b319686acac9f23283e46345a6b4e13139eeb3c9ef413b54c3d29262cf5",
+      "target": "参数足够多的神经网络可以记住任何数据集。这并非假设：Zhang 等人（2017）用带有随机标签的 ImageNet 训练标准网络，证明了这一点。在标签分配完全随机的情况下，网络仍然达到了接近零的训练损失。它们记住了一百万个随机输入—输出对，尽管其中没有可供学习的模式。训练损失表现完美，测试准确率却为零。\n",
+      "target_sha256": "d1897fa34c238b1aae483b11cc2e25cdcd2c403cc01540277de2eb39fb650f14"
+    },
+    {
+      "segment_id": "03-07:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "53fd8d6d9466e201232c63db865209a791afcad9f81f83140ededddd0b6659e6",
+      "target": "这就是过拟合问题，而且模型越大，问题越严重。GPT-3 有 175 billion（一千七百五十亿）个参数，训练集大约有 500 billion（五千亿）个 token（词元）。如此多的参数，让模型有足够的容量逐字记住训练数据中的大量内容。如果没有正则化，它就只会复述训练样本，而不是学习可以泛化的模式。\n",
+      "target_sha256": "aab2a3c93a89c16736e5b59e73f8eef974ec0a49936d93411a809c278bd41630"
+    },
+    {
+      "segment_id": "03-07:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "0895dd8b7b2a3ed6358e19b24168ff11b283e4a3dc2a1bfa1502736401bfa6a8",
+      "target": "训练表现与测试表现之间的差距，就是过拟合差距。本课中的每项技术都从不同角度缩小这一差距。Dropout 迫使网络不依赖任何单个神经元。权重衰减防止任何单个权重变得过大。批量归一化让损失曲面更加平滑，使优化器能找到更平坦、泛化能力更强的极小值。层归一化起到同样的作用，但能适用于批量归一化失效的情况，例如小批量和变长序列。RMSNorm 省去均值计算，将这一过程加快 10%。每项技术都很简单，而它们结合起来，就能让模型从只会记忆走向能够泛化。\n",
+      "target_sha256": "ec01fd5868c61d8b17865eccb7bdc3af010b20f666e9e800c14266378ba013fb"
+    },
+    {
+      "segment_id": "03-07:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "03-07:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### The Overfitting Spectrum"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7d18d28adae0d2a0e241b79a007c2cd3bae3b7a170e1ccc025fcc368c91beea",
+      "target": "### 从欠拟合到过拟合\n",
+      "target_sha256": "bbc7e551e1dbfa1725c63ad33c7badff25fed5df2d6444674f6d05aa798d9f8c"
+    },
+    {
+      "segment_id": "03-07:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### The Overfitting Spectrum"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### The Overfitting Spectrum"
+      ],
+      "ordinal": 12,
+      "source_sha256": "e02d228c8ad4e74d4fda0ee4a84bc41280028bebae4e0147211ac0ba09f33529",
+      "target": "每个模型都处在从欠拟合（underfitting，过于简单，无法捕捉模式）到过拟合（过于复杂，连噪声也捕捉下来）之间的某个位置。最佳平衡点位于两者之间，而正则化会把模型从过拟合的一侧推向这个平衡点。\n",
+      "target_sha256": "b0ed92b573e1be57f453a252daf4c4b489821a7221fe5dd01116be5efaee9fff"
+    },
+    {
+      "segment_id": "03-07:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### The Overfitting Spectrum"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0025",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### The Overfitting Spectrum"
+      ],
+      "ordinal": 13,
+      "source_sha256": "6bb98da198e54dd0a0c3b1208a11f407f99f3c151f1ebea46e8e3a0cd3a5df63",
+      "target": "```mermaid\ngraph LR\n    Under[\"Underfitting<br/>Train: 60%<br/>Test: 58%<br/>Model too simple\"] --> Good[\"Good Fit<br/>Train: 95%<br/>Test: 92%<br/>Generalizes well\"]\n    Good --> Over[\"Overfitting<br/>Train: 99.9%<br/>Test: 65%<br/>Memorized noise\"]\n\n    Dropout[\"Dropout\"] -->|\"Pushes left\"| Over\n    WD[\"Weight Decay\"] -->|\"Pushes left\"| Over\n    BN[\"BatchNorm\"] -->|\"Pushes left\"| Over\n    Aug[\"Data Augmentation\"] -->|\"Pushes left\"| Over\n```\n",
+      "target_sha256": "6bb98da198e54dd0a0c3b1208a11f407f99f3c151f1ebea46e8e3a0cd3a5df63"
+    },
+    {
+      "segment_id": "03-07:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### The Overfitting Spectrum"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 14,
+      "source_sha256": "24af668bd7a61508e35e9024aa38698cad5a42ffd73005aee58c45f40433352f",
+      "target": "### Dropout\n",
+      "target_sha256": "24af668bd7a61508e35e9024aa38698cad5a42ffd73005aee58c45f40433352f"
+    },
+    {
+      "segment_id": "03-07:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 15,
+      "source_sha256": "002396042a70735babd03cbcef79eca75e63a10b4f7766bdcf6b934f65ded787",
+      "target": "这是一种最简单的正则化技术，也有一种最优雅的解释。训练期间，以概率 p 随机将每个神经元的输出置零。\n",
+      "target_sha256": "cce85db5dfb189d66379e69292c6b2db11dab72b7ca7fa1a536dff2241ce9123"
+    },
+    {
+      "segment_id": "03-07:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 16,
+      "source_sha256": "031f052b3b3588be0a2d24f0e572843780cd8100ada8944a63ff7812c05ba1be",
+      "target": "```text\noutput = activation(z) * mask    where mask[i] ~ Bernoulli(1 - p)\n```\n",
+      "target_sha256": "4d2a0433f2ddf9bd39234cce28fd29d15ab5eda676524bc09a91b6b7581b60d6"
+    },
+    {
+      "segment_id": "03-07:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 17,
+      "source_sha256": "18204702acd0d7ac31cc6096e23d90df930014244fc0a10f22c6408cf1321798",
+      "target": "当 p = 0.5 时，每次前向传播都会将一半神经元置零。网络无法预知哪些神经元可用，因此必须学习冗余表示。这就能防止协同适应（co-adaptation），也就是神经元学会依赖某些特定的其他神经元始终存在。\n",
+      "target_sha256": "c72039b723ffdf06bf8a2855c52d66d679da641a68f250c21cb21d9d457ef26f"
+    },
+    {
+      "segment_id": "03-07:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 18,
+      "source_sha256": "032f35b34d07b40bf4e6727c59fa1360c954742e2300be5384c760f9e7716742",
+      "target": "从集成（ensemble）的角度看：一个含有 N 个神经元并采用 Dropout 的网络，会产生 2^N 种可能的子网络，涵盖神经元开启或关闭的所有组合。使用 Dropout 训练，近似于同时训练全部 2^N 个子网络，每个子网络使用不同的小批量数据。测试时，使用所有神经元，也就是不使用 Dropout，并将输出乘以 (1 - p)，使其与训练期间的期望值相匹配。这相当于对 2^N 个子网络的预测取平均：一个模型就能形成规模庞大的集成。\n",
+      "target_sha256": "6c4887ddf2a292f642361b277e1462a7c2583aefae1b15827c7696b34049e066"
+    },
+    {
+      "segment_id": "03-07:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 19,
+      "source_sha256": "3eb7877e0121ae27d26c938d527e3eacf7ccdf4201f6d2a1a03bde0a0ef3b3c2",
+      "target": "实际使用时，会在训练阶段而非测试阶段进行缩放，这称为倒置 Dropout（inverted dropout），也就是在训练时除以保留概率来进行反向缩放：\n",
+      "target_sha256": "89062482a482705aaba54fcfb5a3d0d981fdb72bbfeda12746514f0aac5c5e69"
+    },
+    {
+      "segment_id": "03-07:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 20,
+      "source_sha256": "49808bc0e7f7bcd6d1aef136bec7977159599d1551d28d1f812e81c22eb8ae6e",
+      "target": "```text\nDuring training:  output = activation(z) * mask / (1 - p)\nDuring testing:   output = activation(z)   (no change needed)\n```\n",
+      "target_sha256": "6c666855892d5a9560cce5f95ea5d9cd27667805e596e62db9d99d938c8907a3"
+    },
+    {
+      "segment_id": "03-07:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 21,
+      "source_sha256": "ac4298618eee41116ca5e9df2e5af7066c721c39c22d5a4d1fe87182eda5e7cd",
+      "target": "这样更简洁，因为测试代码完全不需要知道 Dropout 的存在。\n",
+      "target_sha256": "1e7172e0783ae5b89a6fb54007a9c332832c35b90e7f08f4406fb34bff0deb1e"
+    },
+    {
+      "segment_id": "03-07:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 22,
+      "source_sha256": "efa75996872360e5cbbf1dc3c325867b1035ee6ba6d2141a7d73195aa8c38965",
+      "target": "默认失活率：Transformer 使用 p = 0.1，多层感知机（MLP）使用 p = 0.5，卷积神经网络（CNN）使用 p = 0.2-0.3。Dropout 越强 = 正则化越强 = 欠拟合风险越高。\n",
+      "target_sha256": "3c19997b2ee1495911eb313714145fd812fc319c018539dab1e40c7d47e8785b"
+    },
+    {
+      "segment_id": "03-07:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Dropout"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "10a1e70bf460356fd1973f6d0ed8d2d23be0b4096e33a4bbf2698041ce26fac7",
+      "target": "### 权重衰减（L2 正则化）\n",
+      "target_sha256": "b94d9970d82547d3706fdf3735cbc59871c472ad31e8eb22ce86a5b0bd81329d"
+    },
+    {
+      "segment_id": "03-07:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "293fbfa9e63861862b1e1e088ca51988367e033ef9e1d3b47c1f62c92b551f8a",
+      "target": "将所有权重的平方和加到损失中：\n",
+      "target_sha256": "bb158819c504c4536745061b7b34a67430f3719423280778888adad812fa1735"
+    },
+    {
+      "segment_id": "03-07:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "c660f320c49c375352711faf6c1d0c107ca16750a7f6a8baa6e14e29ff16f5da",
+      "target": "```text\ntotal_loss = task_loss + (lambda / 2) * sum(w_i^2)\n```\n",
+      "target_sha256": "31fe66e9651ed447722e563a101738eee563756fb16b9419d36597b2d28eb2df"
+    },
+    {
+      "segment_id": "03-07:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "fa7735c10d3bf6704e0a4781ad290daeabaddbbe724ada5a3eab72ceb1cd4d58",
+      "target": "正则化项的梯度为 lambda * w。这意味着每一步都会让各个权重向零收缩，收缩量与其幅度成正比。大权重受到的惩罚更大，模型因此被推向没有任何单个权重占主导的解。\n",
+      "target_sha256": "dcfa278a0a9f8cb52c9bba2661c412b951055061cf8b9cc0de9c0ee9c42ec3aa"
+    },
+    {
+      "segment_id": "03-07:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "097b7473a3d440d1b6c5be22e91cb9d5ac159c6a6fce060f6bcb73155e4bc180",
+      "target": "这为什么有助于泛化？过拟合模型往往具有较大的权重，会放大训练数据中的噪声。权重衰减让权重保持较小，从而限制模型的有效容量，迫使它依赖稳健、可泛化的特征，而不是记住的偶然细节。\n",
+      "target_sha256": "60630e7d93f2a0e7d4b6152127fef19592f7c9e0e47425c9140c795689207cbc"
+    },
+    {
+      "segment_id": "03-07:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "a0ff9f804cc70c30411878ba5257b26f6108b7de05a59e5cf9e71191d7c014da",
+      "target": "超参数 lambda 控制正则化强度。典型取值如下：\n",
+      "target_sha256": "12ad0fdb2813a3f135feb1ca683999d7fa88e56ef56a1102635d1c3624607a48"
+    },
+    {
+      "segment_id": "03-07:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0057",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "ff9076ed7b063ed4332889dda01de4675ace3f6d45f92c973a157dc9a2a182c0",
+      "target": "- Transformer 使用 AdamW 时取 0.01\n- CNN 使用随机梯度下降（SGD）时取 1e-4\n- 严重过拟合的模型取 0.1\n",
+      "target_sha256": "ae1a4d60e05829ec75d44bee36b67cfb06d63589d55ad963c6f262a227408a4d"
+    },
+    {
+      "segment_id": "03-07:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "58bd20e9ba51c804baecaf5bf98f68af29c3181409840b52f34f102bc1ef56d5",
+      "target": "如第 06 课所述，权重衰减与 L2 正则化在 SGD 中等价，但在 Adam 中并不等价。使用 Adam 训练时，始终应使用 AdamW，即解耦权重衰减（decoupled weight decay）。\n",
+      "target_sha256": "645a66f0cca03ac24555bed4eb18de2e2e9bbb3335d3335e73d23f958da5a9fb"
+    },
+    {
+      "segment_id": "03-07:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Weight Decay (L2 Regularization)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 31,
+      "source_sha256": "2ca97a6232b2d4f146ad3b5c1505c80d2bab02803ee047c511b10d5c38da98dc",
+      "target": "### 批量归一化\n",
+      "target_sha256": "286888b366d381ea3bbc2323050add9508e0df309dd9eaf229aa489136046783"
+    },
+    {
+      "segment_id": "03-07:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 32,
+      "source_sha256": "4456a9d9aef2512a233e704223ac564b94744d5c9036a21a89c199b111645c43",
+      "target": "在把每层输出传给下一层之前，先跨小批量对这些输出做归一化。\n",
+      "target_sha256": "554b60dfd0696ca1e63bec7f6aa90a487602a4a4083bdc0a5bc8064ddcc787ff"
+    },
+    {
+      "segment_id": "03-07:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 33,
+      "source_sha256": "c6b28e81fa28f18bedaeefc7ee08351091ff4250a834c493929c7a71cc822de3",
+      "target": "对于某一层的一小批激活值：\n",
+      "target_sha256": "ff254cbe5dab988727db5e36b9418ade8d2d095acf68893e5ca8fbf081292110"
+    },
+    {
+      "segment_id": "03-07:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 34,
+      "source_sha256": "5cbc0731dceb170121102cbb8d590fa9893b0ce483bc93a4f8d2f33695795e1e",
+      "target": "```text\nmu = (1/B) * sum(x_i)           (batch mean)\nsigma^2 = (1/B) * sum((x_i - mu)^2)   (batch variance)\nx_hat = (x_i - mu) / sqrt(sigma^2 + eps)   (normalize)\ny = gamma * x_hat + beta        (scale and shift)\n```\n",
+      "target_sha256": "153c1f30cc8b0231787b6f0fae963fb2759914a64e9da82a32d310e00b78909a"
+    },
+    {
+      "segment_id": "03-07:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 35,
+      "source_sha256": "328976cca2361caf13b0c59fbea674bac06770c1bfcad299de46763150feb190",
+      "target": "Gamma 和 beta 是可学习参数；如果撤销归一化能得到最优结果，网络就可以通过它们做到这一点。没有这两个参数，就等于强制每一层的输出都具有零均值和单位方差，而这未必符合网络的需要。\n",
+      "target_sha256": "f671b4f8b61a462b1e3f02a83c3e4c6f2bdba6e5d5ff2012aed2d6d8bcde2690"
+    },
+    {
+      "segment_id": "03-07:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 36,
+      "source_sha256": "6fd02c25beaf80ddc7808173c2c2baba96c9193628cf123a55b399f77a0583d3",
+      "target": "**训练与推理的区别：** 训练期间，mu 和 sigma 来自当前小批量。推理期间，则使用训练过程中累积的运行平均值（running average），也就是 momentum = 0.1 的指数移动平均，含义为 90% 旧值 + 10% 新值。\n",
+      "target_sha256": "064d4bd4ab5d367129fd5e270ccf56b80be9f4252b39533ad10015c5aa8a064a"
+    },
+    {
+      "segment_id": "03-07:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 37,
+      "source_sha256": "7cfc5ff9a0c91c0832b648ff69bc33980a82cc9765048c9a33d34dd6dc2515f7",
+      "target": "BatchNorm 为什么有效，至今仍有争论。原始论文声称，它能减少“内部协变量偏移”（internal covariate shift），也就是较早层更新时，后续层输入的分布随之发生变化。Santurkar 等人（2018）表明，这一解释是错误的。真正的原因在于：BatchNorm 让损失曲面更加平滑，梯度更能预测损失的变化，Lipschitz 常数更小，优化器因而可以安全地迈出更大的步子。这就是 BatchNorm 能让你使用更高学习率、更快收敛的原因。\n",
+      "target_sha256": "ad56d2c331125eb33d161ebdc1054e76c1fed6611099f9c7af7a69aa7ca957a6"
+    },
+    {
+      "segment_id": "03-07:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 38,
+      "source_sha256": "5f9c658540091301f4858a65b11141c03336194fc5a887d238a0c860faae7cee",
+      "target": "BatchNorm 有一个根本限制：它依赖批量统计量。当批量大小为 1 时，均值和方差没有意义。当批量较小（< 32）时，统计量噪声较大，会损害模型表现。这会影响目标检测等任务，因为内存限制了批量大小；也会影响语言建模，因为序列长度各不相同。\n",
+      "target_sha256": "98388c78ad9211a045f0425803bbdcfc5d84f55d3cc128a553ff3976801f407d"
+    },
+    {
+      "segment_id": "03-07:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Batch Normalization"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 39,
+      "source_sha256": "3a514b7b9b6cd993849c44d174303a51f726a3391d01642e5cb2fd5ea73cdf49",
+      "target": "### 层归一化\n",
+      "target_sha256": "5b9a32ab4a973c678f22dea8ee13e46f9ced2d580f49333ee878ccc18e5b9657"
+    },
+    {
+      "segment_id": "03-07:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 40,
+      "source_sha256": "5b23c05f2afd49055f4469db52fe91203675fed2e4c317ca5930e7f33ad6024b",
+      "target": "跨特征做归一化，而不是跨批量。对于单个样本：\n",
+      "target_sha256": "44c5d2029a57d4d15051e70cf462f3496c8636c107c6b60c52c996597b2a812d"
+    },
+    {
+      "segment_id": "03-07:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 41,
+      "source_sha256": "336c2797a82a83dfa9387a0bdaa726ea695be89d2f0b67564a269bb614c80dd1",
+      "target": "```text\nmu = (1/D) * sum(x_j)           (feature mean)\nsigma^2 = (1/D) * sum((x_j - mu)^2)   (feature variance)\nx_hat = (x_j - mu) / sqrt(sigma^2 + eps)\ny = gamma * x_hat + beta\n```\n",
+      "target_sha256": "55f58b24b9e82976e5921d928a2ec969abb4c82f9ba0df98ce830e4cfffd0e4f"
+    },
+    {
+      "segment_id": "03-07:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 42,
+      "source_sha256": "75f2e9d10831833144a9873579cf6b25964fa3ef61650da22dfd8f9cd350dd87",
+      "target": "D 是特征维度。每个样本独立归一化，不依赖批量大小。这就是 Transformer 使用 LayerNorm 而非 BatchNorm 的原因。序列长度各不相同，批量往往较小，生成时甚至为 1，而且训练与推理期间的计算完全相同。\n",
+      "target_sha256": "9087ced293ede5c2394be6ec50d5324a647e4417dc33189d3fb91d0b174b4075"
+    },
+    {
+      "segment_id": "03-07:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 43,
+      "source_sha256": "df96685d725f84cf2f27d3c4db6b86f4edbdb09a9b3bfac73a8b6105aa71686f",
+      "target": "Transformer 中的 LayerNorm 可以放在每个自注意力块和每个前馈块之后，称为 Post-LN（后置层归一化）；也可以放在它们之前，称为 Pre-LN（前置层归一化），后者的训练更加稳定。\n",
+      "target_sha256": "7f2ee7927058480f5fd709d5e84aeb684d5ab68a16274f5efa81f5dcfdf77839"
+    },
+    {
+      "segment_id": "03-07:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Layer Normalization"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 44,
+      "source_sha256": "f4fb5b7b4154a764fc2d0dc721643b4891dbb67e768db5b52ac5cdceec192e12",
+      "target": "### RMSNorm\n",
+      "target_sha256": "f4fb5b7b4154a764fc2d0dc721643b4891dbb67e768db5b52ac5cdceec192e12"
+    },
+    {
+      "segment_id": "03-07:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 45,
+      "source_sha256": "947c1061b40019943eec23cac9871a49bdbc6ffe66f52755e67fa7652fa4f29c",
+      "target": "RMSNorm 就是不减去均值的 LayerNorm，由 Zhang 和 Sennrich（2019）提出。\n",
+      "target_sha256": "492885518f6b67ae2370147fc31c8527e8aebea8c5e355eb94251b5b1aa51311"
+    },
+    {
+      "segment_id": "03-07:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0091",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 46,
+      "source_sha256": "987394c420b11c6ec2f487441b604b95864f8663f55809b66313748d024421e9",
+      "target": "```text\nrms = sqrt((1/D) * sum(x_j^2))\ny = gamma * x / rms\n```\n",
+      "target_sha256": "9f219323ced759f7b87a35b68147d0aa6695c6ad03f92d80498334a9a62d217a"
+    },
+    {
+      "segment_id": "03-07:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 47,
+      "source_sha256": "24245ddc468708f211c7f7f8fea6a43bb0fae849c8c8c23013a44df3157b5b70",
+      "target": "就是这样：不计算均值，也没有 beta 参数。其依据是，LayerNorm 中的重新中心化，也就是减去均值，对模型表现的贡献很小，却要消耗计算资源。移除这一步，可以在保持相同准确率的同时，将开销减少约 10%。\n",
+      "target_sha256": "323059ae79f83b3cdd04a0537860aefc7e34d1685955c56d995ec9fe1844cca9"
+    },
+    {
+      "segment_id": "03-07:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 48,
+      "source_sha256": "ff085038bb41c2528fa6f715c412945417ff4344ee7e7afd29fd8dcfcd253aee",
+      "target": "LLaMA、LLaMA 2、LLaMA 3、Mistral 以及大多数现代 LLM 都使用 RMSNorm 代替 LayerNorm。在数十亿参数、数万亿 token 的规模下，这 10% 的节省非常可观。\n",
+      "target_sha256": "7fac4fbae9df4184867f5cf4a8272995009dfecfa1627aee6842acd138be3014"
+    },
+    {
+      "segment_id": "03-07:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### RMSNorm"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Normalization Comparison"
+      ],
+      "ordinal": 49,
+      "source_sha256": "5354e8b71692286ec7f9d8d75683d9e92000594836ab6aa4bcb6d6c9d4f80bfd",
+      "target": "### 归一化方法对比\n",
+      "target_sha256": "59c365a04161a1c853de4724353146a0477636ffc0a7a0561d08254678face65"
+    },
+    {
+      "segment_id": "03-07:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Normalization Comparison"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Normalization Comparison"
+      ],
+      "ordinal": 50,
+      "source_sha256": "557a7a94bb08c47d70926797e5b14f0cc5e8c5945d08b7bfc319c3f92c270a9f",
+      "target": "```mermaid\ngraph TD\n    subgraph \"Batch Normalization\"\n        BN_D[\"Normalize across BATCH<br/>for each feature\"]\n        BN_S[\"Batch: [x1, x2, x3, x4]<br/>Feature 1: normalize [x1f1, x2f1, x3f1, x4f1]\"]\n        BN_P[\"Needs batch > 32<br/>Different train vs eval<br/>Used in CNNs\"]\n    end\n    subgraph \"Layer Normalization\"\n        LN_D[\"Normalize across FEATURES<br/>for each sample\"]\n        LN_S[\"Sample x1: normalize [f1, f2, f3, f4]\"]\n        LN_P[\"Batch-independent<br/>Same train vs eval<br/>Used in Transformers\"]\n    end\n    subgraph \"RMS Normalization\"\n        RN_D[\"Like LayerNorm<br/>but skip mean subtraction\"]\n        RN_S[\"Just divide by RMS<br/>No centering\"]\n        RN_P[\"10% faster than LayerNorm<br/>Same accuracy<br/>Used in LLaMA, Mistral\"]\n    end\n```\n",
+      "target_sha256": "557a7a94bb08c47d70926797e5b14f0cc5e8c5945d08b7bfc319c3f92c270a9f"
+    },
+    {
+      "segment_id": "03-07:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Normalization Comparison"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0101",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Data Augmentation as Regularization"
+      ],
+      "ordinal": 51,
+      "source_sha256": "0bd4cf37c0a282e336b31e837b85a53b0502c8ac8cd4ac2f266f19e1ac282afc",
+      "target": "### 将数据增强用于正则化\n",
+      "target_sha256": "7f70a856e3c5fceab1f6993d75c400d4266345a08a1a8cbb1d1eb695d75f275e"
+    },
+    {
+      "segment_id": "03-07:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Data Augmentation as Regularization"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Data Augmentation as Regularization"
+      ],
+      "ordinal": 52,
+      "source_sha256": "f423f03710c9b83e126f18b5a29433e2e5a8249075469da96448590ea9b745ee",
+      "target": "这种方法改变的是数据，而不是模型。它在保持标签不变的前提下，变换训练输入，这就是数据增强（data augmentation）：\n",
+      "target_sha256": "146314e4a4bfcea7f97b23568bd0c9cf2dac01155bb8a432235e3b336c7bc7b2"
+    },
+    {
+      "segment_id": "03-07:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Data Augmentation as Regularization"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0105",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Data Augmentation as Regularization"
+      ],
+      "ordinal": 53,
+      "source_sha256": "cbc97b1ce1edcee3e25ef7eb526e41d38ae7c4c089750d49cce67f60cc0883f8",
+      "target": "- 图像：随机裁剪、翻转、旋转、颜色抖动、局部遮挡\n- 文本：同义词替换、回译、随机删除\n- 音频：时间拉伸、音高偏移、添加噪声\n",
+      "target_sha256": "3fb2b85c2109932dc919e5eef27481c74b22581c3c71b795f8248ed9d878b645"
+    },
+    {
+      "segment_id": "03-07:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Data Augmentation as Regularization"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Data Augmentation as Regularization"
+      ],
+      "ordinal": 54,
+      "source_sha256": "74eebbaaf46759b4fcffe21d7b1d8c0f72ccd97fbd5aad6c56d4510d1207fb8e",
+      "target": "它的效果与正则化相同：增加训练集的有效规模，让模型更难记住具体样本。如果模型只以原始形式看过每张图像一次，它就能记住这些图像。如果模型看到每张图像的 50 个增强版本，就必须学习其中的不变结构。\n",
+      "target_sha256": "7ea6c2b4a71e7ef1171f7cd69e61efc68634d3d470b31391b48e3cc1bcec0db3"
+    },
+    {
+      "segment_id": "03-07:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Data Augmentation as Regularization"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Early Stopping"
+      ],
+      "ordinal": 55,
+      "source_sha256": "acf231a86cee47645630a1140b7769edc07cfcb5a1bd45b3ecd0b299e7e1b0d3",
+      "target": "### 早停\n",
+      "target_sha256": "a34f461620669a7c1a886678363e277c6d6c24fce1f9a388fbf4cf2f238d5350"
+    },
+    {
+      "segment_id": "03-07:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Early Stopping"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Early Stopping"
+      ],
+      "ordinal": 56,
+      "source_sha256": "76f2646514961124f7ce5d2c849d5232fc709dfa1149f4a5122ac5b2c8913974",
+      "target": "最简单的正则化方法，就是在验证损失开始上升时停止训练，称为早停（early stopping）。此时，模型还没有过拟合。实践中，每轮跟踪验证损失，保存最优模型，然后在一个“耐心窗口”（patience）内继续训练，通常为 5-20 轮。如果验证损失在这个窗口内没有改善，就停止训练并加载已保存的最优模型。\n",
+      "target_sha256": "7a0914c173df9b7dc94b5fda30dc5bc15521a4af5d54e37347b7df78c7e69cfc"
+    },
+    {
+      "segment_id": "03-07:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### Early Stopping"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### When to Apply What"
+      ],
+      "ordinal": 57,
+      "source_sha256": "bbcf15e78ba11ac41ccc8268afd98d58be4b22d20cd5a907deba1ef07a3da8a7",
+      "target": "### 何时使用哪种方法\n",
+      "target_sha256": "ad51c9ab4e9a14f75728c94e7a78a681680b24ca5923c9d5fb39e4b30d8908cf"
+    },
+    {
+      "segment_id": "03-07:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### When to Apply What"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0115",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### When to Apply What"
+      ],
+      "ordinal": 58,
+      "source_sha256": "7d55942c42a4c16d2e514f17112bbf0b0adacdf2e0ca5968a19dbdec439e2f06",
+      "target": "```mermaid\nflowchart TD\n    Gap{\"Train-test<br/>accuracy gap?\"} -->|\"> 10%\"| Heavy[\"Heavy regularization\"]\n    Gap -->|\"5-10%\"| Medium[\"Moderate regularization\"]\n    Gap -->|\"< 5%\"| Light[\"Light regularization\"]\n\n    Heavy --> D5[\"Dropout p=0.3-0.5\"]\n    Heavy --> WD2[\"Weight decay 0.01-0.1\"]\n    Heavy --> Aug[\"Aggressive data augmentation\"]\n    Heavy --> ES[\"Early stopping\"]\n\n    Medium --> D3[\"Dropout p=0.1-0.2\"]\n    Medium --> WD1[\"Weight decay 0.001-0.01\"]\n    Medium --> Norm[\"BatchNorm or LayerNorm\"]\n\n    Light --> D1[\"Dropout p=0.05-0.1\"]\n    Light --> WD0[\"Weight decay 1e-4\"]\n```\n",
+      "target_sha256": "7d55942c42a4c16d2e514f17112bbf0b0adacdf2e0ca5968a19dbdec439e2f06"
+    },
+    {
+      "segment_id": "03-07:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### When to Apply What"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0117",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### When to Apply What"
+      ],
+      "ordinal": 59,
+      "source_sha256": "bbe9d9dcd1221594bc31d60e22510faa9fdd3b59a2026f430d72893e2f834397",
+      "target": "```figure\nl2-regularization\n```\n",
+      "target_sha256": "bbe9d9dcd1221594bc31d60e22510faa9fdd3b59a2026f430d72893e2f834397"
+    },
+    {
+      "segment_id": "03-07:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## The Concept",
+        "### When to Apply What"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0119",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Build It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "03-07:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 1: Dropout (Train and Eval Mode)"
+      ],
+      "ordinal": 61,
+      "source_sha256": "7ba34ea1e979cbcb1551ebc9bc1d93cdbb63bb7fa862ce58fd8f2bf87fe3e1e2",
+      "target": "### 步骤 1：Dropout（训练与评估模式）\n",
+      "target_sha256": "46326cb74004de428d0beec56924616036c5e214e7a6086875eaec5478eaa92e"
+    },
+    {
+      "segment_id": "03-07:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 1: Dropout (Train and Eval Mode)"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0123",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 1: Dropout (Train and Eval Mode)"
+      ],
+      "ordinal": 62,
+      "source_sha256": "71b5168bc32ba04de25ccf63e866ff77070891f6796838b8884c241073c206ba",
+      "target": "```python\nimport random\nimport math\n\n\nclass Dropout:\n    def __init__(self, p=0.5):\n        self.p = p\n        self.training = True\n        self.mask = None\n\n    def forward(self, x):\n        if not self.training:\n            return list(x)\n        self.mask = []\n        output = []\n        for val in x:\n            if random.random() < self.p:\n                self.mask.append(0)\n                output.append(0.0)\n            else:\n                self.mask.append(1)\n                output.append(val / (1 - self.p))\n        return output\n\n    def backward(self, grad_output):\n        grads = []\n        for g, m in zip(grad_output, self.mask):\n            if m == 0:\n                grads.append(0.0)\n            else:\n                grads.append(g / (1 - self.p))\n        return grads\n```\n",
+      "target_sha256": "71b5168bc32ba04de25ccf63e866ff77070891f6796838b8884c241073c206ba"
+    },
+    {
+      "segment_id": "03-07:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 1: Dropout (Train and Eval Mode)"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 2: L2 Weight Decay"
+      ],
+      "ordinal": 63,
+      "source_sha256": "90e4bccf3eaff44606a28c90a14e928e5e3653be4af93d3f6fdd2943cc0a01d5",
+      "target": "### 步骤 2：L2 权重衰减\n",
+      "target_sha256": "3113f741e5beaf5ec259746a1913cf5d74c3b7ddb243dde0937b4726cadb97f4"
+    },
+    {
+      "segment_id": "03-07:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 2: L2 Weight Decay"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 2: L2 Weight Decay"
+      ],
+      "ordinal": 64,
+      "source_sha256": "65416b65c8cab3bd6eecc0638101b856f7fe094eb2730d8e79c90dccd0e5987e",
+      "target": "```python\ndef l2_regularization(weights, lambda_reg):\n    penalty = 0.0\n    for w in weights:\n        penalty += w * w\n    return lambda_reg * 0.5 * penalty\n\ndef l2_gradient(weights, lambda_reg):\n    return [lambda_reg * w for w in weights]\n```\n",
+      "target_sha256": "65416b65c8cab3bd6eecc0638101b856f7fe094eb2730d8e79c90dccd0e5987e"
+    },
+    {
+      "segment_id": "03-07:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 2: L2 Weight Decay"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0129",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 3: Batch Normalization"
+      ],
+      "ordinal": 65,
+      "source_sha256": "5797f8391f44d6ba7d8b7bcf9f2937b21da770f8253443bde8da777bd9496171",
+      "target": "### 步骤 3：批量归一化\n",
+      "target_sha256": "d92a75ba43daf23a3d02f7f6525bc51a280dcb91d0f7a9fc1f5527dd20040a03"
+    },
+    {
+      "segment_id": "03-07:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 3: Batch Normalization"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0131",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 3: Batch Normalization"
+      ],
+      "ordinal": 66,
+      "source_sha256": "b202cb70f0c8fadcfe0c7c2d63b0d1a7e947db465f89d470bc74e75b3955ccf7",
+      "target": "```python\nclass BatchNorm:\n    def __init__(self, num_features, momentum=0.1, eps=1e-5):\n        self.gamma = [1.0] * num_features\n        self.beta = [0.0] * num_features\n        self.eps = eps\n        self.momentum = momentum\n        self.running_mean = [0.0] * num_features\n        self.running_var = [1.0] * num_features\n        self.training = True\n        self.num_features = num_features\n\n    def forward(self, batch):\n        batch_size = len(batch)\n        if self.training:\n            mean = [0.0] * self.num_features\n            for sample in batch:\n                for j in range(self.num_features):\n                    mean[j] += sample[j]\n            mean = [m / batch_size for m in mean]\n\n            var = [0.0] * self.num_features\n            for sample in batch:\n                for j in range(self.num_features):\n                    var[j] += (sample[j] - mean[j]) ** 2\n            var = [v / batch_size for v in var]\n\n            for j in range(self.num_features):\n                self.running_mean[j] = (1 - self.momentum) * self.running_mean[j] + self.momentum * mean[j]\n                self.running_var[j] = (1 - self.momentum) * self.running_var[j] + self.momentum * var[j]\n        else:\n            mean = list(self.running_mean)\n            var = list(self.running_var)\n\n        self.x_hat = []\n        output = []\n        for sample in batch:\n            normalized = []\n            out_sample = []\n            for j in range(self.num_features):\n                x_h = (sample[j] - mean[j]) / math.sqrt(var[j] + self.eps)\n                normalized.append(x_h)\n                out_sample.append(self.gamma[j] * x_h + self.beta[j])\n            self.x_hat.append(normalized)\n            output.append(out_sample)\n        return output\n```\n",
+      "target_sha256": "b202cb70f0c8fadcfe0c7c2d63b0d1a7e947db465f89d470bc74e75b3955ccf7"
+    },
+    {
+      "segment_id": "03-07:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 3: Batch Normalization"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0133",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 4: Layer Normalization"
+      ],
+      "ordinal": 67,
+      "source_sha256": "d93c07ede38494cdf6e713193a28c26e636a998d26a2ad318c830d82e9d74c83",
+      "target": "### 步骤 4：层归一化\n",
+      "target_sha256": "7db93976f1fc28af3d849fc9131b2c7393006b4f5a2a28f4bba872c8e56cfc06"
+    },
+    {
+      "segment_id": "03-07:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 4: Layer Normalization"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0135",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 4: Layer Normalization"
+      ],
+      "ordinal": 68,
+      "source_sha256": "d3f5d9e8bb5043c61b241c4a5a806e6fb7194c635b9c090d1ec7a46c0a89276f",
+      "target": "```python\nclass LayerNorm:\n    def __init__(self, num_features, eps=1e-5):\n        self.gamma = [1.0] * num_features\n        self.beta = [0.0] * num_features\n        self.eps = eps\n        self.num_features = num_features\n\n    def forward(self, x):\n        mean = sum(x) / len(x)\n        var = sum((xi - mean) ** 2 for xi in x) / len(x)\n\n        self.x_hat = []\n        output = []\n        for j in range(self.num_features):\n            x_h = (x[j] - mean) / math.sqrt(var + self.eps)\n            self.x_hat.append(x_h)\n            output.append(self.gamma[j] * x_h + self.beta[j])\n        return output\n```\n",
+      "target_sha256": "d3f5d9e8bb5043c61b241c4a5a806e6fb7194c635b9c090d1ec7a46c0a89276f"
+    },
+    {
+      "segment_id": "03-07:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 4: Layer Normalization"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0137",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 5: RMSNorm"
+      ],
+      "ordinal": 69,
+      "source_sha256": "f2830e8075fb2cf92256e72df84556a2f525a8e24926d424772cc90dcb21fbf0",
+      "target": "### 步骤 5：RMSNorm\n",
+      "target_sha256": "1be10879e0138c87d2b40d2bfd225863af88aeaa58be357cca0bb8fb49c59149"
+    },
+    {
+      "segment_id": "03-07:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 5: RMSNorm"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0139",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 5: RMSNorm"
+      ],
+      "ordinal": 70,
+      "source_sha256": "92d6f97f5cc082baed46ca61f41a212c65c823f346d5e023ef379270800ccee3",
+      "target": "```python\nclass RMSNorm:\n    def __init__(self, num_features, eps=1e-6):\n        self.gamma = [1.0] * num_features\n        self.eps = eps\n        self.num_features = num_features\n\n    def forward(self, x):\n        rms = math.sqrt(sum(xi * xi for xi in x) / len(x) + self.eps)\n        output = []\n        for j in range(self.num_features):\n            output.append(self.gamma[j] * x[j] / rms)\n        return output\n```\n",
+      "target_sha256": "92d6f97f5cc082baed46ca61f41a212c65c823f346d5e023ef379270800ccee3"
+    },
+    {
+      "segment_id": "03-07:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 5: RMSNorm"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0141",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 6: Training With and Without Regularization"
+      ],
+      "ordinal": 71,
+      "source_sha256": "d9df50dff1139fdcc90951059cdfde9d54e27c3f933885cd24c5b20b8852714a",
+      "target": "### 步骤 6：对比使用与不使用正则化的训练\n",
+      "target_sha256": "840f8bc0fbfe5fd80a2d119f63affea21d052093ebf1bd9b7c1e9dc0addd1fb4"
+    },
+    {
+      "segment_id": "03-07:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 6: Training With and Without Regularization"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0143",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 6: Training With and Without Regularization"
+      ],
+      "ordinal": 72,
+      "source_sha256": "69dd651c00d0922f52214ca98f64b1d885ca32c5674fa2a5705826d9e9e25439",
+      "target": "```python\ndef sigmoid(x):\n    x = max(-500, min(500, x))\n    return 1.0 / (1.0 + math.exp(-x))\n\n\ndef make_circle_data(n=200, seed=42):\n    random.seed(seed)\n    data = []\n    for _ in range(n):\n        x = random.uniform(-2, 2)\n        y = random.uniform(-2, 2)\n        label = 1.0 if x * x + y * y < 1.5 else 0.0\n        data.append(([x, y], label))\n    return data\n\n\nclass RegularizedNetwork:\n    def __init__(self, hidden_size=16, lr=0.05, dropout_p=0.0, weight_decay=0.0):\n        random.seed(0)\n        self.hidden_size = hidden_size\n        self.lr = lr\n        self.dropout_p = dropout_p\n        self.weight_decay = weight_decay\n        self.dropout = Dropout(p=dropout_p) if dropout_p > 0 else None\n\n        self.w1 = [[random.gauss(0, 0.5) for _ in range(2)] for _ in range(hidden_size)]\n        self.b1 = [0.0] * hidden_size\n        self.w2 = [random.gauss(0, 0.5) for _ in range(hidden_size)]\n        self.b2 = 0.0\n\n    def forward(self, x, training=True):\n        self.x = x\n        self.z1 = []\n        self.h = []\n        for i in range(self.hidden_size):\n            z = self.w1[i][0] * x[0] + self.w1[i][1] * x[1] + self.b1[i]\n            self.z1.append(z)\n            self.h.append(max(0.0, z))\n\n        if self.dropout and training:\n            self.dropout.training = True\n            self.h = self.dropout.forward(self.h)\n        elif self.dropout:\n            self.dropout.training = False\n            self.h = self.dropout.forward(self.h)\n\n        self.z2 = sum(self.w2[i] * self.h[i] for i in range(self.hidden_size)) + self.b2\n        self.out = sigmoid(self.z2)\n        return self.out\n\n    def backward(self, target):\n        eps = 1e-15\n        p = max(eps, min(1 - eps, self.out))\n        d_loss = -(target / p) + (1 - target) / (1 - p)\n        d_sigmoid = self.out * (1 - self.out)\n        d_out = d_loss * d_sigmoid\n\n        for i in range(self.hidden_size):\n            d_relu = 1.0 if self.z1[i] > 0 else 0.0\n            d_h = d_out * self.w2[i] * d_relu\n            self.w2[i] -= self.lr * (d_out * self.h[i] + self.weight_decay * self.w2[i])\n            for j in range(2):\n                self.w1[i][j] -= self.lr * (d_h * self.x[j] + self.weight_decay * self.w1[i][j])\n            self.b1[i] -= self.lr * d_h\n        self.b2 -= self.lr * d_out\n\n    def evaluate(self, data):\n        correct = 0\n        total_loss = 0.0\n        for x, y in data:\n            pred = self.forward(x, training=False)\n            eps = 1e-15\n            p = max(eps, min(1 - eps, pred))\n            total_loss += -(y * math.log(p) + (1 - y) * math.log(1 - p))\n            if (pred >= 0.5) == (y >= 0.5):\n                correct += 1\n        return total_loss / len(data), correct / len(data) * 100\n\n    def train_model(self, train_data, test_data, epochs=300):\n        history = []\n        for epoch in range(epochs):\n            total_loss = 0.0\n            correct = 0\n            for x, y in train_data:\n                pred = self.forward(x, training=True)\n                self.backward(y)\n                eps = 1e-15\n                p = max(eps, min(1 - eps, pred))\n                total_loss += -(y * math.log(p) + (1 - y) * math.log(1 - p))\n                if (pred >= 0.5) == (y >= 0.5):\n                    correct += 1\n            train_loss = total_loss / len(train_data)\n            train_acc = correct / len(train_data) * 100\n            test_loss, test_acc = self.evaluate(test_data)\n            history.append((train_loss, train_acc, test_loss, test_acc))\n            if epoch % 75 == 0 or epoch == epochs - 1:\n                gap = train_acc - test_acc\n                print(f\"    Epoch {epoch:3d}: train_acc={train_acc:.1f}%, test_acc={test_acc:.1f}%, gap={gap:.1f}%\")\n        return history\n```\n",
+      "target_sha256": "69dd651c00d0922f52214ca98f64b1d885ca32c5674fa2a5705826d9e9e25439"
+    },
+    {
+      "segment_id": "03-07:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Build It",
+        "### Step 6: Training With and Without Regularization"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0145",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "03-07:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0147",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "d0c7ffdf4f9fbebfc1eb1a1d1875687e8683ca3e0daffc6480104fb394f7f83d",
+      "target": "PyTorch 将所有这些归一化和正则化方法都提供为模块：\n",
+      "target_sha256": "6a1a6f73b21464fdf21dc89e5e2bf2704c5e956476f9b4fe0a28a7c7f180ca1d"
+    },
+    {
+      "segment_id": "03-07:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0149",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "8413e38ef4fd1f23e696159b6d072b2e89f4b4adf3b02ae1e60db64efc5af77f",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\nmodel = nn.Sequential(\n    nn.Linear(784, 256),\n    nn.BatchNorm1d(256),\n    nn.ReLU(),\n    nn.Dropout(0.3),\n    nn.Linear(256, 128),\n    nn.BatchNorm1d(128),\n    nn.ReLU(),\n    nn.Dropout(0.3),\n    nn.Linear(128, 10),\n)\n\nmodel.train()\nout_train = model(torch.randn(32, 784))\n\nmodel.eval()\nout_test = model(torch.randn(1, 784))\n```\n",
+      "target_sha256": "8413e38ef4fd1f23e696159b6d072b2e89f4b4adf3b02ae1e60db64efc5af77f"
+    },
+    {
+      "segment_id": "03-07:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "062c2e388c2ea3b53fc7e26a0d2e2d0156599d204838672b4187b4e1e09a9f96",
+      "target": "`model.train()` / `model.eval()` 这一切换至关重要。它会开启或关闭 Dropout，并告诉 BatchNorm 使用批量统计量还是运行统计量。推理前忘记调用 `model.eval()`，是深度学习中最常见的错误之一。由于 Dropout 仍处于启用状态，而且 BatchNorm 使用的是小批量统计量，测试准确率会随机波动。\n",
+      "target_sha256": "59dcc7cfd7a6d2c6dfca8070c7faccafec03e7d0e638a896ac0b0b6126d418d1"
+    },
+    {
+      "segment_id": "03-07:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 77,
+      "source_sha256": "f6e3ed6d653ce8218182107e091896e6253c51f5f6ff5f87a7767f779808d0ac",
+      "target": "对于 Transformer，使用方式有所不同：\n",
+      "target_sha256": "99d2dd1a47495a87ca51f78846feed0a677dcd8b58faa71650c1d88f5a1751ac"
+    },
+    {
+      "segment_id": "03-07:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0155",
+      "kind": "fence",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "3594d4c0a860420c23506eb0929a9195d5d68efe2138612946d6af6583cf70de",
+      "target": "```python\nclass TransformerBlock(nn.Module):\n    def __init__(self, d_model=512, nhead=8, dropout=0.1):\n        super().__init__()\n        self.attention = nn.MultiheadAttention(d_model, nhead, dropout=dropout)\n        self.norm1 = nn.LayerNorm(d_model)\n        self.ff = nn.Sequential(\n            nn.Linear(d_model, d_model * 4),\n            nn.GELU(),\n            nn.Linear(d_model * 4, d_model),\n            nn.Dropout(dropout),\n        )\n        self.norm2 = nn.LayerNorm(d_model)\n        self.dropout = nn.Dropout(dropout)\n\n    def forward(self, x):\n        attended, _ = self.attention(x, x, x)\n        x = self.norm1(x + self.dropout(attended))\n        x = self.norm2(x + self.ff(x))\n        return x\n```\n",
+      "target_sha256": "3594d4c0a860420c23506eb0929a9195d5d68efe2138612946d6af6583cf70de"
+    },
+    {
+      "segment_id": "03-07:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "6ee2b32f72e56619487ae489255e32c2f202ce3f984cceda1d8059139f03ca29",
+      "target": "使用 LayerNorm，而非 BatchNorm；Dropout 取 p=0.1，而非 p=0.5。这些是 Transformer 的默认设置。\n",
+      "target_sha256": "7f7b30435fc748ad6cb48c7644e0517d0443b219a3bb4b078ff91d71aa4b5e08"
+    },
+    {
+      "segment_id": "03-07:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0159",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Ship It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "03-07:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Ship It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0161",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Regularization",
+        "## Ship It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "9adbe6a95340c2f89b1b2bd9600ed8a518e934fe4f3dadd95faa6f7f2a511059",
+      "target": "本课产出：\n- `outputs/prompt-regularization-advisor.md`：一个用于诊断过拟合并推荐恰当正则化策略的提示词（prompt）\n",
+      "target_sha256": "6f719420860116a24f109ae97c091a62ca90ccdfcc36233fd507e1a35b6a1da2"
+    },
+    {
+      "segment_id": "03-07:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Ship It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0163",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "03-07:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0165",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "03df02c23d3eeb1e32cd7646503a30dc427492afcdf3a3ff05d64cd297966c91",
+      "target": "1. 为 2D 数据实现空间 Dropout（spatial dropout）：丢弃整个特征通道，而不是单个神经元。可以把若干连续特征视为一个通道，整组丢弃，以此模拟这种方法。在圆形数据集上设 hidden_size=32，比较它与标准 Dropout 的训练与测试差距。\n",
+      "target_sha256": "fcfa5882e2a24bdca88b54b8f8fcb5b10de0d6438cb1a2b7195e394391f097c3"
+    },
+    {
+      "segment_id": "03-07:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0167",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "99d417a1b29a387476ccea013c6b20aa5785d4ba42b25d0b6e424203102063de",
+      "target": "2. 将第 05 课的标签平滑（label smoothing）与本课的 Dropout 结合起来。用四种配置训练：两者都不用、仅用 Dropout、仅用标签平滑、两者同时使用。测量每种配置最终的训练与测试准确率差距。哪种组合的差距最小？\n",
+      "target_sha256": "ed3305c46811eaed1e9b8b397f2d7277041e782a7b50d2efc19439fc0915ffb6"
+    },
+    {
+      "segment_id": "03-07:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0169",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "e3ef32c2e1c16bff20573025770b04313e489fd168f4f1b487448273af2bd6e9",
+      "target": "3. 在圆形数据集网络的隐藏层与激活之间添加一个 BatchNorm 层。分别在使用与不使用 BatchNorm 的情况下，以 0.01、0.05 和 0.1 的学习率训练。BatchNorm 应该能在基础网络会发散的较高学习率下，让训练保持稳定。\n",
+      "target_sha256": "a78eed6eda80b68d5e0663bf77e8adc69ef9da6e8f672eab997bb282c2568bf2"
+    },
+    {
+      "segment_id": "03-07:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0171",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "cfb10f8386339bd2a970f3591fbd7f10e98ba6fb2edfd22a3080f84aed9b6c2f",
+      "target": "4. 实现早停：每轮跟踪测试损失，保存最优权重，如果测试损失连续 20 轮没有改善，就停止训练。让带正则化的网络运行 1000 轮。报告测试准确率最高的是哪一轮，以及节省了多少轮计算。\n",
+      "target_sha256": "dd4a8cbbdfa4f152974a622ac0ad8b6eb0af5184fb026d2de2eafceeeff94f88"
+    },
+    {
+      "segment_id": "03-07:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0173",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "ef9ba0ce26bc5ffdbaf3cf0b1aa6034c59da2ef90d3fcb9253ac22a2ce96a42f",
+      "target": "5. 在一个 4 层网络上比较 LayerNorm 与 RMSNorm，而不只是使用 2 层网络。用相同的权重初始化两者。训练 200 轮，比较最终准确率、训练速度（每轮耗时）以及第一层的梯度幅度。验证 RMSNorm 能在保持相同准确率的同时运行得更快。\n",
+      "target_sha256": "846fb1a40135dcbcffe52f52fe3376d856e4b1ddee8a8ebe769c56ccfc398fd0"
+    },
+    {
+      "segment_id": "03-07:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0175",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Key Terms"
+      ],
+      "ordinal": 88,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "03-07:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Key Terms"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0177",
+      "kind": "table",
+      "heading_path": [
+        "# Regularization",
+        "## Key Terms"
+      ],
+      "ordinal": 89,
+      "source_sha256": "9d90a357b12d85af2ab2b154f84886015f18533bd6ec2c50a29064e3e8148475",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 过拟合 | “模型记住了数据” | 模型的训练表现显著优于测试表现，说明它学到了噪声，而不是信号 |\n| 正则化 | “防止过拟合” | 通过约束模型复杂性来改善泛化的任何技术，包括 Dropout、权重衰减、归一化和数据增强 |\n| Dropout | “随机删除神经元” | 训练期间以概率 p 随机将神经元置零，迫使模型学习冗余表示；等价于训练一个集成 |\n| 权重衰减 | “L2 惩罚” | 每一步减去 lambda * w，让所有权重向零收缩；通过权重幅度惩罚复杂性 |\n| 批量归一化 | “按批量归一化” | 沿批量维度归一化各层输出；训练时使用批量统计量，推理时使用运行平均值 |\n| 层归一化 | “按样本归一化” | 在每个样本内部跨特征归一化，不依赖批量；用于批量大小会变化的 Transformer |\n| RMSNorm | “不减均值的 LayerNorm” | 均方根归一化；移除 LayerNorm 的减均值步骤，在保持相同准确率的同时加快 10% |\n| 早停 | “在过拟合前停止” | 验证损失不再改善时停止训练；这是最简单的正则化方法，常与其他方法同时使用 |\n| 数据增强 | “用较少数据得到更多数据” | 变换训练输入，例如翻转、裁剪、加噪声，以增加有效数据集规模，并迫使模型学习不变性 |\n| 泛化差距 | “训练—测试划分” | 训练表现与测试表现之间的差异；正则化旨在将这一差距最小化 |\n",
+      "target_sha256": "5f0a8b533c1632f9299a6591a3c62c92ee832e13375a47c40efbe4f6d258feca"
+    },
+    {
+      "segment_id": "03-07:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Key Terms"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0179",
+      "kind": "heading",
+      "heading_path": [
+        "# Regularization",
+        "## Further Reading"
+      ],
+      "ordinal": 90,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "03-07:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Regularization",
+        "## Further Reading"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-07:b0181",
+      "kind": "list",
+      "heading_path": [
+        "# Regularization",
+        "## Further Reading"
+      ],
+      "ordinal": 91,
+      "source_sha256": "f86d0fc1eac6444a7a800ef08776b374798e9feb7c986f2b0728858ffdeae80c",
+      "target": "- Srivastava 等人，\"Dropout: A Simple Way to Prevent Neural Networks from Overfitting\"（2014）：最初的 Dropout 论文，给出了集成解释和大量实验\n- Ioffe 和 Szegedy，\"Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift\"（2015）：提出了 BatchNorm 及其训练流程，是被引用最多的深度学习论文之一\n- Zhang 和 Sennrich，\"Root Mean Square Layer Normalization\"（2019）：表明 RMSNorm 能以更少的计算达到与 LayerNorm 相同的准确率；该方法已被 LLaMA 和 Mistral 采用\n- Zhang 等人，\"Understanding Deep Learning Requires Rethinking Generalization\"（2017）：这篇具有里程碑意义的论文表明，神经网络可以记住随机标签，挑战了传统的泛化观点\n",
+      "target_sha256": "a49893b34907f02abb3c6976740d434c01802c93ad8bf0d5b61e07f9ae576e94"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "stage_id": "S48-regularization",
+  "stage_glossary": {
+    "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+    "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+  },
+  "dependency_manifest": {
+    "path": "i18n/zh/.curated/stages/S48-regularization/DEPENDENCIES.json",
+    "sha256": "9daa509b7404e39d3a9c76604949f49d439d9939a49217a5e36b751886476711",
+    "verified_files": 56,
+    "git_bytes_verified": true
+  },
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "a1c452c3f11db9b039fab64d3b084383d4f90cea",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    }
+  ],
+  "quantity_mappings": [
+    {
+      "segment_id": "03-07:b0005",
+      "source": "~75 minutes",
+      "target": "~75 分钟",
+      "equivalence_and_units": "75 minutes preserved; minutes→分钟",
+      "source_sha256": "6b77caccdf9ac8f4dc5270dd2c299c7b06fe9b1f479ef3df173446a5df55493d",
+      "target_sha256": "869fead4b249667d83ae2b9f020c131c337e50fd620f590e390edfccb5d9e43f"
+    },
+    {
+      "segment_id": "03-07:b0013",
+      "source": "a million / near-zero / zero",
+      "target": "一百万 / 接近零 / 零",
+      "equivalence_and_units": "input-output pairs 10^6; zero literal word equivalents",
+      "source_sha256": "c0572b319686acac9f23283e46345a6b4e13139eeb3c9ef413b54c3d29262cf5",
+      "target_sha256": "d1897fa34c238b1aae483b11cc2e25cdcd2c403cc01540277de2eb39fb650f14"
+    },
+    {
+      "segment_id": "03-07:b0015",
+      "source": "175 billion parameters; about 500 billion tokens",
+      "target": "175 billion（一千七百五十亿）个参数；大约 500 billion（五千亿）个 token",
+      "equivalence_and_units": "175×10^9 parameters; approximately 500×10^9 tokens; original numerals and scale words retained",
+      "source_sha256": "53fd8d6d9466e201232c63db865209a791afcad9f81f83140ededddd0b6659e6",
+      "target_sha256": "aab2a3c93a89c16736e5b59e73f8eef974ec0a49936d93411a809c278bd41630"
+    },
+    {
+      "segment_id": "03-07:b0017",
+      "source": "any single neuron / weight; 10%",
+      "target": "任何单个神经元 / 权重；10%",
+      "equivalence_and_units": "single=one; percentage retained not percentage points",
+      "source_sha256": "0895dd8b7b2a3ed6358e19b24168ff11b283e4a3dc2a1bfa1502736401bfa6a8",
+      "target_sha256": "ec01fd5868c61d8b17865eccb7bdc3af010b20f666e9e800c14266378ba013fb"
+    },
+    {
+      "segment_id": "03-07:b0033",
+      "source": "half; p = 0.5",
+      "target": "一半；p = 0.5",
+      "equivalence_and_units": "half=1/2, stochastic expectation source claim retained",
+      "source_sha256": "18204702acd0d7ac31cc6096e23d90df930014244fc0a10f22c6408cf1321798",
+      "target_sha256": "c72039b723ffdf06bf8a2855c52d66d679da641a68f250c21cb21d9d457ef26f"
+    },
+    {
+      "segment_id": "03-07:b0035",
+      "source": "N; all 2^N; (1 - p); a single model",
+      "target": "N；全部 2^N；(1 - p)；一个模型",
+      "equivalence_and_units": "all expressions unchanged; single=one",
+      "source_sha256": "032f35b34d07b40bf4e6727c59fa1360c954742e2300be5384c760f9e7716742",
+      "target_sha256": "6c4887ddf2a292f642361b277e1462a7c2583aefae1b15827c7696b34049e066"
+    },
+    {
+      "segment_id": "03-07:b0043",
+      "source": "p = 0.1 / 0.5 / 0.2-0.3",
+      "target": "p = 0.1 / 0.5 / 0.2-0.3",
+      "equivalence_and_units": "probabilities unchanged",
+      "source_sha256": "efa75996872360e5cbbf1dc3c325867b1035ee6ba6d2141a7d73195aa8c38965",
+      "target_sha256": "3c19997b2ee1495911eb313714145fd812fc319c018539dab1e40c7d47e8785b"
+    },
+    {
+      "segment_id": "03-07:b0069",
+      "source": "zero-mean unit-variance; them",
+      "target": "零均值和单位方差；这两个参数",
+      "equivalence_and_units": "zero=0,unit=1; them refers gamma and beta",
+      "source_sha256": "328976cca2361caf13b0c59fbea674bac06770c1bfcad299de46763150feb190",
+      "target_sha256": "f671b4f8b61a462b1e3f02a83c3e4c6f2bdba6e5d5ff2012aed2d6d8bcde2690"
+    },
+    {
+      "segment_id": "03-07:b0071",
+      "source": "momentum = 0.1; 90% old + 10% new",
+      "target": "momentum = 0.1；90% 旧值 + 10% 新值",
+      "equivalence_and_units": "all weights unchanged; same EMA convention",
+      "source_sha256": "6fd02c25beaf80ddc7808173c2c2baba96c9193628cf123a55b399f77a0583d3",
+      "target_sha256": "064d4bd4ab5d367129fd5e270ccf56b80be9f4252b39533ad10015c5aa8a064a"
+    },
+    {
+      "segment_id": "03-07:b0075",
+      "source": "batch size 1; < 32",
+      "target": "批量大小为 1；< 32",
+      "equivalence_and_units": "sample count unchanged",
+      "source_sha256": "5f9c658540091301f4858a65b11141c03336194fc5a887d238a0c860faae7cee",
+      "target_sha256": "98388c78ad9211a045f0425803bbdcfc5d84f55d3cc128a553ff3976801f407d"
+    },
+    {
+      "segment_id": "03-07:b0079",
+      "source": "a single sample",
+      "target": "单个样本",
+      "equivalence_and_units": "one sample",
+      "source_sha256": "5b23c05f2afd49055f4469db52fe91203675fed2e4c317ca5930e7f33ad6024b",
+      "target_sha256": "44c5d2029a57d4d15051e70cf462f3496c8636c107c6b60c52c996597b2a812d"
+    },
+    {
+      "segment_id": "03-07:b0083",
+      "source": "D; 1 during generation",
+      "target": "D；生成时为 1",
+      "equivalence_and_units": "dimension symbol and count unchanged",
+      "source_sha256": "75f2e9d10831833144a9873579cf6b25964fa3ef61650da22dfd8f9cd350dd87",
+      "target_sha256": "9087ced293ede5c2394be6ec50d5324a647e4417dc33189d3fb91d0b174b4075"
+    },
+    {
+      "segment_id": "03-07:b0093",
+      "source": "about 10% less overhead",
+      "target": "开销减少约 10%",
+      "equivalence_and_units": "relative overhead percentage not universal timing proof",
+      "source_sha256": "24245ddc468708f211c7f7f8fea6a43bb0fae849c8c8c23013a44df3157b5b70",
+      "target_sha256": "323059ae79f83b3cdd04a0537860aefc7e34d1685955c56d995ec9fe1844cca9"
+    },
+    {
+      "segment_id": "03-07:b0095",
+      "source": "billions of parameters and trillions of tokens; 10%",
+      "target": "数十亿参数、数万亿 token；10%",
+      "equivalence_and_units": "unspecified quantities in 10^9 and 10^12 scales, no exact count asserted; percentage unchanged",
+      "source_sha256": "ff085038bb41c2528fa6f715c412945417ff4344ee7e7afd29fd8dcfcd253aee",
+      "target_sha256": "7fac4fbae9df4184867f5cf4a8272995009dfecfa1627aee6842acd138be3014"
+    },
+    {
+      "segment_id": "03-07:b0107",
+      "source": "once; 50 augmented versions",
+      "target": "一次；50 个增强版本",
+      "equivalence_and_units": "one exposure and fifty versions",
+      "source_sha256": "74eebbaaf46759b4fcffe21d7b1d8c0f72ccd97fbd5aad6c56d4510d1207fb8e",
+      "target_sha256": "7ea6c2b4a71e7ef1171f7cd69e61efc68634d3d470b31391b48e3cc1bcec0db3"
+    },
+    {
+      "segment_id": "03-07:b0111",
+      "source": "every epoch; 5-20 epochs",
+      "target": "每轮；5-20 轮",
+      "equivalence_and_units": "epoch=one full training round, range unchanged",
+      "source_sha256": "76f2646514961124f7ce5d2c849d5232fc709dfa1149f4a5122ac5b2c8913974",
+      "target_sha256": "7a0914c173df9b7dc94b5fda30dc5bc15521a4af5d54e37347b7df78c7e69cfc"
+    },
+    {
+      "segment_id": "03-07:b0165",
+      "source": "2D; groups; hidden_size=32",
+      "target": "2D；整组；hidden_size=32",
+      "equivalence_and_units": "dimensionality and hidden size unchanged",
+      "source_sha256": "03df02c23d3eeb1e32cd7646503a30dc427492afcdf3a3ff05d64cd297966c91",
+      "target_sha256": "fcfa5882e2a24bdca88b54b8f8fcb5b10de0d6438cb1a2b7195e394391f097c3"
+    },
+    {
+      "segment_id": "03-07:b0167",
+      "source": "four configurations",
+      "target": "四种配置",
+      "equivalence_and_units": "exactly4 configurations, enumeration preserved",
+      "source_sha256": "99d417a1b29a387476ccea013c6b20aa5785d4ba42b25d0b6e424203102063de",
+      "target_sha256": "ed3305c46811eaed1e9b8b397f2d7277041e782a7b50d2efc19439fc0915ffb6"
+    },
+    {
+      "segment_id": "03-07:b0169",
+      "source": "a BatchNorm layer; 0.01,0.05,0.1",
+      "target": "一个 BatchNorm 层；0.01、0.05、0.1",
+      "equivalence_and_units": "one layer; learning rates preserved",
+      "source_sha256": "e3ef32c2e1c16bff20573025770b04313e489fd168f4f1b487448273af2bd6e9",
+      "target_sha256": "a78eed6eda80b68d5e0663bf77e8adc69ef9da6e8f672eab997bb282c2568bf2"
+    },
+    {
+      "segment_id": "03-07:b0171",
+      "source": "each epoch;20 epochs;1000 epochs",
+      "target": "每轮；20 轮；1000 轮",
+      "equivalence_and_units": "training-round units preserved, test label not changed to validation",
+      "source_sha256": "cfb10f8386339bd2a970f3591fbd7f10e98ba6fb2edfd22a3080f84aed9b6c2f",
+      "target_sha256": "dd4a8cbbdfa4f152974a622ac0ad8b6eb0af5184fb026d2de2eafceeeff94f88"
+    },
+    {
+      "segment_id": "03-07:b0173",
+      "source": "4-layer;2;200 epochs;first layer",
+      "target": "4 层；2；200 轮；第一层",
+      "equivalence_and_units": "4 vs2 layers,200 rounds,first ordinal=1",
+      "source_sha256": "ef9ba0ce26bc5ffdbaf3cf0b1aa6034c59da2ef90d3fcb9253ac22a2ce96a42f",
+      "target_sha256": "846fb1a40135dcbcffe52f52fe3376d856e4b1ddee8a8ebe769c56ccfc398fd0"
+    },
+    {
+      "segment_id": "03-07:b0177",
+      "source": "zero;lambda * w;10%",
+      "target": "零；lambda * w；10%",
+      "equivalence_and_units": "math,unitless relative rate and zero preserved",
+      "source_sha256": "9d90a357b12d85af2ab2b154f84886015f18533bd6ec2c50a29064e3e8148475",
+      "target_sha256": "5f0a8b533c1632f9299a6591a3c62c92ee832e13375a47c40efbe4f6d258feca"
+    }
+  ],
+  "author_self_review": {
+    "reviewer": "translation author, not independent reviewer",
+    "technical_full_pass": {
+      "completed": true,
+      "all_blocks": 181,
+      "candidate_blocks": 73,
+      "translated_blocks": 71,
+      "unchanged_api_titles": [
+        "03-07:b0027",
+        "03-07:b0087"
+      ],
+      "completed_utc": "2026-10-02T15:37:00Z"
+    },
+    "chinese_only_full_pass": {
+      "completed": true,
+      "completed_utc": "2026-10-02T15:37:45Z"
+    },
+    "reviewed_target_sha256": "be1bfd10a147facdf50a60c4b11973113d8241852a5347605e5366f99c1638f3",
+    "scope": "Complete fixed EN/ZH comparison, full separate Chinese read, all prose/table/exercises/references and protected payloads; source issues external, no silent correction",
+    "original_full_read_target_sha256": "79cc5cca103d856bb4472eb87d762995c9a9d3053be94ac59cfa850c06e799d2",
+    "terminology_heading_delta": {
+      "blocks": [
+        "03-07:b0011",
+        "03-07:b0119"
+      ],
+      "reason": "Fixed TERMINOLOGY-ADDENDUM section names, independently requested by peer",
+      "changed_paragraphs_reread": true,
+      "other_blocks_unchanged": 179,
+      "fences_unchanged": 18,
+      "inverse_restores_original": true
+    }
+  },
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S48-regularization/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "9daa509b7404e39d3a9c76604949f49d439d9939a49217a5e36b751886476711"
+}
