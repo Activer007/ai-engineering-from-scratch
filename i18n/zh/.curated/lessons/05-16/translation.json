@@ -1,0 +1,1683 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-16",
+  "source_path": "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "8cb94f7f387ddf53cb352006be6b498689b6ef3f",
+  "source_sha256": "92d3b5e90a0730efd6819090e514a562e02185a3a1b65f78b60331692adbb9ee",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/docs/zh.md",
+  "target_sha256": "65df45c729d3417c64bc4bc546bf2a712c62ba98e3c0870da7c9fc4dd0a41fd4",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "05-16:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models"
+      ],
+      "ordinal": 1,
+      "source_sha256": "dad4e7981945574fda4e0d657b656d0752e168f6c4145a162b72cab7c6aad382",
+      "target": "# Transformer 之前的文本生成：N-gram 语言模型\n",
+      "target_sha256": "0e61eb64e45e4eba825294bbcf22a7142336104e9c941f64508b265b02ace1d4"
+    },
+    {
+      "segment_id": "05-16:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models"
+      ],
+      "ordinal": 2,
+      "source_sha256": "6c96b827510e30801e182476afd080a4fd8378cbc9afef7f42b0e1a3914ea9f8",
+      "target": "> 如果一个词让模型感到意外，说明模型不够好。困惑度（perplexity）把这种惊讶程度变成一个数字，平滑（smoothing）则让它保持有限。\n",
+      "target_sha256": "e786086b2a22084e767c3bf4ff85f34601253144520d461d0237202772bde7dc"
+    },
+    {
+      "segment_id": "05-16:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models"
+      ],
+      "ordinal": 3,
+      "source_sha256": "5b6327305e67c5378bd3a2325e1fb8206589bd76bd1786a73dc55bd5a9d99c8d",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 01（文本处理），阶段 2 · 14（朴素 Bayes）\n**Time:** ~45 分钟\n",
+      "target_sha256": "eb6922dc24f1cec26938fe8eb29b6ad4340e795e79257a63fc6af40d1aa23ef5"
+    },
+    {
+      "segment_id": "05-16:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "05-16:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "cf2b1f530bbd2095f3ab197c9a9db7916fc83de244f72df55acc987085765b51",
+      "target": "在 Transformer、RNN（循环神经网络）和词嵌入（word embeddings）出现之前，语言模型通过统计一个词跟在前面 `n-1` 个词之后的次数，来预测下一个词。统计得到 \"the cat\" → \"sat\" 出现 47 次，\"the cat\" → \"jumped\" 出现 12 次，\"the cat\" → \"refrigerator\" 出现 0 次。将计数归一化，就得到概率分布。\n",
+      "target_sha256": "14b2f7dcd9d5291b008e8d1d9415f5ea9a14eca6dedf4d76d4b8349935c754d2"
+    },
+    {
+      "segment_id": "05-16:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "1b4f138b0fced023d239ea73909a1ec80c201877584a9e7209fc4980cc702a85",
+      "target": "这就是 n 元语言模型（n-gram language model）。从 1980 年到 2015 年，每个语音识别器、拼写检查器和基于短语的机器翻译系统都靠它运行。如今，只要需要低成本的设备端语言建模，它仍然在发挥作用。\n",
+      "target_sha256": "80e3814ee1cd82a108740c9d536f032e65b42478cf486b260284fa8bd12627c1"
+    },
+    {
+      "segment_id": "05-16:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "09e84729718c3495c1ae37e6f5ba4b541788266d2c982e1e1ffc646bbcc888af",
+      "target": "有意思的问题是如何处理未见过的连续 n 元片段（n-gram）。直接基于计数的模型会给任何未见过的片段分配零概率，这会造成灾难性后果：句子很长，而几乎每个长句都至少包含一个未见过的序列。五十年的平滑研究解决了这个问题，Kneser-Ney（KN）平滑就是其成果，现代深度学习也继承了这套实证研究传统。\n",
+      "target_sha256": "6de411fc97c100b6609012da59ea2fcadee80bce382ddcbb5691a13e94d8c3df"
+    },
+    {
+      "segment_id": "05-16:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "05-16:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "8814238c4f87bbe9620758b83c0fa86732f3f96db2860597b37945725b64fa27",
+      "target": "![N-gram 模型：计数、平滑、生成](../assets/ngram.svg)\n",
+      "target_sha256": "43f104d51e1679e11c7ac55d1510c83b5e637caea9919daebde5fa5e9f7aa50a"
+    },
+    {
+      "segment_id": "05-16:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 10,
+      "source_sha256": "dbb847f6589694fdbfdee8e17d53c22b1e5b18ae814dbdadf0d5a3ec0019a866",
+      "target": "### 预测游戏\n",
+      "target_sha256": "8eaff9628e4855837918171f0c43a46d264f89eba081f66e202f381cf8844a3e"
+    },
+    {
+      "segment_id": "05-16:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 11,
+      "source_sha256": "74a9f299aa96fbe7de263c4cdc6a67c71be5e2b4a1eb33a42f70653a26e2c2ee",
+      "target": "在这些方法出现之前，一个实验就定义了什么是语言模型。遮住一个英语句子中的下一个字母，让一个人一次猜一个，直到猜对。记下猜测次数，再对几百个字母重复这个过程。\n",
+      "target_sha256": "6f86e8b82f121d616bb1e95c57812a1b5c12c374c230eea1ed89d7c1ef57a935"
+    },
+    {
+      "segment_id": "05-16:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 12,
+      "source_sha256": "b7466f98995924d6eb8bae4a279f36e17e75f2c5f6626eb4f27f37d4ea586695",
+      "target": "猜测次数并非无关紧要。它们是对文本的无损重新编码：把次数序列交给另一个猜测方式完全相同的人，对方就能还原每个字母，因为在每个位置上，对方都确切知道各种猜测的先后次序。如果一条消息能被重新编码成更少的符号，就说明它每个符号携带的信息较少。因此，猜测次数的统计结果为英语的熵（entropy）给出了上界。\n",
+      "target_sha256": "bcb432b2f0e285f02fd551a9706b7c826c5aa94672ba3c9e94eb72200eb6ec3a"
+    },
+    {
+      "segment_id": "05-16:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 13,
+      "source_sha256": "3990cbca7465f8f992d53b54ff2c422679a73cb7d1ad8be31e807a51fcac515e",
+      "target": "Shannon 在 1951 年进行了这个实验，得到了一个至今仍影响着该领域的数值。由 27 个符号组成的字母表（26 个字母加空格），每个字母最多可携带 `log2(27) ≈ 4.75` bits（比特）。人在利用 100 个字母的上下文进行猜测时，结果落在每个字母 0.6 到 1.3 bits 之间。英语中大约四分之三的选择其实已经被上下文限定了。在任何模型有能力学习这些结构之前，人们就已经测量出了模型需要学习的结构。\n",
+      "target_sha256": "a823a706a4c907d19fe524d052d64c5c8458f53fbc7f3ae18569bcb826abd15c"
+    },
+    {
+      "segment_id": "05-16:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 14,
+      "source_sha256": "52cc371470515efb158a9ad7f6af32ed294ff4f27b54597937cd571860611329",
+      "target": "此后的每个语言模型，都是这个游戏的机械玩家；本课中的每个评估数值，都是对这场游戏的计分：\n",
+      "target_sha256": "13b89ee580e4a877112d0f9dd7719aefa1b36607f1608fc25257d0e91fffb61a"
+    },
+    {
+      "segment_id": "05-16:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0029",
+      "kind": "list",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 15,
+      "source_sha256": "cb735e6379895844da4cfd0377bbb77dea99fb52303bf8a1f75d5baae05ab3b9",
+      "target": "- **交叉熵损失（cross-entropy loss）** 是模型编码每个符号平均需要的 bits 数。训练语言模型（LM），就是在最小化它在猜测游戏中的得分。\n- **困惑度** 是 `2^bits`（或 `e^nats`）：模型经过猜测后仍然面对的分支因子（branching factor）。在 27 个符号之间均匀猜测，困惑度为 27；每个字母只需 1 bit 的玩家，其困惑度为 2。\n- **上下文长度就是玩家的记忆。** 三元模型（trigram model）只有两个 token（词元）的记忆。Transformer 用 100K 个 token 来玩同一个游戏。规则从未改变，只是玩家变强了。\n",
+      "target_sha256": "65dd7e5757ec9bdd459163b4eea811efa3afacabf323ef22f2ed1a1f4f6de441"
+    },
+    {
+      "segment_id": "05-16:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 16,
+      "source_sha256": "9d5344ff8a3c4370876a0260db59201c9af8a9fc9c8bf903212a0de95666a125",
+      "target": "需要留意一处单位切换：这个游戏按每个字母的 bits 数计分（`log2`），而下文的 n 元模型公式按每个单词 token 的 nats（奈特）数计分（自然对数）。由于以 nats 表示时的困惑度 `e^H` 等于以 bits 表示时的 `2^H`，这两个视角是同一测量的不同单位表示。\n",
+      "target_sha256": "c37c3e212bcbb752633c5e588ff522a1b05f5bf1dafa25ee1137bc169d92ab84"
+    },
+    {
+      "segment_id": "05-16:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 17,
+      "source_sha256": "5c5f646d0cf78f7895100c5dae356d25aa7678be2ee05bf99d4c0c8480e57b42",
+      "target": "```figure\nprediction-game\n```\n",
+      "target_sha256": "5c5f646d0cf78f7895100c5dae356d25aa7678be2ee05bf99d4c0c8480e57b42"
+    },
+    {
+      "segment_id": "05-16:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 18,
+      "source_sha256": "393a6f6c5f44c4c4f45367dffbaf7b2bf643c9c9ad1d3ccd3e798fda7812e940",
+      "target": "**N-gram 概率：** `P(w_i | w_{i-n+1}, ..., w_{i-1})`。固定 `n`（三元模型通常取 3，4 元模型取 4），再根据计数计算：\n",
+      "target_sha256": "19b81aaaa28ab813be27cebdd24c8302456cc6b1c4378db898e02a91630bcca0"
+    },
+    {
+      "segment_id": "05-16:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 19,
+      "source_sha256": "35859bbb2db0d1567ce2ab27048e406a4812853daf867f5d28162705e2348665",
+      "target": "```text\nP(w | context) = count(context, w) / count(context)\n```\n",
+      "target_sha256": "35859bbb2db0d1567ce2ab27048e406a4812853daf867f5d28162705e2348665"
+    },
+    {
+      "segment_id": "05-16:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 20,
+      "source_sha256": "f8c98fd8c67ffc3636c8b703d834ce838dcee5b4f8cdeb097e13021d201e6251",
+      "target": "**零计数问题。** 训练时未见过的任何 n 元片段，概率都会是零。2007 年一项针对 Brown 语料库的研究发现，即使使用 4 元模型，留出数据中的 4 元片段仍有 30% 未在训练中出现过。不做平滑，就无法在任何真实文本上进行评估。\n",
+      "target_sha256": "300d9b75e439b192e1e8de4cd85cab8f3d985299324d8e7e602de5edd6740f5f"
+    },
+    {
+      "segment_id": "05-16:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 21,
+      "source_sha256": "e418b29c54d17624707060d776906753bbed1e4c884bd7104f7bd53ccaf9af99",
+      "target": "**以下平滑方法按复杂程度递增排列：**\n",
+      "target_sha256": "e3539ab790facd85a3172f378ffcd329ebf12973ab754ada7750a99a41f010e9"
+    },
+    {
+      "segment_id": "05-16:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0043",
+      "kind": "list",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 22,
+      "source_sha256": "85e0918d34517a7e2b2bca50bd805b85e4423944b80a03058fe15fca188ff226",
+      "target": "1. **Laplace 平滑（拉普拉斯平滑，也称加一平滑）。** 给每个计数加 1。方法简单，但对稀有事件的效果很差。\n2. **Good-Turing。** 根据“频次的频次”，把频次较高的事件的一部分概率质量重新分配给未见过的事件。\n3. **插值（interpolation）。** 用可调权重组合 n 元、(n-1) 元等模型的估计。\n4. **回退（backoff）。** 如果 n 元片段的计数为零，就回退到 (n-1) 元片段。Katz 回退会对这一过程进行归一化。\n5. **绝对折扣法（absolute discounting）。** 从所有计数中减去固定折扣 `D`，再将腾出的概率质量重新分配给未见过的事件。\n6. **Kneser-Ney。** 在绝对折扣法的基础上，为低阶模型作出一个巧妙选择：使用*延续概率（continuation probability）*，即一个词出现过的不同左上下文的种类数，而非原始频次。\n",
+      "target_sha256": "5e11634f1a6ed5c28bdf24e2f8b65d5832de800747735e37cf448592671e35f9"
+    },
+    {
+      "segment_id": "05-16:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 23,
+      "source_sha256": "5ded85106777b710127a3ebd4840ba9562ae536cd1bfc69068b4b71e73401ea1",
+      "target": "Kneser-Ney 的洞见很深刻。\"San Francisco\" 是常见的二元片段（bigram），一元片段（unigram）\"Francisco\" 大多跟在 \"San\" 之后。简单的绝对折扣法会给 \"Francisco\" 很高的一元概率，因为它的计数很高。Kneser-Ney 则注意到 \"Francisco\" 只出现在一种上下文中，因此降低了它的延续概率。结果是，以 \"Francisco\" 结尾的新二元片段会获得恰当的低概率。\n",
+      "target_sha256": "78812a14a7ffd0dd0428a8bdfb95f0ea14a383c546fb8e72ac9c3f45d05adcb6"
+    },
+    {
+      "segment_id": "05-16:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 24,
+      "source_sha256": "f59fa8937ad37cc5b4ac0b22a5975781fd35c387911d06bc417ae653f9dc88dd",
+      "target": "**评估：困惑度。** 在留出测试集上，对每个词的负对数似然（negative log-likelihood）取平均，再取指数。越低越好。困惑度为 100，意味着模型的困惑程度相当于在 100 个词之间进行均匀选择。\n",
+      "target_sha256": "68bc7e276ace81ee7a48ba14bcf29e92eccde375b138266c2d6a6bb1a3b912a3"
+    },
+    {
+      "segment_id": "05-16:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 25,
+      "source_sha256": "2dcd2189509782c046c3fc3afbb26d9d907d44e4fbca262a98d27d904d356cfc",
+      "target": "```text\nperplexity = exp(- (1/N) * Σ log P(w_i | context_i))\n```\n",
+      "target_sha256": "2dcd2189509782c046c3fc3afbb26d9d907d44e4fbca262a98d27d904d356cfc"
+    },
+    {
+      "segment_id": "05-16:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 26,
+      "source_sha256": "31a170d1e9d092a645e0a3acbed56e592b5dc469e427737ff4a52af9e01f6d05",
+      "target": "```figure\nngram-backoff\n```\n",
+      "target_sha256": "31a170d1e9d092a645e0a3acbed56e592b5dc469e427737ff4a52af9e01f6d05"
+    },
+    {
+      "segment_id": "05-16:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## The Concept",
+        "### The prediction game"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It"
+      ],
+      "ordinal": 27,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "05-16:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 1: trigram counts"
+      ],
+      "ordinal": 28,
+      "source_sha256": "1fbf7300486ddc5204587020919fc1e26d8c1cb55189428725f118c944de2968",
+      "target": "### 步骤 1：三元片段计数\n",
+      "target_sha256": "a940949d74592ec422779cd4bda9653f3e6e9393127d5d9e7e3aab5034b85fde"
+    },
+    {
+      "segment_id": "05-16:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 1: trigram counts"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0057",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 1: trigram counts"
+      ],
+      "ordinal": 29,
+      "source_sha256": "53ca6b2347784d06c430d96ae7412264c67f6d09e19fcc702d732c6c1570fc53",
+      "target": "```python\nfrom collections import Counter, defaultdict\n\n\ndef train_ngram(corpus_tokens, n=3):\n    ngrams = Counter()\n    contexts = Counter()\n    for sentence in corpus_tokens:\n        padded = [\"<s>\"] * (n - 1) + sentence + [\"</s>\"]\n        for i in range(len(padded) - n + 1):\n            ctx = tuple(padded[i:i + n - 1])\n            word = padded[i + n - 1]\n            ngrams[ctx + (word,)] += 1\n            contexts[ctx] += 1\n    return ngrams, contexts\n\n\ndef raw_probability(ngrams, contexts, context, word):\n    ctx = tuple(context)\n    if contexts.get(ctx, 0) == 0:\n        return 0.0\n    return ngrams.get(ctx + (word,), 0) / contexts[ctx]\n```\n",
+      "target_sha256": "53ca6b2347784d06c430d96ae7412264c67f6d09e19fcc702d732c6c1570fc53"
+    },
+    {
+      "segment_id": "05-16:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 1: trigram counts"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 1: trigram counts"
+      ],
+      "ordinal": 30,
+      "source_sha256": "5dbc9469b330edc9d0f530d2d89644298d80cbe2ff41ac06d4bcad56357d39ed",
+      "target": "输入是已分词的句子列表，输出是 n 元片段计数和上下文计数。`<s>` 与 `</s>` 表示句子边界。\n",
+      "target_sha256": "847a49c1f90d4c8959e4e20b6bea20a08dfd6a85d38e43bd61c15769340fc3cb"
+    },
+    {
+      "segment_id": "05-16:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 1: trigram counts"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 2: Laplace smoothing"
+      ],
+      "ordinal": 31,
+      "source_sha256": "ba1166eca273d7aa25909ef6e3c9f21e65cff691c345b0293ec83bb9653e9872",
+      "target": "### 步骤 2：Laplace 平滑\n",
+      "target_sha256": "7de34ce26326c7ddf06dfb58e117e50e4c0f1040c61f57232fc5f90bd3584c43"
+    },
+    {
+      "segment_id": "05-16:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 2: Laplace smoothing"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 2: Laplace smoothing"
+      ],
+      "ordinal": 32,
+      "source_sha256": "52664c72b2c8b696579dc825a943aaf3cbfedd25b6230dd5e169e7ffc32ab9db",
+      "target": "```python\ndef laplace_probability(ngrams, contexts, vocab_size, context, word):\n    ctx = tuple(context)\n    numerator = ngrams.get(ctx + (word,), 0) + 1\n    denominator = contexts.get(ctx, 0) + vocab_size\n    return numerator / denominator\n```\n",
+      "target_sha256": "52664c72b2c8b696579dc825a943aaf3cbfedd25b6230dd5e169e7ffc32ab9db"
+    },
+    {
+      "segment_id": "05-16:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 2: Laplace smoothing"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 2: Laplace smoothing"
+      ],
+      "ordinal": 33,
+      "source_sha256": "13689f2b7408a082c5f49a66f5b7f9c819ba6fb25777b3570a145da364c74a78",
+      "target": "给每个计数加 1。这样做能实现平滑，但会给未见过的事件分配过多概率质量，也会损害已见过的稀有事件。\n",
+      "target_sha256": "8eeccc6cd600f7826daa06fab464eb24ed335219f003b5ea86adcd1c728b93a4"
+    },
+    {
+      "segment_id": "05-16:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 2: Laplace smoothing"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 3: Kneser-Ney (bigram, interpolated)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "43131448de368c6590b81660dd5bff9ed45197da18caecb4e034ed55304e8295",
+      "target": "### 步骤 3：Kneser-Ney（二元、插值式）\n",
+      "target_sha256": "2f7927556bf115e39c60b6925078b28f9bf5522ebb3e3552f40d50fb4ba43ffb"
+    },
+    {
+      "segment_id": "05-16:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 3: Kneser-Ney (bigram, interpolated)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 3: Kneser-Ney (bigram, interpolated)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "fc98f6539673cbaad68d719ecf0ee13d68ee1a05c5960b31bde334f278e0cafa",
+      "target": "```python\ndef kneser_ney_bigram_model(corpus_tokens, discount=0.75):\n    unigrams = Counter()\n    bigrams = Counter()\n    unigram_contexts = defaultdict(set)\n\n    for sentence in corpus_tokens:\n        padded = [\"<s>\"] + sentence + [\"</s>\"]\n        for i, w in enumerate(padded):\n            unigrams[w] += 1\n            if i > 0:\n                prev = padded[i - 1]\n                bigrams[(prev, w)] += 1\n                unigram_contexts[w].add(prev)\n\n    total_unique_bigrams = sum(len(ctx_set) for ctx_set in unigram_contexts.values())\n    continuation_prob = {\n        w: len(ctx_set) / total_unique_bigrams for w, ctx_set in unigram_contexts.items()\n    }\n\n    context_totals = Counter()\n    for (prev, w), count in bigrams.items():\n        context_totals[prev] += count\n\n    unique_follow = defaultdict(set)\n    for (prev, w) in bigrams:\n        unique_follow[prev].add(w)\n\n    def prob(prev, w):\n        count = bigrams.get((prev, w), 0)\n        denom = context_totals.get(prev, 0)\n        if denom == 0:\n            return continuation_prob.get(w, 1e-9)\n        first_term = max(count - discount, 0) / denom\n        lambda_prev = discount * len(unique_follow[prev]) / denom\n        return first_term + lambda_prev * continuation_prob.get(w, 1e-9)\n\n    return prob\n```\n",
+      "target_sha256": "fc98f6539673cbaad68d719ecf0ee13d68ee1a05c5960b31bde334f278e0cafa"
+    },
+    {
+      "segment_id": "05-16:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 3: Kneser-Ney (bigram, interpolated)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 3: Kneser-Ney (bigram, interpolated)"
+      ],
+      "ordinal": 36,
+      "source_sha256": "5200d482f38afad337acbb3f47a1feffc910c68c8cc960b4cb56419f3d320aea",
+      "target": "这里有三个组成部分。`continuation_prob` 衡量“这个词出现在多少种不同的上下文中”，这是 Kneser-Ney 的创新。`lambda_prev` 是折扣释放出的概率质量，用作回退项的权重。最终概率等于折扣后的主项加上加权后的延续项。\n",
+      "target_sha256": "e3e1f4938b868068914a8af5d0428cbf1e77cef0d0f6d0176db78b2da5c0d0ee"
+    },
+    {
+      "segment_id": "05-16:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 3: Kneser-Ney (bigram, interpolated)"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 4: generating text with sampling"
+      ],
+      "ordinal": 37,
+      "source_sha256": "b6d8071f504ee0d0ab4db14a05a26c0637a2fa206f9d1ec5d2e75e3430dafa5b",
+      "target": "### 步骤 4：通过采样生成文本\n",
+      "target_sha256": "f0c293c2ea698ff3daff816238c21aa9acb1f811725d844f249dbe2cdb1362f7"
+    },
+    {
+      "segment_id": "05-16:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 4: generating text with sampling"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 4: generating text with sampling"
+      ],
+      "ordinal": 38,
+      "source_sha256": "03786634fc7f69c3962eb664f8830e2e0752a2683a7d52d327b4be8a7aaffa14",
+      "target": "```python\nimport random\n\n\ndef generate(prob_fn, vocab, prefix, max_len=30, seed=0):\n    rng = random.Random(seed)\n    tokens = list(prefix)\n    for _ in range(max_len):\n        candidates = [(w, prob_fn(tokens[-1], w)) for w in vocab]\n        total = sum(p for _, p in candidates)\n        r = rng.random() * total\n        acc = 0.0\n        for w, p in candidates:\n            acc += p\n            if r <= acc:\n                tokens.append(w)\n                break\n        if tokens[-1] == \"</s>\":\n            break\n    return tokens\n```\n",
+      "target_sha256": "03786634fc7f69c3962eb664f8830e2e0752a2683a7d52d327b4be8a7aaffa14"
+    },
+    {
+      "segment_id": "05-16:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 4: generating text with sampling"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 4: generating text with sampling"
+      ],
+      "ordinal": 39,
+      "source_sha256": "1480754abbb1aae2d95177f887b77f7c652e3be1840eb8adea8c231b7d2b6de8",
+      "target": "按概率大小成比例地采样。不同的随机种子总会产生不同的输出。如果想得到类似束搜索（beam search）的输出，就在每一步选择 argmax，即贪心选择，再加一个控制少量随机性的旋钮，也就是温度（temperature）。\n",
+      "target_sha256": "b9db1a33df1c33625dd6e8ee50f9cf1e429da9e9e6b1072c0d7abca8c7cb98ee"
+    },
+    {
+      "segment_id": "05-16:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 4: generating text with sampling"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 5: perplexity"
+      ],
+      "ordinal": 40,
+      "source_sha256": "fb2d3bd5c93a5e831ff61e056b4267f6f45ed306b2a39d91cc546f47d4fd165f",
+      "target": "### 步骤 5：困惑度\n",
+      "target_sha256": "7ae88a43451065b9bfbc613e55b17e7d726877586fa9229a534d11e4c79328cc"
+    },
+    {
+      "segment_id": "05-16:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 5: perplexity"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 5: perplexity"
+      ],
+      "ordinal": 41,
+      "source_sha256": "326ab4df7f358f65dfc0ab48572316d11aff020fc4147dfcc06f54dddd07be6b",
+      "target": "```python\nimport math\n\n\ndef perplexity(prob_fn, sentences):\n    total_log_prob = 0.0\n    total_tokens = 0\n    for sentence in sentences:\n        padded = [\"<s>\"] + sentence + [\"</s>\"]\n        for i in range(1, len(padded)):\n            p = prob_fn(padded[i - 1], padded[i])\n            total_log_prob += math.log(max(p, 1e-12))\n            total_tokens += 1\n    return math.exp(-total_log_prob / total_tokens)\n```\n",
+      "target_sha256": "326ab4df7f358f65dfc0ab48572316d11aff020fc4147dfcc06f54dddd07be6b"
+    },
+    {
+      "segment_id": "05-16:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 5: perplexity"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 5: perplexity"
+      ],
+      "ordinal": 42,
+      "source_sha256": "4bd120dda3b78e914baf8372890e3c656643dbd3cb7352a46194f3f9adc9f7c6",
+      "target": "困惑度越低越好。在 Brown 语料库上，经过充分调优的 4 元 KN 模型可达到约 140 的困惑度，而 Transformer 语言模型在同一个测试集上可达到 15-30。差距约为 10 倍，这正是该领域转向新方法的原因。\n",
+      "target_sha256": "aee99a6018d928e5485838e7682739e24dc274111d06c5163d2112bbac9499c3"
+    },
+    {
+      "segment_id": "05-16:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Build It",
+        "### Step 5: perplexity"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "05-16:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0087",
+      "kind": "list",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Use It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "41a3b1c4bd39a21a62af93baf1041aeee8347c653ce60447afdb240f7e5c2205",
+      "target": "- **经典自然语言处理（NLP）教学。** 这是理解平滑、最大似然估计（MLE）和困惑度最清楚直接的方式。\n- **KenLM。** 面向生产环境的 n 元模型库。在重视低延迟的语音和机器翻译（MT）系统中，用于重评分（rescoring）。\n- **设备端自动补全。** 键盘中的三元模型，至今仍在使用。\n- **基线。** 在宣称神经语言模型表现好之前，先计算 n 元语言模型的困惑度。如果你的 Transformer 没有明显优于 KN，那就说明有问题。\n",
+      "target_sha256": "250be962aa1105f348fe96180c972dac8e84d8740ec6e67d1190783108d3a2e4"
+    },
+    {
+      "segment_id": "05-16:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Use It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "05-16:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Ship It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "cce5fc89dcd5512649cdd052f7a97813b6805c61a2724a913aec2080e63d16a6",
+      "target": "保存为 `outputs/prompt-lm-baseline.md`：\n",
+      "target_sha256": "8f58c5e97974c95f55f81d1f100139746ed4831dfd16a7f1e0abe353b4e031b1"
+    },
+    {
+      "segment_id": "05-16:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Ship It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Ship It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "a15cf18283d10cbb2ed6e1e12bd5993880079368c98ce3160452dd51833b7177",
+      "target": "```markdown\n---\nname: lm-baseline\ndescription: Build a reproducible n-gram language model baseline before training a neural LM.\nphase: 5\nlesson: 16\n---\n\nGiven a corpus and target use (next-word prediction, rescoring, perplexity baseline), output:\n\n1. N-gram order. Trigram for general English, 4-gram if corpus is large, 5-gram for speech rescoring.\n2. Smoothing. Modified Kneser-Ney is the default; Laplace only for teaching.\n3. Library. `kenlm` for production, `nltk.lm` for teaching, roll your own only to learn.\n4. Evaluation. Held-out perplexity with consistent tokenization between train and test sets.\n\nRefuse to report perplexity computed with different tokenization between systems being compared — perplexity numbers are comparable only under identical tokenization. Flag OOV rate in test set; KN handles OOV poorly unless you reserve a special <UNK> token during training.\n```\n",
+      "target_sha256": "a15cf18283d10cbb2ed6e1e12bd5993880079368c98ce3160452dd51833b7177"
+    },
+    {
+      "segment_id": "05-16:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Ship It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "05-16:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "0aa4958d892c861b040ef0539ae9479b9ebef02aa1e1643a861dea9bb1a4a000",
+      "target": "1. **简单。** 在包含 1,000 个句子的 Shakespeare 语料库上训练三元语言模型，再生成 20 个句子。这些句子局部看似合理，整体却不连贯，这是经典演示。\n2. **中等。** 为你的 KN 模型实现困惑度计算，并在 Shakespeare 语料的留出部分上评估，与 Laplace 平滑比较。你应该能看到 KN 将困惑度降低 30-50%。\n3. **困难。** 构建三元拼写纠错器：给定一个拼错的词及其上下文，生成纠正候选，并按语言模型给出的上下文概率排序。使用公开的 Birkbeck 拼写语料库进行评估。\n",
+      "target_sha256": "be94b7be44589e03dc290b45593f63e9b0b9afe0a34118298afd53b3ea5b0db7"
+    },
+    {
+      "segment_id": "05-16:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Key Terms"
+      ],
+      "ordinal": 50,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "05-16:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Key Terms"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0101",
+      "kind": "table",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Key Terms"
+      ],
+      "ordinal": 51,
+      "source_sha256": "6633bbcdc5a613533d9c0886cc3c142b203bf81cf671ad0678af4828aa7fd0d5",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| N-gram | 词序列 | 由连续 `n` 个 token 构成的序列。 |\n| 平滑 | 避免零概率 | 重新分配概率质量，让未见过的事件获得非零概率。 |\n| 困惑度 | 语言模型质量指标 | 在留出数据上计算 `exp(-average log-prob)`，越低越好。 |\n| 回退 | 退回更短的上下文 | 如果三元片段的计数为零，就使用二元片段。Katz 回退将这一过程形式化。 |\n| Kneser-Ney | n 元模型的最佳平滑方法 | 绝对折扣法，加上低阶模型的延续概率。 |\n| 延续概率 | KN 特有 | `P(w)` 按 `w` 出现过的上下文数量加权，而非按原始计数加权。 |\n| 文本的熵 | 每个符号的信息量 | 给定上下文后，编码下一个符号平均需要的 bits 数。Shannon 在 1951 年利用最长 100 个字母的上下文，估计印刷英语为 0.6-1.3 bits/letter（每个字母的比特数）；这一测量早于任何模型的出现。 |\n",
+      "target_sha256": "dfcaffd5a1957aef912fc4ef98ac0facdc0a68b15a80346e1fe94cc932a23d34"
+    },
+    {
+      "segment_id": "05-16:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Key Terms"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Further Reading"
+      ],
+      "ordinal": 52,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "05-16:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Further Reading"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-16:b0105",
+      "kind": "list",
+      "heading_path": [
+        "# Text Generation Before Transformers — N-gram Language Models",
+        "## Further Reading"
+      ],
+      "ordinal": 53,
+      "source_sha256": "62cd0fb40adca75b64db13ea89ef218d44270f498662130b3a0ab8c427cc1c53",
+      "target": "- [Shannon (1951). Prediction and Entropy of Printed English](https://www.princeton.edu/~wbialek/rome/refs/shannon_51.pdf)：定义猜测游戏的实验，给出了每个语言模型至今仍在优化的目标。\n- [Jurafsky and Martin — Speech and Language Processing, Chapter 3 (2026 draft)](https://web.stanford.edu/~jurafsky/slp3/3.pdf)：关于 n 元语言模型和平滑的经典论述。\n- [Chen and Goodman (1998). An Empirical Study of Smoothing Techniques for Language Modeling](https://dash.harvard.edu/handle/1/25104739)：确立 Kneser-Ney 作为最佳 n 元平滑方法地位的论文。\n- [Kneser and Ney (1995). Improved Backing-off for M-gram Language Modeling](https://ieeexplore.ieee.org/document/479394)：KN 的原始论文。\n- [KenLM](https://kheafield.com/code/kenlm/)：面向生产环境的快速 n 元语言模型，2026 年仍用于对延迟敏感的应用。\n",
+      "target_sha256": "48197d288d3f5a01d6ebbb9a785b469b40ffca61da5de2eac1e806daee898339"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+  "additional_glossary_sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S50-ngram-language-models/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "442a20403a2bb267addcce6e6b1ccf6b2c01da4f36a4c1c09044eb9ad83b7346",
+  "dependency_count": 56,
+  "assets": [
+    {
+      "source_path": "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/assets/ngram.svg",
+      "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/assets/ngram.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "06a8718f1b24c551a6b62b85200c33c7ba193a94c8e6e63c5b1b224a666d5c07"
+    }
+  ],
+  "quantity_mappings": [
+    {
+      "segment_id": "05-16:b0005",
+      "source": "~45 minutes",
+      "target": "~45 分钟",
+      "equivalence": "近似时长45分钟，分钟单位等值"
+    },
+    {
+      "segment_id": "05-16:b0013",
+      "source": "at least one; Fifty years",
+      "target": "至少一个；五十年",
+      "equivalence": "序列数量下界和50年量级，未新增阿拉伯数字"
+    },
+    {
+      "segment_id": "05-16:b0021",
+      "source": "one guess at a time; a few hundred letters",
+      "target": "一次猜一个；几百个字母",
+      "equivalence": "每次一个猜测，模糊数百字母量级"
+    },
+    {
+      "segment_id": "05-16:b0023",
+      "source": "a second, identical guesser",
+      "target": "另一个猜测方式完全相同的人",
+      "equivalence": "第二位猜测者，次序不变"
+    },
+    {
+      "segment_id": "05-16:b0025",
+      "source": "three-quarters; bits per letter",
+      "target": "四分之三；每个字母的 bits",
+      "equivalence": "3/4比例自然中文等值；每字母单位非每token"
+    },
+    {
+      "segment_id": "05-16:b0029",
+      "source": "two tokens; 1-bit-per-letter; 100K tokens",
+      "target": "两个 token；每个字母只需 1 bit；100K 个 token",
+      "equivalence": "2个token记忆；1比特/字母；K缩写保留，不混字母和词元"
+    },
+    {
+      "segment_id": "05-16:b0031",
+      "source": "bits per letter; nats per word token",
+      "target": "每个字母的 bits 数；每个单词 token 的 nats 数",
+      "equivalence": "底2/自然对数以及分母各自保留，源可比性缺陷另列"
+    },
+    {
+      "segment_id": "05-16:b0035",
+      "source": "trigrams; 4-grams",
+      "target": "三元模型；4 元模型",
+      "equivalence": "片段阶数3/4；源数字3、4逐块保留"
+    },
+    {
+      "segment_id": "05-16:b0045",
+      "source": "one context",
+      "target": "一种上下文",
+      "equivalence": "上下文种类数为1"
+    },
+    {
+      "segment_id": "05-16:b0071",
+      "source": "Three moving parts",
+      "target": "三个组成部分",
+      "equivalence": "3项结构"
+    },
+    {
+      "segment_id": "05-16:b0083",
+      "source": "10x",
+      "target": "10 倍",
+      "equivalence": "约10倍的比值；源benchmark并未复现"
+    },
+    {
+      "segment_id": "05-16:b0097",
+      "source": "1,000-sentence; 20 sentences; 30-50%",
+      "target": "1,000 个句子；20 个句子；30-50%",
+      "equivalence": "训练句数、生成句数和下降百分比角色保持"
+    },
+    {
+      "segment_id": "05-16:b0101",
+      "source": "0.6-1.3 bits/letter",
+      "target": "0.6-1.3 bits/letter（每个字母的比特数）",
+      "equivalence": "源区间及每字母量纲保留"
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "37628f1450134ac9bdba10236982341fddb9ca35",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    }
+  ]
+}
