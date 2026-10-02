@@ -1,0 +1,1663 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-05",
+  "source_path": "phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "96fe7e95778a3dddffc3653efdc4ac55a2583bbd",
+  "source_sha256": "6c0d5587fd261631bbf70042e355315dd840b25ea237f8525e5970dd10f87534",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/docs/zh.md",
+  "target_sha256": "41d78c428e5352860e0297397010f281574bbdaa3b85714d5ddfdd9a45433184",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "05-05:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis"
+      ],
+      "ordinal": 1,
+      "source_sha256": "b909af268670e3dbc3e54f197d0d1602b389379dd9afe094a6f43e8f4d18697c",
+      "target": "# 情感分析\n",
+      "target_sha256": "c655422aee20133f5d898fb2a455fe3ddef3f48fbdad03639c01fb9b3429692c"
+    },
+    {
+      "segment_id": "05-05:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Sentiment Analysis"
+      ],
+      "ordinal": 2,
+      "source_sha256": "b1454b7dc5058e6b00843c018faa831925d88ef3ff00e78ee50d23187737d961",
+      "target": "> 自然语言处理（NLP）的经典任务。关于传统文本分类，你需要掌握的大部分知识都会在这里出现。\n",
+      "target_sha256": "83ef7bacc3572c7df68e19e71d55d5c3bdef518cbfa70049e4231bbcae89edc5"
+    },
+    {
+      "segment_id": "05-05:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis"
+      ],
+      "ordinal": 3,
+      "source_sha256": "8a9cc6bc84a1428985f2f904313573b036f17259997ade5e6bd40ecc20292b88",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 02（词袋与 TF-IDF），阶段 2 · 14（朴素 Bayes）\n**Time:** ~75 分钟\n",
+      "target_sha256": "74b4984f537f5d1954a9408994b9451d1349615d078da69ccfd427050c153f75"
+    },
+    {
+      "segment_id": "05-05:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "05-05:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "019fcf649831490f1f46d3ce638ab79ab8db1f9fe8795f169549563acea4d0c2",
+      "target": "“The food was not great.” 是正向还是负向？\n",
+      "target_sha256": "8969dfcbe6f2cd44f9727669c3393f4042d87a515db4d125737db5bcf913d6b8"
+    },
+    {
+      "segment_id": "05-05:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "70fdb77a7ea3c080bd123b9815567eab8a8a333186747915c790b90f9168acb5",
+      "target": "情感判断听起来很简单。评论者说自己喜欢或不喜欢某样东西，给这句话标上标签就行了。它之所以成为经典的 NLP 任务，是因为每个看似简单的情形背后都藏着难题。否定会翻转含义，讽刺也会将含义颠倒。“Not bad at all” 虽然包含两个带有负面意味的词，表达的却是正向情感。表情符号携带的信号比周围的文字还多。领域词汇也很重要，例如音乐评论中的 `tight` 与时尚评论中的 `tight`。\n",
+      "target_sha256": "fe590248cbf585a8504a5061312e3d767606bb70535e84fd081a0ff5de9be5da"
+    },
+    {
+      "segment_id": "05-05:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "9f2bf4c1eefb9d419471fbb810413df647ad6ba5a117d6ba96fd7099807cb872",
+      "target": "情感分析（sentiment analysis）是传统 NLP 的实践试验场。如果你理解每个朴素基线为何会出现特定的失效模式，就能理解人们为何发明了更复杂的模型。本课从零构建朴素 Bayes（Naive Bayes）基线，再加入逻辑回归（logistic regression），并指出那些让生产环境中的情感分析成为需要以合规标准对待的问题的陷阱。\n",
+      "target_sha256": "7c70e024e79e7816068f8a250fbb21cf6c9a3db1bc88bf13d65f529982ba9bd7"
+    },
+    {
+      "segment_id": "05-05:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "05-05:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "d58238fe86d394a007020b2dfbc2738b6d9c75142e5f360c1f5f45aaf0ee2d7e",
+      "target": "传统情感分析分为两步。\n",
+      "target_sha256": "97b174ec4255408976831abebde13bb62e6dbecfa25d2e8ead17640f29cfaee5"
+    },
+    {
+      "segment_id": "05-05:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0019",
+      "kind": "list",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "04a17eac827838e74e2f6f94cf9b466e817284cb74518d528b9f5a3c12668894",
+      "target": "1. **表示。** 将文本转换为特征向量：词袋（BoW）、TF-IDF（词频-逆文档频率），或连续 n 元片段（n-gram）。\n2. **分类。** 用带标签的样本拟合线性模型，例如朴素 Bayes、逻辑回归或支持向量机（SVM）。\n",
+      "target_sha256": "0dcbcddb4579d8146189c0387f6e67c9f03d2521c104870f8f8fa96b1565b02e"
+    },
+    {
+      "segment_id": "05-05:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "a3dbf353387d23f73ca21946a02c89ec43f6081f12275e1a419cb33737ba80cb",
+      "target": "朴素 Bayes 是最简单粗糙、却能奏效的模型。它假设：给定标签后，各个特征彼此独立。根据计数估计 `P(word | positive)` 和 `P(word | negative)`，推理时再将概率相乘。这个“朴素”的独立性假设错得令人发笑，效果却好得令人惊讶。原因在于：当文本特征稀疏、数据量适中时，分类器更在意每个词倾向于哪一类，而不是倾向有多强。\n",
+      "target_sha256": "8c624f883bed51b8585c517d1440091efa3d033640341f5ba77812bc8124dd59"
+    },
+    {
+      "segment_id": "05-05:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "489b60f8ca9f5a61dd2cf1cf368231b3ea60af457f1b266f803bdd1db088b372",
+      "target": "逻辑回归解决了独立性假设的问题。它为每个特征学习一个权重，其中也可以有负权重。作为二元片段（bigram）特征的 `not good` 会得到负权重。对于从未标注过的二元片段，朴素 Bayes 做不到这一点。\n",
+      "target_sha256": "86643d410fc1652eba99c789911ca2cd954239fabb7eaf9e22d099036f14d45a"
+    },
+    {
+      "segment_id": "05-05:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0025",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "4d93c30d0206a6dd93f6091d87dc3da0730f93c6349dbae8cfe68b4f3c24efd2",
+      "target": "```figure\nsentiment-logits\n```\n",
+      "target_sha256": "4d93c30d0206a6dd93f6091d87dc3da0730f93c6349dbae8cfe68b4f3c24efd2"
+    },
+    {
+      "segment_id": "05-05:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It"
+      ],
+      "ordinal": 14,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "05-05:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 1: a real mini-dataset"
+      ],
+      "ordinal": 15,
+      "source_sha256": "ee5e35536e950d89c38c74d5d6349282d8794bf5b855b5732fc04084015c1007",
+      "target": "### 步骤 1：真实的小型数据集\n",
+      "target_sha256": "33f644f5e42174dd2fcc2524f4fd5d4633e372d7f9c4b3d86b3011272e622625"
+    },
+    {
+      "segment_id": "05-05:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 1: a real mini-dataset"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 1: a real mini-dataset"
+      ],
+      "ordinal": 16,
+      "source_sha256": "76b6fd2c7c2a405d4d3653c7413f1a8a2bb01623cfbc35d9c71c9d44f4701c49",
+      "target": "```python\nPOSITIVE = [\n    \"absolutely loved this movie\",\n    \"beautiful cinematography and a great story\",\n    \"one of the best films of the year\",\n    \"brilliant acting from the lead\",\n    \"heartwarming and funny\",\n]\n\nNEGATIVE = [\n    \"boring and far too long\",\n    \"not worth your time\",\n    \"the plot made no sense\",\n    \"terrible acting, awful script\",\n    \"i want my two hours back\",\n]\n```\n",
+      "target_sha256": "76b6fd2c7c2a405d4d3653c7413f1a8a2bb01623cfbc35d9c71c9d44f4701c49"
+    },
+    {
+      "segment_id": "05-05:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 1: a real mini-dataset"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 1: a real mini-dataset"
+      ],
+      "ordinal": 17,
+      "source_sha256": "da49b2057128375ee0c0c8bf98a52edb951c7d8c504496a00dc5b091bd4464a6",
+      "target": "数据集刻意保持很小。实际工作会使用数万条样本，例如 IMDb、SST-2 和 Yelp polarity。数学原理完全相同。\n",
+      "target_sha256": "92a0f9e08d0292c70939dc521a278b838035190c7f4a645576197d9d3b18712c"
+    },
+    {
+      "segment_id": "05-05:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 1: a real mini-dataset"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 2: multinomial Naive Bayes from scratch"
+      ],
+      "ordinal": 18,
+      "source_sha256": "31714b0bc90026a80424cb8ed379a670d63ded4adaf7ed799474a8f50241d354",
+      "target": "### 步骤 2：从零实现多项式朴素 Bayes\n",
+      "target_sha256": "fb68d5873a013aa211dd0b4726fd710c19c0b67032cc30bd882fb44b6a1d439f"
+    },
+    {
+      "segment_id": "05-05:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 2: multinomial Naive Bayes from scratch"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 2: multinomial Naive Bayes from scratch"
+      ],
+      "ordinal": 19,
+      "source_sha256": "39d538ef657d2e7c1a96ad3594696ca0cfcccaf8a98c4577dfa79bb05a3b67c6",
+      "target": "```python\nimport math\nfrom collections import Counter\n\n\ndef train_nb(docs_by_class, vocab, alpha=1.0):\n    class_priors = {}\n    class_word_probs = {}\n    total_docs = sum(len(d) for d in docs_by_class.values())\n\n    for cls, docs in docs_by_class.items():\n        class_priors[cls] = len(docs) / total_docs\n        counts = Counter()\n        for doc in docs:\n            for token in doc:\n                counts[token] += 1\n        total = sum(counts.values()) + alpha * len(vocab)\n        class_word_probs[cls] = {\n            w: (counts[w] + alpha) / total for w in vocab\n        }\n    return class_priors, class_word_probs\n\n\ndef predict_nb(doc, class_priors, class_word_probs):\n    scores = {}\n    for cls in class_priors:\n        s = math.log(class_priors[cls])\n        for token in doc:\n            if token in class_word_probs[cls]:\n                s += math.log(class_word_probs[cls][token])\n        scores[cls] = s\n    return max(scores, key=scores.get)\n```\n",
+      "target_sha256": "39d538ef657d2e7c1a96ad3594696ca0cfcccaf8a98c4577dfa79bb05a3b67c6"
+    },
+    {
+      "segment_id": "05-05:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 2: multinomial Naive Bayes from scratch"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 2: multinomial Naive Bayes from scratch"
+      ],
+      "ordinal": 20,
+      "source_sha256": "745df5d42271f833826c93ab285904d8b128cb50451d5a7699a69bab5183b25c",
+      "target": "加性平滑（alpha=1.0）就是 Laplace 平滑（拉普拉斯平滑）。没有平滑，一个词若未在某一类中出现，其概率就会是零，对数值也就会发散。实践中常用 `alpha=0.01`，而教学默认使用 `alpha=1.0`。\n",
+      "target_sha256": "64ce7b1a2c655b340cbff8711ea5d69ab80a647a10e20b9cec98175537b8a5b0"
+    },
+    {
+      "segment_id": "05-05:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 2: multinomial Naive Bayes from scratch"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 3: logistic regression from scratch"
+      ],
+      "ordinal": 21,
+      "source_sha256": "baa9e69179d441ded363820c4039a4362bf56e44ad1564bc83a178a923476394",
+      "target": "### 步骤 3：从零实现逻辑回归\n",
+      "target_sha256": "9dbcccd25d62f6552ef361aff5853c673c8d3b66c629e48f79b4cd97769e2ae2"
+    },
+    {
+      "segment_id": "05-05:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 3: logistic regression from scratch"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 3: logistic regression from scratch"
+      ],
+      "ordinal": 22,
+      "source_sha256": "011d728f46b4742c7c24a2cde132f986c5554cd10d9dc77b8d56935949535444",
+      "target": "```python\nimport numpy as np\n\n\ndef sigmoid(x):\n    return 1.0 / (1.0 + np.exp(-np.clip(x, -20, 20)))\n\n\ndef train_lr(X, y, epochs=500, lr=0.05, l2=0.01):\n    n_features = X.shape[1]\n    w = np.zeros(n_features)\n    b = 0.0\n    for _ in range(epochs):\n        logits = X @ w + b\n        preds = sigmoid(logits)\n        err = preds - y\n        grad_w = X.T @ err / len(y) + l2 * w\n        grad_b = err.mean()\n        w -= lr * grad_w\n        b -= lr * grad_b\n    return w, b\n\n\ndef predict_lr(X, w, b):\n    return (sigmoid(X @ w + b) >= 0.5).astype(int)\n```\n",
+      "target_sha256": "011d728f46b4742c7c24a2cde132f986c5554cd10d9dc77b8d56935949535444"
+    },
+    {
+      "segment_id": "05-05:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 3: logistic regression from scratch"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 3: logistic regression from scratch"
+      ],
+      "ordinal": 23,
+      "source_sha256": "709c0e79b156fd5eb0a738b1433c6b01b8469f5fd8394fd5ab51048863cc6a4b",
+      "target": "L2 正则化（regularization）在这里很重要。文本特征是稀疏的；没有 L2，模型就会记住训练样本。从 `0.01` 开始调参。\n",
+      "target_sha256": "3d50cc0ce23bd268165a0d9fc4ed135f881dd8f82278549f6b8d2e16c93d98a3"
+    },
+    {
+      "segment_id": "05-05:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 3: logistic regression from scratch"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0047",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "bf1dd67924045f5a284067cd926e96b46bc5a6136426ac6fbe5663bf44678141",
+      "target": "### 步骤 4：处理否定这一失效模式\n",
+      "target_sha256": "f59b991a7ac451ed5ab4ebec35a7580357ec08dc095b055422190e4e18ad3a07"
+    },
+    {
+      "segment_id": "05-05:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "a9483c88c6334ec1d0377749fa818c33f4df644285a54ad0f3a9c94abe9ff3ad",
+      "target": "看看“not good”和“not bad”。词袋分类器看到的是 `{not, good}` 和 `{not, bad}`，会根据训练中哪一种出现得更多来学习。二元片段分类器看到的则是 `not_good` 和 `not_bad`，会把它们作为不同的特征来学习。这通常就够用了。\n",
+      "target_sha256": "f6d5f876f7df105c76f770ceb7b330d67763c8795ffacefda32824488be9ad51"
+    },
+    {
+      "segment_id": "05-05:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "a7b7d14a11589e4763c021799d35b874b343a2f575ca4884d14048a53bb89e41",
+      "target": "没有二元片段时，还有一种更粗略但有效的办法：**否定范围标记（negation scoping）**。给否定词之后的 token（词元）加上 `NOT_` 前缀，直到下一个标点为止。\n",
+      "target_sha256": "7b8cf4306dfd6e0b6f21a932bd0cbbd1610025b61027a6e3e81a8fca4ad10cc0"
+    },
+    {
+      "segment_id": "05-05:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "70e915c53b5d8c27ae20744bbf00a2be5ed2bc08f81935d77bf02d86a316d050",
+      "target": "```python\nNEGATION_WORDS = {\"not\", \"no\", \"never\", \"nor\", \"none\", \"nothing\", \"neither\"}\nNEGATION_TERMINATORS = {\".\", \"!\", \"?\", \",\", \";\"}\n\n\ndef apply_negation(tokens):\n    out = []\n    negate = False\n    for token in tokens:\n        if token in NEGATION_TERMINATORS:\n            negate = False\n            out.append(token)\n            continue\n        if token in NEGATION_WORDS:\n            negate = True\n            out.append(token)\n            continue\n        out.append(f\"NOT_{token}\" if negate else token)\n    return out\n```\n",
+      "target_sha256": "70e915c53b5d8c27ae20744bbf00a2be5ed2bc08f81935d77bf02d86a316d050"
+    },
+    {
+      "segment_id": "05-05:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "b8246cdd33dd07eaf9394018bb382b942eaed84ed4aedad18ebc7a90e59834e1",
+      "target": "```python\n>>> apply_negation([\"not\", \"good\", \"at\", \"all\", \".\", \"but\", \"funny\"])\n['not', 'NOT_good', 'NOT_at', 'NOT_all', '.', 'but', 'funny']\n```\n",
+      "target_sha256": "b8246cdd33dd07eaf9394018bb382b942eaed84ed4aedad18ebc7a90e59834e1"
+    },
+    {
+      "segment_id": "05-05:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "650989e3610fd02b67601b56325a3e68d60ebed6e23655635d93986590361984",
+      "target": "现在，`good` 和 `NOT_good` 是不同的特征。分类器可以给它们赋予正负相反的权重。三行预处理，就能在情感分析基准上带来可测量的准确率提升。\n",
+      "target_sha256": "3439fea6aac00201e42f9a83c418226467f30ac3ffc6c4958a51b9be4ebe32a2"
+    },
+    {
+      "segment_id": "05-05:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 4: handling negation (the failure mode)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 30,
+      "source_sha256": "ef9781e287ac5ef93704dec350136e79473a31c9a27313d77f63fe94f26e8f91",
+      "target": "### 步骤 5：真正重要的评估指标\n",
+      "target_sha256": "edf05795a611e7d4ed6a4b7ab0056d0245397651c1688610dfea19903070e3a2"
+    },
+    {
+      "segment_id": "05-05:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 31,
+      "source_sha256": "d5fa1e1b99e88f8585341332af3b9a1050bcd3fd13b79c3531bfdbf4b6a07a7a",
+      "target": "类别不平衡时，只看准确率会产生误导。真实的情感语料通常有 70-80% 是正向，或有 70-80% 是负向；一个始终预测多数类的分类器就能达到 80% 准确率，却毫无价值。下面这些指标和信息，每一项都要报告：\n",
+      "target_sha256": "3a4584ff0e9751736e3af6a02a58151d8367d2db03db66d8f950cdc108f51d9a"
+    },
+    {
+      "segment_id": "05-05:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0063",
+      "kind": "list",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 32,
+      "source_sha256": "f8b3a1cc135d31eea0a2f3c4fae89130129030573e51045973dada987e2a6981",
+      "target": "- **各类别的精确率与召回率。** 每类各算一对，再分别取宏平均，得到兼顾类别平衡的单一数值。\n- **Macro-F1（宏平均，不平衡数据的主要指标）。** 对各类别的 F1 分数取等权平均。类别不平衡时，用它代替准确率。\n- **Weighted-F1（加权，另一种选择）。** 与宏平均类似，但按类别频率加权。如果这种不平衡本身具有业务意义，就将它与宏平均 F1 一并报告。\n- **混淆矩阵。** 展示原始计数。在相信任何标量指标之前，都要先检查它；它能揭示模型混淆了哪两个类别。\n- **各类别的错误样本。** 每类抽出 5 个预测错误的样本，读一读。没有什么能代替亲自查看实际错误。\n",
+      "target_sha256": "3b8eba008f682250d8e9799f75e5911c46b19bce702cfc9143db0716f1fc2e2b"
+    },
+    {
+      "segment_id": "05-05:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 33,
+      "source_sha256": "61286f5c9bfd83c30ddaf038c6e120b1bcd4b2035b8ede931ee84f7862398855",
+      "target": "对于严重不平衡的数据（比例 > 95-5），应报告 **ROC 曲线下面积（AUROC）** 和 **精确率-召回率曲线下面积（AUPRC）**，而不是准确率。AUPRC 对少数类更敏感，而少数类通常才是你关心的对象，例如垃圾信息、欺诈或少见的情感类别。\n",
+      "target_sha256": "d5175e9f369dfb3e81abbe27c9ea102472241efb2ffc0c61e324a8ea0c3e6593"
+    },
+    {
+      "segment_id": "05-05:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 34,
+      "source_sha256": "d37fa49f3f9395e6c2bd1789ea5cefe4ad91b30e203cfbdb7690839a9e63e6ab",
+      "target": "**要避免的常见错误。** 在不平衡数据上报告micro-F1（微平均），而不是宏平均 F1，会得到一个看起来很高的数字，因为它由多数类主导。宏平均 F1 会迫使你关注少数类的表现。\n",
+      "target_sha256": "7c751d32f4c35ae35442031b95fcdbc82d0801f383259f38c762b5ab27d32126"
+    },
+    {
+      "segment_id": "05-05:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 35,
+      "source_sha256": "5fb9a70068428516e7bd1c7545892f24284e599dcd6a10db8445f825ec22fb92",
+      "target": "```python\ndef evaluate(y_true, y_pred):\n    tp = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 1)\n    fp = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 1)\n    fn = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 0)\n    tn = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 0)\n    precision = tp / (tp + fp) if tp + fp else 0\n    recall = tp / (tp + fn) if tp + fn else 0\n    f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0\n    return {\"tp\": tp, \"fp\": fp, \"tn\": tn, \"fn\": fn, \"precision\": precision, \"recall\": recall, \"f1\": f1}\n```\n",
+      "target_sha256": "5fb9a70068428516e7bd1c7545892f24284e599dcd6a10db8445f825ec22fb92"
+    },
+    {
+      "segment_id": "05-05:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Build It",
+        "### Step 5: evaluation metrics that matter"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "05-05:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "eaa6b3516ca8c612c6bfed60bcc0b25a62dea085a84708dd93c4094e45f31a64",
+      "target": "scikit-learn 用六行代码就能正确完成这件事。\n",
+      "target_sha256": "57d8843d4abca13a57a86fa72b98a6ebc5dd949350577ad93861cd3350e523ad"
+    },
+    {
+      "segment_id": "05-05:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "e2925a68912f43fc0deee03ceee5a4134286a7fe8379cd0b1838dcf1b2d0a091",
+      "target": "```python\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.pipeline import Pipeline\n\npipe = Pipeline([\n    (\"tfidf\", TfidfVectorizer(ngram_range=(1, 2), min_df=2, sublinear_tf=True, stop_words=None)),\n    (\"clf\", LogisticRegression(C=1.0, max_iter=1000)),\n])\npipe.fit(X_train, y_train)\nprint(pipe.score(X_test, y_test))\n```\n",
+      "target_sha256": "e2925a68912f43fc0deee03ceee5a4134286a7fe8379cd0b1838dcf1b2d0a091"
+    },
+    {
+      "segment_id": "05-05:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "a6762833c8bb0a36ac76810cf1cb10fbd86c34986b1aede9ae9a6e3158bd456d",
+      "target": "注意三点。`stop_words=None` 会保留否定词；`ngram_range=(1, 2)` 会加入二元片段，使 `not_good` 成为一个特征；`sublinear_tf=True` 会减弱重复词的影响。在 SST-2 上，这三个标志决定了基线准确率是 75% 还是 85%。\n",
+      "target_sha256": "69143852a972783f7c6ae01b881a24b5736667ff36f8affb7584992b025d5d84"
+    },
+    {
+      "segment_id": "05-05:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### When to reach for a transformer"
+      ],
+      "ordinal": 40,
+      "source_sha256": "e88349b571adb712093c2742ec710f98f1af95c1eebdfa02f8fe3042887b930a",
+      "target": "### 何时采用 transformer\n",
+      "target_sha256": "01582b8a4025bfbaa06e62344843df82ae352e17ad8d4da60530e84af5b88228"
+    },
+    {
+      "segment_id": "05-05:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### When to reach for a transformer"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0081",
+      "kind": "list",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### When to reach for a transformer"
+      ],
+      "ordinal": 41,
+      "source_sha256": "fecf82957a7b28db1db99127c9967b1946e5f09fa9ea39dfcb53810872b8002b",
+      "target": "- 讽刺检测。传统模型在这里行不通，就是如此。\n- 情感在文中发生转变的长评论。\n- 方面级情感分析（aspect-based sentiment）。“Camera was great but battery was terrible.” 你需要把情感归属于具体方面。只能使用 Transformer 或结构化输出模型。\n- 非英语的低资源语言。多语言 BERT 可以直接提供一个零样本基线。\n",
+      "target_sha256": "4b790252e8926adb0e34eb7088e72c4a986826431655e8c43d55566906b681e7"
+    },
+    {
+      "segment_id": "05-05:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### When to reach for a transformer"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### When to reach for a transformer"
+      ],
+      "ordinal": 42,
+      "source_sha256": "063d25b9fbef05f0e2607281020bdc246da97a72238e96ed98fdf372a1c921ea",
+      "target": "如果你有上述任一需求，就跳到阶段 7（深入学习 Transformer）。否则，基于 TF-IDF、二元片段和否定处理的朴素 Bayes 或逻辑回归，就是你在 2026 年的生产基线。\n",
+      "target_sha256": "b0c1ad4a47187ebdd4e644bc2323b2b496cb4cca1400757154ea00aa1b603cff"
+    },
+    {
+      "segment_id": "05-05:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### When to reach for a transformer"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### The reproducibility trap (again)"
+      ],
+      "ordinal": 43,
+      "source_sha256": "5b159ecfbcabbeb30785cc1ee64f7a55bb446e43c33c8bbc595aca769d034fad",
+      "target": "### 再谈可复现性陷阱\n",
+      "target_sha256": "85761bee8e14a2664fd93e0ecbac8dc03ebc710b8b2aaa689374aa9abeadaa20"
+    },
+    {
+      "segment_id": "05-05:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### The reproducibility trap (again)"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### The reproducibility trap (again)"
+      ],
+      "ordinal": 44,
+      "source_sha256": "3ff59a6a34462c7083f2ef3f4f42d33766dae336f986adce3426a5c6053d2a91",
+      "target": "重新训练情感模型很常见，重新评估却不常见。论文报告的准确率使用了特定的数据划分、预处理和分词器。如果你在比较新模型和基线时，没有使用完全相同的流水线，得到的差异就会产生误导。始终用自己的流水线重新得到基线结果，不要直接使用论文中的数字。\n",
+      "target_sha256": "b1b9c7e7d11b94b424e123d9daff84f2c6226b8252c2fbc32315452d307ace15"
+    },
+    {
+      "segment_id": "05-05:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Use It",
+        "### The reproducibility trap (again)"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "05-05:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Ship It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "174250714ebb0e4fb4d3ab442f46ec10e7299546282385d733058ffe43c466ce",
+      "target": "保存为 `outputs/prompt-sentiment-baseline.md`：\n",
+      "target_sha256": "589ad1dcd01b17e6b0322ec5386ee0b8333ffaf449074899f4965f29492155b3"
+    },
+    {
+      "segment_id": "05-05:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Ship It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Ship It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "df1ac42c4b30b22a1c7e4a4b6b73f1a3594a9d7ff7328bf1190f740ffaad3b6a",
+      "target": "```markdown\n---\nname: sentiment-baseline\ndescription: Design a sentiment analysis baseline for a new dataset.\nphase: 5\nlesson: 05\n---\n\nGiven a dataset description (domain, language, size, label granularity, latency budget), you output:\n\n1. Feature extraction recipe. Specify tokenizer, n-gram range, stopword policy (usually keep), negation handling (scoped prefix or bigrams).\n2. Classifier. Naive Bayes for baseline, logistic regression for production, transformer only if the domain needs sarcasm / aspects / cross-lingual.\n3. Evaluation plan. Report precision, recall, F1, confusion matrix, and per-class error samples (not just scalars).\n4. One failure mode to monitor post-deployment. Domain drift and sarcasm are the top two.\n\nRefuse to recommend dropping stopwords for sentiment tasks. Refuse to report accuracy as the sole metric when classes are imbalanced (e.g., 90% positive). Flag subword-rich languages as needing FastText or transformer embeddings over word-level TF-IDF.\n```\n",
+      "target_sha256": "df1ac42c4b30b22a1c7e4a4b6b73f1a3594a9d7ff7328bf1190f740ffaad3b6a"
+    },
+    {
+      "segment_id": "05-05:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Ship It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "05-05:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "9f013f2280c57e7c8a6832d003c4ff3c2a6ca8d0f509f24fb2ec4b92a81f1dea",
+      "target": "1. **简单。** 将 `apply_negation` 作为预处理步骤加入 scikit-learn 流水线，在一个小型情感数据集上测量 F1 的变化。\n2. **中等。** 实现按类别加权的逻辑回归：向 scikit-learn 传入 `class_weight=\"balanced\"`，或者自己推导梯度。在人为构造的 90-10 类别不平衡数据上测量效果。\n3. **困难。** 在情感模型的残差上训练第二个分类器，构建一个讽刺检测器。记录你的实验设置。当准确率低于随机猜测水平时，要提醒读者：2 类讽刺分类的随机猜测水平约为 50%，而大多数初次尝试都处于这一水平。\n",
+      "target_sha256": "15696a7a6373478c6acd7956da375a674f90c866d6cd8cebd3b1c73f1681676c"
+    },
+    {
+      "segment_id": "05-05:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Key Terms"
+      ],
+      "ordinal": 50,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "05-05:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Key Terms"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0101",
+      "kind": "table",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Key Terms"
+      ],
+      "ordinal": 51,
+      "source_sha256": "6fb62078540d0e0afce24ca54f0b09c492095499bfd7b47b97e9e1149757c9fc",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 情感极性（polarity） | 正向或负向 | 二元标签；有时扩展为中性，或更细的粒度（5 星）。 |\n| 方面级情感分析 | 各方面的情感极性 | 将情感归属于文本中提及的具体实体或属性。 |\n| 否定范围标记 | 反转邻近 token | 给“not”之后的 token 加上 `NOT_` 前缀，直到标点为止。 |\n| Laplace 平滑 | 给计数加 1 | 避免朴素 Bayes 中出现零概率特征。 |\n| L2 正则化 | 缩小权重 | 在损失中加入 `lambda * sum(w^2)`。对稀疏文本特征必不可少。 |\n",
+      "target_sha256": "0bb820537bcf1ab6d21e176c616000f76af30e0053ea8c79f9ded48e5f44855f"
+    },
+    {
+      "segment_id": "05-05:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Key Terms"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Further Reading"
+      ],
+      "ordinal": 52,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "05-05:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Further Reading"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-05:b0105",
+      "kind": "list",
+      "heading_path": [
+        "# Sentiment Analysis",
+        "## Further Reading"
+      ],
+      "ordinal": 53,
+      "source_sha256": "4fd5298d557ca1dbe8ee2c6167583b4edf46a0c8f1e974ad95e38f82b6da10ba",
+      "target": "- [Pang and Lee (2008). Opinion Mining and Sentiment Analysis](https://www.cs.cornell.edu/home/llee/opinion-mining-sentiment-analysis-survey.html) — 奠基性的综述。篇幅很长，但前四节涵盖了传统方法的全部内容。\n- [Wang and Manning (2012). Baselines and Bigrams: Simple, Good Sentiment and Topic Classification](https://aclanthology.org/P12-2018/) — 这篇论文表明，在短文本上，二元片段加朴素 Bayes 很难被超越。\n- [scikit-learn text feature extraction docs](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) — `CountVectorizer`、`TfidfVectorizer` 及其各项可调参数的参考文档。\n",
+      "target_sha256": "9ad715c9827988de0267ab15ae4013414d95bc6c92c1ca7d01964ad336678014"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+  "additional_glossary_sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S51-sentiment-analysis/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "38fcca71f9ac69299a1e8a9a6d22f37e3cca3273d074499c2c54d39cbbdacb33",
+  "author_review": {
+    "technical_full_en_zh": true,
+    "separate_full_zh_read": true,
+    "source_issues_separate": true,
+    "candidate_blocks": 44,
+    "all_blocks": 105,
+    "peer_requested_delta": {
+      "blocks": [
+        "b0007",
+        "b0027",
+        "b0063",
+        "b0067"
+      ],
+      "previous_target_sha256": "fbdd9c1365f1b787118639d13b57910fff6204c78b1bf6583b0d23c6efbe10bd",
+      "new_target_sha256": "41d78c428e5352860e0297397010f281574bbdaa3b85714d5ddfdd9a45433184",
+      "exact_inverse_verified": true,
+      "recapture": false
+    }
+  },
+  "quantity_mappings": [
+    {
+      "segment_id": "05-05:b0011",
+      "source": "two negative-coded words",
+      "target": "两个带有负面意味的词",
+      "dimension": "word count"
+    },
+    {
+      "segment_id": "05-05:b0017",
+      "source": "two-step",
+      "target": "两步",
+      "dimension": "procedure steps"
+    },
+    {
+      "segment_id": "05-05:b0033",
+      "source": "tens of thousands of examples",
+      "target": "数万条样本",
+      "dimension": "order of magnitude of example count"
+    },
+    {
+      "segment_id": "05-05:b0057",
+      "source": "Three lines",
+      "target": "三行",
+      "dimension": "code line count; source claim retained"
+    },
+    {
+      "segment_id": "05-05:b0063",
+      "source": "One pair per class",
+      "target": "每类各算一对",
+      "dimension": "metric pair per class"
+    },
+    {
+      "segment_id": "05-05:b0063",
+      "source": "a single number",
+      "target": "单一数值",
+      "dimension": "summary scalar count"
+    },
+    {
+      "segment_id": "05-05:b0073",
+      "source": "six lines",
+      "target": "六行",
+      "dimension": "code line count; source claim retained"
+    },
+    {
+      "segment_id": "05-05:b0077",
+      "source": "Three things / these three flags",
+      "target": "三点 / 这三个标志",
+      "dimension": "configuration count"
+    },
+    {
+      "segment_id": "05-05:b0097",
+      "source": "a second classifier",
+      "target": "第二个分类器",
+      "dimension": "classifier order"
+    },
+    {
+      "segment_id": "05-05:b0105",
+      "source": "the first four sections",
+      "target": "前四节",
+      "dimension": "section count/order"
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "15589e6f87aee77493ea5512ead8d12be253379a",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    }
+  ]
+}
