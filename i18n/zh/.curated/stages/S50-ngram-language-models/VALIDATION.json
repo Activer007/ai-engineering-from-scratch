@@ -1,0 +1,433 @@
+{
+  "stage_id": "S50-ngram-language-models",
+  "lesson_id": "05-16",
+  "date": "2026-10-02",
+  "status": "reviewed-draft-submitted",
+  "final_acceptance": false,
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_path": "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/docs/en.md",
+  "source_sha256": "92d3b5e90a0730efd6819090e514a562e02185a3a1b65f78b60331692adbb9ee",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/docs/zh.md",
+  "target_sha256": "65df45c729d3417c64bc4bc546bf2a712c62ba98e3c0870da7c9fc4dd0a41fd4",
+  "support_commit": "37628f1450134ac9bdba10236982341fddb9ca35",
+  "content_commit": "5b237395a1edd480cb809388edff03b13dc49780",
+  "draft_pr_number": 56,
+  "coverage": {
+    "lines": 256,
+    "blocks": 105,
+    "translatable_blocks": 43,
+    "headings": 15,
+    "fences": 10,
+    "python_fences": 5,
+    "text_fences": 2,
+    "figure_fences": 2,
+    "markdown_fences": 1,
+    "tables": 1,
+    "table_rows_including_header": 8,
+    "table_columns": 3,
+    "exercises": 3,
+    "references": 5,
+    "relative_svg_assets": 1
+  },
+  "author_review": {
+    "full_English_Chinese_technical": true,
+    "separate_full_Chinese_read": true,
+    "all_blocks_hash_bound": true
+  },
+  "independent_review": {
+    "verdict": "PASS_TRANSLATION_WITH_SOURCE_ISSUES",
+    "full_English_Chinese_technical": true,
+    "separate_full_Chinese_read": true,
+    "author_QA_read_before_review": false,
+    "required_translation_changes": 0,
+    "source_issue_groups": 15
+  },
+  "dependencies": {
+    "manifest": "DEPENDENCIES.json",
+    "sha256": "442a20403a2bb267addcce6e6b1ccf6b2c01da4f36a4c1c09044eb9ad83b7346",
+    "count": 56,
+    "each_pinned_git_and_local_hash_equal": true,
+    "terminology": "TERMINOLOGY.md",
+    "terminology_sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06",
+    "scope_sha256": "0447dcdeb7eeed912f5e3c8c7d38d4c4c8111fdbde33150109ba566e3a1dda16"
+  },
+  "assets": [
+    {
+      "source_path": "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/assets/ngram.svg",
+      "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/assets/ngram.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "06a8718f1b24c551a6b62b85200c33c7ba193a94c8e6e63c5b1b224a666d5c07"
+    }
+  ],
+  "resource_replay_boundary": "原 curated render 仅重放 Markdown。SVG 另从固定源精确复制并核对 source/Git/target 三方字节和 manifest；不声称 render 自动打包 SVG。",
+  "execution": {
+    "author": {
+      "full_pre_read": true,
+      "canonical": {
+        "lines": 118,
+        "sha256": "f1e410e20a19c8321a83dd2cc7e4e39f09355c534c23cf7454ae5fc6e5775227",
+        "default_main_unchanged": true,
+        "train_sentences": 10,
+        "test_sentences": 2,
+        "vocabulary_size": 28,
+        "sample_seeds": [
+          1,
+          7,
+          42
+        ],
+        "printed_perplexity": {
+          "Laplace": 10.29,
+          "Kneser_Ney": 4.42
+        },
+        "scope": "本地字面量小语料二元演示；不能证明 Brown/Shakespeare/Transformer 基准"
+      },
+      "external_timeout_seconds": 40,
+      "documentary_python_blocks_executed": 5,
+      "finite_external_checks_passed": 25,
+      "fixture_corrections": "外部夹具两次预期修正：负折扣实际造成大于一的概率，以及浮点指数比较改用容差；原代码未改"
+    },
+    "independent_reviewer": {
+      "full_pre_read": true,
+      "canonical": {
+        "lines": 118,
+        "sha256": "f1e410e20a19c8321a83dd2cc7e4e39f09355c534c23cf7454ae5fc6e5775227",
+        "default_main_unchanged": true,
+        "train_sentences": 10,
+        "test_sentences": 2,
+        "vocabulary_size": 28,
+        "sample_seeds": [
+          1,
+          7,
+          42
+        ],
+        "printed_perplexity": {
+          "Laplace": 10.29,
+          "Kneser_Ney": 4.42
+        },
+        "scope": "本地字面量小语料二元演示；不能证明 Brown/Shakespeare/Transformer 基准"
+      },
+      "external_timeout_seconds": 20,
+      "documentary_python_blocks_executed": 5,
+      "finite_external_checks_passed": 14,
+      "fixture_correction": "外部夹具修正负折扣预期，最终 14 组通过；原代码未改"
+    },
+    "no_installs_downloads_or_external_model_APIs": true,
+    "shipped_prompt_executed": false,
+    "external_benchmarks_executed": false
+  },
+  "checks": {
+    "author_original_check": "PASS",
+    "independent_original_check": "PASS",
+    "author_original_regressions": "33/33 PASS",
+    "independent_original_regressions": "33/33 PASS",
+    "author_two_new_external_replays": "PASS byte-identical Markdown",
+    "independent_two_new_external_replays": "PASS byte-identical Markdown",
+    "author_repository_audits": {
+      "lessons": "523 lessons, 0 issues",
+      "certifications": "67 lessons, 12 assessments, 505 assessment questions, 0 issues",
+      "readme_counts": "counts and volume tables match"
+    },
+    "independent_offline_site_parser": {
+      "executed_by": "独立审员",
+      "empty_heading_ids": 9,
+      "duplicate_nonempty_heading_ids": 0,
+      "browser_verified": false,
+      "result": "source_renderer_limitation"
+    }
+  },
+  "actual_GFM": {
+    "result": "PASS",
+    "observed_by": "作者本人，dot 云 Chrome 自己的新标签",
+    "verified_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/5b237395a1edd480cb809388edff03b13dc49780/i18n/zh/phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/docs/zh.md",
+    "headings": 15,
+    "unique_nonempty_heading_anchors": 15,
+    "complete_DOM_text_units_matching_frozen_body": 57,
+    "strong": 24,
+    "em": 1,
+    "unparsed_double_stars": 0,
+    "inline_code_matching_source": 19,
+    "code_payloads_matching_source": 10,
+    "complete_table_shape": [
+      8,
+      3
+    ],
+    "SVG_all_text_labels_visually_checked": 39,
+    "SVG_stages": 4,
+    "SVG_arrows": 3,
+    "SVG_complete_captions": 2,
+    "all_code_screenshots_checked": true,
+    "long_prompt_line_horizontal_scrolling_verified": true,
+    "figure_interaction": "two plain code placeholders; not passed"
+  },
+  "quantity_mappings": [
+    {
+      "segment_id": "05-16:b0005",
+      "source": "~45 minutes",
+      "target": "~45 分钟",
+      "equivalence": "近似时长45分钟，分钟单位等值"
+    },
+    {
+      "segment_id": "05-16:b0013",
+      "source": "at least one; Fifty years",
+      "target": "至少一个；五十年",
+      "equivalence": "序列数量下界和50年量级，未新增阿拉伯数字"
+    },
+    {
+      "segment_id": "05-16:b0021",
+      "source": "one guess at a time; a few hundred letters",
+      "target": "一次猜一个；几百个字母",
+      "equivalence": "每次一个猜测，模糊数百字母量级"
+    },
+    {
+      "segment_id": "05-16:b0023",
+      "source": "a second, identical guesser",
+      "target": "另一个猜测方式完全相同的人",
+      "equivalence": "第二位猜测者，次序不变"
+    },
+    {
+      "segment_id": "05-16:b0025",
+      "source": "three-quarters; bits per letter",
+      "target": "四分之三；每个字母的 bits",
+      "equivalence": "3/4比例自然中文等值；每字母单位非每token"
+    },
+    {
+      "segment_id": "05-16:b0029",
+      "source": "two tokens; 1-bit-per-letter; 100K tokens",
+      "target": "两个 token；每个字母只需 1 bit；100K 个 token",
+      "equivalence": "2个token记忆；1比特/字母；K缩写保留，不混字母和词元"
+    },
+    {
+      "segment_id": "05-16:b0031",
+      "source": "bits per letter; nats per word token",
+      "target": "每个字母的 bits 数；每个单词 token 的 nats 数",
+      "equivalence": "底2/自然对数以及分母各自保留，源可比性缺陷另列"
+    },
+    {
+      "segment_id": "05-16:b0035",
+      "source": "trigrams; 4-grams",
+      "target": "三元模型；4 元模型",
+      "equivalence": "片段阶数3/4；源数字3、4逐块保留"
+    },
+    {
+      "segment_id": "05-16:b0045",
+      "source": "one context",
+      "target": "一种上下文",
+      "equivalence": "上下文种类数为1"
+    },
+    {
+      "segment_id": "05-16:b0071",
+      "source": "Three moving parts",
+      "target": "三个组成部分",
+      "equivalence": "3项结构"
+    },
+    {
+      "segment_id": "05-16:b0083",
+      "source": "10x",
+      "target": "10 倍",
+      "equivalence": "约10倍的比值；源benchmark并未复现"
+    },
+    {
+      "segment_id": "05-16:b0097",
+      "source": "1,000-sentence; 20 sentences; 30-50%",
+      "target": "1,000 个句子；20 个句子；30-50%",
+      "equivalence": "训练句数、生成句数和下降百分比角色保持"
+    },
+    {
+      "segment_id": "05-16:b0101",
+      "source": "0.6-1.3 bits/letter",
+      "target": "0.6-1.3 bits/letter（每个字母的比特数）",
+      "equivalence": "源区间及每字母量纲保留"
+    }
+  ],
+  "independent_source_issues": [
+    {
+      "id": "categorical_hook_and_history",
+      "segments": [
+        "05-16:b0003",
+        "05-16:b0011",
+        "05-16:b0013"
+      ],
+      "summary": "“单词令人意外就说明模型差”及 1980–2015 所有系统都采用 n 元模型等历史概括过于绝对，未逐项外部核实。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "Shannon_guessing_and_entropy",
+      "segments": [
+        "05-16:b0021",
+        "05-16:b0023",
+        "05-16:b0025",
+        "05-16:b0027",
+        "05-16:b0101"
+      ],
+      "summary": "猜测次数的无损编码需要可复现的猜测次序、上下文与编码约定；Shannon 的数值、四分之三被限定的解释及历史叙述未重现实验。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "units_letters_vs_words",
+      "segments": [
+        "05-16:b0029",
+        "05-16:b0031",
+        "05-16:b0047",
+        "05-16:b0081",
+        "05-16:b0101"
+      ],
+      "summary": "bits/nats 换底只适用于相同事件单位；每字母与每单词 token 的分母不能仅靠换对数底等同，实际代码还计入 EOS。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "smoothing_oversimplifications",
+      "segments": [
+        "05-16:b0039",
+        "05-16:b0043",
+        "05-16:b0045",
+        "05-16:b0065"
+      ],
+      "summary": "Brown 2007 年 30% 数值缺少本地可核实实验配置；平滑方法和 Francisco 示例是简化说明，“任何真实文本都无法评估”过于绝对。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "KN_probability_support_and_OOV",
+      "segments": [
+        "05-16:b0069",
+        "05-16:b0071",
+        "05-16:b0093",
+        "05-16:b0101"
+      ],
+      "summary": "文档 KN 对任意 OOV 注入 epsilon，会在固定支持集之外增加未归一化质量；原 main 对已见上下文的 OOV 返回零，两者均未训练归一化 UNK 桶。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "discount_and_empty_training",
+      "segments": [
+        "05-16:b0069"
+      ],
+      "summary": "折扣缺少边界校验；有限样例中 D=2 使概率和为 2，D=-1 可得到 1.5 的单项概率，空训练集仅返回 epsilon。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "count_and_laplace_input_contract",
+      "segments": [
+        "05-16:b0057",
+        "05-16:b0063"
+      ],
+      "summary": "计数与 Laplace 函数依赖调用者保证分词、阶数、上下文长度和固定词表；额外 OOV 查询、n=0 或无效词表大小没有完整校验。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "canonical_laplace_EOS",
+      "segments": [
+        "05-16:b0063"
+      ],
+      "summary": "原 main 的 Laplace 分母计入无后继的 EOS；词表包含 BOS，而生成候选排除 BOS，因此概率支持集和生成时重归一化需区别。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "sampling_seed_and_search_claim",
+      "segments": [
+        "05-16:b0075",
+        "05-16:b0077"
+      ],
+      "summary": "不同随机种子不保证输出不同；贪心选择加温度不是束搜索，示例没有实现 argmax、温度或束搜索。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "sampler_input_failures",
+      "segments": [
+        "05-16:b0075"
+      ],
+      "summary": "总概率为零仍会选中首候选；空词表和空前缀存在边界行为，文档与原 main 返回序列是否含边界标记也不同。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "perplexity_clipping_and_validation",
+      "segments": [
+        "05-16:b0047",
+        "05-16:b0049",
+        "05-16:b0081"
+      ],
+      "summary": "困惑度将零或负概率裁剪到 1e-12，掩盖不可能事件；p>1 可使困惑度小于 1，空评估集会除以零。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "benchmarks_and_model_comparisons",
+      "segments": [
+        "05-16:b0083",
+        "05-16:b0087",
+        "05-16:b0097",
+        "05-16:b0105"
+      ],
+      "summary": "Brown、Transformer 与 Shakespeare 的性能数字未复现；140/(15..30) 约为 4.67..9.33，约 10 倍只是宽泛描述，神经模型必须明显优于 KN 也非普遍判据。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "implementation_scope",
+      "segments": [
+        "05-16:b0055",
+        "05-16:b0067",
+        "05-16:b0075",
+        "05-16:b0081",
+        "05-16:b0093",
+        "05-16:b0097"
+      ],
+      "summary": "前文计数为三元，但 KN、生成与困惑度实现为二元；不是完整三元、四元或 Modified Kneser-Ney 系统，未执行额外语料与拼写纠错练习。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "SVG_and_renderer",
+      "segments": [
+        "05-16:b0017",
+        "05-16:b0033",
+        "05-16:b0051"
+      ],
+      "summary": "SVG 中未见单词与未见组合的说法及性能断言忠实保留；两个 figure 是站点注册占位。独立审员的原站离线解析发现 9 个空标题锚点，不能替代实际网站验收。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    },
+    {
+      "id": "reference_boundary",
+      "segments": [
+        "05-16:b0105"
+      ],
+      "summary": "五条参考的英文题名和 URL 保留；本轮没有下载论文、外部软件或验证现时产品与历史断言。",
+      "translation_action": "原意及载荷忠实保留，未暗修"
+    }
+  ],
+  "coordinator_pending": {
+    "aggregate_validation": "PASS; 71 lessons, two byte-identical outputs",
+    "final_remote_all_file_byte_comparison": "POST_COMMIT; final result in PR body and rollout index",
+    "exact_final_commit_CI_query": "POST_COMMIT; final result in PR body and rollout index",
+    "final_evidence_commit": "pending"
+  },
+  "acceptance_limits": {
+    "full_website": "not_passed",
+    "mobile": "not_passed",
+    "interactive_figures": "not_passed",
+    "hosted_CI": "pending",
+    "publication": "not_performed",
+    "merge": "not_performed"
+  },
+  "coordinator_validation": {
+    "combined_original_strict": 69,
+    "S07_exact_symbolic_exception": 1,
+    "S19_exact_pipe_repair": 1,
+    "original_regressions": 33,
+    "S07_guards": 24,
+    "S19_guards": 50,
+    "all_lessons_double_replay": {
+      "count": 71,
+      "result": "byte-identical",
+      "asset_scope": "Core renders Markdown; manifest SVG separately hash-verified/copied into both output trees then recursively compared"
+    },
+    "repository_audits": "523 lessons,67 certifications,12 assessments,505 questions; zero issues; README/book counts pass",
+    "source_and_generic_controls": "unchanged"
+  },
+  "snapshot": {
+    "reviewed_drafts": 71,
+    "in_progress": 2,
+    "unstarted": 450,
+    "curriculum_total": 523,
+    "merged": 0,
+    "released": 0,
+    "live_count_authority": "PR #7 single ROLLOUT-INDEX.json"
+  },
+  "post_commit_verification": "After final evidence commit, changed files are fetched and compared byte-for-byte and exact-head PR/CI metadata checked. Results are recorded in PR body and single rollout index to avoid a self-referencing evidence commit. Empty CI arrays are not a pass."
+}
