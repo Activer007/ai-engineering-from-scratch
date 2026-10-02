@@ -6,7 +6,7 @@
   "source_blob": "30177b2b7c6f2b47197f41920e5f3ea34a302e13",
   "source_sha256": "88d32836b77ed732bc2e2610451d4ea5509c1b20b9bb96dddc2dd3cd0bc47cff",
   "target_path": "i18n/zh/phases/01-math-foundations/20-fourier-transform/docs/zh.md",
-  "target_sha256": "94dd830f1ce5e7066148869241adefaee48bc537a02372e8660de7fbba7c3385",
+  "target_sha256": "8ed5894393b29e8e9ff3d74768b1bbb15dcef55b21b8fa1bfffe2a98dd965c84",
   "glossary_version": "1.0",
   "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
   "status": "language-reviewed",
@@ -748,7 +748,8 @@
       ],
       "ordinal": 32,
       "source_sha256": "37e41a8747c6286667098daa9835625c82072b94522be70247e000e363243111",
-      "target": "1. 将信号拆成偶数索引采样点和奇数索引采样点。\n2. 递归计算每一半的 DFT。\n3. 使用“旋转因子”（twiddle factors）e^(-2*pi*i*k/N)，合并两个长度减半的 DFT。\n"
+      "target": "1. 将信号拆成偶数索引采样点和奇数索引采样点。\n2. 递归计算每一半的 DFT。\n3. 使用“旋转因子”（twiddle factors）e^(-2\\*pi\\*i*k/N)，合并两个长度减半的 DFT。\n",
+      "target_sha256": "c7c7b0a3e2f10f23552bea2f57fef16ff5ee922bb8abf8db2bb10382024df80b"
     },
     {
       "segment_id": "01-20:b0064",
@@ -1444,7 +1445,8 @@
       ],
       "ordinal": 61,
       "source_sha256": "4fac09998d457970a34e5e3aaee76eafc40f1abbee1072c4328c03d0b75b95e3",
-      "target": "| 性质 | 时域 | 频域 |\n|----------|-------------|-----------------|\n| 线性性 | a*x + b*y | a*X + b*Y |\n| 时移 | x[n - k] | X[f] * e^(-2*pi*i*f*k/N) |\n| 频移 | x[n] * e^(2*pi*i*f0*n/N) | X[f - f0] |\n| 卷积 | x * h | X * H（逐点相乘） |\n| 乘法 | x * h（逐点相乘） | X * H（循环卷积，乘以缩放因子 1/N） |\n| Parseval 定理 | sum \\|x[n]\\|^2 | (1/N) * sum \\|X[k]\\|^2 |\n| 共轭对称性（实数输入） | x[n] 为实数 | X[k] = conj(X[N-k]) |\n"
+      "target": "| 性质 | 时域 | 频域 |\n|----------|-------------|-----------------|\n| 线性性 | a\\*x + b\\*y | a\\*X + b\\*Y |\n| 时移 | x[n - k] | X[f] * e^(-2\\*pi\\*i\\*f\\*k/N) |\n| 频移 | x[n] * e^(2\\*pi\\*i\\*f0\\*n/N) | X[f - f0] |\n| 卷积 | x * h | X * H（逐点相乘） |\n| 乘法 | x * h（逐点相乘） | X * H（循环卷积，乘以缩放因子 1/N） |\n| Parseval 定理 | sum \\|x[n]\\|^2 | (1/N) * sum \\|X[k]\\|^2 |\n| 共轭对称性（实数输入） | x[n] 为实数 | X[k] = conj(X[N-k]) |\n",
+      "target_sha256": "87ad63c3041f42308d9d41db2d0e5b848df7b4963e755a8fec459cecdda4ea32"
     },
     {
       "segment_id": "01-20:b0122",
@@ -2747,7 +2749,8 @@
       ],
       "ordinal": 117,
       "source_sha256": "70eb8b72c13c87882225f979046b89785402c4f5989d2efdcd6b48d88652f668",
-      "target": "| 术语 | 含义 |\n|------|---------------|\n| DFT（离散 Fourier 变换） | 将 N 个时域采样点转换为 N 个频域系数。每个系数都是信号与相应频率复正弦波的相关值 |\n| FFT（快速 Fourier 变换） | 以 O(N log N) 复杂度计算 DFT 的算法。Cooley-Tukey 算法递归拆分奇偶索引 |\n| 逆 DFT | 根据频率系数重构时域信号。公式与 DFT 相同，但指数符号相反，且乘以 1/N |\n| 频点 | DFT 输出中的每个索引 k 都表示频率 k*fs/N Hz。“频点”就是离散的频率位置 |\n| 直流分量 | X[0]，零频率系数，与信号均值成正比 |\n| Nyquist 频率 | fs/2，在采样率 fs 下能表示的最高频率；高于此值的频率会发生混叠 |\n| 功率谱 | \\|X[k]\\|^2，即每个频率系数的模的平方，表示能量在各个频率上的分布 |\n| 相位谱 | angle(X[k])，每个频率分量的相位偏移，在分析中经常被忽略 |\n| 频谱泄漏 | 将非周期信号视为周期信号而产生的额外频率成分，可通过加窗减少 |\n| 窗函数 | 在 DFT 之前应用的渐变函数（Hann、Hamming、Blackman），用于减少频谱泄漏 |\n| 旋转因子 | 复指数 e^(-2*pi*i*k/N)，用于 FFT 蝶形运算中合并子 DFT |\n| 卷积定理 | 时域中的卷积等于频域中的逐点相乘，是信号处理与 CNN 的基础 |\n| 循环卷积 | 信号首尾回绕相接的卷积，是 DFT 自然计算出的卷积形式 |\n| 线性卷积 | 不发生回绕的标准卷积，可以在 DFT 之前补零来实现 |\n| Parseval 定理 | Fourier 变换保持总能量不变，sum \\|x[n]\\|^2 = (1/N) sum \\|X[k]\\|^2 |\n| 混叠 | 采样率不足时，高于 Nyquist 的频率表现为较低频率的现象 |\n"
+      "target": "| 术语 | 含义 |\n|------|---------------|\n| DFT（离散 Fourier 变换） | 将 N 个时域采样点转换为 N 个频域系数。每个系数都是信号与相应频率复正弦波的相关值 |\n| FFT（快速 Fourier 变换） | 以 O(N log N) 复杂度计算 DFT 的算法。Cooley-Tukey 算法递归拆分奇偶索引 |\n| 逆 DFT | 根据频率系数重构时域信号。公式与 DFT 相同，但指数符号相反，且乘以 1/N |\n| 频点 | DFT 输出中的每个索引 k 都表示频率 k*fs/N Hz。“频点”就是离散的频率位置 |\n| 直流分量 | X[0]，零频率系数，与信号均值成正比 |\n| Nyquist 频率 | fs/2，在采样率 fs 下能表示的最高频率；高于此值的频率会发生混叠 |\n| 功率谱 | \\|X[k]\\|^2，即每个频率系数的模的平方，表示能量在各个频率上的分布 |\n| 相位谱 | angle(X[k])，每个频率分量的相位偏移，在分析中经常被忽略 |\n| 频谱泄漏 | 将非周期信号视为周期信号而产生的额外频率成分，可通过加窗减少 |\n| 窗函数 | 在 DFT 之前应用的渐变函数（Hann、Hamming、Blackman），用于减少频谱泄漏 |\n| 旋转因子 | 复指数 e^(-2\\*pi\\*i*k/N)，用于 FFT 蝶形运算中合并子 DFT |\n| 卷积定理 | 时域中的卷积等于频域中的逐点相乘，是信号处理与 CNN 的基础 |\n| 循环卷积 | 信号首尾回绕相接的卷积，是 DFT 自然计算出的卷积形式 |\n| 线性卷积 | 不发生回绕的标准卷积，可以在 DFT 之前补零来实现 |\n| Parseval 定理 | Fourier 变换保持总能量不变，sum \\|x[n]\\|^2 = (1/N) sum \\|X[k]\\|^2 |\n| 混叠 | 采样率不足时，高于 Nyquist 的频率表现为较低频率的现象 |\n",
+      "target_sha256": "9c41dbfd006a8f09bdfb63fb174e2743ce1c0ab8b01f084c7274539752f9bee2"
     },
     {
       "segment_id": "01-20:b0234",
