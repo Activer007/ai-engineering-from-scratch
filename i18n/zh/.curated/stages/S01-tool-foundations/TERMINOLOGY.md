@@ -1,6 +1,6 @@
 # S01 工具基础术语增量 v1.0
 
-日期：2026-10-02。与固定核心 v1.0 及试点附表 v1.1 联用，不改写其既有含义。首次正文中按下表解释，后续可用中文；代码、命令、路径、品牌、字段、快捷键原样。引用语境均来自固定英文 S01 四课。
+日期：2026-10-02。与固定核心 v1.0 及试点附表 v1.1 联用，不改写其既有含义。首次正文中按下表解释，后续可用中文；代码、命令、路径、品牌、字段、快捷键原样。词项来源为固定英文 S01 四课或本阶段审查流程，表内分别注明。
 
 | EN | 推荐呈现 | 语境 / 不可混淆项 | 来源课 |
 |---|---|---|---|
@@ -16,15 +16,15 @@
 | commit | 提交（commit） | Git记录/动作；commit hash、命令及Conventional类型不译 | 00/02 |
 | staging / stage | 暂存 | Git index语境；不是课程阶段 | 00/02 |
 | merge | 合并（merge） | 合并Git历史；不暗示允许合并本项目PR | 00/02 |
-| pull request / PR | 拉取请求（pull request，PR） | 协作审查机制；PR缩写与平台按钮保留 | 00/02 |
-| diff | 差异（diff） | 文件或提交之间的变化 | 00/02、00/05 |
+| pull request / PR | 拉取请求（pull request，PR） | 协作审查机制；PR缩写与平台按钮保留 | 本阶段审查流程，非课文用词 |
+| diff | 差异（diff） | 文件或提交之间的变化 | 本阶段审查流程，非课文用词 |
 | dependency | 依赖项 | 项目需要的软件包；先修依赖按教学语境区分 | 00/06 |
 | virtual environment | 虚拟环境（virtual environment） | Python包隔离；不是虚拟机 | 00/06 |
 | dependency resolution | 依赖解析 | 为约束选择兼容版本；不是解析源代码语法 | 00/06 |
 | lockfile | 锁文件（lockfile） | 记录解析后的依赖；具体文件名原样 | 00/06 |
 | transitive dependency | 传递依赖项 | 依赖项自身需要的依赖 | 00/06 |
 | pin (a version) | 锁定（版本） | 仅版本锁定语境；不同于Registry中的完整“锁定记录” | 00/06 |
-| editable install | 可编辑安装 | 使用源码目录开发的安装模式；`-e`原样 | 00/06 |
+| editable install | 可编辑安装 | 使用源码目录开发的安装模式；`-e`原样 | 00/06 的 `-e` 命令语境 |
 | notebook | 笔记本（notebook） | Jupyter交互文档；不是笔记本电脑 | 00/05 |
 | cell / code cell | 单元格 / 代码单元格 | 笔记本文档的执行或文本单元 | 00/05 |
 | kernel | 内核（kernel） | 本课指后台执行单元格的Python进程；不同于操作系统内核/CUDA kernel | 00/05 |
