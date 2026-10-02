@@ -1,0 +1,1795 @@
+{
+  "schema_version": 1,
+  "lesson_id": "01-03",
+  "source_path": "phases/01-math-foundations/03-matrix-transformations/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "ea0ea17c4d71b209c4d8d3b7dc843c94b6d8b481",
+  "source_sha256": "bd248b5462edccab7838ef32e303839811157e453873fb6b19421e4f3d5f2365",
+  "target_path": "i18n/zh/phases/01-math-foundations/03-matrix-transformations/docs/zh.md",
+  "target_sha256": "99e5d8610f217f930f184ce56bc259b69cf25c014025f0aa14f24030928f2098",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "source_policy": "Fresh English-first authoring from pinned source; no historical Chinese lesson/cache or upstream Chinese PR accessed or reused",
+    "author_review": "Full source comparison and complete Chinese-only self-review; no independent review claimed"
+  },
+  "segments": [
+    {
+      "segment_id": "01-03:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations"
+      ],
+      "ordinal": 1,
+      "source_sha256": "dbe1794d04ff5a2451585c271b278fb29fed40c8f54fda7d8f4b48cc1c7624d9",
+      "target": "# 矩阵变换\n"
+    },
+    {
+      "segment_id": "01-03:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Matrix Transformations"
+      ],
+      "ordinal": 2,
+      "source_sha256": "032a61b1c0b4a28dac1ecffcf40c24fdf9d36a6c5f8f75538df472991cf986c0",
+      "target": "> 矩阵（matrix）就像一台重塑空间的机器。弄清它如何作用于每一个点，就能理解整个变换。\n"
+    },
+    {
+      "segment_id": "01-03:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations"
+      ],
+      "ordinal": 3,
+      "source_sha256": "06331dc68eb640ebf805120cf2f819bfd418eb7007d0d0e1b52734a651f6fdc5",
+      "target": "**Type:** Build\n**Languages:** Python, Julia\n**Prerequisites:** 第 1 阶段，第 01-02 课（线性代数直觉、向量与矩阵运算）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "01-03:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "01-03:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "314ae4cde6e3a1a04d4bbd890322df92b49afc4c7b6986563ba5712cbd817dcf",
+      "target": "- 构造旋转（rotation）、缩放（scaling）、剪切（shear）和反射（reflection）矩阵，并将它们应用于 2D 和 3D 空间中的点\n- 通过矩阵乘法复合多个变换，并验证顺序会影响结果\n- 根据特征方程（characteristic equation）计算 2x2 矩阵的特征值（eigenvalue）和特征向量（eigenvector）\n- 解释为什么特征值决定主成分分析（PCA）的方向、循环神经网络（RNN）的稳定性以及谱聚类的行为\n"
+    },
+    {
+      "segment_id": "01-03:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "01-03:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "ffddb7f2712bde6fd78a7de70bf3a254b7de8cca1a1ae8e2510774abedf70e9c",
+      "target": "阅读 PCA 的资料时，你会看到“求协方差矩阵的特征向量”；阅读模型稳定性的资料时，你会看到“检查所有特征值的模是否都小于 1”；阅读数据增强的资料时，你会看到“应用随机旋转”。只有从几何角度理解矩阵如何作用于空间，这些说法才会变得清晰。\n"
+    },
+    {
+      "segment_id": "01-03:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "60f0274e967e8dda7a72e2490012073b464878cedfd97814cdec87b8aa2c50a8",
+      "target": "矩阵不只是排列成网格的数字，更是操纵空间的机器。旋转矩阵让点转动，缩放矩阵将点拉伸，剪切矩阵使点发生倾斜位移。神经网络对数据施加的每一次变换，都是这些操作之一，或是它们的复合。本课会让这些操作变得具体可感。\n"
+    },
+    {
+      "segment_id": "01-03:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "01-03:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Transformations as matrices"
+      ],
+      "ordinal": 10,
+      "source_sha256": "cea1813c358d46f79c1f8a60cb27923069a593e7320608976ae99c62fbc21947",
+      "target": "### 用矩阵表示变换\n"
+    },
+    {
+      "segment_id": "01-03:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Transformations as matrices"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Transformations as matrices"
+      ],
+      "ordinal": 11,
+      "source_sha256": "14cb3df166e5ef0514810cc6e2b0aa857ce8fc65f539a9888c10e4fb1bb45d71",
+      "target": "2D 空间中的每一个线性变换都可以写成一个 2x2 矩阵。矩阵准确地告诉你，基向量 [1, 0] 和 [0, 1] 最终会落在哪里。其余各点的去向也就随之确定。\n"
+    },
+    {
+      "segment_id": "01-03:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Transformations as matrices"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Transformations as matrices"
+      ],
+      "ordinal": 12,
+      "source_sha256": "baa91b60fb667111c7dd79fac1749b9f1f6a110b99ed547af5ae4aa0d1495d04",
+      "target": "```mermaid\ngraph LR\n    subgraph Before[\"Standard Basis\"]\n        e1[\"e1 = [1, 0] (along x)\"]\n        e2[\"e2 = [0, 1] (along y)\"]\n    end\n    subgraph Transform[\"Matrix M\"]\n        M[\"M = columns are new basis vectors\"]\n    end\n    subgraph After[\"After Transformation M\"]\n        e1p[\"e1' = new x-basis\"]\n        e2p[\"e2' = new y-basis\"]\n    end\n    e1 --> M --> e1p\n    e2 --> M --> e2p\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Transformations as matrices"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 13,
+      "source_sha256": "7ee1f7ec6827b58b6b1c1be8cb5482fe07f1ce1a7198da5d6f2d9ed207990061",
+      "target": "### 旋转\n"
+    },
+    {
+      "segment_id": "01-03:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 14,
+      "source_sha256": "27f915ad1f60d3f82403630e97911f7b8846b340559fa8c9a0e41a22d071201a",
+      "target": "在 2D 空间中旋转 theta 角度，会保持距离和夹角不变，并使每个点沿一段圆弧移动。\n"
+    },
+    {
+      "segment_id": "01-03:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0029",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 15,
+      "source_sha256": "a5928ebaa7c9378c24ebc96e21b7d1c32dd127e70d32aa578736702644494cc5",
+      "target": "```mermaid\ngraph LR\n    subgraph Before[\"Before Rotation\"]\n        A[\"A(2, 1)\"]\n        B[\"B(0, 2)\"]\n    end\n    subgraph Rot[\"Rotate 45 degrees\"]\n        R[\"R(θ) = [[cos θ, -sin θ], [sin θ, cos θ]]\"]\n    end\n    subgraph After[\"After Rotation\"]\n        Ap[\"A'(0.71, 2.12)\"]\n        Bp[\"B'(-1.41, 1.41)\"]\n    end\n    A --> R --> Ap\n    B --> R --> Bp\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 16,
+      "source_sha256": "6e9a991984da870e8374a21aeca93baad84e36acee66f88c1bdf5e445fc9116c",
+      "target": "在 3D 空间中，旋转围绕一条轴进行。每条坐标轴都有对应的旋转矩阵：\n"
+    },
+    {
+      "segment_id": "01-03:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 17,
+      "source_sha256": "d096b4d2647c10f83efa9d7df0bb1ec0a7d7de1cd9181248eb540b6ef296a569",
+      "target": "```text\nRz(theta) = | cos  -sin  0 |     Rotate around z-axis\n            | sin   cos  0 |     (x-y plane spins, z stays)\n            |  0     0   1 |\n\nRx(theta) = | 1   0     0    |   Rotate around x-axis\n            | 0  cos  -sin   |   (y-z plane spins, x stays)\n            | 0  sin   cos   |\n\nRy(theta) = |  cos  0  sin |     Rotate around y-axis\n            |   0   1   0  |     (x-z plane spins, y stays)\n            | -sin  0  cos |\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Rotation"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Scaling"
+      ],
+      "ordinal": 18,
+      "source_sha256": "cd50f0292746624b57677c5769bc8f30951a445711e8c6b0bd3c34473e19cc96",
+      "target": "### 缩放\n"
+    },
+    {
+      "segment_id": "01-03:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Scaling"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Scaling"
+      ],
+      "ordinal": 19,
+      "source_sha256": "7d8b3e57377cc9bc17864a9a109db1a8a6402be4e905008628f1ff257a42f3da",
+      "target": "缩放沿各条坐标轴独立地拉伸或压缩空间。\n"
+    },
+    {
+      "segment_id": "01-03:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Scaling"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Scaling"
+      ],
+      "ordinal": 20,
+      "source_sha256": "1979edb199a93f2413920c16339ea3fe646f6a66c92aa36cc5277b263cb42ff5",
+      "target": "```mermaid\ngraph LR\n    subgraph Before[\"Before Scaling\"]\n        A[\"A(2, 1)\"]\n        B[\"B(0, 2)\"]\n    end\n    subgraph Scale[\"Scale sx=2, sy=0.5\"]\n        S[\"S = [[2, 0], [0, 0.5]]\"]\n    end\n    subgraph After[\"After Scaling\"]\n        Ap[\"A'(4, 0.5)\"]\n        Bp[\"B'(0, 1)\"]\n    end\n    A --> S --> Ap\n    B --> S --> Bp\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Scaling"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Shearing"
+      ],
+      "ordinal": 21,
+      "source_sha256": "2860c006a80764e72c36d963c7c8055dc216a38a78e9aa6e54e8be52c6188e69",
+      "target": "### 剪切\n"
+    },
+    {
+      "segment_id": "01-03:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Shearing"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Shearing"
+      ],
+      "ordinal": 22,
+      "source_sha256": "aeaa3e8229ee9fcbb7e717f6df59c55448dcf0aa87d61d2c46ef6c51a012605d",
+      "target": "剪切使一条轴倾斜，同时保持另一条轴不变。它会把矩形变成平行四边形。\n"
+    },
+    {
+      "segment_id": "01-03:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Shearing"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Shearing"
+      ],
+      "ordinal": 23,
+      "source_sha256": "f0a100e99aca29eacc6bc9cacd99aee8bcdd8d1d1e04820871302c45cb064805",
+      "target": "```mermaid\ngraph LR\n    subgraph Before[\"Before Shear\"]\n        A[\"A(1, 0)\"]\n        B[\"B(0, 1)\"]\n    end\n    subgraph Shear[\"Shear in x, k=1\"]\n        Sh[\"Shx = [[1, k], [0, 1]]\"]\n    end\n    subgraph After[\"After Shear\"]\n        Ap[\"A(1, 0) unchanged\"]\n        Bp[\"B'(1, 1) shifted\"]\n    end\n    A --> Sh --> Ap\n    B --> Sh --> Bp\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Shearing"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Shearing"
+      ],
+      "ordinal": 24,
+      "source_sha256": "84a41bf13a979e79284211f06ef60e298297fa790f6d43cd380ab6d60e4e2738",
+      "target": "剪切矩阵：\n- `Shx = [[1, k], [0, 1]]` 使 x 坐标偏移 k * y\n- `Shy = [[1, 0], [k, 1]]` 使 y 坐标偏移 k * x\n"
+    },
+    {
+      "segment_id": "01-03:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Shearing"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Reflection"
+      ],
+      "ordinal": 25,
+      "source_sha256": "237c7d454e4c0feef7eaea7b86746aab732c6400d291f80c0aa6824d584c5d39",
+      "target": "### 反射\n"
+    },
+    {
+      "segment_id": "01-03:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Reflection"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Reflection"
+      ],
+      "ordinal": 26,
+      "source_sha256": "37df222ee63c1d15679b497c3484d7b9ca9d1708a13607484cf442711f80d2a6",
+      "target": "反射把点映射到关于某条坐标轴或直线的镜像位置。\n"
+    },
+    {
+      "segment_id": "01-03:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Reflection"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Reflection"
+      ],
+      "ordinal": 27,
+      "source_sha256": "e90dcd18aa089f5759bf155b8f7b0d83ed391a5ccbd2051abc383a98e4af0d16",
+      "target": "```mermaid\ngraph LR\n    subgraph Before[\"Before Reflection\"]\n        A[\"A(2, 1)\"]\n    end\n    subgraph Reflect[\"Reflect across y-axis\"]\n        R[\"[[-1, 0], [0, 1]]\"]\n    end\n    subgraph After[\"After Reflection\"]\n        Ap[\"A'(-2, 1)\"]\n    end\n    A --> R --> Ap\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Reflection"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Reflection"
+      ],
+      "ordinal": 28,
+      "source_sha256": "63f2b15072a68be655246ea28bc7043cfd158ebd7a4bdd7e90e7184ee864e3b3",
+      "target": "反射矩阵：\n- 关于 y 轴反射：`[[-1, 0], [0, 1]]`\n- 关于 x 轴反射：`[[1, 0], [0, -1]]`\n"
+    },
+    {
+      "segment_id": "01-03:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Reflection"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 29,
+      "source_sha256": "b7e20973835b00a816efcd3d760ec7369fdf64ff127e166809a3409ef7362157",
+      "target": "### 复合：串联多个变换\n"
+    },
+    {
+      "segment_id": "01-03:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 30,
+      "source_sha256": "679590d08b22f08b1cba277b99c6eeeb0a7be54b62bd76ff99c784f1536f1341",
+      "target": "先应用变换 A，再应用变换 B，等价于将它们的矩阵相乘：`result = B @ A @ point`。顺序很重要。先旋转再缩放，与先缩放再旋转会得到不同的结果。\n"
+    },
+    {
+      "segment_id": "01-03:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 31,
+      "source_sha256": "412e9097243168b95f006e64c17189112d4229bf95355f89bc12d24b6a5a7e8b",
+      "target": "```mermaid\ngraph LR\n    subgraph Path1[\"Rotate 90 then Scale (2, 0.5)\"]\n        P1[\"(1, 0)\"] -->|\"Rotate 90\"| P2[\"(0, 1)\"] -->|\"Scale\"| P3[\"(0, 0.5)\"]\n    end\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 32,
+      "source_sha256": "04cd7a106e5a205a240ec2bd18efaa1dff3191661af249b224b5a436c7686b9f",
+      "target": "复合后：`S @ R = [[0, -2], [0.5, 0]]`\n"
+    },
+    {
+      "segment_id": "01-03:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 33,
+      "source_sha256": "dd69af4e878a111cf4b36f13b1e1e198240da6e569904d10af9b358ce37effa5",
+      "target": "```mermaid\ngraph LR\n    subgraph Path2[\"Scale (2, 0.5) then Rotate 90\"]\n        Q1[\"(1, 0)\"] -->|\"Scale\"| Q2[\"(2, 0)\"] -->|\"Rotate 90\"| Q3[\"(0, 2)\"]\n    end\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 34,
+      "source_sha256": "bac4b67464172177a9f0e7e72bf6002af397b184b00f76544b658c4614b20345",
+      "target": "复合后：`R @ S = [[0, -0.5], [2, 0]]`\n"
+    },
+    {
+      "segment_id": "01-03:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 35,
+      "source_sha256": "8f0f80eccb3d89014bc42f6f514dfedb95c970aa242fc7da9d02125496611152",
+      "target": "结果不同。矩阵乘法不满足交换律。\n"
+    },
+    {
+      "segment_id": "01-03:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Composition: chaining transformations"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigenvalues and eigenvectors"
+      ],
+      "ordinal": 36,
+      "source_sha256": "a2002a21fd7c0c6877bbdba642f4bac88e61b83fd90a57c64a292d5722d1b198",
+      "target": "### 特征值与特征向量\n"
+    },
+    {
+      "segment_id": "01-03:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigenvalues and eigenvectors"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigenvalues and eigenvectors"
+      ],
+      "ordinal": 37,
+      "source_sha256": "6386bea8e0e5ef8a101380d2a1d032388d5dbc08f2f55aa1513577153406e1d6",
+      "target": "大多数向量在矩阵作用下会改变方向。特征向量则很特殊：矩阵只对它们进行缩放，从不旋转。缩放因子就是特征值。\n"
+    },
+    {
+      "segment_id": "01-03:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigenvalues and eigenvectors"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigenvalues and eigenvectors"
+      ],
+      "ordinal": 38,
+      "source_sha256": "8fa1ed663c21851e24b1233e8c275aaac6d57211347c2950361adf9bcc91e629",
+      "target": "```text\nA @ v = lambda * v\n\nv is the eigenvector (direction that survives)\nlambda is the eigenvalue (how much it stretches)\n\nExample: A = | 2  1 |\n             | 1  2 |\n\nEigenvector [1, 1] with eigenvalue 3:\n  A @ [1,1] = [3, 3] = 3 * [1, 1]     (same direction, scaled by 3)\n\nEigenvector [1, -1] with eigenvalue 1:\n  A @ [1,-1] = [1, -1] = 1 * [1, -1]  (same direction, unchanged)\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigenvalues and eigenvectors"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigenvalues and eigenvectors"
+      ],
+      "ordinal": 39,
+      "source_sha256": "ec6bad4321923eb73ecef08e36866f771a684cbf14f7a70d71ba640625e6afcb",
+      "target": "该矩阵沿 [1, 1] 方向将空间拉伸 3x，并保持 [1, -1] 不变。其他每个方向都是这两个方向的组合。\n"
+    },
+    {
+      "segment_id": "01-03:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigenvalues and eigenvectors"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigendecomposition"
+      ],
+      "ordinal": 40,
+      "source_sha256": "357de70ed061a7f44a2a8d731b4f0f4575499c8b366a1e1ad46512a4d637b706",
+      "target": "### 特征分解\n"
+    },
+    {
+      "segment_id": "01-03:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigendecomposition"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigendecomposition"
+      ],
+      "ordinal": 41,
+      "source_sha256": "1dd97c78957aeff61c7d0d5b3aca22b41721c8f35f7d1ea8c0e37eb480d91de7",
+      "target": "如果一个矩阵有 n 个线性无关的特征向量，就可以进行特征分解（eigendecomposition）：\n"
+    },
+    {
+      "segment_id": "01-03:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigendecomposition"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0083",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigendecomposition"
+      ],
+      "ordinal": 42,
+      "source_sha256": "20a5cfb42678d483bc3689871c0a6ccc44a6b7d5c50c1b39ad61cabef2478c21",
+      "target": "```text\nA = V @ D @ V^(-1)\n\nV = matrix whose columns are eigenvectors\nD = diagonal matrix of eigenvalues\nV^(-1) = inverse of V\n\nThis says: rotate into eigenvector coordinates, scale along each axis, rotate back.\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Eigendecomposition"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Why eigenvalues matter"
+      ],
+      "ordinal": 43,
+      "source_sha256": "1891f3c1a8a15d4115a42d6bc23eac311c1007af08002f594039410df307c82e",
+      "target": "### 特征值为什么重要\n"
+    },
+    {
+      "segment_id": "01-03:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Why eigenvalues matter"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Why eigenvalues matter"
+      ],
+      "ordinal": 44,
+      "source_sha256": "4e8fc36d2de66e93f4deccd815317ad74df3427df4080511cfd8295c9d496786",
+      "target": "**PCA。** 协方差矩阵的特征向量就是主成分（principal component）。特征值告诉你每个主成分捕捉了多少方差。按特征值排序，保留最大的 k 个对应的主成分，就实现了降维。\n"
+    },
+    {
+      "segment_id": "01-03:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Why eigenvalues matter"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Why eigenvalues matter"
+      ],
+      "ordinal": 45,
+      "source_sha256": "a8623610dbebb80f33b1fec6dd84f8b461ebcf79c5b1d6249985fa2a984d61fe",
+      "target": "**稳定性。** 在循环网络和动力系统中，模 > 1 的特征值会导致输出爆炸；模 < 1 则会导致输出消失。这一句话就概括了梯度消失与梯度爆炸问题。\n"
+    },
+    {
+      "segment_id": "01-03:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Why eigenvalues matter"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Why eigenvalues matter"
+      ],
+      "ordinal": 46,
+      "source_sha256": "3d1b7386283ca073c62d915adb7b767b1c74335238b69bbf5e20f1639b497561",
+      "target": "**谱方法。** 图神经网络使用邻接矩阵的特征值，谱聚类使用拉普拉斯矩阵的特征值。特征向量揭示了图的结构。\n"
+    },
+    {
+      "segment_id": "01-03:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Why eigenvalues matter"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Determinant as volume scaling factor"
+      ],
+      "ordinal": 47,
+      "source_sha256": "5595b45f1ddf253b6b23da1ed545151ae5d351a138ce4b57978da7bfda0418c9",
+      "target": "### 行列式作为体积缩放因子\n"
+    },
+    {
+      "segment_id": "01-03:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Determinant as volume scaling factor"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Determinant as volume scaling factor"
+      ],
+      "ordinal": 48,
+      "source_sha256": "ff00efc94a1ba1e02abef5b22e41959efdea251ccf89b96c796edc362e50110f",
+      "target": "变换矩阵的行列式（determinant）告诉你，该变换将面积（2D）或体积（3D）缩放了多少。\n"
+    },
+    {
+      "segment_id": "01-03:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Determinant as volume scaling factor"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0097",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Determinant as volume scaling factor"
+      ],
+      "ordinal": 49,
+      "source_sha256": "7272ebcf32334db400715ee6684def500d616c857e6c1950e78c7d927b21d4ea",
+      "target": "```text\ndet = 1:   area preserved (rotation)\ndet = 2:   area doubled\ndet = 0:   space crushed to lower dimension (singular)\ndet = -1:  area preserved but orientation flipped (reflection)\n\n| det(Rotation) | = 1        (always)\n| det(Scale sx, sy) | = sx * sy\n| det(Shear) | = 1           (area preserved)\n| det(Reflection) | = -1     (orientation flipped)\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Determinant as volume scaling factor"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Determinant as volume scaling factor"
+      ],
+      "ordinal": 50,
+      "source_sha256": "3614e54e71667dd3753b4d7680fc7bbfd2c213453213d3c879c353b5ede377b9",
+      "target": "```figure\nmatrix-transform\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## The Concept",
+        "### Determinant as volume scaling factor"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0101",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "01-03:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 1: Transformation matrices from scratch (Python)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "e6428d33cf831e4f91133aa0a61913bab7e1180dd83221f0bd4c77b7964a85fd",
+      "target": "### 第 1 步：从零实现变换矩阵（Python）\n"
+    },
+    {
+      "segment_id": "01-03:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 1: Transformation matrices from scratch (Python)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0105",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 1: Transformation matrices from scratch (Python)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "be0eabd4ae54819fcc1d20ba47089db7971f9283c4c12fdb1c89e67eaee5c78f",
+      "target": "```python\nimport math\n\ndef rotation_2d(theta):\n    c, s = math.cos(theta), math.sin(theta)\n    return [[c, -s], [s, c]]\n\ndef scaling_2d(sx, sy):\n    return [[sx, 0], [0, sy]]\n\ndef shearing_2d(kx, ky):\n    return [[1, kx], [ky, 1]]\n\ndef reflection_x():\n    return [[1, 0], [0, -1]]\n\ndef reflection_y():\n    return [[-1, 0], [0, 1]]\n\ndef mat_vec_mul(matrix, vector):\n    return [\n        sum(matrix[i][j] * vector[j] for j in range(len(vector)))\n        for i in range(len(matrix))\n    ]\n\ndef mat_mul(a, b):\n    rows_a, cols_b = len(a), len(b[0])\n    cols_a = len(a[0])\n    return [\n        [sum(a[i][k] * b[k][j] for k in range(cols_a)) for j in range(cols_b)]\n        for i in range(rows_a)\n    ]\n\npoint = [1.0, 0.0]\nangle = math.pi / 4\n\nrotated = mat_vec_mul(rotation_2d(angle), point)\nprint(f\"Rotate (1,0) by 45 deg: ({rotated[0]:.4f}, {rotated[1]:.4f})\")\n\nscaled = mat_vec_mul(scaling_2d(2, 3), [1.0, 1.0])\nprint(f\"Scale (1,1) by (2,3): ({scaled[0]:.1f}, {scaled[1]:.1f})\")\n\nsheared = mat_vec_mul(shearing_2d(1, 0), [1.0, 1.0])\nprint(f\"Shear (1,1) kx=1: ({sheared[0]:.1f}, {sheared[1]:.1f})\")\n\nreflected = mat_vec_mul(reflection_y(), [2.0, 1.0])\nprint(f\"Reflect (2,1) across y: ({reflected[0]:.1f}, {reflected[1]:.1f})\")\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 1: Transformation matrices from scratch (Python)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 2: Composition of transformations"
+      ],
+      "ordinal": 54,
+      "source_sha256": "6bf0ac13d36b24a5e9c490bf3642ca1c1f03ba4706c95c39b7a7d3573223f333",
+      "target": "### 第 2 步：变换的复合\n"
+    },
+    {
+      "segment_id": "01-03:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 2: Composition of transformations"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0109",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 2: Composition of transformations"
+      ],
+      "ordinal": 55,
+      "source_sha256": "ce4a30d498c6bae63f45959bed3f7172f892b0c9c2f383388df2c58d8c1f0fe1",
+      "target": "```python\nR = rotation_2d(math.pi / 2)\nS = scaling_2d(2, 0.5)\n\nrotate_then_scale = mat_mul(S, R)\nscale_then_rotate = mat_mul(R, S)\n\npoint = [1.0, 0.0]\nresult1 = mat_vec_mul(rotate_then_scale, point)\nresult2 = mat_vec_mul(scale_then_rotate, point)\n\nprint(f\"Rotate 90 then scale: ({result1[0]:.2f}, {result1[1]:.2f})\")\nprint(f\"Scale then rotate 90: ({result2[0]:.2f}, {result2[1]:.2f})\")\nprint(f\"Same? {result1 == result2}\")\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 2: Composition of transformations"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 3: Eigenvalues from scratch (2x2)"
+      ],
+      "ordinal": 56,
+      "source_sha256": "3b659622bed775037572dce993f299ff02e587e255b85de024088763a53aaf60",
+      "target": "### 第 3 步：从零计算特征值（2x2）\n"
+    },
+    {
+      "segment_id": "01-03:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 3: Eigenvalues from scratch (2x2)"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 3: Eigenvalues from scratch (2x2)"
+      ],
+      "ordinal": 57,
+      "source_sha256": "26a793195e7f43256bfcce6c566a332b3bc92d217d11435399fd91724267604b",
+      "target": "对于 2x2 矩阵 `[[a, b], [c, d]]`，特征值是特征方程 `lambda^2 - (a+d)*lambda + (ad - bc) = 0` 的解。\n"
+    },
+    {
+      "segment_id": "01-03:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 3: Eigenvalues from scratch (2x2)"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0115",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 3: Eigenvalues from scratch (2x2)"
+      ],
+      "ordinal": 58,
+      "source_sha256": "b308b9d05080e59f4418387cb4e9b3e8e1e389df16080b84e9148befc95a4002",
+      "target": "```python\ndef eigenvalues_2x2(matrix):\n    a, b = matrix[0]\n    c, d = matrix[1]\n    trace = a + d\n    det = a * d - b * c\n    discriminant = trace ** 2 - 4 * det\n    if discriminant < 0:\n        real = trace / 2\n        imag = (-discriminant) ** 0.5 / 2\n        return (complex(real, imag), complex(real, -imag))\n    sqrt_disc = discriminant ** 0.5\n    return ((trace + sqrt_disc) / 2, (trace - sqrt_disc) / 2)\n\ndef eigenvector_2x2(matrix, eigenvalue):\n    a, b = matrix[0]\n    c, d = matrix[1]\n    if abs(b) > 1e-10:\n        v = [b, eigenvalue - a]\n    elif abs(c) > 1e-10:\n        v = [eigenvalue - d, c]\n    else:\n        if abs(a - eigenvalue) < 1e-10:\n            v = [1, 0]\n        else:\n            v = [0, 1]\n    mag = (v[0] ** 2 + v[1] ** 2) ** 0.5\n    return [v[0] / mag, v[1] / mag]\n\nA = [[2, 1], [1, 2]]\nvals = eigenvalues_2x2(A)\nprint(f\"Matrix: {A}\")\nprint(f\"Eigenvalues: {vals[0]:.4f}, {vals[1]:.4f}\")\n\nfor val in vals:\n    vec = eigenvector_2x2(A, val)\n    result = mat_vec_mul(A, vec)\n    scaled = [val * vec[0], val * vec[1]]\n    print(f\"  lambda={val:.1f}, v={[round(x,4) for x in vec]}\")\n    print(f\"    A@v = {[round(x,4) for x in result]}\")\n    print(f\"    l*v = {[round(x,4) for x in scaled]}\")\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 3: Eigenvalues from scratch (2x2)"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 4: Determinant as volume scaling factor"
+      ],
+      "ordinal": 59,
+      "source_sha256": "b533eae202b739fe5a262301194afdb7ce506e9c28a6c97c06ab93c47e7fe428",
+      "target": "### 第 4 步：行列式作为体积缩放因子\n"
+    },
+    {
+      "segment_id": "01-03:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 4: Determinant as volume scaling factor"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0119",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 4: Determinant as volume scaling factor"
+      ],
+      "ordinal": 60,
+      "source_sha256": "b1995bb63050811217b8eba0b01df2c0d9a38f410e00a9ca1c5c657dc6e4719a",
+      "target": "```python\ndef det_2x2(matrix):\n    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]\n\nprint(f\"det(rotation 45) = {det_2x2(rotation_2d(math.pi/4)):.4f}\")\nprint(f\"det(scale 2,3)   = {det_2x2(scaling_2d(2, 3)):.1f}\")\nprint(f\"det(shear kx=1)  = {det_2x2(shearing_2d(1, 0)):.1f}\")\nprint(f\"det(reflect y)   = {det_2x2(reflection_y()):.1f}\")\n\nsingular = [[1, 2], [2, 4]]\nprint(f\"det(singular)     = {det_2x2(singular):.1f}\")\nprint(\"Singular: columns are proportional, space collapses to a line.\")\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Build It",
+        "### Step 4: Determinant as volume scaling factor"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "01-03:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "28162c5c14e8ad0ae15750fa4cccdfb759a026168497eaad132bc9f0f4153a6a",
+      "target": "NumPy 提供了经过优化的函数，可以完成上述所有操作。\n"
+    },
+    {
+      "segment_id": "01-03:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0125",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "9766a297448bcc5b590fbabfaae393cc6eb496728bbdda21e451da9a1cdf455b",
+      "target": "```python\nimport numpy as np\n\ntheta = np.pi / 4\nR = np.array([[np.cos(theta), -np.sin(theta)],\n              [np.sin(theta),  np.cos(theta)]])\n\npoint = np.array([1.0, 0.0])\nprint(f\"Rotate (1,0) by 45 deg: {R @ point}\")\n\nS = np.diag([2.0, 3.0])\ncomposed = S @ R\nprint(f\"Scale(2,3) after Rotate(45): {composed @ point}\")\n\nA = np.array([[2, 1], [1, 2]], dtype=float)\neigenvalues, eigenvectors = np.linalg.eig(A)\nprint(f\"\\nEigenvalues: {eigenvalues}\")\nprint(f\"Eigenvectors (columns):\\n{eigenvectors}\")\n\nfor i in range(len(eigenvalues)):\n    v = eigenvectors[:, i]\n    lam = eigenvalues[i]\n    print(f\"  A @ v{i} = {A @ v}, lambda * v{i} = {lam * v}\")\n\nprint(f\"\\ndet(R) = {np.linalg.det(R):.4f}\")\nprint(f\"det(S) = {np.linalg.det(S):.1f}\")\n\nB = np.array([[3, 1], [0, 2]], dtype=float)\nvals, vecs = np.linalg.eig(B)\nD = np.diag(vals)\nV = vecs\nreconstructed = V @ D @ np.linalg.inv(V)\nprint(f\"\\nEigendecomposition A = V @ D @ V^-1:\")\nprint(f\"Original:\\n{B}\")\nprint(f\"Reconstructed:\\n{reconstructed}\")\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0127",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It",
+        "### 3D rotations with NumPy"
+      ],
+      "ordinal": 64,
+      "source_sha256": "2a130eda345cf43f7add97ad366c705a044bd0bff20043bc654993e46d7774c2",
+      "target": "### 用 NumPy 实现 3D 旋转\n"
+    },
+    {
+      "segment_id": "01-03:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It",
+        "### 3D rotations with NumPy"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0129",
+      "kind": "fence",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It",
+        "### 3D rotations with NumPy"
+      ],
+      "ordinal": 65,
+      "source_sha256": "bdf3060508022049dd7ccc0080fcf87951ccd6db859d6d691f6f7800752129aa",
+      "target": "```python\ndef rotation_3d_z(theta):\n    c, s = np.cos(theta), np.sin(theta)\n    return np.array([[c, -s, 0], [s, c, 0], [0, 0, 1]])\n\ndef rotation_3d_x(theta):\n    c, s = np.cos(theta), np.sin(theta)\n    return np.array([[1, 0, 0], [0, c, -s], [0, s, c]])\n\npoint_3d = np.array([1.0, 0.0, 0.0])\nrotated_z = rotation_3d_z(np.pi / 2) @ point_3d\nrotated_x = rotation_3d_x(np.pi / 2) @ point_3d\n\nprint(f\"\\n3D point: {point_3d}\")\nprint(f\"Rotate 90 around z: {np.round(rotated_z, 4)}\")\nprint(f\"Rotate 90 around x: {np.round(rotated_x, 4)}\")\n```\n"
+    },
+    {
+      "segment_id": "01-03:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Use It",
+        "### 3D rotations with NumPy"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Ship It"
+      ],
+      "ordinal": 66,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "01-03:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Ship It"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Ship It"
+      ],
+      "ordinal": 67,
+      "source_sha256": "d5282634ce6e6a792a042547d4581713c62870ca560ca1df9c155858ed5d3206",
+      "target": "本课为 PCA（第 2 阶段）和神经网络权重分析打下几何基础。这里实现的特征值与特征向量代码，采用的正是生产环境中机器学习系统用于降维、谱聚类和稳定性分析的算法。\n"
+    },
+    {
+      "segment_id": "01-03:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Ship It"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Exercises"
+      ],
+      "ordinal": 68,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "01-03:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Exercises"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0137",
+      "kind": "list",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Exercises"
+      ],
+      "ordinal": 69,
+      "source_sha256": "924d5e899069648eb0ce6574adb30c85c5d443223f9600964909fe95145ee244",
+      "target": "1. 对一个单位正方形（顶点为 [0,0]、[1,0]、[1,1]、[0,1]）分别应用旋转、缩放和剪切。打印每种变换后的顶点坐标，并验证旋转保持顶点间的距离不变。\n"
+    },
+    {
+      "segment_id": "01-03:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Exercises"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0139",
+      "kind": "list",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Exercises"
+      ],
+      "ordinal": 70,
+      "source_sha256": "9dc8251719c72ca69169e4c710838730ed35dc22f0cfc8c3d92753397b1429a3",
+      "target": "2. 用特征方程手算矩阵 [[4, 2], [1, 3]] 的特征值，然后用从零实现的函数和 NumPy 验证结果。\n"
+    },
+    {
+      "segment_id": "01-03:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Exercises"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0141",
+      "kind": "list",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Exercises"
+      ],
+      "ordinal": 71,
+      "source_sha256": "c736482f2c1134df9e72ec4300af12f722de77882f2c0bbe009276f7fdb3dced",
+      "target": "3. 将三个变换复合起来（旋转 30 degrees（度）、按 [1.5, 0.8] 缩放、以 kx=0.3 剪切），并将其应用于沿圆周排列的 8 个点。打印变换前后的坐标。计算复合矩阵的行列式，验证它等于各个变换矩阵行列式的乘积。\n"
+    },
+    {
+      "segment_id": "01-03:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Exercises"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0143",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Key Terms"
+      ],
+      "ordinal": 72,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "01-03:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Key Terms"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0145",
+      "kind": "table",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Key Terms"
+      ],
+      "ordinal": 73,
+      "source_sha256": "f5eed211fcb0c5708bea43ab5f43172f5bfb1f5db1c09e0be2da0a840301d0eb",
+      "target": "| 术语 | 通俗说法 | 实际含义 |\n|------|----------------|----------------------|\n| 旋转矩阵 | “让东西转起来” | 使点沿圆弧移动，同时保持距离和夹角不变的正交矩阵。行列式始终为 1。 |\n| 缩放矩阵 | “让东西变大” | 沿各条坐标轴独立拉伸或压缩的对角矩阵。行列式为各缩放因子的乘积。 |\n| 剪切矩阵 | “让东西倾斜” | 使一个坐标按另一个坐标的比例发生偏移的矩阵，将矩形变成平行四边形。行列式为 1。 |\n| 反射 | “映成镜像” | 关于某条轴或某个平面翻转空间的矩阵。行列式为 -1。 |\n| 复合 | “接连做两件事” | 通过变换矩阵相乘来串联操作。顺序很重要：B @ A 表示先应用 A，再应用 B。 |\n| 特征向量 | “特殊的方向” | 矩阵只会缩放、从不旋转的方向。它就像变换的指纹。 |\n| 特征值 | “拉伸了多少” | 矩阵缩放其特征向量时所用的标量因子。它可以是负数（翻转），也可以是复数（旋转）。 |\n| 特征分解 | “把矩阵拆开” | 将矩阵写成 V @ D @ V^(-1)，分解出它的基本缩放方向和缩放幅度。 |\n| 行列式 | “由矩阵得到的一个数” | 变换缩放面积（2D）或体积（3D）的因子。零表示该变换不可逆。 |\n| 特征方程 | “特征值从哪来” | det(A - lambda * I) = 0。这个多项式的根就是特征值。 |\n"
+    },
+    {
+      "segment_id": "01-03:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Key Terms"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Further Reading"
+      ],
+      "ordinal": 74,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "01-03:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Further Reading"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-03:b0149",
+      "kind": "list",
+      "heading_path": [
+        "# Matrix Transformations",
+        "## Further Reading"
+      ],
+      "ordinal": 75,
+      "source_sha256": "6e04ed80e6a55e70e0e0a8d04cbbabad54844927d573b40193a9adc09aa72858",
+      "target": "- [3Blue1Brown：线性变换](https://www.3blue1brown.com/lessons/linear-transformations) -- 直观展示矩阵如何重塑空间\n- [3Blue1Brown：特征向量与特征值](https://www.3blue1brown.com/lessons/eigenvalues) -- 对特征向量几何意义的最佳可视化讲解\n- [MIT 18.06 第 21 讲：特征值与特征向量](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/) -- Gilbert Strang 的经典讲解\n"
+    }
+  ],
+  "batch": "S06",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+  "additional_glossary_sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+      "version": "S06-v1.0",
+      "pin": "stage-scoped glossary frozen by SHA-256"
+    }
+  ],
+  "dependencies_manifest": {
+    "path": "i18n/zh/.curated/stages/S06-matrix-transformations/DEPENDENCIES.json",
+    "sha256": "0fef598a97d592197d0dfd7fe4de6eb36548e89d90e3008669dce0ff651e44fb"
+  },
+  "assets": []
+}
