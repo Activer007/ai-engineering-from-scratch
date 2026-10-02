@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "lesson_id": "01-02",
+  "source_path": "phases/01-math-foundations/02-vectors-matrices-operations/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "8c0033c7e8a30979b1f07de8210e7b0cc33b4ee9",
+  "source_sha256": "398ce87f481e54f360898e1af0d0c05877f631d5d1b1c1edebf83f3cf5a09981",
+  "target_path": "i18n/zh/phases/01-math-foundations/02-vectors-matrices-operations/docs/zh.md",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+  "additional_glossary_sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    }
+  ],
+  "batch": "S05",
+  "review_date": "2026-10-02",
+  "reviewed_target_sha256": "e2ad53006e49361f50eafc3359633e06870ae086a436555a8b7b27cf65880c17",
+  "release_status": "draft-not-approved",
+  "review_coverage": {
+    "technical": "Full independent English-to-Chinese comparison of every source/target block, including formulas, dimensions, scalar/vector/matrix roles, metadata, tables and exercises; no sampling",
+    "chinese": "Separate full Chinese-only reading",
+    "independence": "Final reviewer not author; final changes rechecked and bound to exact target hash",
+    "human_approval": "not requested or claimed"
+  },
+  "coverage_counts": {
+    "source_blocks": 131,
+    "translatable_blocks": 52,
+    "fenced_payloads": 14
+  },
+  "resolved_translation_findings": [],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "01-02-PEER-SRC-01",
+      "segments": [
+        "01-02:b0085",
+        "01-02:b0119"
+      ],
+      "finding": "The displayed Matrix class lacks __matmul__, so the exercise @ expression fails for that copied excerpt; the complete code/matrices.py explicitly defines __matmul__ at lines 106–107. Complete implementation defect must not be claimed.",
+      "category": "snippet-reference-gap"
+    },
+    {
+      "id": "01-02-PEER-SRC-02",
+      "segments": [
+        "01-02:b0019",
+        "01-02:b0095"
+      ],
+      "finding": "Universal image-as-matrix, every-layer-as-matrix-transformation and every-dense-layer-as-ReLU claims are introductory overgeneralizations. Source scope retained.",
+      "category": "technical-overgeneralization"
+    },
+    {
+      "id": "01-02-PEER-SRC-03",
+      "segments": [
+        "01-02:b0069",
+        "01-02:b0109",
+        "01-02:b0127"
+      ],
+      "finding": "Broadcasting example correctly repeats [10,20,30] across rows, but source prose omits right-aligned equal-or-one compatibility and singleton-axis expansion. Chinese does not strengthen or silently fix it.",
+      "category": "missing-preconditions"
+    },
+    {
+      "id": "01-02-PEER-SRC-04",
+      "segments": [
+        "01-02:b0081",
+        "01-02:b0085"
+      ],
+      "finding": "Displayed snippets lack shape and nonempty guards; zip may truncate; determinant/inverse need square/2x2 constraints. Exact det==0 is not a robust near-singularity test. Complete implementation has separate checks and abs(det)<1e-10, which is a numerical threshold, not an algebraic definition of singularity.",
+      "category": "code-preconditions-and-tolerance"
+    },
+    {
+      "id": "01-02-PEER-SRC-05",
+      "segments": [
+        "01-02:b0099",
+        "01-02:b0103"
+      ],
+      "finding": "Orders-of-magnitude/100x claims are unbenchmarked and BLAS dispatch depends on dtype/backend/size. Preserved 100x does not indicate this review measured speed.",
+      "category": "unqualified-performance-claim"
+    },
+    {
+      "id": "01-02-PEER-SRC-06",
+      "segments": [
+        "01-02:b0027",
+        "01-02:b0127"
+      ],
+      "finding": "Zero vector has no direction; determinant is signed scaling of a square-matrix transformation and inverse/determinant equivalence presumes square matrices. Simplifications are already in source.",
+      "category": "mathematical-scope"
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "byte-identical; bare fences receive text tag only",
+    "math": "identical mathematical content; recorded reversible GFM syntax escapes only",
+    "structure": "source block count/kind/order, heading levels, tables and lists retained",
+    "inline_code_numbers_units_roles": "protected per-block inventories retained; projection operands, multiplication order and dimensions independently reviewed"
+  },
+  "format_repairs": [
+    {
+      "kind": "fence-language",
+      "count": 7,
+      "change": "bare fences labeled text; payload unchanged"
+    }
+  ],
+  "assets": [],
+  "checks": {
+    "strict_source_target_review_binding": "passed",
+    "independent_technical_and_chinese": "passed after final exact-hash review",
+    "github_gfm": "pending actual browser verification",
+    "deterministic_replay": "pending final consolidated rerun",
+    "actual_site_browser": "not passed; not run this stage; inherited renderer limitations",
+    "hosted_ci": "not run; inherited Actions disabled"
+  },
+  "runtime_checks": {
+    "canonical_python_demo": "byte-identical isolated copy executed with Python3, exit0; stdlib-only implementation",
+    "lesson_unit_suite": "none checked in",
+    "julia": "not run; executable unavailable; no installation",
+    "inline_numpy_torch_examples": "not run as a complete suite",
+    "not_a_full_runtime_acceptance": true,
+    "focused_assertions": [
+      {
+        "name": "matrix multiplication",
+        "input": "[[1,2],[3,4]] @ [[5,6],[7,8]]",
+        "expected": [
+          [
+            19,
+            22
+          ],
+          [
+            43,
+            50
+          ]
+        ],
+        "result": "passed"
+      },
+      {
+        "name": "inverse",
+        "input": "A=[[4,7],[2,6]], A @ A.inverse_2x2()",
+        "expected": "identity within1e-9",
+        "result": "passed"
+      },
+      {
+        "name": "row broadcast",
+        "input": "[[1,2,3],[4,5,6]] + [[10,20,30]]",
+        "expected": [
+          [
+            11,
+            22,
+            33
+          ],
+          [
+            14,
+            25,
+            36
+          ]
+        ],
+        "result": "passed"
+      },
+      {
+        "name": "column broadcast",
+        "input": "[[1,2],[3,4]] + [[10],[20]]",
+        "expected": [
+          [
+            11,
+            12
+          ],
+          [
+            23,
+            24
+          ]
+        ],
+        "result": "passed"
+      }
+    ]
+  }
+}
