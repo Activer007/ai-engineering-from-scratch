@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "lesson_id": "00-07",
+  "source_path": "phases/00-setup-and-tooling/07-docker-for-ai/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "72dfa2ad927d15b5e99a4dd73892f4486cc2eff1",
+  "source_sha256": "7010d2e2c5d90012f328cee7e51ba8d18660582048dc8311ead1885c6455d952",
+  "target_path": "i18n/zh/phases/00-setup-and-tooling/07-docker-for-ai/docs/zh.md",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+  "additional_glossary_sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    }
+  ],
+  "batch": "S03",
+  "review_date": "2026-10-02",
+  "reviewed_target_sha256": "616b06ab118eea9ba43bcbe453eb3bb7470e59714283e4b384c1cde237cd5696",
+  "release_status": "draft-not-approved",
+  "review_coverage": {
+    "technical": "Complete independent source/target technical comparison, including every prose block, metadata field, table, objective and exercise; no sampling",
+    "chinese": "Separate complete Chinese-only reading",
+    "independence": "Final reviewer different from author; required edits independently rechecked against final exact bytes",
+    "human_approval": "not requested or claimed"
+  },
+  "coverage_counts": {
+    "source_blocks": 149,
+    "translatable_blocks": 55,
+    "fenced_payloads": 20
+  },
+  "resolved_translation_findings": [
+    {
+      "severity": "S2",
+      "category": "first-use-terminology",
+      "description": "CUDA, cuDNN and MPS lacked first-use Chinese context",
+      "resolution": "Added concise platform/library/backend explanations at first prose use; final diff independently confirms exactly three additions, no protected or source-meaning changes",
+      "final_recheck": "passed"
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "docker-storage-semantics",
+      "blocks": [
+        "00-07:b0009",
+        "00-07:b0027",
+        "00-07:b0093",
+        "00-07:b0149"
+      ],
+      "finding": "源文将宿主目录绑定挂载统称volume；将停止容器直接等同于文件消失，未区分停止、删除、--rm和容器可写层持久性。忠实保留，非译误。"
+    },
+    {
+      "id": "docker-portability-claims",
+      "blocks": [
+        "00-07:b0013",
+        "00-07:b0015",
+        "00-07:b0019",
+        "00-07:b0025",
+        "00-07:b0135",
+        "00-07:b0137"
+      ],
+      "finding": "到处相同、两台机器通用、CUDA版本运行关系和共享宿主OS内核等说法欠驱动/ABI/平台/Docker Desktop VM条件；多项未锁包版本也削弱完全复现承诺。"
+    },
+    {
+      "id": "docker-platform-gpu",
+      "blocks": [
+        "00-07:b0053",
+        "00-07:b0081",
+        "00-07:b0141"
+      ],
+      "finding": "macOS/WSL2跳过Toolkit的表述可能误导；后文Apple Silicon仿真CPU-only限制已保留。镜像arm64/wheel平台支持属于固定时点信息；PyTorch自动CPU回退需应用设备选择配合，非普遍保证。"
+    },
+    {
+      "id": "docker-privilege-network",
+      "blocks": [
+        "00-07:b0045",
+        "00-07:b0055",
+        "00-07:b0089",
+        "00-07:b0109"
+      ],
+      "finding": "源示例含远程安装管道、sudo、docker用户组、daemon重启，以及Jupyter root和0.0.0.0监听/发布端口；未给完整权限/网络安全部署前提。本审查不执行。"
+    },
+    {
+      "id": "docker-compose-interface-gap",
+      "blocks": [
+        "00-07:b0105",
+        "00-07:b0109",
+        "00-07:b0119"
+      ],
+      "finding": "文字承诺推理服务器+向量数据库，Compose实为Jupyter+Qdrant；连接片段导入qdrant_client，但展示的Dockerfile依赖清单没有qdrant-client。"
+    },
+    {
+      "id": "docker-compose-relative-path",
+      "blocks": [
+        "00-07:b0109"
+      ],
+      "finding": "code目录的../../../挂载源解析到phases目录，而非仓库根；译文没有新增仓库根承诺。"
+    },
+    {
+      "id": "docker-cleanup-effects",
+      "blocks": [
+        "00-07:b0121",
+        "00-07:b0123",
+        "00-07:b0125",
+        "00-07:b0127",
+        "00-07:b0131"
+      ],
+      "finding": "down不只停止也移除资源；down -v删除卷；system prune -a范围不只源注释中的未使用镜像；<container_id>是待替换模板。译文保留原样。"
+    },
+    {
+      "id": "docker-layers-runtime",
+      "blocks": [
+        "00-07:b0145",
+        "00-07:b0149"
+      ],
+      "finding": "每条Dockerfile指令都创建层的说法未区分元数据与文件系统层；devel→runtime会移除编译器，可能使原构建步骤失败。"
+    },
+    {
+      "issue": "Docker group grants root-level privileges; source usermod instruction lacks complete security qualification",
+      "official_source": "https://docs.docker.com/engine/install/linux-postinstall",
+      "verified": "2026-10-02"
+    },
+    {
+      "issue": "Bind mounts are writable on the host by default; source volume language does not distinguish all storage/security cases",
+      "official_source": "https://docs.docker.com/engine/storage/bind-mounts/",
+      "verified": "2026-10-02"
+    },
+    {
+      "issue": "Stopping a container does not itself remove its writable layer unless automatic removal such as --rm applies; stopping/deleting must be distinguished",
+      "official_source": "https://docs.docker.com/engine/manage-resources/pruning/",
+      "verified": "2026-10-02"
+    },
+    {
+      "issue": "Ports published without a specific host IP bind all host interfaces by default; sample Jupyter/Qdrant ports need deployment-specific protection",
+      "official_source": "https://docs.docker.com/engine/network/port-publishing/",
+      "verified": "2026-10-02"
+    },
+    {
+      "issue": "Literal <container_id> in source b0131 causes bash -n exit2; template must be substituted before executable use",
+      "handling": "Placeholder payload preserved; never counted as a syntax pass"
+    },
+    {
+      "issue": "code/docker-compose.yml ../../../ source path statically resolves to phases, not repository root",
+      "handling": "Existing source path retained; no host mount performed"
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "byte-identical, including English option/cost/reference cards and code comments; not claimed as translated prose",
+    "block_structure": "same count/order/kind, headings, table columns, lists and separators",
+    "inline_code_numbers_units_urls": "same per-block protected inventory; hardware/platform/version roles independently reviewed",
+    "metadata": "keys and Type/Languages values unchanged"
+  },
+  "format_repairs": [
+    {
+      "kind": "fence-language",
+      "change": "original untagged explanatory fences labeled text only; payload unchanged"
+    }
+  ],
+  "assets": [],
+  "checks": {
+    "strict_source_target_review_binding": "passed",
+    "independent_technical_and_chinese": "passed after final revision recheck",
+    "github_gfm": "passed-desktop: actual GitHub DOM and screenshots, Chinese permalinks, tables, protected text, code, architecture flags and relevant Mermaid/emphasis verified",
+    "deterministic_replay": "passed: two independent final-output directories byte-identical",
+    "actual_site_browser": "not passed; not run this stage; inherited renderer issues remain",
+    "hosted_ci": "not run; inherited Actions remain disabled",
+    "offline_site_parser": {
+      "file": "i18n/zh/phases/00-setup-and-tooling/07-docker-for-ai/docs/zh.md",
+      "parser_executed": true,
+      "html_bytes": 25798,
+      "tables": 2,
+      "code_blocks": 18,
+      "figures": 1,
+      "mermaid_sources": 1,
+      "empty_heading_ids": [
+        "学习目标",
+        "要解决的问题",
+        "核心概念",
+        "核心词汇",
+        "动手实现",
+        "实际使用",
+        "练习",
+        "关键术语"
+      ],
+      "duplicate_heading_ids": [
+        "ai-docker"
+      ],
+      "browser_verified": false,
+      "result": "BLOCKED_SOURCE_RENDERER"
+    }
+  },
+  "runtime_checks": {
+    "source_fences": [
+      {
+        "block": 45,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 49,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 55,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 59,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 77,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 85,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 89,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 95,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 99,
+        "type": "python-ast",
+        "result": "passed"
+      },
+      {
+        "block": 113,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 119,
+        "type": "python-ast",
+        "result": "passed"
+      },
+      {
+        "block": 123,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 127,
+        "type": "bash-syntax-only",
+        "returncode": 0,
+        "stderr": ""
+      },
+      {
+        "block": 131,
+        "type": "bash-syntax-only",
+        "returncode": 2,
+        "stderr": "bash: line 17: syntax error near unexpected token `newline'\nbash: line 17: `docker logs -f <container_id>'"
+      }
+    ],
+    "compose_yaml": {
+      "result": "syntax parse passed",
+      "services": [
+        "ai-dev",
+        "qdrant"
+      ],
+      "schema_validation": "not run",
+      "build_run": "not run"
+    },
+    "dockerfile_validation": "build not run; no container/image operations",
+    "lesson_unit_suite": "none checked in"
+  },
+  "not_run": [
+    "driver/toolkit/Docker/PyTorch installs",
+    "permission/group changes",
+    "Docker image pull/build/run",
+    "GPU benchmark",
+    "cloud accounts/provisioning/payment",
+    "network deployments"
+  ],
+  "terminology_verification": [
+    {
+      "term": "cuDNN",
+      "official_source": "https://developer.nvidia.com/cuda/cuda-x-libraries/cudnn?ncid=so-othe-95613"
+    },
+    {
+      "term": "MPS",
+      "official_source": "https://docs.pytorch.org/docs/2.14/notes/mps.html"
+    }
+  ],
+  "github_gfm_evidence": {
+    "verification_date": "2026-10-02",
+    "observed_commit": "4ec534dc3a167281db5c10c6ffdb33c026da6bd3",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/4ec534dc3a167281db5c10c6ffdb33c026da6bd3/i18n/zh/phases/00-setup-and-tooling/07-docker-for-ai/docs/zh.md",
+    "target_sha256": "616b06ab118eea9ba43bcbe453eb3bb7470e59714283e4b384c1cde237cd5696",
+    "browser": "dot cloud Chrome desktop",
+    "headings": 19,
+    "tables": 2,
+    "chinese_permalink_clicked": true,
+    "figure": "identifier shown as code, not site interaction",
+    "mobile": "not tested",
+    "focused_checks": "Mermaid rendered; three new first-use explanations present; four emphasized labels render as strong; Apple Silicon --platform=linux/amd64 and CPU-only caveat intact; Compose fields and literal <container_id> intact"
+  }
+}
