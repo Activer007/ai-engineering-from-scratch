@@ -1,0 +1,650 @@
+{
+  "version": 1,
+  "stage_id": "S42-bias-variance",
+  "lesson_id": "02-10",
+  "date": "2026-10-02",
+  "status": "reviewed-draft-submitted",
+  "final_acceptance": false,
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "0a85c46801a4aebab2816e45dafaa49a60d12a89da2d1fc5f5f8fb63e15830c9",
+  "target_sha256": "1009e9594b11daac84e6d24dcc07105c0d7237f5770f8fc7818a1bf81d5d6f79",
+  "support_commit": "128b4f9217dd7ab61ece3d8b87791ed97936108f",
+  "content_commit": "2f9130ab9dfdbf79b0d4a6ff4c03b331637ee193",
+  "coverage": {
+    "blocks": 229,
+    "candidates": 98,
+    "headings": 30,
+    "fences": 17,
+    "python_fences": 8,
+    "mermaid_fences": 5,
+    "figure": 1,
+    "bare_fences_text": 3,
+    "tables": 6,
+    "table_shapes_including_header": [
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        6,
+        6
+      ],
+      [
+        9,
+        3
+      ]
+    ],
+    "exercises": 5,
+    "references": 4,
+    "terms": 8
+  },
+  "translation_review": {
+    "technical": "Full independent English/Chinese comparison, every block hash-bound",
+    "chinese": "Separate complete final Chinese readthrough",
+    "independence": "Another author reviewed without reading author QA or modifying author text",
+    "human_approval": "not claimed"
+  },
+  "runtime": {
+    "author": {
+      "lesson_id": "02-10",
+      "code_sha256": "bbe398e9345eae3c9a3b757b6c4271909ad018eab893879b3e9c262712b2c4c7",
+      "numpy_version": "2.3.5",
+      "finite_checks": [
+        {
+          "name": "raw document missing np reproduced",
+          "result": "PASS",
+          "evidence": "name 'np' is not defined"
+        },
+        {
+          "name": "document and canonical generator bytes behavior",
+          "result": "PASS",
+          "evidence": [
+            30,
+            -0.2929795412144358
+          ]
+        },
+        {
+          "name": "known linear coefficients",
+          "result": "PASS",
+          "evidence": [
+            2.0,
+            3.000000000000001
+          ]
+        },
+        {
+          "name": "ridge intercept excluded",
+          "result": "PASS",
+          "evidence": [
+            4.0,
+            0.0,
+            -1.8620092656187113e-17,
+            0.0
+          ]
+        },
+        {
+          "name": "negative lambda follows unregularized branch",
+          "result": "PASS",
+          "evidence": true
+        },
+        {
+          "name": "document total lacks irreducible noise",
+          "result": "PASS",
+          "evidence": {
+            "total": 1.361111111111111,
+            "bias_plus_variance": 1.3611111111111107,
+            "difference_if_noise_added": 0.25
+          }
+        },
+        {
+          "name": "canonical decomposition includes noise",
+          "result": "PASS",
+          "evidence": {
+            "max_error": 5.551115123125783e-17,
+            "results": {
+              "1": {
+                "bias_sq": 0.43102863390601676,
+                "variance": 0.04339550849827921,
+                "total_error": 0.724424142404296,
+                "noise": 0.25
+              },
+              "3": {
+                "bias_sq": 0.056375127808742286,
+                "variance": 0.037302145824071896,
+                "total_error": 0.3436772736328142,
+                "noise": 0.25
+              },
+              "5": {
+                "bias_sq": 0.0011133561119705373,
+                "variance": 0.05288069800515172,
+                "total_error": 0.30399405411712227,
+                "noise": 0.25
+              }
+            }
+          }
+        },
+        {
+          "name": "zero noise boundary",
+          "result": "PASS",
+          "evidence": {
+            "bias_sq": 0.43263270483679583,
+            "variance": 0.029834882156501093,
+            "total_error": 0.46246758699329704,
+            "noise": 0
+          }
+        },
+        {
+          "name": "degree list order consumes shared RNG",
+          "result": "PASS",
+          "evidence": {
+            "degree_alone": {
+              "bias_sq": 0.001098970241383622,
+              "variance": 0.044850696521391724,
+              "total_error": 0.29594966676277534,
+              "noise": 0.25
+            },
+            "degree_after_other": {
+              "bias_sq": 0.0009618952396206764,
+              "variance": 0.04837523488977557,
+              "total_error": 0.2993371301293962,
+              "noise": 0.25
+            }
+          }
+        },
+        {
+          "name": "generated independent data instead of finite dataset resampling",
+          "result": "PASS",
+          "evidence": {
+            "sample1_unique": 30,
+            "sample2_unique": 30
+          }
+        },
+        {
+          "name": "regularization can reduce both empirical components",
+          "result": "PASS",
+          "evidence": {
+            "lambda0": {
+              "bias_sq": 0.015646523566951138,
+              "variance": 2.3985490928756388,
+              "total_error": 2.6641956164425897,
+              "noise": 0.25
+            },
+            "lambda0.1": {
+              "bias_sq": 0.008648583008955702,
+              "variance": 1.2525719757816574,
+              "total_error": 1.5112205587906131,
+              "noise": 0.25
+            }
+          }
+        },
+        {
+          "name": "variance not monotonically decreasing in displayed sweep",
+          "result": "PASS",
+          "evidence": {
+            "lambda10": 0.43703058303422554,
+            "lambda100": 0.45067141934787186
+          }
+        },
+        {
+          "name": "alpha100 degree15 need not be near constant",
+          "result": "PASS",
+          "evidence": {
+            "prediction_range": 2.388967111933672
+          }
+        },
+        {
+          "name": "document learning curves require external predictor/grid",
+          "result": "PASS",
+          "evidence": "name 'predict_polynomial' is not defined"
+        },
+        {
+          "name": "original document learning loop with declared canonical fixture",
+          "result": "PASS",
+          "evidence": {
+            "sizes": 10,
+            "seeds_per_size": 50,
+            "degree": 5,
+            "no_output_claim": "function accumulates lists but has no print/return"
+          }
+        },
+        {
+          "name": "original document ridge sweep after explicit canonical fixture",
+          "result": "PASS",
+          "evidence": {
+            "initial_error": "name 'bias_variance_decomposition' is not defined",
+            "rows": 11,
+            "bootstrap_per_alpha": 200
+          }
+        },
+        {
+          "name": "original full canonical run output has all seven demos",
+          "result": "PASS",
+          "evidence": {
+            "lines": 324,
+            "demo_count": 7,
+            "default_scale_unchanged": true
+          }
+        }
+      ],
+      "finite_count": 17,
+      "canonical_exit": 0,
+      "canonical_lines_fully_read": 324,
+      "canonical_original_demos": 7,
+      "document_fences_executed": [
+        139,
+        145,
+        153,
+        161,
+        171
+      ],
+      "explicit_context": "np first missing reproduced; canonical predictor/decomposition and noiseless test grid explicitly supplied only in external fixture after missing names reproduced; original snippets unchanged",
+      "not_run": [
+        "three sklearn fences 183/189/195",
+        "outputs prompt",
+        "model downloads/installations"
+      ],
+      "source_changed": false
+    },
+    "independent": {
+      "finite_groups": 8,
+      "checks": [
+        {
+          "name": "Original snippet requires external NumPy binding",
+          "status": "PASS",
+          "evidence": {
+            "first_attempt": "name 'np' is not defined",
+            "external_context_added": "np = installed numpy; source unchanged",
+            "numpy_version": "2.3.5"
+          }
+        },
+        {
+          "name": "Original data generator reproducibility and zero-noise contract",
+          "status": "PASS",
+          "evidence": {
+            "samples": 30,
+            "seed": 4,
+            "same_seed_identical": true,
+            "zero_noise_equals_true_function": true
+          }
+        },
+        {
+          "name": "OLS finite linear recovery",
+          "status": "PASS",
+          "evidence": {
+            "coefficients": [
+              2.0,
+              3.0000000000000018
+            ],
+            "max_residual": 3.552713678800501e-15
+          }
+        },
+        {
+          "name": "Ridge preserves unpenalized intercept and shrinks slope",
+          "status": "PASS",
+          "evidence": {
+            "ridge_coefficients": [
+              2.0,
+              0.2727272727272727
+            ],
+            "constant_target_coefficients": [
+              4.0,
+              0.0,
+              -0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "name": "Negative lambda silently selects unregularized branch",
+          "status": "PASS",
+          "evidence": {
+            "lambda": -1,
+            "equal_to_OLS": true
+          }
+        },
+        {
+          "name": "Source total_error excludes an added irreducible-noise term",
+          "status": "PASS",
+          "evidence": {
+            "bias_sq": 1.0,
+            "variance": 0.6666666666666666,
+            "total_error": 1.6666666666666667,
+            "sum_without_noise": 1.6666666666666665,
+            "sum_plus_example_noise_variance_0_25": 1.9166666666666665,
+            "external_fixture_only": true
+          }
+        },
+        {
+          "name": "Source demonstrations not standalone; original first iterations attempted",
+          "status": "PASS",
+          "evidence": {
+            "errors": {
+              "demo_learning_curves": "name 'predict_polynomial' is not defined",
+              "demo_regularization_sweep": "name 'bias_variance_decomposition' is not defined"
+            },
+            "loops_or_source_not_modified": true,
+            "no_full_demo_success_claimed": true
+          }
+        },
+        {
+          "name": "Unvalidated length mismatch reaches linear algebra error",
+          "status": "PASS",
+          "evidence": {
+            "error": "LinAlgError"
+          }
+        }
+      ],
+      "fully_read_document_blocks": [
+        139,
+        145,
+        153,
+        161,
+        171
+      ],
+      "successful_definition_and_calculation_blocks": [
+        139,
+        145,
+        153
+      ],
+      "demo_definition_blocks_called_only_until_missing_dependency": [
+        161,
+        171
+      ],
+      "external_context_added": [
+        "numpy alias np",
+        "small predictions/y_true fixture for decomposition"
+      ],
+      "canonical_or_author_QA_read_or_run": false,
+      "sklearn_blocks_skipped": [
+        183,
+        189,
+        195
+      ],
+      "network_download_install_or_models": false
+    }
+  },
+  "source_risks": [
+    {
+      "id": "S42-INDEPENDENT-SOURCE-01",
+      "segments": [
+        "02-10:b0003",
+        "02-10:b0039",
+        "02-10:b0041",
+        "02-10:b0043",
+        "02-10:b0045"
+      ],
+      "title": "Squared-error decomposition conditions",
+      "detail": "Opening every-model-error statement is broader than the later squared-loss derivation. Conditional mean f(x), independent test noise/fit, expectation domain and noise assumptions matter; a realized finite error is not universally lower-bounded by sigma^2.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-02",
+      "segments": [
+        "02-10:b0015",
+        "02-10:b0017",
+        "02-10:b0025",
+        "02-10:b0031",
+        "02-10:b0033"
+      ],
+      "title": "Capacity, bias and variance generalizations",
+      "detail": "Fixed capacity does not force every improvement in one component to worsen the other. High variance is not definitionally noise fitting; degree20 interpolation requires enough distinct data and appropriate solution assumptions. Source universal statements retained.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-03",
+      "segments": [
+        "02-10:b0057",
+        "02-10:b0059",
+        "02-10:b0061",
+        "02-10:b0225"
+      ],
+      "title": "Regularization effects and intercept exception",
+      "detail": "Increasing regularization does not universally increase bias/decrease variance in all settings. Ridge coefficient-wise shrinkage, L1 exact zeros and dropout interpretation require context; document fit explicitly excludes intercept from penalty.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-04",
+      "segments": [
+        "02-10:b0065",
+        "02-10:b0069",
+        "02-10:b0071",
+        "02-10:b0073",
+        "02-10:b0075",
+        "02-10:b0077"
+      ],
+      "title": "Double descent and implicit preference",
+      "detail": "Double descent is a possible behavior, not a universal guaranteed curve or complete explanation of generalization. Parameter count threshold p~n, simplest solution selection and peak persistence under regularization are conditional.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-05",
+      "segments": [
+        "02-10:b0081",
+        "02-10:b0083",
+        "02-10:b0087",
+        "02-10:b0089",
+        "02-10:b0107",
+        "02-10:b0113",
+        "02-10:b0115",
+        "02-10:b0125",
+        "02-10:b0163",
+        "02-10:b0165",
+        "02-10:b0185",
+        "02-10:b0191",
+        "02-10:b0203"
+      ],
+      "title": "Diagnostic heuristics and use of test set",
+      "detail": "Training/validation gaps alone do not identify population bias/variance; optimization failure, noise and distribution shift can also matter. More-data-is-useless and ship-it rules are strong source heuristics. Repeated diagnostics should not be mistaken for independent final test estimation.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-06",
+      "segments": [
+        "02-10:b0093",
+        "02-10:b0095",
+        "02-10:b0097",
+        "02-10:b0099",
+        "02-10:b0101",
+        "02-10:b0103",
+        "02-10:b0221"
+      ],
+      "title": "Ensemble variance and bias summaries",
+      "detail": "sigma^2/N requires equal variances and independence; correlated models need covariance terms. Bagging/boosting/stacking effects are not unconditional. Random forests add feature randomization beyond simple bagging. Source reduction less-than1/N phrasing ambiguous but faithfully retained.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-07",
+      "segments": [
+        "02-10:b0137",
+        "02-10:b0143",
+        "02-10:b0147",
+        "02-10:b0155"
+      ],
+      "title": "Bootstrap versus fresh population draws and finite estimates",
+      "detail": "generate_data draws new uniform/noisy data, not resamples from a fixed empirical training set. Source uses bootstrap terminology across these experiments. Known true function still leaves population bias/variance estimated from finite runs rather than exactly known.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-08",
+      "segments": [
+        "02-10:b0153",
+        "02-10:b0155"
+      ],
+      "title": "total_error is error against noise-free truth",
+      "detail": "Source code computes squared difference to y_true. Finite fixture gives bias_sq1 + variance2/3 = total_error5/3 exactly (roundoff), while adding example noise variance .25 gives1.9167, not the computed1.6667. Source prose says +noise; retained unchanged.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-09",
+      "segments": [
+        "02-10:b0139",
+        "02-10:b0145",
+        "02-10:b0153",
+        "02-10:b0161",
+        "02-10:b0171"
+      ],
+      "title": "Incomplete executable context",
+      "detail": "Original first generator call raises NameError np. Reviewer then supplied installed NumPy externally without editing source. Prediction/truth arrays supplied for b0153. Learning-curve call stops at missing predict_polynomial; regularization-sweep call stops at missing bias_variance_decomposition. x_test/y_test also need surrounding context. These snippet failures do not establish canonical failure; canonical was not read or run.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-10",
+      "segments": [
+        "02-10:b0145",
+        "02-10:b0169",
+        "02-10:b0173",
+        "02-10:b0175",
+        "02-10:b0197"
+      ],
+      "title": "Polynomial conditioning and lambda domain",
+      "detail": "Unscaled powers and normal equations can be ill-conditioned at high degree. Negative lambda silently follows least-squares branch; mismatched x/y lengths raise LinAlgError. A finite alpha100 need not force a degree15 polynomial on [-3,3] to constant; limiting behavior and basis scale differ.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-11",
+      "segments": [
+        "02-10:b0179",
+        "02-10:b0183",
+        "02-10:b0185",
+        "02-10:b0189",
+        "02-10:b0191",
+        "02-10:b0195",
+        "02-10:b0197",
+        "02-10:b0205"
+      ],
+      "title": "External library and compute-time claims",
+      "detail": "sklearn imports skipped under allowlist. Cross-validation learning/validation curves do not directly measure population decomposition. Negative-MSE sign, X/y dependencies and full timing/performance claims preserved; no external compatibility benchmark or10-15-minute result claimed.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-12",
+      "segments": [
+        "02-10:b0219"
+      ],
+      "title": "Exercise true-function mismatch",
+      "detail": "Exercise asks to change true function from polynomial to sin(x), but the earlier source generator already uses sin(1.5x)+0.5x. No silent correction in Chinese.",
+      "translation_change_required": false
+    },
+    {
+      "id": "S42-INDEPENDENT-SOURCE-13",
+      "segments": [
+        "02-10:b0049",
+        "02-10:b0067",
+        "02-10:b0081",
+        "02-10:b0109",
+        "02-10:b0127",
+        "02-10:b0129",
+        "02-10:b0209",
+        "02-10:b0213",
+        "02-10:b0215",
+        "02-10:b0217",
+        "02-10:b0219",
+        "02-10:b0221",
+        "02-10:b0229"
+      ],
+      "title": "Visual, artifact and execution limits",
+      "detail": "Five Mermaid payloads and figure bias-variance preserved. No actual diagrams rendered by reviewer. Exercises and output prompt not executed; all four references retained without outside research. Source strengths/limitations remain independent from translation approval.",
+      "translation_change_required": false
+    }
+  ],
+  "actual_github_gfm": {
+    "status": "passed-desktop",
+    "content_commit": "2f9130ab9dfdbf79b0d4a6ff4c03b331637ee193",
+    "browser": "dot cloud Chrome",
+    "observer": "coordinator personally inspected cloud Chrome tab11",
+    "headings": 30,
+    "tables": [
+      {
+        "rows_including_header": 4,
+        "columns": 4
+      },
+      {
+        "rows_including_header": 4,
+        "columns": 3
+      },
+      {
+        "rows_including_header": 5,
+        "columns": 3
+      },
+      {
+        "rows_including_header": 5,
+        "columns": 4
+      },
+      {
+        "rows_including_header": 6,
+        "columns": 6
+      },
+      {
+        "rows_including_header": 9,
+        "columns": 3
+      }
+    ],
+    "strong": 15,
+    "total_em": 0,
+    "unintended_em": 0,
+    "unparsed_bold_labels": 0,
+    "mermaid_rendered": 5,
+    "all_frame_labels_inspected": true,
+    "screenshots_personally_observed": true,
+    "new_syntax_repairs": false,
+    "actual_course_site": "not passed",
+    "layout_note": "All five Mermaid iframe texts and diagrams inspected; two tall decision graphs viewed in upper/lower screenshots, diagnostic graph zoomed out twice. All six tables readable; figure only code placeholder. One body PageDown locator action timed out, then ordinary observed-page scroll succeeded; no site rejection."
+  },
+  "single_lesson_controls": "author and independent original strict,33 regressions and double-new-directory replays PASS",
+  "dependencies": {
+    "count": 51,
+    "verified_pinned_Git_and_SHA256": true
+  },
+  "coordinator_validation": {
+    "combined_original_strict": 62,
+    "S07_exact_symbolic_exception": 1,
+    "S19_exact_pipe_repair": 1,
+    "original_regressions": 33,
+    "S07_guards": 24,
+    "S19_guards": 50,
+    "all_lessons_double_replay": {
+      "count": 64,
+      "result": "byte-identical",
+      "asset_scope": "Core renders Markdown; manifest SVG separately hash-verified/copied into both output trees then recursively compared"
+    },
+    "repository_audits": "523 lessons,67 certifications,12 assessments,505 questions; zero issues; README/book counts pass",
+    "source_and_generic_controls": "unchanged"
+  },
+  "stage_progress_snapshot": {
+    "completed_before_stage": 63,
+    "stage_completed": 1,
+    "distinct_new_translations": 64,
+    "curriculum_total": 523,
+    "remaining_unstarted_at_stage_completion": 455,
+    "in_progress_elsewhere": 4,
+    "remaining_not_reviewed": 459,
+    "note": "64 reviewed +4 in progress+455unstarted=523; stages may close out of numeric order to avoid blocking passed lessons"
+  },
+  "post_commit_verification": "After final evidence commit, changed files are fetched and compared byte-for-byte and exact-head PR/CI metadata checked. Results are recorded in PR body and single rollout index to avoid a self-referencing evidence commit. Empty CI arrays are not a pass.",
+  "not_passed": [
+    "actual course website and25 empty original-parser heading IDs",
+    "mobile and interactive figure",
+    "hosted CI",
+    "user release approval,merge,deployment"
+  ],
+  "snapshot": {
+    "reviewed_drafts": 64,
+    "in_progress": 4,
+    "unstarted": 455,
+    "curriculum_total": 523,
+    "merged": 0,
+    "released": 0,
+    "live_count_authority": "PR #7 single ROLLOUT-INDEX.json"
+  }
+}
