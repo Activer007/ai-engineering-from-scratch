@@ -34,7 +34,7 @@ one-hot(center) ── W ──▶ hidden (d-dim) ── W' ──▶ softmax(vo
                           this is the embedding
 ```
 
-关键技巧在于：对 100k（k 表示千）个词计算 softmax，代价高得难以承受。Word2Vec 用**负采样（negative sampling）**把它转为二分类任务，预测“这个上下文词是否出现在这个中心词附近”。每个训练词对只抽取少量负词（没有共同出现的词），而不对整个词表计算 softmax。
+关键技巧在于：对 100k（k 表示千）个词计算 softmax，代价高得难以承受。Word2Vec 用**负采样（negative sampling）** 把它转为二分类任务，预测“这个上下文词是否出现在这个中心词附近”。每个训练词对只抽取少量负词（没有共同出现的词），而不对整个词表计算 softmax。
 
 ```figure
 word-vector-arithmetic
