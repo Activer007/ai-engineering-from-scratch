@@ -1,0 +1,2424 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-04",
+  "source_path": "phases/02-ml-fundamentals/04-decision-trees/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "89b19288c719ca1fbf1363f7879b559ce23b14ca",
+  "source_sha256": "012e6e8f09a1eda4f03ca395221e5aa30287a782b885a197d563ff79b5ca750c",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/04-decision-trees/docs/zh.md",
+  "target_sha256": "42857fb62aa5b27d7eac711107d580c80e627fa48c5c3497b0d985e83b204e92",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "old_chinese_or_cache_used": false
+  },
+  "segments": [
+    {
+      "segment_id": "02-04:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests"
+      ],
+      "ordinal": 1,
+      "source_sha256": "c60badcc56483b0ffbfb5ddef835850b2bad37884480f888fceb55fa9d3cd7dd",
+      "target": "# 决策树与随机森林\n",
+      "target_sha256": "0065922ff9baeec903e44d271fffd2c739508f1afe6e704126fa85c4799bb7dd"
+    },
+    {
+      "segment_id": "02-04:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Decision Trees and Random Forests"
+      ],
+      "ordinal": 2,
+      "source_sha256": "7dbd66ccf47a209f2173f2857b87608aa786216ea555d8d5c5ef541df8be7ab0",
+      "target": "> 决策树（decision tree）就是一张流程图。但由许多决策树组成的森林，却是机器学习（ML）中最强大的工具之一。\n",
+      "target_sha256": "c379f917733ade7e446403cd7926e8ea5bf2236e58ab0005463b7e59763b6421"
+    },
+    {
+      "segment_id": "02-04:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests"
+      ],
+      "ordinal": 3,
+      "source_sha256": "57bcdbdb2f4b9415c7d8cb5912063b97185a2a51f202af5f890159f2a8be28db",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 阶段 1（课程 09 信息论、06 概率）\n**Time:** ~90 分钟\n",
+      "target_sha256": "8c49114d66a33a403316686ca4c50197acd79e99659d935abecca4d9279c304f"
+    },
+    {
+      "segment_id": "02-04:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "02-04:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "9e661ab4d444d8b716a90293196975f49fd2a849723a884f5b547c1154159217",
+      "target": "- 实现 Gini 不纯度、熵和信息增益的计算，找出决策树的最优划分\n- 从零构建决策树分类器，并加入预剪枝控制（最大深度、最小样本数）\n- 利用 bootstrap 抽样（自助抽样）和特征随机化构建随机森林（random forest），并解释它为什么能降低方差\n- 比较 MDI 特征重要性与置换重要性，并识别 MDI 存在偏差的情况\n",
+      "target_sha256": "cb8437beb2b52bad9aa7b7c550ec89ac8c622aca42fd85193f19651d2896c313"
+    },
+    {
+      "segment_id": "02-04:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "02-04:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "f5f3f5eba99121a960d242d46df48ea65301d0689073586f25694b783b43e706",
+      "target": "你手头有一份表格数据。每行是一个样本，每列是一个特征，还有一列是你想预测的目标。你可以直接拿神经网络来处理。但对于表格数据，树模型（决策树、随机森林、梯度提升树）的表现一直优于深度学习。在 Kaggle 的结构化数据竞赛中，占据主导地位的是 XGBoost 和 LightGBM，而不是 Transformer。\n",
+      "target_sha256": "f80323a3b124209c62e485de8328f0418d15a895ac18ea9c9e9c9dc3e5a7c0b7"
+    },
+    {
+      "segment_id": "02-04:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "262c1c74f6b0278fc2745ec5d1e9cc6c0aaf83aaa780f7ef9294e0d2a7885024",
+      "target": "为什么？树模型无需预处理就能处理混合类型的特征（数值型和类别型），无需特征工程就能处理非线性关系。它们具有可解释性：查看树的结构，就能清楚看到模型为什么做出某个预测。而对许多树的结果取平均的随机森林，在中等规模的数据集上具有很强的抗过拟合能力。\n",
+      "target_sha256": "78565478509380e424f9784aeb757ff4cea0ad2d1f1d9a2aa694abbba3e0fdd0"
+    },
+    {
+      "segment_id": "02-04:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "fdbc1a3222f09eaaaf9ae2ad827b7b76570fe9ea4e57c8c36dbacda5f94e8d3a",
+      "target": "本课使用递归划分从零构建决策树，再在此基础上构建随机森林。你将实现划分准则背后的数学计算（Gini 不纯度、熵、信息增益），并理解为什么把弱学习器组成集成（ensemble）后，就能得到强学习器。\n",
+      "target_sha256": "80b99819a64f72d715e5840d8022f50c82f240352b5f08481102685e3cbf05b8"
+    },
+    {
+      "segment_id": "02-04:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "02-04:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 11,
+      "source_sha256": "75795fe3e76b5f66d0be5d2dd2073c54765bd149f5b6fda5de8c873f10f4daee",
+      "target": "### 决策树做什么\n",
+      "target_sha256": "3bf87d101535c6fea2b2c28dd4c391d95349c579b574aa3680484f7d0e3e0a18"
+    },
+    {
+      "segment_id": "02-04:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 12,
+      "source_sha256": "71e52f061c7bf3899550f63423ab924f678f6e4caae0e50104a21368d55f033e",
+      "target": "决策树通过一连串是非问题，将特征空间划分成矩形区域。\n",
+      "target_sha256": "52e8dc860e7f815c99764003b16901d53907a976d10fbad7131a4c34aedaa43a"
+    },
+    {
+      "segment_id": "02-04:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0025",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 13,
+      "source_sha256": "c20453a15b1ed33036851b9a44b36cc2e650e182b08ce9e243721e9eebfba47d",
+      "target": "```mermaid\ngraph TD\n    A[\"Age < 30?\"] -->|Yes| B[\"Income > 50k?\"]\n    A -->|No| C[\"Credit Score > 700?\"]\n    B -->|Yes| D[\"Approve\"]\n    B -->|No| E[\"Deny\"]\n    C -->|Yes| F[\"Approve\"]\n    C -->|No| G[\"Deny\"]\n```\n",
+      "target_sha256": "c20453a15b1ed33036851b9a44b36cc2e650e182b08ce9e243721e9eebfba47d"
+    },
+    {
+      "segment_id": "02-04:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 14,
+      "source_sha256": "38d7e78f39209adce6ec84959d4e44ca1eae369e2d1882825608fe65678a286e",
+      "target": "每个内部节点都将一个特征与阈值进行比较。每个叶节点都给出一个预测。要对一个新数据点分类，就从根节点出发，沿着分支向下走，直到到达叶节点。\n",
+      "target_sha256": "e16f517314ab74ccac7d8e2efd885c340ffdfdaaf4cec67316d21bf7704f5c49"
+    },
+    {
+      "segment_id": "02-04:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 15,
+      "source_sha256": "85fbcd66220014e6be2a91ee8665b675c68b749a2f53f7c39328261355f8a335",
+      "target": "构建树时从上到下进行，在每个节点选择最能分开数据的特征和阈值。“最好”由划分准则来定义。\n",
+      "target_sha256": "8a74d9cc8042c2aaf426be4131f1e6e01d97faeaea5780c033ee33ad1d3eaf2c"
+    },
+    {
+      "segment_id": "02-04:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### What a decision tree does"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 16,
+      "source_sha256": "4a1261eddd008c7d73b9ad6051e4ebed258829924c981a5c661714e26d66a3a8",
+      "target": "### 划分准则：衡量不纯度\n",
+      "target_sha256": "75374d0bfd0e6f0f760bc194bd502be8d26ee251e0d1f08ae7304c81550bceef"
+    },
+    {
+      "segment_id": "02-04:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 17,
+      "source_sha256": "4a4557720b37bd0a324ae3097864beed28e06698a185ffe29d7b542ee381f9b1",
+      "target": "每个节点都有一组样本。我们希望划分后得到的子节点尽可能“纯”，也就是说，每个子节点中的样本主要属于同一个类别。\n",
+      "target_sha256": "439536d5f7d5c9867b957872d6240395a82c8e4226a2d9f4e190ad676d28e678"
+    },
+    {
+      "segment_id": "02-04:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 18,
+      "source_sha256": "98a08deb30994ee6dc5a789d1828d969423525c9f082e56394c948cc65d868be",
+      "target": "**Gini 不纯度（Gini impurity）** 衡量的是：随机选取一个样本，再按照该节点的类别分布为它指定标签时，被错误分类的概率。\n",
+      "target_sha256": "032bea05c05871ce12d8929e7a8e4a0b058a9c6391b1c058770e7c6f8a0843f0"
+    },
+    {
+      "segment_id": "02-04:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 19,
+      "source_sha256": "f335eed1375ed0ac7087dcdeebf0978456862694c436ec0a8b824eb87af3760a",
+      "target": "```text\nGini(S) = 1 - sum(p_k^2)\n\nwhere p_k is the proportion of class k in set S.\n```\n",
+      "target_sha256": "92f4986f8eac1289b6f85b082b89eaa7b797534442caec89ca436dd419d965e5"
+    },
+    {
+      "segment_id": "02-04:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 20,
+      "source_sha256": "a4344fdac7f8a12b2feec3630d182613f4eac6dadf0f7ed74efd9b8a3166d34f",
+      "target": "对于纯节点（样本全属于同一类别），Gini = 0。对于类别比例为 50/50 的二分类划分，Gini = 0.5。数值越低越好。\n",
+      "target_sha256": "34a99f01d1277a462b77aba61804fb423800fba23a2d0fe3cbf8c9fcadcad2fc"
+    },
+    {
+      "segment_id": "02-04:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 21,
+      "source_sha256": "4e22e1944ca5cbbb8e99551e93a35b8b49e03b3d134930c2dde4f1e8af62449b",
+      "target": "```text\nExample: 6 cats, 4 dogs\n\nGini = 1 - (0.6^2 + 0.4^2) = 1 - (0.36 + 0.16) = 0.48\n```\n",
+      "target_sha256": "67653c58ec8e0c1c3d34bedf2c1efdeaaeb58284babb38ca5e8dc8bee6bf7327"
+    },
+    {
+      "segment_id": "02-04:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 22,
+      "source_sha256": "22b6d922d54362b435cbf66ba15ced6109591a80d21c90dd4896a8d2bbda1d7f",
+      "target": "**熵（entropy）** 衡量节点中的信息量（无序程度）。阶段 1 课程 09 已经介绍过。\n",
+      "target_sha256": "829eb34bc82a02f135edf9b4d5085521878a9ee84fab4c5a99802d2f5d6d52c6"
+    },
+    {
+      "segment_id": "02-04:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 23,
+      "source_sha256": "bb7a344414c0cde1e48b981efd216dd5dd82562e6d5c0d478d982a5f32a96855",
+      "target": "```text\nEntropy(S) = -sum(p_k * log2(p_k))\n```\n",
+      "target_sha256": "8704831e5952795673d57ec7b82fb9d77de4c650a03c68901ab3d428d48ad5f2"
+    },
+    {
+      "segment_id": "02-04:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 24,
+      "source_sha256": "cd25a0ae35ebb49110fff44cbb3274d40339f6f6c7a6bd17a08af5728dbdf59d",
+      "target": "对于纯节点，entropy = 0。对于类别比例为 50/50 的二分类划分，entropy = 1.0。数值越低越好。\n",
+      "target_sha256": "d5c6b19be90cd12cc9d6d0a00664621bd9c8e26702e13dc07965db5cb59b7140"
+    },
+    {
+      "segment_id": "02-04:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 25,
+      "source_sha256": "9c92d2c2848bdf615059ea6dba45087bcad7cb2ad45429856e67be78ff14958e",
+      "target": "```text\nExample: 6 cats, 4 dogs\n\nEntropy = -(0.6 * log2(0.6) + 0.4 * log2(0.4))\n        = -(0.6 * -0.737 + 0.4 * -1.322)\n        = 0.442 + 0.529\n        = 0.971 bits\n```\n",
+      "target_sha256": "308ee103b489ee527515fa40f4efb8826c552c5d62311c82cbf7aa4be2f190e5"
+    },
+    {
+      "segment_id": "02-04:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 26,
+      "source_sha256": "e33efd583d2f7e1e06308520d96c4563854b8ddafa1161b71f6b5d43df5df20a",
+      "target": "**信息增益（information gain）** 是一次划分后不纯度（熵或 Gini）的减少量。\n",
+      "target_sha256": "81232ee9061e4fdba9a5410070dfc98ba6382ecd2f664b9d162734c18d43efe8"
+    },
+    {
+      "segment_id": "02-04:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 27,
+      "source_sha256": "b69a87c7647d1988f445af5c039ccfc94d6389f5a1e06bee160aa414919a347d",
+      "target": "```text\nIG(S, feature, threshold) = Impurity(S) - weighted_avg(Impurity(S_left), Impurity(S_right))\n\nwhere the weights are the proportions of samples in each child.\n```\n",
+      "target_sha256": "b2619603d02410c7b6739452e334e3b1164375064ef9ab22650c55503ecbb341"
+    },
+    {
+      "segment_id": "02-04:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 28,
+      "source_sha256": "32b1f55b50f76190b8858f6c4536d7a26f1af17caab0b2992c2b3b25a5efce1a",
+      "target": "每个节点采用的贪心算法是：尝试每个特征和每个可能的阈值，选择使信息增益最大的特征与阈值组合（feature, threshold）。\n",
+      "target_sha256": "8947348bd96cb2efda8e3eaebe7b9136f7fc94c9db4b751b8d0187b90341f190"
+    },
+    {
+      "segment_id": "02-04:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Split criteria: measuring impurity"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### How splitting works"
+      ],
+      "ordinal": 29,
+      "source_sha256": "1ee187cb6c27d76c2ee56a33d8152f85ad0dd0b8b078faf65ea682e75b88dbea",
+      "target": "### 划分如何进行\n",
+      "target_sha256": "02920b9dc3114821794f887aff353d7a040a72ef415f7e4ee3c160475e41572c"
+    },
+    {
+      "segment_id": "02-04:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### How splitting works"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### How splitting works"
+      ],
+      "ordinal": 30,
+      "source_sha256": "9bf9d1812c649cce1c5056ac0707c26b7af27166c4d57ef826ceb11dfd804609",
+      "target": "假设当前节点的数据集有 n 个特征、m 个样本：\n",
+      "target_sha256": "2757ced3c74663b712eaadf1b129795f70ddfd4a8cd2edc67608418445955240"
+    },
+    {
+      "segment_id": "02-04:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### How splitting works"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0061",
+      "kind": "list",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### How splitting works"
+      ],
+      "ordinal": 31,
+      "source_sha256": "a48f58691cec8a02acdda5bd9083576732dbf61714230efa505cef16dd48abff",
+      "target": "1. 对每个特征 j（j = 1 到 n）：\n   - 按特征 j 对样本排序\n   - 将相邻不同取值之间的每个中点都作为候选阈值\n   - 计算每个阈值对应的信息增益\n2. 选择信息增益最高的特征和阈值\n3. 将数据划分到左侧（feature <= threshold）和右侧（feature > threshold）\n4. 对每个子节点递归执行\n",
+      "target_sha256": "af09ab2bbf8cdac5b91567051c235d218dfbe9c48998c42b66ed2bdc409a6c66"
+    },
+    {
+      "segment_id": "02-04:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### How splitting works"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### How splitting works"
+      ],
+      "ordinal": 32,
+      "source_sha256": "abde0bb33e6513c641fb043e2adb8bf2601b1efde105e7fdc792ec3e5405f983",
+      "target": "这种贪心方法不能保证得到全局最优的树。寻找最优树是 NP-hard 问题。但贪心划分在实践中效果很好。\n",
+      "target_sha256": "dc87b396513fc28899b1040c56dc4a846d778e0b006dc9713819f46068c4f68c"
+    },
+    {
+      "segment_id": "02-04:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### How splitting works"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 33,
+      "source_sha256": "f34b814ee3ab039526dc4c6b7979c4ba2c67c6145748bbddffee8f27663ad5f1",
+      "target": "### 停止条件\n",
+      "target_sha256": "aca965294a1f93166c2d9754b590c36b7d83962920195e8c7317f0db34fd6138"
+    },
+    {
+      "segment_id": "02-04:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 34,
+      "source_sha256": "a529721884431c39fc07688c5b2283ef21129a6c37315e6e2c9d54343a60bfa6",
+      "target": "如果没有停止条件，树会一直生长，直到每个叶节点都变纯（每个叶节点只有一个样本）。这样可以完美记住训练数据，泛化表现却很差。\n",
+      "target_sha256": "15a48073de0d357ddc8a5e4303a91f2c7d37228beff1476b4fa1b50871bdd7a4"
+    },
+    {
+      "segment_id": "02-04:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 35,
+      "source_sha256": "f0df553bf329ddc64d24ea7eb897aa77ab96df01badc5c52f2dc7f2a93d7be9f",
+      "target": "**预剪枝（pre-pruning）** 在树完全长成之前停止生长：\n- 最大深度：树达到设定深度时停止划分\n- 每个叶节点的最小样本数：节点中的样本少于 k 个时停止\n- 最小信息增益：最佳划分带来的不纯度改善小于阈值时停止\n- 最大叶节点数：限制叶节点总数\n",
+      "target_sha256": "22e3c94807e9479eeda99bcbef0b363574a0a7ab2ccdeb58aca4c624dc272c19"
+    },
+    {
+      "segment_id": "02-04:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 36,
+      "source_sha256": "aa024dee6b47a4df126f81634b105c854b7a921cca864d3a62c5158b1ef99898",
+      "target": "**后剪枝（post-pruning）** 先让树完全长成，再进行修剪：\n- 代价复杂度剪枝（scikit-learn 使用的方法）：加入与叶节点数成正比的惩罚。增大惩罚就能得到更小的树\n- 错误率降低剪枝：如果移除一棵子树不会增加验证误差，就将其移除\n",
+      "target_sha256": "32d72581a228d06c8af64a4adadfcb3697c5156aa95c7aa29395a7d06d540ca0"
+    },
+    {
+      "segment_id": "02-04:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 37,
+      "source_sha256": "052317f99d52e32179731f4de50dc005eb52d5785750720d473e1a1c960e1076",
+      "target": "预剪枝更简单、速度更快。后剪枝往往能得到更好的树，因为它不会过早阻止那些可能为后续有效划分创造条件的划分。\n",
+      "target_sha256": "5f4ad94b000e6f24fc799fb26f4b359438d10e9a462d02f7f03d186c2ab0602f"
+    },
+    {
+      "segment_id": "02-04:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Stopping conditions"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 38,
+      "source_sha256": "a77acd4d74afb68081b9698b3c8ab216575d2f318eb3901f32813282eba9cebd",
+      "target": "### 用于回归的决策树\n",
+      "target_sha256": "965981b52c009ce767dbcb72d5d36b2bd1455aa7b7a5c27c32f0f8aaf5aa2de7"
+    },
+    {
+      "segment_id": "02-04:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 39,
+      "source_sha256": "eab4be146dd09e42d1320bef07b8201ed50dd336b04b9ca2bd54b6ab1f7fff0b",
+      "target": "对于回归任务，叶节点的预测值是其中目标值的均值。划分准则也会改变：\n",
+      "target_sha256": "edc975b7e7b5d7b4efe55841a709b1142421dab3a303f27c8c9d836d9d9b1091"
+    },
+    {
+      "segment_id": "02-04:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 40,
+      "source_sha256": "357a6ebe099556c95b00eb86258853859f2a8aa7053558517669ffbb6cd9ba86",
+      "target": "用 **方差减少量（variance reduction）** 代替信息增益：\n",
+      "target_sha256": "0c08838a88bb96a842228d7aacd2c0a9161d60a9c1d07c2ac4b40499346a3103"
+    },
+    {
+      "segment_id": "02-04:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 41,
+      "source_sha256": "6ce2171f387e49676f923a44ab7162da54b89f3516a48340cbc00c69e34806d9",
+      "target": "```text\nVR(S, feature, threshold) = Var(S) - weighted_avg(Var(S_left), Var(S_right))\n```\n",
+      "target_sha256": "fd60dfba710255fdfb67890c77d06acd6ac9ee983c2086316965a5a3b14e4c8d"
+    },
+    {
+      "segment_id": "02-04:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 42,
+      "source_sha256": "369150186c31715b8d0c592a061c9a9bd048a3b9bc101e6359d67300b04c4521",
+      "target": "选择让方差减少最多的划分。树将输入空间分成若干区域，并在每个区域内预测一个常数（均值）。\n",
+      "target_sha256": "e1c66c1166b565b9206f9cb35df4419309621a92e7c045ae82c514226a5ebdff"
+    },
+    {
+      "segment_id": "02-04:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Decision trees for regression"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 43,
+      "source_sha256": "33dad84b95c0c223d04abc26fa01d1e6d7529c57d0578bea9b401dcf33d63185",
+      "target": "### 随机森林：集成的力量\n",
+      "target_sha256": "cf00d735c8c8c8a5421190d1a5f12a89982385078eda1e4bf30849b200e42172"
+    },
+    {
+      "segment_id": "02-04:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 44,
+      "source_sha256": "873354b8de98ec89bad34512a3f20a9f9dfba36e93cdcbb44f999db0e9b0d321",
+      "target": "单棵决策树的方差很高。数据中很小的变化，就可能产生完全不同的树。随机森林通过对许多树的结果取平均来解决这一问题。\n",
+      "target_sha256": "bc0c43fca6d56313dfe901c9446c6d19b69a28d0e418ee4f508566e21d5be1f6"
+    },
+    {
+      "segment_id": "02-04:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0089",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 45,
+      "source_sha256": "efb265d9df542502527c0989300260dbcd0db214616c06bc9bcf040351335591",
+      "target": "```mermaid\ngraph TD\n    D[\"Training Data\"] --> B1[\"Bootstrap Sample 1\"]\n    D --> B2[\"Bootstrap Sample 2\"]\n    D --> B3[\"Bootstrap Sample 3\"]\n    D --> BN[\"Bootstrap Sample N\"]\n    B1 --> T1[\"Tree 1<br>(random feature subset)\"]\n    B2 --> T2[\"Tree 2<br>(random feature subset)\"]\n    B3 --> T3[\"Tree 3<br>(random feature subset)\"]\n    BN --> TN[\"Tree N<br>(random feature subset)\"]\n    T1 --> V[\"Aggregate Predictions<br>(majority vote or average)\"]\n    T2 --> V\n    T3 --> V\n    TN --> V\n```\n",
+      "target_sha256": "efb265d9df542502527c0989300260dbcd0db214616c06bc9bcf040351335591"
+    },
+    {
+      "segment_id": "02-04:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 46,
+      "source_sha256": "1f4da9c99a792cfc2780ab86fe940e22a1e2ddc8990c6b7619d21a5746d8b371",
+      "target": "两种随机性来源让各棵树有所不同：\n",
+      "target_sha256": "e045a061e924ff9279822e5224facba5c36a0d2a8405fe33e486686c25666dd1"
+    },
+    {
+      "segment_id": "02-04:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 47,
+      "source_sha256": "d6d4175a74eae32e7f37851c03954dafdb8c1876c6aea327df8788b539683102",
+      "target": "**Bagging（自助聚合，bootstrap aggregating）：** 每棵树都在一个 bootstrap 样本上训练，也就是从训练数据中有放回随机抽取的样本集。每个 bootstrap 样本中会出现约 63% 的原始样本（其余是可用于验证的袋外样本，即 out-of-bag samples）。\n",
+      "target_sha256": "0984e068daf136f7f13aebcd388babbec8b266d5b0a62b0ca9d43c2c6e4bba73"
+    },
+    {
+      "segment_id": "02-04:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 48,
+      "source_sha256": "048f2acad7762285399d8a4cca4c2afa631817a00b1f3e70ffbd804af4c5f79f",
+      "target": "**特征随机化（feature randomization）：** 每次划分时，只考虑一个随机选取的特征子集。分类任务默认使用 sqrt(n_features)，回归任务使用 n_features/3。这可以防止所有树都按同一个占主导地位的特征划分。\n",
+      "target_sha256": "287229599cd69e7f92d334a83b31e00e8a23d8185ae65628b8ff29ddadca54ff"
+    },
+    {
+      "segment_id": "02-04:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 49,
+      "source_sha256": "dbf35d3c828ea4ce9f1b5c1bebb8660ff3c56c91ec5e1ae194d8e2f34131e450",
+      "target": "关键在于：对许多相关性较低的树取平均，能够降低方差而不增加偏差。单棵树的表现可能平平，但集成后的模型很强。\n",
+      "target_sha256": "723accc34be52eaa5560fe930e77af8879cb18160d0d6cd4aa6ff96718ce0eff"
+    },
+    {
+      "segment_id": "02-04:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Random forests: the power of ensembles"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 50,
+      "source_sha256": "c7f95455220fd75f3e7f466e1ee867571343e8717c8a93a4db9430049f31ed7c",
+      "target": "### 特征重要性\n",
+      "target_sha256": "0adcb58cc6cde428ed98153df4491139ef4ff914e77e2e8842695d11ae742cae"
+    },
+    {
+      "segment_id": "02-04:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 51,
+      "source_sha256": "c2dc52a3cc1ae1dfc58ea814c367f86315a5b7774a7baab3a94022d16637ffcc",
+      "target": "随机森林自然能够给出特征重要性分数。最常用的方法是：\n",
+      "target_sha256": "6ec6731c68ae82f9a4fb9c4558c87b6a91c4d87d6ae48bc4be9a44acca885002"
+    },
+    {
+      "segment_id": "02-04:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 52,
+      "source_sha256": "de0e090bd60893ccac35df26ad580962d0a785955c9c7ad4fa24815366dad1b6",
+      "target": "**平均不纯度减少量（Mean Decrease in Impurity，MDI）：** 对每个特征，将所有树中使用该特征的所有节点带来的不纯度减少量相加。在更靠前的划分中带来更大不纯度减少量的特征，更为重要。\n",
+      "target_sha256": "9a1b7b0214555abeccaaf824b9c0fa6bbae52be18499c373eed692d3a3681306"
+    },
+    {
+      "segment_id": "02-04:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0105",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 53,
+      "source_sha256": "f2f0a78e36d6db55527ed24f674380e1f7c1305c2692efb64c427f648bfc5b45",
+      "target": "```text\nimportance(feature_j) = sum over all nodes where feature_j is used:\n    (n_samples_at_node / n_total_samples) * impurity_decrease\n```\n",
+      "target_sha256": "cdad046145d8055990f21ea1a4846b8fea62cb6405a5368d6ae9cbcbe021edab"
+    },
+    {
+      "segment_id": "02-04:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 54,
+      "source_sha256": "b4d121e3b3bcd6dec0aa8ee01b2497824268d032fb3c57e7e41a6e8a0a62b638",
+      "target": "这种方法速度快（训练过程中就能计算），但会偏向高基数（cardinality，即不同取值的数量）的特征，以及具有许多可能划分点的特征。\n",
+      "target_sha256": "cbdf8eeb7d4c78cac25a34b8d9b64fe267eee70741c049a88dbd52f668b62549"
+    },
+    {
+      "segment_id": "02-04:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 55,
+      "source_sha256": "5638162db423a459ca8c5003fe4174ecfc48109b96aee18f1382d8a12533ec8c",
+      "target": "另一种方法是 **置换重要性（permutation importance）**：打乱某个特征的取值，测量模型准确率下降了多少。这种方法更可靠，但也更慢。\n",
+      "target_sha256": "ba160262d64a83c3bc04e5f2bf9dc5b548b89e31e93eb712d97fc84fe15ecc47"
+    },
+    {
+      "segment_id": "02-04:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### Feature importance"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 56,
+      "source_sha256": "49488bd48e87860cba450546ba199b1d74bd14e7a11221b2227bc316ad35f430",
+      "target": "### 树模型何时胜过神经网络\n",
+      "target_sha256": "052bf355d06c991418b53f967b6e4f8d8aa5b81278df914dd41ac17d527e920f"
+    },
+    {
+      "segment_id": "02-04:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 57,
+      "source_sha256": "fea01db6b33789446b64da4ff6e9ce68893b9bdc8e21c7e3491b2ebde3129b3e",
+      "target": "在表格数据上，决策树和随机森林的表现优于神经网络。原因有以下几项：\n",
+      "target_sha256": "e0073d406beceafb9158b10844a4e79b865d1e801e962cabce75237e620a147b"
+    },
+    {
+      "segment_id": "02-04:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0115",
+      "kind": "table",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 58,
+      "source_sha256": "424e5cd8db5d3538744a36479f4f08d0ac0e0a4e0fb6a5cfa82b7d04aa26af8f",
+      "target": "| 因素 | 树模型 | 神经网络 |\n|--------|-------|----------------|\n| 混合类型（数值型 + 类别型） | 原生支持 | 需要编码 |\n| 小数据集（< 10k 行） | 效果好 | 过拟合 |\n| 特征交互 | 通过划分发现 | 需要设计架构 |\n| 可解释性 | 完全透明 | 黑盒 |\n| 训练时间 | 几分钟 | 几小时 |\n| 超参数敏感性 | 低 | 高 |\n",
+      "target_sha256": "81456a2e04ec744805e3542326b8e17440c074885a244397f2c724b887f75a52"
+    },
+    {
+      "segment_id": "02-04:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 59,
+      "source_sha256": "523ed5652fb55c5699ef7815b06d7de1c5d8058e99d7ab422257d9eb3639c942",
+      "target": "当数据具有空间或序列结构（图像、文本、音频）时，神经网络胜出。对于扁平的特征表，树模型是默认选择。\n",
+      "target_sha256": "a5eb340050c0cd928c5394d34b330e710f2bee43235ff0b5c4adc7afd31601e9"
+    },
+    {
+      "segment_id": "02-04:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0119",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 60,
+      "source_sha256": "539dae584309c7571982293eb3dd01a6bdda71b789d7ede707c5e7a1f12114fa",
+      "target": "```figure\ndecision-tree-depth\n```\n",
+      "target_sha256": "539dae584309c7571982293eb3dd01a6bdda71b789d7ede707c5e7a1f12114fa"
+    },
+    {
+      "segment_id": "02-04:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## The Concept",
+        "### When trees beat neural networks"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "02-04:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0123",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 1: Gini impurity and entropy"
+      ],
+      "ordinal": 62,
+      "source_sha256": "2856e3affaf04f33d69b7d533d43feef6c9e0d1a6321134022bc85d9fcfba899",
+      "target": "### 步骤 1：Gini 不纯度与熵\n",
+      "target_sha256": "3ca6a92f50e19ae3d25c3d1daebed0999b31b6c546c6217e53056f1888d69c8a"
+    },
+    {
+      "segment_id": "02-04:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 1: Gini impurity and entropy"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 1: Gini impurity and entropy"
+      ],
+      "ordinal": 63,
+      "source_sha256": "b4792edb8c7fd427ca2ae96ddf65390c3d2dedd43bae162c4670c732fd705a8c",
+      "target": "从零实现两种划分准则，并验证它们对哪些划分更好的判断一致。\n",
+      "target_sha256": "40c66425f7285357622d80853b0bf260b7522737ff71a5a6e5e7cbdcfc28f96f"
+    },
+    {
+      "segment_id": "02-04:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 1: Gini impurity and entropy"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 1: Gini impurity and entropy"
+      ],
+      "ordinal": 64,
+      "source_sha256": "23fe38dbcfbf75af21567c03ab31b16f44b079790c787c98685885542a3faac6",
+      "target": "```python\nimport math\n\ndef gini_impurity(labels):\n    n = len(labels)\n    if n == 0:\n        return 0.0\n    counts = {}\n    for label in labels:\n        counts[label] = counts.get(label, 0) + 1\n    return 1.0 - sum((c / n) ** 2 for c in counts.values())\n\ndef entropy(labels):\n    n = len(labels)\n    if n == 0:\n        return 0.0\n    counts = {}\n    for label in labels:\n        counts[label] = counts.get(label, 0) + 1\n    return -sum(\n        (c / n) * math.log2(c / n) for c in counts.values() if c > 0\n    )\n```\n",
+      "target_sha256": "23fe38dbcfbf75af21567c03ab31b16f44b079790c787c98685885542a3faac6"
+    },
+    {
+      "segment_id": "02-04:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 1: Gini impurity and entropy"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0129",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 2: Find the best split"
+      ],
+      "ordinal": 65,
+      "source_sha256": "7359e94dc5b2e14816d22f0e50b716da05eb3be9bb99156301767b06f8f12e51",
+      "target": "### 步骤 2：寻找最佳划分\n",
+      "target_sha256": "a8bf64b8a3a5be1e2daed4fa513fcfdefa32dc37027f237e8da89129c935e05f"
+    },
+    {
+      "segment_id": "02-04:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 2: Find the best split"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0131",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 2: Find the best split"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ed2d21e5a4072cd26b7dd88cccc0a8831644bb0823fb2b7bd3398985dfa9a5",
+      "target": "尝试每个特征和每个阈值，返回信息增益最高的那个。\n",
+      "target_sha256": "db3bdc5d575b153b4306823d617c46aa8c33c635b037f12a3a7ffd9b9055194c"
+    },
+    {
+      "segment_id": "02-04:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 2: Find the best split"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0133",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 2: Find the best split"
+      ],
+      "ordinal": 67,
+      "source_sha256": "1281d919e3a092081fd87fbc832e86b4dfc7156777e9b8c8a94aa78c24f3bece",
+      "target": "```python\ndef information_gain(parent_labels, left_labels, right_labels, criterion=\"gini\"):\n    measure = gini_impurity if criterion == \"gini\" else entropy\n    n = len(parent_labels)\n    n_left = len(left_labels)\n    n_right = len(right_labels)\n    if n_left == 0 or n_right == 0:\n        return 0.0\n    parent_impurity = measure(parent_labels)\n    child_impurity = (\n        (n_left / n) * measure(left_labels) +\n        (n_right / n) * measure(right_labels)\n    )\n    return parent_impurity - child_impurity\n```\n",
+      "target_sha256": "1281d919e3a092081fd87fbc832e86b4dfc7156777e9b8c8a94aa78c24f3bece"
+    },
+    {
+      "segment_id": "02-04:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 2: Find the best split"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 3: Build the DecisionTree class"
+      ],
+      "ordinal": 68,
+      "source_sha256": "5c45cdefd3cabb52ae50a272c4f394cc82f3d207a5d5924860d1426fd0ccb986",
+      "target": "### 步骤 3：构建 DecisionTree 类\n",
+      "target_sha256": "db461c3624059a9efcbe9774f8fa7cbe3060e52993f932e26c62a23a3a3c6293"
+    },
+    {
+      "segment_id": "02-04:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 3: Build the DecisionTree class"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0137",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 3: Build the DecisionTree class"
+      ],
+      "ordinal": 69,
+      "source_sha256": "1321d434c267432f088bfd27244dba68ba917f97a0510fad1f2aa4fbb3df4137",
+      "target": "实现递归划分、预测和特征重要性跟踪。`_build` 是树的核心：节点变纯或达到预剪枝限制时，它就停止；否则，它会选取最佳划分，并对两个子节点递归处理。\n",
+      "target_sha256": "67c4872b14302eda99edf7bc007d2f71081754781010ffd2d3153654bc48d157"
+    },
+    {
+      "segment_id": "02-04:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 3: Build the DecisionTree class"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0139",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 3: Build the DecisionTree class"
+      ],
+      "ordinal": 70,
+      "source_sha256": "439b1b960eccddb8ed78bb30d217afea034c3fe08a0ad53af3b54a40068dd014",
+      "target": "```python\nimport random\n\nclass DecisionTree:\n    def __init__(self, max_depth=None, min_samples_split=2,\n                 min_samples_leaf=1, criterion=\"gini\",\n                 max_features=None):\n        self.max_depth = max_depth\n        self.min_samples_split = min_samples_split\n        self.min_samples_leaf = min_samples_leaf\n        self.criterion = criterion\n        self.max_features = max_features\n        self.tree = None\n        self.feature_importances_ = None\n\n    def fit(self, X, y):\n        self.n_features = len(X[0])\n        self.feature_importances_ = [0.0] * self.n_features\n        self.n_samples = len(X)\n        self.tree = self._build(X, y, depth=0)\n        total = sum(self.feature_importances_)\n        if total > 0:\n            self.feature_importances_ = [\n                fi / total for fi in self.feature_importances_\n            ]\n\n    def predict(self, X):\n        return [self._predict_one(x, self.tree) for x in X]\n\n    def _build(self, X, y, depth):\n        if len(set(y)) == 1:\n            return {\"leaf\": True, \"value\": y[0]}\n\n        if self.max_depth is not None and depth >= self.max_depth:\n            return self._make_leaf(y)\n\n        if len(y) < self.min_samples_split:\n            return self._make_leaf(y)\n\n        best_feature, best_threshold, best_gain = self._best_split(X, y)\n\n        if best_feature is None or best_gain <= 0:\n            return self._make_leaf(y)\n\n        left_X, left_y, right_X, right_y = self._split_data(\n            X, y, best_feature, best_threshold\n        )\n\n        if len(left_y) < self.min_samples_leaf or len(right_y) < self.min_samples_leaf:\n            return self._make_leaf(y)\n\n        weight = len(y) / self.n_samples\n        self.feature_importances_[best_feature] += weight * best_gain\n\n        return {\n            \"leaf\": False,\n            \"feature\": best_feature,\n            \"threshold\": best_threshold,\n            \"left\": self._build(left_X, left_y, depth + 1),\n            \"right\": self._build(right_X, right_y, depth + 1),\n        }\n\n    def _make_leaf(self, y):\n        counts = {}\n        for label in y:\n            counts[label] = counts.get(label, 0) + 1\n        return {\"leaf\": True, \"value\": max(counts, key=counts.get)}\n\n    def _best_split(self, X, y):\n        best_feature = None\n        best_threshold = None\n        best_gain = -1.0\n\n        if self.max_features == \"sqrt\":\n            k = max(1, int(math.sqrt(self.n_features)))\n            feature_indices = random.sample(range(self.n_features), k)\n        elif isinstance(self.max_features, int):\n            if self.max_features < 1:\n                raise ValueError(\"max_features must be at least 1 when given as an integer\")\n            k = min(self.max_features, self.n_features)\n            feature_indices = random.sample(range(self.n_features), k)\n        else:\n            feature_indices = list(range(self.n_features))\n\n        for feature_idx in feature_indices:\n            values = sorted(set(X[i][feature_idx] for i in range(len(X))))\n            if len(values) <= 1:\n                continue\n\n            for i in range(len(values) - 1):\n                threshold = (values[i] + values[i + 1]) / 2.0\n                left_y = [y[j] for j in range(len(X)) if X[j][feature_idx] <= threshold]\n                right_y = [y[j] for j in range(len(X)) if X[j][feature_idx] > threshold]\n\n                if len(left_y) < self.min_samples_leaf or len(right_y) < self.min_samples_leaf:\n                    continue\n\n                gain = information_gain(y, left_y, right_y, self.criterion)\n                if gain > best_gain:\n                    best_gain = gain\n                    best_feature = feature_idx\n                    best_threshold = threshold\n\n        return best_feature, best_threshold, best_gain\n\n    def _split_data(self, X, y, feature, threshold):\n        left_X, left_y, right_X, right_y = [], [], [], []\n        for i in range(len(X)):\n            if X[i][feature] <= threshold:\n                left_X.append(X[i])\n                left_y.append(y[i])\n            else:\n                right_X.append(X[i])\n                right_y.append(y[i])\n        return left_X, left_y, right_X, right_y\n\n    def _predict_one(self, x, node):\n        if node[\"leaf\"]:\n            return node[\"value\"]\n        if x[node[\"feature\"]] <= node[\"threshold\"]:\n            return self._predict_one(x, node[\"left\"])\n        return self._predict_one(x, node[\"right\"])\n```\n",
+      "target_sha256": "439b1b960eccddb8ed78bb30d217afea034c3fe08a0ad53af3b54a40068dd014"
+    },
+    {
+      "segment_id": "02-04:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 3: Build the DecisionTree class"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0141",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 4: Build the RandomForest class"
+      ],
+      "ordinal": 71,
+      "source_sha256": "2b0ca6ebef46f706f5d103f2c05ba65763c62cef8f3c3345f442b7c71f639a2d",
+      "target": "### 步骤 4：构建 RandomForest 类\n",
+      "target_sha256": "5196ed0bd520042df5f877c5bae4b46d0452ceae7bdaa514b408340d8a449102"
+    },
+    {
+      "segment_id": "02-04:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 4: Build the RandomForest class"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0143",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 4: Build the RandomForest class"
+      ],
+      "ordinal": 72,
+      "source_sha256": "4ee67fb49ec34666ea232f5f20bb7a6763a761e83fa2fee139f129959144be94",
+      "target": "实现 bootstrap 抽样、特征随机化和多数投票。\n",
+      "target_sha256": "3a0f5b11d24bbd35963ff710380990338a6fa299556dd9bfe41b74afe88be0df"
+    },
+    {
+      "segment_id": "02-04:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 4: Build the RandomForest class"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0145",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 4: Build the RandomForest class"
+      ],
+      "ordinal": 73,
+      "source_sha256": "b6ac895f1bef6551219f6db70e14bcd428897aaa8258d9eab85c71caf9bb62dc",
+      "target": "```python\nclass RandomForest:\n    def __init__(self, n_trees=100, max_depth=None,\n                 min_samples_split=2, max_features=\"sqrt\",\n                 criterion=\"gini\"):\n        self.n_trees = n_trees\n        self.max_depth = max_depth\n        self.min_samples_split = min_samples_split\n        self.max_features = max_features\n        self.criterion = criterion\n        self.trees = []\n\n    def fit(self, X, y):\n        n = len(X)\n        for _ in range(self.n_trees):\n            indices = [random.randint(0, n - 1) for _ in range(n)]\n            X_boot = [X[i] for i in indices]\n            y_boot = [y[i] for i in indices]\n            tree = DecisionTree(\n                max_depth=self.max_depth,\n                min_samples_split=self.min_samples_split,\n                max_features=self.max_features,\n                criterion=self.criterion,\n            )\n            tree.fit(X_boot, y_boot)\n            self.trees.append(tree)\n\n    def predict(self, X):\n        all_preds = [tree.predict(X) for tree in self.trees]\n        predictions = []\n        for i in range(len(X)):\n            votes = {}\n            for preds in all_preds:\n                v = preds[i]\n                votes[v] = votes.get(v, 0) + 1\n            predictions.append(max(votes, key=votes.get))\n        return predictions\n```\n",
+      "target_sha256": "b6ac895f1bef6551219f6db70e14bcd428897aaa8258d9eab85c71caf9bb62dc"
+    },
+    {
+      "segment_id": "02-04:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 4: Build the RandomForest class"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0147",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 4: Build the RandomForest class"
+      ],
+      "ordinal": 74,
+      "source_sha256": "1ed3859c812301f8c4a8c94b2c5ccf4369dde9e5a9cc35adbde75483c51adaa2",
+      "target": "完整实现及全部辅助方法见 `code/trees.py`。\n",
+      "target_sha256": "7346f60f19f88170e1510f69b21f965943c4294016448f38b9cccb8ef2e0d8ca"
+    },
+    {
+      "segment_id": "02-04:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Build It",
+        "### Step 4: Build the RandomForest class"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0149",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Use It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "02-04:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Use It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Use It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "2671b5412d559b4a09f40b9456d46cb2f0b024aa66f5ac47735f4a47756feb7f",
+      "target": "使用 scikit-learn，训练随机森林只需三行：\n",
+      "target_sha256": "3a7bc73e60c21526485972f345f0062734b0a6753df20bd59070df44b212cc8e"
+    },
+    {
+      "segment_id": "02-04:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Use It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0153",
+      "kind": "fence",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Use It"
+      ],
+      "ordinal": 77,
+      "source_sha256": "7f506daf800d30e8333200c6f20c0075dbc30253854ce610112e14ea8a99746e",
+      "target": "```python\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)\n\nrf = RandomForestClassifier(n_estimators=100, random_state=42)\nrf.fit(X_train, y_train)\nprint(f\"Accuracy: {rf.score(X_test, y_test):.4f}\")\nprint(f\"Feature importances: {rf.feature_importances_}\")\n```\n",
+      "target_sha256": "7f506daf800d30e8333200c6f20c0075dbc30253854ce610112e14ea8a99746e"
+    },
+    {
+      "segment_id": "02-04:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Use It"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0155",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "c5d7c867b47a8e096eb3ba9888332e43bb3af3c513be93c399ced80ff0dcc92e",
+      "target": "在实践中，梯度提升树（gradient boosted trees，如 XGBoost、LightGBM、CatBoost）往往比随机森林更强，因为它们按顺序构建树，每棵树都会修正前面那些树的错误。不过，随机森林更不容易配错，几乎不需要超参数调优。\n",
+      "target_sha256": "028ee7946297c88b7a7628194155c68e31142107bbdd08939a27867febdee3e2"
+    },
+    {
+      "segment_id": "02-04:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0157",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Ship It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "02-04:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Ship It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0159",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Ship It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "11147331a5989d77dd2cec4886fb635b87a50de2871b6cc96c6649b12d0f6cdf",
+      "target": "本课产出 `outputs/prompt-tree-interpreter.md`，这是一份面向业务相关人员解释决策树划分的提示词（prompt）。向它提供训练好的树的结构（深度、特征、划分阈值、准确率），它就会将模型转化成通俗的规则，对特征重要性排序，指出过拟合或数据泄漏，并建议后续步骤。需要向不读代码的人解释树模型时，都可以使用它。\n",
+      "target_sha256": "da0f939ffc8f02b4c4020000d58f7866eef6f943d3bb49262febd177765074f2"
+    },
+    {
+      "segment_id": "02-04:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Ship It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0161",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 81,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "02-04:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0163",
+      "kind": "list",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "26bfb4e6de8b3948ede8473df075de9147da9102a9bb10db7bba33807731321a",
+      "target": "1. 在一个有 3 个类别的 2D 数据集上训练单棵决策树。手动追踪划分过程，画出矩形决策边界。比较 max_depth=2 与 max_depth=10 时的边界。\n",
+      "target_sha256": "2fceed8bd101a5d1d0cda526f386681e708bd4f223fc26f4d24f7608bf3e37dc"
+    },
+    {
+      "segment_id": "02-04:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0165",
+      "kind": "list",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "369b3614816472151e85593a52583feaa57e4bdb8c40d9d376ab50b05483f48f",
+      "target": "2. 为回归树实现基于方差减少量的划分。生成 200 个满足 y = sin(x) + noise 的数据点，并拟合你的回归树。将树的分段常数预测与真实曲线画在一起比较。\n",
+      "target_sha256": "e108bcc3d4d8c1c790c407908025da7992b99cab22dc4f586a3650fa77aa7273"
+    },
+    {
+      "segment_id": "02-04:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0167",
+      "kind": "list",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "032e436488d2a96416f21d8d672983775e35bf0c5a79565a19076809891a9cf1",
+      "target": "3. 分别构建包含 1、5、10、50 和 200 棵树的随机森林。绘制训练准确率和测试准确率随树的数量变化的曲线。观察测试准确率达到平台期，但不会下降的现象（随机森林能够抵抗过拟合）。\n",
+      "target_sha256": "03f142fbbfe1590ce7249ca04430f5f4484a73c12de1303df8a46ee06bd2d497"
+    },
+    {
+      "segment_id": "02-04:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0169",
+      "kind": "list",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "5a6f8e1fd18040b2d5c0e3f4a3cbb36215cbc6fab29b881ea7f4f6b2634aa160",
+      "target": "4. 在 5 个不同的数据集上比较 Gini 不纯度与熵这两种划分准则。测量准确率和树深度。在大多数情况下，它们会产生几乎相同的结果。解释原因。\n",
+      "target_sha256": "7e04df31d8f06c04b31413afa6e127bd86d95398078d1fb141d9f133fa48df87"
+    },
+    {
+      "segment_id": "02-04:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0171",
+      "kind": "list",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "b663a50090e1b241b7dd42e9adda0f81c5e825b79c41edd059c4973a3df5067b",
+      "target": "5. 实现置换重要性。在一个特征为高基数随机噪声的数据集上，将它与 MDI 重要性进行比较。MDI 会把这个噪声特征排得很高，而置换重要性不会。\n",
+      "target_sha256": "889e66fa3763dfb8d22f7290bcc47dd1b4a8490a1d4a25b8da6ebddf6d601441"
+    },
+    {
+      "segment_id": "02-04:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0173",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Key Terms"
+      ],
+      "ordinal": 87,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "02-04:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Key Terms"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0175",
+      "kind": "table",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Key Terms"
+      ],
+      "ordinal": 88,
+      "source_sha256": "d48d5bc1420c9b98858405a85294b4d63fdb33125c21c0023409e9dfb341b0a9",
+      "target": "| 术语 | 通常的说法 | 实际含义 |\n|------|----------------|----------------------|\n| 决策树 | “用来预测的流程图” | 通过学习一连串 if/else 划分，将特征空间分成矩形区域的模型 |\n| Gini 不纯度 | “节点有多混杂” | 节点处随机样本被误分类的概率。0 = 纯，0.5 = 二分类的最大不纯度 |\n| 熵 | “节点中的无序程度” | 节点中的信息量。0 = 纯，1.0 = 二分类的最大不确定性。源自信息论 |\n| 信息增益 | “一次划分有多好” | 划分后的不纯度减少量。选择划分的贪心准则 |\n| 预剪枝 | “让树早点停下” | 通过设置最大深度、最小样本数或最小增益阈值，提前停止树的生长 |\n| 后剪枝 | “长成之后再修剪” | 先让树完全长成，再移除不能改善验证表现的子树 |\n| Bagging | “在随机子集上训练” | 自助聚合。每个模型都在有放回抽取的不同随机样本集上训练 |\n| 随机森林 | “一群树” | 决策树的集成；每棵树在一个 bootstrap 样本上训练，每次划分时使用随机特征子集 |\n| 特征重要性（MDI） | “哪些特征重要” | 每个特征贡献的不纯度减少总量，在所有树和节点上求和 |\n| 置换重要性 | “打乱后再检查” | 随机打乱某个特征的取值后，准确率的下降量。对于噪声特征，比 MDI 更可靠 |\n| 方差减少量 | “回归版的信息增益” | 回归树中与信息增益对应的量。选择使目标方差减少最多的划分 |\n| bootstrap 样本 | “允许重复的随机样本” | 从原始数据集中有放回随机抽取的样本集。大小相同，但存在重复样本 |\n",
+      "target_sha256": "3dc321889b6c913efad42cf272c69b1b0b74b78243260e4dd64f59889e2f0bc4"
+    },
+    {
+      "segment_id": "02-04:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Key Terms"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0177",
+      "kind": "heading",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Further Reading"
+      ],
+      "ordinal": 89,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "02-04:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Further Reading"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-04:b0179",
+      "kind": "list",
+      "heading_path": [
+        "# Decision Trees and Random Forests",
+        "## Further Reading"
+      ],
+      "ordinal": 90,
+      "source_sha256": "8edd198a3a27ff35d7ea4e8fe7fd8ad401887fd29d31d1336911b8856b0baee4",
+      "target": "- [Breiman：Random Forests（2001）](https://link.springer.com/article/10.1023/A:1010933404324) - 随机森林的原始论文\n- [Grinsztajn 等：Why do tree-based models still outperform deep learning on tabular data?（2022）](https://arxiv.org/abs/2207.08815) - 对表格任务中树模型与神经网络的严谨比较\n- [scikit-learn 决策树文档](https://scikit-learn.org/stable/modules/tree.html) - 含可视化工具的实用指南\n- [XGBoost: A Scalable Tree Boosting System（Chen & Guestrin，2016）](https://arxiv.org/abs/1603.02754) - 在 Kaggle 上占据主导地位的梯度提升论文\n",
+      "target_sha256": "5c88929f334cb2b5d5a32e736b2bec50cef4f1ddb0c409c1e4822d3ac0143133"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+  "additional_glossary_sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S23-decision-trees/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "6eef72f3c8074cbcafe86eecff87a63c280ea31beaf281a08fb81d4492ddf4c6"
+}
