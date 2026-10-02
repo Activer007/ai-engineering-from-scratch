@@ -1,0 +1,2336 @@
+{
+  "schema_version": 1,
+  "lesson_id": "03-02",
+  "source_path": "phases/03-deep-learning-core/02-multi-layer-networks/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "f65e95b75a0385a625cac84fa2feff95d67fd433",
+  "source_sha256": "192b46fd134bdd7aada17ecd58fafd35c973d11b9bf47ac3a785cc91595db428",
+  "target_path": "i18n/zh/phases/03-deep-learning-core/02-multi-layer-networks/docs/zh.md",
+  "target_sha256": "10deded2a53ea90dfbb8b708d54b1285ca18a8ff40e272a952134f12c8835755",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "old_chinese_or_cache_used": false
+  },
+  "segments": [
+    {
+      "segment_id": "03-02:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass"
+      ],
+      "ordinal": 1,
+      "source_sha256": "05a4f7d5fb8983703c3a0400f6767b48f2ff2b19fb2c8b9813b02befc8d05f29",
+      "target": "# 多层网络与前向传播\n",
+      "target_sha256": "17c866bb3040451d417118b62200e97ea6c23f4e30085eac930eddb5939c6e68"
+    },
+    {
+      "segment_id": "03-02:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass"
+      ],
+      "ordinal": 2,
+      "source_sha256": "0dd07dcc12bda58557ce274e33f9c6db1d3269750964bbf024ee4367dc943820",
+      "target": "> 一个神经元能画一条直线。将它们堆叠起来，就能画出任何东西。\n",
+      "target_sha256": "6e704b1a0c75bf2ff5013583e8cb64cdd438b73dcb5be7b7fa91362bf2212223"
+    },
+    {
+      "segment_id": "03-02:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass"
+      ],
+      "ordinal": 3,
+      "source_sha256": "8d020dc015495ca93186ddcf6ef6e8760a5b9776fc6e1a5a41d68c33d61561fb",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 01（数学基础）、课程 03.01（感知机）\n**Time:** ~90 分钟\n",
+      "target_sha256": "f78e6d5d8a89ca151fbce6ee1b6bf472f7261e96e91936e7910bfe241348debf"
+    },
+    {
+      "segment_id": "03-02:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "03-02:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "5d2810314c60ce6c4839ccf38dafa8276df6e9009e3c1a92d0a35d70b48cf1dd",
+      "target": "- 从零构建多层网络，让 Layer 和 Network 类完成一次完整的前向传播\n- 追踪网络各层的矩阵维度，识别形状不匹配的问题\n- 解释堆叠非线性激活函数如何让网络学会弯曲的决策边界\n- 使用 2-2-1 架构和手动调节的 sigmoid 权重解决 XOR（异或）问题\n",
+      "target_sha256": "788585fcffb1414b40dcbc41f5cde9f77b170031cd5c2fafa168766fa7c791e9"
+    },
+    {
+      "segment_id": "03-02:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "03-02:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "9890bdf13ede7245e24e2a81249433326f21f9528c9e681d671d1ecd210db164",
+      "target": "单个神经元只能画直线，仅此而已：在数据中画出一条直线。AI 中每个实际问题，无论是图像识别、语言理解还是下围棋，都需要曲线。将神经元堆叠成多层，就能得到曲线。\n",
+      "target_sha256": "687a6dceacb7ff65e6a8495c768e1b611df0c1c1c9ae972aea61b2658deada1f"
+    },
+    {
+      "segment_id": "03-02:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "31af5c6522d8ba7a9e0975548f6acf1c1c6beb327aaf3242e95c9fa9b81ba310",
+      "target": "1969 年，Minsky 和 Papert 证明了这个限制是致命的：单层网络无法学会 XOR。不是“很难学会”，而是在数学上不可能。XOR 真值表将 [0,1] 和 [1,0] 归到一侧，将 [0,0] 和 [1,1] 归到另一侧，没有一条直线能将它们分开。\n",
+      "target_sha256": "308b51662d1ce27affb84bf3d6c84483cf0063186a8281d72d2e724f5064b4a8"
+    },
+    {
+      "segment_id": "03-02:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "88175e36ed7a6a57c858c19c609370f793820d87532ed5c088e3a6d05ea195e8",
+      "target": "这使神经网络研究的资金支持中断了十多年。事后看来，解决方法很明显：不要只用一层。将神经元堆叠成多层，让第一层从输入空间中划分出新的特征，再让第二层组合这些特征，做出任何单条直线都无法完成的决策。\n",
+      "target_sha256": "27d7d4852281945cde828ae3e6feb2eefef22d7e717b8ebdd520ba67c44a0a5e"
+    },
+    {
+      "segment_id": "03-02:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "b22ec98a2be62dc15dad7aebbe7646163c8f75f6f03a2fc9ced60efc270ef0af",
+      "target": "这样堆叠起来的结构就是多层网络（multi-layer network），它是如今每个投入生产使用的深度学习模型的基础。前向传播（forward pass）是数据从输入经过隐藏层流向输出的过程。要让其他部分运转起来，首先就得把它实现好。\n",
+      "target_sha256": "80b91517056a5e854c70d22796ac03ee652c2bceffdc3da1f8513fc463e28ecf"
+    },
+    {
+      "segment_id": "03-02:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "03-02:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 12,
+      "source_sha256": "70bad1453821687977180d157fb8f10321fcf9727c6c51850b751904d901e2d2",
+      "target": "### 层：输入层、隐藏层与输出层\n",
+      "target_sha256": "c44e77ea35253fc05c570f7628466d6ac7046019b0738dd405eca6b2b8bc6191"
+    },
+    {
+      "segment_id": "03-02:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 13,
+      "source_sha256": "abc037f3c49af4d734515ea03963db9ecd3f871c19cc743e7300732f6c5c7269",
+      "target": "多层网络有三种类型的层：\n",
+      "target_sha256": "75f7931474896aa4d665ac22981a4fb619a565cc4a5b35c94764a9f0fc383783"
+    },
+    {
+      "segment_id": "03-02:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 14,
+      "source_sha256": "e6cb67b64c19d22213cb80744ecd70790cc1d210c843d66686112b01670f225c",
+      "target": "**输入层（input layer）**：严格说来，它不算真正的层，而是存放原始数据的地方。两个特征对应两个输入节点，这里不进行计算。\n",
+      "target_sha256": "ad539f1bbfa98cf1c8251f52500c9898d6db52ee5d48b6e73525e0407d0b2faf"
+    },
+    {
+      "segment_id": "03-02:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 15,
+      "source_sha256": "8a4e5d509b31d7686b0f7456b3af1ddf66d8d9fce1b1a129ae32592c9e48566b",
+      "target": "**隐藏层（hidden layers）**：实际进行计算的地方。每个神经元接收上一层的所有输出，施加权重和偏置，再将结果送入激活函数。之所以称为“隐藏”，是因为在训练数据中无法直接看到这些值。\n",
+      "target_sha256": "724369ef40110abc86205074a757e6d7ee80b9432f36e6cfc0ca41845609fd93"
+    },
+    {
+      "segment_id": "03-02:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 16,
+      "source_sha256": "acaaa506b83c6398c1529e50f2a71e2fae2c568c933c39cd95f7c2c8d0b77747",
+      "target": "**输出层（output layer）**：给出最终答案。二分类使用一个带 sigmoid 的神经元；多分类则为每个类别设置一个神经元。\n",
+      "target_sha256": "46c194ebe765ed6a02b16aa667c24924e9da78a74e459bc5911eaa0a26025f50"
+    },
+    {
+      "segment_id": "03-02:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 17,
+      "source_sha256": "2bc637c39ee277dba6b6557bf46b8131a1082d24d60525abe728cdd7d2ef3409",
+      "target": "```mermaid\ngraph LR\n    subgraph Input[\"Input Layer\"]\n        x1[\"x1\"]\n        x2[\"x2\"]\n    end\n    subgraph Hidden[\"Hidden Layer (3 neurons)\"]\n        h1[\"h1\"]\n        h2[\"h2\"]\n        h3[\"h3\"]\n    end\n    subgraph Output[\"Output Layer\"]\n        y[\"y\"]\n    end\n    x1 --> h1\n    x1 --> h2\n    x1 --> h3\n    x2 --> h1\n    x2 --> h2\n    x2 --> h3\n    h1 --> y\n    h2 --> y\n    h3 --> y\n```\n",
+      "target_sha256": "2bc637c39ee277dba6b6557bf46b8131a1082d24d60525abe728cdd7d2ef3409"
+    },
+    {
+      "segment_id": "03-02:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 18,
+      "source_sha256": "465a72d577e8b52d6bcba9e2f6873b8becb89c5fea185be33cd68d90b6e67eb1",
+      "target": "这是一个 2-3-1 网络：两个输入、三个隐藏神经元、一个输出。每条连接都有一个权重，每个神经元（输入节点除外）都有一个偏置。\n",
+      "target_sha256": "b0140f48b5c93a56bfe52326fcde72b3908631b49da5b90441e823927fc74120"
+    },
+    {
+      "segment_id": "03-02:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 19,
+      "source_sha256": "8b0ee1cb3193db03f9d35ccd9dc57c343c5f16c395ede7b0a2e26dadb4a86bcb",
+      "target": "每一层都会产生一个数值向量，称为隐藏状态（hidden state）。对于文本，隐藏状态会增加维数，将一个词编码为 768 个数值，以捕捉语义。对于图像，隐藏状态会降低维数，将 millions（数百万）个像素压缩成便于处理的表示。隐藏状态就是学习发生的地方。\n",
+      "target_sha256": "d353149e667b3678346c20adeff3bee3b0b30e07e633db46bd248ad80d7cf482"
+    },
+    {
+      "segment_id": "03-02:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Layers: Input, Hidden, Output"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 20,
+      "source_sha256": "a7000aaf85c3391f9c269dd018a092b977ffec72731cd9c399de7c45d9e72165",
+      "target": "### 神经元与激活函数\n",
+      "target_sha256": "9af971b53ab8ff333b3134f8d36567eef4edc9c16150b08bf0b725e803b573c0"
+    },
+    {
+      "segment_id": "03-02:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 21,
+      "source_sha256": "90c061dd6677a1c469dbd9c0d09ce90a39a76ec73d5f95db8db10495c3b3c969",
+      "target": "每个神经元做三件事：\n",
+      "target_sha256": "faad19b6bb569c341e213206c6d3e0ae720e9279b5fad66a282dc532e8021423"
+    },
+    {
+      "segment_id": "03-02:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0043",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 22,
+      "source_sha256": "7689499cac0b319fac1b793c6cca4c4e50a86d92495eb21f8093249f3fe91c05",
+      "target": "1. 将每个输入乘以对应的权重\n2. 将所有乘积相加，再加上偏置\n3. 将这个和送入激活函数\n",
+      "target_sha256": "8f8c444bcab5414108435187fe98d96092a3d4ced273c67f6791e64bd968f4ce"
+    },
+    {
+      "segment_id": "03-02:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 23,
+      "source_sha256": "55d53b736863d4f043f810a4f9dcd59c91207eb5f21b8ff0d197df49c1f97ea4",
+      "target": "目前使用的激活函数是 sigmoid：\n",
+      "target_sha256": "2ad55ef63621a408b34b55fe1fffaf1cc5d95b014122a579c77e876cb8ba859d"
+    },
+    {
+      "segment_id": "03-02:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 24,
+      "source_sha256": "701469b4bd1a6d167d1f5245e28035f8794205dd82fea806ff3ea2893545c392",
+      "target": "```text\nsigmoid(z) = 1 / (1 + e^(-z))\n```\n",
+      "target_sha256": "52000d07dca1ef459d9cce1e57b46bb4aca6d75b1d19205012bfe2453cf8ec1b"
+    },
+    {
+      "segment_id": "03-02:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 25,
+      "source_sha256": "b20999000246b481d044964fcc356c40354bdf066eae1755d86a21d9e2f2f380",
+      "target": "sigmoid 将任意数值压缩到 (0, 1) 范围内。较大的正输入让输出趋近于 1，较大的负输入让输出趋近于 0，零则映射为 0.5。正是这条光滑曲线让学习成为可能：与感知机的硬阶跃不同，sigmoid 处处都有梯度。\n",
+      "target_sha256": "90b837dcc017dcf0070615c83d5748c0c44865c65bbe21132c7a8e96c9d3e2f7"
+    },
+    {
+      "segment_id": "03-02:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Neurons and Activations"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 26,
+      "source_sha256": "be436eb4306369590bbbc7b279dca0a6a415215073118c0edfe6cb122536aab4",
+      "target": "### 前向传播：数据如何流动\n",
+      "target_sha256": "e85b7b835b64f5bb28fd97fd4c8a2df8044ea5a37ac92a31fee0cfc9b3a8d3e2"
+    },
+    {
+      "segment_id": "03-02:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 27,
+      "source_sha256": "9ddc11e6998f75c9b660040d6dd26e686264cd483f9b14c5edacc57e64d134c6",
+      "target": "前向传播将输入数据逐层送过网络，直到到达输出。前向传播期间不发生学习，它只是计算：相乘、相加、激活，然后重复。\n",
+      "target_sha256": "8d6f6f03f61b67ff592750ccaabfcb09b6b44f6d9fcc5b530a8b1bf9fe259abb"
+    },
+    {
+      "segment_id": "03-02:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 28,
+      "source_sha256": "21f553112e88f6878fe67cf903f4383f4582f9afc61c0e5ec54327f8584523db",
+      "target": "```mermaid\ngraph TD\n    X[\"Input: [x1, x2]\"] --> WH[\"Multiply by Weight Matrix W1 (2x3)\"]\n    WH --> BH[\"Add Bias Vector b1 (3,)\"]\n    BH --> AH[\"Apply sigmoid to each element\"]\n    AH --> H[\"Hidden Output: [h1, h2, h3]\"]\n    H --> WO[\"Multiply by Weight Matrix W2 (3x1)\"]\n    WO --> BO[\"Add Bias Vector b2 (1,)\"]\n    BO --> AO[\"Apply sigmoid\"]\n    AO --> Y[\"Output: y\"]\n```\n",
+      "target_sha256": "21f553112e88f6878fe67cf903f4383f4582f9afc61c0e5ec54327f8584523db"
+    },
+    {
+      "segment_id": "03-02:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 29,
+      "source_sha256": "400c3daa720fd732369c01276b608b0da4a07d0e7c2881ebf4df3e9723ead061",
+      "target": "每一层都依次执行三项操作：\n",
+      "target_sha256": "6af9938da6b3aef6b4d1f3cb35e1a9f882b6b3500c3781be8d56ea665fa23f7c"
+    },
+    {
+      "segment_id": "03-02:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0059",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 30,
+      "source_sha256": "d8cd85989c6a6acf83d819f9cec7fab11836af0d8353b260959c4d3e23c09b55",
+      "target": "```text\nz = W * input + b       (linear transformation)\na = sigmoid(z)           (activation)\n```\n",
+      "target_sha256": "e05299a5d079fcd5c1d832e7176d42dedd37ab11ea17af4151c569cee8b2a1ac"
+    },
+    {
+      "segment_id": "03-02:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 31,
+      "source_sha256": "5c7b8acf0fcb53858588dbed7b4b80b2c0f8b52f1b6451af802e50c1e395d9cb",
+      "target": "一层的输出成为下一层的输入。这就是完整的前向传播。\n",
+      "target_sha256": "12ad4207fb2d4a133e5a406a0ae3e6d1ed7b405c4ea41b315d3d3e6b14fcf3da"
+    },
+    {
+      "segment_id": "03-02:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Forward Pass: How Data Flows"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Matrix Dimensions"
+      ],
+      "ordinal": 32,
+      "source_sha256": "f5bb490ac6b532693e5eb789f6ad47ae10412da4e3e7d9eb45a893c78248fb9b",
+      "target": "### 矩阵维度\n",
+      "target_sha256": "44c8051fd4825125efa903efc89ffd1ba9d97fb6ff40aa88da8161e0a111000a"
+    },
+    {
+      "segment_id": "03-02:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Matrix Dimensions"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Matrix Dimensions"
+      ],
+      "ordinal": 33,
+      "source_sha256": "7491437d559f379e63610d8e81dc0e354904a87f1de8a00fdb7cda37c7e6ff51",
+      "target": "追踪维度是深度学习中最重要的调试技能。来看这个 2-3-1 网络：\n",
+      "target_sha256": "ed583ed5c7185fc38a1af070da855768f406262d753c1d2906bd52421bde30c1"
+    },
+    {
+      "segment_id": "03-02:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Matrix Dimensions"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0067",
+      "kind": "table",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Matrix Dimensions"
+      ],
+      "ordinal": 34,
+      "source_sha256": "a9f7114478679588f0154ae7eccfb92a4d35007472e2f1d2bac2d46f8f1a763a",
+      "target": "| 步骤 | 运算 | 维度 | 结果形状 |\n|------|-----------|------------|-------------|\n| 输入 | x | -- | (2,) |\n| 隐藏层线性运算 | W1 * x + b1 | W1: (3, 2), b1: (3,) | (3,) |\n| 隐藏层激活 | sigmoid(z1) | -- | (3,) |\n| 输出层线性运算 | W2 * h + b2 | W2: (1, 3), b2: (1,) | (1,) |\n| 输出层激活 | sigmoid(z2) | -- | (1,) |\n",
+      "target_sha256": "44c04fe3752584020e57376dc1c58d1301b5df6fe37a418063a2f454266be687"
+    },
+    {
+      "segment_id": "03-02:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Matrix Dimensions"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Matrix Dimensions"
+      ],
+      "ordinal": 35,
+      "source_sha256": "761e1afeaaf70772ad9f1884f736762545b169ea891d13c2b2c54f153041b9c1",
+      "target": "规则是：第 k 层的权重矩阵 W 的形状为 (neurons_in_layer_k, neurons_in_layer_k_minus_1)。行对应当前层，列对应上一层。如果形状对不上，就有 bug。\n",
+      "target_sha256": "af43dfa5a703615218ff4ba1abe25b9cdc5391146b72d30d9e28d04f058274cb"
+    },
+    {
+      "segment_id": "03-02:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Matrix Dimensions"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 36,
+      "source_sha256": "1d36d3c9f56cb4353a1932b25376c90fb2d56ddd7f72c0103ba759b844118189",
+      "target": "### 通用逼近定理\n",
+      "target_sha256": "7fa2cef941d23b183de897f6af85840047bbaa910daf3386a31756984e4a44bd"
+    },
+    {
+      "segment_id": "03-02:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 37,
+      "source_sha256": "c16b3047108a5e7705b851891ce14d9f1c751a774741751e1aa5fb9fb37d41a8",
+      "target": "1989 年，George Cybenko 证明了一个了不起的结论：只要神经元足够多，只有一个隐藏层的神经网络就能以任意指定的精度逼近任意连续函数。这就是通用逼近定理（universal approximation theorem）。\n",
+      "target_sha256": "fa5e37d5839ceebcd78cbdb92f18baea14e51275290627ef5c371827f2ceae87"
+    },
+    {
+      "segment_id": "03-02:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 38,
+      "source_sha256": "2a8741c280164f3b7b69791c9553f4443fcbd832680b6266bd8d8f8b9875af7d",
+      "target": "这并不意味着一个隐藏层始终是最佳选择，而是说这种架构在理论上具备相应的表达能力。在实践中，更深的网络（层数更多、每层神经元更少）能用远少于浅而宽的网络的总参数量，学会同样的函数。这就是深度学习奏效的原因。\n",
+      "target_sha256": "5751e84f9eba927a23ee379fbbb35fe99265cfcf9c702fb2d3a2459a47fec954"
+    },
+    {
+      "segment_id": "03-02:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 39,
+      "source_sha256": "51b724264990eb1e2d2d4a853b514997ab6754088edd9fa468e85bd4756beb53",
+      "target": "直观地说，隐藏层中的每个神经元都会学到一个“隆起”或特征。在合适的位置放上足够多的隆起，就能逼近任意光滑曲线。神经元越多，隆起越多，逼近也就越好。\n",
+      "target_sha256": "ee86023a39cd3b0c27f0dec5c0080eef3bc9a2c3acf8ac7bf268ec5973782f36"
+    },
+    {
+      "segment_id": "03-02:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 40,
+      "source_sha256": "4c47684b94e636099a9874f9898c4085aca3c00676ff118801b91cc0463506ad",
+      "target": "```mermaid\ngraph LR\n    subgraph FewNeurons[\"4 Hidden Neurons\"]\n        A[\"Rough approximation\"]\n    end\n    subgraph MoreNeurons[\"16 Hidden Neurons\"]\n        B[\"Close approximation\"]\n    end\n    subgraph ManyNeurons[\"64 Hidden Neurons\"]\n        C[\"Near-perfect fit\"]\n    end\n    FewNeurons --> MoreNeurons --> ManyNeurons\n```\n",
+      "target_sha256": "4c47684b94e636099a9874f9898c4085aca3c00676ff118801b91cc0463506ad"
+    },
+    {
+      "segment_id": "03-02:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Universal Approximation Theorem"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Composability"
+      ],
+      "ordinal": 41,
+      "source_sha256": "e121668a6d267355d834e5a989379c185da5ee180da33632ea61d364a4a9ee0c",
+      "target": "### 可组合性\n",
+      "target_sha256": "ee95e080620a4669c6d37f6e2a80365ea8bfdd3d571913cfdd6c5ffcc5032eb5"
+    },
+    {
+      "segment_id": "03-02:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Composability"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Composability"
+      ],
+      "ordinal": 42,
+      "source_sha256": "04e1feedf338a8bf3c396d8a83614bf967f079c618f6a36c88e90b49c98cfe67",
+      "target": "神经网络具有可组合性（composability）。你可以堆叠它们、将它们依次连接，也可以并行运行。Whisper 模型使用一个编码器（encoder）网络处理音频，再用一个单独的解码器（decoder）网络生成文本。现代大语言模型（LLM）采用纯解码器架构，BERT 采用纯编码器架构，T5 则采用编码器—解码器架构。架构选择决定了模型能做什么。\n",
+      "target_sha256": "38a50c6f883b476128a82c035a22e129c5f0c474a6b4cb04b0fcb57142a641ce"
+    },
+    {
+      "segment_id": "03-02:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Composability"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Composability"
+      ],
+      "ordinal": 43,
+      "source_sha256": "ad5844ab060ab24a346d5b6c25521c5fde15f75ab38a55f118f82b1835cad514",
+      "target": "```figure\nmlp-forward\n```\n",
+      "target_sha256": "ad5844ab060ab24a346d5b6c25521c5fde15f75ab38a55f118f82b1835cad514"
+    },
+    {
+      "segment_id": "03-02:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## The Concept",
+        "### Composability"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "03-02:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "acce470149f1aaf8cb197183fb829aebcd493a99e22b605aab26114262e9dbfb",
+      "target": "纯 Python，不用 numpy。每项矩阵运算都从零实现。\n",
+      "target_sha256": "e47903098b84d0dd7630009231328e112056011ce471f50408105f49c0c038ef"
+    },
+    {
+      "segment_id": "03-02:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 1: Sigmoid Activation"
+      ],
+      "ordinal": 46,
+      "source_sha256": "f2d83dea9823e750e819135f6ef4b19717b4b397cfeab4655d5d680ba958cd8d",
+      "target": "### 步骤 1：sigmoid 激活函数\n",
+      "target_sha256": "eeb5d4de27b8f08e9eb7b85004bb5dc1e7d714ed43f6eda9584d9fe672f8867d"
+    },
+    {
+      "segment_id": "03-02:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 1: Sigmoid Activation"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 1: Sigmoid Activation"
+      ],
+      "ordinal": 47,
+      "source_sha256": "cf2af88a47392031697f4786af0d8b67a5bdf0c8960cd9ec2f3ab1e1f1fd86d5",
+      "target": "```python\nimport math\n\ndef sigmoid(x):\n    x = max(-500.0, min(500.0, x))\n    return 1.0 / (1.0 + math.exp(-x))\n```\n",
+      "target_sha256": "cf2af88a47392031697f4786af0d8b67a5bdf0c8960cd9ec2f3ab1e1f1fd86d5"
+    },
+    {
+      "segment_id": "03-02:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 1: Sigmoid Activation"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 1: Sigmoid Activation"
+      ],
+      "ordinal": 48,
+      "source_sha256": "187c4a5a2419c660e0e0b0b06e99c10f2e7e89664493195d416906a1f5559463",
+      "target": "将输入限制在 [-500, 500] 内可以防止溢出。`math.exp(500)` 很大，但仍是有限值；`math.exp(1000)` 则是无穷大。\n",
+      "target_sha256": "8c3230de941c61e9f36697c6169242942cd2c633442fe42f725384583bb4a12c"
+    },
+    {
+      "segment_id": "03-02:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 1: Sigmoid Activation"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 49,
+      "source_sha256": "1442ee3aabf09cbbc0264343228a43a63e0adc8eadfd2361b6933b3bf87455a1",
+      "target": "### 步骤 2：Layer 类\n",
+      "target_sha256": "deedf6ca4b87da335d40b4cbc2e8c5c3c9b7b35bae4817df198a39eeee1b2121"
+    },
+    {
+      "segment_id": "03-02:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 50,
+      "source_sha256": "41d102489bf4bbfbe83d2dfecf9b7563862826e89cd8fcb1ae0e61ad1150f0f9",
+      "target": "矩阵乘法是整个深度学习中最重要的运算。每一层、每个注意力头、每次前向传播，底层都是矩阵乘法。线性层接收一个输入向量，将它乘以权重矩阵，再加上偏置向量：y = Wx + b。仅这一条公式就占据了神经网络中 90% 的计算量。\n",
+      "target_sha256": "ef3a98c03285c15195c997c730e0cbb911937a75464133e69b9f3250104cd2b8"
+    },
+    {
+      "segment_id": "03-02:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 51,
+      "source_sha256": "d54980c086e89cf45cb486487f5244a3941882484ba5ea332734f16ca2ca99be",
+      "target": "每层保存一个权重矩阵和一个偏置向量。它的 forward 方法接收输入向量，返回激活后的输出。\n",
+      "target_sha256": "c38d8f18343f3a7d144dba5b52bb2e992463e5751cba93eacd0557283b58e496"
+    },
+    {
+      "segment_id": "03-02:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 52,
+      "source_sha256": "9e90ed2975863f217cd2350f0f4c60c2279fcf5083416e4ceeb6775e7ae8fb43",
+      "target": "```python\nclass Layer:\n    def __init__(self, n_inputs, n_neurons, weights=None, biases=None):\n        if weights is not None:\n            self.weights = weights\n        else:\n            import random\n            self.weights = [\n                [random.uniform(-1, 1) for _ in range(n_inputs)]\n                for _ in range(n_neurons)\n            ]\n        if biases is not None:\n            self.biases = biases\n        else:\n            self.biases = [0.0] * n_neurons\n\n    def forward(self, inputs):\n        self.last_input = inputs\n        self.last_output = []\n        for neuron_idx in range(len(self.weights)):\n            z = sum(\n                w * x for w, x in zip(self.weights[neuron_idx], inputs)\n            )\n            z += self.biases[neuron_idx]\n            self.last_output.append(sigmoid(z))\n        return self.last_output\n```\n",
+      "target_sha256": "9e90ed2975863f217cd2350f0f4c60c2279fcf5083416e4ceeb6775e7ae8fb43"
+    },
+    {
+      "segment_id": "03-02:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 53,
+      "source_sha256": "13183542f7eb1ed65a440bf2c236aae20dc55762bad0d793eaf5f8382d394ccc",
+      "target": "权重矩阵的形状为 (n_neurons, n_inputs)。每一行都是某个神经元对应所有输入的权重。forward 方法遍历神经元，计算加权和并加上偏置，应用 sigmoid，再收集结果。\n",
+      "target_sha256": "2469c7ceb830a99d427934fbac0ac9fee5ab60d075a6bc8819338fbb6b2245a5"
+    },
+    {
+      "segment_id": "03-02:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 2: Layer Class"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 3: Network Class"
+      ],
+      "ordinal": 54,
+      "source_sha256": "2b6bb0d81ba5e7ed752db22cb7f32f14fc02e3670cc0deb810736cff810cb4c7",
+      "target": "### 步骤 3：Network 类\n",
+      "target_sha256": "eafc1be5d1673082577e564e5a80b4163d2de611db7a7eda995a55204ecd8b4d"
+    },
+    {
+      "segment_id": "03-02:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 3: Network Class"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 3: Network Class"
+      ],
+      "ordinal": 55,
+      "source_sha256": "8b91d86417b511f2c078b0294a2da889d6438b2cf8ef2a2b3651e45b23d5d6d9",
+      "target": "网络就是一个由层组成的列表。前向传播将它们依次连接：第 k 层的输出送入第 k+1 层。\n",
+      "target_sha256": "dd03f61963b5db637d2811c50dace63c005c68f3e47fe957a456687d35d60115"
+    },
+    {
+      "segment_id": "03-02:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 3: Network Class"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0111",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 3: Network Class"
+      ],
+      "ordinal": 56,
+      "source_sha256": "3e663bea1a0f8f3387604a99e07f8f25c6708160392398131eb6e92a6b5f60a1",
+      "target": "```python\nclass Network:\n    def __init__(self, layers):\n        self.layers = layers\n\n    def forward(self, inputs):\n        current = inputs\n        for layer in self.layers:\n            current = layer.forward(current)\n        return current\n```\n",
+      "target_sha256": "3e663bea1a0f8f3387604a99e07f8f25c6708160392398131eb6e92a6b5f60a1"
+    },
+    {
+      "segment_id": "03-02:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 3: Network Class"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 3: Network Class"
+      ],
+      "ordinal": 57,
+      "source_sha256": "663140a5346615b8fd65a8da788e7bf2e0105a38025e23b4e69e1718ef29fb0c",
+      "target": "这就是完整的前向传播，只有四行逻辑。数据进入网络，流经每一层，再从另一端输出。\n",
+      "target_sha256": "3907c03506f679d34632fdf706be68c56f5b51e5fe3af1012bf9969f927e5072"
+    },
+    {
+      "segment_id": "03-02:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 3: Network Class"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0115",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 4: XOR with Hand-Tuned Weights"
+      ],
+      "ordinal": 58,
+      "source_sha256": "9cab781cd56cf406c8d75711dfe794a6a52d14b34c9818b3ff5ad4b39bdc0101",
+      "target": "### 步骤 4：用手动调节的权重解决 XOR\n",
+      "target_sha256": "9b93e396ce884018efb15e5fa1ce2235ce336c2014d978372babd639066bd6ac"
+    },
+    {
+      "segment_id": "03-02:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 4: XOR with Hand-Tuned Weights"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 4: XOR with Hand-Tuned Weights"
+      ],
+      "ordinal": 59,
+      "source_sha256": "db6c15b97a99888f9483fdb867550dc38440ad7a07af3057926b33a1c4a479bd",
+      "target": "在课程 01 中，我们通过组合 OR、NAND 和 AND 感知机解决了 XOR。现在，用 Layer 和 Network 类完成同样的事情。2-2-1 架构包含两个输入、两个隐藏神经元和一个输出。\n",
+      "target_sha256": "76704c044b25e29e699dae17624572f5cb5d3f47bcdc25adcf887b94f18b7a1a"
+    },
+    {
+      "segment_id": "03-02:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 4: XOR with Hand-Tuned Weights"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0119",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 4: XOR with Hand-Tuned Weights"
+      ],
+      "ordinal": 60,
+      "source_sha256": "8368e51375f45654c5cccab270e3b8e98aa64957327115b031db5b6f643a2744",
+      "target": "```python\nhidden = Layer(\n    n_inputs=2,\n    n_neurons=2,\n    weights=[[20.0, 20.0], [-20.0, -20.0]],\n    biases=[-10.0, 30.0],\n)\n\noutput = Layer(\n    n_inputs=2,\n    n_neurons=1,\n    weights=[[20.0, 20.0]],\n    biases=[-30.0],\n)\n\nxor_net = Network([hidden, output])\n\nxor_data = [\n    ([0, 0], 0),\n    ([0, 1], 1),\n    ([1, 0], 1),\n    ([1, 1], 0),\n]\n\nfor inputs, expected in xor_data:\n    result = xor_net.forward(inputs)\n    predicted = 1 if result[0] >= 0.5 else 0\n    print(f\"  {inputs} -> {result[0]:.6f} (rounded: {predicted}, expected: {expected})\")\n```\n",
+      "target_sha256": "8368e51375f45654c5cccab270e3b8e98aa64957327115b031db5b6f643a2744"
+    },
+    {
+      "segment_id": "03-02:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 4: XOR with Hand-Tuned Weights"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 4: XOR with Hand-Tuned Weights"
+      ],
+      "ordinal": 61,
+      "source_sha256": "658dd3cb9ab711587c1ce012781cfdee81bf5dac60e933d6d1c81927f27a9118",
+      "target": "较大的权重（20、-20）让 sigmoid 的表现接近阶跃函数。第一个隐藏神经元近似实现 OR，第二个近似实现 NAND。输出神经元通过 AND 将两者组合起来，结果就是 XOR。\n",
+      "target_sha256": "1af526fb4b0c8cef49f55edcd67055a5823466a072193830abb302e95c52b8d0"
+    },
+    {
+      "segment_id": "03-02:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 4: XOR with Hand-Tuned Weights"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0123",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 62,
+      "source_sha256": "8c68ffe275bea463f05207495309aebbe821a722c3e35757c0e152dbb2c73bdf",
+      "target": "### 步骤 5：圆形区域分类\n",
+      "target_sha256": "8ebd93f372c6118d116a4f4d95461857c921f10102406ce34dd4a674f8f7aa23"
+    },
+    {
+      "segment_id": "03-02:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 63,
+      "source_sha256": "55cb0a1ad29aa6103e609250134068f0d506fdb4f7c631444d1fccac375e9004",
+      "target": "来看一个更难的问题：判断 2D 数据点位于以原点为圆心、半径为 0.5 的圆内还是圆外。这需要弯曲的决策边界，单个感知机无法做到。\n",
+      "target_sha256": "c8c6f5f9ee0970ae86accb89ed85ed57e74d197b7c729fcdfb6b59fba82b1295"
+    },
+    {
+      "segment_id": "03-02:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 64,
+      "source_sha256": "79957037bc7620d74d9ef10752250c92dec185fbb3b66761d0412cb66223b280",
+      "target": "```python\nimport random\nimport math\n\nrandom.seed(42)\n\ndata = []\nfor _ in range(200):\n    x = random.uniform(-1, 1)\n    y = random.uniform(-1, 1)\n    label = 1 if (x * x + y * y) < 0.25 else 0\n    data.append(([x, y], label))\n\ncircle_net = Network([\n    Layer(n_inputs=2, n_neurons=8),\n    Layer(n_inputs=8, n_neurons=1),\n])\n```\n",
+      "target_sha256": "79957037bc7620d74d9ef10752250c92dec185fbb3b66761d0412cb66223b280"
+    },
+    {
+      "segment_id": "03-02:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 65,
+      "source_sha256": "b6bbcfebc838f3d966122ba4b8dd7becb3459b25dc2924f1d27614e8588e5530",
+      "target": "使用随机权重时，网络的分类效果不会很好，但前向传播依然可以运行。关键就在这里：前向传播只是计算。学习正确权重靠的是反向传播，我们将在课程 03 中介绍。\n",
+      "target_sha256": "4f80caa0631288c7171df53fcfecac329962034f56708cd79274bc3ba2c8d25d"
+    },
+    {
+      "segment_id": "03-02:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0131",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 66,
+      "source_sha256": "05dd3f944908f73371fe56faef72e2db294abceb993f80a3c98337f46932634f",
+      "target": "```python\ncorrect = 0\nfor inputs, expected in data:\n    result = circle_net.forward(inputs)\n    predicted = 1 if result[0] >= 0.5 else 0\n    if predicted == expected:\n        correct += 1\n\nprint(f\"Accuracy with random weights: {correct}/{len(data)} ({100*correct/len(data):.1f}%)\")\n```\n",
+      "target_sha256": "05dd3f944908f73371fe56faef72e2db294abceb993f80a3c98337f46932634f"
+    },
+    {
+      "segment_id": "03-02:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 67,
+      "source_sha256": "19a6073feb94d213bc5d541dfba63ecd43b987eef1f4d32803799d50266d2d51",
+      "target": "随机权重的准确率很差，往往还不如直接猜多数类。训练之后（课程 03），这个同样包含 8 个隐藏神经元的架构就会画出一条曲线边界，将圆内和圆外分开。\n",
+      "target_sha256": "25bfa73e812090d1d8915e595fc003435f91cc094952cc492696a38e6191b49d"
+    },
+    {
+      "segment_id": "03-02:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Build It",
+        "### Step 5: Circle Classification"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 68,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "03-02:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0137",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 69,
+      "source_sha256": "47be5b77c263ad4b3af72b4034db07997205d26b6fb6fd8272bc1cfbde5d5433",
+      "target": "PyTorch 只用四行就能完成上面的所有工作：\n",
+      "target_sha256": "d35150d34c7e97d61ace495210a1e40b3ab54c3db24b48736522429699e21ae3"
+    },
+    {
+      "segment_id": "03-02:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0139",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 70,
+      "source_sha256": "f82ed265d902546d9993dfb6509b53c82fe38940458013c667886842a465d358",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\nmodel = nn.Sequential(\n    nn.Linear(2, 8),\n    nn.Sigmoid(),\n    nn.Linear(8, 1),\n    nn.Sigmoid(),\n)\n\nx = torch.tensor([[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]])\noutput = model(x)\nprint(output)\n```\n",
+      "target_sha256": "f82ed265d902546d9993dfb6509b53c82fe38940458013c667886842a465d358"
+    },
+    {
+      "segment_id": "03-02:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0141",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 71,
+      "source_sha256": "9e9e6926492d7ef90781a8a4a93e1884d4da7889417a7889088d4f45cdf08834",
+      "target": "`nn.Linear(2, 8)` 对应你写的 Layer 类：权重矩阵形状为 (8, 2)，偏置向量形状为 (8,)；`nn.Sigmoid()` 对应逐元素应用的 sigmoid 函数；`nn.Sequential` 对应你的 Network 类，按顺序连接各层。\n",
+      "target_sha256": "21114980ed28f8ee08716327938744a1f8217f5571dc011681a2bc961bef5980"
+    },
+    {
+      "segment_id": "03-02:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0143",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 72,
+      "source_sha256": "950d8da23715c1432a41febe3d54be68651bb3d018c5cb40fd0d9d59552896f9",
+      "target": "区别在于速度和规模。PyTorch 能在 GPU 上运行，处理包含 millions（数百万）个样本的批次，并自动计算反向传播所需的梯度。但前向传播的逻辑与你刚才从零实现的内容完全相同。\n",
+      "target_sha256": "de1693883ea3d8ad086dd0fd5debaeaa0b81880b95577671d0be0c8c377322aa"
+    },
+    {
+      "segment_id": "03-02:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Use It"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0145",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Ship It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "03-02:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Ship It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0147",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Ship It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "095d8587d4ff3b9dc6b399a36491c2696269c1adf4720027462f2bc24338842d",
+      "target": "本课产出一份用于设计网络架构的可复用提示词（prompt）：\n",
+      "target_sha256": "059bb4f2a5431b5d4677828f7df697c12ce84d95a07ea126e1da09d6666741d9"
+    },
+    {
+      "segment_id": "03-02:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Ship It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0149",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Ship It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "171c2520e95d0a5333f24a33b052949a640c42fcd83859cfaf8f1d60de02ddbf",
+      "target": "- `outputs/prompt-network-architect.md`\n",
+      "target_sha256": "171c2520e95d0a5333f24a33b052949a640c42fcd83859cfaf8f1d60de02ddbf"
+    },
+    {
+      "segment_id": "03-02:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Ship It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Ship It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "04589198cc9761841b63e1db59e9d2e3202669685e24722715b8a3143e2cee4a",
+      "target": "针对具体问题，需要决定层数、每层神经元数量以及激活函数时，就可以使用它。\n",
+      "target_sha256": "d961cdbb00c7d3dbb4e73d9795b32e3a0ddf2f6a564c364c58b2f26b964a1b49"
+    },
+    {
+      "segment_id": "03-02:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Ship It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0153",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 77,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "03-02:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0155",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 78,
+      "source_sha256": "4ac6f1757d3a8aa394d64d76ef942d9d910b03538a3ad0596500e4fa3821ecda",
+      "target": "1. 构建一个 2-4-2-1 网络（两个隐藏层），用随机权重对 XOR 数据进行前向传播。打印中间隐藏层的输出，观察表示在每一层如何变换。\n",
+      "target_sha256": "22f9815dd81f9d345a98a33b5b6e9fed66883ae1db31822e0dfe3c0b161a5d92"
+    },
+    {
+      "segment_id": "03-02:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0157",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 79,
+      "source_sha256": "03cd5ec293bd90cd7aa66d2e4be0737524d8fbe541e8713aecc176a6a66934d8",
+      "target": "2. 将圆形区域分类器的隐藏层大小从 8 改为 2，再改为 32。每次都使用随机权重进行前向传播。隐藏神经元的数量会改变输出的范围或分布吗？为什么？\n",
+      "target_sha256": "d030a881758996ef5d690c61dc92c4580779619a8b8217b6bf07ab18fdac2b45"
+    },
+    {
+      "segment_id": "03-02:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0159",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 80,
+      "source_sha256": "d9de5861de3289820262ffd0c749c74390a69abf4b70fc3ad3e3b05beee0345e",
+      "target": "3. 为 Network 类实现一个 `count_parameters` 方法，返回可训练权重与偏置的总数。在 784-256-128-10 网络（经典 MNIST 架构）上测试它。它有多少个参数？\n",
+      "target_sha256": "dc1e9a50c19272d07b900f497f238dec873bf0cff46a0bb453a61bdb8f715252"
+    },
+    {
+      "segment_id": "03-02:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0161",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 81,
+      "source_sha256": "653d8d40985f82c2dc0abf9095df87c10d2446b419c76d56fa016f63f5ca5925",
+      "target": "4. 为一个 3-4-4-2 网络实现前向传播。输入 RGB 颜色值（归一化到 0-1），观察两个输出。这是一个具有两个类别的简单颜色分类器的架构。\n",
+      "target_sha256": "658e3c1c3ae223024522e645846d82e860befe974693f535f99498eb8fe4eb94"
+    },
+    {
+      "segment_id": "03-02:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0163",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "c75be95c286a1a027d6d392cd75f0202337897f5a647140ac7093e2c8a6d9d16",
+      "target": "5. 将 sigmoid 替换为“leaky step”（带泄漏的阶跃）函数：z < 0 时返回 0.01 * z，否则返回 1.0。使用第 4 步中相同的手动调节权重，对 XOR 执行前向传播。它还能工作吗？为什么相比硬截断，更倾向于使用光滑的 sigmoid？\n",
+      "target_sha256": "145e923059057e3f293b1b7dfc1efd0f063ed1ad10906d879f820b18f657ab19"
+    },
+    {
+      "segment_id": "03-02:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0165",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Key Terms"
+      ],
+      "ordinal": 83,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "03-02:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Key Terms"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0167",
+      "kind": "table",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Key Terms"
+      ],
+      "ordinal": 84,
+      "source_sha256": "c110e5858e2092987c68f67b193d2b46ed13e182966b4a83135949caa3506df8",
+      "target": "| 术语 | 通常的说法 | 实际含义 |\n|------|----------------|----------------------|\n| 前向传播 | “运行模型” | 将输入送过每一层：乘以权重、加上偏置、应用激活函数，从而产生输出 |\n| 隐藏层 | “中间部分” | 输入与输出之间的任意层，其取值无法在数据中直接观察到 |\n| 多层网络 | “深度神经网络” | 将神经元组成的层按顺序堆叠起来，每层的输出作为下一层的输入 |\n| 激活函数 | “非线性部分” | 在线性变换之后应用的函数，使决策边界出现弯曲 |\n| Sigmoid | “S 形曲线” | sigma(z) = 1/(1+e^(-z))，将任意实数压缩到 (0,1)，处处光滑且可微 |\n| 权重矩阵 | “参数” | 形状为 (current_layer_neurons, previous_layer_neurons) 的矩阵 W，包含可学习的连接强度 |\n| 偏置向量 | “偏移量” | 在矩阵乘法之后相加的向量，使神经元即使在所有输入均为零时也能激活 |\n| 通用逼近 | “神经网络什么都能学” | 一个隐藏层只要有足够多的神经元，就能逼近任意连续函数，但“足够多”可能意味着 billions（数十亿） |\n| 线性变换 | “矩阵相乘这一步” | z = W * x + b，即激活之前的计算，将输入映射到新空间 |\n| 决策边界 | “分类器改变判断的位置” | 输入空间中，网络输出跨过分类阈值处的曲面 |\n",
+      "target_sha256": "0443057f6da16fa2c0f082e4d6cdd6629841204c0cc9e8f19f09c4c5700557c9"
+    },
+    {
+      "segment_id": "03-02:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Key Terms"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0169",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Further Reading"
+      ],
+      "ordinal": 85,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "03-02:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Further Reading"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-02:b0171",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Layer Networks and Forward Pass",
+        "## Further Reading"
+      ],
+      "ordinal": 86,
+      "source_sha256": "42f5e451bdbe3382e339d78ab0a03cdce719280d003b160a801e773f17297f1a",
+      "target": "- Michael Nielsen，《Neural Networks and Deep Learning》，第 1-2 章 (http://neuralnetworksanddeeplearning.com/) -- 对前向传播和网络结构最清晰的免费讲解，并配有交互式可视化\n- Cybenko，《Approximation by Superpositions of a Sigmoidal Function》（1989）-- 通用逼近定理的原始论文，意外地好读\n- 3Blue1Brown，《But what is a neural network?》 (https://www.youtube.com/watch?v=aircAruvnKk) -- 用 20 分钟直观讲解层、权重和前向传播，帮助建立正确的理解\n- Goodfellow、Bengio、Courville，《Deep Learning》，第 6 章 (https://www.deeplearningbook.org/) -- 多层网络的标准参考书，可免费在线阅读\n",
+      "target_sha256": "74ca02c7818ce4c78a54b3fa9007b09b7adcf7ffee8f6ccc77955f527114c902"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+  "additional_glossary_sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "b06ff6e88519cfb96621b8e6de00c6968c97d2e0",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S29-multi-layer-networks/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "aca23420ce1c0c706999931ea8a804b1e6efa44e453973a99b4e9d102498246f"
+}
