@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "stage_id": "S48-regularization",
+  "lesson_id": "03-07",
+  "status": "reviewed-draft-submitted",
+  "final_acceptance": false,
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_path": "phases/03-deep-learning-core/07-regularization/docs/en.md",
+  "source_sha256": "c6e31ead99cce8cf40dda09a94a3a2b95978f162e4fe67bc3f3e1b9763ae170d",
+  "target_path": "i18n/zh/phases/03-deep-learning-core/07-regularization/docs/zh.md",
+  "target_sha256": "be1bfd10a147facdf50a60c4b11973113d8241852a5347605e5366f99c1638f3",
+  "draft_pr": 54,
+  "support_commit": "a1c452c3f11db9b039fab64d3b084383d4f90cea",
+  "content_commit": "39bdd49238976960e0c02150ab533cc1ca0f1c8e",
+  "coverage": {
+    "lines": 532,
+    "blocks": 181,
+    "translatable_candidates": 73,
+    "actually_translated_candidates": 71,
+    "unchanged_proper_API_headings": [
+      "Dropout",
+      "RMSNorm"
+    ],
+    "kinds": {
+      "heading": 26,
+      "separator": 90,
+      "blockquote": 1,
+      "paragraph": 36,
+      "list": 9,
+      "fence": 18,
+      "table": 1
+    },
+    "fences": 18,
+    "bare_fences_tagged_text": 6,
+    "python_fences": 8,
+    "mermaid_fences": 3,
+    "figure_fences": 1,
+    "table_body_rows": 10,
+    "table_columns": 3,
+    "exercises": 5,
+    "references": 4
+  },
+  "heading_delta": {
+    "initial_sha256": "79cc5cca103d856bb4472eb87d762995c9a9d3053be94ac59cfa850c06e799d2",
+    "final_sha256": "be1bfd10a147facdf50a60c4b11973113d8241852a5347605e5366f99c1638f3",
+    "changes": [
+      {
+        "block": "b0011",
+        "before": "## 问题所在\n",
+        "after": "## 要解决的问题\n",
+        "old_sha256": "fe149aef08a53e85d2f4133424bff1deb019a4a71dab5aa8425904f5471d178b",
+        "new_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+      },
+      {
+        "block": "b0119",
+        "before": "## 动手构建\n",
+        "after": "## 动手实现\n",
+        "old_sha256": "266914d8e24a11c49674550f5806f95eb345dbdeb2d646f7b494a4802032120f",
+        "new_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+      }
+    ],
+    "inverse_restores_initial": true,
+    "unchanged_other_blocks": 179,
+    "fences_unchanged": 18,
+    "review": "Two headings rechecked against source The Problem / Build It and fixed additive terminology; both read naturally in context"
+  },
+  "author_full_pass_and_language_pass": "PASS on initial79cc5cca with exact twoheading delta rebound to finalbe1bfd10",
+  "independent_full_technical_and_language_pass": "PASS with exact twoheading delta, full181blockbinding",
+  "mechanical_checks": {
+    "original_strict": "PASS",
+    "original_control_tests": 33,
+    "author_fresh_directory_replays": 2,
+    "peer_fresh_directory_replays": 2,
+    "dependency_files": 56,
+    "dependency_git_bytes_and_hashes": "PASS",
+    "repository_audits": {
+      "lesson": "523 lessons,0 issues",
+      "certification": "67 lessons,12 assessments,505 questions,0 issues",
+      "readme": "counts and book volume tables match"
+    }
+  },
+  "author_runtime": {
+    "canonical_lines": 347,
+    "canonical_sha256": "6842047a2ab368cbddc4e3190ec60f271a6607ecf779b937b0736120a2c59646",
+    "canonical_demos": 5,
+    "canonical_train_configs": 4,
+    "epochs_per_config": 300,
+    "train_samples": 150,
+    "test_samples": 150,
+    "documentary_stdlib_blocks": 6,
+    "documentary_finite_check_groups": 15,
+    "documentary_four_config_300epoch_run": true,
+    "shared_context": "math/random imports from first source definition block, explicit source order",
+    "torch": "not installed;2PyTorch blocks skipped",
+    "canonical_final_test_accuracy_percent": {
+      "none": 97.33333333333334,
+      "dropout": 98.0,
+      "weight_decay": 94.0,
+      "both": 90.66666666666666
+    }
+  },
+  "independent_runtime": {
+    "documentary_stdlib_blocks": 6,
+    "finite_check_groups": 19,
+    "canonical_read": false,
+    "canonical_run": false,
+    "author_QA_read": false,
+    "training_fixture": {
+      "samples": 8,
+      "epochs": 2,
+      "hidden_size": 2
+    },
+    "torch_blocks_run": false
+  },
+  "source_issues": [
+    {
+      "id": "S48-SRC-01",
+      "blocks": [
+        "03-07:b0003",
+        "03-07:b0013",
+        "03-07:b0015",
+        "03-07:b0023",
+        "03-07:b0177"
+      ],
+      "title": "Memorization and generalization overstatements",
+      "detail": "Any dataset, zero test accuracy, always worse for larger models, and no regularization means mere regurgitation are source simplifications. A gap alone does not uniquely establish learned noise, and inconsistent identical inputs cannot all be memorized by a deterministic predictor. Historical GPT-3 corpus/parameter assertions and paper details were not externally verified.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-02",
+      "blocks": [
+        "03-07:b0017",
+        "03-07:b0073",
+        "03-07:b0093",
+        "03-07:b0095",
+        "03-07:b0099",
+        "03-07:b0173",
+        "03-07:b0177"
+      ],
+      "title": "Normalization performance claims are not universal",
+      "detail": "Flatter minima, same accuracy, 10% faster/less overhead, LLM preferences and guaranteed learning-rate stability depend on model/task/hardware. The source treats overhead reduction and speedup interchangeably. No benchmark reproduced or current product claim verified.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-03",
+      "blocks": [
+        "03-07:b0033"
+      ],
+      "title": "Half of neurons is an expectation",
+      "detail": "Independent Bernoulli(.5) masks do not force exactly half each pass; fixed seed 5 kept all four in the finite fixture. Translation correctly preserves the source statement.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-04",
+      "blocks": [
+        "03-07:b0035",
+        "03-07:b0177"
+      ],
+      "title": "Dropout ensemble interpretation is approximate",
+      "detail": "For nonlinear networks, deterministic scaling at inference is not generally exact averaging of all 2^N predictions. Finite training does not literally train every subnetwork on its own minibatch.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-05",
+      "blocks": [
+        "03-07:b0043",
+        "03-07:b0057",
+        "03-07:b0059",
+        "03-07:b0115",
+        "03-07:b0157"
+      ],
+      "title": "Default rates and gap thresholds are heuristic",
+      "detail": "Dropout/weight-decay rates, all-Adam-always-AdamW recommendation, >32 batch cutoff and accuracy-gap thresholds are prescriptive source heuristics, not universal defaults or a measured diagnosis. Percentage versus percentage-point wording is retained.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-06",
+      "blocks": [
+        "03-07:b0047",
+        "03-07:b0049",
+        "03-07:b0051",
+        "03-07:b0053",
+        "03-07:b0059",
+        "03-07:b0177"
+      ],
+      "title": "L2 and weight-decay distinctions",
+      "detail": "Plain SGD equivalence assumes the same learning-rate scaling and update convention. The table says subtract lambda*w without an explicit learning rate. Small weights do not guarantee generalization, and the network decays weights but not biases. Formula payload and source wording remain unchanged.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-07",
+      "blocks": [
+        "03-07:b0069",
+        "03-07:b0071"
+      ],
+      "title": "Affine normalization and statistic conventions",
+      "detail": "Gamma/beta can restore a chosen scale/shift but cannot universally undo changing batch-dependent normalization. Epsilon makes unit variance approximate. The implementation averages variances, not standard deviations, despite prose referring to sigma.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-08",
+      "blocks": [
+        "03-07:b0073"
+      ],
+      "title": "BatchNorm explanation is overstated",
+      "detail": "The source calls one explanation wrong and presents smoothing/Lipschitz changes as the actual universal reason despite acknowledging debate. This review did not independently check the cited paper or generality of those claims.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-09",
+      "blocks": [
+        "03-07:b0075",
+        "03-07:b0099"
+      ],
+      "title": "Batch-size limitation depends on normalized axes",
+      "detail": "The one-sample dense fixture collapses normalized activations to zero before affine parameters. Batch size 1 is not generally meaningless when spatial/time axes supply observations; <32 is not a mathematical threshold. Mermaid claims were preserved.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-10",
+      "blocks": [
+        "03-07:b0083",
+        "03-07:b0085",
+        "03-07:b0155"
+      ],
+      "title": "LayerNorm placement and Transformer example scope",
+      "detail": "Sample-wise normalization and Pre/Post-LN roles are translated correctly. The PyTorch example is Post-LN with default sequence-first MultiheadAttention and no causal/padding masks; it is not a complete causal LM block.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-11",
+      "blocks": [
+        "03-07:b0089",
+        "03-07:b0091",
+        "03-07:b0093",
+        "03-07:b0139"
+      ],
+      "title": "RMSNorm formula omits stabilizing epsilon",
+      "detail": "Displayed formula divides by RMS without epsilon, whereas documentary code adds eps before sqrt and handles a zero vector. It also has no beta parameter, so shorthand LayerNorm-minus-mean is incomplete. No source correction applied.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-12",
+      "blocks": [
+        "03-07:b0103",
+        "03-07:b0105",
+        "03-07:b0107"
+      ],
+      "title": "Augmentation requires task-specific label invariance",
+      "detail": "Flips, crops, synonym replacement, deletion and pitch shifts can change labels. Seeing one or fifty views does not guarantee memorization or invariant learning; source assertions are faithfully retained.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-13",
+      "blocks": [
+        "03-07:b0111",
+        "03-07:b0171"
+      ],
+      "title": "Early stopping uses validation but exercise reuses test",
+      "detail": "A rising validation loss does not establish an exact not-yet-overfit boundary. Exercise 4 explicitly selects using test loss/accuracy, which contaminates a final held-out evaluation; translation correctly does not silently replace test with validation.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-14",
+      "blocks": [
+        "03-07:b0123"
+      ],
+      "title": "Dropout object has state and validation gaps",
+      "detail": "Local training forward/backward mask and inverted scaling work in the finite fixture. Eval forward leaves a stale mask; eval-first backward raises TypeError. p, lengths and calling order are not validated; zip can silently truncate gradients.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-15",
+      "blocks": [
+        "03-07:b0131",
+        "03-07:b0135",
+        "03-07:b0139",
+        "03-07:b0173"
+      ],
+      "title": "Normalization snippets are forward-only",
+      "detail": "BatchNorm, LayerNorm and RMSNorm define no backward method or gamma/beta updates. Empty inputs can divide by zero; feature count and eps are not validated. Exercise 5 needs additional backward implementations before its training/gradient comparison can run.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-16",
+      "blocks": [
+        "03-07:b0143"
+      ],
+      "title": "Network omits Dropout derivative on hidden path",
+      "detail": "RegularizedNetwork.backward never calls Dropout.backward and omits both zero mask and 1/(1-p) for hidden gradients. With fixed mask [0,1], six hidden weight/bias gradients disagree with independent central differences; no-Dropout all nine parameters agree. Source code copied unchanged.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-17",
+      "blocks": [
+        "03-07:b0143"
+      ],
+      "title": "Training and test accuracy use different measurement conditions",
+      "detail": "Training accuracy aggregates online, changing-weight, dropout-active predictions; test accuracy uses final current weights without dropout. The reported gap therefore is not solely a same-model generalization gap. Fixed example order and global random.seed side effects further limit comparisons.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-18",
+      "blocks": [
+        "03-07:b0143"
+      ],
+      "title": "Sigmoid/BCE clipping and empty evaluation boundaries",
+      "detail": "sigmoid(500) rounds to exactly 1, giving a zero out*(1-out) derivative while clipped BCE may still be large. Empty train/test data divides by zero. The finite fixture is not an exhaustive numerical-stability validation.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-19",
+      "blocks": [
+        "03-07:b0149",
+        "03-07:b0151",
+        "03-07:b0155"
+      ],
+      "title": "PyTorch usage and mode limitations",
+      "detail": "Source snippets were fully read and their payloads matched, but not executed in this independent review. train/eval switches do not disable autograd; random-data forward calls do not demonstrate training accuracy. No external framework behavior or performance pass is claimed.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    },
+    {
+      "id": "S48-SRC-20",
+      "blocks": [
+        "03-07:b0025",
+        "03-07:b0099",
+        "03-07:b0115",
+        "03-07:b0117",
+        "03-07:b0161",
+        "03-07:b0165",
+        "03-07:b0167",
+        "03-07:b0169",
+        "03-07:b0171",
+        "03-07:b0173"
+      ],
+      "title": "Unexecuted interactive, shipped and experiment scope",
+      "detail": "Three Mermaid payloads and one figure identifier are preserved; actual browser rendering is pending. Prompt artifact instructions were not executed. Spatial dropout, label smoothing, BN training, 1000-epoch early stopping and 4-layer/200-epoch comparisons were not run.",
+      "policy": "Preserve fixed-source content; do not repair via translation"
+    }
+  ],
+  "author_additional_source_evidence": "Canonical printed best-generalization conclusion contradicted by its actual final test figures; documentary network missing mask differs from canonical. Preserved source.",
+  "actual_github_gfm": {
+    "status": "PASS",
+    "observer": "author personally in own dot cloud Chrome tab",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/39bdd49238976960e0c02150ab533cc1ca0f1c8e/i18n/zh/phases/03-deep-learning-core/07-regularization/docs/zh.md",
+    "content_commit": "39bdd49238976960e0c02150ab533cc1ca0f1c8e",
+    "headings": 26,
+    "tables": [
+      {
+        "rows_including_header": 11,
+        "columns": 3
+      }
+    ],
+    "strong": 5,
+    "em": 0,
+    "unparsed_bold_outside_code": 0,
+    "literal_prose_and_table_multiplications": 2,
+    "fenced_pre_payloads_equal": 18,
+    "diagrams": [
+      {
+        "block": "b0025",
+        "nodes": 7,
+        "screenshot_checked": true
+      },
+      {
+        "block": "b0099",
+        "groups": 3,
+        "nodes": 9,
+        "screenshot_checked": true
+      },
+      {
+        "block": "b0115",
+        "nodes": 13,
+        "threshold_labels": 3,
+        "screenshot_checked": true,
+        "coverage": "overview plus left/right panned detail views together"
+      }
+    ],
+    "additional_format_changes": 0,
+    "figure_identifier_is_code_not_interactive_acceptance": true
+  },
+  "offline_site_parser": {
+    "status": "BLOCKED_SOURCE_RENDERER",
+    "empty_heading_ids": 17,
+    "duplicate_nonempty_heading_ids": 0,
+    "browser_verified_by_parser": false
+  },
+  "pending_coordinator": {
+    "aggregate_replay": "PASS; 70 lessons, two byte-identical outputs",
+    "final_remote_bytes": "POST_COMMIT; final result in PR body and rollout index",
+    "final_pr_metadata": "PENDING",
+    "ci_query": "POST_COMMIT; final result in PR body and rollout index"
+  },
+  "not_accepted": [
+    "website",
+    "mobile",
+    "interactive figure",
+    "hosted CI",
+    "merge",
+    "publication"
+  ],
+  "safety": {
+    "no_installation": true,
+    "no_downloads_or_external_model_api": true,
+    "finite_offline_timeout_execution": true,
+    "no_source_correction": true
+  },
+  "handoff": "After draft delivery coordinator exclusively owns further completion of these two files",
+  "coordinator_validation": {
+    "combined_original_strict": 68,
+    "S07_exact_symbolic_exception": 1,
+    "S19_exact_pipe_repair": 1,
+    "original_regressions": 33,
+    "S07_guards": 24,
+    "S19_guards": 50,
+    "all_lessons_double_replay": {
+      "count": 70,
+      "result": "byte-identical",
+      "asset_scope": "Core renders Markdown; manifest SVG separately hash-verified/copied into both output trees then recursively compared"
+    },
+    "repository_audits": "523 lessons,67 certifications,12 assessments,505 questions; zero issues; README/book counts pass",
+    "source_and_generic_controls": "unchanged"
+  },
+  "snapshot": {
+    "reviewed_drafts": 70,
+    "in_progress": 3,
+    "unstarted": 450,
+    "curriculum_total": 523,
+    "merged": 0,
+    "released": 0,
+    "live_count_authority": "PR #7 single ROLLOUT-INDEX.json"
+  },
+  "post_commit_verification": "After final evidence commit, changed files are fetched and compared byte-for-byte and exact-head PR/CI metadata checked. Results are recorded in PR body and single rollout index to avoid a self-referencing evidence commit. Empty CI arrays are not a pass."
+}
