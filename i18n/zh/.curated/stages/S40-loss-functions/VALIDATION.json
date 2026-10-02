@@ -1,0 +1,823 @@
+{
+  "version": 1,
+  "date": "2026-10-02",
+  "stage": "S40-loss-functions",
+  "lesson_id": "03-05",
+  "status": "reviewed-draft-submitted",
+  "final_acceptance": false,
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_path": "phases/03-deep-learning-core/05-loss-functions/docs/en.md",
+  "source_sha256": "aa64f3d64a9dab9b7e68b117158d8876bf350adc30d2cd3cddf4d11702d3085c",
+  "source_blob": "6e0ed8d23f7722cfbabcec68d2dc5f69dfa6cbe8",
+  "target_path": "i18n/zh/phases/03-deep-learning-core/05-loss-functions/docs/zh.md",
+  "target_sha256": "c4e169d3b4da523d7e06339214e3cdf1396ce8a901aaba513eaba7dce00272a9",
+  "observed_content_commit": "3d394870eea292abb0cf104aa64646d76a0e970f",
+  "observed_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/3d394870eea292abb0cf104aa64646d76a0e970f/i18n/zh/phases/03-deep-learning-core/05-loss-functions/docs/zh.md#%E6%8D%9F%E5%A4%B1%E6%9B%B2%E9%9D%A2",
+  "support_commit": "3fa846ff7823a8d5692ef3ab33da78f3a376032b",
+  "pull_request": {
+    "number": 43,
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/pull/43",
+    "metadata_final_verification": "PENDING coordinator"
+  },
+  "metrics": {
+    "source_lines": 458,
+    "target_lines": 458,
+    "blocks": 191,
+    "translatable_blocks": 76,
+    "translated_prose_blocks": 76,
+    "headings": 24,
+    "tables": 1,
+    "fences": 20,
+    "python_fences": 7,
+    "mermaid_fences": 3,
+    "figure_fences": 1,
+    "bare_fences_labelled_text": 9,
+    "exercises": 5,
+    "further_reading_items": 4
+  },
+  "review": {
+    "author_full_english_chinese_technical_self_check": "PASS",
+    "author_separate_full_chinese_readthrough": "PASS",
+    "independent_full_english_chinese_technical_review": "PASS",
+    "independent_separate_full_chinese_readthrough": "PASS",
+    "independent_blocks": 191,
+    "independent_candidates": 76,
+    "independent_verdict": "PASS_WITH_SOURCE_CAVEATS",
+    "independent_author_qa_read": false,
+    "required_translation_changes": []
+  },
+  "passed": {
+    "original_strict": "PASS",
+    "original_regression": {
+      "author": 33,
+      "independent": 33
+    },
+    "author_double_replay": "PASS; two new directories reproduce exact frozen bytes",
+    "fixed_support_dependencies": {
+      "count": 46,
+      "local_and_fixed_git_hashes_match": true,
+      "manifest_sha256": "4fcfe4f22aaeee286976d5765b8dd2b047240acdda559a6af8a19d0ca9b57794"
+    },
+    "repository_audits": {
+      "audit_lessons": "pass 523 lessons / 0 issues",
+      "audit_certifications": "pass 67 lessons / 12 assessments / 505 questions / 0 issues",
+      "check_readme_counts": "pass",
+      "source_and_scripts_diff": "unchanged"
+    },
+    "independent_double_replay": {
+      "status": "PASS",
+      "method": "Original render to two newly created temporary directories; independent diff and exact cmp to frozen target passed",
+      "completed_utc": "2026-10-02T11:44:56.072584+00:00"
+    }
+  },
+  "actual_github_gfm": {
+    "status": "PASS",
+    "observer": "author personally inspected live page",
+    "browser": "dot cloud Chrome; newly created tab only",
+    "content_commit": "3d394870eea292abb0cf104aa64646d76a0e970f",
+    "heading_count": 24,
+    "tables": [
+      {
+        "rows_including_header": 11,
+        "columns": 3
+      }
+    ],
+    "strong_total": 8,
+    "strong_metadata": 4,
+    "strong_body_labels": 4,
+    "em": 0,
+    "unparsed_bold_markers": 0,
+    "b0187_bce_formula": "-(y*log(p) + (1-y)*log(1-p))",
+    "both_formula_multiplication_symbols_visible": true,
+    "mermaid_iframes": 3,
+    "all_iframe_node_text_read": true,
+    "screenshots_inspected": [
+      "complete term table",
+      "classification comparison, all nodes after two zoom-out actions",
+      "loss function decision tree, all nodes",
+      "loss landscape, all nodes after three zoom-out actions"
+    ],
+    "new_formatting_repairs": 0,
+    "figure_fence_is_course_interaction_acceptance": false
+  },
+  "finite_runtime": {
+    "author": {
+      "pre_read_all_canonical_lines": 268,
+      "canonical_sha256": "ccb5f031c4de174ba6499f56d253e412296fcbeda9454f32a0d6910f7f0447ae",
+      "canonical_exit_code": 0,
+      "canonical_demos": 6,
+      "canonical_original_200_epoch_trainings": 2,
+      "document_blocks_executed_unchanged": [
+        129,
+        135,
+        141,
+        147,
+        151,
+        157
+      ],
+      "finite_check_count": 15,
+      "finite_checks": [
+        {
+          "name": "MSE mean gradient finite differences",
+          "status": "PASS",
+          "evidence": [
+            -0.05000000000143778,
+            0.05000000000143778,
+            -0.15000000000431335,
+            0.19999999999187335
+          ]
+        },
+        {
+          "name": "Doc BCE gradient omits mean factor; canonical has it",
+          "status": "PASS",
+          "evidence": {
+            "numeric_mean_gradient": [
+              -0.27777777777959756,
+              0.27777777777959756,
+              -0.3571428571769175,
+              0.41666666666939634
+            ],
+            "doc": [
+              -1.1111111111111112,
+              1.1111111111111112,
+              -1.4285714285714286,
+              1.6666666666666667
+            ],
+            "canonical": [
+              -0.2777777777777778,
+              0.2777777777777778,
+              -0.35714285714285715,
+              0.4166666666666667
+            ],
+            "factor": 4
+          }
+        },
+        {
+          "name": "Clipped BCE gradient differs from clipped loss derivative",
+          "status": "PASS",
+          "evidence": {
+            "clipped_loss": 34.538776394910684,
+            "provided_gradient": -999999999999999.9,
+            "numerical_derivative": 0
+          }
+        },
+        {
+          "name": "Ordinary softmax CCE logit gradients",
+          "status": "PASS",
+          "evidence": {
+            "max_error": 1.0091259772249117e-10
+          }
+        },
+        {
+          "name": "CCE probability clipping caps loss and mismatches gradient",
+          "status": "PASS",
+          "evidence": {
+            "loss": 34.538776394910684,
+            "uncapped_logsumexp_equivalent_loss": 1000.0,
+            "gradient": [
+              1.0,
+              -1.0
+            ],
+            "numeric_clipped_derivative": 0
+          }
+        },
+        {
+          "name": "Finite softmax shift invariance",
+          "status": "PASS",
+          "evidence": [
+            0.09003057317038046,
+            0.24472847105479764,
+            0.6652409557748218
+          ]
+        },
+        {
+          "name": "Label smoothing true targets",
+          "status": "PASS",
+          "evidence": {
+            "10_classes": 0.91,
+            "5_classes": 0.92,
+            "uniform_prediction_loss_equals_log_classes": true
+          }
+        },
+        {
+          "name": "Both losses minimize balanced constant predictor at .5; both reward discrimination",
+          "status": "PASS",
+          "evidence": {
+            "mse_constant": [
+              0.41000000000000003,
+              0.25,
+              0.41000000000000003
+            ],
+            "bce_constant": [
+              1.203972804325936,
+              0.6931471805599453,
+              1.2039728043259361
+            ]
+          }
+        },
+        {
+          "name": "Probability versus logit gradients",
+          "status": "PASS",
+          "evidence": {
+            "dL_dp": -1.001001001001001,
+            "dL_dlogit": -0.0010000000000000009,
+            "exact_log_loss_ratio_001_vs_099": 458.2105765533884
+          }
+        },
+        {
+          "name": "Collapsed and empty-negative InfoNCE",
+          "status": "PASS",
+          "evidence": {
+            "collapsed_7_negatives": 2.0794415416798357,
+            "all_zero_embeddings": 2.0794415416798357,
+            "no_negatives": -0.0
+          }
+        },
+        {
+          "name": "Lower temperature need not increase loss; zero temperature unsupported",
+          "status": "PASS",
+          "evidence": {
+            "tau_007": 6.248751462395945e-07,
+            "tau_05": 0.1429316284998995,
+            "tau_zero_exception": "ZeroDivisionError"
+          }
+        },
+        {
+          "name": "Both network losses nine-parameter update gradients",
+          "status": "PASS",
+          "evidence": {
+            "mse": 5.323352869623932e-12,
+            "bce": 8.44213587924969e-11
+          }
+        },
+        {
+          "name": "Saturated rounded sigmoid can defeat separately multiplied BCE correction",
+          "status": "PASS",
+          "evidence": {
+            "out": 1.0,
+            "bias_after_wrong_label_update": 1000.0
+          }
+        },
+        {
+          "name": "Explicit fixture executes both original 200-epoch training methods",
+          "status": "PASS",
+          "evidence": {
+            "mse": {
+              "first": [
+                0.20713416252094685,
+                67.0
+              ],
+              "last": [
+                0.00860756887125195,
+                99.0
+              ],
+              "epochs": 200
+            },
+            "bce": {
+              "first": [
+                0.5542329051374094,
+                68.5
+              ],
+              "last": [
+                0.021873612269872517,
+                99.0
+              ],
+              "epochs": 200
+            }
+          }
+        },
+        {
+          "name": "Empty inputs and doc zip truncation versus canonical assertion",
+          "status": "PASS",
+          "evidence": {
+            "mse_empty": "ZeroDivisionError",
+            "bce_empty": "ZeroDivisionError",
+            "softmax_empty": "ValueError",
+            "canonical_length_mismatch": "AssertionError"
+          }
+        }
+      ],
+      "execution_scope": "Original stdlib blocks share prior math/random definitions; explicit external synthetic fixtures call functions and training methods; source code unmodified"
+    },
+    "independent": {
+      "pre_read_all_canonical_lines": 268,
+      "canonical_sha256": "ccb5f031c4de174ba6499f56d253e412296fcbeda9454f32a0d6910f7f0447ae",
+      "canonical_exit_code": 0,
+      "canonical_full_original_run": true,
+      "canonical_demos": 6,
+      "canonical_original_epochs_per_loss": 200,
+      "documentary_code_executed": [
+        "b0135 BCE function definitions only; fully pre-read"
+      ],
+      "finite_check_count": 13,
+      "finite_checks": [
+        {
+          "check": "MSE main.py averaged gradient",
+          "status": "PASS",
+          "observed": {
+            "analytic": [
+              -0.04999999999999999,
+              0.05,
+              -0.15000000000000002,
+              0.2
+            ],
+            "numeric": [
+              -0.05000000000143778,
+              0.05000000000143778,
+              -0.15000000000431335,
+              0.19999999999187335
+            ]
+          }
+        },
+        {
+          "check": "BCE main.py averaged gradient",
+          "status": "PASS",
+          "observed": {
+            "analytic": [
+              -0.2777777777777778,
+              0.2777777777777778,
+              -0.35714285714285715,
+              0.4166666666666667
+            ],
+            "numeric": [
+              -0.27777777777959756,
+              0.27777777777959756,
+              -0.3571428571769175,
+              0.41666666666939634
+            ]
+          }
+        },
+        {
+          "check": "documentary BCE gradient missing mean factor",
+          "status": "PASS",
+          "observed": {
+            "documentation": [
+              -1.1111111111111112,
+              1.1111111111111112,
+              -1.4285714285714286,
+              1.6666666666666667
+            ],
+            "main.py": [
+              -0.2777777777777778,
+              0.2777777777777778,
+              -0.35714285714285715,
+              0.4166666666666667
+            ]
+          }
+        },
+        {
+          "check": "CCE derivative is with respect to logits",
+          "status": "PASS",
+          "observed": {
+            "analytic": [
+              0.23334407726821044,
+              0.08584248874609511,
+              0.0349009514407861,
+              0.011617517528188518,
+              -0.3657050349832802
+            ],
+            "numeric": [
+              0.23334407722730433,
+              0.08584248864518251,
+              0.03490095146219119,
+              0.011617517503559327,
+              -0.3657050350047708
+            ],
+            "sum": -5.204170427930421e-17
+          }
+        },
+        {
+          "check": "label smoothing gives .91 not .9",
+          "status": "PASS",
+          "observed": {
+            "alpha": 0.1,
+            "classes": 10,
+            "positive_target": 0.91
+          }
+        },
+        {
+          "check": "collapsed InfoNCE is log8 not zero",
+          "status": "PASS",
+          "observed": {
+            "loss": 2.0794415416798357
+          }
+        },
+        {
+          "check": "lower temperature does not universally increase loss",
+          "status": "PASS",
+          "observed": {
+            "tau_.07": 6.248747556628904e-07,
+            "tau_.5": 0.12692801104297263
+          }
+        },
+        {
+          "check": "BCE probability and logit derivatives differ",
+          "status": "PASS",
+          "observed": {
+            "dL_dp": -1.001001001001001,
+            "dL_dlogit": -0.0010000000000000009
+          }
+        },
+        {
+          "check": "MSE .25 is not unrestricted classification optimum",
+          "status": "PASS",
+          "observed": {
+            "constant_loss": 0.25,
+            "perfect_predictor_loss": 0.0
+          }
+        },
+        {
+          "check": "BCE also prefers .5 within balanced constant predictors",
+          "status": "PASS",
+          "observed": {
+            "constant_.1_.5_.9_losses": [
+              1.203972804325936,
+              0.6931471805599453,
+              1.2039728043259361
+            ]
+          }
+        },
+        {
+          "check": "negative-only denominator differs from implementation",
+          "status": "PASS",
+          "observed": {
+            "negative_only_loss": -2.0,
+            "positive_included_loss": 0.12692801104297263
+          }
+        },
+        {
+          "check": "focal gamma0 retains alpha weight",
+          "status": "PASS",
+          "observed": {
+            "alpha": 0.25,
+            "plain_ce": 0.10536051565782628,
+            "gamma0_focal": 0.02634012891445657
+          }
+        },
+        {
+          "check": "cross entropy differs from KL by target entropy",
+          "status": "PASS",
+          "observed": {
+            "ce": 0.5261345160161732,
+            "kl": 0.025732092477985358,
+            "target_entropy": 0.5004024235381879
+          }
+        }
+      ],
+      "scope": "Full canonical execution plus separate BCE doc definition execution and 13 independent math checks; not a claim of six separately executed doc blocks"
+    },
+    "torch_installed_or_run": false,
+    "julia_run": false,
+    "external_model_api_calls": 0,
+    "model_or_data_downloads": 0,
+    "installed_packages": 0
+  },
+  "independent_source_issue_groups": 16,
+  "independent_source_issues": [
+    {
+      "id": "IR40-S01",
+      "segment_ids": [
+        "03-05:b0009",
+        "03-05:b0013",
+        "03-05:b0017",
+        "03-05:b0065",
+        "03-05:b0069",
+        "03-05:b0155"
+      ],
+      "classification": "source_overclaim",
+      "detail": "MSE用于分类并不必然输出全0.5；均衡常数预测的最优不能当作有特征模型的最优。BCE在均衡常数模型内也最优于0.5。",
+      "evidence": "独立完整200epoch运行：MSE/BCE最终训练准确率均99%；常数与完美预测有限反例通过。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0009": "f5bce76e049ba05a52a80bac0b63801929c61022aacc74275ad3fc805472e550",
+        "03-05:b0013": "8d7ef91c3ff8292546f53d6ccd7d8b04922e857d04fc94bf49644523b66cf1ba",
+        "03-05:b0017": "2e2038d42a8b8fd4f4eeb3a7cda855522196daa8ce56c79cfd6602ac0a605503",
+        "03-05:b0065": "383f26fbc5bd8f473e8f0959bc8ace6a98e6f4c5aa3720b63a98a59479715339",
+        "03-05:b0069": "1f7720d9557074de308c03a52f42da314f3c539e400d8bc8144440f0599cb831",
+        "03-05:b0155": "50f8a60c203cba3cb7afa5ae6cd5e7f0ba04735e8189101da200d14500e7c8d5"
+      }
+    },
+    {
+      "id": "IR40-S02",
+      "segment_ids": [
+        "03-05:b0019",
+        "03-05:b0091",
+        "03-05:b0151"
+      ],
+      "classification": "source_mathematical_error",
+      "detail": "同向量坍缩不使本课带负样本InfoNCE损失为零。",
+      "evidence": "1正7负全部相同时，原实现损失log(8)=2.0794415416798357。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0019": "36052b118fc73eff0a4d5047920fa553f30e5b3be089682a09560dba5fbb71dd",
+        "03-05:b0091": "aae120960eec2b96c4438a80c0e417b90ec5dcec6f030b5b4da15d95f742f1f0",
+        "03-05:b0151": "9518f892f66eec106d81e50b810768fdab1b25e0d363f137d4f1c8485cee141a"
+      }
+    },
+    {
+      "id": "IR40-S03",
+      "segment_ids": [
+        "03-05:b0037",
+        "03-05:b0041",
+        "03-05:b0049",
+        "03-05:b0055",
+        "03-05:b0067",
+        "03-05:b0069",
+        "03-05:b0187"
+      ],
+      "classification": "source_gradient_conflation",
+      "detail": "BCE对概率与对logit的导数不同：p→1,y=1时-1/p趋近-1。交叉熵不是预测概率的指数惩罚，一般与KL相差目标熵。",
+      "evidence": "有限差分核对main平均MSE/BCE与CCE-logit梯度；dp=-1.001001而dlogit=-.001；CE=H+KL另证。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0037": "c1c5ee2f7b254093cdea4b13eeafcf98bf43ee02719020bdd374b62ac7c0a011",
+        "03-05:b0041": "cadfb0dc7d80e7212f9d3eb9b77ffd9b9e9106626272eb332c354a7e8d9c39b4",
+        "03-05:b0049": "5cae82ba26b5ed288641f2313051b7cb367c794d00b6dfef878e52f3535a24a6",
+        "03-05:b0055": "57f11fa2f5db32daf180bf5add4898281afa5f1044ea83dbc7ee8be036ac9a4b",
+        "03-05:b0067": "3c7c0f06d618f8870c7e4489b9c2271f1fb6c9a772dfaf3bf8847cf379ae72a4",
+        "03-05:b0069": "1f7720d9557074de308c03a52f42da314f3c539e400d8bc8144440f0599cb831",
+        "03-05:b0187": "97083f3c08e6736ae237560068772f150e5724b1f78ef5c29da1e1db7df0bf80"
+      }
+    },
+    {
+      "id": "IR40-S04",
+      "segment_ids": [
+        "03-05:b0077",
+        "03-05:b0079",
+        "03-05:b0147"
+      ],
+      "classification": "source_internal_numeric_conflict",
+      "detail": "alpha=.1、10类别平滑先写.91后写.9；代码公式实际为1-alpha+alpha/K。softmax无穷表述应区分logit差。",
+      "evidence": "直接代入得.91；译文保留两处源数值。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0077": "40d921819d8a6eab4e3c3c40b78517f4a7243dc66af876ef53d762427f520517",
+        "03-05:b0079": "6bb23bc6653e436ceb457c167d8d812b7f7f0c5d3545da304e0a22e928f463ef",
+        "03-05:b0147": "c1543c0ecb40e215d3b12e3de814ca7772d4a14ef591f906535f1a9920a6a942"
+      }
+    },
+    {
+      "id": "IR40-S05",
+      "segment_ids": [
+        "03-05:b0079",
+        "03-05:b0191"
+      ],
+      "classification": "unverified_source_generalization",
+      "detail": "GPT及大多数现代模型普遍使用标签平滑或等效方法，未在此次定点核验中确认。",
+      "evidence": "源强泛化忠实保留，不视为当前训练事实。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0079": "6bb23bc6653e436ceb457c167d8d812b7f7f0c5d3545da304e0a22e928f463ef",
+        "03-05:b0191": "91357dc004883f2ed351ff8dfd07bbbfbdd65dce03da9b03dd3b43bb2b5b2f25"
+      }
+    },
+    {
+      "id": "IR40-S06",
+      "segment_ids": [
+        "03-05:b0089",
+        "03-05:b0091",
+        "03-05:b0151"
+      ],
+      "classification": "source_denominator_conflict",
+      "detail": "正文称InfoNCE分母只含负样本，实现包含正样本；只含负样本可能产生负损失。",
+      "evidence": "独立反例-2与原实现.126928；SimCLR式(1)排除自身但包含正样本。",
+      "references": [
+        "https://proceedings.mlr.press/v119/chen20j/chen20j.pdf#page=2"
+      ],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0089": "64cce25cc3fc428f8badf2b402fa4affb8ff88a21fecb913499d7a9a85897354",
+        "03-05:b0091": "aae120960eec2b96c4438a80c0e417b90ec5dcec6f030b5b4da15d95f742f1f0",
+        "03-05:b0151": "9518f892f66eec106d81e50b810768fdab1b25e0d363f137d4f1c8485cee141a"
+      }
+    },
+    {
+      "id": "IR40-S07",
+      "segment_ids": [
+        "03-05:b0087",
+        "03-05:b0093"
+      ],
+      "classification": "source_simclr_count_and_default",
+      "detail": "两视图SimCLR的负样本数不是简单N-1；.07默认值未由定点核验证实。",
+      "evidence": "论文2.1给出2(N-1)负样本；N=256即510，非教材255。",
+      "references": [
+        "https://proceedings.mlr.press/v119/chen20j/chen20j.pdf#page=2"
+      ],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0087": "74126f865d2e21e697fd218e7e16e51bf8da0a5d68d5dba331a1ff42dc2852f9",
+        "03-05:b0093": "51fe1908925e2b5830b0c0f47d97d615c240b81507a0eb3f42f566584c24e536"
+      }
+    },
+    {
+      "id": "IR40-S08",
+      "segment_ids": [
+        "03-05:b0091",
+        "03-05:b0093",
+        "03-05:b0151"
+      ],
+      "classification": "source_temperature_generalization",
+      "detail": "更低温度不等于负样本本身更难，也不保证当前损失更高。",
+      "evidence": "独立同一输入测试tau=.07时6.2487e-7，tau=.5时.126928。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0091": "aae120960eec2b96c4438a80c0e417b90ec5dcec6f030b5b4da15d95f742f1f0",
+        "03-05:b0093": "51fe1908925e2b5830b0c0f47d97d615c240b81507a0eb3f42f566584c24e536",
+        "03-05:b0151": "9518f892f66eec106d81e50b810768fdab1b25e0d363f137d4f1c8485cee141a"
+      }
+    },
+    {
+      "id": "IR40-S09",
+      "segment_ids": [
+        "03-05:b0101",
+        "03-05:b0179"
+      ],
+      "classification": "source_triplet_boundary",
+      "detail": "某项triplet损失为零不表示整个优化器无更新；semi-hard需在margin内，仅比正样本远不足。",
+      "evidence": "固定练习缺上界；论文5.1描述在margin内且比正例远，译文未暗补。",
+      "references": [
+        "https://proceedings.mlr.press/v119/chen20j/chen20j.pdf#page=6"
+      ],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0101": "9b21a3654f9058e432712cfbce01667f856828a6378abf4e1729ed76963ec4f6",
+        "03-05:b0179": "6c37cdc551ff26cd25935a0a00157f330baf6579b9b0249fd8c1071641c4e71a"
+      }
+    },
+    {
+      "id": "IR40-S10",
+      "segment_ids": [
+        "03-05:b0105",
+        "03-05:b0109",
+        "03-05:b0111",
+        "03-05:b0113"
+      ],
+      "classification": "source_focal_boundary",
+      "detail": "gamma=0仍保留alpha，不无条件等于未加权CE；CE随置信度变化；.81权重不等于完整梯度；无focal绝不学会检测是过度概括。",
+      "evidence": "独立alpha=.25,gamma=0测试结果为普通CE四分之一；按公式与源陈述对照。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0105": "75ee62fdaf5ef0dbd75a80312bdce783147410a909d2b16fd9e60618d7f4b956",
+        "03-05:b0109": "26feae310d49301fcf7992163433bf270aef902ac97fdf57a747e7ec742dce04",
+        "03-05:b0111": "eb8072c87ec4ff276940edd101586d0cdf83c1a5658912c0a687ab48ebbe7983",
+        "03-05:b0113": "10e76351f00258249aa36f6e792f5274ea9b3ea3367fe879c979048c90e874c1"
+      }
+    },
+    {
+      "id": "IR40-S11",
+      "segment_ids": [
+        "03-05:b0121",
+        "03-05:b0187"
+      ],
+      "classification": "source_domain_missing",
+      "detail": "MSE对预测变量的二次形状不能推广为深度参数空间单极小；损失也不必处处可微。",
+      "evidence": "源图与max三元组公式直接对照；译文图示未改。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0121": "1a9e352c7effe9c1310eb91fc99acda2793a3e518a0a75c96e4587d3bcb27199",
+        "03-05:b0187": "97083f3c08e6736ae237560068772f150e5724b1f78ef5c29da1e1db7df0bf80"
+      }
+    },
+    {
+      "id": "IR40-S12",
+      "segment_ids": [
+        "03-05:b0135"
+      ],
+      "classification": "source_document_main_mismatch",
+      "detail": "正文BCE损失取平均，但bce_gradient缺1/n；main.py已包含1/n。",
+      "evidence": "独立执行已完整预读的安全stdlib围栏函数：n=4时正文梯度恰为main梯度4倍。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0135": "96da2306da40834d97f852fd578d0075059c85166b57b7bc06c8f34c70f98ade"
+      }
+    },
+    {
+      "id": "IR40-S13",
+      "segment_ids": [
+        "03-05:b0133",
+        "03-05:b0135",
+        "03-05:b0141",
+        "03-05:b0151",
+        "03-05:b0157"
+      ],
+      "classification": "implementation_boundaries",
+      "detail": "clip后的损失与所写导数在截断区间外不严格对应；sigmoid舍入成1会破坏理想梯度抵消；main没有InfoNCE梯度实现。",
+      "evidence": "完整预读268行Python及所有Python围栏；有限差分只验证有效内部概率，未宣称浮点极值全覆盖。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0133": "d663aa5d552a0c6467756c971f80507e0547e3be749578f1c811dfbf9ac6e02d",
+        "03-05:b0135": "96da2306da40834d97f852fd578d0075059c85166b57b7bc06c8f34c70f98ade",
+        "03-05:b0141": "3a3d67a0844d3fa0da0c883cbb90b8f56e390b971fdad7e18d2ce94f3327b7b0",
+        "03-05:b0151": "9518f892f66eec106d81e50b810768fdab1b25e0d363f137d4f1c8485cee141a",
+        "03-05:b0157": "cbd27f24260613d7540428f416d38a2902bdeb71cfa072c6c4721f212d01c018"
+      }
+    },
+    {
+      "id": "IR40-S14",
+      "segment_ids": [
+        "03-05:b0165"
+      ],
+      "classification": "source_stability_explanation",
+      "detail": "softmax后log的不稳定并非源称的大指数相减这一步；nll_loss需要对数概率，非softmax概率。",
+      "evidence": "显示的运算并无指数相减；PyTorch未执行，不把解释当作运行验证。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0165": "fcb22cef36b5a7dc74cceabaa999f1f2d603c000ac8f44fb2a770eff1a1dc54a"
+      }
+    },
+    {
+      "id": "IR40-S15",
+      "segment_ids": [
+        "03-05:b0175"
+      ],
+      "classification": "source_huber_scaling",
+      "detail": "Huber和平滑L1依赖阈值及缩放，小误差常用二次项含1/2，不能无条件等同MSE。",
+      "evidence": "只单列定义边界，不在译文补写源没有的实现。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0175": "2b1dfa76c9376314a93bd06becd0d8a1bf3aa01c8027938263b565294a19ae6f"
+      }
+    },
+    {
+      "id": "IR40-S16",
+      "segment_ids": [
+        "03-05:b0005"
+      ],
+      "classification": "source_metadata_mismatch",
+      "detail": "源Languages只列Python，但固定目录存在main.jl。",
+      "evidence": "仅清点Julia文件名，未读取/执行；译文仍保留Python元数据。",
+      "references": [],
+      "translation_action": "preserved; do not silently correct source",
+      "blocks_translation_acceptance": false,
+      "source_hash_bindings": {
+        "03-05:b0005": "1a68d0e6e780fe65ee07a69f47c87eb94d36ac3d2ef8d8bffa96f896effb2cd3"
+      }
+    }
+  ],
+  "source_issue_treatment": "Faithful fixed-source translation; source caveats kept separate and not silently corrected. External paper references in independent risk records are attributed to that reviewer; the author browser work inspected only the GitHub rendering.",
+  "gfm_syntax_delta_review": {
+    "required": false,
+    "target_body_unchanged_since_full_reviews": true
+  },
+  "quantity_mappings": [],
+  "not_passed": {
+    "course_website": "NOT_PASSED; offline parser has 16 empty Chinese heading IDs and duplicate mse",
+    "mobile": "NOT_PASSED",
+    "course_interactive_figure": "NOT_PASSED",
+    "hosted_ci": "NOT_PASSED; final-head API query recorded after evidence commit in PR body/index",
+    "publication_or_merge": "NOT_PASSED"
+  },
+  "coordinator_validation": {
+    "combined_original_strict": 58,
+    "S07_exact_symbolic_exception": 1,
+    "S19_exact_pipe_repair": 1,
+    "original_regressions": 33,
+    "S07_guards": 24,
+    "S19_guards": 50,
+    "all_lessons_double_replay": {
+      "count": 60,
+      "result": "byte-identical",
+      "assets": "Core replays Markdown; manifest SVG bytes separately verified/copied before recursive comparison"
+    },
+    "repository_audits": "523 lessons /67 certifications /12 assessments /505 questions; zero issues; README/book counts pass",
+    "source_core_control_bytes": "unchanged"
+  },
+  "handoff": "Coordinator exclusively completes acceptance fields after handoff",
+  "snapshot": {
+    "reviewed_drafts": 60,
+    "in_progress": 3,
+    "unstarted": 460,
+    "curriculum_total": 523,
+    "merged": 0,
+    "released": 0,
+    "live_count_authority": "PR #7 ROLLOUT-INDEX.json"
+  },
+  "post_commit_verification": "Final evidence commit cannot self-reference; exact changed-file bytes, draft PR metadata and final-head CI queries are checked after commit and recorded in PR body and the single rollout index. Empty hosted status is not a CI pass."
+}
