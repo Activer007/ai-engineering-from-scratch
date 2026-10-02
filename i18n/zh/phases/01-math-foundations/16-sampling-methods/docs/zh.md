@@ -648,7 +648,7 @@ print(f"Sampled token index: {token}")
 
 3. 分别使用 1,000、10,000 和 100,000 个样本，用 Monte Carlo 估计 sin(x) 从 0 到 pi 的积分。比较各个样本量下的误差，验证误差按 O(1/sqrt(N)) 的速率变化。
 
-4. 实现 Metropolis-Hastings，从一个 2D 分布中抽样，其 p(x, y) 正比于 exp(-(x^2 * y^2 + x^2 + y^2 - 8*x - 8*y) / 2)。绘制样本和链轨迹，并尝试不同的提议标准差。
+4. 实现 Metropolis-Hastings，从一个 2D 分布中抽样，其 p(x, y) 正比于 exp(-(x^2 * y^2 + x^2 + y^2 - 8\*x - 8\*y) / 2)。绘制样本和链轨迹，并尝试不同的提议标准差。
 
 5. 构建完整的文本生成演示：给定一个含 10 个单词及其 logits 的词表，分别使用 (a) 贪心、(b) temperature=0.7、(c) top-k=3、(d) top-p=0.9 生成长度为 20 个 token 的序列。比较 5 次运行中输出的多样性。
 
