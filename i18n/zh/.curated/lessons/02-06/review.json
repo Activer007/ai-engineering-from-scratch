@@ -1,0 +1,4091 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-06",
+  "source_path": "phases/02-ml-fundamentals/06-knn-and-distances/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "7ecd324e9a00caefd3e7e0e530d93b6a3edbdc61",
+  "source_sha256": "f18a8624854931bd3757829e4d4626d4dc3b6f10f0ad2cf3c2011e983172f1d4",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/06-knn-and-distances/docs/zh.md",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+  "additional_glossary_sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S24-knn-distances/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "ccc0772caf6d11e7a6f1014332052f2e6ece2e486fcd3c38079c9ca2fff7be55",
+  "batch": "S24",
+  "review_date": "2026-10-02",
+  "reviewed_target_sha256": "da32339ffecf8bc979e13d058ccfdd073ae7b05da21f825c418ce43ff6e21380",
+  "release_status": "draft-not-approved",
+  "review_coverage": {
+    "technical": "Independent complete 381-line, 191-block, 79-candidate EN/ZH comparison; not sampling",
+    "chinese": "Separate complete final Chinese readthrough after bilingual pass",
+    "independence": "Other author reviewed frozen candidate without author self-review report or cross-edits",
+    "human_approval": "not requested or claimed"
+  },
+  "coverage_counts": {
+    "source_lines": 381,
+    "source_blocks": 191,
+    "candidate_blocks": 79,
+    "fenced_payloads": 17,
+    "headings": 22,
+    "tables": 4
+  },
+  "review_passes": [
+    {
+      "status": "pass",
+      "scope": "All 191 blocks, 79 translatable blocks, all 4 tables, 17 fences, 5 exercises and 5 references independently compared."
+    },
+    {
+      "status": "pass",
+      "scope": "Separate complete Chinese-only read after bilingual comparison; no mandatory Chinese-language corrections."
+    }
+  ],
+  "reviewed_blocks": [
+    {
+      "segment_id": "02-06:b0001",
+      "source_lines": [
+        1,
+        1
+      ],
+      "source_sha256": "5eb1a02d8a55480b360fa2dc09dfc60785d066ed794fccf99fe16507a19aae4a",
+      "target_sha256": "e12bb77f8eaabc35c46f98dd896bffcdb325e72829061e573b1b9dd9bf9accf1",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0002",
+      "source_lines": [
+        2,
+        2
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0003",
+      "source_lines": [
+        3,
+        3
+      ],
+      "source_sha256": "00b2f7c9430617ebe027ca4d98af51ed4d992b35e4c0c8fb6355936eb63c9416",
+      "target_sha256": "50aabcbb14c541ff5e9e90cb181d4dbd68de7395fcabefc4516b541fc824bb72",
+      "kind": "blockquote",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0004",
+      "source_lines": [
+        4,
+        4
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0005",
+      "source_lines": [
+        5,
+        8
+      ],
+      "source_sha256": "ce164f89455538cddb8e93cf1d45f9424e5151d5bd27ec35474ffdfec7a0f5fe",
+      "target_sha256": "1e3fb1111efd25dde8c1292f8ecd3a73897e6bbbc0ae814e2f8105587e700601",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0006",
+      "source_lines": [
+        9,
+        9
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0007",
+      "source_lines": [
+        10,
+        10
+      ],
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0008",
+      "source_lines": [
+        11,
+        11
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0009",
+      "source_lines": [
+        12,
+        15
+      ],
+      "source_sha256": "1b48ae5f24fa39b9b1a0235c6176f0560846ea343e1073e34fdcfb02e4ef1f6c",
+      "target_sha256": "0af58bdd9d85bc881414ff11b1cf94c7e4af27b24017bf4d893de5a0a51a02b7",
+      "kind": "list",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0010",
+      "source_lines": [
+        16,
+        16
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0011",
+      "source_lines": [
+        17,
+        17
+      ],
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0012",
+      "source_lines": [
+        18,
+        18
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0013",
+      "source_lines": [
+        19,
+        19
+      ],
+      "source_sha256": "be0ccc41f1f521988497221873c11f65a2ffbded797140165766fd93c2aa0ee8",
+      "target_sha256": "ef3c32bc8d1da954846df78fcafbbeb33472603a23bf183db4b70d54a32035e9",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0014",
+      "source_lines": [
+        20,
+        20
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0015",
+      "source_lines": [
+        21,
+        21
+      ],
+      "source_sha256": "1032d2f429242d08db89b1a2f4cd55fc5b168c61483e33cc1a7025ba519ad78f",
+      "target_sha256": "5700a98718b8576ca4af1b81817a20d9c3821936d02c3e22e05baf2c50d3e9c1",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0016",
+      "source_lines": [
+        22,
+        22
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0017",
+      "source_lines": [
+        23,
+        23
+      ],
+      "source_sha256": "be23985d0dbce185ec8c474a9fc68fb16ef243ab35d276a7be6dafcb715eb7b6",
+      "target_sha256": "2270edb9ffe18d7328e9b8f7e90a29548a5114801c7d33df2a2f3f6bf0acacf8",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0018",
+      "source_lines": [
+        24,
+        24
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0019",
+      "source_lines": [
+        25,
+        25
+      ],
+      "source_sha256": "9fe920eb29fa831ff862fa34b997f51efd8ffb9cd5cd50e09e0295e137189811",
+      "target_sha256": "3d0be1cc5daa6eafaa5c98f8efbcf50b54f8735781801095c5526bbfcf9ef815",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0020",
+      "source_lines": [
+        26,
+        26
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0021",
+      "source_lines": [
+        27,
+        27
+      ],
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0022",
+      "source_lines": [
+        28,
+        28
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0023",
+      "source_lines": [
+        29,
+        29
+      ],
+      "source_sha256": "d6b83fbee98953be180cdfc2e686af21366ec254f1738f942556a039b9154c45",
+      "target_sha256": "ab19754cb64ff903a9e60dcc3c810792c885bc0883e779fb572864b7e0a05750",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0024",
+      "source_lines": [
+        30,
+        30
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0025",
+      "source_lines": [
+        31,
+        31
+      ],
+      "source_sha256": "d1f0d54ee8b21b9ef76a9947eab7ff1add787c2b284d08ac8988d4db34bc8ea8",
+      "target_sha256": "c2e7f8e55d34fb743df0bae11c8ea694dd4611fb0b33d1792e2902c62d5ef479",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0026",
+      "source_lines": [
+        32,
+        32
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0027",
+      "source_lines": [
+        33,
+        37
+      ],
+      "source_sha256": "c33b9e4874682ad66ba486063149e8021f1ebb80e5fcc5be016b2342bf70b81a",
+      "target_sha256": "d47eb3b0c509e00eca3c16a8f0ab70d33b39f924efbde90e425dfb58a39823c1",
+      "kind": "list",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0028",
+      "source_lines": [
+        38,
+        38
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0029",
+      "source_lines": [
+        39,
+        49
+      ],
+      "source_sha256": "025e9424fe5069c05d8065798c75d261243d12748aac07423bbd96c5e7a7b89f",
+      "target_sha256": "025e9424fe5069c05d8065798c75d261243d12748aac07423bbd96c5e7a7b89f",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0030",
+      "source_lines": [
+        50,
+        50
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0031",
+      "source_lines": [
+        51,
+        51
+      ],
+      "source_sha256": "7dc7f545fcbf059cf2c4768167f1205a6522f55de50915efc088232a595a8ac2",
+      "target_sha256": "a226d12d6b1ef3ccb821dc4f73f8fb7a3470ff9ea178cac0a6617efacd69483a",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0032",
+      "source_lines": [
+        52,
+        52
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0033",
+      "source_lines": [
+        53,
+        53
+      ],
+      "source_sha256": "edc243b93b6a6bd26e9cec9ab4cf4152576b9d06ac785840c1c7dd759a36807b",
+      "target_sha256": "5949d9617e56e2ae326123455cddf4ee807c56e36a4710bb6ea8dc2febfd7689",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0034",
+      "source_lines": [
+        54,
+        54
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0035",
+      "source_lines": [
+        55,
+        55
+      ],
+      "source_sha256": "0716f13e95fbd54ac2aea02cae5d23188cc14df1b03f4213561b601b9f682c97",
+      "target_sha256": "427789960d82f12c0f48d9bb2a4d6e6b22cc121184f10226c710cba18f3c8343",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0036",
+      "source_lines": [
+        56,
+        56
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0037",
+      "source_lines": [
+        57,
+        62
+      ],
+      "source_sha256": "c742e6989b5dc699a959a313c60c4ef6622ac30a923f45f5f9d1c52df189ff2f",
+      "target_sha256": "5a7ee418f1d7ddc2bb48173484b24d3ce98a23db96fe6efcf1e9d9976c44f9be",
+      "kind": "table",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-02"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0038",
+      "source_lines": [
+        63,
+        63
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0039",
+      "source_lines": [
+        64,
+        64
+      ],
+      "source_sha256": "b5c53bd3ea41a70cca2c0a8f55de42b6f37e814824d99c5307f11652732f7bb8",
+      "target_sha256": "735789b1913db5a776f1d8c2cc4f84e262acd8b940c7d86c6f9d9f07348987f0",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-02"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0040",
+      "source_lines": [
+        65,
+        65
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0041",
+      "source_lines": [
+        66,
+        78
+      ],
+      "source_sha256": "b602f616674c6f5b55f166c29d33437aeb75e3582767f0f4c98e573b2356e02c",
+      "target_sha256": "b602f616674c6f5b55f166c29d33437aeb75e3582767f0f4c98e573b2356e02c",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0042",
+      "source_lines": [
+        79,
+        79
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0043",
+      "source_lines": [
+        80,
+        80
+      ],
+      "source_sha256": "8fa6c09e8d8e2dd4f8188b9c3340266b4875b0b5a7912d1c0150dbe023394a22",
+      "target_sha256": "0bcae0a663995bf1f8e02f0f27dd4f860ec3b8f23c60e3a47e1cff2e4b4640cb",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0044",
+      "source_lines": [
+        81,
+        81
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0045",
+      "source_lines": [
+        82,
+        82
+      ],
+      "source_sha256": "cd22a64c01246e108d807ecd7bdafb529cf2c4533cc584eadefae96fdcb3dc66",
+      "target_sha256": "078360bcf3e6718c5d3abc6424f8f74933ddd8a7ed60fffda64af29bae2cfbbd",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0046",
+      "source_lines": [
+        83,
+        83
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0047",
+      "source_lines": [
+        84,
+        84
+      ],
+      "source_sha256": "4362eb795d6af3420c2d02a2062719088319d7e0553b5f51653c7b0890d1261d",
+      "target_sha256": "90c6b204e7f6e132bdae143e274c867bd623008ed10573fab7164f4c46ed9e89",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0048",
+      "source_lines": [
+        85,
+        85
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0049",
+      "source_lines": [
+        86,
+        88
+      ],
+      "source_sha256": "61059d16794a42470b1775332a07480352f88667a05a0434c87286d687ae1784",
+      "target_sha256": "23171342bcde56f0530268917c42e891e9a33c51313f6e144614faab4b4d32f3",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0050",
+      "source_lines": [
+        89,
+        89
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0051",
+      "source_lines": [
+        90,
+        90
+      ],
+      "source_sha256": "fc52c394ceb7d6c74ca0a0eee73e0d3d7e2087cbf92de2c582509b8ffc8121f5",
+      "target_sha256": "1ab36da31b71fa9503240f067dce5a75680e5dd72045b875403a01731744f4d2",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0052",
+      "source_lines": [
+        91,
+        91
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0053",
+      "source_lines": [
+        92,
+        92
+      ],
+      "source_sha256": "20a55eac6ae85105fa175a37cf5437549e486e85858930229e2152ec6b821386",
+      "target_sha256": "42b5915d680a32051d34bf531daa3aa11f69ef0f6a52dd5d86e14c34fdffe6bd",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0054",
+      "source_lines": [
+        93,
+        93
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0055",
+      "source_lines": [
+        94,
+        96
+      ],
+      "source_sha256": "0f08057d9ca5a3cb3c18117b67959109724b06ea9167a3003ba381513ffbd08e",
+      "target_sha256": "15f582c903658581d2ca9aa34e8e50890260a13d9d9b7664762b079f2ef4efc3",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0056",
+      "source_lines": [
+        97,
+        97
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0057",
+      "source_lines": [
+        98,
+        98
+      ],
+      "source_sha256": "c2bcad84a09f74f018f62dd3b9ac8d7e862895edf07832fb33a841c6f3a26718",
+      "target_sha256": "bf9b061128269c2d130352715894193ff22e6a17bc4b2d353d0d60599f6d0825",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0058",
+      "source_lines": [
+        99,
+        99
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0059",
+      "source_lines": [
+        100,
+        102
+      ],
+      "source_sha256": "261318b8c69bd00dc241669b175eecca46aa677e14e3b7c4ae02c2b874104685",
+      "target_sha256": "2d6231214f6835a9e1e710e8a1bb30de4412d42e9f3668a86c3bffc1a2673a1d",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0060",
+      "source_lines": [
+        103,
+        103
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0061",
+      "source_lines": [
+        104,
+        104
+      ],
+      "source_sha256": "ab7578e928dfccd39ef2a48d065c59c4113558242730e5b356d6c1cd6ce23288",
+      "target_sha256": "abdcd2e04803e0760047f447bae4f8bdd9896afdfb0a2d2e179bed88f0b2765b",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0062",
+      "source_lines": [
+        105,
+        105
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0063",
+      "source_lines": [
+        106,
+        112
+      ],
+      "source_sha256": "203780017201226c62bff19ccb94b0b37b90a7843e4b780833c8ea763a8c1a8e",
+      "target_sha256": "c4ab2bd5a09742084cf7dafb7b3b414421771eb79a5b8b7747b170607d735eb8",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0064",
+      "source_lines": [
+        113,
+        113
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0065",
+      "source_lines": [
+        114,
+        114
+      ],
+      "source_sha256": "98300e05330fb568b95ef752eb50cecb1efd069286a2ab42d74d7334502f84a1",
+      "target_sha256": "8225bfeda973b8308ddb2250800f525dce32d2ad480209c46cad8564b1d110cc",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0066",
+      "source_lines": [
+        115,
+        115
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0067",
+      "source_lines": [
+        116,
+        122
+      ],
+      "source_sha256": "b3ffbf8644e8912e391d499fd09955c754b495f989e3b90b0eae5507a4b7ed6d",
+      "target_sha256": "4085a0c438c58b33827ac4cbbac99d3aef31366a20dc1441d91583bdd449cac4",
+      "kind": "table",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0068",
+      "source_lines": [
+        123,
+        123
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0069",
+      "source_lines": [
+        124,
+        124
+      ],
+      "source_sha256": "4dfb1049755cce513535f9d0f3e6a29f0e58fac7284f298681dcd9cfc9f33320",
+      "target_sha256": "8916df37ec17d78ba14b5914d06086523c2695b9fa22488643a30539b5b28b6a",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0070",
+      "source_lines": [
+        125,
+        125
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0071",
+      "source_lines": [
+        126,
+        126
+      ],
+      "source_sha256": "24a70b48c4ba8a1938eddf2500fa406b96ceaf46578a884cc9b8c55bd1199751",
+      "target_sha256": "08e61db1e765b30809bcf89a92b7777ea7fe4c626317ddef2578638faff2fd5f",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0072",
+      "source_lines": [
+        127,
+        127
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0073",
+      "source_lines": [
+        128,
+        128
+      ],
+      "source_sha256": "fddebd2fb1e9deefedef92c45a53adc45084ef451444d2a0bec5a5d3797b5627",
+      "target_sha256": "213d3223e6e28b33f080e131a4ad622250f33111bc6b5e5c146e5f71db502a92",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-07"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0074",
+      "source_lines": [
+        129,
+        129
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0075",
+      "source_lines": [
+        130,
+        135
+      ],
+      "source_sha256": "fbea1ec1e6e5058007852e0977f497817f3e858fcc783f81a06425054d6ee1e1",
+      "target_sha256": "80ef248233dd92ca367503c1fb321030e74e95ff5af0fbde69a8f3bf6de92a83",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-07"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0076",
+      "source_lines": [
+        136,
+        136
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0077",
+      "source_lines": [
+        137,
+        137
+      ],
+      "source_sha256": "25e79c91e9051e483b770df5c9eff1605a44a16ed61bca02b257f6b06f9b9687",
+      "target_sha256": "cb67f17f31688725f223a9941baa852fb24a2d24bfb4796bb06b4bdb061568ed",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-07"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0078",
+      "source_lines": [
+        138,
+        138
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0079",
+      "source_lines": [
+        139,
+        139
+      ],
+      "source_sha256": "ff014e587999baa212cc1aee56ca046bc94c114b5e0c6025c3f6f79f8d8b1639",
+      "target_sha256": "71b95ca43e9b4ce84293af56b6929b640616433fe8270fd444b5aecfe88a7140",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-02",
+        "S24-PEER-SRC-07"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0080",
+      "source_lines": [
+        140,
+        140
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0081",
+      "source_lines": [
+        141,
+        141
+      ],
+      "source_sha256": "ad07a4200c037f15db56607ff1d162fa86510d299499b25164997ec3556f6986",
+      "target_sha256": "d51e3bc2011160a17fa1b147ae536d63dc51babb754b4df8e84c4778fd04614f",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0082",
+      "source_lines": [
+        142,
+        142
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0083",
+      "source_lines": [
+        143,
+        143
+      ],
+      "source_sha256": "62c078c24b3c78097a33a8da933282b8e198b7e86e731bf94862cbbb6a32d63e",
+      "target_sha256": "6f2c2e45f2598eae35cc3e0ce1fda69e430a0893950b35ff24f10a5d1c2ad082",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-04"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0084",
+      "source_lines": [
+        144,
+        144
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0085",
+      "source_lines": [
+        145,
+        145
+      ],
+      "source_sha256": "9c059fd3fc8531fb6066e3ecb5ada4b5ce3c9708bc8ff010b7edbcffbf5e6d71",
+      "target_sha256": "4f3a73c9853f6cec65f04be253ef4e942d663394c52a6ab1c1bf0fa3a64f652b",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-04"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0086",
+      "source_lines": [
+        146,
+        146
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0087",
+      "source_lines": [
+        147,
+        155
+      ],
+      "source_sha256": "9c415a573aee10c579dd4cd4a659fc50b8c3a87e8289da2d4b1d760c1eb87f35",
+      "target_sha256": "2b5a695a81d34af9dc890d0db04f887940ffce4c7707158a7679750eed38d3bb",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-04"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0088",
+      "source_lines": [
+        156,
+        156
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0089",
+      "source_lines": [
+        157,
+        157
+      ],
+      "source_sha256": "653e481c6d8a7f8b380457df1a0f445b5b0fad7a57075a9947afe90104ab1d8c",
+      "target_sha256": "0e179504f0a71c323e279dae25725474c02a306ed0168b7918a0b7ba10cdcf70",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-04"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0090",
+      "source_lines": [
+        158,
+        158
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0091",
+      "source_lines": [
+        159,
+        159
+      ],
+      "source_sha256": "0607f50844127c939f249cd8c8907be6924b83ee7616932924392d03e357ac5c",
+      "target_sha256": "3feabea64e88e6ef4910cb9ae52071bd6fc991384e19d56ffef003c81d160ada",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-05"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0092",
+      "source_lines": [
+        160,
+        160
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0093",
+      "source_lines": [
+        161,
+        161
+      ],
+      "source_sha256": "095aa4337fc9b1f1b59860a8b1a5a0067d2c2624e9dab5656676c09aa0443c6d",
+      "target_sha256": "1b97088df699398e03ae46406b0f66718bfe2cd4014008731fc04f91036233d0",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-04"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0094",
+      "source_lines": [
+        162,
+        162
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0095",
+      "source_lines": [
+        163,
+        163
+      ],
+      "source_sha256": "aea7289b82a5fdb9be5b009e28429275394c661166916d96e507cbcaf7b1ddf7",
+      "target_sha256": "d78b75f3cfb027c7b81b965079485628cb17945ffaec984f5d51a1668bda5ecf",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0096",
+      "source_lines": [
+        164,
+        164
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0097",
+      "source_lines": [
+        165,
+        165
+      ],
+      "source_sha256": "dcb03845faa00e3fb903d1e782567ce57052ee7daf39d073a3666a7d02178456",
+      "target_sha256": "ffeac4fa666bfa11843e38c8779bc2e86f0e8c2d06aafeb0324eb421d3df4caf",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0098",
+      "source_lines": [
+        166,
+        166
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0099",
+      "source_lines": [
+        167,
+        167
+      ],
+      "source_sha256": "06911bfd92fddd8892e09aea0ffd6c148f73b724de2000673b0f34f52974b916",
+      "target_sha256": "7edcd081a8c79757e1633dba805fed5c3e7cfd5944094f7a92bb79c80578df1e",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0100",
+      "source_lines": [
+        168,
+        168
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0101",
+      "source_lines": [
+        169,
+        177
+      ],
+      "source_sha256": "d292c0bfda34314220deaf2544f16bce79dc861df9394fe32c9358376e675962",
+      "target_sha256": "d292c0bfda34314220deaf2544f16bce79dc861df9394fe32c9358376e675962",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0102",
+      "source_lines": [
+        178,
+        178
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0103",
+      "source_lines": [
+        179,
+        179
+      ],
+      "source_sha256": "87bcb60cbf8ae6d31f74a34fa071e1851d6afa33ac852d757be31d7f744a354d",
+      "target_sha256": "46d5e98885e329b02cb2633488262093cb3477986b97461d6ef2d8095e463506",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0104",
+      "source_lines": [
+        180,
+        180
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0105",
+      "source_lines": [
+        181,
+        181
+      ],
+      "source_sha256": "04145c687e207134707059623066c5da8a4f2fc3716dfbb76005dd5814fc04ac",
+      "target_sha256": "5ce0df061cc4efdb25e664d0825e79f2291a777b6c9997e273c34116e8139783",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0106",
+      "source_lines": [
+        182,
+        182
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0107",
+      "source_lines": [
+        183,
+        183
+      ],
+      "source_sha256": "0621843cfee2a1d42c34b17b16fe682373fad8ee4557976c874ad5e2cddaef31",
+      "target_sha256": "e1dc2109bdee748c3c17bfede5a295b962d0134cf581b337353b07c6c4264a4b",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0108",
+      "source_lines": [
+        184,
+        184
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0109",
+      "source_lines": [
+        185,
+        185
+      ],
+      "source_sha256": "fa747d9e9465cc3ba27c447378b4e3ecd35d320da35615a8def108f920f89f95",
+      "target_sha256": "129d51e35184420a8f0277e668082b4183f182e6a59dc8981c530e33bf3af999",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0110",
+      "source_lines": [
+        186,
+        186
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0111",
+      "source_lines": [
+        187,
+        190
+      ],
+      "source_sha256": "71f0c8c38cddad46c13b6aebb9000e999c08da9e2d6b42c1b56d7a0d046388fa",
+      "target_sha256": "14daed1dc00fc1900d588c8210a7164ecc753fbe3fdcfb083875c7b3828ed7b5",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0112",
+      "source_lines": [
+        191,
+        191
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0113",
+      "source_lines": [
+        192,
+        192
+      ],
+      "source_sha256": "728c1a9dbc61317b90590118df0847347dbe9968b6d41c49eae590048a142de5",
+      "target_sha256": "531d1c7f80f0c993046662878d16fba19c9b30abc22d40f3275b818e3d775106",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0114",
+      "source_lines": [
+        193,
+        193
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0115",
+      "source_lines": [
+        194,
+        194
+      ],
+      "source_sha256": "e7de3f5a7e12b60a6539e352d2933cc1f542875c33ac54f5f8923346d68b1f8e",
+      "target_sha256": "92706088fbf0213bf7040f3948731fbf99b7245ff930e6cc39497c47940c1083",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0116",
+      "source_lines": [
+        195,
+        195
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0117",
+      "source_lines": [
+        196,
+        196
+      ],
+      "source_sha256": "5109a07760e676618931e4d593e41bef2f8a9813ed6f0bd0fc284f34bc0acdc0",
+      "target_sha256": "7a3604fd384586dbe848b153d1fff98c0d309a76750ce45bf49490f13754f442",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0118",
+      "source_lines": [
+        197,
+        197
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0119",
+      "source_lines": [
+        198,
+        204
+      ],
+      "source_sha256": "4fc2808990d3488f93c5ddeef088d98a301c41e5a63bc8966b966b16e441bd74",
+      "target_sha256": "3741d7a1da38ae192613e68b1d2e40c6bc659657e097a8b8ce82b6a325497fa4",
+      "kind": "table",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01",
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0120",
+      "source_lines": [
+        205,
+        205
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0121",
+      "source_lines": [
+        206,
+        210
+      ],
+      "source_sha256": "f318d3a855643dac3ddf177a27e1e01603487044bd976d1ff29d3865c8ace320",
+      "target_sha256": "3e27daf9ee0e2d2759467e7272fc67b3fd2d019560234be1c9919e778b8973fc",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0122",
+      "source_lines": [
+        211,
+        211
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0123",
+      "source_lines": [
+        212,
+        212
+      ],
+      "source_sha256": "2de8e825f1e808b1d05f5c5330db6e15d508018d7be7faf2a0456c5908b7be15",
+      "target_sha256": "50791bebcfa69ec34eafde33bf21ac85ad90ecb6ed4c30cfcb038052f8c63dca",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0124",
+      "source_lines": [
+        213,
+        213
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0125",
+      "source_lines": [
+        214,
+        214
+      ],
+      "source_sha256": "4ebe9f77bfa11aef5c64d159b14a46f378dec65fc75e23184da7f18445915d88",
+      "target_sha256": "c8a2343fb3587de28499fe1c2826b9db4e4f7ce5ad9a375cff7825e22394d877",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-07"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0126",
+      "source_lines": [
+        215,
+        215
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0127",
+      "source_lines": [
+        216,
+        222
+      ],
+      "source_sha256": "b9d90c846dcbd7b714d4053c7b107f0a2e56cb91bc2b446f5a1ec395560dd551",
+      "target_sha256": "5000ae7ebd0fd3176cfc2bb462d52383c15cceac45a0b14ce3c8664afa63f249",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-07"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0128",
+      "source_lines": [
+        223,
+        223
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0129",
+      "source_lines": [
+        224,
+        224
+      ],
+      "source_sha256": "d9af5ce30d3a48ea7dc2901b201fe2d5836c1cef6959a333bf27d6cf6bc704a2",
+      "target_sha256": "322a1cd577809e205ba6feccc6b0d2984810c79ed51380fccc230990c86788b3",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-07"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0130",
+      "source_lines": [
+        225,
+        225
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0131",
+      "source_lines": [
+        226,
+        228
+      ],
+      "source_sha256": "f0a056efe1817f22a4de3d09d17d9628aee86251469d8e15150e6131490ac380",
+      "target_sha256": "f0a056efe1817f22a4de3d09d17d9628aee86251469d8e15150e6131490ac380",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0132",
+      "source_lines": [
+        229,
+        229
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0133",
+      "source_lines": [
+        230,
+        230
+      ],
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0134",
+      "source_lines": [
+        231,
+        231
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0135",
+      "source_lines": [
+        232,
+        232
+      ],
+      "source_sha256": "07553e9d9ca0a5cd9671484581ae81d802df39658a1f488b52c68ae9490a677c",
+      "target_sha256": "b6d403974bcadeeb105230388605cc2760d5a15ab9b696c1d3ebd33a51507d03",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0136",
+      "source_lines": [
+        233,
+        233
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0137",
+      "source_lines": [
+        234,
+        234
+      ],
+      "source_sha256": "8ecfe1bb6bd3df13057ee0a4d0b3e53b9f56b276ed4cf07839a0fafef4a4aa9c",
+      "target_sha256": "81296b51c127a7ebfafa2a233ef74ee5caba1818a26be0628b3496d860a5e4b2",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0138",
+      "source_lines": [
+        235,
+        235
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0139",
+      "source_lines": [
+        236,
+        257
+      ],
+      "source_sha256": "3d485235db4f1ef7dbdeea70bc8e39c470a2dd58c1b5afd1d4eabf7bcce054ac",
+      "target_sha256": "3d485235db4f1ef7dbdeea70bc8e39c470a2dd58c1b5afd1d4eabf7bcce054ac",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-03",
+        "S24-PEER-SRC-08"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0140",
+      "source_lines": [
+        258,
+        258
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0141",
+      "source_lines": [
+        259,
+        259
+      ],
+      "source_sha256": "62ac967d594f5eb088a55501eaf546f6a27d2eee02c5c54a6b6e080e931ed2a6",
+      "target_sha256": "125b9720364185b151ac1da59b838118b93fec7cafacb2254e24895c9f4ad9c3",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0142",
+      "source_lines": [
+        260,
+        260
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0143",
+      "source_lines": [
+        261,
+        261
+      ],
+      "source_sha256": "6cdd532086f609c12a1dd17f109537f73f6c65e4a4dd62a3c62658e3760b8289",
+      "target_sha256": "265d7376ce28bc319773c51e7ee67729d0298126e18351edf4a610d0aa148824",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0144",
+      "source_lines": [
+        262,
+        262
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0145",
+      "source_lines": [
+        263,
+        280
+      ],
+      "source_sha256": "aa75616a7acc71bd167c7b61b7001e6b4e6df07016d3a354d2a6f70cb309230c",
+      "target_sha256": "aa75616a7acc71bd167c7b61b7001e6b4e6df07016d3a354d2a6f70cb309230c",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-08"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0146",
+      "source_lines": [
+        281,
+        281
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0147",
+      "source_lines": [
+        282,
+        282
+      ],
+      "source_sha256": "ff2b5ceae83fd649a67ba0f367a864dcf32f89fe4aead9d8e6196f2489ef090c",
+      "target_sha256": "016bef113ddfdb8bfa73e71d75be1adda3a97c7f4ad08fdafe43d90865402370",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0148",
+      "source_lines": [
+        283,
+        283
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0149",
+      "source_lines": [
+        284,
+        284
+      ],
+      "source_sha256": "f9f0b8cce4426b844fd7bdc05fa57aa4729e187564cfc9ac3e117836e8e00914",
+      "target_sha256": "90fa9e685361e38a21a3929a5490388158d1d8d732d3367f3dd06ebfac0fee43",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0150",
+      "source_lines": [
+        285,
+        285
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0151",
+      "source_lines": [
+        286,
+        297
+      ],
+      "source_sha256": "b04e294bc1254836a9351b481bf083350e55987df7f709c8ec0b670fe542c18e",
+      "target_sha256": "b04e294bc1254836a9351b481bf083350e55987df7f709c8ec0b670fe542c18e",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06",
+        "S24-PEER-SRC-08"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0152",
+      "source_lines": [
+        298,
+        298
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0153",
+      "source_lines": [
+        299,
+        299
+      ],
+      "source_sha256": "f8edc77d8b96788bafbe1d92298173802f7c8f79defee4c08d19022499e50379",
+      "target_sha256": "cb9795bfb8fc1b2c2225d7dc0e3a54e08e41bfab89230bf946076893fe0b5044",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0154",
+      "source_lines": [
+        300,
+        300
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0155",
+      "source_lines": [
+        301,
+        301
+      ],
+      "source_sha256": "9f578f4c0138afbe8647ae404b2e21e329bc0d1b90e04ce0a2e141676094475a",
+      "target_sha256": "f96f8873952c60ee3f6cd96e4ef768a0de8fbbaff68087c757b63016efdd3d16",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0156",
+      "source_lines": [
+        302,
+        302
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0157",
+      "source_lines": [
+        303,
+        303
+      ],
+      "source_sha256": "a45df51dd29aaba004ce730758f67a2b81bf37d2870fb58d8e1da28e1b576036",
+      "target_sha256": "0b98e6d62d010379197afb36bf3c5c459f11ac3d87c4f6ba916d4ce4d81e6fdc",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-08"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0158",
+      "source_lines": [
+        304,
+        304
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0159",
+      "source_lines": [
+        305,
+        315
+      ],
+      "source_sha256": "50ba9f318176d0fa52db1d3cc5b4ae6c869e9077d9732fb76ccbeb3c4eb1e1d5",
+      "target_sha256": "50ba9f318176d0fa52db1d3cc5b4ae6c869e9077d9732fb76ccbeb3c4eb1e1d5",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-08"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0160",
+      "source_lines": [
+        316,
+        316
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0161",
+      "source_lines": [
+        317,
+        317
+      ],
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0162",
+      "source_lines": [
+        318,
+        318
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0163",
+      "source_lines": [
+        319,
+        319
+      ],
+      "source_sha256": "23d2a3ffc6e7006e4122c9dec90d1131545678df4989c605964c219de5f48f92",
+      "target_sha256": "bb147258ec12dadb4bc92b250cea167449f4ee8a735b85e74593ebd9b564c2b9",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0164",
+      "source_lines": [
+        320,
+        320
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0165",
+      "source_lines": [
+        321,
+        332
+      ],
+      "source_sha256": "7dedfefd0905cc5562f87a980389180a47c3c28790cf20b966503175e7f18ba9",
+      "target_sha256": "7dedfefd0905cc5562f87a980389180a47c3c28790cf20b966503175e7f18ba9",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-08",
+        "S24-PEER-SRC-09"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0166",
+      "source_lines": [
+        333,
+        333
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0167",
+      "source_lines": [
+        334,
+        334
+      ],
+      "source_sha256": "686d3b5f39958f18529b1eff98e880d3e5d8ff9976dc4e7dfc3aa4a1174d4955",
+      "target_sha256": "e2ef24f5eb90d6fd6277821941ae3a39fb4d882cb8c5962153dd45e6baf8117e",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06",
+        "S24-PEER-SRC-09"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0168",
+      "source_lines": [
+        335,
+        335
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0169",
+      "source_lines": [
+        336,
+        336
+      ],
+      "source_sha256": "43446577e7e92f79061dc50080e322a45d04c16c88269cc2878ec246fb681c25",
+      "target_sha256": "b2f9c1b250b12265ef8a35e96407e0f843f0ecc261d8e67c2929405f379f7964",
+      "kind": "paragraph",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-09"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0170",
+      "source_lines": [
+        337,
+        337
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0171",
+      "source_lines": [
+        338,
+        344
+      ],
+      "source_sha256": "5fe9253b6dc66dd448ff68a1dcf1a2ed5b3c6c8da6bba77ca4e9acdf1574c748",
+      "target_sha256": "5fe9253b6dc66dd448ff68a1dcf1a2ed5b3c6c8da6bba77ca4e9acdf1574c748",
+      "kind": "fence",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [
+        "S24-PEER-SRC-09"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change.",
+      "protected_payload_equal": true
+    },
+    {
+      "segment_id": "02-06:b0172",
+      "source_lines": [
+        345,
+        345
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0173",
+      "source_lines": [
+        346,
+        346
+      ],
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0174",
+      "source_lines": [
+        347,
+        347
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0175",
+      "source_lines": [
+        348,
+        348
+      ],
+      "source_sha256": "ad24a4df52876667ca0301ccaf3971f9a7ff9c4c527e5fee9a76530730c1614b",
+      "target_sha256": "2cd0196f675d9608e1f451e1bd3b779a417a4c52555816585c269b877381d785",
+      "kind": "list",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-02"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0176",
+      "source_lines": [
+        349,
+        349
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0177",
+      "source_lines": [
+        350,
+        350
+      ],
+      "source_sha256": "559f15260823f460bcbd347db92c29f27123e0e3d171694ea230f447575c479b",
+      "target_sha256": "ffb5c2116630471a6d12237591d0bc30c5cdf6a3c241392afe66112c09abffed",
+      "kind": "list",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-04",
+        "S24-PEER-SRC-10"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0178",
+      "source_lines": [
+        351,
+        351
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0179",
+      "source_lines": [
+        352,
+        352
+      ],
+      "source_sha256": "8bc3b0384f7a1ce88d64b1947c8d26da7a3e810449c4e0b2d314d804295bc7b4",
+      "target_sha256": "e14c51bf541c253627ac17b2fdcde2361af0d803c71f659f587c0e1e6faf99e9",
+      "kind": "list",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-10"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0180",
+      "source_lines": [
+        353,
+        353
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0181",
+      "source_lines": [
+        354,
+        354
+      ],
+      "source_sha256": "13120f89162701c879e64959d6c9b9eb4ce1775c7461ce1d3559a33bd5b2a34e",
+      "target_sha256": "0821c22d756cfcdb7e4838718c406935a65e3821a90eb00095c103b2779a6660",
+      "kind": "list",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-06"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0182",
+      "source_lines": [
+        355,
+        355
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0183",
+      "source_lines": [
+        356,
+        356
+      ],
+      "source_sha256": "1badd34a2eb71d6f09c8beafc445fc4cb7320d83a92ba4fce5d5270ecbe82595",
+      "target_sha256": "caf622100d068f7b12f51d5bacb8c5ff555f4ff6e195a6a7f2404ebcaf57ae0c",
+      "kind": "list",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-07",
+        "S24-PEER-SRC-10"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0184",
+      "source_lines": [
+        357,
+        357
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0185",
+      "source_lines": [
+        358,
+        358
+      ],
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0186",
+      "source_lines": [
+        359,
+        359
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0187",
+      "source_lines": [
+        360,
+        373
+      ],
+      "source_sha256": "ac9a59b7c46e325d288e39b2de88ffd4138178d8166cb5e63dae2f7e5c24c2fa",
+      "target_sha256": "09ef99c77fc58aae12a838fa1b40a4525a3b78fad6688e3077d5fd9aed68c244",
+      "kind": "table",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-01",
+        "S24-PEER-SRC-02",
+        "S24-PEER-SRC-03",
+        "S24-PEER-SRC-04",
+        "S24-PEER-SRC-06",
+        "S24-PEER-SRC-09"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0188",
+      "source_lines": [
+        374,
+        374
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0189",
+      "source_lines": [
+        375,
+        375
+      ],
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58",
+      "kind": "heading",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0190",
+      "source_lines": [
+        376,
+        376
+      ],
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "kind": "separator",
+      "technical_review": "pass",
+      "chinese_language_review": "not-applicable-protected",
+      "source_issue_ids": [],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    },
+    {
+      "segment_id": "02-06:b0191",
+      "source_lines": [
+        377,
+        381
+      ],
+      "source_sha256": "2fa2cc4342185d03fc7cf334cab23a4fcacbce68760f3be0dba3e5748b497f21",
+      "target_sha256": "7eee11d15e52fedfb21ca3c5545cad8977f5c68fe57c75e2e13a90bec2436f67",
+      "kind": "list",
+      "technical_review": "pass",
+      "chinese_language_review": "pass",
+      "source_issue_ids": [
+        "S24-PEER-SRC-10"
+      ],
+      "note": "Independently read complete English/Chinese block and separate Chinese-only pass; no mandatory translation change."
+    }
+  ],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "S24-PEER-SRC-01",
+      "title": "KNN无训练、唯一超参数与现代检索的概括",
+      "locations": [
+        {
+          "segment_id": "02-06:b0013",
+          "source_lines": [
+            19,
+            19
+          ],
+          "source_sha256": "be0ccc41f1f521988497221873c11f65a2ffbded797140165766fd93c2aa0ee8",
+          "target_sha256": "ef3c32bc8d1da954846df78fcafbbeb33472603a23bf183db4b70d54a32035e9"
+        },
+        {
+          "segment_id": "02-06:b0015",
+          "source_lines": [
+            21,
+            21
+          ],
+          "source_sha256": "1032d2f429242d08db89b1a2f4cd55fc5b168c61483e33cc1a7025ba519ad78f",
+          "target_sha256": "5700a98718b8576ca4af1b81817a20d9c3821936d02c3e22e05baf2c50d3e9c1"
+        },
+        {
+          "segment_id": "02-06:b0019",
+          "source_lines": [
+            25,
+            25
+          ],
+          "source_sha256": "9fe920eb29fa831ff862fa34b997f51efd8ffb9cd5cd50e09e0295e137189811",
+          "target_sha256": "3d0be1cc5daa6eafaa5c98f8efbcf50b54f8735781801095c5526bbfcf9ef815"
+        },
+        {
+          "segment_id": "02-06:b0031",
+          "source_lines": [
+            51,
+            51
+          ],
+          "source_sha256": "7dc7f545fcbf059cf2c4768167f1205a6522f55de50915efc088232a595a8ac2",
+          "target_sha256": "a226d12d6b1ef3ccb821dc4f73f8fb7a3470ff9ea178cac0a6617efacd69483a"
+        },
+        {
+          "segment_id": "02-06:b0035",
+          "source_lines": [
+            55,
+            55
+          ],
+          "source_sha256": "0716f13e95fbd54ac2aea02cae5d23188cc14df1b03f4213561b601b9f682c97",
+          "target_sha256": "427789960d82f12c0f48d9bb2a4d6e6b22cc121184f10226c710cba18f3c8343"
+        },
+        {
+          "segment_id": "02-06:b0117",
+          "source_lines": [
+            196,
+            196
+          ],
+          "source_sha256": "5109a07760e676618931e4d593e41bef2f8a9813ed6f0bd0fc284f34bc0acdc0",
+          "target_sha256": "7a3604fd384586dbe848b153d1fff98c0d309a76750ce45bf49490f13754f442"
+        },
+        {
+          "segment_id": "02-06:b0119",
+          "source_lines": [
+            198,
+            204
+          ],
+          "source_sha256": "4fc2808990d3488f93c5ddeef088d98a301c41e5a63bc8966b966b16e441bd74",
+          "target_sha256": "3741d7a1da38ae192613e68b1d2e40c6bc659657e097a8b8ce82b6a325497fa4"
+        },
+        {
+          "segment_id": "02-06:b0121",
+          "source_lines": [
+            206,
+            210
+          ],
+          "source_sha256": "f318d3a855643dac3ddf177a27e1e01603487044bd976d1ff29d3865c8ace320",
+          "target_sha256": "3e27daf9ee0e2d2759467e7272fc67b3fd2d019560234be1c9919e778b8973fc"
+        },
+        {
+          "segment_id": "02-06:b0187",
+          "source_lines": [
+            360,
+            373
+          ],
+          "source_sha256": "ac9a59b7c46e325d288e39b2de88ffd4138178d8166cb5e63dae2f7e5c24c2fa",
+          "target_sha256": "09ef99c77fc58aae12a838fa1b40a4525a3b78fad6688e3077d5fd9aed68c244"
+        }
+      ],
+      "note": "K不是唯一配置：距离、权重、缩放和索引等也影响模型。保存数据、预处理/索引构建可能有成本，fit直接存引用才可视局部O(1)。RAG/向量库不总只是相同精确KNN算法；SVM预测可依支持向量数，不统一O(d)。",
+      "verification_scope": "Independent limited source/mathematical reading; no source correction or broader external research.",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-02",
+      "title": "K取值、平票和训练误差边界",
+      "locations": [
+        {
+          "segment_id": "02-06:b0037",
+          "source_lines": [
+            57,
+            62
+          ],
+          "source_sha256": "c742e6989b5dc699a959a313c60c4ef6622ac30a923f45f5f9d1c52df189ff2f",
+          "target_sha256": "5a7ee418f1d7ddc2bb48173484b24d3ce98a23db96fe6efcf1e9d9976c44f9be"
+        },
+        {
+          "segment_id": "02-06:b0039",
+          "source_lines": [
+            64,
+            64
+          ],
+          "source_sha256": "b5c53bd3ea41a70cca2c0a8f55de42b6f37e814824d99c5307f11652732f7bb8",
+          "target_sha256": "735789b1913db5a776f1d8c2cc4f84e262acd8b940c7d86c6f9d9f07348987f0"
+        },
+        {
+          "segment_id": "02-06:b0079",
+          "source_lines": [
+            139,
+            139
+          ],
+          "source_sha256": "ff014e587999baa212cc1aee56ca046bc94c114b5e0c6025c3f6f79f8d8b1639",
+          "target_sha256": "71b95ca43e9b4ce84293af56b6929b640616433fe8270fd444b5aecfe88a7140"
+        },
+        {
+          "segment_id": "02-06:b0175",
+          "source_lines": [
+            348,
+            348
+          ],
+          "source_sha256": "ad24a4df52876667ca0301ccaf3971f9a7ff9c4c527e5fee9a76530730c1614b",
+          "target_sha256": "2cd0196f675d9608e1f451e1bd3b779a417a4c52555816585c269b877381d785"
+        },
+        {
+          "segment_id": "02-06:b0187",
+          "source_lines": [
+            360,
+            373
+          ],
+          "source_sha256": "ac9a59b7c46e325d288e39b2de88ffd4138178d8166cb5e63dae2f7e5c24c2fa",
+          "target_sha256": "09ef99c77fc58aae12a838fa1b40a4525a3b78fad6688e3077d5fd9aed68c244"
+        }
+      ],
+      "note": "K=1零训练误差需无冲突重复点和相应自身匹配规则；奇数K只避免无权重二类票数平票。K=N多数类指无权分类，未必最大偏差。距离加权敏感性、K=sqrt(N)为条件性启发式，非普适保证。",
+      "verification_scope": "Independent limited source/mathematical reading; no source correction or broader external research.",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-03",
+      "title": "度量定义、零向量和p定义域",
+      "locations": [
+        {
+          "segment_id": "02-06:b0047",
+          "source_lines": [
+            84,
+            84
+          ],
+          "source_sha256": "4362eb795d6af3420c2d02a2062719088319d7e0553b5f51653c7b0890d1261d",
+          "target_sha256": "90c6b204e7f6e132bdae143e274c867bd623008ed10573fab7164f4c46ed9e89"
+        },
+        {
+          "segment_id": "02-06:b0051",
+          "source_lines": [
+            90,
+            90
+          ],
+          "source_sha256": "fc52c394ceb7d6c74ca0a0eee73e0d3d7e2087cbf92de2c582509b8ffc8121f5",
+          "target_sha256": "1ab36da31b71fa9503240f067dce5a75680e5dd72045b875403a01731744f4d2"
+        },
+        {
+          "segment_id": "02-06:b0053",
+          "source_lines": [
+            92,
+            92
+          ],
+          "source_sha256": "20a55eac6ae85105fa175a37cf5437549e486e85858930229e2152ec6b821386",
+          "target_sha256": "42b5915d680a32051d34bf531daa3aa11f69ef0f6a52dd5d86e14c34fdffe6bd"
+        },
+        {
+          "segment_id": "02-06:b0057",
+          "source_lines": [
+            98,
+            98
+          ],
+          "source_sha256": "c2bcad84a09f74f018f62dd3b9ac8d7e862895edf07832fb33a841c6f3a26718",
+          "target_sha256": "bf9b061128269c2d130352715894193ff22e6a17bc4b2d353d0d60599f6d0825"
+        },
+        {
+          "segment_id": "02-06:b0059",
+          "source_lines": [
+            100,
+            102
+          ],
+          "source_sha256": "261318b8c69bd00dc241669b175eecca46aa677e14e3b7c4ae02c2b874104685",
+          "target_sha256": "2d6231214f6835a9e1e710e8a1bb30de4412d42e9f3668a86c3bffc1a2673a1d"
+        },
+        {
+          "segment_id": "02-06:b0061",
+          "source_lines": [
+            104,
+            104
+          ],
+          "source_sha256": "ab7578e928dfccd39ef2a48d065c59c4113558242730e5b356d6c1cd6ce23288",
+          "target_sha256": "abdcd2e04803e0760047f447bae4f8bdd9896afdfb0a2d2e179bed88f0b2765b"
+        },
+        {
+          "segment_id": "02-06:b0063",
+          "source_lines": [
+            106,
+            112
+          ],
+          "source_sha256": "203780017201226c62bff19ccb94b0b37b90a7843e4b780833c8ea763a8c1a8e",
+          "target_sha256": "c4ab2bd5a09742084cf7dafb7b3b414421771eb79a5b8b7747b170607d735eb8"
+        },
+        {
+          "segment_id": "02-06:b0067",
+          "source_lines": [
+            116,
+            122
+          ],
+          "source_sha256": "b3ffbf8644e8912e391d499fd09955c754b495f989e3b90b0eae5507a4b7ed6d",
+          "target_sha256": "4085a0c438c58b33827ac4cbbac99d3aef31366a20dc1441d91583bdd449cac4"
+        },
+        {
+          "segment_id": "02-06:b0139",
+          "source_lines": [
+            236,
+            257
+          ],
+          "source_sha256": "3d485235db4f1ef7dbdeea70bc8e39c470a2dd58c1b5afd1d4eabf7bcce054ac",
+          "target_sha256": "3d485235db4f1ef7dbdeea70bc8e39c470a2dd58c1b5afd1d4eabf7bcce054ac"
+        },
+        {
+          "segment_id": "02-06:b0187",
+          "source_lines": [
+            360,
+            373
+          ],
+          "source_sha256": "ac9a59b7c46e325d288e39b2de88ffd4138178d8166cb5e63dae2f7e5c24c2fa",
+          "target_sha256": "09ef99c77fc58aae12a838fa1b40a4525a3b78fad6688e3077d5fd9aed68c244"
+        }
+      ],
+      "note": "余弦距离为1-cos而非角度本身，且非一般度量；零向量公式未定义，代码人为返回1。Minkowski为度量需p>=1；L1较L2稳健、模长都是噪声及始终标准化依数据语境。",
+      "verification_scope": "完整读b0139后有限执行：单位向量0/60/120度余弦距离1.5>0.5+0.5；p=.5二维对角距离4>两边和2；零向量约定返回1。",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-04",
+      "title": "高维距离集中和维数门槛缺前提",
+      "locations": [
+        {
+          "segment_id": "02-06:b0083",
+          "source_lines": [
+            143,
+            143
+          ],
+          "source_sha256": "62c078c24b3c78097a33a8da933282b8e198b7e86e731bf94862cbbb6a32d63e",
+          "target_sha256": "6f2c2e45f2598eae35cc3e0ce1fda69e430a0893950b35ff24f10a5d1c2ad082"
+        },
+        {
+          "segment_id": "02-06:b0085",
+          "source_lines": [
+            145,
+            145
+          ],
+          "source_sha256": "9c059fd3fc8531fb6066e3ecb5ada4b5ce3c9708bc8ff010b7edbcffbf5e6d71",
+          "target_sha256": "4f3a73c9853f6cec65f04be253ef4e942d663394c52a6ab1c1bf0fa3a64f652b"
+        },
+        {
+          "segment_id": "02-06:b0087",
+          "source_lines": [
+            147,
+            155
+          ],
+          "source_sha256": "9c415a573aee10c579dd4cd4a659fc50b8c3a87e8289da2d4b1d760c1eb87f35",
+          "target_sha256": "2b5a695a81d34af9dc890d0db04f887940ffce4c7707158a7679750eed38d3bb"
+        },
+        {
+          "segment_id": "02-06:b0089",
+          "source_lines": [
+            157,
+            157
+          ],
+          "source_sha256": "653e481c6d8a7f8b380457df1a0f445b5b0fad7a57075a9947afe90104ab1d8c",
+          "target_sha256": "0e179504f0a71c323e279dae25725474c02a306ed0168b7918a0b7ba10cdcf70"
+        },
+        {
+          "segment_id": "02-06:b0093",
+          "source_lines": [
+            161,
+            161
+          ],
+          "source_sha256": "095aa4337fc9b1f1b59860a8b1a5a0067d2c2624e9dab5656676c09aa0443c6d",
+          "target_sha256": "1b97088df699398e03ae46406b0f66718bfe2cd4014008731fc04f91036233d0"
+        },
+        {
+          "segment_id": "02-06:b0177",
+          "source_lines": [
+            350,
+            350
+          ],
+          "source_sha256": "559f15260823f460bcbd347db92c29f27123e0e3d171694ea230f447575c479b",
+          "target_sha256": "ffb5c2116630471a6d12237591d0bc30c5cdf6a3c241392afe66112c09abffed"
+        },
+        {
+          "segment_id": "02-06:b0187",
+          "source_lines": [
+            360,
+            373
+          ],
+          "source_sha256": "ac9a59b7c46e325d288e39b2de88ffd4138178d8166cb5e63dae2f7e5c24c2fa",
+          "target_sha256": "09ef99c77fc58aae12a838fa1b40a4525a3b78fad6688e3077d5fd9aed68c244"
+        }
+      ],
+      "note": "距离最大/最小比趋1依分布、样本数、独立性、内在维数和距离定义；100维1.01/1000维1.001不是普适数值。20-50阈值不是理论界；树索引加速本身不会改善无信息距离的统计问题。",
+      "verification_scope": "Independent limited source/mathematical reading; no source correction or broader external research.",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-05",
+      "title": "超立方体体积与角部表述",
+      "locations": [
+        {
+          "segment_id": "02-06:b0091",
+          "source_lines": [
+            159,
+            159
+          ],
+          "source_sha256": "0607f50844127c939f249cd8c8907be6924b83ee7616932924392d03e357ac5c",
+          "target_sha256": "3feabea64e88e6ef4910cb9ae52071bd6fc991384e19d56ffef003c81d160ada"
+        }
+      ],
+      "note": "内接球体积比例趋0不能直接推出体积集中于各顶点的小邻域；角部与远离中心/球面的几何概念应区分。源表述保留。",
+      "verification_scope": "Independent limited source/mathematical reading; no source correction or broader external research.",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-06",
+      "title": "KD树/球树的复杂度与几何概括",
+      "locations": [
+        {
+          "segment_id": "02-06:b0097",
+          "source_lines": [
+            165,
+            165
+          ],
+          "source_sha256": "dcb03845faa00e3fb903d1e782567ce57052ee7daf39d073a3666a7d02178456",
+          "target_sha256": "ffeac4fa666bfa11843e38c8779bc2e86f0e8c2d06aafeb0324eb421d3df4caf"
+        },
+        {
+          "segment_id": "02-06:b0099",
+          "source_lines": [
+            167,
+            167
+          ],
+          "source_sha256": "06911bfd92fddd8892e09aea0ffd6c148f73b724de2000673b0f34f52974b916",
+          "target_sha256": "7edcd081a8c79757e1633dba805fed5c3e7cfd5944094f7a92bb79c80578df1e"
+        },
+        {
+          "segment_id": "02-06:b0103",
+          "source_lines": [
+            179,
+            179
+          ],
+          "source_sha256": "87bcb60cbf8ae6d31f74a34fa071e1851d6afa33ac852d757be31d7f744a354d",
+          "target_sha256": "46d5e98885e329b02cb2633488262093cb3477986b97461d6ef2d8095e463506"
+        },
+        {
+          "segment_id": "02-06:b0105",
+          "source_lines": [
+            181,
+            181
+          ],
+          "source_sha256": "04145c687e207134707059623066c5da8a4f2fc3716dfbb76005dd5814fc04ac",
+          "target_sha256": "5ce0df061cc4efdb25e664d0825e79f2291a777b6c9997e273c34116e8139783"
+        },
+        {
+          "segment_id": "02-06:b0109",
+          "source_lines": [
+            185,
+            185
+          ],
+          "source_sha256": "fa747d9e9465cc3ba27c447378b4e3ecd35d320da35615a8def108f920f89f95",
+          "target_sha256": "129d51e35184420a8f0277e668082b4183f182e6a59dc8981c530e33bf3af999"
+        },
+        {
+          "segment_id": "02-06:b0111",
+          "source_lines": [
+            187,
+            190
+          ],
+          "source_sha256": "71f0c8c38cddad46c13b6aebb9000e999c08da9e2d6b42c1b56d7a0d046388fa",
+          "target_sha256": "14daed1dc00fc1900d588c8210a7164ecc753fbe3fdcfb083875c7b3828ed7b5"
+        },
+        {
+          "segment_id": "02-06:b0113",
+          "source_lines": [
+            192,
+            192
+          ],
+          "source_sha256": "728c1a9dbc61317b90590118df0847347dbe9968b6d41c49eae590048a142de5",
+          "target_sha256": "531d1c7f80f0c993046662878d16fba19c9b30abc22d40f3275b818e3d775106"
+        },
+        {
+          "segment_id": "02-06:b0119",
+          "source_lines": [
+            198,
+            204
+          ],
+          "source_sha256": "4fc2808990d3488f93c5ddeef088d98a301c41e5a63bc8966b966b16e441bd74",
+          "target_sha256": "3741d7a1da38ae192613e68b1d2e40c6bc659657e097a8b8ce82b6a325497fa4"
+        },
+        {
+          "segment_id": "02-06:b0147",
+          "source_lines": [
+            282,
+            282
+          ],
+          "source_sha256": "ff2b5ceae83fd649a67ba0f367a864dcf32f89fe4aead9d8e6196f2489ef090c",
+          "target_sha256": "016bef113ddfdb8bfa73e71d75be1adda3a97c7f4ad08fdafe43d90865402370"
+        },
+        {
+          "segment_id": "02-06:b0149",
+          "source_lines": [
+            284,
+            284
+          ],
+          "source_sha256": "f9f0b8cce4426b844fd7bdc05fa57aa4729e187564cfc9ac3e117836e8e00914",
+          "target_sha256": "90fa9e685361e38a21a3929a5490388158d1d8d732d3367f3dd06ebfac0fee43"
+        },
+        {
+          "segment_id": "02-06:b0151",
+          "source_lines": [
+            286,
+            297
+          ],
+          "source_sha256": "b04e294bc1254836a9351b481bf083350e55987df7f709c8ec0b670fe542c18e",
+          "target_sha256": "b04e294bc1254836a9351b481bf083350e55987df7f709c8ec0b670fe542c18e"
+        },
+        {
+          "segment_id": "02-06:b0167",
+          "source_lines": [
+            334,
+            334
+          ],
+          "source_sha256": "686d3b5f39958f18529b1eff98e880d3e5d8ff9976dc4e7dfc3aa4a1174d4955",
+          "target_sha256": "e2ef24f5eb90d6fd6277821941ae3a39fb4d882cb8c5962153dd45e6baf8117e"
+        },
+        {
+          "segment_id": "02-06:b0181",
+          "source_lines": [
+            354,
+            354
+          ],
+          "source_sha256": "13120f89162701c879e64959d6c9b9eb4ce1775c7461ce1d3559a33bd5b2a34e",
+          "target_sha256": "0821c22d756cfcdb7e4838718c406935a65e3821a90eb00095c103b2779a6660"
+        },
+        {
+          "segment_id": "02-06:b0187",
+          "source_lines": [
+            360,
+            373
+          ],
+          "source_sha256": "ac9a59b7c46e325d288e39b2de88ffd4138178d8166cb5e63dae2f7e5c24c2fa",
+          "target_sha256": "09ef99c77fc58aae12a838fa1b40a4525a3b78fad6688e3077d5fd9aed68c244"
+        }
+      ],
+      "note": "暴力源码说明先全排序，成本不只有O(nd)；KD树平均O(log n)及高维O(n)省维度/条件，维数20/50并非统一界。球树包围球不一定逐层严格嵌套，也不保证总更紧。源码骨架没有搜索实现，不能据此认定功能完成。",
+      "verification_scope": "Independent limited source/mathematical reading; no source correction or broader external research.",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-07",
+      "title": "加权平滑性、零距离与回归外推",
+      "locations": [
+        {
+          "segment_id": "02-06:b0073",
+          "source_lines": [
+            128,
+            128
+          ],
+          "source_sha256": "fddebd2fb1e9deefedef92c45a53adc45084ef451444d2a0bec5a5d3797b5627",
+          "target_sha256": "213d3223e6e28b33f080e131a4ad622250f33111bc6b5e5c146e5f71db502a92"
+        },
+        {
+          "segment_id": "02-06:b0075",
+          "source_lines": [
+            130,
+            135
+          ],
+          "source_sha256": "fbea1ec1e6e5058007852e0977f497817f3e858fcc783f81a06425054d6ee1e1",
+          "target_sha256": "80ef248233dd92ca367503c1fb321030e74e95ff5af0fbde69a8f3bf6de92a83"
+        },
+        {
+          "segment_id": "02-06:b0077",
+          "source_lines": [
+            137,
+            137
+          ],
+          "source_sha256": "25e79c91e9051e483b770df5c9eff1605a44a16ed61bca02b257f6b06f9b9687",
+          "target_sha256": "cb67f17f31688725f223a9941baa852fb24a2d24bfb4796bb06b4bdb061568ed"
+        },
+        {
+          "segment_id": "02-06:b0079",
+          "source_lines": [
+            139,
+            139
+          ],
+          "source_sha256": "ff014e587999baa212cc1aee56ca046bc94c114b5e0c6025c3f6f79f8d8b1639",
+          "target_sha256": "71b95ca43e9b4ce84293af56b6929b640616433fe8270fd444b5aecfe88a7140"
+        },
+        {
+          "segment_id": "02-06:b0125",
+          "source_lines": [
+            214,
+            214
+          ],
+          "source_sha256": "4ebe9f77bfa11aef5c64d159b14a46f378dec65fc75e23184da7f18445915d88",
+          "target_sha256": "c8a2343fb3587de28499fe1c2826b9db4e4f7ce5ad9a375cff7825e22394d877"
+        },
+        {
+          "segment_id": "02-06:b0127",
+          "source_lines": [
+            216,
+            222
+          ],
+          "source_sha256": "b9d90c846dcbd7b714d4053c7b107f0a2e56cb91bc2b446f5a1ec395560dd551",
+          "target_sha256": "5000ae7ebd0fd3176cfc2bb462d52383c15cceac45a0b14ce3c8664afa63f249"
+        },
+        {
+          "segment_id": "02-06:b0129",
+          "source_lines": [
+            224,
+            224
+          ],
+          "source_sha256": "d9af5ce30d3a48ea7dc2901b201fe2d5836c1cef6959a333bf27d6cf6bc704a2",
+          "target_sha256": "322a1cd577809e205ba6feccc6b0d2984810c79ed51380fccc230990c86788b3"
+        },
+        {
+          "segment_id": "02-06:b0183",
+          "source_lines": [
+            356,
+            356
+          ],
+          "source_sha256": "1badd34a2eb71d6f09c8beafc445fc4cb7320d83a92ba4fce5d5270ecbe82595",
+          "target_sha256": "caf622100d068f7b12f51d5bacb8c5ff555f4ff6e195a6a7f2404ebcaf57ae0c"
+        }
+      ],
+      "note": "b0075有epsilon，b0127权重1/d却未保护零距离。加权产生分段平滑不保证跨邻居集合边界更平滑；不能超出目标值凸包依非负权重，而非输入范围。译文保留源目标0/100/200示例。",
+      "verification_scope": "Independent limited source/mathematical reading; no source correction or broader external research.",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-08",
+      "title": "距离/标准化片段边界和训练测试隔离",
+      "locations": [
+        {
+          "segment_id": "02-06:b0139",
+          "source_lines": [
+            236,
+            257
+          ],
+          "source_sha256": "3d485235db4f1ef7dbdeea70bc8e39c470a2dd58c1b5afd1d4eabf7bcce054ac",
+          "target_sha256": "3d485235db4f1ef7dbdeea70bc8e39c470a2dd58c1b5afd1d4eabf7bcce054ac"
+        },
+        {
+          "segment_id": "02-06:b0145",
+          "source_lines": [
+            263,
+            280
+          ],
+          "source_sha256": "aa75616a7acc71bd167c7b61b7001e6b4e6df07016d3a354d2a6f70cb309230c",
+          "target_sha256": "aa75616a7acc71bd167c7b61b7001e6b4e6df07016d3a354d2a6f70cb309230c"
+        },
+        {
+          "segment_id": "02-06:b0151",
+          "source_lines": [
+            286,
+            297
+          ],
+          "source_sha256": "b04e294bc1254836a9351b481bf083350e55987df7f709c8ec0b670fe542c18e",
+          "target_sha256": "b04e294bc1254836a9351b481bf083350e55987df7f709c8ec0b670fe542c18e"
+        },
+        {
+          "segment_id": "02-06:b0157",
+          "source_lines": [
+            303,
+            303
+          ],
+          "source_sha256": "a45df51dd29aaba004ce730758f67a2b81bf37d2870fb58d8e1da28e1b576036",
+          "target_sha256": "0b98e6d62d010379197afb36bf3c5c459f11ac3d87c4f6ba916d4ce4d81e6fdc"
+        },
+        {
+          "segment_id": "02-06:b0159",
+          "source_lines": [
+            305,
+            315
+          ],
+          "source_sha256": "50ba9f318176d0fa52db1d3cc5b4ae6c869e9077d9732fb76ccbeb3c4eb1e1d5",
+          "target_sha256": "50ba9f318176d0fa52db1d3cc5b4ae6c869e9077d9732fb76ccbeb3c4eb1e1d5"
+        },
+        {
+          "segment_id": "02-06:b0165",
+          "source_lines": [
+            321,
+            332
+          ],
+          "source_sha256": "7dedfefd0905cc5562f87a980389180a47c3c28790cf20b966503175e7f18ba9",
+          "target_sha256": "7dedfefd0905cc5562f87a980389180a47c3c28790cf20b966503175e7f18ba9"
+        }
+      ],
+      "note": "zip静默截断维数不匹配；距离p/空输入缺校验，KNN正文缺_predict_one，KDTree是省略号骨架。standardize必须使用训练统计量变换测试集；当前函数只展示拟合与变换同一X。",
+      "verification_scope": "只执行已完整读的b0139和b0159：不同长度输入距离0；常量列除1e-10返回0；两行标准化均值/总体标准差核验通过。未假装骨架可运行。",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-09",
+      "title": "外部API例和FAISS精确/近似区别",
+      "locations": [
+        {
+          "segment_id": "02-06:b0165",
+          "source_lines": [
+            321,
+            332
+          ],
+          "source_sha256": "7dedfefd0905cc5562f87a980389180a47c3c28790cf20b966503175e7f18ba9",
+          "target_sha256": "7dedfefd0905cc5562f87a980389180a47c3c28790cf20b966503175e7f18ba9"
+        },
+        {
+          "segment_id": "02-06:b0167",
+          "source_lines": [
+            334,
+            334
+          ],
+          "source_sha256": "686d3b5f39958f18529b1eff98e880d3e5d8ff9976dc4e7dfc3aa4a1174d4955",
+          "target_sha256": "e2ef24f5eb90d6fd6277821941ae3a39fb4d882cb8c5962153dd45e6baf8117e"
+        },
+        {
+          "segment_id": "02-06:b0169",
+          "source_lines": [
+            336,
+            336
+          ],
+          "source_sha256": "43446577e7e92f79061dc50080e322a45d04c16c88269cc2878ec246fb681c25",
+          "target_sha256": "b2f9c1b250b12265ef8a35e96407e0f843f0ecc261d8e67c2929405f379f7964"
+        },
+        {
+          "segment_id": "02-06:b0171",
+          "source_lines": [
+            338,
+            344
+          ],
+          "source_sha256": "5fe9253b6dc66dd448ff68a1dcf1a2ed5b3c6c8da6bba77ca4e9acdf1574c748",
+          "target_sha256": "5fe9253b6dc66dd448ff68a1dcf1a2ed5b3c6c8da6bba77ca4e9acdf1574c748"
+        },
+        {
+          "segment_id": "02-06:b0187",
+          "source_lines": [
+            360,
+            373
+          ],
+          "source_sha256": "ac9a59b7c46e325d288e39b2de88ffd4138178d8166cb5e63dae2f7e5c24c2fa",
+          "target_sha256": "09ef99c77fc58aae12a838fa1b40a4525a3b78fad6688e3077d5fd9aed68c244"
+        }
+      ],
+      "note": "sklearn自动选择策略需版本/具体配置，例子缺X_train等上下文；FAISS IndexFlatL2为精确平面索引，不构成近似搜索演示，距离通常为平方L2。外部包不在本课允许检查范围，未安装或运行。",
+      "verification_scope": "Independent limited source/mathematical reading; no source correction or broader external research.",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    },
+    {
+      "id": "S24-PEER-SRC-10",
+      "title": "练习和参考文献断言条件",
+      "locations": [
+        {
+          "segment_id": "02-06:b0177",
+          "source_lines": [
+            350,
+            350
+          ],
+          "source_sha256": "559f15260823f460bcbd347db92c29f27123e0e3d171694ea230f447575c479b",
+          "target_sha256": "ffb5c2116630471a6d12237591d0bc30c5cdf6a3c241392afe66112c09abffed"
+        },
+        {
+          "segment_id": "02-06:b0179",
+          "source_lines": [
+            352,
+            352
+          ],
+          "source_sha256": "8bc3b0384f7a1ce88d64b1947c8d26da7a3e810449c4e0b2d314d804295bc7b4",
+          "target_sha256": "e14c51bf541c253627ac17b2fdcde2361af0d803c71f659f587c0e1e6faf99e9"
+        },
+        {
+          "segment_id": "02-06:b0183",
+          "source_lines": [
+            356,
+            356
+          ],
+          "source_sha256": "1badd34a2eb71d6f09c8beafc445fc4cb7320d83a92ba4fce5d5270ecbe82595",
+          "target_sha256": "caf622100d068f7b12f51d5bacb8c5ff555f4ff6e195a6a7f2404ebcaf57ae0c"
+        },
+        {
+          "segment_id": "02-06:b0191",
+          "source_lines": [
+            377,
+            381
+          ],
+          "source_sha256": "2fa2cc4342185d03fc7cf334cab23a4fcacbce68760f3be0dba3e5748b497f21",
+          "target_sha256": "7eee11d15e52fedfb21ca3c5545cad8977f5c68fe57c75e2e13a90bec2436f67"
+        }
+      ],
+      "note": "成对最小距离应排除自身且需考虑重复点；cosine总胜、加权必更平滑非普适。Cover-Hart两倍Bayes错误率说法遗漏渐近与分布/采样等适用条件；保留参考链接，未打开论文推称已外部核实。",
+      "verification_scope": "Independent limited source/mathematical reading; no source correction or broader external research.",
+      "treatment": "Source wording/payload preserved, not silently repaired in translation."
+    }
+  ],
+  "format_repairs": [
+    {
+      "kind": "bare fence language",
+      "count": 7,
+      "change": "empty to text; payload unchanged"
+    },
+    {
+      "kind": "Chinese bold boundary",
+      "change": "Space after closing bold marks preserved from source for GFM"
+    }
+  ],
+  "checks": {
+    "legacy_strict": "passed without exception",
+    "independent_technical_and_chinese": "passed-full-final-hash",
+    "github_gfm": {
+      "status": "passed-desktop",
+      "content_commit": "118d5f94a9fea2e91d08dc707a1b03162bba072d",
+      "browser": "dot cloud Chrome",
+      "headings": 22,
+      "tables": [
+        {
+          "rows_including_header": 5,
+          "columns": 2
+        },
+        {
+          "rows_including_header": 6,
+          "columns": 3
+        },
+        {
+          "rows_including_header": 6,
+          "columns": 3
+        },
+        {
+          "rows_including_header": 13,
+          "columns": 2
+        }
+      ],
+      "strong": 12,
+      "unintended_em": 0,
+      "unparsed_bold_labels": 0,
+      "mermaid_rendered": 3,
+      "all_frame_labels_inspected": true,
+      "figure_note": "Protected figure identifier is a code fence; actual site interaction untested",
+      "repair": "No GFM repair needed; raw mathematical multiplication and Chinese punctuation labels display correctly"
+    },
+    "deterministic_replay": "46 lessons twice byte-identical; S07 and S19 separate exact adapters",
+    "actual_site_browser": "not passed; source renderer limitations remain",
+    "hosted_ci": "not run; Actions disabled"
+  },
+  "runtime_checks": {
+    "author": {
+      "core_check_record": "PASS",
+      "strict_cli": "PASS",
+      "core_regressions": {
+        "count": 33,
+        "result": "PASS"
+      },
+      "double_replay": {
+        "result": "PASS",
+        "outputs": [
+          "stage24_author_qa/replay_a",
+          "stage24_author_qa/replay_b"
+        ],
+        "byte_identical_to_target": true,
+        "sha256": "da32339ffecf8bc979e13d058ccfdd073ae7b05da21f825c418ce43ff6e21380"
+      },
+      "canonical_demo": {
+        "full_source_read_lines": 734,
+        "command": "timeout 45s python3 -B phases/02-ml-fundamentals/06-knn-and-distances/code/knn.py",
+        "exit_code": 0,
+        "scope": "Full original demonstration, original counts/iterations unchanged, stdlib only"
+      },
+      "bounded_checks": {
+        "source_code_sha256": "09aceb2515d264465187f7f37cc4eabd78d52d1fd0249e9ff39b8ae5007c41dd",
+        "safe_execution": "Fully read 734-line source; only math/random/time stdlib, no file/network/API calls. Canonical untouched. External timeout used.",
+        "checks": [
+          {
+            "name": "distance values",
+            "status": "PASS",
+            "details": [
+              8,
+              4.69041575982343,
+              3
+            ]
+          },
+          {
+            "name": "Minkowski endpoints",
+            "status": "PASS",
+            "details": {
+              "p1": 8,
+              "p2": 4.69041575982343
+            }
+          },
+          {
+            "name": "majority classification",
+            "status": "PASS",
+            "details": [
+              0
+            ]
+          },
+          {
+            "name": "weighted classification",
+            "status": "PASS",
+            "details": [
+              1
+            ]
+          },
+          {
+            "name": "regression remains target bounded",
+            "status": "PASS",
+            "details": [
+              47.68892149670916,
+              8.33333333161111e-09,
+              94.40734557103187,
+              50.50850939971869
+            ]
+          },
+          {
+            "name": "standardize constant column and means",
+            "status": "PASS",
+            "details": {
+              "means": [
+                3.0,
+                4.0
+              ],
+              "stds": [
+                1.632993161855452,
+                1e-10
+              ],
+              "scaled": [
+                [
+                  -1.224744871391589,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  1.224744871391589,
+                  0.0
+                ]
+              ]
+            }
+          },
+          {
+            "name": "KD-tree exact nearest neighbors",
+            "status": "PASS",
+            "details": [
+              {
+                "query": [
+                  0.1,
+                  0.2,
+                  0.3
+                ],
+                "k": 1,
+                "match": true
+              },
+              {
+                "query": [
+                  0.1,
+                  0.2,
+                  0.3
+                ],
+                "k": 5,
+                "match": true
+              },
+              {
+                "query": [
+                  0.1,
+                  0.2,
+                  0.3
+                ],
+                "k": 64,
+                "match": true
+              },
+              {
+                "query": [
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "k": 1,
+                "match": true
+              },
+              {
+                "query": [
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "k": 5,
+                "match": true
+              },
+              {
+                "query": [
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "k": 64,
+                "match": true
+              },
+              {
+                "query": [
+                  2,
+                  2,
+                  2
+                ],
+                "k": 1,
+                "match": true
+              },
+              {
+                "query": [
+                  2,
+                  2,
+                  2
+                ],
+                "k": 5,
+                "match": true
+              },
+              {
+                "query": [
+                  2,
+                  2,
+                  2
+                ],
+                "k": 64,
+                "match": true
+              }
+            ]
+          },
+          {
+            "name": "four stdlib documentation definitions execute",
+            "status": "PASS",
+            "details": {
+              "blocks": [
+                139,
+                145,
+                151,
+                159
+              ]
+            }
+          }
+        ],
+        "source_boundary_observations": {
+          "doc_missing_predict_one": "AttributeError",
+          "zero_vector_cosine_self": 1.0,
+          "mismatched_vector_lengths_silently_truncate": 0.0,
+          "Minkowski_p0": "ZeroDivisionError",
+          "empty_standardize": "IndexError",
+          "empty_KDTree": "IndexError",
+          "KD_k0": "IndexError",
+          "d100_32_points_all496pairs_max_min": 1.526019909040343
+        },
+        "skipped": [
+          {
+            "block": "b0165",
+            "reason": "scikit-learn non-allowlist; stays stdlib-first for educational clarity; undefined train/test fixtures"
+          },
+          {
+            "block": "b0171",
+            "reason": "FAISS non-allowlist; stays stdlib-first for educational clarity; undefined vectors/dimension"
+          }
+        ]
+      },
+      "site_parser": {
+        "file": "i18n/zh/phases/02-ml-fundamentals/06-knn-and-distances/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 27629,
+        "tables": 4,
+        "code_blocks": 13,
+        "figures": 1,
+        "mermaid_sources": 3,
+        "empty_heading_ids": [
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "距离度量",
+          "维数灾难",
+          "球树：更适合中等维数",
+          "惰性学习与急切学习",
+          "动手实现",
+          "实际使用",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [
+          "k",
+          "knn"
+        ],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER"
+      },
+      "real_github_gfm": "Coordinator pending; b0119 raw multiplication needs inspection",
+      "real_site_browser": "Not validated; inherited source renderer empty/duplicate Chinese anchors"
+    },
+    "peer": {
+      "checks": [
+        {
+          "name": "L2 3-4-5",
+          "status": "pass",
+          "value": 5.0
+        },
+        {
+          "name": "L1 sum",
+          "status": "pass",
+          "value": 7
+        },
+        {
+          "name": "Minkowski p2/pinf",
+          "status": "pass",
+          "value": {
+            "p2": 5,
+            "pinf": 4
+          }
+        },
+        {
+          "name": "cosine source distance violates triangle inequality",
+          "status": "pass",
+          "value": {
+            "d_uw": 1.5,
+            "d_uv_plus_d_vw": 0.9999999999999999
+          }
+        },
+        {
+          "name": "zero vector cosine implementation convention",
+          "status": "pass",
+          "value": 1.0
+        },
+        {
+          "name": "unequal lengths silently truncated by zip",
+          "status": "pass",
+          "value": 0.0
+        },
+        {
+          "name": "p below one fails metric triangle condition",
+          "status": "pass",
+          "value": {
+            "direct": 4.0,
+            "two_edges": 2.0
+          }
+        },
+        {
+          "name": "population standardization and constant column",
+          "status": "pass",
+          "value": {
+            "transformed": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "means": [
+              2.0,
+              5.0
+            ],
+            "stds": [
+              1.0,
+              1e-10
+            ]
+          }
+        }
+      ],
+      "executed_doc_blocks": [
+        "02-06:b0139",
+        "02-06:b0159"
+      ],
+      "count": 8,
+      "scope": "Finite stdlib only after full payload inspection, no installations/network/external model calls"
+    },
+    "independent_canonical_execution": false
+  },
+  "provenance_limits": {
+    "direct_external_model_api_calls": 0,
+    "exact_runtime_model_id": "unavailable",
+    "token_usage": "unavailable",
+    "human_review_minutes": "unavailable"
+  }
+}

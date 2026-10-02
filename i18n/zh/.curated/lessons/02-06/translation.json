@@ -1,0 +1,2394 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-06",
+  "source_path": "phases/02-ml-fundamentals/06-knn-and-distances/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "7ecd324e9a00caefd3e7e0e530d93b6a3edbdc61",
+  "source_sha256": "f18a8624854931bd3757829e4d4626d4dc3b6f10f0ad2cf3c2011e983172f1d4",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/06-knn-and-distances/docs/zh.md",
+  "target_sha256": "da32339ffecf8bc979e13d058ccfdd073ae7b05da21f825c418ce43ff6e21380",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "02-06:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances"
+      ],
+      "ordinal": 1,
+      "source_sha256": "5eb1a02d8a55480b360fa2dc09dfc60785d066ed794fccf99fe16507a19aae4a",
+      "target": "# K近邻与距离\n"
+    },
+    {
+      "segment_id": "02-06:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances"
+      ],
+      "ordinal": 2,
+      "source_sha256": "00b2f7c9430617ebe027ca4d98af51ed4d992b35e4c0c8fb6355936eb63c9416",
+      "target": "> 存下所有数据，参照邻居做预测。这是最简单、却确实有效的算法。\n"
+    },
+    {
+      "segment_id": "02-06:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances"
+      ],
+      "ordinal": 3,
+      "source_sha256": "ce164f89455538cddb8e93cf1d45f9424e5151d5bd27ec35474ffdfec7a0f5fe",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 阶段 1（第 14 课：范数与距离）\n**Time:** ~90 分钟\n"
+    },
+    {
+      "segment_id": "02-06:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "02-06:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "1b48ae5f24fa39b9b1a0235c6176f0560846ea343e1073e34fdcfb02e4ef1f6c",
+      "target": "- 从零实现 KNN 分类与回归，支持配置 K 和按距离加权投票\n- 比较 L1、L2、余弦和 Minkowski 距离度量，并为给定的数据类型选择合适的度量\n- 解释维数灾难，并演示 KNN 为何会在高维空间中表现退化\n- 构建 KD树以高效搜索最近邻，并分析它在什么情况下优于暴力搜索\n"
+    },
+    {
+      "segment_id": "02-06:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "02-06:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "be0ccc41f1f521988497221873c11f65a2ffbded797140165766fd93c2aa0ee8",
+      "target": "你有一个数据集。现在来了一个新数据点，你需要判断它的类别或预测它的值。你无需像线性回归或支持向量机（SVM）那样从数据中学习参数，只要找到离新点最近的 K 个训练点，让它们投票即可。\n"
+    },
+    {
+      "segment_id": "02-06:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "1032d2f429242d08db89b1a2f4cd55fc5b168c61483e33cc1a7025ba519ad78f",
+      "target": "这就是 K近邻（K-nearest neighbors，KNN）。它没有训练阶段，没有要学习的参数，也没有要最小化的损失函数。你存储整个训练集，在预测时计算距离。\n"
+    },
+    {
+      "segment_id": "02-06:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "be23985d0dbce185ec8c474a9fc68fb16ef243ab35d276a7be6dafcb715eb7b6",
+      "target": "这听起来简单得不像能奏效。但对于许多问题，尤其是中小型数据集，KNN 的竞争力出人意料。深入理解它，还能揭示几个基本概念：距离度量的选择（衔接阶段 1 第 14 课）、维数灾难（curse of dimensionality），以及按训练时机区分的惰性学习（lazy learning）与急切学习（eager learning）之间的区别。\n"
+    },
+    {
+      "segment_id": "02-06:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "9fe920eb29fa831ff862fa34b997f51efd8ffb9cd5cd50e09e0295e137189811",
+      "target": "KNN 也遍布现代 AI，只是换了不同的名字。向量数据库对嵌入（embedding）执行 KNN 搜索；检索增强生成（RAG）寻找最近的 K 个文档块；推荐系统寻找相似的用户或物品。算法相同，区别在于规模和数据结构。\n"
+    },
+    {
+      "segment_id": "02-06:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "02-06:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 12,
+      "source_sha256": "d6b83fbee98953be180cdfc2e686af21366ec254f1738f942556a039b9154c45",
+      "target": "### KNN 如何工作\n"
+    },
+    {
+      "segment_id": "02-06:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 13,
+      "source_sha256": "d1f0d54ee8b21b9ef76a9947eab7ff1add787c2b284d08ac8988d4db34bc8ea8",
+      "target": "给定一个由带标签的数据点组成的数据集，以及一个新的查询点：\n"
+    },
+    {
+      "segment_id": "02-06:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0027",
+      "kind": "list",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 14,
+      "source_sha256": "c33b9e4874682ad66ba486063149e8021f1ebb80e5fcc5be016b2342bf70b81a",
+      "target": "1. 计算查询点到数据集中每个点的距离\n2. 按距离排序\n3. 取最近的 K 个点\n4. 对于分类：由 K 个邻居进行多数投票\n5. 对于回归：对 K 个邻居的值求平均（或加权平均）\n"
+    },
+    {
+      "segment_id": "02-06:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0029",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 15,
+      "source_sha256": "025e9424fe5069c05d8065798c75d261243d12748aac07423bbd96c5e7a7b89f",
+      "target": "```mermaid\ngraph TD\n    Q[\"Query point ?\"] --> D[\"Compute distances<br>to all training points\"]\n    D --> S[\"Sort by distance\"]\n    S --> K[\"Select K nearest\"]\n    K --> C{\"Classification<br>or Regression?\"}\n    C -->|Classification| V[\"Majority vote\"]\n    C -->|Regression| A[\"Average values\"]\n    V --> P[\"Prediction\"]\n    A --> P\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 16,
+      "source_sha256": "7dc7f545fcbf059cf2c4768167f1205a6522f55de50915efc088232a595a8ac2",
+      "target": "这就是完整算法。无需拟合，无需梯度下降，也无需训练轮次（epoch）。\n"
+    },
+    {
+      "segment_id": "02-06:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### How KNN works"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 17,
+      "source_sha256": "edc243b93b6a6bd26e9cec9ab4cf4152576b9d06ac785840c1c7dd759a36807b",
+      "target": "### 选择 K\n"
+    },
+    {
+      "segment_id": "02-06:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 18,
+      "source_sha256": "0716f13e95fbd54ac2aea02cae5d23188cc14df1b03f4213561b601b9f682c97",
+      "target": "K 是唯一的超参数（hyperparameter）。它控制着偏差与方差之间的权衡：\n"
+    },
+    {
+      "segment_id": "02-06:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0037",
+      "kind": "table",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 19,
+      "source_sha256": "c742e6989b5dc699a959a313c60c4ef6622ac30a923f45f5f9d1c52df189ff2f",
+      "target": "| K | 行为 |\n|---|----------|\n| K = 1 | 决策边界紧随每个点。训练误差为零。方差高。过拟合 |\n| 较小的 K（3-5） | 对局部结构敏感。可以捕捉复杂边界 |\n| 较大的 K | 边界更平滑。对噪声更鲁棒。可能欠拟合 |\n| K = N | 对每个点都预测为多数类。偏差最大 |\n"
+    },
+    {
+      "segment_id": "02-06:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 20,
+      "source_sha256": "b5c53bd3ea41a70cca2c0a8f55de42b6f37e814824d99c5307f11652732f7bb8",
+      "target": "对于包含 N 个点的数据集，常见的初始选择是 K = sqrt(N)。二分类时使用奇数 K，以避免平票。\n"
+    },
+    {
+      "segment_id": "02-06:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 21,
+      "source_sha256": "b602f616674c6f5b55f166c29d33437aeb75e3582767f0f4c98e573b2356e02c",
+      "target": "```mermaid\ngraph LR\n    subgraph \"K=1 (overfitting)\"\n        A[\"Jagged boundary<br>follows every point\"]\n    end\n    subgraph \"K=15 (good)\"\n        B[\"Smooth boundary<br>captures true pattern\"]\n    end\n    subgraph \"K=N (underfitting)\"\n        C[\"Flat boundary<br>predicts majority class\"]\n    end\n    A -->|\"increase K\"| B -->|\"increase K\"| C\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Choosing K"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 22,
+      "source_sha256": "8fa6c09e8d8e2dd4f8188b9c3340266b4875b0b5a7912d1c0150dbe023394a22",
+      "target": "### 距离度量\n"
+    },
+    {
+      "segment_id": "02-06:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 23,
+      "source_sha256": "cd22a64c01246e108d807ecd7bdafb529cf2c4533cc584eadefae96fdcb3dc66",
+      "target": "距离函数定义了什么叫“近”。不同的度量（metric）会找出不同的邻居，从而产生不同的预测。\n"
+    },
+    {
+      "segment_id": "02-06:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 24,
+      "source_sha256": "4362eb795d6af3420c2d02a2062719088319d7e0553b5f51653c7b0890d1261d",
+      "target": "**L2（欧氏距离，Euclidean）** 是默认选择，即直线距离。\n"
+    },
+    {
+      "segment_id": "02-06:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 25,
+      "source_sha256": "61059d16794a42470b1775332a07480352f88667a05a0434c87286d687ae1784",
+      "target": "```text\nd(a, b) = sqrt(sum((a_i - b_i)^2))\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 26,
+      "source_sha256": "fc52c394ceb7d6c74ca0a0eee73e0d3d7e2087cbf92de2c582509b8ffc8121f5",
+      "target": "它对特征尺度敏感。在 KNN 中使用 L2 之前，始终要先对特征做标准化。\n"
+    },
+    {
+      "segment_id": "02-06:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 27,
+      "source_sha256": "20a55eac6ae85105fa175a37cf5437549e486e85858930229e2152ec6b821386",
+      "target": "**L1（Manhattan）** 将各分量差的绝对值相加。由于不对差值平方，它比 L2 更能抵抗离群值的影响。\n"
+    },
+    {
+      "segment_id": "02-06:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 28,
+      "source_sha256": "0f08057d9ca5a3cb3c18117b67959109724b06ea9167a3003ba381513ffbd08e",
+      "target": "```text\nd(a, b) = sum(|a_i - b_i|)\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 29,
+      "source_sha256": "c2bcad84a09f74f018f62dd3b9ac8d7e862895edf07832fb33a841c6f3a26718",
+      "target": "**余弦距离（cosine distance）** 衡量向量之间的夹角，忽略模长。它对文本和嵌入数据至关重要。\n"
+    },
+    {
+      "segment_id": "02-06:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0059",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 30,
+      "source_sha256": "261318b8c69bd00dc241669b175eecca46aa677e14e3b7c4ae02c2b874104685",
+      "target": "```text\nd(a, b) = 1 - (a . b) / (||a|| * ||b||)\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 31,
+      "source_sha256": "ab7578e928dfccd39ef2a48d065c59c4113558242730e5b356d6c1cd6ce23288",
+      "target": "**Minkowski** 通过参数 p 将 L1 和 L2 推广为统一形式。\n"
+    },
+    {
+      "segment_id": "02-06:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 32,
+      "source_sha256": "203780017201226c62bff19ccb94b0b37b90a7843e4b780833c8ea763a8c1a8e",
+      "target": "```text\nd(a, b) = (sum(|a_i - b_i|^p))^(1/p)\n\np=1: Manhattan\np=2: Euclidean\np->inf: Chebyshev (max absolute difference)\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 33,
+      "source_sha256": "98300e05330fb568b95ef752eb50cecb1efd069286a2ab42d74d7334502f84a1",
+      "target": "使用哪种度量取决于数据：\n"
+    },
+    {
+      "segment_id": "02-06:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0067",
+      "kind": "table",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 34,
+      "source_sha256": "b3ffbf8644e8912e391d499fd09955c754b495f989e3b90b0eae5507a4b7ed6d",
+      "target": "| 数据类型 | 最佳度量 | 原因 |\n|-----------|------------|-----|\n| 尺度相近的数值特征 | L2（欧氏距离，Euclidean） | 默认选择，适用于空间数据 |\n| 含离群值的数值特征 | L1（Manhattan） | 鲁棒，不会放大较大的差值 |\n| 文本嵌入 | 余弦 | 模长是噪声，方向代表含义 |\n| 高维稀疏数据 | 余弦或 L1 | L2 受到维数灾难的影响 |\n| 混合类型 | 自定义距离 | 按特征类型组合不同度量 |\n"
+    },
+    {
+      "segment_id": "02-06:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Distance metrics"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 35,
+      "source_sha256": "4dfb1049755cce513535f9d0f3e6a29f0e58fac7284f298681dcd9cfc9f33320",
+      "target": "### 加权 KNN\n"
+    },
+    {
+      "segment_id": "02-06:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 36,
+      "source_sha256": "24a70b48c4ba8a1938eddf2500fa406b96ceaf46578a884cc9b8c55bd1199751",
+      "target": "标准 KNN 给所有 K 个邻居相同的权重。但距离为 0.1 的邻居应当比距离为 5.0 的邻居更重要。\n"
+    },
+    {
+      "segment_id": "02-06:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 37,
+      "source_sha256": "fddebd2fb1e9deefedef92c45a53adc45084ef451444d2a0bec5a5d3797b5627",
+      "target": "**按距离加权的 KNN（distance-weighted KNN）** 让每个邻居的权重与距离成反比：\n"
+    },
+    {
+      "segment_id": "02-06:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 38,
+      "source_sha256": "fbea1ec1e6e5058007852e0977f497817f3e858fcc783f81a06425054d6ee1e1",
+      "target": "```text\nweight_i = 1 / (distance_i + epsilon)\n\nFor classification: weighted vote\nFor regression:     weighted average = sum(w_i * y_i) / sum(w_i)\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 39,
+      "source_sha256": "25e79c91e9051e483b770df5c9eff1605a44a16ed61bca02b257f6b06f9b9687",
+      "target": "当查询点与某个训练点完全重合时，epsilon 可以防止除以零。\n"
+    },
+    {
+      "segment_id": "02-06:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 40,
+      "source_sha256": "ff014e587999baa212cc1aee56ca046bc94c114b5e0c6025c3f6f79f8d8b1639",
+      "target": "加权 KNN 对 K 的选择不那么敏感，因为无论如何，远处邻居的贡献都很小。\n"
+    },
+    {
+      "segment_id": "02-06:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Weighted KNN"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 41,
+      "source_sha256": "ad07a4200c037f15db56607ff1d162fa86510d299499b25164997ec3556f6986",
+      "target": "### 维数灾难\n"
+    },
+    {
+      "segment_id": "02-06:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 42,
+      "source_sha256": "62c078c24b3c78097a33a8da933282b8e198b7e86e731bf94862cbbb6a32d63e",
+      "target": "KNN 在高维空间中的表现会退化。这不是模糊的担忧，而是一个数学事实。\n"
+    },
+    {
+      "segment_id": "02-06:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 43,
+      "source_sha256": "9c059fd3fc8531fb6066e3ecb5ada4b5ce3c9708bc8ff010b7edbcffbf5e6d71",
+      "target": "**问题 1：距离趋同。** 随着维数增加，最大距离与最小距离的比值趋近于 1。所有点到查询点都变得同样“远”。\n"
+    },
+    {
+      "segment_id": "02-06:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 44,
+      "source_sha256": "9c415a573aee10c579dd4cd4a659fc50b8c3a87e8289da2d4b1d760c1eb87f35",
+      "target": "```text\nIn d dimensions, for random uniform points:\n\nd=2:    max_dist / min_dist = varies widely\nd=100:  max_dist / min_dist ~ 1.01\nd=1000: max_dist / min_dist ~ 1.001\n\nWhen all distances are nearly equal, \"nearest\" is meaningless.\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 45,
+      "source_sha256": "653e481c6d8a7f8b380457df1a0f445b5b0fad7a57075a9947afe90104ab1d8c",
+      "target": "**问题 2：体积急剧增大。** 要在数据中一个固定比例的范围内找到 K 个邻居，就需要扩大搜索半径，覆盖特征空间中大得多的比例。高维空间中的“邻域”包含了空间的大部分。\n"
+    },
+    {
+      "segment_id": "02-06:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 46,
+      "source_sha256": "0607f50844127c939f249cd8c8907be6924b83ee7616932924392d03e357ac5c",
+      "target": "**问题 3：角部占据主导。** 在 d 维单位超立方体中，大部分体积集中在角部附近，而不是中心。随着 d 增大，立方体内接球所占的体积比例趋近于零。\n"
+    },
+    {
+      "segment_id": "02-06:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 47,
+      "source_sha256": "095aa4337fc9b1f1b59860a8b1a5a0067d2c2624e9dab5656676c09aa0443c6d",
+      "target": "实际影响是：特征数在大约 20-50 以内时，KNN 表现良好。超过这一范围，就需要先降维（PCA、UMAP、t-SNE），再使用 KNN；或者使用能利用数据较低内在维数的树形搜索结构。\n"
+    },
+    {
+      "segment_id": "02-06:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### The curse of dimensionality"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 48,
+      "source_sha256": "aea7289b82a5fdb9be5b009e28429275394c661166916d96e507cbcaf7b1ddf7",
+      "target": "### KD树：快速搜索最近邻\n"
+    },
+    {
+      "segment_id": "02-06:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 49,
+      "source_sha256": "dcb03845faa00e3fb903d1e782567ce57052ee7daf39d073a3666a7d02178456",
+      "target": "暴力 KNN 会计算查询点到每个训练点的距离，每次查询的成本为 O(n * d)。对于大型数据集，这太慢了。\n"
+    },
+    {
+      "segment_id": "02-06:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 50,
+      "source_sha256": "06911bfd92fddd8892e09aea0ffd6c148f73b724de2000673b0f34f52974b916",
+      "target": "KD树（KD-tree）沿着特征轴递归划分空间。每一层都选择一个维度，在其中位数处划分。\n"
+    },
+    {
+      "segment_id": "02-06:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0101",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 51,
+      "source_sha256": "d292c0bfda34314220deaf2544f16bce79dc861df9394fe32c9358376e675962",
+      "target": "```mermaid\ngraph TD\n    R[\"Split on x1 at 5.0\"] -->|\"x1 <= 5.0\"| L[\"Split on x2 at 3.0\"]\n    R -->|\"x1 > 5.0\"| RR[\"Split on x2 at 7.0\"]\n    L -->|\"x2 <= 3.0\"| LL[\"Leaf: 3 points\"]\n    L -->|\"x2 > 3.0\"| LR[\"Leaf: 4 points\"]\n    RR -->|\"x2 <= 7.0\"| RL[\"Leaf: 2 points\"]\n    RR -->|\"x2 > 7.0\"| RRR[\"Leaf: 5 points\"]\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 52,
+      "source_sha256": "87bcb60cbf8ae6d31f74a34fa071e1851d6afa33ac852d757be31d7f744a354d",
+      "target": "要寻找最近邻，先沿树遍历到包含查询点的叶节点，再回溯；只有相邻分区可能包含更近的点时，才检查这些分区。\n"
+    },
+    {
+      "segment_id": "02-06:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 53,
+      "source_sha256": "04145c687e207134707059623066c5da8a4f2fc3716dfbb76005dd5814fc04ac",
+      "target": "低维情况下，平均查询时间为 O(log n)。但在高维（d > 20）时，KD树会退化为 O(n)，因为回溯时能够排除的分支越来越少。\n"
+    },
+    {
+      "segment_id": "02-06:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KD-trees: fast nearest neighbor search"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Ball trees: better for moderate dimensions"
+      ],
+      "ordinal": 54,
+      "source_sha256": "0621843cfee2a1d42c34b17b16fe682373fad8ee4557976c874ad5e2cddaef31",
+      "target": "### 球树：更适合中等维数\n"
+    },
+    {
+      "segment_id": "02-06:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Ball trees: better for moderate dimensions"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Ball trees: better for moderate dimensions"
+      ],
+      "ordinal": 55,
+      "source_sha256": "fa747d9e9465cc3ba27c447378b4e3ecd35d320da35615a8def108f920f89f95",
+      "target": "球树（ball tree）将数据划分为嵌套的超球，而不是与坐标轴对齐的盒子。每个节点定义一个球（中心 + 半径），其中包含该子树内的所有点。\n"
+    },
+    {
+      "segment_id": "02-06:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Ball trees: better for moderate dimensions"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Ball trees: better for moderate dimensions"
+      ],
+      "ordinal": 56,
+      "source_sha256": "71f0c8c38cddad46c13b6aebb9000e999c08da9e2d6b42c1b56d7a0d046388fa",
+      "target": "相对于 KD树的优势：\n- 在中等维数下表现更好（最高 ~50）\n- 能处理不与坐标轴对齐的结构\n- 更紧的包围体意味着搜索时可以剪去更多分支\n"
+    },
+    {
+      "segment_id": "02-06:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Ball trees: better for moderate dimensions"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Ball trees: better for moderate dimensions"
+      ],
+      "ordinal": 57,
+      "source_sha256": "728c1a9dbc61317b90590118df0847347dbe9968b6d41c49eae590048a142de5",
+      "target": "KD树和球树都是精确算法。对于真正的大规模搜索（millions，即数百万个点，以及数百维），则使用近似最近邻（approximate nearest neighbor）方法，例如 HNSW、IVF 和乘积量化（product quantization）。阶段 1 第 14 课介绍了这些方法。\n"
+    },
+    {
+      "segment_id": "02-06:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Ball trees: better for moderate dimensions"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0115",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Lazy learning vs eager learning"
+      ],
+      "ordinal": 58,
+      "source_sha256": "e7de3f5a7e12b60a6539e352d2933cc1f542875c33ac54f5f8923346d68b1f8e",
+      "target": "### 惰性学习与急切学习\n"
+    },
+    {
+      "segment_id": "02-06:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Lazy learning vs eager learning"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Lazy learning vs eager learning"
+      ],
+      "ordinal": 59,
+      "source_sha256": "5109a07760e676618931e4d593e41bef2f8a9813ed6f0bd0fc284f34bc0acdc0",
+      "target": "KNN 属于惰性学习（lazy learning）：训练时不做计算，所有工作都在预测时完成。大多数其他算法，例如线性回归、SVM 和神经网络，则属于急切学习（eager learning）：训练时进行大量计算，构建紧凑的模型，之后便能快速预测。\n"
+    },
+    {
+      "segment_id": "02-06:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Lazy learning vs eager learning"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0119",
+      "kind": "table",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Lazy learning vs eager learning"
+      ],
+      "ordinal": 60,
+      "source_sha256": "4fc2808990d3488f93c5ddeef088d98a301c41e5a63bc8966b966b16e441bd74",
+      "target": "| 方面 | 惰性学习（KNN） | 急切学习（SVM、神经网络） |\n|--------|------------|------------------------|\n| 训练时间 | O(1)，只需存储数据 | O(n * epochs) |\n| 预测时间 | 每次查询 O(n * d) | O(d) 或 O(parameters) |\n| 预测时的内存需求 | 存储整个训练集 | 仅存储模型参数 |\n| 适应新数据 | 立即添加数据点 | 重新训练模型 |\n| 决策边界 | 隐式，在预测时即时计算 | 显式，训练后固定 |\n"
+    },
+    {
+      "segment_id": "02-06:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Lazy learning vs eager learning"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Lazy learning vs eager learning"
+      ],
+      "ordinal": 61,
+      "source_sha256": "f318d3a855643dac3ddf177a27e1e01603487044bd976d1ff29d3865c8ace320",
+      "target": "以下情形适合使用惰性学习：\n- 数据集频繁变化（无需重新训练即可添加或移除数据点）\n- 只需要为极少量查询做预测\n- 希望训练时间为零\n- 数据集足够小，暴力搜索也很快\n"
+    },
+    {
+      "segment_id": "02-06:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### Lazy learning vs eager learning"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0123",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 62,
+      "source_sha256": "2de8e825f1e808b1d05f5c5330db6e15d508018d7be7faf2a0456c5908b7be15",
+      "target": "### 用 KNN 做回归\n"
+    },
+    {
+      "segment_id": "02-06:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 63,
+      "source_sha256": "4ebe9f77bfa11aef5c64d159b14a46f378dec65fc75e23184da7f18445915d88",
+      "target": "KNN 回归不进行多数投票，而是对 K 个邻居的目标值求平均。\n"
+    },
+    {
+      "segment_id": "02-06:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 64,
+      "source_sha256": "b9d90c846dcbd7b714d4053c7b107f0a2e56cb91bc2b446f5a1ec395560dd551",
+      "target": "```text\nprediction = (1/K) * sum(y_i for i in K nearest neighbors)\n\nOr with distance weighting:\nprediction = sum(w_i * y_i) / sum(w_i)\nwhere w_i = 1 / distance_i\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 65,
+      "source_sha256": "d9af5ce30d3a48ea7dc2901b201fe2d5836c1cef6959a333bf27d6cf6bc704a2",
+      "target": "KNN 回归产生分段常数预测（加权时则为分段平滑预测）。它无法外推到训练数据的取值范围之外。如果训练目标都在 0 到 100 之间，KNN 就绝不会预测出 200。\n"
+    },
+    {
+      "segment_id": "02-06:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0131",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 66,
+      "source_sha256": "f0a056efe1817f22a4de3d09d17d9628aee86251469d8e15150e6131490ac380",
+      "target": "```figure\nknn-smoothness\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## The Concept",
+        "### KNN for regression"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0133",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It"
+      ],
+      "ordinal": 67,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "02-06:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 1: Distance functions"
+      ],
+      "ordinal": 68,
+      "source_sha256": "07553e9d9ca0a5cd9671484581ae81d802df39658a1f488b52c68ae9490a677c",
+      "target": "### 第 1 步：距离函数\n"
+    },
+    {
+      "segment_id": "02-06:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 1: Distance functions"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0137",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 1: Distance functions"
+      ],
+      "ordinal": 69,
+      "source_sha256": "8ecfe1bb6bd3df13057ee0a4d0b3e53b9f56b276ed4cf07839a0fafef4a4aa9c",
+      "target": "实现 L1、L2、余弦和 Minkowski 距离。这些内容直接衔接阶段 1 第 14 课。\n"
+    },
+    {
+      "segment_id": "02-06:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 1: Distance functions"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0139",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 1: Distance functions"
+      ],
+      "ordinal": 70,
+      "source_sha256": "3d485235db4f1ef7dbdeea70bc8e39c470a2dd58c1b5afd1d4eabf7bcce054ac",
+      "target": "```python\nimport math\n\ndef l2_distance(a, b):\n    return math.sqrt(sum((ai - bi) ** 2 for ai, bi in zip(a, b)))\n\ndef l1_distance(a, b):\n    return sum(abs(ai - bi) for ai, bi in zip(a, b))\n\ndef cosine_distance(a, b):\n    dot_val = sum(ai * bi for ai, bi in zip(a, b))\n    norm_a = math.sqrt(sum(ai ** 2 for ai in a))\n    norm_b = math.sqrt(sum(bi ** 2 for bi in b))\n    if norm_a == 0 or norm_b == 0:\n        return 1.0\n    return 1.0 - dot_val / (norm_a * norm_b)\n\ndef minkowski_distance(a, b, p=2):\n    if p == float('inf'):\n        return max(abs(ai - bi) for ai, bi in zip(a, b))\n    return sum(abs(ai - bi) ** p for ai, bi in zip(a, b)) ** (1 / p)\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 1: Distance functions"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0141",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 2: KNN classifier and regressor"
+      ],
+      "ordinal": 71,
+      "source_sha256": "62ac967d594f5eb088a55501eaf546f6a27d2eee02c5c54a6b6e080e931ed2a6",
+      "target": "### 第 2 步：KNN 分类器与回归器\n"
+    },
+    {
+      "segment_id": "02-06:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 2: KNN classifier and regressor"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0143",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 2: KNN classifier and regressor"
+      ],
+      "ordinal": 72,
+      "source_sha256": "6cdd532086f609c12a1dd17f109537f73f6c65e4a4dd62a3c62658e3760b8289",
+      "target": "构建完整的 KNN，支持配置 K、距离度量，并可选择按距离加权。\n"
+    },
+    {
+      "segment_id": "02-06:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 2: KNN classifier and regressor"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0145",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 2: KNN classifier and regressor"
+      ],
+      "ordinal": 73,
+      "source_sha256": "aa75616a7acc71bd167c7b61b7001e6b4e6df07016d3a354d2a6f70cb309230c",
+      "target": "```python\nclass KNN:\n    def __init__(self, k=5, distance_fn=l2_distance, weighted=False,\n                 task=\"classification\"):\n        self.k = k\n        self.distance_fn = distance_fn\n        self.weighted = weighted\n        self.task = task\n        self.X_train = None\n        self.y_train = None\n\n    def fit(self, X, y):\n        self.X_train = X\n        self.y_train = y\n\n    def predict(self, X):\n        return [self._predict_one(x) for x in X]\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 2: KNN classifier and regressor"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 3: KD-tree for efficient search"
+      ],
+      "ordinal": 74,
+      "source_sha256": "ff2b5ceae83fd649a67ba0f367a864dcf32f89fe4aead9d8e6196f2489ef090c",
+      "target": "### 第 3 步：用 KD树高效搜索\n"
+    },
+    {
+      "segment_id": "02-06:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 3: KD-tree for efficient search"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0149",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 3: KD-tree for efficient search"
+      ],
+      "ordinal": 75,
+      "source_sha256": "f9f0b8cce4426b844fd7bdc05fa57aa4729e187564cfc9ac3e117836e8e00914",
+      "target": "从零构建 KD树，递归地在各维度的中位数处划分。\n"
+    },
+    {
+      "segment_id": "02-06:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 3: KD-tree for efficient search"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0151",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 3: KD-tree for efficient search"
+      ],
+      "ordinal": 76,
+      "source_sha256": "b04e294bc1254836a9351b481bf083350e55987df7f709c8ec0b670fe542c18e",
+      "target": "```python\nclass KDTree:\n    def __init__(self, X, indices=None, depth=0):\n        # Recursively partition the data\n        self.axis = depth % len(X[0])\n        # Split on median of the current axis\n        ...\n\n    def query(self, point, k=1):\n        # Traverse to leaf, then backtrack\n        ...\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 3: KD-tree for efficient search"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 3: KD-tree for efficient search"
+      ],
+      "ordinal": 77,
+      "source_sha256": "f8edc77d8b96788bafbe1d92298173802f7c8f79defee4c08d19022499e50379",
+      "target": "完整实现，包括所有辅助方法和演示，见 `code/knn.py`。\n"
+    },
+    {
+      "segment_id": "02-06:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 3: KD-tree for efficient search"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0155",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 4: Feature scaling"
+      ],
+      "ordinal": 78,
+      "source_sha256": "9f578f4c0138afbe8647ae404b2e21e329bc0d1b90e04ce0a2e141676094475a",
+      "target": "### 第 4 步：特征缩放\n"
+    },
+    {
+      "segment_id": "02-06:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 4: Feature scaling"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 4: Feature scaling"
+      ],
+      "ordinal": 79,
+      "source_sha256": "a45df51dd29aaba004ce730758f67a2b81bf37d2870fb58d8e1da28e1b576036",
+      "target": "KNN 需要特征缩放（feature scaling），因为距离对特征的数值大小敏感。取值范围为 0 到 1000 的特征会主导取值范围为 0 到 1 的特征。\n"
+    },
+    {
+      "segment_id": "02-06:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 4: Feature scaling"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0159",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 4: Feature scaling"
+      ],
+      "ordinal": 80,
+      "source_sha256": "50ba9f318176d0fa52db1d3cc5b4ae6c869e9077d9732fb76ccbeb3c4eb1e1d5",
+      "target": "```python\ndef standardize(X):\n    n = len(X)\n    d = len(X[0])\n    means = [sum(X[i][j] for i in range(n)) / n for j in range(d)]\n    stds = [\n        max(1e-10, (sum((X[i][j] - means[j]) ** 2 for i in range(n)) / n) ** 0.5)\n        for j in range(d)\n    ]\n    return [[((X[i][j] - means[j]) / stds[j]) for j in range(d)] for i in range(n)], means, stds\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Build It",
+        "### Step 4: Feature scaling"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0161",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "02-06:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0163",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 82,
+      "source_sha256": "23d2a3ffc6e7006e4122c9dec90d1131545678df4989c605964c219de5f48f92",
+      "target": "使用 scikit-learn：\n"
+    },
+    {
+      "segment_id": "02-06:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0165",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 83,
+      "source_sha256": "7dedfefd0905cc5562f87a980389180a47c3c28790cf20b966503175e7f18ba9",
+      "target": "```python\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import Pipeline\n\nclf = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"knn\", KNeighborsClassifier(n_neighbors=5, metric=\"euclidean\")),\n])\nclf.fit(X_train, y_train)\nprint(f\"Accuracy: {clf.score(X_test, y_test):.4f}\")\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0167",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 84,
+      "source_sha256": "686d3b5f39958f18529b1eff98e880d3e5d8ff9976dc4e7dfc3aa4a1174d4955",
+      "target": "当数据集足够大、维数足够低时，Scikit-learn 会自动使用 KD树或球树。对于高维数据，它会退回到暴力搜索。你可以通过 `algorithm` 参数控制这一行为。\n"
+    },
+    {
+      "segment_id": "02-06:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0169",
+      "kind": "paragraph",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 85,
+      "source_sha256": "43446577e7e92f79061dc50080e322a45d04c16c88269cc2878ec246fb681c25",
+      "target": "对于大规模最近邻搜索（millions，即数百万个向量），可以使用 FAISS、Annoy 或向量数据库：\n"
+    },
+    {
+      "segment_id": "02-06:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0171",
+      "kind": "fence",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 86,
+      "source_sha256": "5fe9253b6dc66dd448ff68a1dcf1a2ed5b3c6c8da6bba77ca4e9acdf1574c748",
+      "target": "```python\nimport faiss\n\nindex = faiss.IndexFlatL2(dimension)\nindex.add(embeddings)\ndistances, indices = index.search(query_vectors, k=5)\n```\n"
+    },
+    {
+      "segment_id": "02-06:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Use It"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0173",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "02-06:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0175",
+      "kind": "list",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 88,
+      "source_sha256": "ad24a4df52876667ca0301ccaf3971f9a7ff9c4c527e5fee9a76530730c1614b",
+      "target": "1. 在包含 3 个类别的 2D（二维）数据集上实现 KNN 分类。分别绘制 K=1、K=5、K=15 和 K=N 时的决策边界，观察从过拟合到欠拟合的变化。\n"
+    },
+    {
+      "segment_id": "02-06:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0177",
+      "kind": "list",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 89,
+      "source_sha256": "559f15260823f460bcbd347db92c29f27123e0e3d171694ea230f447575c479b",
+      "target": "2. 分别在 2、5、10、50、100 和 500 维空间中生成 1000 个随机点。对每种维数，计算最大成对距离与最小成对距离的比值。绘制该比值随维数变化的图像，将维数灾难可视化。\n"
+    },
+    {
+      "segment_id": "02-06:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0179",
+      "kind": "list",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 90,
+      "source_sha256": "8bc3b0384f7a1ce88d64b1947c8d26da7a3e810449c4e0b2d314d804295bc7b4",
+      "target": "3. 在文本分类问题上比较使用 L1、L2 和余弦距离的 KNN（使用 TF-IDF 向量）。哪种度量的准确率最高？为什么余弦距离往往在文本上胜出？\n"
+    },
+    {
+      "segment_id": "02-06:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0181",
+      "kind": "list",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 91,
+      "source_sha256": "13120f89162701c879e64959d6c9b9eb4ce1775c7461ce1d3559a33bd5b2a34e",
+      "target": "4. 实现 KD树，并在包含 1k、10k 和 100k 个点、维数为 2D、10D 和 50D 的数据集上，比较它与暴力搜索的查询时间。维数达到多少时，KD树不再比暴力搜索快？\n"
+    },
+    {
+      "segment_id": "02-06:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0183",
+      "kind": "list",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 92,
+      "source_sha256": "1badd34a2eb71d6f09c8beafc445fc4cb7320d83a92ba4fce5d5270ecbe82595",
+      "target": "5. 为 y = sin(x) + noise 构建加权 KNN 回归器。在 K=3、10、30 时，将它与不加权的 KNN 比较。展示加权如何产生更平滑的预测，尤其是在 K 较大时。\n"
+    },
+    {
+      "segment_id": "02-06:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Exercises"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0185",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Key Terms"
+      ],
+      "ordinal": 93,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "02-06:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Key Terms"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0187",
+      "kind": "table",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Key Terms"
+      ],
+      "ordinal": 94,
+      "source_sha256": "ac9a59b7c46e325d288e39b2de88ffd4138178d8166cb5e63dae2f7e5c24c2fa",
+      "target": "| 术语 | 实际含义 |\n|------|----------------------|\n| K近邻 | 非参数算法，通过找到离查询点最近的 K 个训练点来预测 |\n| 惰性学习 | 训练时不做计算，所有工作都在预测时完成。KNN 是典型例子 |\n| 急切学习 | 训练时进行大量计算，以构建紧凑的模型。大多数 ML 算法属于急切学习 |\n| 维数灾难 | 高维空间中，距离趋同，邻域扩大到覆盖空间的大部分，使 KNN 失效 |\n| KD树 | 沿特征轴递归划分空间的二叉树。低维情况下查询成本为 O(log n) |\n| 球树 | 由嵌套超球组成的树。在中等维数下（最高 ~50）比 KD树表现更好 |\n| 加权 KNN | 邻居的权重与距离成反比。较近的邻居对预测的影响更大 |\n| 特征缩放 | 将特征归一化到可比较的范围。KNN 等基于距离的方法需要这一步 |\n| 多数投票 | 统计 K 个邻居中哪个类别最多，以此进行分类 |\n| 暴力搜索 | 计算到每个训练点的距离。每次查询成本为 O(n*d)。结果精确，但 n 较大时很慢 |\n| 近似最近邻 | HNSW、LSH、IVF 等算法，以远快于精确搜索的速度找到近似最近的点 |\n| Voronoi图 | 对空间的划分：每个区域包含的所有点，到某个训练点的距离都比到其他任意训练点更近。K=1 的 KNN 会产生 Voronoi 边界 |\n"
+    },
+    {
+      "segment_id": "02-06:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Key Terms"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0189",
+      "kind": "heading",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Further Reading"
+      ],
+      "ordinal": 95,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "02-06:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Further Reading"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-06:b0191",
+      "kind": "list",
+      "heading_path": [
+        "# K-Nearest Neighbors and Distances",
+        "## Further Reading"
+      ],
+      "ordinal": 96,
+      "source_sha256": "2fa2cc4342185d03fc7cf334cab23a4fcacbce68760f3be0dba3e5748b497f21",
+      "target": "- [Cover & Hart: Nearest Neighbor Pattern Classification (1967)](https://ieeexplore.ieee.org/document/1053964) - KNN 的奠基论文，证明其错误率最多是 Bayes 最优错误率的两倍\n- [Friedman, Bentley, Finkel: An Algorithm for Finding Best Matches in Logarithmic Expected Time (1977)](https://dl.acm.org/doi/10.1145/355744.355745) - 最早的 KD树论文\n- [Beyer et al.: When Is \"Nearest Neighbor\" Meaningful? (1999)](https://link.springer.com/chapter/10.1007/3-540-49257-7_15) - 对最近邻问题中维数灾难的形式化分析\n- [scikit-learn Nearest Neighbors documentation](https://scikit-learn.org/stable/modules/neighbors.html) - 包含算法选择说明的实用指南\n- [FAISS: A Library for Efficient Similarity Search](https://github.com/facebookresearch/faiss) - Meta 面向 billion（十亿）规模近似最近邻搜索的库\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+  "additional_glossary_sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63",
+  "stage_dependencies_path": "i18n/zh/.curated/stages/S24-knn-distances/DEPENDENCIES.json",
+  "stage_dependencies_sha256": "ccc0772caf6d11e7a6f1014332052f2e6ece2e486fcd3c38079c9ca2fff7be55",
+  "author_checks": {
+    "technical_full_comparison": true,
+    "separate_full_chinese_read": true,
+    "independent_review": false,
+    "preserve_draft_until_independent_review": true
+  },
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S24-knn-distances/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "ccc0772caf6d11e7a6f1014332052f2e6ece2e486fcd3c38079c9ca2fff7be55"
+}
