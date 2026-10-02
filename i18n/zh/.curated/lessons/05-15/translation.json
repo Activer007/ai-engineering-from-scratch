@@ -1,0 +1,1648 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-15",
+  "source_path": "phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "22b8f9a06e585f278c7dba6f41a1aaee8a326110",
+  "source_sha256": "0b8bfca1c418447199c2d11972a26da45b772de059db589c56f2e1127d38499b",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/zh.md",
+  "target_sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "recovery": "Reconstructed from complete original in-session author script; target SHA matches prior frozen bytes. All approval evidence is newly performed after workspace restoration."
+  },
+  "segments": [
+    {
+      "segment_id": "05-15:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic"
+      ],
+      "ordinal": 1,
+      "source_sha256": "81fa2a991359b0a18155aa203efaf28eb98e8ac42cf782b3f7e95e5c17dae2f4",
+      "target": "# 主题建模：LDA 与 BERTopic\n",
+      "target_sha256": "29b54c7efb193dbcd7dc7cd80dd7e9dc55847c1b06bd5485019013dd55e63e48",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic"
+      ],
+      "ordinal": 2,
+      "source_sha256": "2b19434e8b290d268d7d0a2f81f239e3e570dbc087177f9d59cde96ec06a8f55",
+      "target": "> LDA（隐 Dirichlet 分配）：文档是主题的混合，主题是词上的分布。BERTopic：文档在嵌入（embedding）空间中聚成簇，簇就是主题。目标相同，分解方式不同。\n",
+      "target_sha256": "d539f48af51347dd1c050e4e74eff5b4559c7d4054b3eb8f200d9b3a17c5f758",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic"
+      ],
+      "ordinal": 3,
+      "source_sha256": "2aad1ae1f0c4f7da762181ad03c88218cb685eebb3a62171c2422a287b675c35",
+      "target": "**Type:** Learn\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 02（BoW + TF-IDF），阶段 5 · 03（Word2Vec）\n**Time:** ~45 分钟\n",
+      "target_sha256": "332cdbfa8137bac0dc7a70c2cd9ddcad3516acbd5cd684e66e9e026b4a69ab7b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "6774bd270dfb28d5022eb87cef96ecbf7f1ffb064ce29231e7c2536005ba4f39",
+      "target": "你有 10,000 条客户支持工单、50,000 篇新闻文章，或 200,000 条推文。你需要在不逐篇阅读的情况下，知道这批文本在谈什么。你没有已标注的类别，甚至不知道存在多少个类别。\n",
+      "target_sha256": "6d41c6876f37c80fdbc62e7ba37bbfedfde1e1048b70ec125cf11addbc73b60a",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "9ea1999c5f149c44a099208089cc28676a0149c22c3c438866976fcc79f3e228",
+      "target": "主题建模（topic modeling）无需监督就能回答这个问题。给它一个语料库，它会返回少量连贯的主题，以及每篇文档在这些主题上的分布。\n",
+      "target_sha256": "a6d186cc16ea392eaa6046a463a5f682958014072ea7a8aa60f71e5f4672b484",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "67115c2005cb8ea74273c5b77da8bcc921aebb48928533abbf7b26d3268c7e27",
+      "target": "两类算法占据主导地位。LDA（2003）把每篇文档视为潜在主题的混合，把每个主题视为词上的分布。它采用 Bayes 推断。对于需要混合成员关系（mixed membership）的主题分配，以及可解释的词级概率分布的场景，LDA 至今仍用于生产环境。\n",
+      "target_sha256": "74095aef215a325ba55b82e6287b614af20e26b13247ac262975a27a2a8b359c",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "fda9f595320272f30ce527279908028bcc2704c5530c765337695457ecd103eb",
+      "target": "BERTopic（2020）用 BERT 编码文档，通过 UMAP 降维，用 HDBSCAN 聚类，再通过基于类别的 TF-IDF（词频-逆文档频率）提取主题词。在短文本、社交媒体，以及语义相似性比词语重叠更重要的场景中，它更胜一筹。一篇文档只分配一个主题，这对长篇内容是一项限制。\n",
+      "target_sha256": "33d0588be5cb2f55cccdb93bed2e04276ffae1e93f9fc05a0eb44cdb11721472",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c35c4d9d9e1eed07596ca7939b48635defafecaa227afaa456316716072f3d19",
+      "target": "本课帮助你建立对这两种方法的直观理解，并说明面对给定语料库时该选哪一种。\n",
+      "target_sha256": "ba0c080b7d9ef96b4e5788eaf387c6a2ed428f0ce87f64485f963f3d08321fb3",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "4d0ae7af03d04ae9f1910bd04da9d6324e1a7821d1f158520765b8705f38a754",
+      "target": "![LDA 混合模型与 BERTopic 聚类对比](../assets/topic-modeling.svg)\n",
+      "target_sha256": "6136d18e222e94e6435287c7a8890a2801118cae5e179f0febe22cfc947dc574",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "e7d5336597d0e6e4c499326a8664acbec70dcc0910be9749c5a1eeae7cd6f2bc",
+      "target": "**LDA 的生成过程。** 每个主题都是词上的分布，每篇文档都是主题的混合。要在文档中生成一个词，先从文档的主题混合中抽取一个主题，再从该主题的分布中抽取一个词。推断则反过来：给定观测到的词，推断每篇文档的主题分布和每个主题的词分布。具体计算由折叠 Gibbs 抽样（collapsed Gibbs sampling）或变分 Bayes 完成。\n",
+      "target_sha256": "7967c3bc6f0a7d94f89b23363370f9c34545c8b9932441ead78674afc02dc89d",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "e5acd131a1fd554f9bedb0862d1ea763ae48a760f0ec9f41fed9f5ae8a9b9798",
+      "target": "LDA 的关键输出：\n",
+      "target_sha256": "3307491575fdc8123b2e31068f01ffb76152c23f6d91d5dcf82082a8e159ebf3",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0027",
+      "kind": "list",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "a10e6420b366056a66d8cf89e5e22c172b0b2ddd4b4b10d52e2ed42c9085c895",
+      "target": "- `doc_topic`：形状为 `(n_docs, n_topics)` 的矩阵，每行之和为 1（文档的主题混合）。\n- `topic_word`：形状为 `(n_topics, vocab_size)` 的矩阵，每行之和为 1（主题的词分布）。\n",
+      "target_sha256": "a6797765fefd9dd6afee0d55ba0e3527c23ef2d8dbfa502593d75ea80b7a7be5",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "f6208e219b97b88cfd3259e078a9907e224218e5efd17bd5bec22390000a1cad",
+      "target": "**BERTopic 流程。**\n",
+      "target_sha256": "7fac56d42955f345b3120b67694c5492d568f1603496b54d954e49e3285188d7",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0031",
+      "kind": "list",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "78354d1682c81c8b7aee37a34c54d9ba19ef6cfa875c96f482d8c837ca982a60",
+      "target": "1. 用句子 Transformer 对每篇文档进行编码，例如 `all-MiniLM-L6-v2`，得到 384 维向量。\n2. 用 UMAP 将维数降至 ~5 维。BERT 嵌入的维数太高，不适合聚类。\n3. 用 HDBSCAN 聚类。它基于密度，产生大小不一的簇和一个“离群点”标签。\n4. 对每个簇，在簇内文档上计算基于类别的 TF-IDF，提取排名靠前的词。\n",
+      "target_sha256": "5e7e9e194c515504b2cddfb813910e9b2a51da61b5217e3e7d029a4b1a940c61",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 17,
+      "source_sha256": "a568fe6ae4cf1b1351c974f15f0e77304bc7f05fd67896d2640d7823c7e00822",
+      "target": "输出为每篇文档一个主题，另有一个值为 -1 的离群点标签。还可以选择通过 HDBSCAN 的概率向量获得软成员关系（soft membership）。\n",
+      "target_sha256": "c76d759a9d30f99ceffe317d7983f9c6bfaa7c60630d0ade6ab2b6ea907a76f7",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 18,
+      "source_sha256": "5ee0070ea6f18bfe7047b4d7519dac346500150cc8792a3cfdd862e75d336152",
+      "target": "```figure\ntopic-drift\n```\n",
+      "target_sha256": "5ee0070ea6f18bfe7047b4d7519dac346500150cc8792a3cfdd862e75d336152",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## The Concept"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It"
+      ],
+      "ordinal": 19,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 1: LDA via scikit-learn"
+      ],
+      "ordinal": 20,
+      "source_sha256": "59fb0fbc654a30ae1b62b93514ef34c88b0e2bc2d2d79ae3295f2b8e1542bb63",
+      "target": "### 第 1 步：通过 scikit-learn 实现 LDA\n",
+      "target_sha256": "b7ecb189ce6d54f7fd66db0a10595b6f7c08ef326ada4fe4dc30a3326181d831",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 1: LDA via scikit-learn"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 1: LDA via scikit-learn"
+      ],
+      "ordinal": 21,
+      "source_sha256": "863676fea57515988f8addd954c860beb013bcb37f538a4de77c7725c954b346",
+      "target": "```python\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import LatentDirichletAllocation\nimport numpy as np\n\n\ndef fit_lda(documents, n_topics=5, max_features=1000):\n    cv = CountVectorizer(\n        max_features=max_features,\n        stop_words=\"english\",\n        min_df=2,\n        max_df=0.9,\n    )\n    X = cv.fit_transform(documents)\n    lda = LatentDirichletAllocation(\n        n_components=n_topics,\n        random_state=42,\n        max_iter=50,\n        learning_method=\"online\",\n    )\n    doc_topic = lda.fit_transform(X)\n    feature_names = cv.get_feature_names_out()\n    return lda, cv, doc_topic, feature_names\n\n\ndef print_top_words(lda, feature_names, n_top=10):\n    for idx, topic in enumerate(lda.components_):\n        top_idx = np.argsort(-topic)[:n_top]\n        words = [feature_names[i] for i in top_idx]\n        print(f\"topic {idx}: {' '.join(words)}\")\n```\n",
+      "target_sha256": "863676fea57515988f8addd954c860beb013bcb37f538a4de77c7725c954b346",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 1: LDA via scikit-learn"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 1: LDA via scikit-learn"
+      ],
+      "ordinal": 22,
+      "source_sha256": "c7b78a092cd7ff2818d46ca9ac708173efa2cb9948b7201133a20a4cc7fa8e3a",
+      "target": "注意：这里移除了停用词，min_df 和 max_df 分别过滤罕见词和普遍出现的词；采用 CountVectorizer，而非 TfidfVectorizer，因为 LDA 需要原始计数。\n",
+      "target_sha256": "986e1b4633c64cf7bbeccc93cd6e55233fcc2fabca00939f04ceb9605a8e4f6e",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 1: LDA via scikit-learn"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 2: BERTopic (production)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "b55d6822eb4a067d570ef8cd8898f9bceb6eed0a111c0f4d462790cbb5c3d2ae",
+      "target": "### 第 2 步：BERTopic（生产环境）\n",
+      "target_sha256": "5a1e0d2ef52440e337a03f272e634b3b1feb9a13cd51c5065efa61da429212e0",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 2: BERTopic (production)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 2: BERTopic (production)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "91a1f2f3d7aec2d543a6767e9edaf8f5bd48adb9088237eb494d292c84886376",
+      "target": "```python\nfrom bertopic import BERTopic\n\ntopic_model = BERTopic(\n    embedding_model=\"sentence-transformers/all-MiniLM-L6-v2\",\n    min_topic_size=15,\n    verbose=True,\n)\n\ntopics, probs = topic_model.fit_transform(documents)\ninfo = topic_model.get_topic_info()\nprint(info.head(20))\nvalid_topics = info[info[\"Topic\"] != -1][\"Topic\"].tolist()\nfor topic_id in valid_topics[:5]:\n    print(f\"topic {topic_id}: {topic_model.get_topic(topic_id)[:10]}\")\n```\n",
+      "target_sha256": "91a1f2f3d7aec2d543a6767e9edaf8f5bd48adb9088237eb494d292c84886376",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 2: BERTopic (production)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 2: BERTopic (production)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "0ca0490b1819a6a8c33a8ab62a0c6b7302f6e9215e5f07c18e176d5ff87214cf",
+      "target": "`Topic != -1` 这个过滤条件会去掉 BERTopic 的离群点分组，也就是 HDBSCAN 无法聚类的文档。`min_topic_size` 控制 HDBSCAN 的最小簇大小；BERTopic 库的默认值为 10。本示例根据课程中的数据规模，将它显式设为 15。对于文档数超过 10,000 的语料库，将它提高到 50 或 100。\n",
+      "target_sha256": "c3ab805ac61a6a37767c973a27005145b2b370c4611b2449a9439e90a7e8f5b1",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 2: BERTopic (production)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 3: evaluation"
+      ],
+      "ordinal": 26,
+      "source_sha256": "3768e65886a7226066948bc2f48d1b0bb7a9b824e84d3d73a47d0a64b0048123",
+      "target": "### 第 3 步：评估\n",
+      "target_sha256": "8700314aaccaeecbfe7e11abf60299962321fef2493deddd7f8cb734ef8e38a1",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 3: evaluation"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 3: evaluation"
+      ],
+      "ordinal": 27,
+      "source_sha256": "76f1496c2550bad8546abf1e157321112e3cf18e386c9997c7532cc29bb41778",
+      "target": "两种方法都会输出主题词。问题是，这些词是否连贯。\n",
+      "target_sha256": "2956b945c50fe4ef2057d628e45bc450ee97c9076149aadfbfb9537ce9607569",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 3: evaluation"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0055",
+      "kind": "list",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 3: evaluation"
+      ],
+      "ordinal": 28,
+      "source_sha256": "2da0638b17f3a40ba61cf09e2fc02e99112d368795e0d9e00eb7701b913cb582",
+      "target": "- **主题连贯性（topic coherence，c_v）。** 结合滑动窗口上下文中排名靠前的词对的 NPMI（归一化点互信息），将这些分数聚合为主题向量，再通过余弦相似度比较这些向量。越高越好。使用 `gensim.models.CoherenceModel`，并设置 `coherence=\"c_v\"`。\n- **主题多样性（topic diversity）。** 所有主题排名靠前的词中，不重复词所占的比例。越高越好，表示主题没有重叠。\n- **定性检查。** 阅读每个主题排名靠前的词。它们描述的是一个真实存在的事物吗？人工判断仍然是最后一道防线。\n",
+      "target_sha256": "4de3484575f6850ee3d78a9c450ae9fdd2aa6ac44593fdb42ef25e1a2fe88e3d",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Build It",
+        "### Step 3: evaluation"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## When to pick which"
+      ],
+      "ordinal": 29,
+      "source_sha256": "8aa330b2c22fa640eb4bb6b20ff88257ac8b1f5a1a0298b6d830f318c5ca3b54",
+      "target": "## 什么情况下该选哪种方法\n",
+      "target_sha256": "a69c88e545020044677d9a0354aac1db1d5e9770c764cd451990cb4092d9fca9",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## When to pick which"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0059",
+      "kind": "table",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## When to pick which"
+      ],
+      "ordinal": 30,
+      "source_sha256": "3a5572f0b5ea4a1c404533ad7f6bdfcf8d7720b6b2e280c4c460e162584b44e8",
+      "target": "| 场景 | 选择 |\n|-----------|------|\n| 短文本（推文、评论、标题） | BERTopic |\n| 包含多个主题混合的长文档 | LDA |\n| 没有 GPU / 计算资源有限 | LDA 或非负矩阵分解（NMF） |\n| 需要文档级的多主题分布 | LDA |\n| 集成大语言模型（LLM）来标注主题 | BERTopic（直接支持） |\n| 资源受限的边缘部署 | LDA |\n| 追求最高的语义连贯性 | BERTopic |\n",
+      "target_sha256": "915a5b632cc2323f7436f62fb5522eeb2e3c1753eb25af293166ead6910aa67f",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## When to pick which"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## When to pick which"
+      ],
+      "ordinal": 31,
+      "source_sha256": "46abafb3e77e9cf9dd31fa8e024b37b59c2ce1ef9e23c7d741fab4d88ffc58fa",
+      "target": "实践中最重要的考虑因素是文档长度。BERT 嵌入会截断输入；LDA 的计数方式则适用于任意长度。对于超过嵌入模型上下文长度的文档，要么分块后聚合，要么使用 LDA。\n",
+      "target_sha256": "79f3a7edfaac55630ca717e3033db697465373639378699e48f512fb8d21643e",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## When to pick which"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Use It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Use It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Use It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "b5f6d498dc25c78d94f60b46a9aaaab318a7bb444048551be1450bf0d7abfac3",
+      "target": "2026 年的技术栈：\n",
+      "target_sha256": "51db907c3b40c0de6ea2170983f32f6f748a8b657cfb3796bb10971b68cfeac3",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Use It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0067",
+      "kind": "list",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "2a02e10e69fa5fcbe7768b4220fc4291b4068c0e68c030c147233a838a720628",
+      "target": "- **BERTopic。** 短文本和所有重视语义的场景中的默认选择。\n- **`gensim.models.LdaModel`。** 用于生产环境的经典 LDA，成熟且经过实战检验。\n- **`sklearn.decomposition.LatentDirichletAllocation`。** 便于实验的 LDA。\n- **NMF。** 非负矩阵分解。它是 LDA 的一种快速替代方法，在短文本上的质量相当。\n- **Top2Vec。** 设计与 BERTopic 相似。社区规模较小，但在一些基准上表现不错。\n- **FASTopic。** 较新的方法，在超大规模语料库上比 BERTopic 更快。\n- **基于 LLM 的标注。** 运行任意聚类方法，再用提示词（prompt）让模型为每个簇命名。\n",
+      "target_sha256": "ca1a994ef5fa593a77ef46c13fd99a05f0f9fd6b21557d85dd517a5db5b63598",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Ship It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Ship It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Ship It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "8b3723d9cffae37ca168c17798cc31f0931db1ced01aeb8f7f22b6529fbb6275",
+      "target": "保存为 `outputs/skill-topic-picker.md`：\n",
+      "target_sha256": "8f9bcf4dc11595090cfdaa4a6784d30708da0326f1d78f038e8fabb6ef426c5c",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Ship It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Ship It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "bf8769555930750ef6d9762e8dbb7a0bcd48b5286325287b656bdd5621571e05",
+      "target": "```markdown\n---\nname: topic-picker\ndescription: Pick LDA or BERTopic for a corpus. Specify library, knobs, evaluation.\nversion: 1.0.0\nphase: 5\nlesson: 15\ntags: [nlp, topic-modeling]\n---\n\nGiven a corpus description (document count, avg length, domain, language, compute budget), output:\n\n1. Algorithm. LDA / NMF / BERTopic / Top2Vec / FASTopic. One-sentence reason.\n2. Configuration. Number of topics: `recommended = max(5, round(sqrt(n_docs)))`, clamped to 200 for corpora under 40,000 docs; permit >200 only when the corpus is genuinely large (>40k) and note the increased compute cost. `min_df` / `max_df` filters and embedding model for neural approaches also belong here.\n3. Evaluation. Topic coherence (c_v) via `gensim.models.CoherenceModel`, topic diversity, and a 20-sample human read.\n4. Failure mode to probe. For LDA, \"junk topics\" absorbing stopwords and frequent terms. For BERTopic, the -1 outlier cluster swallowing ambiguous documents.\n\nRefuse BERTopic on documents longer than the embedding model's context window without a chunking strategy. Refuse LDA on very short text (tweets, reviews under 10 tokens) as coherence collapses. Flag any n_topics choice below 5 as likely wrong; flag >200 on corpora under 40k docs as likely over-splitting.\n```\n",
+      "target_sha256": "bf8769555930750ef6d9762e8dbb7a0bcd48b5286325287b656bdd5621571e05",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Ship It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Exercises"
+      ],
+      "ordinal": 38,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Exercises"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0077",
+      "kind": "list",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Exercises"
+      ],
+      "ordinal": 39,
+      "source_sha256": "2360b17c64cf6110f89c87f540bf24225b07ed75d3724cbe0401d30db604ee9a",
+      "target": "1. **简单。** 在 20 Newsgroups 数据集上拟合一个包含 5 个主题的 LDA 模型。打印每个主题排名靠前的 10 个词。手动给每个主题命名。算法找到了真实类别吗？\n2. **中等。** 在同一个 20 Newsgroups 子集上拟合 BERTopic。将发现的主题数量、排名靠前的词和定性连贯性与 LDA 进行比较。哪种方法能更清晰地呈现真实类别？\n3. **困难。** 在你自己的语料库上，分别计算 LDA 和 BERTopic 的 c_v 连贯性。让每种方法分别使用 5、10、20、50 个主题运行。绘制连贯性随主题数量变化的曲线，报告哪种方法在不同主题数量下更稳定。\n",
+      "target_sha256": "17f3d08b787896f11d3a62b796ccdad04176a9843f6f1e4625c8b2982f853820",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Exercises"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Key Terms"
+      ],
+      "ordinal": 40,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Key Terms"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0081",
+      "kind": "table",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Key Terms"
+      ],
+      "ordinal": 41,
+      "source_sha256": "277c4d10dfb5fa49a80b8176429170af938944879b74fa4bba6d63ff7e1c2032",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 主题 | 语料库讨论的某件事 | 词上的概率分布（LDA），或相似文档组成的簇（BERTopic）。 |\n| 混合成员关系 | 一篇文档属于多个主题 | LDA 为每篇文档分配一个覆盖所有主题的分布。 |\n| UMAP | 降维 | 保留局部结构的流形学习（manifold learning）方法，用于 BERTopic。 |\n| HDBSCAN | 密度聚类 | 找出大小不一的簇，并为离群点生成“噪声”标签（-1）。 |\n| c_v 连贯性 | 主题质量指标 | 滑动窗口内排名靠前的主题词之间的平均点互信息。 |\n",
+      "target_sha256": "5ad40241509e3e90dc5b1be9c731b7f0e08dd78955dd2974a4b2835bcc992023",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Key Terms"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Further Reading"
+      ],
+      "ordinal": 42,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    },
+    {
+      "segment_id": "05-15:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Further Reading"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_BYTES_VERIFIED"
+    },
+    {
+      "segment_id": "05-15:b0085",
+      "kind": "list",
+      "heading_path": [
+        "# Topic Modeling — LDA and BERTopic",
+        "## Further Reading"
+      ],
+      "ordinal": 43,
+      "source_sha256": "07b965361d869bcb05f1a98846fd62343525ec25a531b79838a4efd01429e2e2",
+      "target": "- [Blei, Ng, Jordan (2003). Latent Dirichlet Allocation](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf) — LDA 论文。\n- [Grootendorst (2022). BERTopic: Neural topic modeling with a class-based TF-IDF procedure](https://arxiv.org/abs/2203.05794) — BERTopic 论文。\n- [Röder, Both, Hinneburg (2015). Exploring the Space of Topic Coherence Measures](https://svn.aksw.org/papers/2015/WSDM_Topic_Evaluation/public.pdf) — 提出 c_v 等指标的论文。\n- [BERTopic documentation](https://maartengr.github.io/BERTopic/) — 生产环境参考文档，示例很出色。\n",
+      "target_sha256": "09f7e5776f6884998319174984381010b2bb4447248585149b26fd188d110e86",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS"
+    }
+  ],
+  "stage_id": "S56-topic-modeling",
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "stage_terminology_path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+  "stage_terminology_sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S56-topic-modeling/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "0924d87144f44455db71f120ef9c7491cc2ee8ad591aefedd14fbb402f02e1ee",
+  "assets": [
+    {
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "source_path": "phases/05-nlp-foundations-to-advanced/15-topic-modeling/assets/topic-modeling.svg",
+      "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/assets/topic-modeling.svg",
+      "sha256": "4bf98a1d0ab33604de5caf9777f4f399b14ec0454d871891bb97083c638e77fd"
+    }
+  ],
+  "quantity_mappings": [
+    {
+      "segment_id": "05-15:b0005",
+      "source": "~45 minutes",
+      "target": "~45 分钟",
+      "equivalence": "45-minute estimate unchanged",
+      "source_sha256": "2aad1ae1f0c4f7da762181ad03c88218cb685eebb3a62171c2422a287b675c35",
+      "target_sha256": "332cdbfa8137bac0dc7a70c2cd9ddcad3516acbd5cd684e66e9e026b4a69ab7b"
+    },
+    {
+      "segment_id": "05-15:b0009",
+      "source": "10,000 tickets / 50,000 articles / 200,000 tweets",
+      "target": "10,000 条工单 / 50,000 篇文章 / 200,000 条推文",
+      "equivalence": "document counts and units unchanged",
+      "source_sha256": "6774bd270dfb28d5022eb87cef96ecbf7f1ffb064ce29231e7c2536005ba4f39",
+      "target_sha256": "6d41c6876f37c80fdbc62e7ba37bbfedfde1e1048b70ec125cf11addbc73b60a"
+    },
+    {
+      "segment_id": "05-15:b0011",
+      "source": "a small set / for each document",
+      "target": "少量 / 每篇文档",
+      "equivalence": "qualitative small set, per-document distribution",
+      "source_sha256": "9ea1999c5f149c44a099208089cc28676a0149c22c3c438866976fcc79f3e228",
+      "target_sha256": "a6d186cc16ea392eaa6046a463a5f682958014072ea7a8aa60f71e5f4672b484"
+    },
+    {
+      "segment_id": "05-15:b0013",
+      "source": "Two algorithmic families / each document / each topic",
+      "target": "两类算法 / 每篇文档 / 每个主题",
+      "equivalence": "2 families and per-document/per-topic roles",
+      "source_sha256": "67115c2005cb8ea74273c5b77da8bcc921aebb48928533abbf7b26d3268c7e27",
+      "target_sha256": "74095aef215a325ba55b82e6287b614af20e26b13247ac262975a27a2a8b359c"
+    },
+    {
+      "segment_id": "05-15:b0015",
+      "source": "One document gets one topic",
+      "target": "一篇文档只分配一个主题",
+      "equivalence": "1 topic per document",
+      "source_sha256": "fda9f595320272f30ce527279908028bcc2704c5530c765337695457ecd103eb",
+      "target_sha256": "33d0588be5cb2f55cccdb93bed2e04276ffae1e93f9fc05a0eb44cdb11721472"
+    },
+    {
+      "segment_id": "05-15:b0017",
+      "source": "both / which one",
+      "target": "这两种方法 / 哪一种",
+      "equivalence": "2 methods, choice of 1",
+      "source_sha256": "c35c4d9d9e1eed07596ca7939b48635defafecaa227afaa456316716072f3d19",
+      "target_sha256": "ba0c080b7d9ef96b4e5788eaf387c6a2ed428f0ce87f64485f963f3d08321fb3"
+    },
+    {
+      "segment_id": "05-15:b0023",
+      "source": "a topic ... a word / per document / per topic",
+      "target": "一个主题……一个词 / 每篇文档 / 每个主题",
+      "equivalence": "one draw at each generative stage, respective distributions",
+      "source_sha256": "e7d5336597d0e6e4c499326a8664acbec70dcc0910be9749c5a1eeae7cd6f2bc",
+      "target_sha256": "7967c3bc6f0a7d94f89b23363370f9c34545c8b9932441ead78674afc02dc89d"
+    },
+    {
+      "segment_id": "05-15:b0027",
+      "source": "each row sums to 1",
+      "target": "每行之和为 1",
+      "equivalence": "two matrix dimensions and row normalization preserved",
+      "source_sha256": "a10e6420b366056a66d8cf89e5e22c172b0b2ddd4b4b10d52e2ed42c9085c895",
+      "target_sha256": "a6797765fefd9dd6afee0d55ba0e3527c23ef2d8dbfa502593d75ea80b7a7be5"
+    },
+    {
+      "segment_id": "05-15:b0031",
+      "source": "384-dim / ~5 dimensions / each document / each cluster",
+      "target": "384 维 / ~5 维 / 每篇文档 / 每个簇",
+      "equivalence": "original vs reduced dimensions distinguished",
+      "source_sha256": "78354d1682c81c8b7aee37a34c54d9ba19ef6cfa875c96f482d8c837ca982a60",
+      "target_sha256": "5e7e9e194c515504b2cddfb813910e9b2a51da61b5217e3e7d029a4b1a940c61"
+    },
+    {
+      "segment_id": "05-15:b0033",
+      "source": "one topic per document (plus a -1 outlier label)",
+      "target": "每篇文档一个主题，另有一个值为 -1 的离群点标签",
+      "equivalence": "one-topic count versus negative-one label",
+      "source_sha256": "a568fe6ae4cf1b1351c974f15f0e77304bc7f05fd67896d2640d7823c7e00822",
+      "target_sha256": "c76d759a9d30f99ceffe317d7983f9c6bfaa7c60630d0ade6ab2b6ea907a76f7"
+    },
+    {
+      "segment_id": "05-15:b0049",
+      "source": "10 / 15 / over 10,000 documents / 50 or 100",
+      "target": "10 / 15 / 文档数超过 10,000 / 50 或 100",
+      "equivalence": "cluster-size settings versus document count",
+      "source_sha256": "0ca0490b1819a6a8c33a8ab62a0c6b7302f6e9215e5f07c18e176d5ff87214cf",
+      "target_sha256": "c3ab805ac61a6a37767c973a27005145b2b370c4611b2449a9439e90a7e8f5b1"
+    },
+    {
+      "segment_id": "05-15:b0053",
+      "source": "Both methods",
+      "target": "两种方法",
+      "equivalence": "2 methods",
+      "source_sha256": "76f1496c2550bad8546abf1e157321112e3cf18e386c9997c7532cc29bb41778",
+      "target_sha256": "2956b945c50fe4ef2057d628e45bc450ee97c9076149aadfbfb9537ce9607569"
+    },
+    {
+      "segment_id": "05-15:b0055",
+      "source": "Fraction of unique words across all topics top words",
+      "target": "所有主题排名靠前的词中，不重复词所占的比例",
+      "equivalence": "unique-word ratio, not a new numeric threshold",
+      "source_sha256": "2da0638b17f3a40ba61cf09e2fc02e99112d368795e0d9e00eb7701b913cb582",
+      "target_sha256": "4de3484575f6850ee3d78a9c450ae9fdd2aa6ac44593fdb42ef25e1a2fe88e3d"
+    },
+    {
+      "segment_id": "05-15:b0077",
+      "source": "5 topics / 20 Newsgroups / top 10 / 5,10,20,50 topics",
+      "target": "5 个主题 / 20 Newsgroups / 排名靠前的 10 个 / 5、10、20、50 个主题",
+      "equivalence": "topic counts versus selected word counts and dataset proper name",
+      "source_sha256": "2360b17c64cf6110f89c87f540bf24225b07ed75d3724cbe0401d30db604ee9a",
+      "target_sha256": "17f3d08b787896f11d3a62b796ccdad04176a9843f6f1e4625c8b2982f853820"
+    },
+    {
+      "segment_id": "05-15:b0081",
+      "source": "each document / all topics / -1",
+      "target": "每篇文档 / 所有主题 / -1",
+      "equivalence": "document-wide distributions and negative-one noise label",
+      "source_sha256": "277c4d10dfb5fa49a80b8176429170af938944879b74fa4bba6d63ff7e1c2032",
+      "target_sha256": "5ad40241509e3e90dc5b1be9c731b7f0e08dd78955dd2974a4b2835bcc992023"
+    }
+  ],
+  "author_review": {
+    "technical_full_pass": true,
+    "separate_chinese_full_read": true,
+    "completed_at_utc": "2026-10-02T23:27:05.258594+00:00",
+    "recovery_review_is_new": true,
+    "previous_pass_inherited": false,
+    "blocks": 85,
+    "candidates": 39,
+    "lines": 184,
+    "fixed_generic_headings_separately_checked": true
+  },
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "4b18d0c33f3dc9915f6fed3c1346868458807d62",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    }
+  ]
+}
