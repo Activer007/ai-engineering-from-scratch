@@ -1,0 +1,2215 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-03",
+  "source_path": "phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "ed9e72af8f8ece10a29f124f648c37a2df41a57a",
+  "source_sha256": "566500e6c43ebc3624a117e76843be1100be7951ac7780c37f15241299846b27",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/docs/zh.md",
+  "target_sha256": "84ca0bc5d45c8d24fde87ae928d6a1a1fa5e77445b2c294fc53dae78b1703e0e",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "05-03:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch"
+      ],
+      "ordinal": 1,
+      "source_sha256": "7029426966c45dd02078eee43993ae0a347e99fd7d8fdbefff6ef97792c4ca52",
+      "target": "# 词嵌入：从零实现 Word2Vec\n",
+      "target_sha256": "ff21a68886d5bbb4b51f70fd251ed571919992d2a410ce5264817261487d723c",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "标题保留 Word2Vec 专名与从零实现语义。"
+    },
+    {
+      "segment_id": "05-03:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch"
+      ],
+      "ordinal": 2,
+      "source_sha256": "ad1b248e50ee052033814bc25296531aeae65e029497b66c316297cde7f7d0ff",
+      "target": "> 一个词的含义，取决于与它相伴的词。用这个想法训练一个浅层网络，几何结构就会自然浮现。\n",
+      "target_sha256": "12cfe598cd581253e0da3c81026c82f3a69d1be9af76f66e42d2745237d8470c",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "相伴词决定词义的比喻及浅层网络几何结果保持。"
+    },
+    {
+      "segment_id": "05-03:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch"
+      ],
+      "ordinal": 3,
+      "source_sha256": "e2985e60d9cc0bafe00c56a66f0e6446298af1d98369c26023063cbdbf30aaef",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 02（BoW + TF-IDF），阶段 3 · 03（从零实现反向传播）\n**Time:** ~75 分钟\n",
+      "target_sha256": "dc2aa01daaf8be26d6b0ecaa214b35a51fe82b94b2cf38ddaf701c478cae4d53",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "元数据键/Build/Python和前置编号保留，时间等值中文。"
+    },
+    {
+      "segment_id": "05-03:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "统一问题章节。"
+    },
+    {
+      "segment_id": "05-03:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "1a557913bf7b4c99a4f46d4a9593af454039867846d5188cf51747054b4d2732",
+      "target": "TF-IDF（词频-逆文档频率）知道 `dog` 和 `puppy` 是不同的词，却不知道它们的含义几乎相同。用 `dog` 训练的分类器，无法泛化到一条谈论 `puppy` 的评论。你可以通过列举同义词来勉强弥补，但遇到罕见词、领域术语，以及任何你未曾考虑过的语言，这种办法就会失效。\n",
+      "target_sha256": "b71224748ec4e17d87df2817ff9704b02803290b970e587d8de705e68e8e2a33",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "TF-IDF首现释义、dog/puppy差异与源无法泛化断言保持。"
+    },
+    {
+      "segment_id": "05-03:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "b486cb380b05ea6ad6dc5eb99b2c956b14c3b8d3b428caccaf985df4ddcaf1fa",
+      "target": "你希望有一种表示，让 `dog` 和 `puppy` 在空间中彼此接近，让 `king - man + woman` 落在 `queen` 附近，也让用 `dog` 训练的模型无需额外处理，就能把一部分信号迁移到 `puppy`。\n",
+      "target_sha256": "c7bd6c5749702f8723858737fd7ffa9a705de027e035363118213f8c068833db",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "三组期望几何/迁移关系及行内向量式保持。"
+    },
+    {
+      "segment_id": "05-03:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "d5f449eec2c0a0aa40f4b8216f77a924d7f0e525e96240032efbabd565da1475",
+      "target": "Word2Vec 给了我们这样的空间。两层神经网络、万亿 token（词元）规模的训练，于 2013 年发表。它的架构简单得几乎让人不好意思，但成果重塑了随后十年的自然语言处理（NLP）。\n",
+      "target_sha256": "9b1a7ca373ba84be6665e54247ee2dd9f47801a1e3614c96c619aabca2886e37",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "两层、万亿token、2013与十年量级逐项映射，历史强断言另列。"
+    },
+    {
+      "segment_id": "05-03:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "统一概念章节。"
+    },
+    {
+      "segment_id": "05-03:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "3f5adb16d99a9278f6f25568e1d37c12e91888d173812b595a63c457b44104bd",
+      "target": "**分布假设（distributional hypothesis）**（Firth，1957）：“要理解一个词，就看与它相伴的词。”如果两个词出现在相似的上下文中，它们的含义很可能也相近。\n",
+      "target_sha256": "3e27c6675f8b46fa4d996b88ba03ef00f6233fbc787dc094c7ea301380ed37ee",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "分布假设中英首现；Firth/1957及上下文相近则词义可能相近的限定保持。"
+    },
+    {
+      "segment_id": "05-03:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "e4d171942833edb9520ed5958750781eb2f7361ad320ecb6d16369bdf6dfbb90",
+      "target": "Word2Vec 有两种形式，都利用了这个想法。\n",
+      "target_sha256": "693bf0923e0e8250aad3e612a20db6c39f57f328ab86888da9ff8e3ffced7cc4",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "两种架构数量及同一思想保持。"
+    },
+    {
+      "segment_id": "05-03:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0021",
+      "kind": "list",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "e9586b5aca7b3f0de6da59a37f121d162ffd489fb557a1a5af01d7867edaa63d",
+      "target": "- **Skip-gram。** 给定中心词，预测周围的词。窗口大小为 2 时，`cat -> (the, sat, on)`。\n- **连续词袋（CBOW，continuous bag of words）。** 给定周围的词，预测中心词。`(the, sat, on) -> cat`。\n",
+      "target_sha256": "8e3ab59f45a6f63e5d015be64c061fdc5a6fd4cc1e5ad00618a0b19741601f41",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "Skip-gram中心到上下文、CBOW上下文到中心方向及窗口2保持。"
+    },
+    {
+      "segment_id": "05-03:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "b896aba493c603de525182110697af920235b5abe1036573dcd3dea701ac1998",
+      "target": "Skip-gram 训练更慢，但对罕见词的处理更好。它成了默认选择。\n",
+      "target_sha256": "5ebd3be24e8861eb77fea58763231393f436ea8416a3fffbd6a591773fcdd7fa",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "更慢/罕见词更好/默认选择三项源断言不缓和。"
+    },
+    {
+      "segment_id": "05-03:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "bd7059979e902e8ce64fbc484cb3859a8174e073ca18f549d098dbaff18f7bd1",
+      "target": "这个网络只有一个隐藏层，而且没有非线性变换。输入是覆盖整个词表的 one-hot（独热）向量，输出是覆盖整个词表的 softmax。训练结束后，丢弃输出层，隐藏层的权重就是词嵌入（word embedding）。\n",
+      "target_sha256": "06cdbc582b4786c32c387fc14869a707986527fdd7858dc0e2481f26f7add87c",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "一个隐藏层、无非线性、独热、softmax、丢输出表与词嵌入角色保持。"
+    },
+    {
+      "segment_id": "05-03:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0027",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "2ec8bec872350ffb559b69d7067cb408eaa07c84f565a26a81f3d112ad833a27",
+      "target": "```text\none-hot(center) ── W ──▶ hidden (d-dim) ── W' ──▶ softmax(vocab)\n                          ^\n                          this is the embedding\n```\n",
+      "target_sha256": "43d8db4acf340447f7322e24956c4d5502b1bd122e85da7056dacac8e696683d",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "57713f7db8c392be1517b7ea1ef88cdea2e5304b6068118010486ae5f6c21c8d",
+      "target": "关键技巧在于：对 100k（k 表示千）个词计算 softmax，代价高得难以承受。Word2Vec 用**负采样（negative sampling）** 把它转为二分类任务，预测“这个上下文词是否出现在这个中心词附近”。每个训练词对只抽取少量负词（没有共同出现的词），而不对整个词表计算 softmax。\n",
+      "target_sha256": "8c0700c5f7a2f5bece5ac4db14988793cc81ab03834cca734f200428b1265728",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "100k及k单位释义；负采样与二分类、少量负词定义按源保留。 实际GitHub GFM确认闭合标记紧贴汉字导致残留**；仅补一个ASCII空格，语义与载荷不改。"
+    },
+    {
+      "segment_id": "05-03:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "9c670bf1b7f5bc1b01293144739b6155a85e8f1d8a50f737eb7342e947a03fc2",
+      "target": "```figure\nword-vector-arithmetic\n```\n",
+      "target_sha256": "9c670bf1b7f5bc1b01293144739b6155a85e8f1d8a50f737eb7342e947a03fc2",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It"
+      ],
+      "ordinal": 17,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "统一实现章节。"
+    },
+    {
+      "segment_id": "05-03:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 1: training pairs from a corpus"
+      ],
+      "ordinal": 18,
+      "source_sha256": "a2f1774af8fb5ec07a8149de4c346dae8c4eae0bc67b823cabdd130b556e78df",
+      "target": "### 步骤 1：从语料库生成训练词对\n",
+      "target_sha256": "12fd071ea5b856b260418d57be20632349b1834c5cc60c57cbf53258544a29c8",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "步骤1从语料生成训练词对。"
+    },
+    {
+      "segment_id": "05-03:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 1: training pairs from a corpus"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 1: training pairs from a corpus"
+      ],
+      "ordinal": 19,
+      "source_sha256": "40ae4da834c0eaa547ed6e0fa24dcfe7dbd649ab3751503f393860670f715a24",
+      "target": "```python\ndef skipgram_pairs(docs, window=2):\n    pairs = []\n    for doc in docs:\n        for i, center in enumerate(doc):\n            for j in range(max(0, i - window), min(len(doc), i + window + 1)):\n                if i == j:\n                    continue\n                pairs.append((center, doc[j]))\n    return pairs\n```\n",
+      "target_sha256": "40ae4da834c0eaa547ed6e0fa24dcfe7dbd649ab3751503f393860670f715a24",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 1: training pairs from a corpus"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 1: training pairs from a corpus"
+      ],
+      "ordinal": 20,
+      "source_sha256": "c56322e9825906eb01b74b1f004f3fec866e35d174c079c867ae22cc7f3f67f9",
+      "target": "```python\n>>> skipgram_pairs([[\"the\", \"cat\", \"sat\", \"on\", \"mat\"]], window=2)\n[('the', 'cat'), ('the', 'sat'),\n ('cat', 'the'), ('cat', 'sat'), ('cat', 'on'),\n ('sat', 'the'), ('sat', 'cat'), ('sat', 'on'), ('sat', 'mat'),\n ...]\n```\n",
+      "target_sha256": "c56322e9825906eb01b74b1f004f3fec866e35d174c079c867ae22cc7f3f67f9",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 1: training pairs from a corpus"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 1: training pairs from a corpus"
+      ],
+      "ordinal": 21,
+      "source_sha256": "55d392f46c6ea2c4cc84577c814bfcc1964cc5326ff9bd53e64d524d6398a885",
+      "target": "窗口中的每一对（中心词，上下文词）都是一个正训练样本。\n",
+      "target_sha256": "985f4af6de475e7b4178eca036e211d3023cfceb7f159f790b62d23cc2c1a3ca",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "窗口有向中心/上下文正词对角色不倒置。"
+    },
+    {
+      "segment_id": "05-03:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 1: training pairs from a corpus"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 2: embedding tables"
+      ],
+      "ordinal": 22,
+      "source_sha256": "b60c92e10c8688fe6cf568b4323a58e36774df6abc009cca83fcdccf66d7e462",
+      "target": "### 步骤 2：嵌入表\n",
+      "target_sha256": "42027338e570fc971b8c08529ee516a5fb3e6e80d77f331b93b6bed71f91727d",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "步骤2嵌入表。"
+    },
+    {
+      "segment_id": "05-03:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 2: embedding tables"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 2: embedding tables"
+      ],
+      "ordinal": 23,
+      "source_sha256": "5c4887face85bff53911b89138f60a615d1713672de806d0ed61faa81b71f931",
+      "target": "使用两个矩阵。`W` 是中心词嵌入表，也就是你要保留的那一张；`W'` 是上下文词嵌入表，通常会被丢弃，有时也会与 `W` 取平均。\n",
+      "target_sha256": "332a3ebd81c4a50bb43587c2b6fd6597267a380636f6e1f5fabc7702e754bbfc",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "W中心表保留，W撇上下文表丢弃或平均的两角色完整。"
+    },
+    {
+      "segment_id": "05-03:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 2: embedding tables"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 2: embedding tables"
+      ],
+      "ordinal": 24,
+      "source_sha256": "eb6a74d47f4bc7227a3daa26c1a33e50ee5ed561f9bff6c6c14f384d4ddb5f4c",
+      "target": "```python\nimport numpy as np\n\n\ndef init_embeddings(vocab_size, dim, seed=0):\n    rng = np.random.default_rng(seed)\n    W = rng.normal(0, 0.1, size=(vocab_size, dim))\n    W_prime = rng.normal(0, 0.1, size=(vocab_size, dim))\n    return W, W_prime\n```\n",
+      "target_sha256": "eb6a74d47f4bc7227a3daa26c1a33e50ee5ed561f9bff6c6c14f384d4ddb5f4c",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 2: embedding tables"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 2: embedding tables"
+      ],
+      "ordinal": 25,
+      "source_sha256": "3d0035e9b3334e5fce0f76e370ecb279445764a7eaecd0df246143d399de7088",
+      "target": "用较小的随机值初始化。词表大小为 10k、维数为 100，是实际可用的规模；用于教学时，50 个词 x 16 维就足以看出几何结构。\n",
+      "target_sha256": "352d282e357dd13722ef780e11e4085aaa4845aa770de6bd45af75b3e79e08d5",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "小随机初值、10k词表/100维和50词x16维区别保持。"
+    },
+    {
+      "segment_id": "05-03:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 2: embedding tables"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 3: negative sampling objective"
+      ],
+      "ordinal": 26,
+      "source_sha256": "67d54822070184be05d6ac8c2069e0d57f77be8e3d07b4b68385b8bdaae17435",
+      "target": "### 步骤 3：负采样目标\n",
+      "target_sha256": "bfa15288ca623d8f0760f89b4175125934a75588e230c8a3c5d3682c62e875d2",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "步骤3负采样目标。"
+    },
+    {
+      "segment_id": "05-03:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 3: negative sampling objective"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 3: negative sampling objective"
+      ],
+      "ordinal": 27,
+      "source_sha256": "a1a3fc55d180a6fbe0a6c5062ff54b3f053e2fe9d2439da4547d690cc0da80a1",
+      "target": "对于每个正词对 `(center, context)`，从词表中随机抽取 `k` 个词作为负样本。训练模型，使点积 `W[center] · W'[context]` 对正样本较高、对负样本较低。\n",
+      "target_sha256": "c3818f2ffe690ba37c9a8c41189cfccce8628f513d8c4db91cea167f6b80dff2",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "正词对、k负词、点积正高负低的符号和逻辑保持。"
+    },
+    {
+      "segment_id": "05-03:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 3: negative sampling objective"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 3: negative sampling objective"
+      ],
+      "ordinal": 28,
+      "source_sha256": "ab422d9a4d1b01c7761b2384fede151f8484761d5b6ff3f1aac44c721eb5b069",
+      "target": "```python\ndef sigmoid(x):\n    return 1.0 / (1.0 + np.exp(-np.clip(x, -20, 20)))\n\n\ndef train_pair(W, W_prime, center_idx, context_idx, negative_indices, lr):\n    v_c = W[center_idx]\n    u_pos = W_prime[context_idx]\n    u_negs = W_prime[negative_indices]\n\n    pos_score = sigmoid(v_c @ u_pos)\n    neg_scores = sigmoid(u_negs @ v_c)\n\n    grad_center = (pos_score - 1) * u_pos\n    for i, u in enumerate(u_negs):\n        grad_center += neg_scores[i] * u\n\n    W[context_idx] = W[context_idx]\n    W_prime[context_idx] -= lr * (pos_score - 1) * v_c\n    for i, neg_idx in enumerate(negative_indices):\n        W_prime[neg_idx] -= lr * neg_scores[i] * v_c\n    W[center_idx] -= lr * grad_center\n```\n",
+      "target_sha256": "ab422d9a4d1b01c7761b2384fede151f8484761d5b6ff3f1aac44c721eb5b069",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 3: negative sampling objective"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 3: negative sampling objective"
+      ],
+      "ordinal": 29,
+      "source_sha256": "b79d87e62cfba963a2928a6844fe9fc498765c6dc1cbea1f2a67e82c5cec2b09",
+      "target": "关键公式是：正词对的逻辑损失（logistic loss，希望 sigmoid 接近 1），加上负词对的逻辑损失（希望 sigmoid 接近 0）。梯度流向两张表。完整推导见原论文；如果想真正记住它，不妨用纸笔推一遍。\n",
+      "target_sha256": "b2d153dc10905a1a6e566c134213d7761ec596afb817e26bc6d54ac06c73ae8a",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "正负逻辑损失sigmoid向1/0，两表梯度与推导建议保持。"
+    },
+    {
+      "segment_id": "05-03:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 3: negative sampling objective"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 4: train on a toy corpus"
+      ],
+      "ordinal": 30,
+      "source_sha256": "2f01a758b914806f688a329f79c5252a7ebac26d8358f066e6af6eb45d6a0fbd",
+      "target": "### 步骤 4：在小型示例语料库上训练\n",
+      "target_sha256": "1317dc127ee151b575dbc24b8374c72c1180642814c61c66f93fa75912c931d7",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "步骤4小型语料训练。"
+    },
+    {
+      "segment_id": "05-03:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 4: train on a toy corpus"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 4: train on a toy corpus"
+      ],
+      "ordinal": 31,
+      "source_sha256": "a55c896cf670d6ef09d5387dbde3abe30c90236d88c97be905597af49e7bfbab",
+      "target": "```python\ndef train(docs, dim=16, window=2, k_neg=5, epochs=100, lr=0.05, seed=0):\n    vocab = build_vocab(docs)\n    vocab_size = len(vocab)\n    rng = np.random.default_rng(seed)\n    W, W_prime = init_embeddings(vocab_size, dim, seed=seed)\n    pairs = skipgram_pairs(docs, window=window)\n\n    for epoch in range(epochs):\n        rng.shuffle(pairs)\n        for center, context in pairs:\n            c_idx = vocab[center]\n            ctx_idx = vocab[context]\n            negs = rng.integers(0, vocab_size, size=k_neg)\n            negs = [n for n in negs if n != ctx_idx and n != c_idx]\n            train_pair(W, W_prime, c_idx, ctx_idx, negs, lr)\n    return vocab, W\n```\n",
+      "target_sha256": "a55c896cf670d6ef09d5387dbde3abe30c90236d88c97be905597af49e7bfbab",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 4: train on a toy corpus"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 4: train on a toy corpus"
+      ],
+      "ordinal": 32,
+      "source_sha256": "da56b6eb27f86389ef4c88d8b8cd172bfa476a0ba2ca5d1f2bd3eb9bc7e178ef",
+      "target": "在大型语料库上训练足够多轮（epoch）后，共享上下文的词会得到相似的中心词嵌入。在小型示例语料库上，这个效果还不明显；用数十亿 token 训练时，效果就非常显著。\n",
+      "target_sha256": "3c47f5bb4fcd1fd03ea24fabda2d3b45d42837aca28bc4d8ccf4b119926a1c22",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "足够轮次、共享上下文、数十亿token和规模效果强断言保持。"
+    },
+    {
+      "segment_id": "05-03:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 4: train on a toy corpus"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 33,
+      "source_sha256": "6bbc9f07bad189b98ca229332a8d2b07f4ced658068e9517a8ef75885105cb76",
+      "target": "### 步骤 5：类比技巧\n",
+      "target_sha256": "6acf66e7e57bc30342e5af84cbfd91fc5a2c309c5edc1e9c6a757f8d427a2f1b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "步骤5类比。"
+    },
+    {
+      "segment_id": "05-03:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 34,
+      "source_sha256": "5f937d604965db59a792ba75b1e1d965e56576c4d2c74db20b5c7710182013b7",
+      "target": "```python\ndef nearest(vocab, W, target_vec, topk=5, exclude=None):\n    exclude = exclude or set()\n    inv_vocab = {i: w for w, i in vocab.items()}\n    norms = np.linalg.norm(W, axis=1, keepdims=True) + 1e-9\n    W_norm = W / norms\n    target = target_vec / (np.linalg.norm(target_vec) + 1e-9)\n    sims = W_norm @ target\n    order = np.argsort(-sims)\n    out = []\n    for i in order:\n        if i in exclude:\n            continue\n        out.append((inv_vocab[i], float(sims[i])))\n        if len(out) == topk:\n            break\n    return out\n\n\ndef analogy(vocab, W, a, b, c, topk=5):\n    v = W[vocab[b]] - W[vocab[a]] + W[vocab[c]]\n    return nearest(vocab, W, v, topk=topk, exclude={vocab[a], vocab[b], vocab[c]})\n```\n",
+      "target_sha256": "5f937d604965db59a792ba75b1e1d965e56576c4d2c74db20b5c7710182013b7",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 35,
+      "source_sha256": "113c2862cbc1c679a415f9f42180d436fdb1cfc3d7a3b61e13e3edae11f89491",
+      "target": "使用预训练的 300d（d 表示向量维数）Google News 向量：\n",
+      "target_sha256": "d2352a51308203e5516c1f89a366f1713bf140bcde7d3923942870109fbb05c3",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "300d Google News中d是维数，不是语料数量。"
+    },
+    {
+      "segment_id": "05-03:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0071",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 36,
+      "source_sha256": "de26e7dc2ba9570a79e5ffd5b76300451fce86a2596c1d3d8b18acc337197856",
+      "target": "```python\n>>> analogy(vocab, W, \"man\", \"king\", \"woman\")\n[('queen', 0.71), ('monarch', 0.62), ('princess', 0.59), ...]\n```\n",
+      "target_sha256": "de26e7dc2ba9570a79e5ffd5b76300451fce86a2596c1d3d8b18acc337197856",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 37,
+      "source_sha256": "fcad9fc4d496ebc89a991638a7d09ef1ef759976788c1826dbe4152594a5d897",
+      "target": "`king - man + woman = queen`。这并不是因为模型知道什么是王室，而是因为向量 `(king - man)` 捕捉到了类似“王室”的含义，把它加到 `woman` 上，就会落在王室女性所处的区域附近。\n",
+      "target_sha256": "484d0acac9603f3698bd0b7c2a36eaa62aeef9c3ad856659661c9fcbafc27f6a",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "向量式原样；royal解释为王室，未暗修语义轴解释。"
+    },
+    {
+      "segment_id": "05-03:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Build It",
+        "### Step 5: the analogy trick"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "统一使用章节。"
+    },
+    {
+      "segment_id": "05-03:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "0af1a31ce641acbc633a01facb50ea32274df114bc65c88757e7347b12b30c11",
+      "target": "从零编写 Word2Vec 是为了教学。生产环境中的 NLP 使用 `gensim`。\n",
+      "target_sha256": "1c7b7a0b96de79c89775ed5e0d851127fd4003e8bbfa5a89cabc5a978f340512",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "教学与生产gensim源概括保留，代码API不改。"
+    },
+    {
+      "segment_id": "05-03:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "144daab58c4d17a33404f9472729dbf04a71d99c4016cd50cfc0bb3ea9e204a6",
+      "target": "```python\nfrom gensim.models import Word2Vec\n\nsentences = [\n    [\"the\", \"cat\", \"sat\", \"on\", \"the\", \"mat\"],\n    [\"the\", \"dog\", \"ran\", \"across\", \"the\", \"room\"],\n]\n\nmodel = Word2Vec(\n    sentences,\n    vector_size=100,\n    window=5,\n    min_count=1,\n    sg=1,\n    negative=5,\n    workers=4,\n    epochs=30,\n)\n\nprint(model.wv[\"cat\"])\nprint(model.wv.most_similar(\"cat\", topn=3))\n```\n",
+      "target_sha256": "144daab58c4d17a33404f9472729dbf04a71d99c4016cd50cfc0bb3ea9e204a6",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "aa2858b25642af4ab06d5d0f89271b62947eb6cd65d650f4960cc4c6c9c07385",
+      "target": "在实际工作中，你几乎从不自己训练 Word2Vec，而是下载预训练向量。\n",
+      "target_sha256": "6d59ed3c6f8f46f5ef8ffd4e4242baa41c5686dc60a750687a7bd7f5dc6ced3f",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "几乎不自训、下载预训练向量的源推荐保持。"
+    },
+    {
+      "segment_id": "05-03:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0083",
+      "kind": "list",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "92ea9915f2c14c47eceaf79cf5829f3f55c3569d48028836e785e9f2fca659d5",
+      "target": "- **GloVe**：Stanford 提出的共现矩阵分解方法。有 50d、100d、200d、300d 的检查点，通用覆盖面良好。第 04 课专门介绍 GloVe。\n- **fastText**：Facebook 对 Word2Vec 的扩展，对字符连续 n 元片段（n-gram）进行嵌入。通过组合子词来处理词表外（OOV，out of vocabulary）词。见第 04 课。\n- **在 Google News 上预训练的 Word2Vec**：300d，词表包含 3M（M 表示百万）个词，发表于 2013 年。至今每天仍有人下载。\n",
+      "target_sha256": "ed9569e4d9121d21c8531fb7e2a91b1ab77fcca7a6c1089b9728cd29cdf8ece2",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "GloVe/fastText/Google News三项完整，d/M/2013/04保持，OOV首现释义。"
+    },
+    {
+      "segment_id": "05-03:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### When Word2Vec still wins in 2026"
+      ],
+      "ordinal": 43,
+      "source_sha256": "b2a43ef7eb454fa74ad8b09a78c12ea5a91999f271ac419c2e296929f2a71bb4",
+      "target": "### 到了 2026 年，Word2Vec 在哪些场景下仍有优势\n",
+      "target_sha256": "5b0f66a6fcad57e97fda889afb62934a8625bfd94697463f059de7de52ed7ee9",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "2026标题和优势语义保持。"
+    },
+    {
+      "segment_id": "05-03:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### When Word2Vec still wins in 2026"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0087",
+      "kind": "list",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### When Word2Vec still wins in 2026"
+      ],
+      "ordinal": 44,
+      "source_sha256": "3e5a0a0e0c198b03df7d971f0fb33f175a96c1347d2a6423c2404524559a0d17",
+      "target": "- 轻量的领域专用检索。在笔记本电脑上，用医学摘要训练一小时，就能得到通用模型都无法捕捉的专用向量。\n- 基于类比的特征工程。`gender_vector = mean(man - woman pairs)`。从其他词中减去这个向量，得到一个性别中立的轴。公平性研究至今仍在使用这种方法。\n- 可解释性。100d 足够小，可以通过主成分分析（PCA）或 t-SNE（t 分布随机邻域嵌入）绘图，实际看到簇的形成。\n- 任何需要在没有 GPU 的设备上运行推理的场景。Word2Vec 查找只需读取一行。\n",
+      "target_sha256": "c1dd8fdc717a76059872864a457744b0d2a314de5f0835299ac70b1e818355bb",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "四用途全部保留，小时/单行映射，PCA与t-SNE释义，去偏断言另记。"
+    },
+    {
+      "segment_id": "05-03:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### When Word2Vec still wins in 2026"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### Where Word2Vec fails"
+      ],
+      "ordinal": 45,
+      "source_sha256": "62818bf94eea55c6a6d5ec5e76c7f4e3a67c95f49d5307c40edc6437a23fdaf1",
+      "target": "### Word2Vec 在哪些地方会失效\n",
+      "target_sha256": "6ec737fe8f57603eb75207cb2e8ba8a38b581628016f17b5f5efc51677ebeb6f",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "源局限章节。"
+    },
+    {
+      "segment_id": "05-03:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### Where Word2Vec fails"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### Where Word2Vec fails"
+      ],
+      "ordinal": 46,
+      "source_sha256": "e392455a6a727ff7c900e21a7c161a397e6d07f62ab06435f396fe1fddbfbb77",
+      "target": "多义性（polysemy）是它绕不过去的限制。`bank` 只有一个向量，`river bank` 和 `financial bank` 共用它。`table` 表示电子表格或家具时，也共用一个向量。下游分类器无法仅从这个向量区分这些词义。\n",
+      "target_sha256": "8269d6e8b2cfee6addf0df4c7d44aff6c0565485d5299980360cc1fdcfd22793",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "bank/table例词原样，多义性与单一向量限制保持。"
+    },
+    {
+      "segment_id": "05-03:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### Where Word2Vec fails"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### Where Word2Vec fails"
+      ],
+      "ordinal": 47,
+      "source_sha256": "d70ed3d2a572234be93fe9af473d7642508bb069265471a040a20a4bf2027cdf",
+      "target": "上下文嵌入（contextual embedding，例如 ELMo、BERT 及之后的所有 Transformer）解决了这个问题：根据周围的上下文，为词的每次出现生成不同的向量。这就是从 Word2Vec 到 BERT 的跨越：从静态变为上下文相关。阶段 7 介绍 Transformer 部分。\n",
+      "target_sha256": "7031fcdf78f98d76a21a024eb0583dd5f8094d07bcd8d24877ebb7669b1eef2f",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "每次词出现根据上下文变化，静态与上下文两类及阶段7保持。"
+    },
+    {
+      "segment_id": "05-03:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### Where Word2Vec fails"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### Where Word2Vec fails"
+      ],
+      "ordinal": 48,
+      "source_sha256": "9ee7c74df1143b51ded348ffc77525008bb4c7d91762e7a85c4aec406d6ea47b",
+      "target": "词表外问题是另一个缺陷。如果 `Zoomer-approved` 没有出现在训练数据中，Word2Vec 就从未见过它，也没有回退办法。fastText 用子词组合解决这个问题，见第 04 课。\n",
+      "target_sha256": "7655a4e27803eb88f3bad3f72d36350d212241d23a907f9a73b44581d81defbd",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "Zoomer-approved原样，词表外/无回退/fastText源结论保持。"
+    },
+    {
+      "segment_id": "05-03:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Use It",
+        "### Where Word2Vec fails"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 49,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "统一交付章节。"
+    },
+    {
+      "segment_id": "05-03:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "087c65b60bf7b70d5a591ce5c6ac6a6c31fae908c8e7ca64efa70f91e36bdaa3",
+      "target": "保存为 `outputs/skill-embedding-probe.md`：\n",
+      "target_sha256": "f4a8beb8269a81dabea64a5fefd26144e1ceec29632400e43841f97db41e6f55",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "输出路径原样，仅译保存指令，不执行提示词。"
+    },
+    {
+      "segment_id": "05-03:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0101",
+      "kind": "fence",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "9782d0b8c7501bb08b5d0fc03a24c93c7274e8629941ffaba3e405bcca6d2b77",
+      "target": "```markdown\n---\nname: embedding-probe\ndescription: Inspect a word2vec model. Run analogies, find neighbors, diagnose quality.\nversion: 1.0.0\nphase: 5\nlesson: 03\ntags: [nlp, embeddings, debugging]\n---\n\nYou probe trained word embeddings to verify they are working. Given a `gensim.models.KeyedVectors` object and a vocabulary, you run:\n\n1. Three canonical analogy tests. `king : man :: queen : woman`. `paris : france :: tokyo : japan`. `walking : walked :: swimming : ?`. Report the top-1 result and its cosine.\n2. Five nearest-neighbor tests on domain-specific words the user supplies. Print top-5 neighbors with cosines.\n3. One symmetry check. `similarity(a, b) == similarity(b, a)` to within float precision.\n4. One degenerate check. If any embedding has a norm below 0.01 or above 100, the model has a training bug. Flag it.\n\nRefuse to declare a model good on analogy accuracy alone. Analogy benchmarks are gameable and do not transfer to downstream tasks. Recommend intrinsic + downstream evaluation together.\n```\n",
+      "target_sha256": "9782d0b8c7501bb08b5d0fc03a24c93c7274e8629941ffaba3e405bcca6d2b77",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "受保护围栏逐载荷相同，裸围栏仅加text。"
+    },
+    {
+      "segment_id": "05-03:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 52,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "统一练习章节。"
+    },
+    {
+      "segment_id": "05-03:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0105",
+      "kind": "list",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 53,
+      "source_sha256": "3f1e57bd6aa6a96b5da5e5ce626fa7cdc6b831e10d9b3c68c818355dbf648c77",
+      "target": "1. **简单。** 在一个极小的语料库上运行训练循环，其中包含 20 个关于猫狗的句子。训练 200 轮后，验证 `nearest(vocab, W, W[vocab[\"cat\"]])` 返回的前 3 个结果中包含 `dog`。如果没有，就增加训练轮数或扩大词表。\n2. **中等。** 加入针对高频词的子采样（subsampling）。频率高于 `10^-5` 的词，会以与其频率成正比的概率从训练词对中删除。衡量这对罕见词相似度的影响。\n3. **困难。** 在 20 Newsgroups 语料库上训练一个模型。计算两个偏见轴：`he - she` 和 `doctor - nurse`。将职业词投影到两个轴上，报告哪些职业的偏见差距最大。这就是公平性研究者使用的一类探查方法。\n",
+      "target_sha256": "9fde5ea1f89911e3322e3c3796ff483f28444ebd0cc5b052202ebf25f5e7e876",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "全部三题的20句/200轮/top3/10^-5/20Newsgroups/两社会偏见轴与难度完整。"
+    },
+    {
+      "segment_id": "05-03:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 54,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "统一术语章节。"
+    },
+    {
+      "segment_id": "05-03:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0109",
+      "kind": "table",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 55,
+      "source_sha256": "7d823c7f4a963f01357b8835e9a0f712cb21998850e278dd913b8561dd2a3b2c",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 词嵌入 | 用向量表示词 | 从上下文中学习到的稠密、低维表示，通常为 100-300 维。 |\n| Skip-gram | Word2Vec 的技巧 | 根据中心词预测上下文词。比 CBOW 慢，但对罕见词效果更好。 |\n| 负采样 | 训练捷径 | 用针对 `k` 个随机词的二分类，替代覆盖整个词表的 softmax。 |\n| 静态嵌入 | 每个词对应一个向量 | 无论上下文如何都使用同一个向量，无法处理多义性。 |\n| 上下文嵌入 | 对上下文敏感的向量 | 根据周围的词，为每次出现生成不同的向量。这正是 Transformer 产生的表示。 |\n| OOV | 词表外 | 训练时未见过的词。Word2Vec 无法为这些词生成向量。 |\n",
+      "target_sha256": "63ca1d331db07f0b7f4a5db584462350033011577d6c99a00db35abe3ddefe49",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "七行三列表含表头，六术语全部释义，100-300/k保持；静态与上下文不混同。"
+    },
+    {
+      "segment_id": "05-03:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 56,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "统一参考章节。"
+    },
+    {
+      "segment_id": "05-03:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PROTECTED_OR_STRUCTURE",
+      "author_note": "空行结构与源一致。"
+    },
+    {
+      "segment_id": "05-03:b0113",
+      "kind": "list",
+      "heading_path": [
+        "# Word Embeddings — Word2Vec from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 57,
+      "source_sha256": "8c85b335107637d34b7b355f0da191a53e3282ef1a62e0db9dbe2689fc4506e3",
+      "target": "- [Mikolov et al. (2013). Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/abs/1310.4546)：介绍负采样的论文，篇幅短，易于阅读。\n- [Rong, X. (2014). word2vec Parameter Learning Explained](https://arxiv.org/abs/1411.2738)：如果觉得原论文的数学内容晦涩，这篇给出了最清晰的梯度推导。\n- [gensim Word2Vec tutorial](https://radimrehurek.com/gensim/models/word2vec.html)：在生产环境中真正有效的训练设置。\n",
+      "target_sha256": "1612fa71412c62e5a60cb9b74225773fe2591023599f1b87de952cf007297d39",
+      "author_technical_review": "PASS",
+      "author_chinese_review": "PASS",
+      "author_note": "三参考作者/年/英文题名/URL原样，说明完整。"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "stage_id": "S49-word2vec",
+  "stage_terminology_path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+  "stage_terminology_sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S49-word2vec/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "2203c6d084751deb9a644d1e74c3ba7d5531108ad9c600db94d24da3b93cb498",
+  "quantity_mappings": [
+    {
+      "segment_id": "05-03:b0005",
+      "source": "~75 minutes",
+      "target": "~75 分钟",
+      "equivalence": "75 minutes, metadata unit only",
+      "source_sha256": "e2985e60d9cc0bafe00c56a66f0e6446298af1d98369c26023063cbdbf30aaef",
+      "target_sha256": "dc2aa01daaf8be26d6b0ecaa214b35a51fe82b94b2cf38ddaf701c478cae4d53"
+    },
+    {
+      "segment_id": "05-03:b0013",
+      "source": "Two layer",
+      "target": "两层",
+      "equivalence": "2 layers",
+      "source_sha256": "d5f449eec2c0a0aa40f4b8216f77a924d7f0e525e96240032efbabd565da1475",
+      "target_sha256": "9b1a7ca373ba84be6665e54247ee2dd9f47801a1e3614c96c619aabca2886e37"
+    },
+    {
+      "segment_id": "05-03:b0013",
+      "source": "trillion-token",
+      "target": "万亿 token（词元）规模",
+      "equivalence": "trillion = 10^12 tokens, not parameter count",
+      "source_sha256": "d5f449eec2c0a0aa40f4b8216f77a924d7f0e525e96240032efbabd565da1475",
+      "target_sha256": "9b1a7ca373ba84be6665e54247ee2dd9f47801a1e3614c96c619aabca2886e37"
+    },
+    {
+      "segment_id": "05-03:b0013",
+      "source": "a decade",
+      "target": "十年",
+      "equivalence": "10 years",
+      "source_sha256": "d5f449eec2c0a0aa40f4b8216f77a924d7f0e525e96240032efbabd565da1475",
+      "target_sha256": "9b1a7ca373ba84be6665e54247ee2dd9f47801a1e3614c96c619aabca2886e37"
+    },
+    {
+      "segment_id": "05-03:b0017",
+      "source": "two words",
+      "target": "两个词",
+      "equivalence": "2 words",
+      "source_sha256": "3f5adb16d99a9278f6f25568e1d37c12e91888d173812b595a63c457b44104bd",
+      "target_sha256": "3e27c6675f8b46fa4d996b88ba03ef00f6233fbc787dc094c7ea301380ed37ee"
+    },
+    {
+      "segment_id": "05-03:b0019",
+      "source": "two flavors",
+      "target": "两种形式",
+      "equivalence": "2 variants",
+      "source_sha256": "e4d171942833edb9520ed5958750781eb2f7361ad320ecb6d16369bdf6dfbb90",
+      "target_sha256": "693bf0923e0e8250aad3e612a20db6c39f57f328ab86888da9ff8e3ffced7cc4"
+    },
+    {
+      "segment_id": "05-03:b0025",
+      "source": "one hidden layer",
+      "target": "一个隐藏层",
+      "equivalence": "1 hidden layer",
+      "source_sha256": "bd7059979e902e8ce64fbc484cb3859a8174e073ca18f549d098dbaff18f7bd1",
+      "target_sha256": "06cdbc582b4786c32c387fc14869a707986527fdd7858dc0e2481f26f7add87c"
+    },
+    {
+      "segment_id": "05-03:b0029",
+      "source": "100k words",
+      "target": "100k（k 表示千）个词",
+      "equivalence": "100 × 1000 words; original digits retained",
+      "source_sha256": "57713f7db8c392be1517b7ea1ef88cdea2e5304b6068118010486ae5f6c21c8d",
+      "target_sha256": "8c0700c5f7a2f5bece5ac4db14988793cc81ab03834cca734f200428b1265728"
+    },
+    {
+      "segment_id": "05-03:b0029",
+      "source": "a handful",
+      "target": "少量",
+      "equivalence": "qualitative small count, not invented integer",
+      "source_sha256": "57713f7db8c392be1517b7ea1ef88cdea2e5304b6068118010486ae5f6c21c8d",
+      "target_sha256": "8c0700c5f7a2f5bece5ac4db14988793cc81ab03834cca734f200428b1265728"
+    },
+    {
+      "segment_id": "05-03:b0045",
+      "source": "Two matrices",
+      "target": "两个矩阵",
+      "equivalence": "2 matrices",
+      "source_sha256": "5c4887face85bff53911b89138f60a615d1713672de806d0ed61faa81b71f931",
+      "target_sha256": "332a3ebd81c4a50bb43587c2b6fd6597267a380636f6e1f5fabc7702e754bbfc"
+    },
+    {
+      "segment_id": "05-03:b0049",
+      "source": "10k / 100 / 50 vocab x 16 dim",
+      "target": "10k / 100 / 50 个词 x 16 维",
+      "equivalence": "vocabulary counts versus dimensions remain distinct",
+      "source_sha256": "3d0035e9b3334e5fce0f76e370ecb279445764a7eaecd0df246143d399de7088",
+      "target_sha256": "352d282e357dd13722ef780e11e4085aaa4845aa770de6bd45af75b3e79e08d5"
+    },
+    {
+      "segment_id": "05-03:b0057",
+      "source": "both tables",
+      "target": "两张表",
+      "equivalence": "2 parameter tables",
+      "source_sha256": "b79d87e62cfba963a2928a6844fe9fc498765c6dc1cbea1f2a67e82c5cec2b09",
+      "target_sha256": "b2d153dc10905a1a6e566c134213d7761ec596afb817e26bc6d54ac06c73ae8a"
+    },
+    {
+      "segment_id": "05-03:b0057",
+      "source": "once",
+      "target": "一遍",
+      "equivalence": "one suggested derivation pass",
+      "source_sha256": "b79d87e62cfba963a2928a6844fe9fc498765c6dc1cbea1f2a67e82c5cec2b09",
+      "target_sha256": "b2d153dc10905a1a6e566c134213d7761ec596afb817e26bc6d54ac06c73ae8a"
+    },
+    {
+      "segment_id": "05-03:b0063",
+      "source": "billions of tokens",
+      "target": "数十亿 token",
+      "equivalence": "billions scale, not an invented exact corpus size",
+      "source_sha256": "da56b6eb27f86389ef4c88d8b8cd172bfa476a0ba2ca5d1f2bd3eb9bc7e178ef",
+      "target_sha256": "3c47f5bb4fcd1fd03ea24fabda2d3b45d42837aca28bc4d8ccf4b119926a1c22"
+    },
+    {
+      "segment_id": "05-03:b0069",
+      "source": "300d",
+      "target": "300d（d 表示向量维数）",
+      "equivalence": "300 dimensions",
+      "source_sha256": "113c2862cbc1c679a415f9f42180d436fdb1cfc3d7a3b61e13e3edae11f89491",
+      "target_sha256": "d2352a51308203e5516c1f89a366f1713bf140bcde7d3923942870109fbb05c3"
+    },
+    {
+      "segment_id": "05-03:b0083",
+      "source": "3M word vocabulary",
+      "target": "3M（M 表示百万）个词",
+      "equivalence": "3 × 10^6 words",
+      "source_sha256": "92ea9915f2c14c47eceaf79cf5829f3f55c3569d48028836e785e9f2fca659d5",
+      "target_sha256": "ed9569e4d9121d21c8531fb7e2a91b1ab77fcca7a6c1089b9728cd29cdf8ece2"
+    },
+    {
+      "segment_id": "05-03:b0087",
+      "source": "an hour",
+      "target": "一小时",
+      "equivalence": "1 hour",
+      "source_sha256": "3e5a0a0e0c198b03df7d971f0fb33f175a96c1347d2a6423c2404524559a0d17",
+      "target_sha256": "c1dd8fdc717a76059872864a457744b0d2a314de5f0835299ac70b1e818355bb"
+    },
+    {
+      "segment_id": "05-03:b0087",
+      "source": "a single row fetch",
+      "target": "读取一行",
+      "equivalence": "1 row",
+      "source_sha256": "3e5a0a0e0c198b03df7d971f0fb33f175a96c1347d2a6423c2404524559a0d17",
+      "target_sha256": "c1dd8fdc717a76059872864a457744b0d2a314de5f0835299ac70b1e818355bb"
+    },
+    {
+      "segment_id": "05-03:b0091",
+      "source": "one vector",
+      "target": "一个向量",
+      "equivalence": "1 vector per word type",
+      "source_sha256": "e392455a6a727ff7c900e21a7c161a397e6d07f62ab06435f396fe1fddbfbb77",
+      "target_sha256": "8269d6e8b2cfee6addf0df4c7d44aff6c0565485d5299980360cc1fdcfd22793"
+    },
+    {
+      "segment_id": "05-03:b0105",
+      "source": "two bias axes / both axes",
+      "target": "两个偏见轴 / 两个轴",
+      "equivalence": "2 social-bias axes",
+      "source_sha256": "3f1e57bd6aa6a96b5da5e5ce626fa7cdc6b831e10d9b3c68c818355dbf648c77",
+      "target_sha256": "9fde5ea1f89911e3322e3c3796ff483f28444ebd0cc5b052202ebf25f5e7e876"
+    },
+    {
+      "segment_id": "05-03:b0109",
+      "source": "One vector per word",
+      "target": "每个词对应一个向量",
+      "equivalence": "1 vector per word",
+      "source_sha256": "7d823c7f4a963f01357b8835e9a0f712cb21998850e278dd913b8561dd2a3b2c",
+      "target_sha256": "63ca1d331db07f0b7f4a5db584462350033011577d6c99a00db35abe3ddefe49"
+    }
+  ],
+  "author_review": {
+    "technical_full_pass": true,
+    "separate_chinese_full_read": true,
+    "independent_review": false,
+    "completed_at_utc": "2026-10-02T15:37:22Z",
+    "scope": "267 lines; all 46 translatable blocks; all 11 protected fences; table, exercises, references"
+  },
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "1680463a426d345fcf6ca3056d8fd9cc8acabef4",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    }
+  ],
+  "format_revisions": [
+    {
+      "block": "05-03:b0029",
+      "old_target_sha256": "319168ba0dddacdd8e889142e31d618076f0c7e13b8067d227520d5809a16c13",
+      "new_target_sha256": "84ca0bc5d45c8d24fde87ae928d6a1a1fa5e77445b2c294fc53dae78b1703e0e",
+      "old_block_sha256": "eef2d584501847d3999b84e2efb05fbbeac88ed6c0b10d9c090f198c7369c509",
+      "new_block_sha256": "8c0700c5f7a2f5bece5ac4db14988793cc81ab03834cca734f200428b1265728",
+      "old_fragment": "**负采样（negative sampling）**把它",
+      "new_fragment": "**负采样（negative sampling）** 把它",
+      "inserted_ascii_spaces": 1,
+      "changed_blocks": 1,
+      "unchanged_blocks": 112,
+      "all_11_fence_payloads_unchanged": true,
+      "exact_inverse_restores_original": true,
+      "reason": "actual GitHub GFM at content47d9a3530985917052b2fa6c34e9ab783c72b31c showed13strong and literal ** at b0029; own cloud Chrome DOM and screenshot confirmed",
+      "reviewed_at_utc": "2026-10-02T16:11:00Z"
+    }
+  ]
+}
