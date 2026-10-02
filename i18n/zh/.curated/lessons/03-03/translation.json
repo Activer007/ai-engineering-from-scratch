@@ -1,0 +1,2333 @@
+{
+  "schema_version": 1,
+  "lesson_id": "03-03",
+  "source_path": "phases/03-deep-learning-core/03-backpropagation/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "85b065946ba31419843abbcf23b9122b9078b708",
+  "source_sha256": "e481014372b43289e15b4d7b70a4045eb786168afb10fe15d1fff84b4bccb7ee",
+  "target_path": "i18n/zh/phases/03-deep-learning-core/03-backpropagation/docs/zh.md",
+  "target_sha256": "2256704c806d01054f49f2ac043a35181f962e70a8ade410272a47c8444a8c0c",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "old_chinese_or_cache_used": false
+  },
+  "segments": [
+    {
+      "segment_id": "03-03:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch"
+      ],
+      "ordinal": 1,
+      "source_sha256": "7a502f7aace799d881c9fdf4be7b02c9f97d345fb255e98183c14195931e2d26",
+      "target": "# 从零实现反向传播\n",
+      "target_sha256": "b1b33de52c07b0e0f8f009d714e191719ede49690f7024eeeac9133192549186"
+    },
+    {
+      "segment_id": "03-03:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Backpropagation from Scratch"
+      ],
+      "ordinal": 2,
+      "source_sha256": "3d3e8ddcfafda6912029f38b2bc5f5f8eed1fe085f90cc73d3aa0b494ad3dda9",
+      "target": "> 反向传播（backpropagation）是让学习成为可能的算法。没有它，神经网络就只是昂贵的随机数生成器。\n",
+      "target_sha256": "a90c261e7a5d71037e9fb6eac9c9bdf3531cd26046572aee5600a2d946bb1dd6"
+    },
+    {
+      "segment_id": "03-03:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch"
+      ],
+      "ordinal": 3,
+      "source_sha256": "87ba9f1dc38e365b34a3d831e8a10a8ea9e1628561a24b0b814136f00403897c",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 课程 03.02（多层网络）\n**Time:** ~120 分钟\n",
+      "target_sha256": "3371b33ebe59eea5e9689472aba98b799ed70763797785501eec2b4f0c8525b6"
+    },
+    {
+      "segment_id": "03-03:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "03-03:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "d5b72fb9fcc4af95e71f06b895acd2e33526e07cd936750a93eb4ded87d353b1",
+      "target": "- 实现一个基于 Value 的自动微分引擎（autograd engine），构建计算图并通过拓扑排序计算梯度\n- 使用链式法则推导加法、乘法和 sigmoid 的反向传播\n- 仅使用自己从零实现的反向传播引擎，训练多层网络完成 XOR（异或）和圆形区域分类\n- 识别深层 sigmoid 网络中的梯度消失问题，并解释梯度为何呈指数级缩小\n",
+      "target_sha256": "c74ef071da5a967cdb4863ad0555670219b866b16c0759c275cfbada98e84f34"
+    },
+    {
+      "segment_id": "03-03:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "03-03:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "0f354e8eab83bda765f28f23beca3053129841f5ad5535b6b41ac66b8bbe245a",
+      "target": "你的网络只有一个隐藏层，输入数为 768，输出数为 3072。这意味着有 2,359,296 个权重。现在它作出了错误预测，究竟是哪些权重造成了误差？逐一测试每个权重，需要执行 2.3 million（百万）次前向传播。反向传播只需一次反向计算，就能求出全部 2.3 million（百万）个梯度。这不只是优化，而是能否训练的区别。\n",
+      "target_sha256": "dc8909362e32adba1a522b9a04075f2071deef24826221f66e4115f90e921e6c"
+    },
+    {
+      "segment_id": "03-03:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c2604d473f143046103768d9d6519860a4771fad039fb421d6627433ca71a12e",
+      "target": "最朴素的方法是：选一个权重，将它微调一点，再运行一次前向传播，观察损失是上升还是下降。这样就得到了该权重的梯度。接着对网络中的每个权重都这样做，再乘上数千个训练步骤和 millions（数百万）个数据点。要训练出有用的模型，恐怕得耗上地质年代般漫长的时间。\n",
+      "target_sha256": "6a8f39cbf205b52e729157f73a9b133f03c3a4864b939658d32213f9d061ddcc"
+    },
+    {
+      "segment_id": "03-03:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "4bac5200b4a4dfdeb961122d46d2382779913b735c9e25c4e63e4fc291943111",
+      "target": "反向传播解决了这个问题。一次前向传播、一次反向传播，就能计算出所有梯度。诀窍就是把微积分中的链式法则系统地应用于计算图。这项算法让深度学习变得实用；没有它，我们还会困在玩具问题上。\n",
+      "target_sha256": "07c6d6143d25c294967ca9a7c53358c20ac738e29f978687191d74b7465074a1"
+    },
+    {
+      "segment_id": "03-03:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "03-03:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### The Chain Rule, Applied to Networks"
+      ],
+      "ordinal": 11,
+      "source_sha256": "d6c714578afc904717b342aac4888d4494c99db6fce2977698024424b1ce751b",
+      "target": "### 将链式法则应用于网络\n",
+      "target_sha256": "c5bc77a4e7ba4c744b69d9b3fb236b344360e564a8b9857843a7301df069cdd1"
+    },
+    {
+      "segment_id": "03-03:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### The Chain Rule, Applied to Networks"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### The Chain Rule, Applied to Networks"
+      ],
+      "ordinal": 12,
+      "source_sha256": "833f3244afe7ccbd92e48b485fc1b8ead59c1d8941802a37be3901c23f9613ea",
+      "target": "你已在阶段 01 的课程 05 中见过链式法则。简单回顾一下：若 y = f(g(x))，则 dy/dx = f'(g(x)) * g'(x)。沿着这条链将导数相乘即可。\n",
+      "target_sha256": "5b5460f03b32371379c9e179169719d253d869874b19db03799537fdd27d5a21"
+    },
+    {
+      "segment_id": "03-03:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### The Chain Rule, Applied to Networks"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### The Chain Rule, Applied to Networks"
+      ],
+      "ordinal": 13,
+      "source_sha256": "3429d90b9eb86f508c027730419290372199879af63ddfd26dbf7de6751d7c06",
+      "target": "在神经网络中，这条“链”就是从输入到损失的一系列运算。每一层施加权重、加上偏置，再经过激活函数。损失函数将最终输出与目标值比较。反向传播沿着这条链逆向追踪，计算各项运算对误差的贡献。\n",
+      "target_sha256": "2892c332c780497e2e927f16f33fce6247040625cea04fd4717d782e66a2dbdf"
+    },
+    {
+      "segment_id": "03-03:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### The Chain Rule, Applied to Networks"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 14,
+      "source_sha256": "3682ed28487e8411aaf4560d0c9afbcfba4953ada4114359006a895c4934eb71",
+      "target": "### 计算图\n",
+      "target_sha256": "d9220692b6c635751a757944219893b547fdde7a2738f7cb542e0b8ebb1329f4"
+    },
+    {
+      "segment_id": "03-03:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 15,
+      "source_sha256": "b2819b6ee7349c7d07d84bc0885efa4123ec8035c235bf4b161d2ba483f6bcee",
+      "target": "每次前向传播都会构建一张计算图（computational graph）。每个节点代表一种运算，例如乘法、加法或 sigmoid。每条边向前传递数值，向后传递梯度。\n",
+      "target_sha256": "7a0606882127fbae353ccec3a7f80b949dae73cda3e4640f28f2514b77f63bbf"
+    },
+    {
+      "segment_id": "03-03:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 16,
+      "source_sha256": "2b44999a4a66b0654171543bdc69822b49fe53f33851cec9ac06c17730a818cf",
+      "target": "```mermaid\ngraph LR\n    x[\"x\"] --> mul[\"*\"]\n    w[\"w\"] --> mul\n    mul -- \"z1 = w*x\" --> add[\"+\"]\n    b[\"b\"] --> add\n    add -- \"z2 = z1 + b\" --> sig[\"sigmoid\"]\n    sig -- \"a = sigmoid(z2)\" --> loss[\"Loss\"]\n    y[\"target\"] --> loss\n```\n",
+      "target_sha256": "2b44999a4a66b0654171543bdc69822b49fe53f33851cec9ac06c17730a818cf"
+    },
+    {
+      "segment_id": "03-03:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 17,
+      "source_sha256": "3327957f859d31f78475c0c140559bd778214d4704dd8bf66c1a60d1770a6ee6",
+      "target": "前向传播：数值从左向右流动。x 和 w 产生 z1 = w*x，加上 b 得到 z2，sigmoid 给出激活值 a，再通过损失函数将 a 与目标值 y 比较。\n",
+      "target_sha256": "22cc00fb6a407a70fb9ea09feb1e0778034b09e42b1ccf7aefe8cd5f586cf870"
+    },
+    {
+      "segment_id": "03-03:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 18,
+      "source_sha256": "591fb049272a4a30c74615c89b98ae1f57348aaf400c539f7b44826f914b73ca",
+      "target": "反向传播：梯度从右向左流动。从 dL/da 开始，它表示损失如何随激活值变化。乘以 da/dz2（sigmoid 的导数），便得到 dL/dz2。再分成 dL/db（由于 z2 = z1 + b，它等于 dL/dz2）和 dL/dz1。随后得到 dL/dw = dL/dz1 * x 和 dL/dx = dL/dz1 * w。\n",
+      "target_sha256": "6ff2e7c11629e3d4330c096ea5fa5a0a7c85eb41e027b09c0931557111abfb89"
+    },
+    {
+      "segment_id": "03-03:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 19,
+      "source_sha256": "168d3549629dab75a322433cedfc4372c4d01b42df4f20ff0f978b40583e9fd4",
+      "target": "反向传播时，图中每个节点都只需做一件事：接收从上游传来的梯度，将它乘以自身的局部导数，再向下传递。\n",
+      "target_sha256": "783a5fab51f02040ec83b5d0f6d5caf15e77fc18eed56c97c27db6c0443e1a4a"
+    },
+    {
+      "segment_id": "03-03:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Computational Graphs"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Forward vs Backward"
+      ],
+      "ordinal": 20,
+      "source_sha256": "3cd2c290c4918c818103def09b838d2fb9b21f54ebb03b7096d1d33e59c9a010",
+      "target": "### 前向传播与反向传播\n",
+      "target_sha256": "780f68f3f83b80ce75911b8e895d9c6f8d89598be57b40bd4f033e5157ebcbcf"
+    },
+    {
+      "segment_id": "03-03:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Forward vs Backward"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Forward vs Backward"
+      ],
+      "ordinal": 21,
+      "source_sha256": "edabf5d4114ad0eb38d6ae37b79e93075fb9e0c482e9b92b82c780f420951efa",
+      "target": "```mermaid\ngraph TB\n    subgraph Forward[\"Forward Pass\"]\n        direction LR\n        f1[\"Input x\"] --> f2[\"z = Wx + b\"]\n        f2 --> f3[\"a = sigmoid(z)\"]\n        f3 --> f4[\"Loss = (a - y)^2\"]\n    end\n    subgraph Backward[\"Backward Pass\"]\n        direction RL\n        b4[\"dL/dL = 1\"] --> b3[\"dL/da = 2(a-y)\"]\n        b3 --> b2[\"dL/dz = dL/da * a(1-a)\"]\n        b2 --> b1[\"dL/dW = dL/dz * x\\ndL/db = dL/dz\"]\n    end\n    Forward --> Backward\n```\n",
+      "target_sha256": "edabf5d4114ad0eb38d6ae37b79e93075fb9e0c482e9b92b82c780f420951efa"
+    },
+    {
+      "segment_id": "03-03:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Forward vs Backward"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Forward vs Backward"
+      ],
+      "ordinal": 22,
+      "source_sha256": "d02c2b3d2f5edf3d08e9562e253f0aaf4d4af734171bb14587779c8a6a9a28b9",
+      "target": "前向传播会保存每一个中间值：z、a，以及各层的输入。反向传播需要这些已保存的值来计算梯度。这正是反向传播中内存与计算的核心权衡：用内存（保存激活值）换取速度（一次传播，而不是 millions，即数百万次）。\n",
+      "target_sha256": "681186f381be90e1a91f9d8201339e56e502c6d5d1ce9ef6e88cf1c9c16fc67a"
+    },
+    {
+      "segment_id": "03-03:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Forward vs Backward"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Gradient Flow Through a Network"
+      ],
+      "ordinal": 23,
+      "source_sha256": "f5b84a1bc0246d332b86fc3ebf391e7673b3a93e71f36ef867dd900ab9d09501",
+      "target": "### 梯度如何流经网络\n",
+      "target_sha256": "2d8845c0b73cf25df5b811084676647b26147db3684327cb3b7c073be07d7bd5"
+    },
+    {
+      "segment_id": "03-03:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Gradient Flow Through a Network"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Gradient Flow Through a Network"
+      ],
+      "ordinal": 24,
+      "source_sha256": "5387ddf40cb4e697387e2da7109f3d7e825d1178f3f808f50375ac3d4c4f2635",
+      "target": "对于一个 3 层网络，梯度会沿着每一层逐级传递：\n",
+      "target_sha256": "60a67aeee6d1cda7e1e0828f5709319fb8fc21b159140b2d57071e6272d8a131"
+    },
+    {
+      "segment_id": "03-03:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Gradient Flow Through a Network"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Gradient Flow Through a Network"
+      ],
+      "ordinal": 25,
+      "source_sha256": "9d25118c8957440d7db651f2301e3969cbf0c4bb5cf4db2fdb808fe346367bf0",
+      "target": "```mermaid\ngraph RL\n    L[\"Loss\"] -- \"dL/da3\" --> L3[\"Layer 3\\na3 = sigmoid(z3)\"]\n    L3 -- \"dL/dz3 = dL/da3 * sigmoid'(z3)\" --> L2[\"Layer 2\\na2 = sigmoid(z2)\"]\n    L2 -- \"dL/dz2 = dL/da2 * sigmoid'(z2)\" --> L1[\"Layer 1\\na1 = sigmoid(z1)\"]\n    L1 -- \"dL/dz1 = dL/da1 * sigmoid'(z1)\" --> I[\"Input\"]\n```\n",
+      "target_sha256": "9d25118c8957440d7db651f2301e3969cbf0c4bb5cf4db2fdb808fe346367bf0"
+    },
+    {
+      "segment_id": "03-03:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Gradient Flow Through a Network"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Gradient Flow Through a Network"
+      ],
+      "ordinal": 26,
+      "source_sha256": "69864fb2c8fcb76eb0971d2ca3104537f1ce4093a362c62cd202f2297c5b3ac0",
+      "target": "在每一层，梯度都会乘以 sigmoid 的导数。sigmoid 的导数是 a * (1 - a)，其最大值为 0.25（当 a = 0.5 时取得）。经过三层，梯度最多乘以 0.25^3 = 0.0156。经过十层则是：0.25^10 = 0.000001。\n",
+      "target_sha256": "f75860430c20ec7aa73815a8024b41376ca8e8b21a664ebc10df97ea60e70b51"
+    },
+    {
+      "segment_id": "03-03:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Gradient Flow Through a Network"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Vanishing Gradients"
+      ],
+      "ordinal": 27,
+      "source_sha256": "d25076a91826e264f8657b2888b740d8f839172816a46ad3bd4ecf74e6e8e6f1",
+      "target": "### 梯度消失\n",
+      "target_sha256": "53d2eec4b09142817626fd0fed5dd8787c8c849dfc605aac10486d0641a67c11"
+    },
+    {
+      "segment_id": "03-03:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Vanishing Gradients"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Vanishing Gradients"
+      ],
+      "ordinal": 28,
+      "source_sha256": "c734c84ffac3f55b9ce1ee82d54f8a378902421c14c8b61a27d196b5e1323246",
+      "target": "这就是梯度消失（vanishing gradient）问题。sigmoid 将输出压缩到 0 与 1 之间，其导数始终小于 0.25。堆叠足够多的 sigmoid 层后，梯度就会缩小到几乎没有。靠前的层接收到的梯度接近零，因此几乎无法学习。\n",
+      "target_sha256": "7f9789e21ec339bb21fcbaf7abf90025bd1d5e70f216eaabcd80ae38fe2c78b9"
+    },
+    {
+      "segment_id": "03-03:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Vanishing Gradients"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0057",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Vanishing Gradients"
+      ],
+      "ordinal": 29,
+      "source_sha256": "b431c9f21b85eaa3a47be6827748040ff69f26087ecc412ae8ac226e7cc24c44",
+      "target": "```text\nsigmoid(z):     Output range [0, 1]\nsigmoid'(z):    Max value 0.25 (at z = 0)\n\nAfter 5 layers:   gradient * 0.25^5 = 0.001x original\nAfter 10 layers:  gradient * 0.25^10 = 0.000001x original\n```\n",
+      "target_sha256": "3d3239eefcf65cb746c1d65e595f8bf21c685b58a9cbbca165175077a0ae0a6f"
+    },
+    {
+      "segment_id": "03-03:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Vanishing Gradients"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Vanishing Gradients"
+      ],
+      "ordinal": 30,
+      "source_sha256": "518cfaa315456ed000c53342430a8c16923b97f158dbf1e1ae2304ba1e468232",
+      "target": "这就是深层 sigmoid 网络几乎无法训练的原因。解决办法是 ReLU 及其变体，这也是课程 04 的主题。现在先理解一点：反向传播本身运作得很好，问题在于它要穿过怎样的运算。\n",
+      "target_sha256": "bf2b38c082c75f366db4097f5af757144e8e41960963795a53db886e378e3421"
+    },
+    {
+      "segment_id": "03-03:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Vanishing Gradients"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 31,
+      "source_sha256": "12dce4e82a0fc6b21a736a241ebc9240338fbb9683140fab3b8d2ed76dc71d1b",
+      "target": "### 推导 2 层网络的梯度\n",
+      "target_sha256": "a5631a05319589fcb79e45489d2b5f010cb58ec43687b754e60518145fb71f5e"
+    },
+    {
+      "segment_id": "03-03:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 32,
+      "source_sha256": "9f2202509ead354f535279d6c30568ebb236cc9daa6a6a069917f10f136dbb2a",
+      "target": "来看具体的数学推导：网络的输入为 x，隐藏层和输出层都使用 sigmoid，损失采用均方误差（MSE）。\n",
+      "target_sha256": "e2f37f3a81887b8e6b7bca32d3ae737fc2dbdcfc61f331d1f6a5437899035a6c"
+    },
+    {
+      "segment_id": "03-03:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 33,
+      "source_sha256": "456b96160cc3e4d04ba084d8d5b2bdd18f4a78e8cf623e3850b0cc78a973e323",
+      "target": "前向传播：\n",
+      "target_sha256": "9344c97df6a5ec40ac4f893edd0b2d0f263748930e919bad397877c3de13cf4c"
+    },
+    {
+      "segment_id": "03-03:b0066",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 34,
+      "source_sha256": "caf091ecb0a7305d0165240fb022e390206c15acca11e26464d5a553bd3de073",
+      "target": "```text\nz1 = W1 * x + b1\na1 = sigmoid(z1)\nz2 = W2 * a1 + b2\na2 = sigmoid(z2)\nL = (a2 - y)^2\n```\n",
+      "target_sha256": "d9396e284f3909bba30be9a2cfb436b78d18d7d0333892ffb4c7f8c6f720ff4c"
+    },
+    {
+      "segment_id": "03-03:b0067",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0068",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 35,
+      "source_sha256": "d2258740d639fb8061dc787a7f4e4e2a56ffcec8835816a2a5fa4cc222ffb5eb",
+      "target": "反向传播（逐步应用链式法则）：\n",
+      "target_sha256": "b65a65ebc08266a389547d9e3638290859926aa69fd4706c29ef6aacd33a2143"
+    },
+    {
+      "segment_id": "03-03:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 36,
+      "source_sha256": "23122f2ced6d15257cd0941cf37792a2fff4772bd10f5ad841772201cbd1587c",
+      "target": "```text\ndL/da2 = 2(a2 - y)\nda2/dz2 = a2 * (1 - a2)\ndL/dz2 = dL/da2 * da2/dz2 = 2(a2 - y) * a2 * (1 - a2)\n\ndL/dW2 = dL/dz2 * a1\ndL/db2 = dL/dz2\n\ndL/da1 = dL/dz2 * W2\nda1/dz1 = a1 * (1 - a1)\ndL/dz1 = dL/da1 * da1/dz1\n\ndL/dW1 = dL/dz1 * x\ndL/db1 = dL/dz1\n```\n",
+      "target_sha256": "0f0243da5ff27603534264a910f6ae5eec6822310e1f17ed12665c6a9cbea097"
+    },
+    {
+      "segment_id": "03-03:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 37,
+      "source_sha256": "24d18aaa4a42adb79a2ba3b2bdfeefff29247eb6613f7dbb31a59e48a014bef9",
+      "target": "每个梯度都是从损失逆向追踪得到的局部导数之积。反向传播就是这么回事。\n",
+      "target_sha256": "e07b7edc812c6e34b87fa7bb7a9581d362cd34bcfd524973ca989d68515305d1"
+    },
+    {
+      "segment_id": "03-03:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 38,
+      "source_sha256": "fafaa231303dc881e6df4d69865d88789a0164f280324b07aef43bbf5cbe45b4",
+      "target": "```figure\nbackprop-vanishing\n```\n",
+      "target_sha256": "fafaa231303dc881e6df4d69865d88789a0164f280324b07aef43bbf5cbe45b4"
+    },
+    {
+      "segment_id": "03-03:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## The Concept",
+        "### Deriving Gradients for a 2-Layer Network"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "03-03:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 1: The Value Node"
+      ],
+      "ordinal": 40,
+      "source_sha256": "53173b53119b60c1d6fad21ba2f505d468d956fd387f7d1ebdc4281a0c4c8797",
+      "target": "### 步骤 1：Value 节点\n",
+      "target_sha256": "44fdb0768062d4fd654c001ca814e5af9204725973fc84b3ac5d551bcb12331c"
+    },
+    {
+      "segment_id": "03-03:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 1: The Value Node"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 1: The Value Node"
+      ],
+      "ordinal": 41,
+      "source_sha256": "f941d8dcd604de68af21aa9fbf616ebeb4d4c5e0af9e89d06c11fe23800f442a",
+      "target": "计算中的每个数都变成一个 Value。它保存自己的数据、梯度，以及自身是如何产生的，从而知道怎样反向计算梯度。\n",
+      "target_sha256": "62b57b930c7ca535d0b30b61324734c922a05655434ee5aa739c9added224e25"
+    },
+    {
+      "segment_id": "03-03:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 1: The Value Node"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 1: The Value Node"
+      ],
+      "ordinal": 42,
+      "source_sha256": "bfeda8d13847d8343722928e200c8ef1cf9bad9fb445a1f050635851a80a88db",
+      "target": "```python\nclass Value:\n    def __init__(self, data, children=(), op=''):\n        self.data = data\n        self.grad = 0.0\n        self._backward = lambda: None\n        self._children = set(children)\n        self._op = op\n\n    def __repr__(self):\n        return f\"Value(data={self.data:.4f}, grad={self.grad:.4f})\"\n```\n",
+      "target_sha256": "bfeda8d13847d8343722928e200c8ef1cf9bad9fb445a1f050635851a80a88db"
+    },
+    {
+      "segment_id": "03-03:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 1: The Value Node"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 1: The Value Node"
+      ],
+      "ordinal": 43,
+      "source_sha256": "a1b2fb866fb8b5a9f2a76cce05223265965283625a5d36f50b1a660728321acf",
+      "target": "此时还没有梯度（0.0），也没有反向函数（只有空操作）。`_children` 记录了哪些 Value 产生当前这个值，方便我们随后对图进行拓扑排序（topological sort）。\n",
+      "target_sha256": "bd94b1466436fdd51a43aa96ebd5153550c4a6931619f31fcb5ef7c779f2ad77"
+    },
+    {
+      "segment_id": "03-03:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 1: The Value Node"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 44,
+      "source_sha256": "0882568bb90e114264ed3f7422074e0d38f7a210f6b2cebaaadc992ab501e0cb",
+      "target": "### 步骤 2：为运算添加反向函数\n",
+      "target_sha256": "f2428db0ab99010d8b443924c80f95f58c319aa0a51c492631dcf0ac166360cf"
+    },
+    {
+      "segment_id": "03-03:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 45,
+      "source_sha256": "6d9a82be3a720e4717db4ccb9972acb9aed9203edf901198401f0054f0959bc7",
+      "target": "每项运算都会创建一个新的 Value，并定义梯度如何反向流经它。\n",
+      "target_sha256": "d15538e08302f28eaf4de79365bca01f27bdcb1e5ff729b11199171818a3c67e"
+    },
+    {
+      "segment_id": "03-03:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0089",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 46,
+      "source_sha256": "66b1b8eb4ab6def0c5857efea9d321884b3829274e91058e0ea7fc57fc469ce5",
+      "target": "```python\ndef __add__(self, other):\n    other = other if isinstance(other, Value) else Value(other)\n    out = Value(self.data + other.data, (self, other), '+')\n\n    def _backward():\n        self.grad += out.grad\n        other.grad += out.grad\n\n    out._backward = _backward\n    return out\n\ndef __mul__(self, other):\n    other = other if isinstance(other, Value) else Value(other)\n    out = Value(self.data * other.data, (self, other), '*')\n\n    def _backward():\n        self.grad += other.data * out.grad\n        other.grad += self.data * out.grad\n\n    out._backward = _backward\n    return out\n```\n",
+      "target_sha256": "66b1b8eb4ab6def0c5857efea9d321884b3829274e91058e0ea7fc57fc469ce5"
+    },
+    {
+      "segment_id": "03-03:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 47,
+      "source_sha256": "3f1f0720db0c6b34b330474458c297dd9837252f977eba19136c6f6a8a7571b0",
+      "target": "对于加法：d(a+b)/da = 1，d(a+b)/db = 1。因此，两个输入都直接得到输出的梯度。\n",
+      "target_sha256": "06b74d6a2a69484b0fd36fd432490ff92fdabb763918428123feb0c95a3f41e8"
+    },
+    {
+      "segment_id": "03-03:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 48,
+      "source_sha256": "ef798fe2eb4fa479aca6e9984ae5726d218ca518dd53107c928aece5b57e32f7",
+      "target": "对于乘法：d(a\\*b)/da = b，d(a\\*b)/db = a。每个输入得到的都是另一个输入的值乘以输出梯度。\n",
+      "target_sha256": "2c0a05d5f3a6a92d5318e74a2b112ff59c67c973232e9d7eceee18a4cfeb7577"
+    },
+    {
+      "segment_id": "03-03:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 49,
+      "source_sha256": "a7a2d5a46c78bdb18a901d02e31796a342ab64b1550d241951298c54a6a08663",
+      "target": "`+=` 至关重要。一个 Value 可能会用于多项运算，它的梯度是所有路径贡献的梯度之和。\n",
+      "target_sha256": "aaff98ccecce8aa7e72b34eb2fb6770e794a51db30258d0bc4482ea72ce8180d"
+    },
+    {
+      "segment_id": "03-03:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 2: Operations with Backward Functions"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 50,
+      "source_sha256": "97c69bfce5679dc295b622ca40c8fba5dad95f6b76686e6b1d7172c5ba7e8ff4",
+      "target": "### 步骤 3：sigmoid 与损失\n",
+      "target_sha256": "7d94b2a81da77706ab134e7bfaf21662446e07fb8212d3c99fddf9e6b178cd80"
+    },
+    {
+      "segment_id": "03-03:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 51,
+      "source_sha256": "c767b7cf2ef6dee56eeebe021d8ee0c92964dcf76cfb0383dffd98f3da1cf67a",
+      "target": "```python\nimport math\n\ndef sigmoid(self):\n    x = self.data\n    x = max(-500, min(500, x))\n    s = 1.0 / (1.0 + math.exp(-x))\n    out = Value(s, (self,), 'sigmoid')\n\n    def _backward():\n        self.grad += (s * (1 - s)) * out.grad\n\n    out._backward = _backward\n    return out\n```\n",
+      "target_sha256": "c767b7cf2ef6dee56eeebe021d8ee0c92964dcf76cfb0383dffd98f3da1cf67a"
+    },
+    {
+      "segment_id": "03-03:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 52,
+      "source_sha256": "7e8b7b08daf77e0ae26f1066bd0c6087270fac4e525af49d78b91935b1c3788e",
+      "target": "sigmoid 的导数为 sigmoid(x) * (1 - sigmoid(x))。在前向传播时，我们已经算出 sigmoid(x) = s，直接复用即可，无需额外计算。\n",
+      "target_sha256": "ddaed7493e387c07618bb0cccec0948d72d30db264582d86bc2d3ca2fd79905a"
+    },
+    {
+      "segment_id": "03-03:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 53,
+      "source_sha256": "39fcbe3991198d534660014cee6982c80c8754159b94ef47c6157c3aa2b717a8",
+      "target": "```python\ndef mse_loss(predicted, target):\n    diff = predicted + Value(-target)\n    return diff * diff\n```\n",
+      "target_sha256": "39fcbe3991198d534660014cee6982c80c8754159b94ef47c6157c3aa2b717a8"
+    },
+    {
+      "segment_id": "03-03:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 54,
+      "source_sha256": "ffe38be0b9c79f8c29471b6e75e5b47c3f12c1d89b8552c6882ca7eb221fd422",
+      "target": "单个输出的 MSE 为 (predicted - target)^2。我们用加上一个取负后的 Value 来表示减法。\n",
+      "target_sha256": "a5974adadfb6db3ba94c293821dbb30149e95e57d1e7c9adfd4afd5bcfb78405"
+    },
+    {
+      "segment_id": "03-03:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 3: Sigmoid and Loss"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 4: Backward Pass"
+      ],
+      "ordinal": 55,
+      "source_sha256": "091f9758c063f3bb76d28663d85d8590310dfb50816ce11730bb71cb07da083b",
+      "target": "### 步骤 4：反向传播\n",
+      "target_sha256": "b4cc049b5a835756d949d57fa3a731d7544ee89cbe850708d4a0e0d37390ac8d"
+    },
+    {
+      "segment_id": "03-03:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 4: Backward Pass"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 4: Backward Pass"
+      ],
+      "ordinal": 56,
+      "source_sha256": "eebbd23d1f40416f9d12a7941d3920687aee046f920481092909e66f0062f959",
+      "target": "拓扑排序保证我们按正确顺序处理节点：在通过某个节点继续传播之前，该节点的梯度已经累积完整。\n",
+      "target_sha256": "1865e7650065c723603647d7c07f566f9f0780255889d3ab90691301343aa1c5"
+    },
+    {
+      "segment_id": "03-03:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 4: Backward Pass"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0111",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 4: Backward Pass"
+      ],
+      "ordinal": 57,
+      "source_sha256": "988944d229b1144745430e903408b535c778bb571f44a066424ccf27cdd24598",
+      "target": "```python\ndef backward(self):\n    topo = []\n    visited = set()\n\n    def build_topo(v):\n        if v not in visited:\n            visited.add(v)\n            for child in v._children:\n                build_topo(child)\n            topo.append(v)\n\n    build_topo(self)\n    self.grad = 1.0\n    for v in reversed(topo):\n        v._backward()\n```\n",
+      "target_sha256": "988944d229b1144745430e903408b535c778bb571f44a066424ccf27cdd24598"
+    },
+    {
+      "segment_id": "03-03:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 4: Backward Pass"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 4: Backward Pass"
+      ],
+      "ordinal": 58,
+      "source_sha256": "d1fea30aa2c4b6205cb56d13ed2daafff633c3b7e003180c5b9f2d75fd85e686",
+      "target": "从损失开始（gradient = 1.0，因为 dL/dL = 1）。沿排序后的图逆向遍历，每个节点的 `_backward` 都将梯度传给它的子节点。\n",
+      "target_sha256": "48b9bb5cbbf88666b019f1f64f4250d965f7711b7cfddd14a2a8ee3036f5e136"
+    },
+    {
+      "segment_id": "03-03:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 4: Backward Pass"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0115",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 5: Layer and Network"
+      ],
+      "ordinal": 59,
+      "source_sha256": "5630c4561e1e4e860115f25834fff29a3aba5f7b2611f79c6ac0385c4c4b6f7c",
+      "target": "### 步骤 5：层与网络\n",
+      "target_sha256": "10d3e31afffecb80ffba0c23a0ac08d9b85fad17c3b561f73667a4a409be440b"
+    },
+    {
+      "segment_id": "03-03:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 5: Layer and Network"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0117",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 5: Layer and Network"
+      ],
+      "ordinal": 60,
+      "source_sha256": "c08b326ff4d9acd5df992742dbfd1f8ef7a1f310eba90944dee8f7dc9a3b48c4",
+      "target": "```python\nimport random\n\nclass Neuron:\n    def __init__(self, n_inputs):\n        scale = (2.0 / n_inputs) ** 0.5\n        self.weights = [Value(random.uniform(-scale, scale)) for _ in range(n_inputs)]\n        self.bias = Value(0.0)\n\n    def __call__(self, x):\n        act = sum((wi * xi for wi, xi in zip(self.weights, x)), self.bias)\n        return act.sigmoid()\n\n    def parameters(self):\n        return self.weights + [self.bias]\n\n\nclass Layer:\n    def __init__(self, n_inputs, n_outputs):\n        self.neurons = [Neuron(n_inputs) for _ in range(n_outputs)]\n\n    def __call__(self, x):\n        out = [n(x) for n in self.neurons]\n        return out[0] if len(out) == 1 else out\n\n    def parameters(self):\n        params = []\n        for n in self.neurons:\n            params.extend(n.parameters())\n        return params\n\n\nclass Network:\n    def __init__(self, sizes):\n        self.layers = []\n        for i in range(len(sizes) - 1):\n            self.layers.append(Layer(sizes[i], sizes[i + 1]))\n\n    def __call__(self, x):\n        for layer in self.layers:\n            x = layer(x)\n            if not isinstance(x, list):\n                x = [x]\n        return x[0] if len(x) == 1 else x\n\n    def parameters(self):\n        params = []\n        for layer in self.layers:\n            params.extend(layer.parameters())\n        return params\n\n    def zero_grad(self):\n        for p in self.parameters():\n            p.grad = 0.0\n```\n",
+      "target_sha256": "c08b326ff4d9acd5df992742dbfd1f8ef7a1f310eba90944dee8f7dc9a3b48c4"
+    },
+    {
+      "segment_id": "03-03:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 5: Layer and Network"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 5: Layer and Network"
+      ],
+      "ordinal": 61,
+      "source_sha256": "473799eb5a077d4664efbe266bbf97921540b626e422a5432a6b3e3af63393e9",
+      "target": "Neuron 接收输入，计算加权和加上偏置，再应用 sigmoid。权重初始化按 sqrt(2/n_inputs) 缩放，以防止更深网络中的 sigmoid 饱和。Layer 是一个由 Neuron 组成的列表，Network 是一个由 Layer 组成的列表。`parameters()` 方法收集所有可学习的 Value，以便我们更新它们。\n",
+      "target_sha256": "c226cb630fe2be931c8a5bc5a689aa90cdb79962384eaf9ac94e3f46540ebb27"
+    },
+    {
+      "segment_id": "03-03:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 5: Layer and Network"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 6: Train on XOR"
+      ],
+      "ordinal": 62,
+      "source_sha256": "4d1f1313bd2b7b3222812989c85f99bf70e93616013ca7e599de8e98e7a49ff9",
+      "target": "### 步骤 6：训练 XOR\n",
+      "target_sha256": "d2e2961b0ba1d6c38775d15679962c75a70a644a081ced29b1969a6e82fbedac"
+    },
+    {
+      "segment_id": "03-03:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 6: Train on XOR"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0123",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 6: Train on XOR"
+      ],
+      "ordinal": 63,
+      "source_sha256": "531a6c7e3704be84243e750e4bb7eabbe436968afec024237c16e8abef61e4f0",
+      "target": "```python\nrandom.seed(42)\nnet = Network([2, 4, 1])\n\nxor_data = [\n    ([0.0, 0.0], 0.0),\n    ([0.0, 1.0], 1.0),\n    ([1.0, 0.0], 1.0),\n    ([1.0, 1.0], 0.0),\n]\n\nlearning_rate = 1.0\n\nfor epoch in range(1000):\n    total_loss = Value(0.0)\n    for inputs, target in xor_data:\n        x = [Value(i) for i in inputs]\n        pred = net(x)\n        loss = mse_loss(pred, target)\n        total_loss = total_loss + loss\n\n    net.zero_grad()\n    total_loss.backward()\n\n    for p in net.parameters():\n        p.data -= learning_rate * p.grad\n\n    if epoch % 100 == 0:\n        print(f\"Epoch {epoch:4d} | Loss: {total_loss.data:.6f}\")\n\nprint(\"\\nXOR Results:\")\nfor inputs, target in xor_data:\n    x = [Value(i) for i in inputs]\n    pred = net(x)\n    print(f\"  {inputs} -> {pred.data:.4f} (expected {target})\")\n```\n",
+      "target_sha256": "531a6c7e3704be84243e750e4bb7eabbe436968afec024237c16e8abef61e4f0"
+    },
+    {
+      "segment_id": "03-03:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 6: Train on XOR"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 6: Train on XOR"
+      ],
+      "ordinal": 64,
+      "source_sha256": "9a072f97d781f07f177c381538085180fc34ce6f3e7b1f7cf797b5452dbee567",
+      "target": "观察损失如何下降。从随机预测到正确的 XOR 输出，整个过程完全由反向传播计算梯度、推动权重向正确方向微调来驱动。\n",
+      "target_sha256": "b552fb4f2db39c0fdb69b66eb0f17be5f550764a074efbbcb6a70e0edd1ed4d4"
+    },
+    {
+      "segment_id": "03-03:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 6: Train on XOR"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0127",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 65,
+      "source_sha256": "23895e9dd470422aa2ccd05427a8ab48d528a2c7ec7a9f3236f44794119ed459",
+      "target": "### 步骤 7：圆形区域分类\n",
+      "target_sha256": "b87b2cc399b866355272717c864ff42469a7e41e5d4e7ce0f4fbe4870666398b"
+    },
+    {
+      "segment_id": "03-03:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 66,
+      "source_sha256": "dac188b0b4258e1dc8dd6ea70b7b18f75f4c4593311a5429ae5b6e017aa078f3",
+      "target": "在课程 02 中，你为圆形区域分类手动调节了权重。现在，让网络自己学习这些权重。\n",
+      "target_sha256": "5d25dcba8077b4360e140f53d4c12f81c4a5298b64991ccec86ef3f76b0ba1a2"
+    },
+    {
+      "segment_id": "03-03:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0131",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 67,
+      "source_sha256": "9c6086373afc6c5a31bba5e8660776cb62fbeabced6edfbc35de702ee358787a",
+      "target": "```python\nrandom.seed(7)\n\ndef generate_circle_data(n=100):\n    data = []\n    for _ in range(n):\n        x1 = random.uniform(-1.5, 1.5)\n        x2 = random.uniform(-1.5, 1.5)\n        label = 1.0 if x1 * x1 + x2 * x2 < 1.0 else 0.0\n        data.append(([x1, x2], label))\n    return data\n\ncircle_data = generate_circle_data(80)\n\ncircle_net = Network([2, 8, 1])\nlearning_rate = 0.5\n\nfor epoch in range(2000):\n    random.shuffle(circle_data)\n    total_loss_val = 0.0\n    for inputs, target in circle_data:\n        x = [Value(i) for i in inputs]\n        pred = circle_net(x)\n        loss = mse_loss(pred, target)\n        circle_net.zero_grad()\n        loss.backward()\n        for p in circle_net.parameters():\n            p.data -= learning_rate * p.grad\n        total_loss_val += loss.data\n\n    if epoch % 200 == 0:\n        correct = 0\n        for inputs, target in circle_data:\n            x = [Value(i) for i in inputs]\n            pred = circle_net(x)\n            predicted_class = 1.0 if pred.data > 0.5 else 0.0\n            if predicted_class == target:\n                correct += 1\n        accuracy = correct / len(circle_data) * 100\n        print(f\"Epoch {epoch:4d} | Loss: {total_loss_val:.4f} | Accuracy: {accuracy:.1f}%\")\n```\n",
+      "target_sha256": "9c6086373afc6c5a31bba5e8660776cb62fbeabced6edfbc35de702ee358787a"
+    },
+    {
+      "segment_id": "03-03:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 68,
+      "source_sha256": "bf347e2d4aaf7eb37a2746e6b353c28ce2ca6e6735aff12a28c6ed44bb0096ac",
+      "target": "这里使用在线随机梯度下降（online SGD）：每处理一个样本就更新权重，而不是先累积整个批次。这能更快地打破对称性，并避免 sigmoid 在完整损失曲面上饱和。每个训练轮次打乱数据，可以防止网络记住数据顺序。\n",
+      "target_sha256": "1aae6beb7965f9bfd27da8fb647b3827a6b6b5edd4315a47fd18a234cdce9b77"
+    },
+    {
+      "segment_id": "03-03:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0135",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 69,
+      "source_sha256": "047a04103f574c42b28380e7efbfd2f6aa52c405a7c38310e51c48317b07af1c",
+      "target": "无需手动调节，网络会自行发现圆形决策边界。这就是反向传播的力量：你定义架构、损失函数和数据，算法来确定权重。\n",
+      "target_sha256": "7a993e38aa9d5b9e6c2b39be4915269dde94961e35df56866f8071d25416d4f8"
+    },
+    {
+      "segment_id": "03-03:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Build It",
+        "### Step 7: Circle Classification"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0137",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 70,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "03-03:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0139",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 71,
+      "source_sha256": "b46cb2bb1713299502ee51e764a56d63606be383b6fa39fedcf686bc728c34e9",
+      "target": "PyTorch 用几行代码就能完成上面的所有工作。核心思想完全相同：autograd 在前向传播时构建计算图，再逆向追踪该图来计算梯度。\n",
+      "target_sha256": "eac57dff4d213dd74f00312cf99d0ffbe877568e1a718dfc5c816488fb2f69cf"
+    },
+    {
+      "segment_id": "03-03:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0141",
+      "kind": "fence",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 72,
+      "source_sha256": "3a92954bdd28ef0b2ea805083db92b54a4062b2d61238ffb55239e1e75c221e1",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\nmodel = nn.Sequential(\n    nn.Linear(2, 4),\n    nn.Sigmoid(),\n    nn.Linear(4, 1),\n    nn.Sigmoid(),\n)\noptimizer = torch.optim.SGD(model.parameters(), lr=1.0)\ncriterion = nn.MSELoss()\n\nX = torch.tensor([[0,0],[0,1],[1,0],[1,1]], dtype=torch.float32)\ny = torch.tensor([[0],[1],[1],[0]], dtype=torch.float32)\n\nfor epoch in range(1000):\n    pred = model(X)\n    loss = criterion(pred, y)\n    optimizer.zero_grad()\n    loss.backward()\n    optimizer.step()\n\nprint(\"PyTorch XOR Results:\")\nwith torch.no_grad():\n    for i in range(4):\n        pred = model(X[i])\n        print(f\"  {X[i].tolist()} -> {pred.item():.4f} (expected {y[i].item()})\")\n```\n",
+      "target_sha256": "3a92954bdd28ef0b2ea805083db92b54a4062b2d61238ffb55239e1e75c221e1"
+    },
+    {
+      "segment_id": "03-03:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0143",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "7f4875d662cf4cb427ee7bd5be07e20049e907accdd34de88c3e4c338bf7b4ff",
+      "target": "`loss.backward()` 就是你写的 `total_loss.backward()`；`optimizer.step()` 对应手动执行的 `p.data -= lr * p.grad`；`optimizer.zero_grad()` 对应你写的 `net.zero_grad()`。算法相同，这里采用的是工业级实现。PyTorch 支持 GPU 加速、混合精度、梯度检查点（gradient checkpointing）和数百种层类型。但反向传播仍然是在同一张计算图上应用同样的链式法则。\n",
+      "target_sha256": "2ec6de2f82efba8fa1f609ac9a9a2c29b624b4de40723632dc5d79edb30387d5"
+    },
+    {
+      "segment_id": "03-03:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0145",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "3c56131b5bfc5cc4bb1c027c63e7aa4028c8c49a2f325c0650d34b9f0f14c310",
+      "target": "训练先执行前向传播，再执行反向传播，然后更新权重。推理（inference）只执行前向传播，不计算梯度，也不更新参数。这一区别很重要，因为生产环境执行的是推理。调用 Claude 或 GPT 这样的 API（应用程序编程接口）时，你运行的就是推理：提示词（prompt）沿网络向前流动，另一端输出 token（词元），权重不会改变。理解反向传播很重要，因为网络中的每个权重都是它塑造的。\n",
+      "target_sha256": "b4caca70422e8c6667c61603a720513ae49e25d3608463dbfa15318610240d99"
+    },
+    {
+      "segment_id": "03-03:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "03-03:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0149",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "93d8818f647aad3bc440ac584349fe3a49f3a9136033ebba80cd8374874cb394",
+      "target": "本课产出：\n- `outputs/prompt-gradient-debugger.md` -- 一份可复用提示词，用于诊断任意神经网络中的梯度问题，包括梯度消失、梯度爆炸和 NaN（非数）\n",
+      "target_sha256": "8f5c8f29ca90fbcf87e2aa2c353e71384cd7eaa4e5f33a5af3254d70917bdfa8"
+    },
+    {
+      "segment_id": "03-03:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0151",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 77,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "03-03:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0153",
+      "kind": "list",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 78,
+      "source_sha256": "26e19f251cfd3f405d37e9f313c89200f9b58d76c5a798cac08cdd2c6a157c8f",
+      "target": "1. 为 Value 类添加 `__sub__` 方法（a - b = a + (-1 * b)），再实现 `__neg__` 方法。对于 (a - b)^2 这样简单的表达式，将结果与手工计算对照，验证梯度是否正确。\n",
+      "target_sha256": "1edcdaecb0af25b22a2fbe716b94987cb634110ee5466d5113649f379cbf7eff"
+    },
+    {
+      "segment_id": "03-03:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0155",
+      "kind": "list",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 79,
+      "source_sha256": "75dda99fa125054933c3088f980e3e63d5d7b167c843bad3a8d205ee52646bc1",
+      "target": "2. 为 Value 添加 `relu` 方法（输出为 max(0, x)，当 x > 0 时导数为 1，否则为 0）。将隐藏层中的 sigmoid 替换为 relu，再次训练 XOR。比较收敛速度，你应该会看到训练更快，这也是课程 04 的预览。\n",
+      "target_sha256": "6e45f5dc2506752660677c71f40393b97b2b1ed0c77d7af5a2be9d6abee2f48b"
+    },
+    {
+      "segment_id": "03-03:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0157",
+      "kind": "list",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 80,
+      "source_sha256": "d3cfb7661b364d4e5130031fa9231b6d9bc694efac9e4eb18ab6eb5f894e8575",
+      "target": "3. 为 Value 实现支持整数幂的 `__pow__` 方法，用它将 `mse_loss` 替换为规范的 `(predicted - target) ** 2` 表达式。验证梯度与原实现一致。\n",
+      "target_sha256": "9c32f002c2af27deaf1ed052ed661d3029171c8380184f98f95993f6ae3c57a8"
+    },
+    {
+      "segment_id": "03-03:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0159",
+      "kind": "list",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 81,
+      "source_sha256": "f9a11d13330a1cb4c3f193de8382bec202110a7afa4e5482d996d2d2a1b13f9e",
+      "target": "4. 在训练循环中加入梯度裁剪：调用 `backward()` 后，将所有梯度裁剪到 [-1, 1]。训练一个更深的网络（4+ 层，使用 sigmoid），比较有裁剪和无裁剪时的损失曲线。这是抵御梯度爆炸的第一道防线。\n",
+      "target_sha256": "30dcc97290c925ecffaa30cedb1b979c1db8dd924b89afa5f6fb86e0d9a21357"
+    },
+    {
+      "segment_id": "03-03:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0161",
+      "kind": "list",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "6df56faa8310ea7bf1ba11c7dbd9746b213caab279127cfff50a33763c777d50",
+      "target": "5. 构建一个可视化：训练 XOR 后，打印网络中每个参数的梯度，找出哪一层的梯度最小。这展示了你在核心概念部分读到的梯度消失问题。\n",
+      "target_sha256": "383ad46b04f62a95a65dbd40082d3870942240b9fb450fb24a75d15dad631587"
+    },
+    {
+      "segment_id": "03-03:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0163",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 83,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "03-03:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0165",
+      "kind": "table",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 84,
+      "source_sha256": "d18c5be50047003ac21786eee694ba5b22b9a63fdc3ab8683e0ca603d51d019c",
+      "target": "| 术语 | 通常的说法 | 实际含义 |\n|------|----------------|----------------------|\n| 反向传播 | “网络在学习” | 沿计算图反向应用链式法则，为每个权重计算 dL/dw 的算法 |\n| 计算图 | “网络结构” | 有向无环图，节点表示运算，边传递数值（前向）与梯度（反向） |\n| 链式法则 | “把导数相乘” | 若 y = f(g(x))，则 dy/dx = f'(g(x)) * g'(x)，这是反向传播的数学基础 |\n| 梯度 | “最陡上升的方向” | 损失对某个参数的偏导数，告诉你怎样改变该参数以降低损失 |\n| 梯度消失 | “深层网络学不动” | 梯度流经 sigmoid 等饱和激活函数所在的层时，呈指数级缩小 |\n| 前向传播 | “运行网络” | 从输入开始，依次应用各层运算并保存中间值，计算出输出 |\n| 反向传播 | “计算梯度” | 逆向遍历计算图，使用链式法则在每个节点累积梯度 |\n| 学习率 | “学得多快” | 控制权重更新步长的标量：w_new = w_old - lr * gradient |\n| 拓扑排序 | “正确的顺序” | 图节点的一种排序，每个节点都位于其依赖的所有节点之后，确保梯度在传播前已经累积完整 |\n| Autograd | “自动微分” | 在前向计算时构建计算图并自动计算梯度的系统，也就是 PyTorch 引擎所做的事 |\n",
+      "target_sha256": "d168864a4bc4ca1a23a1591600368bc03cdb87508e6216d6ee6d382b2d6a567f"
+    },
+    {
+      "segment_id": "03-03:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0167",
+      "kind": "heading",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 85,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "03-03:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-03:b0169",
+      "kind": "list",
+      "heading_path": [
+        "# Backpropagation from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 86,
+      "source_sha256": "077e97da1d4478778bf288f86482069d3528b1d1924008963c1eeb3464142163",
+      "target": "- Rumelhart、Hinton 与 Williams，《Learning representations by back-propagating errors》（1986）-- 使反向传播走向主流，并让多层网络训练成为可能的论文\n- 3Blue1Brown，《Neural Networks》系列 (https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) -- 对反向传播与网络梯度流最好的可视化讲解\n",
+      "target_sha256": "4a38e943882fdc46f31d4baf7dee0c85d899700415bc9701594e655e0978c3f0"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+  "additional_glossary_sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "22cdcb9524cd24c6a586b3b782ca75e09913844f",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S32-backpropagation/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "bc85d3afef6597b4becf1cf82bfc2257242e3de44a313a3027ca57bb3b10afa4"
+}
