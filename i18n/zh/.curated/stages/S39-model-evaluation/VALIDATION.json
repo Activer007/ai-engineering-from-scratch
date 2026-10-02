@@ -1,0 +1,434 @@
+{
+  "version": 1,
+  "stage_id": "S39-model-evaluation",
+  "lesson_id": "02-09",
+  "date": "2026-10-02",
+  "status": "reviewed-draft-submitted",
+  "final_acceptance": false,
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_path": "phases/02-ml-fundamentals/09-model-evaluation/docs/en.md",
+  "source_sha256": "4c0ac1f4722a3525dd3dbc7290238a75ac414b195c7715129db05ec36a99619e",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/09-model-evaluation/docs/zh.md",
+  "target_sha256": "4291afe5638cfc450bb5d0571182c7f4dca47e097a4b8f1c7397f33c61fab7fc",
+  "content_commit": "6b3bfeb371bde823dc92aba390d427e1222653c8",
+  "coverage": {
+    "source_lines": 679,
+    "target_lines": 679,
+    "blocks": 133,
+    "candidate_blocks": 57,
+    "fences": 10,
+    "python": 7,
+    "mermaid": 2,
+    "figure": 1,
+    "tables": 2,
+    "exercises": 3,
+    "references": 3,
+    "headings": 23,
+    "complete_EN_ZH_review": true,
+    "separate_complete_Chinese_readthrough": true
+  },
+  "full_reviews": {
+    "author": "Full EN/ZH technical review then separate full Chinese reading",
+    "independent": "Full EN/ZH technical review then separate full Chinese reading; author QA not read",
+    "required_changes": 0,
+    "final_hash_bound": true
+  },
+  "runtime": {
+    "author": {
+      "canonical_lines": 461,
+      "canonical_demo_count": 8,
+      "original_document_stdlib_blocks": 6,
+      "finite_behavior_checks": 21,
+      "extra_git_byte_check": 1,
+      "original_iterations_and_samples": true,
+      "canonical_and_document_demo_stdout_identical": true
+    },
+    "independent": {
+      "original_doc_blocks": [
+        89,
+        93,
+        97,
+        101,
+        105,
+        109
+      ],
+      "source_full_read_before_execution": true,
+      "unchanged_original_demo_run": "s39_original_doc_demo.log; -I -S -B with30s timeout; original seeds/dataset sizes/epochs unchanged",
+      "checks": [
+        {
+          "name": "split coverage and reproducibility",
+          "status": "PASS",
+          "evidence": {
+            "sizes": [
+              12,
+              4,
+              4
+            ],
+            "same_seed_replay": true
+          }
+        },
+        {
+          "name": "Kfold coverage with concentrated remainder",
+          "status": "PASS",
+          "evidence": {
+            "n": 12,
+            "k": 5,
+            "validation_sizes": [
+              2,
+              2,
+              2,
+              2,
+              4
+            ]
+          }
+        },
+        {
+          "name": "stratified minority remainder concentrated into final fold",
+          "status": "PASS",
+          "evidence": [
+            {
+              "size": 1,
+              "positive": 0
+            },
+            {
+              "size": 1,
+              "positive": 0
+            },
+            {
+              "size": 1,
+              "positive": 0
+            },
+            {
+              "size": 1,
+              "positive": 0
+            },
+            {
+              "size": 6,
+              "positive": 2
+            }
+          ]
+        },
+        {
+          "name": "binary metrics and unsupported-label/zip limits",
+          "status": "PASS",
+          "evidence": {
+            "confusion_tuple": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "all_metrics": 0.5,
+            "nonbinary_accuracy": 0.0,
+            "unequal_length_accuracy": 1.0
+          }
+        },
+        {
+          "name": "AUC missing origin and tied-score behavior",
+          "status": "PASS",
+          "evidence": {
+            "tied_scores_source_auc": 0.0,
+            "tied_pair_ranking_reference": 0.5,
+            "perfect": 1.0,
+            "reversed": 0.0,
+            "tied_roc": [
+              [
+                1.0
+              ],
+              [
+                1.0
+              ],
+              [
+                0.5
+              ]
+            ]
+          }
+        },
+        {
+          "name": "regression formula and degenerate inputs",
+          "status": "PASS",
+          "evidence": {
+            "mse": 0.6666666666666666,
+            "mae": 0.6666666666666666,
+            "r_squared": 0.0,
+            "constant_perfect_r2": 0.0,
+            "unequal_length_mse": 0.0,
+            "empty_mse": "ZeroDivisionError"
+          }
+        },
+        {
+          "name": "small learning curve rounds first training size to zero",
+          "status": "PASS",
+          "evidence": {
+            "n": 5,
+            "val_size": 1,
+            "pool_size": 4,
+            "default_first_train_size": 0,
+            "outcome": "IndexError on X[0]"
+          }
+        },
+        {
+          "name": "requested learning sizes can exceed actual pool",
+          "status": "PASS",
+          "evidence": {
+            "reported_sizes": [
+              2,
+              50
+            ],
+            "actual_fit_sizes": [
+              2,
+              8
+            ]
+          }
+        },
+        {
+          "name": "full-data scaling versus train-only statistics",
+          "status": "PASS",
+          "evidence": {
+            "full_mean": 33.666666666666664,
+            "train_only_mean": 0.5,
+            "source_demo_order": "standardize full X_reg columns before train_val_test_split, statically observed in executed original block"
+          }
+        },
+        {
+          "name": "paired t source population variance factor",
+          "status": "PASS",
+          "evidence": {
+            "source_population_denominator_stat": 1.58113883008419,
+            "sample_variance_denominator_stat": 1.4142135623730951,
+            "ratio": 1.118033988749895,
+            "scope": "finite arithmetic only, overlapping CV folds do not meet independent paired-sample assumptions automatically"
+          }
+        }
+      ],
+      "count": 10,
+      "canonical_read_or_run": false,
+      "sklearn_imported": false,
+      "network_or_installation": false,
+      "outputs_skill_executed": false
+    },
+    "not_run": [
+      "Julia (380 lines inventoried only; runtime unavailable)",
+      "sklearn example",
+      "model/data downloads or installations"
+    ]
+  },
+  "source_risks": [
+    {
+      "id": "S39-IND-SRC-01",
+      "segments": [
+        "02-09:b0015",
+        "02-09:b0017",
+        "02-09:b0029"
+      ],
+      "title": "Generalization and blanket claims",
+      "detail": "Train score alone is not unseen-data evaluation but does not prove memorization. Holdout estimates depend on representative sampling and distribution; neither holdout nor sound evaluation guarantees arbitrary production performance.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-02",
+      "segments": [
+        "02-09:b0023",
+        "02-09:b0027",
+        "02-09:b0029",
+        "02-09:b0033",
+        "02-09:b0037",
+        "02-09:b0039",
+        "02-09:b0041",
+        "02-09:b0079"
+      ],
+      "title": "Splits and CV assumptions",
+      "detail": "Coherent ratios, finite rounding, time/group separation and dependence matter. Label stratification alone is insufficient for temporal or grouped observations. CV is not always more stable than every holdout. Source single-use test principle preserved.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-03",
+      "segments": [
+        "02-09:b0089",
+        "02-09:b0093"
+      ],
+      "title": "Fold remainder and validation errors",
+      "detail": "kfold(12,5) gives validation sizes[2,2,2,2,4]. Stratified8majority/2minority,k5 gives sizes[1,1,1,1,6] and minority[0,0,0,0,2], contrary to approximate class-ratio aim. k>n/zero k/ratios/shapes not validated; random.seed mutates global state.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-04",
+      "segments": [
+        "02-09:b0045",
+        "02-09:b0047",
+        "02-09:b0049",
+        "02-09:b0051",
+        "02-09:b0075",
+        "02-09:b0077",
+        "02-09:b0097",
+        "02-09:b0117"
+      ],
+      "title": "Confusion metrics scope",
+      "detail": "Single fixed confusion matrix does not yield every ROC or regression metric. Metric choice depends on costs/prevalence, not clinical/fraud labels alone. Functions assume0/1; zip silently truncates unequal inputs. accuracy([2,2],[2,0])=0 and accuracy([0,1],[0])=1 reproduced. Empty denominator0 is a convention.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-05",
+      "segments": [
+        "02-09:b0051",
+        "02-09:b0097",
+        "02-09:b0129"
+      ],
+      "title": "ROC/AUC missing origin and range",
+      "detail": "roc_curve omits threshold above maximum and initial(0,0). Labels[0,1],scores[.5,.5] give only(1,1) and AUC0 instead of tied ranking0.5. Perfect ranking1 and reverse ranking0 demonstrated; source0.5–1 term-table range wrong. One-class ROC and AUC0.5 interpretation require conditions.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-06",
+      "segments": [
+        "02-09:b0055",
+        "02-09:b0101",
+        "02-09:b0109",
+        "02-09:b0129"
+      ],
+      "title": "Regression metric boundaries",
+      "detail": "R2 variance-explained interpretation has conditions. Zero baseline refers to evaluation-set mean; demo uses training mean and obtains negative baseline. Constant perfect target returns0. Empty MSE raisesZeroDivisionError and unequal lengths can return misleading0. Normal MSE/MAE/R2 fixture checked.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-07",
+      "segments": [
+        "02-09:b0059",
+        "02-09:b0061",
+        "02-09:b0065",
+        "02-09:b0067",
+        "02-09:b0069",
+        "02-09:b0105"
+      ],
+      "title": "Learning and validation curve heuristics",
+      "detail": "High score reasoning assumes higher-is-better; bias/variance diagnosis and adding data are not guarantees. n5 default subset rounds to0 then raisesIndexError. Requested size50 on8-item pool reports50 but actually trains8. Same fixed validation used repeatedly.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-08",
+      "segments": [
+        "02-09:b0073",
+        "02-09:b0109"
+      ],
+      "title": "Demo scaling leakage",
+      "detail": "Original regression demo standardizes full X_reg columns before split, contradicting split-first guidance. Finite fixture full mean33.6667 versus train-only.5; no source repair. Executed unchanged demo output is not a clean leakage-free evaluation claim.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-09",
+      "segments": [
+        "02-09:b0109"
+      ],
+      "title": "Paired t statistic",
+      "detail": "Code divides variance byK rather thanK-1, inflating nonzero statistic bysqrt(K/(K-1)); fixture ratio1.11803398875 forK5. Overlapping CV training folds violate ordinary independent paired-sample assumptions without further treatment. Fixed df4 threshold requires assumptions; zero std forces t0 even if mean nonzero.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-10",
+      "segments": [
+        "02-09:b0109"
+      ],
+      "title": "Toy estimators and demonstrations",
+      "detail": "Clipped sigmoid, online updates, no convergence/input/shape checks. Linear regression divides each online update byn and omits factor2 relative to full squared loss; learning-rate meaning differs from batch MSE. Original seeds/data sizes/100,200,500 epochs unchanged; synthetic single runs are not general benchmarks.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-11",
+      "segments": [
+        "02-09:b0115",
+        "02-09:b0117"
+      ],
+      "title": "External library excluded",
+      "detail": "sklearn example not run or installed; source library parity/current defaults unverified. No network, external datasets/models or outputs skill execution. Reviewer did not read or run canonical; only fully read original document blocks used.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-12",
+      "segments": [
+        "02-09:b0125"
+      ],
+      "title": "Exercise definitions",
+      "detail": "Average precision is not automatically trapezoidal PR AUC. Nested CV must include inner-fold preprocessing/tuning. Label permutation assesses association under exchangeability; model-comparison difference statistic and finite Monte Carlo p-value convention unstated.100 repeats yield coarse resolution. Exercises not implemented.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    },
+    {
+      "id": "S39-IND-SRC-13",
+      "segments": [
+        "02-09:b0023",
+        "02-09:b0035",
+        "02-09:b0083",
+        "02-09:b0129",
+        "02-09:b0133"
+      ],
+      "title": "Protected visuals and references",
+      "detail": "2 Mermaid/1 figure payload unchanged. Raw multiplication symbols kept for actual GFM.3 references retained, not opened. Offline parser15 empty IDs; not live website/mobile/interaction acceptance.",
+      "treatment": "PRESERVE_SOURCE_WITHOUT_SILENT_CORRECTION"
+    }
+  ],
+  "actual_github_gfm": {
+    "status": "passed-desktop",
+    "content_commit": "6b3bfeb371bde823dc92aba390d427e1222653c8",
+    "browser": "dot cloud Chrome",
+    "observer": "coordinator",
+    "headings": 23,
+    "tables": [
+      {
+        "rows_including_header": 3,
+        "columns": 3
+      },
+      {
+        "rows_including_header": 10,
+        "columns": 3
+      }
+    ],
+    "strong": 25,
+    "total_em": 0,
+    "unintended_em": 0,
+    "unparsed_bold_labels": 0,
+    "mermaid_rendered": 2,
+    "all_frame_labels_inspected": true,
+    "screenshots_observed": [
+      "train validation test diagram",
+      "fivefold diagram",
+      "regression formulas",
+      "complete terminology table"
+    ],
+    "diagram_viewport_note": "Fivefold graph is wide and scaled down; every fold label and mean node read from actual iframe. No protected payload changes.",
+    "new_syntax_repairs": false,
+    "actual_course_site": "not passed"
+  },
+  "site": {
+    "empty_heading_ids": 15,
+    "actual_site": "not passed",
+    "mobile_interactive": "not passed"
+  },
+  "dependencies": {
+    "count": 46,
+    "verified_pinned_git_and_hashes": true
+  },
+  "coordinator_validation": {
+    "combined_original_strict": 57,
+    "S07_exact_symbolic_exception": 1,
+    "S19_exact_pipe_repair": 1,
+    "original_regressions": 33,
+    "S07_guards": 24,
+    "S19_guards": 50,
+    "all_lessons_double_replay": {
+      "count": 59,
+      "result": "byte-identical",
+      "assets": "Core replays Markdown; manifest SVG bytes separately verified/copied before recursive comparison"
+    },
+    "repository_audits": "523 lessons /67 certifications /12 assessments /505 questions; zero issues; README/book counts pass",
+    "source_core_control_bytes": "unchanged"
+  },
+  "snapshot": {
+    "reviewed_drafts": 59,
+    "in_progress": 4,
+    "unstarted": 460,
+    "curriculum_total": 523,
+    "merged": 0,
+    "released": 0,
+    "live_count_authority": "PR #7 ROLLOUT-INDEX.json"
+  },
+  "post_commit_verification": "Final evidence commit cannot self-reference; exact changed-file bytes, draft PR metadata and final-head CI queries are checked after commit and recorded in PR body and the single rollout index. Empty hosted status is not a CI pass."
+}
