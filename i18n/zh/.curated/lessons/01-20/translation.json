@@ -1,0 +1,2907 @@
+{
+  "schema_version": 1,
+  "lesson_id": "01-20",
+  "source_path": "phases/01-math-foundations/20-fourier-transform/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "30177b2b7c6f2b47197f41920e5f3ea34a302e13",
+  "source_sha256": "88d32836b77ed732bc2e2610451d4ea5509c1b20b9bb96dddc2dd3cd0bc47cff",
+  "target_path": "i18n/zh/phases/01-math-foundations/20-fourier-transform/docs/zh.md",
+  "target_sha256": "94dd830f1ce5e7066148869241adefaee48bc537a02372e8660de7fbba7c3385",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "author": "/root/translate_parallel_foundations_lane"
+  },
+  "segments": [
+    {
+      "segment_id": "01-20:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform"
+      ],
+      "ordinal": 1,
+      "source_sha256": "b28571edeb29ff6c6b9892605d18d81aff73146887998883af905e5ede9a1b82",
+      "target": "# Fourier 变换\n"
+    },
+    {
+      "segment_id": "01-20:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# The Fourier Transform"
+      ],
+      "ordinal": 2,
+      "source_sha256": "716fe129683d014f9e50798af215ef66ef9da2c53bcc6438e7f8190d1da4360a",
+      "target": "> 每个信号都是正弦波之和。Fourier 变换会告诉你，其中有哪些正弦波。\n"
+    },
+    {
+      "segment_id": "01-20:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform"
+      ],
+      "ordinal": 3,
+      "source_sha256": "3731ce83a588cbc0ae2070754bd1b6c8ca516c98e0c3d066a268cbe6266c5a8d",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 阶段 1，第 01-04 课、第 19 课（复数）\n**Time:** ~90 分钟\n"
+    },
+    {
+      "segment_id": "01-20:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "01-20:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "841683ff94a34c5a671ec575a6851e89f2a508923752a6caa3112136be3025fc",
+      "target": "- 从零实现 DFT，并用复杂度为 O(N log N) 的 Cooley-Tukey FFT 验证结果\n- 解释频率系数：从信号中提取幅度、相位和功率谱\n- 应用卷积定理，通过 FFT 结果相乘来完成卷积\n- 将 Fourier 频率分解与 Transformer 位置编码、CNN 卷积层联系起来\n"
+    },
+    {
+      "segment_id": "01-20:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "01-20:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "3e58e9543664a5995e2f76b0932f59ab411d76b23c1ce4024c9b7f505449c6c2",
+      "target": "音频录音是一串随时间变化的声压测量值。股票价格是一串随日期变化的数值。图像则是空间中像素强度构成的网格。它们都是时域（或空域）数据，你看到的是数值随某个索引变化。\n"
+    },
+    {
+      "segment_id": "01-20:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "4c6eb3b9295a66deb7b470013da435e19abdd128fbe8e06bc9b75fa66c742560",
+      "target": "但许多模式在时域中看不出来。这段音频是纯音，还是和弦？这支股票的价格是否存在一周的周期？这张图像是否有重复纹理？这些问题关注的是频率成分，而时域把这些信息隐藏了起来。\n"
+    },
+    {
+      "segment_id": "01-20:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "f7218655eb86653664473bd4cd2b492ce031d203a1a01f9a22f2078c975f2bd5",
+      "target": "Fourier 变换（傅里叶变换）将数据从时域转换到频域。它把信号分解成频率不同的正弦波。每个正弦波都有幅度（amplitude，表示有多强）和相位（phase，表示从哪里开始），Fourier 变换能告诉你这两者。\n"
+    },
+    {
+      "segment_id": "01-20:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "5272a408702eef345d5021c5f366cfaa8ffc1796216ecd05353f42db1bf64231",
+      "target": "这对机器学习（ML）很重要，因为频域思维无处不在。卷积神经网络进行卷积，而卷积在频域中对应乘法。Transformer 位置编码用频率分解来表示位置。音频模型，例如语音识别和音乐生成模型，处理的是频谱图，也就是声音的频率表示。时间序列模型寻找周期性模式。理解 Fourier 变换，能让你掌握处理这些问题所需的基本概念。\n"
+    },
+    {
+      "segment_id": "01-20:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "01-20:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 12,
+      "source_sha256": "f2a89f7be455ed855cc4611d51e3916d5e6634baa76fc7b414179d82c6b370e4",
+      "target": "### DFT 的定义\n"
+    },
+    {
+      "segment_id": "01-20:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 13,
+      "source_sha256": "27500d7b0d34f0e24d9e8875d8ba3542d9275c7b87d7642ac0167a891948f52b",
+      "target": "给定 N 个采样点 x[0], x[1], ..., x[N-1]，离散 Fourier 变换（Discrete Fourier Transform，DFT）会得到 N 个频率系数 X[0], X[1], ..., X[N-1]：\n"
+    },
+    {
+      "segment_id": "01-20:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0027",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 14,
+      "source_sha256": "21d521390239711fda76b6fd0bec2f9183342dec162759432c86b2107f925295",
+      "target": "```text\nX[k] = sum_{n=0}^{N-1} x[n] * e^(-2*pi*i*k*n/N)\n\nfor k = 0, 1, ..., N-1\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 15,
+      "source_sha256": "a91f25f18ba3f6c657a63d70efe6cb8f82819713d5fcf2ddeceb382d2a80ce2d",
+      "target": "每个 X[k] 都是复数。它的模（magnitude）|X[k]| 告诉你频率 k 的幅度，相位 angle(X[k]) 则告诉你该频率的相位偏移。\n"
+    },
+    {
+      "segment_id": "01-20:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 16,
+      "source_sha256": "240b88a75d44c1a807be3a89939431ca12b37d564e4a6702485dd7e79d73c2bc",
+      "target": "关键认识是：`e^(-2*pi*i*k*n/N)` 是一个以频率 k 旋转的相量。DFT 计算信号与 N 个等间隔频率各自的相关性。如果信号在频率 k 处包含能量，相关性就大；否则就接近零。\n"
+    },
+    {
+      "segment_id": "01-20:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The DFT definition"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 17,
+      "source_sha256": "c681b1e823b98a98b274a3f08660c2effc58c4667074fac4f26fe6b3074b3f97",
+      "target": "### 各个系数的含义\n"
+    },
+    {
+      "segment_id": "01-20:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 18,
+      "source_sha256": "5a5be5a2a5db319d39b657eb1e2ed8958ff7d4f43a6534d51e24a2c0838a3f9d",
+      "target": "**X[0]：直流分量（DC）。** 它是所有采样值之和，与均值成正比，表示信号的恒定偏移，也就是零频率偏移。\n"
+    },
+    {
+      "segment_id": "01-20:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 19,
+      "source_sha256": "9abc8b610a2a2ad8a8300b4864d181c5258279373dc635e46bf1102039f32d00",
+      "target": "```text\nX[0] = sum_{n=0}^{N-1} x[n] * e^0 = sum of all samples\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 20,
+      "source_sha256": "bda46ea17efa471c37e34bd5825a3716528f780e2f304fbe14c46fe32dc6645d",
+      "target": "**当 1 <= k <= N/2 时，X[k] 对应正频率。** X[k] 表示每 N 个采样点中有 k 个周期的频率。k 越大，频率越高，振荡也越快。\n"
+    },
+    {
+      "segment_id": "01-20:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 21,
+      "source_sha256": "923e026684225b76f5dd032d714b670ae7664934d0eac6669cc934b4da56a2f0",
+      "target": "**X[N/2]：Nyquist 频率。** 这是用 N 个采样点能够表示的最高频率。超过这个频率，就会发生混叠（aliasing），也就是高频伪装成低频。\n"
+    },
+    {
+      "segment_id": "01-20:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 22,
+      "source_sha256": "48b2ff1c07ec6b5a4d12a388f3dcc84e84e45ac4359077797b8ff8501ce27b10",
+      "target": "**当 N/2 < k < N 时，X[k] 对应负频率。** 对于实值信号，X[N-k] = conj(X[k])。负频率是正频率的镜像，因此有用的信息位于前 N/2 + 1 个系数中。\n"
+    },
+    {
+      "segment_id": "01-20:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### What each coefficient means"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 23,
+      "source_sha256": "d0e6ca03004ce7df90f0a1c352fb3bfff37cb7e388c9baaf6a905b1bcae8540c",
+      "target": "### 逆 DFT\n"
+    },
+    {
+      "segment_id": "01-20:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 24,
+      "source_sha256": "3820ef3c5170c83bac32be0b37b9ed82e67a7377acf586e1fee9ca733a143451",
+      "target": "逆 DFT 根据频率系数重构原始信号：\n"
+    },
+    {
+      "segment_id": "01-20:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 25,
+      "source_sha256": "cf86e2839bb53aa6999561236ba6e80611e245ff9e3d221d4210318100c33ac9",
+      "target": "```text\nx[n] = (1/N) * sum_{k=0}^{N-1} X[k] * e^(2*pi*i*k*n/N)\n\nfor n = 0, 1, ..., N-1\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 26,
+      "source_sha256": "b5907ff83f408262721fcdc347b2d4284e078e60d9596525ded0cc0ab5554bfd",
+      "target": "与正向 DFT 的区别只有两点：指数中的符号为正，而不是负；此外还有一个 1/N 归一化因子。\n"
+    },
+    {
+      "segment_id": "01-20:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 27,
+      "source_sha256": "1d5945068d198353231a7644a690fb332805ed9e7948a1b909a8a7a7e970b3cc",
+      "target": "逆 DFT 能够完美重构，不会丢失任何信息。你可以从时域转换到频域，再转换回来，而不产生任何误差。DFT 本质上是换基：用另一套坐标系重新表达同样的信息。\n"
+    },
+    {
+      "segment_id": "01-20:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Inverse DFT"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 28,
+      "source_sha256": "936dd19d4ff125a92984b9f9f13456a71593d166fac6091f4bb350f68b7b430a",
+      "target": "### FFT：让计算更快\n"
+    },
+    {
+      "segment_id": "01-20:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 29,
+      "source_sha256": "c44b4cbc06c24bde16e84a4dc256ecc441745101394f8923caf77a113dc9be94",
+      "target": "按上述定义计算 DFT，复杂度为 O(N^2)：对于 N 个输出系数中的每一个，都需要对 N 个输入采样点求和。当 N = 1 million（百万）时，就需要 10^12 次运算。\n"
+    },
+    {
+      "segment_id": "01-20:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 30,
+      "source_sha256": "138d2074c0c0939292f8ff252a222fb73788b877d97f06dff0177e925695b348",
+      "target": "快速 Fourier 变换（Fast Fourier Transform，FFT）只需 O(N log N) 就能计算出相同结果。当 N = 1 million（百万）时，需要的运算次数约为 20 million（百万），而不是 trillion（万亿）次。这让频率分析变得实用。\n"
+    },
+    {
+      "segment_id": "01-20:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 31,
+      "source_sha256": "8603b34da357178a98c0384c88397f207d0e51f38ef5e7537f591a72d07bb526",
+      "target": "Cooley-Tukey 算法是最常见的 FFT 算法，它采用分治策略：\n"
+    },
+    {
+      "segment_id": "01-20:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0063",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 32,
+      "source_sha256": "37e41a8747c6286667098daa9835625c82072b94522be70247e000e363243111",
+      "target": "1. 将信号拆成偶数索引采样点和奇数索引采样点。\n2. 递归计算每一半的 DFT。\n3. 使用“旋转因子”（twiddle factors）e^(-2*pi*i*k/N)，合并两个长度减半的 DFT。\n"
+    },
+    {
+      "segment_id": "01-20:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 33,
+      "source_sha256": "698970c3e7f74a3b4c3c61453a1dd1de3760b95ffa83b90ba9d7bad7a6e19f7d",
+      "target": "```text\nX[k] = E[k] + e^(-2*pi*i*k/N) * O[k]          for k = 0, ..., N/2 - 1\nX[k + N/2] = E[k] - e^(-2*pi*i*k/N) * O[k]    for k = 0, ..., N/2 - 1\n\nwhere E = DFT of even-indexed samples\n      O = DFT of odd-indexed samples\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 34,
+      "source_sha256": "86c15a460a7b8cb14d32b853ef4b80eb431d5b952d4b55d318bfddceaea5788f",
+      "target": "这种对称性意味着每层递归只需要 O(N) 的工作量，而递归一共有 log2(N) 层，因此总复杂度为 O(N log N)。\n"
+    },
+    {
+      "segment_id": "01-20:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 35,
+      "source_sha256": "47b43d3c72b7ce6c2ff8706d1eec50490c53db29fb12ea52b5db479000cb67ad",
+      "target": "```mermaid\ngraph TD\n    subgraph \"8-point FFT (Cooley-Tukey)\"\n        X[\"x[0..7]<br/>8 samples\"] -->|\"split even/odd\"| E[\"Even: x[0,2,4,6]\"]\n        X -->|\"split even/odd\"| O[\"Odd: x[1,3,5,7]\"]\n        E -->|\"4-pt FFT\"| EK[\"E[0..3]\"]\n        O -->|\"4-pt FFT\"| OK[\"O[0..3]\"]\n        EK -->|\"combine with twiddle factors\"| XK[\"X[0..7]\"]\n        OK -->|\"combine with twiddle factors\"| XK\n    end\n    subgraph \"Complexity\"\n        C1[\"DFT: O(N^2) = 64 multiplications\"]\n        C2[\"FFT: O(N log N) = 24 multiplications\"]\n    end\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 36,
+      "source_sha256": "c0d01ffbe053a3db190ffd2729690a4549eff4491f3a5ba4df15c00f0233377e",
+      "target": "FFT 要求信号长度为 2 的幂。实际使用时，会通过补零，将信号长度补到下一个 2 的幂。\n"
+    },
+    {
+      "segment_id": "01-20:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The FFT: making it fast"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectral analysis"
+      ],
+      "ordinal": 37,
+      "source_sha256": "bcf49548aee55a06f413fb4f43eb514d39ddb6a6d4c72a54231948e5f7508d40",
+      "target": "### 频谱分析\n"
+    },
+    {
+      "segment_id": "01-20:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectral analysis"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectral analysis"
+      ],
+      "ordinal": 38,
+      "source_sha256": "b5719a0c917d0907dc94d3b79926e579218ce191357b7f5996bc9d1ed64e7a19",
+      "target": "**功率谱（power spectrum）** 为 |X[k]|^2，即每个频率系数的模的平方。它显示各个频率处有多少能量。\n"
+    },
+    {
+      "segment_id": "01-20:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectral analysis"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectral analysis"
+      ],
+      "ordinal": 39,
+      "source_sha256": "b2f91a8db54046d487acf40563fbf0731f84d1abf8289d1982c0244d78e01d68",
+      "target": "**相位谱（phase spectrum）** 为 angle(X[k])，即各个频率的相位偏移。大多数分析任务关心的是功率谱，而忽略相位。\n"
+    },
+    {
+      "segment_id": "01-20:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectral analysis"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectral analysis"
+      ],
+      "ordinal": 40,
+      "source_sha256": "2b029ffff4e60474abf63103c649c6c00b67be299d2f1a701139874731447fb3",
+      "target": "```text\nPower at frequency k:  P[k] = |X[k]|^2 = X[k].real^2 + X[k].imag^2\nPhase at frequency k:  phi[k] = atan2(X[k].imag, X[k].real)\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectral analysis"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Frequency resolution"
+      ],
+      "ordinal": 41,
+      "source_sha256": "f4dc2a515a6e40f7e8e583ffcadad3ffddcb03fa53fffbc323e3fff75aa5a3db",
+      "target": "### 频率分辨率\n"
+    },
+    {
+      "segment_id": "01-20:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Frequency resolution"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Frequency resolution"
+      ],
+      "ordinal": 42,
+      "source_sha256": "a60ff4f4b55a1db052432d9af9cc2dd0ed45efcc8bc14ce27f613b05d61318f7",
+      "target": "DFT 的频率分辨率取决于采样点数 N 和采样率 fs。\n"
+    },
+    {
+      "segment_id": "01-20:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Frequency resolution"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Frequency resolution"
+      ],
+      "ordinal": 43,
+      "source_sha256": "a269f84fcb0178ae067fb066f0b9203e72c5ab312b8f9cce0ca6dcf5608cc74c",
+      "target": "```text\nFrequency of bin k:      f_k = k * fs / N\nFrequency resolution:    delta_f = fs / N\nMaximum frequency:       f_max = fs / 2  (Nyquist)\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Frequency resolution"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Frequency resolution"
+      ],
+      "ordinal": 44,
+      "source_sha256": "6ae12949010414d6287114409a131e6317f91830fa27d947553cad019d6f463f",
+      "target": "要分辨两个彼此接近的频率，需要更多采样点；要捕获高频，则需要更高的采样率。\n"
+    },
+    {
+      "segment_id": "01-20:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Frequency resolution"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 45,
+      "source_sha256": "f2b2950791023a81df0fdfcf5e18b0cea051fb2d81da49b054977ab0955549c3",
+      "target": "### 卷积定理\n"
+    },
+    {
+      "segment_id": "01-20:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 46,
+      "source_sha256": "f6e1f8cb86b50f16d582c3f535804cc6a93a610d5edbae044f42143e999d47af",
+      "target": "这是信号处理中最重要的结论之一，与 CNN 也直接相关。\n"
+    },
+    {
+      "segment_id": "01-20:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 47,
+      "source_sha256": "bc7794610d321f4c9d462e9a4dc46575039b019dd4245833df75819f36f8d259",
+      "target": "**时域中的卷积，等于频域中的逐点相乘。**\n"
+    },
+    {
+      "segment_id": "01-20:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0095",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 48,
+      "source_sha256": "be708df906aab13eed8a097ddf073940506ad7e9acd902bb09a956dbb5172cef",
+      "target": "```text\nx * h = IFFT(FFT(x) . FFT(h))\n\nwhere * is convolution and . is element-wise multiplication\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 49,
+      "source_sha256": "993154fce5a156a541bc400bc95b8feb1d3c46dd0b780f0551cba52fac70440b",
+      "target": "它的重要性在于：\n"
+    },
+    {
+      "segment_id": "01-20:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0099",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 50,
+      "source_sha256": "0187312c58033c4bcd367f83c402ff61fec2e816d9057ca304abfdb91fe1ab2e",
+      "target": "- 直接对长度分别为 N、M 的两个信号做卷积，需要 O(N*M) 次运算。\n- 基于 FFT 的卷积只需要 O(N log N)：分别变换、相乘，再逆变换。\n- 对于大卷积核，FFT 卷积的速度快得多。\n- 感受野较大的卷积层中执行的正是这个过程。\n"
+    },
+    {
+      "segment_id": "01-20:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 51,
+      "source_sha256": "5cba3a8066ae62004f1365a0346839cbc05cd8f7dc53551ff67d178a9e9b33f0",
+      "target": "注意：DFT 计算的是循环卷积，信号会首尾回绕相接。要得到不发生回绕的线性卷积，需要先将两个信号都补零至长度 N + M - 1，再进行计算。\n"
+    },
+    {
+      "segment_id": "01-20:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 52,
+      "source_sha256": "ce906f4f52e25dee6aae9493835f90e8499f0b309063cac179ac619d5b96722a",
+      "target": "```mermaid\ngraph LR\n    subgraph \"Time Domain\"\n        TA[\"Signal x[n]\"] -->|\"convolve (slow: O(NM))\"| TC[\"Output y[n]\"]\n        TB[\"Filter h[n]\"] -->|\"convolve\"| TC\n    end\n    subgraph \"Frequency Domain\"\n        FA[\"FFT(x)\"] -->|\"multiply (fast: O(N))\"| FC[\"FFT(x) * FFT(h)\"]\n        FB[\"FFT(h)\"] -->|\"multiply\"| FC\n        FC -->|\"IFFT\"| FD[\"y[n]\"]\n    end\n    TA -.->|\"FFT\"| FA\n    TB -.->|\"FFT\"| FB\n    FD -.->|\"same result\"| TC\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### The convolution theorem"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0105",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 53,
+      "source_sha256": "547a953ace5051631745dd3b7a63612a22691835f057b5bf99ca431ad45ab1d7",
+      "target": "### 加窗\n"
+    },
+    {
+      "segment_id": "01-20:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 54,
+      "source_sha256": "4f24c51037bec8b5f229f6b819cf2e64eabe2953e32c32d69dfd0233045dab9e",
+      "target": "DFT 假定信号是周期性的，将 N 个采样点视为无限重复信号的一个周期。如果信号起点和终点的值不同，周期边界处就会不连续，从而表现为额外的高频成分，这称为频谱泄漏（spectral leakage）。\n"
+    },
+    {
+      "segment_id": "01-20:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 55,
+      "source_sha256": "27d901972e89f64ce856b978d7796f1d05a9693b21608ce34d0af739407df194",
+      "target": "加窗（windowing）在计算 DFT 之前，将信号两端逐渐压低至零，以减少泄漏。\n"
+    },
+    {
+      "segment_id": "01-20:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 56,
+      "source_sha256": "dc1e1fcb9a53725b9232ae0c5a07ada9fa9d6ed472bf8c2fcd93a3cf02135181",
+      "target": "常见的窗函数：\n"
+    },
+    {
+      "segment_id": "01-20:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0113",
+      "kind": "table",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 57,
+      "source_sha256": "59866f3f39d17656f520e4e75cbf735d32245fadceaccd6fb0f522196344457a",
+      "target": "| 窗函数 | 形状 | 主瓣宽度 | 旁瓣电平 | 适用场景 |\n|--------|-------|----------------|-----------------|----------|\n| 矩形窗 | 平坦（不加窗） | 最窄 | 最高（-13 dB） | 信号在 N 个采样点内恰好具有周期性时 |\n| Hann | 升余弦 | 中等 | 低（-31 dB） | 通用频谱分析 |\n| Hamming | 修正余弦 | 中等 | 更低（-42 dB） | 音频处理、语音分析 |\n| Blackman | 三项余弦 | 宽 | 很低（-58 dB） | 旁瓣抑制至关重要时 |\n"
+    },
+    {
+      "segment_id": "01-20:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0115",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 58,
+      "source_sha256": "88641bd4e9056729e4d0a1845233a59a5585beafc3c437e4f6e63a6ea47ed03a",
+      "target": "```text\nHann window:    w[n] = 0.5 * (1 - cos(2*pi*n / (N-1)))\nHamming window: w[n] = 0.54 - 0.46 * cos(2*pi*n / (N-1))\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 59,
+      "source_sha256": "63d6009963de65d042f286ef79bb30f9c1085adb384cdf8ca0af22c5d0911a21",
+      "target": "在 DFT 之前，将窗函数与信号逐元素相乘来完成加窗：`X = DFT(x * w)`。\n"
+    },
+    {
+      "segment_id": "01-20:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Windowing"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0119",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### DFT properties"
+      ],
+      "ordinal": 60,
+      "source_sha256": "5f67a052043fc39ecd7e52fac16cfaa779c2dcc48da32c30c8813247f73ad737",
+      "target": "### DFT 的性质\n"
+    },
+    {
+      "segment_id": "01-20:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### DFT properties"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0121",
+      "kind": "table",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### DFT properties"
+      ],
+      "ordinal": 61,
+      "source_sha256": "4fac09998d457970a34e5e3aaee76eafc40f1abbee1072c4328c03d0b75b95e3",
+      "target": "| 性质 | 时域 | 频域 |\n|----------|-------------|-----------------|\n| 线性性 | a*x + b*y | a*X + b*Y |\n| 时移 | x[n - k] | X[f] * e^(-2*pi*i*f*k/N) |\n| 频移 | x[n] * e^(2*pi*i*f0*n/N) | X[f - f0] |\n| 卷积 | x * h | X * H（逐点相乘） |\n| 乘法 | x * h（逐点相乘） | X * H（循环卷积，乘以缩放因子 1/N） |\n| Parseval 定理 | sum \\|x[n]\\|^2 | (1/N) * sum \\|X[k]\\|^2 |\n| 共轭对称性（实数输入） | x[n] 为实数 | X[k] = conj(X[N-k]) |\n"
+    },
+    {
+      "segment_id": "01-20:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### DFT properties"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### DFT properties"
+      ],
+      "ordinal": 62,
+      "source_sha256": "8ced07bc1eb5ddd7bf8af162c5533df81890ec58dd49e0d2a37e71bc093db786",
+      "target": "Parseval 定理表明，两个域中的总能量相同。能量在变换过程中守恒。\n"
+    },
+    {
+      "segment_id": "01-20:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### DFT properties"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 63,
+      "source_sha256": "ed82bee2415b8a44337f6187b3730fcded5d7046ae9be2ed57d6bcb5edb407f4",
+      "target": "### 与位置编码的联系\n"
+    },
+    {
+      "segment_id": "01-20:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0127",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 64,
+      "source_sha256": "35da6d35d24ec0e2f1551ef95076729f90057abee89ba892122bdab66f207605",
+      "target": "最初的 Transformer 使用正弦位置编码：\n"
+    },
+    {
+      "segment_id": "01-20:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0129",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 65,
+      "source_sha256": "36aabcb0c200bebf3de4cdfa6026eac74e93886772cf3055334ed6574b2257cf",
+      "target": "```text\nPE(pos, 2i)   = sin(pos / 10000^(2i/d_model))\nPE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0131",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 66,
+      "source_sha256": "e9028b0ca5d3240edd9d8593a3815718803016315094cc99b1174dfded330b19",
+      "target": "每对维度 (2i, 2i+1) 都以不同的频率振荡。频率按几何级数间隔排列，从高频（维度 0,1）逐渐变为低频（最后几个维度）。这让每个位置都在所有频带上形成一种独特模式，类似于 Fourier 系数能够唯一确定一个信号。\n"
+    },
+    {
+      "segment_id": "01-20:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 67,
+      "source_sha256": "00d068a08f09a6fa9ceff684a5902f4a4903de8244409ce007b82aa9770a8b72",
+      "target": "这带来了以下关键性质：\n"
+    },
+    {
+      "segment_id": "01-20:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0135",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 68,
+      "source_sha256": "f85a3bca3a4f429cc562e78fceda1095064d213f013735bddffeed66f84a453f",
+      "target": "- **唯一性：** 不存在编码相同的两个位置。\n- **有界值：** sin 和 cos 的取值始终在 [-1, 1] 内。\n- **相对位置：** 位置 p+k 的编码可以表示为位置 p 编码的线性函数，因此模型可以学习关注相对位置。\n"
+    },
+    {
+      "segment_id": "01-20:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to positional encodings"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0137",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to CNNs"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01d9f16e098a465f720b0d588c9e517c59ee360a0774c4f866078b6483c8f75b",
+      "target": "### 与 CNN 的联系\n"
+    },
+    {
+      "segment_id": "01-20:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to CNNs"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0139",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to CNNs"
+      ],
+      "ordinal": 70,
+      "source_sha256": "dcfc5235f0fd502537474e7f95573c3bc738510c89d3f9a4f20f6c364166cb4a",
+      "target": "卷积层将学习得到的滤波器（卷积核）在信号或图像上滑动，从而应用于输入。从数学上说，这就是卷积运算。\n"
+    },
+    {
+      "segment_id": "01-20:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to CNNs"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0141",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to CNNs"
+      ],
+      "ordinal": 71,
+      "source_sha256": "334bfd7186cc3335ceae44880dce8a9a259dbb091c744ceb033a3537a6bdc9f7",
+      "target": "根据卷积定理，这等价于：\n1. 对输入做 FFT\n2. 对卷积核做 FFT\n3. 在频域中相乘\n4. 对结果做 IFFT\n"
+    },
+    {
+      "segment_id": "01-20:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to CNNs"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0143",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to CNNs"
+      ],
+      "ordinal": 72,
+      "source_sha256": "d27b3a1df68e636f19176adad685c6436fcbccab8177345d28374b84abc6f898",
+      "target": "标准 CNN 实现使用直接卷积，因为它对较小的 3x3 卷积核更快。但对于大卷积核或全局卷积，基于 FFT 的方法明显更快。一些架构，例如 FNet，用 FFT 完全替代注意力，将复杂度从 O(N^2) 降为 O(N log N)，同时取得有竞争力的准确率。\n"
+    },
+    {
+      "segment_id": "01-20:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Connection to CNNs"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0145",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 73,
+      "source_sha256": "a57946aac1b5031b46263358fe64519282a5c452910045e6a10d72175849527b",
+      "target": "### 频谱图与短时 Fourier 变换\n"
+    },
+    {
+      "segment_id": "01-20:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0147",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 74,
+      "source_sha256": "09c286a41c9bdf76cc3d3a47d5fd22b5d6dba67f8dbdc890689db2992f1f8304",
+      "target": "一次 FFT 可以给出整个信号的频率成分，却无法告诉你这些频率出现在什么时间。啁啾信号（chirp，频率随时间升高的信号）与和弦（所有频率同时出现）可以具有相同的幅度谱。\n"
+    },
+    {
+      "segment_id": "01-20:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0149",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 75,
+      "source_sha256": "c53dbae5964727a12465bc6e276021a77718e42ad3163099156f839ec4ef76d1",
+      "target": "短时 Fourier 变换（Short-Time Fourier Transform，STFT）对信号的重叠窗口分别计算 FFT，从而解决这个问题。结果就是频谱图：一个 2D（二维）表示，一个轴是时间，另一个轴是频率，每个点的强度显示相应时刻、相应频率处的能量。\n"
+    },
+    {
+      "segment_id": "01-20:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0151",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 76,
+      "source_sha256": "5737f3710f7931e4626cc0f99bfdfb1f65a3f00ce26e4e8bc24ad9030d0690a8",
+      "target": "```text\nSTFT procedure:\n1. Choose a window size (e.g., 1024 samples)\n2. Choose a hop size (e.g., 256 samples -- 75% overlap)\n3. For each window position:\n   a. Extract the windowed segment\n   b. Apply a Hann/Hamming window\n   c. Compute FFT\n   d. Store the magnitude spectrum as one column of the spectrogram\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 77,
+      "source_sha256": "f15f5788ce6a9a64496826ab0a89f688c89fe4844633f1109eb9be8b1f47eb55",
+      "target": "频谱图是音频 ML 模型的标准输入表示。语音识别模型（Whisper、DeepSpeech）处理 mel 频谱图，其中频率被映射到 mel 尺度（梅尔频率尺度），以更好地匹配人类的音高感知。\n"
+    },
+    {
+      "segment_id": "01-20:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Spectrograms and the Short-Time Fourier Transform"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0155",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Aliasing"
+      ],
+      "ordinal": 78,
+      "source_sha256": "c627a4f4d35128c2e7db468daab1a2c672b3b4d968f573f46161bd53470675df",
+      "target": "### 混叠\n"
+    },
+    {
+      "segment_id": "01-20:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Aliasing"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Aliasing"
+      ],
+      "ordinal": 79,
+      "source_sha256": "67723cdd2578b50890a733bfda01ddf3f4aec009d7e217e813bddd1a042b8fdb",
+      "target": "如果信号包含高于 fs/2（Nyquist 频率）的频率，以 fs 采样就会产生混叠副本。一个以 100 Hz 采样的 90 Hz 信号，看起来与 10 Hz 信号完全相同。仅凭这些采样值，无法区分两者。\n"
+    },
+    {
+      "segment_id": "01-20:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Aliasing"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0159",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Aliasing"
+      ],
+      "ordinal": 80,
+      "source_sha256": "bb3ecb607653ad0e84f27cd017d00dfd58932f17a256521d520108c448d4297d",
+      "target": "```text\nExample:\n  True signal: 90 Hz sine wave\n  Sampling rate: 100 Hz\n  Apparent frequency: 100 - 90 = 10 Hz\n\n  The samples from the 90 Hz signal at 100 Hz sampling rate\n  are identical to the samples from a 10 Hz signal.\n  No amount of math can recover the original 90 Hz.\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Aliasing"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0161",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Aliasing"
+      ],
+      "ordinal": 81,
+      "source_sha256": "564742bd0ba80a34d114529fae26cfb5f253d91af5e7d965b22d49febabb83c5",
+      "target": "因此，模数转换器会配备抗混叠滤波器，在采样前滤除高于 Nyquist 频率的成分。在 ML 中，如果对特征图下采样时没有进行适当的低通滤波，就会发生混叠；一些架构通过抗混叠池化层来处理这一问题。\n"
+    },
+    {
+      "segment_id": "01-20:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Aliasing"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0163",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Zero-padding does not increase resolution"
+      ],
+      "ordinal": 82,
+      "source_sha256": "1d9ecf5340ae2893db35a7dbe010e724e242cb5d05789e0ba94081df8d2a2378",
+      "target": "### 补零不会提高分辨率\n"
+    },
+    {
+      "segment_id": "01-20:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Zero-padding does not increase resolution"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0165",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Zero-padding does not increase resolution"
+      ],
+      "ordinal": 83,
+      "source_sha256": "23fd61bba0b87861a78eff3117a32fad99a485726d22d8268400adf3ab7afbd4",
+      "target": "一个常见误解是，在 FFT 前给信号补零可以提高频率分辨率。事实并非如此。补零只是在已有频点（frequency bin）之间进行插值，让频谱看起来更平滑，但无法揭示原始采样值中不存在的频率细节。\n"
+    },
+    {
+      "segment_id": "01-20:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Zero-padding does not increase resolution"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0167",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Zero-padding does not increase resolution"
+      ],
+      "ordinal": 84,
+      "source_sha256": "a1f7ff203af7c8a2997c87f57a92dd263d49cdf97fdc473bb0faecae936a1f52",
+      "target": "真正的频率分辨率只取决于观测时长 T = N / fs。要分辨相差 delta_f 的两个频率，至少需要 T = 1 / delta_f 秒的数据。补再多零，也无法改变这个基本限制。\n"
+    },
+    {
+      "segment_id": "01-20:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Zero-padding does not increase resolution"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0169",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Zero-padding does not increase resolution"
+      ],
+      "ordinal": 85,
+      "source_sha256": "37776befb473fdaf5b9149269e6d47f1fb04e6feeaaec4c9edaa86df4bc471b2",
+      "target": "```figure\nfourier-synthesis\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## The Concept",
+        "### Zero-padding does not increase resolution"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0171",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It"
+      ],
+      "ordinal": 86,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "01-20:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0173",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 1: DFT from scratch"
+      ],
+      "ordinal": 87,
+      "source_sha256": "1569f4cf03e4d04e0e89a8af637e182537ee8fa98ae6674396f383f4fb8e4a11",
+      "target": "### 步骤 1：从零实现 DFT\n"
+    },
+    {
+      "segment_id": "01-20:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 1: DFT from scratch"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0175",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 1: DFT from scratch"
+      ],
+      "ordinal": 88,
+      "source_sha256": "24228a0816bef9ee078173b560675dc067c643548819deb4a1b0b83373232f86",
+      "target": "复杂度为 O(N^2) 的 DFT 可以直接按定义实现。\n"
+    },
+    {
+      "segment_id": "01-20:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 1: DFT from scratch"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0177",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 1: DFT from scratch"
+      ],
+      "ordinal": 89,
+      "source_sha256": "fb3a754b6a1845bbeba1c537e5b88f04bbb4487c9c015088b7cd9dae8c0437a1",
+      "target": "```python\nimport math\n\nclass Complex:\n    ...\n\ndef dft(x):\n    N = len(x)\n    result = []\n    for k in range(N):\n        total = Complex(0, 0)\n        for n in range(N):\n            angle = -2 * math.pi * k * n / N\n            w = Complex(math.cos(angle), math.sin(angle))\n            xn = x[n] if isinstance(x[n], Complex) else Complex(x[n])\n            total = total + xn * w\n        result.append(total)\n    return result\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 1: DFT from scratch"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0179",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 2: Inverse DFT"
+      ],
+      "ordinal": 90,
+      "source_sha256": "b06271de4e462cdf6cd51a78cab04e6eb3625ed193bd80f0141ffb6c2bffb811",
+      "target": "### 步骤 2：逆 DFT\n"
+    },
+    {
+      "segment_id": "01-20:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 2: Inverse DFT"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0181",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 2: Inverse DFT"
+      ],
+      "ordinal": 91,
+      "source_sha256": "452fb35d51b8704e467260db930f67324e0991170ae984eae947799b3317eb82",
+      "target": "结构相同，将指数中的符号改为正，再除以 N。\n"
+    },
+    {
+      "segment_id": "01-20:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 2: Inverse DFT"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0183",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 2: Inverse DFT"
+      ],
+      "ordinal": 92,
+      "source_sha256": "6fbd87fd24bf99f69d01a7516a8f650177d9fbac42433bad0b96e4b02257fd99",
+      "target": "```python\ndef idft(X):\n    N = len(X)\n    result = []\n    for n in range(N):\n        total = Complex(0, 0)\n        for k in range(N):\n            angle = 2 * math.pi * k * n / N\n            w = Complex(math.cos(angle), math.sin(angle))\n            total = total + X[k] * w\n        result.append(Complex(total.real / N, total.imag / N))\n    return result\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 2: Inverse DFT"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0185",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 3: FFT (Cooley-Tukey)"
+      ],
+      "ordinal": 93,
+      "source_sha256": "bda08d9c1c763009fcaf53110e7a0bbbdd0fc68e235d0e062b68dd7eaf3c76fa",
+      "target": "### 步骤 3：FFT（Cooley-Tukey）\n"
+    },
+    {
+      "segment_id": "01-20:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 3: FFT (Cooley-Tukey)"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0187",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 3: FFT (Cooley-Tukey)"
+      ],
+      "ordinal": 94,
+      "source_sha256": "a2f6d50fdf88c59595e066cada68eedf908cdf3a50b0a63a4e3719765dec9121",
+      "target": "递归 FFT 要求长度为 2 的幂。先拆分奇偶索引，再递归计算，最后用旋转因子合并。\n"
+    },
+    {
+      "segment_id": "01-20:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 3: FFT (Cooley-Tukey)"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0189",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 3: FFT (Cooley-Tukey)"
+      ],
+      "ordinal": 95,
+      "source_sha256": "34b0ad0fa405fd5727712fd127ded611e43e4222f9df659265e9f6c729097d6d",
+      "target": "```python\ndef fft(x):\n    N = len(x)\n    if N <= 1:\n        return [x[0] if isinstance(x[0], Complex) else Complex(x[0])]\n    if N % 2 != 0:\n        return dft(x)\n\n    even = fft([x[i] for i in range(0, N, 2)])\n    odd = fft([x[i] for i in range(1, N, 2)])\n\n    result = [Complex(0)] * N\n    for k in range(N // 2):\n        angle = -2 * math.pi * k / N\n        twiddle = Complex(math.cos(angle), math.sin(angle))\n        t = twiddle * odd[k]\n        result[k] = even[k] + t\n        result[k + N // 2] = even[k] - t\n    return result\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 3: FFT (Cooley-Tukey)"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0191",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 4: Spectral analysis helpers"
+      ],
+      "ordinal": 96,
+      "source_sha256": "43faae0db6eaf97662cd882d88b6790f28fadaff880a7e63d6f08fbc11488c74",
+      "target": "### 步骤 4：频谱分析辅助函数\n"
+    },
+    {
+      "segment_id": "01-20:b0192",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 4: Spectral analysis helpers"
+      ],
+      "ordinal": 96,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0193",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 4: Spectral analysis helpers"
+      ],
+      "ordinal": 97,
+      "source_sha256": "3863c2bf4973de7414e30a9c911f1c70c19209356018d7c18dd2e41fe220ce4a",
+      "target": "```python\ndef power_spectrum(X):\n    return [xk.real ** 2 + xk.imag ** 2 for xk in X]\n\ndef convolve_fft(x, h):\n    N = len(x) + len(h) - 1\n    padded_N = 1\n    while padded_N < N:\n        padded_N *= 2\n\n    x_padded = x + [0.0] * (padded_N - len(x))\n    h_padded = h + [0.0] * (padded_N - len(h))\n\n    X = fft(x_padded)\n    H = fft(h_padded)\n\n    Y = [xk * hk for xk, hk in zip(X, H)]\n\n    y = idft(Y)\n    return [y[n].real for n in range(N)]\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0194",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Build It",
+        "### Step 4: Spectral analysis helpers"
+      ],
+      "ordinal": 97,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0195",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 98,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "01-20:b0196",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 98,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0197",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 99,
+      "source_sha256": "6da38ecd441dff7d0f591771f80c49209e85d95dd676f5ccda25a1ff57b9afb9",
+      "target": "实际工作中，使用 numpy 的 FFT，它底层依托高度优化的 C 库。\n"
+    },
+    {
+      "segment_id": "01-20:b0198",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 99,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0199",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 100,
+      "source_sha256": "a9bbe6ccaa9a0a083b74ba464489d940657187caa3ef19e8b7325815165c340c",
+      "target": "```python\nimport numpy as np\n\nsignal = np.sin(2 * np.pi * 5 * np.arange(256) / 256)\nspectrum = np.fft.fft(signal)\nfreqs = np.fft.fftfreq(256, d=1/256)\n\npower = np.abs(spectrum) ** 2\n\npositive_freqs = freqs[:len(freqs)//2]\npositive_power = power[:len(power)//2]\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0200",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 100,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0201",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 101,
+      "source_sha256": "31728cec39716aaf1a7e3fe6521e70869d7e8462195fc86ef6fcc6653979b416",
+      "target": "用于加窗与更高级的频谱分析：\n"
+    },
+    {
+      "segment_id": "01-20:b0202",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 101,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0203",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 102,
+      "source_sha256": "b9362fd0f13c6766792967bf2a07e14fe034f5e1b550520101d83ab3cab6a427",
+      "target": "```python\nfrom scipy.signal import windows, stft\n\nwindow = windows.hann(256)\nwindowed = signal * window\nspectrum = np.fft.fft(windowed)\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0204",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 102,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0205",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 103,
+      "source_sha256": "c08ecb1f98d51358b641a0d9f1013c6618adef52371b8752482d18d997270f27",
+      "target": "用于卷积：\n"
+    },
+    {
+      "segment_id": "01-20:b0206",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 103,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0207",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 104,
+      "source_sha256": "0cee42edd178bd6c9a20bf63c703c1f9fd3aa76df3527d829a3f8ac72c166f56",
+      "target": "```python\nfrom scipy.signal import fftconvolve\n\nresult = fftconvolve(signal, kernel, mode='full')\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0208",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 104,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0209",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 105,
+      "source_sha256": "c89628b6bd79d35bea3cd15139532c2152677f4ca56377f13c9b6579e697ab0d",
+      "target": "用于频谱图：\n"
+    },
+    {
+      "segment_id": "01-20:b0210",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 105,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0211",
+      "kind": "fence",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 106,
+      "source_sha256": "663fe755e787b4ed5dec7bea3fcea0a1baf02e4c3678ba39ec47e9c7988abdc4",
+      "target": "```python\nfrom scipy.signal import stft\n\nfrequencies, times, Zxx = stft(signal, fs=sample_rate, nperseg=256)\nspectrogram = np.abs(Zxx) ** 2\n```\n"
+    },
+    {
+      "segment_id": "01-20:b0212",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 106,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0213",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 107,
+      "source_sha256": "2401a231f36db0fd055367bad4e60c2f21a88ff751bae45b7293ddc1eb97f5be",
+      "target": "频谱图矩阵的形状为 (n_frequencies, n_time_frames)。每一列对应一个时间窗口的功率谱，这正是音频 ML 模型使用的输入。\n"
+    },
+    {
+      "segment_id": "01-20:b0214",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Use It"
+      ],
+      "ordinal": 107,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0215",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Ship It"
+      ],
+      "ordinal": 108,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "01-20:b0216",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Ship It"
+      ],
+      "ordinal": 108,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0217",
+      "kind": "paragraph",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Ship It"
+      ],
+      "ordinal": 109,
+      "source_sha256": "9cbb8e33d434321a42c84042086233bbb74ce15cf8d2f7afafbfe317ef01f870",
+      "target": "运行 `code/fourier.py`，生成 `outputs/prompt-spectral-analyzer.md`。\n"
+    },
+    {
+      "segment_id": "01-20:b0218",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Ship It"
+      ],
+      "ordinal": 109,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0219",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 110,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "01-20:b0220",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 110,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0221",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 111,
+      "source_sha256": "d655a51cf84a32c6383de3c276fce57857a75345c08d36413c4c2ee2dbc7a623",
+      "target": "1. **识别纯音。** 创建一个仅包含单个正弦波的信号，频率未知，介于 1 到 50 Hz 之间，以 128 Hz 采样 1 秒。用 DFT 识别频率，并验证结果是否一致。然后加入标准差为 0.5 的 Gaussian 噪声，再做一次。噪声如何影响频谱？\n"
+    },
+    {
+      "segment_id": "01-20:b0222",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 111,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0223",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 112,
+      "source_sha256": "64de84fd13af55beb3711d309a6f97ce4ba9c0726c36a08c1c2976a336480abe",
+      "target": "2. **FFT 与 DFT 验证。** 生成长度为 64 的随机信号，分别计算 DFT（O(N^2)）和 FFT，验证所有系数的差异都在 1e-10 以内。分别测量两种函数处理长度为 256、512、1024、2048 的信号所需的时间，并绘制 DFT 耗时与 FFT 耗时之比。\n"
+    },
+    {
+      "segment_id": "01-20:b0224",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 112,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0225",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 113,
+      "source_sha256": "4f83f041f7da128c6b5eaae74d55c398a554af8fdc41e53603885608e633431d",
+      "target": "3. **用实例验证卷积定理。** 创建信号 x = [1, 2, 3, 4, 0, 0, 0, 0] 和滤波器 h = [1, 1, 1, 0, 0, 0, 0, 0]。先通过嵌套循环直接计算它们的循环卷积，再通过 FFT 计算（变换、相乘、逆变换），验证结果一致。然后适当补零，计算线性卷积。\n"
+    },
+    {
+      "segment_id": "01-20:b0226",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 113,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0227",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 114,
+      "source_sha256": "0ffa0f6a717f9e4f4b4e4b78a0fe19a75c6146dcd7cf6ecc357783f4c13a658d",
+      "target": "4. **加窗的影响。** 创建一个信号，由频率非常接近的 10 Hz 和 12 Hz 两个正弦波相加而成，以 128 Hz 采样 1 秒。分别在不加窗、加 Hann 窗和加 Hamming 窗时计算功率谱。哪一种窗最容易区分两个峰？为什么？\n"
+    },
+    {
+      "segment_id": "01-20:b0228",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 114,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0229",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 115,
+      "source_sha256": "50f19c7e0528ea57fa78fad4465aa34c8773f291b068790d3364b7fea0a0d655",
+      "target": "5. **位置编码分析。** 生成 d_model = 128、max_pos = 512 的正弦位置编码。对每一对位置 (p1, p2)，计算编码的点积，展示点积只依赖 |p1 - p2|，而不依赖绝对位置。随着距离增加，点积会发生什么变化？\n"
+    },
+    {
+      "segment_id": "01-20:b0230",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Exercises"
+      ],
+      "ordinal": 115,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0231",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Key Terms"
+      ],
+      "ordinal": 116,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "01-20:b0232",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Key Terms"
+      ],
+      "ordinal": 116,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0233",
+      "kind": "table",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Key Terms"
+      ],
+      "ordinal": 117,
+      "source_sha256": "70eb8b72c13c87882225f979046b89785402c4f5989d2efdcd6b48d88652f668",
+      "target": "| 术语 | 含义 |\n|------|---------------|\n| DFT（离散 Fourier 变换） | 将 N 个时域采样点转换为 N 个频域系数。每个系数都是信号与相应频率复正弦波的相关值 |\n| FFT（快速 Fourier 变换） | 以 O(N log N) 复杂度计算 DFT 的算法。Cooley-Tukey 算法递归拆分奇偶索引 |\n| 逆 DFT | 根据频率系数重构时域信号。公式与 DFT 相同，但指数符号相反，且乘以 1/N |\n| 频点 | DFT 输出中的每个索引 k 都表示频率 k*fs/N Hz。“频点”就是离散的频率位置 |\n| 直流分量 | X[0]，零频率系数，与信号均值成正比 |\n| Nyquist 频率 | fs/2，在采样率 fs 下能表示的最高频率；高于此值的频率会发生混叠 |\n| 功率谱 | \\|X[k]\\|^2，即每个频率系数的模的平方，表示能量在各个频率上的分布 |\n| 相位谱 | angle(X[k])，每个频率分量的相位偏移，在分析中经常被忽略 |\n| 频谱泄漏 | 将非周期信号视为周期信号而产生的额外频率成分，可通过加窗减少 |\n| 窗函数 | 在 DFT 之前应用的渐变函数（Hann、Hamming、Blackman），用于减少频谱泄漏 |\n| 旋转因子 | 复指数 e^(-2*pi*i*k/N)，用于 FFT 蝶形运算中合并子 DFT |\n| 卷积定理 | 时域中的卷积等于频域中的逐点相乘，是信号处理与 CNN 的基础 |\n| 循环卷积 | 信号首尾回绕相接的卷积，是 DFT 自然计算出的卷积形式 |\n| 线性卷积 | 不发生回绕的标准卷积，可以在 DFT 之前补零来实现 |\n| Parseval 定理 | Fourier 变换保持总能量不变，sum \\|x[n]\\|^2 = (1/N) sum \\|X[k]\\|^2 |\n| 混叠 | 采样率不足时，高于 Nyquist 的频率表现为较低频率的现象 |\n"
+    },
+    {
+      "segment_id": "01-20:b0234",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Key Terms"
+      ],
+      "ordinal": 117,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0235",
+      "kind": "heading",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Further Reading"
+      ],
+      "ordinal": 118,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "01-20:b0236",
+      "kind": "separator",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Further Reading"
+      ],
+      "ordinal": 118,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "01-20:b0237",
+      "kind": "list",
+      "heading_path": [
+        "# The Fourier Transform",
+        "## Further Reading"
+      ],
+      "ordinal": 119,
+      "source_sha256": "c8363c44b9aced2dcf028e1f1fc93f8d4f46b9e600c93d560824bf71ccb8febf",
+      "target": "- [Cooley 与 Tukey：复 Fourier 级数的机器计算算法（1965）](https://www.ams.org/journals/mcom/1965-19-090/S0025-5718-1965-0178586-1/) - 改变计算领域的 FFT 原始论文\n- [3Blue1Brown：Fourier 变换到底是什么？](https://www.youtube.com/watch?v=spUNpyF58BY) - Fourier 变换的最佳可视化入门\n- [Lee-Thorp 等：FNet：用 Fourier 变换混合 token（2021）](https://arxiv.org/abs/2105.03824) - 在 Transformer 中用 FFT 替代自注意力\n- [Smith：科学家与工程师的数字信号处理指南](http://www.dspguide.com/) - 免费在线教材，深入介绍 FFT、加窗与频谱分析\n- [Vaswani 等：Attention Is All You Need（2017）](https://arxiv.org/abs/1706.03762) - 由 Fourier 频率分解导出的正弦位置编码\n- [Radford 等：Whisper（2022）](https://arxiv.org/abs/2212.04356) - 以 mel 频谱图为输入表示的语音识别\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+  "additional_glossary_sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S21-fourier-transform/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "d4bd7e5e055806928e4fb500a7df0f8fc598518bd88554d89547a2bce90b5ab1"
+}
