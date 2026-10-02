@@ -151,7 +151,7 @@
   "dependency_manifest_sha256": "b86a58fdb6ba6b8924d28c7ea113b675229e54df6e1780cd0b073a34be3ba04d",
   "batch": "S27",
   "review_date": "2026-10-02",
-  "reviewed_target_sha256": "77ae500e2f274b6d73bd32574a9c728000dca12e2d7651cea7b4c475a2f373f1",
+  "reviewed_target_sha256": "ebe9ac2e8697a657ce6a5548f30213bd715cfd1f445e89d3e7a0b68b0d8ff493",
   "release_status": "draft-not-approved",
   "review_coverage": {
     "technical": "Independent complete 382-line, 131-block, 51-candidate EN/ZH comparison; not sampling",
@@ -170,11 +170,13 @@
   "review_passes": [
     {
       "status": "pass",
-      "scope": "All 131 blocks, 51 translated blocks, 15 protected fences, 1 table, 3 exercises and 3 references independently compared."
+      "scope": "All 131 blocks, 51 translated blocks, 15 protected fences, 1 table, 3 exercises and 3 references independently compared.",
+      "continuity": "Original complete 131-block bilingual review at prior hash plus exact syntax-only delta review of b0123. Remaining 130 blocks byte-identical."
     },
     {
       "status": "pass",
-      "scope": "Separate entire Chinese-only read after complete bilingual comparison; no mandatory language fixes."
+      "scope": "Separate entire Chinese-only read after complete bilingual comparison; no mandatory language fixes.",
+      "continuity": "Original complete Chinese-only pass preserved; changed exercise block reread after two escapes; no prose or semantic changes."
     }
   ],
   "reviewed_blocks": [
@@ -1977,14 +1979,16 @@
         363
       ],
       "source_sha256": "88ba113d5e7b6728f4b9b28dde32a056e40bdb338b3e578953945ca7e9cc6bde",
-      "target_sha256": "6870178be0921ec30d094f2c9b8182e619f8f8ee7f89098efc97b1bfb87eb0d3",
+      "target_sha256": "7bc9307acde9aa46d3ca9f961ea755a32dc0731c01861767ff1a86894cd82d56",
       "kind": "list",
       "technical_review": "pass",
       "chinese_language_review": "pass",
       "source_issue_ids": [
         "S27-PEER-SRC-08"
       ],
-      "note": "Complete independent English/Chinese comparison and separate Chinese-only pass; no mandatory translation changes."
+      "note": "Complete independent English/Chinese comparison and separate Chinese-only pass; no mandatory translation changes.",
+      "previous_target_sha256": "6870178be0921ec30d094f2c9b8182e619f8f8ee7f89098efc97b1bfb87eb0d3",
+      "gfm_syntax_delta_review": "pass; original full bilingual and Chinese-only reviews extended through exact two-character Markdown escape delta; formula unchanged"
     },
     {
       "segment_id": "03-01:b0124",
@@ -2538,7 +2542,7 @@
             363
           ],
           "source_sha256": "88ba113d5e7b6728f4b9b28dde32a056e40bdb338b3e578953945ca7e9cc6bde",
-          "target_sha256": "6870178be0921ec30d094f2c9b8182e619f8f8ee7f89098efc97b1bfb87eb0d3"
+          "target_sha256": "7bc9307acde9aa46d3ca9f961ea755a32dc0731c01861767ff1a86894cd82d56"
         },
         {
           "segment_id": "03-01:b0127",
@@ -2552,7 +2556,8 @@
       ],
       "note": "练习2 w1*x1 + w2*x2 的两裸星号可能被GFM识别为em，需主协调真实渲染后最小可逆处理。Unicode/ASCII示意图是既有源保护围栏，未重绘；术语表单星号也交实际GFM核验。",
       "verification_scope": "Independent bounded source/mathematical reading; no source edit or broad external research.",
-      "treatment": "Faithful translation retained; no hidden source correction."
+      "treatment": "Faithful translation retained; no hidden source correction.",
+      "gfm_syntax_delta_note": "Coordinator confirmed unintended exercise2 emphasis; two multiplication escapes independently verified. Deliberate emphasis on 学会 and all source fences remain byte-identical. Actual repaired GFM acceptance remains coordinator-owned."
     },
     {
       "id": "S27-PEER-SRC-09",
@@ -2886,5 +2891,40 @@
     "exact_runtime_model_id": "unavailable",
     "token_usage": "unavailable",
     "human_review_minutes": "unavailable"
+  },
+  "GFM_exact_delta_review": {
+    "status": "pass",
+    "reviewed_at_utc": "2026-10-02T08:34:28.694212+00:00",
+    "previous_target_sha256": "77ae500e2f274b6d73bd32574a9c728000dca12e2d7651cea7b4c475a2f373f1",
+    "final_target_sha256": "ebe9ac2e8697a657ce6a5548f30213bd715cfd1f445e89d3e7a0b68b0d8ff493",
+    "basis": "Independent comparison with preserved peer replay of original fully reviewed candidate; coordinator repair proof not used to substitute independent byte comparison",
+    "previous_bytes": 14064,
+    "final_bytes": 14066,
+    "inserted_characters": 2,
+    "removed_or_replaced_characters": 0,
+    "changed_blocks": [
+      {
+        "segment_id": "03-01:b0123",
+        "inserted_backslashes": 2,
+        "previous_target_sha256": "6870178be0921ec30d094f2c9b8182e619f8f8ee7f89098efc97b1bfb87eb0d3",
+        "final_target_sha256": "7bc9307acde9aa46d3ca9f961ea755a32dc0731c01861767ff1a86894cd82d56",
+        "exact_formula_before": "w1*x1 + w2*x2 + b = 0",
+        "exact_formula_after": "w1\\*x1 + w2\\*x2 + b = 0",
+        "mathematical_equivalence": "Same weights, input coordinates, multiplication, plus signs, bias and equality; Markdown unescaping restores the identical formula"
+      }
+    ],
+    "unchanged_blocks": 130,
+    "protected_fences_identical": 15,
+    "deliberate_italic_unchanged": {
+      "segment_id": "03-01:b0013",
+      "text": "*学会*"
+    },
+    "inverse_reconstruction_sha256": "77ae500e2f274b6d73bd32574a9c728000dca12e2d7651cea7b4c475a2f373f1",
+    "exact_inverse_reconstruction": true,
+    "all_131_block_hashes_rebound": true,
+    "translation_record_checked": true,
+    "public_review_modified": false,
+    "record_gate": "Original strict failed solely REVIEW_STALE as expected; awaiting coordinator rebind before final strict and two replays",
+    "review_continuity": "Original complete technical review and separate complete Chinese read plus exact bounded syntax delta, not a newly claimed full reread or actual browser acceptance."
   }
 }
