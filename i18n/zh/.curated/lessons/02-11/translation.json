@@ -1,0 +1,2105 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-11",
+  "source_path": "phases/02-ml-fundamentals/11-ensemble-methods/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "2f048a35a4d944ceaf80ae671d9a23a50f2ed1b0",
+  "source_sha256": "64b7a605139b29e5400bd8d0d44a77a977dd4787e3140133d9f4c05f162e2532",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/11-ensemble-methods/docs/zh.md",
+  "target_sha256": "450b636656f9fc103940bb432af55af1894cc2fafd6af626f0687d8d37859cdf",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "02-11:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods"
+      ],
+      "ordinal": 1,
+      "source_sha256": "0d2f225677ade5f77eb31a6cbcb2def24addb6de1322d4bb506ad5edeb731990",
+      "target": "# 集成方法\n"
+    },
+    {
+      "segment_id": "02-11:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Ensemble Methods"
+      ],
+      "ordinal": 2,
+      "source_sha256": "828bc6a6dd9f2df7b94fdab962c80d7225e2ce1b445700361efa77347c4f71d4",
+      "target": "> 一组弱学习器经过正确组合，就会成为一个强学习器。这不是比喻，而是一个定理。\n"
+    },
+    {
+      "segment_id": "02-11:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01f9e45955f151c455040da734fd1ecd2e8ca0ec69f44f261ee6adce3e503524",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 阶段 2，课程 10（偏差与方差的权衡）\n**Time:** ~120 分钟\n"
+    },
+    {
+      "segment_id": "02-11:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "02-11:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "ddd6a35e10e2bd248186c89d88c61b5915b451f01d011488379ef7535c2cfe6a",
+      "target": "- 从零实现 AdaBoost 和梯度提升，并解释提升法如何逐步降低偏差\n- 构建 Bagging（自助聚合）集成，展示对去相关模型取平均如何在不增加偏差的情况下降低方差\n- 比较 Bagging、Boosting（提升法）和 Stacking（堆叠集成）各自针对哪一类误差分量\n- 评估集成的多样性，并解释为何相互独立的弱学习器越多，多数投票的准确率就越高\n"
+    },
+    {
+      "segment_id": "02-11:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "02-11:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "a536fb6eba2a7286f12e5addfdfe82086f55fc1822ec3974baaa64cea8b3c083",
+      "target": "单棵决策树训练快、容易解释，却会过拟合。单个线性模型面对复杂边界时则会欠拟合。你可以花上好几天设计完美的模型架构，也可以把一批不完美的模型组合起来，得到比其中任何一个单独模型都更好的结果。\n"
+    },
+    {
+      "segment_id": "02-11:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "56e9c4f25d54bce8b7359e504d930550b1766edd5906d3c0f725505397972cf3",
+      "target": "集成方法做的正是这件事。它们是赢得 Kaggle 表格数据竞赛最可靠的技术，支撑着大多数生产环境中的机器学习系统，也直观展现了偏差与方差的权衡。Bagging 降低方差，Boosting 降低偏差，Stacking 则学习面对哪些输入时该信任哪些模型。\n"
+    },
+    {
+      "segment_id": "02-11:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "02-11:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 10,
+      "source_sha256": "82b7d037753f13340bc13870441337507d0fc42dde6d7afb997229c5c9ac71ff",
+      "target": "### 集成为何有效\n"
+    },
+    {
+      "segment_id": "02-11:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 11,
+      "source_sha256": "26160df043ac43b2f2f998702114e9e3a35e39f479c78bf0b2f3863f0bacd94b",
+      "target": "假设有 N 个相互独立的分类器，每个的准确率都是 p > 0.5。多数投票的准确率为：\n"
+    },
+    {
+      "segment_id": "02-11:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 12,
+      "source_sha256": "c5f68dcbd4846e57368ea2a869a5b688fa31e1b3bc1bee59915c50b0d33e4c11",
+      "target": "```text\nP(majority correct) = sum over k > N/2 of C(N,k) * p^k * (1-p)^(N-k)\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 13,
+      "source_sha256": "75f0581e99a115d20566cacff52926880e0ff1c85a1fea7a8037a2b3f2b096af",
+      "target": "对于 21 个准确率均为 60% 的分类器，多数投票的准确率约为 74%。当分类器数量增加到 101 个时，准确率会上升到 84%。当模型犯的错误不同时，错误会相互抵消。\n"
+    },
+    {
+      "segment_id": "02-11:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 14,
+      "source_sha256": "104c015ccd566bc2d09ad4d05f384d75deb2483a9be23d8c298383dc38f37ad0",
+      "target": "关键要求是 **多样性**。如果所有模型都犯同样的错误，组合起来毫无帮助。集成之所以有效，是因为它通过以下方式产生多样化的模型：\n"
+    },
+    {
+      "segment_id": "02-11:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0029",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 15,
+      "source_sha256": "14e08285866421507d17d95fef4b3873fe9a4695d5be1a6def0dbdbc2d31265a",
+      "target": "- 使用不同的训练子集（Bagging）\n- 使用不同的特征子集（随机森林）\n- 顺序纠正错误（Boosting）\n- 使用不同模型家族（Stacking）\n"
+    },
+    {
+      "segment_id": "02-11:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Why Ensembles Work"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "87dd7442250025510cedcdb3c1a368b7550bd391cc89962b3e7f04e8b2263c82",
+      "target": "### Bagging（自助聚合，Bootstrap Aggregating）\n"
+    },
+    {
+      "segment_id": "02-11:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "11681616c784c4a05eea859402929324430d3488ddbec455a6fae7b161c63401",
+      "target": "Bagging 让每个模型在训练数据的不同 bootstrap 样本（自助抽样样本）上训练，从而创造多样性。\n"
+    },
+    {
+      "segment_id": "02-11:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "10bd8928c1edfe0a8502cc7100f3ebc41d97ab426162700e3d2b1260adb1dae5",
+      "target": "```mermaid\nflowchart TD\n    D[Training Data] --> B1[Bootstrap Sample 1]\n    D --> B2[Bootstrap Sample 2]\n    D --> B3[Bootstrap Sample 3]\n    D --> BN[Bootstrap Sample N]\n\n    B1 --> M1[Model 1]\n    B2 --> M2[Model 2]\n    B3 --> M3[Model 3]\n    BN --> MN[Model N]\n\n    M1 --> V[Average or Majority Vote]\n    M2 --> V\n    M3 --> V\n    MN --> V\n\n    V --> P[Final Prediction]\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 19,
+      "source_sha256": "95b5529261538057098eb2d30d91a63ab4bd7b3502f5936154397843e5a886ff",
+      "target": "bootstrap 样本由原数据有放回抽取，大小与原数据相同。每次 bootstrap 抽样大约会包含原数据中 63.2% 的不同样本。剩余的 36.8%（袋外样本）可以充当无需额外划分的验证集。\n"
+    },
+    {
+      "segment_id": "02-11:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 20,
+      "source_sha256": "79b8563225684adb7fbc576648562a3a6cfae2437d422b22810e0ea18743fded",
+      "target": "Bagging 在不大幅增加偏差的情况下降低方差。每棵树都会对自己的 bootstrap 样本过拟合，但各棵树的过拟合方式不同，因此取平均会抵消噪声。\n"
+    },
+    {
+      "segment_id": "02-11:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "c8ce1b4dffab10a3daa60ba911cd7dda7b5216b49c3082fa2bf341475a8537b6",
+      "target": "**随机森林（Random Forests）** 在 Bagging 的基础上多做了一件事：每次分裂时，只考虑一个随机特征子集。这进一步增强了树之间的多样性。典型的候选特征数在分类任务中为 `sqrt(n_features)`，在回归任务中为 `n_features / 3`。\n"
+    },
+    {
+      "segment_id": "02-11:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Bagging (Bootstrap Aggregating)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "6f2671ce47fb5e7135c14d043e5ddb68fb5fdafeb43ea2ca0122953c9c8ae29a",
+      "target": "### Boosting（顺序纠正错误）\n"
+    },
+    {
+      "segment_id": "02-11:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "79721098fc2aeef1751ca2a3b22137fded2190a8ef37cc1de60aaa1ed849535d",
+      "target": "Boosting 按顺序训练模型。每个新模型都着重处理之前的模型判断错误的样本。\n"
+    },
+    {
+      "segment_id": "02-11:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "a3d3471ae0ef6be90d31a8702651d609da5c75330a65ee9da1b7223011f81fc7",
+      "target": "```mermaid\nflowchart LR\n    D[Data with weights] --> M1[Model 1]\n    M1 --> E1[Find errors]\n    E1 --> W1[Increase weights on errors]\n    W1 --> M2[Model 2]\n    M2 --> E2[Find errors]\n    E2 --> W2[Increase weights on errors]\n    W2 --> M3[Model 3]\n    M3 --> F[Weighted sum of all models]\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "f22464f8cefbb40b4ff8f6223aaf95cf53c3ffb568ee839689557a230aaa9f2f",
+      "target": "Boosting 降低偏差。每个新模型都会纠正当前集成的系统性错误。最终预测是所有模型的加权和，表现更好的模型获得更高权重。\n"
+    },
+    {
+      "segment_id": "02-11:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "d2d72bb55589d71c271ab19c768d2ca02f95f5c37bbf9d38eb47546f3d470b90",
+      "target": "代价是：Boosting 如果运行过多轮，可能会过拟合，因为它会不断拟合更难的样本，而其中一些可能是噪声。\n"
+    },
+    {
+      "segment_id": "02-11:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Boosting (Sequential Error Correction)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 27,
+      "source_sha256": "55975bf521e7242e5e1a3e1ad4d3ca3c35ccd2db58a0ce8280e8dbf94cb0801a",
+      "target": "### AdaBoost\n"
+    },
+    {
+      "segment_id": "02-11:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 28,
+      "source_sha256": "d862f58565b810390321d44d81194e06c535362c6ca2ed0d3315c5df8faaa03e",
+      "target": "AdaBoost（自适应提升，Adaptive Boosting）是第一个实用的提升算法。它可以使用任何基学习器，通常采用决策树桩（深度为 1 的树）。\n"
+    },
+    {
+      "segment_id": "02-11:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 29,
+      "source_sha256": "22b9e1549a4168037287f4a96762826aa0bb5154806e1a3ed4a3cca1479a2e07",
+      "target": "算法如下：\n"
+    },
+    {
+      "segment_id": "02-11:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0059",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 30,
+      "source_sha256": "04d38cc36fe84d2dbdba8ff29fffd3b22c2a60dfad6ca42139d919f15a52d4fa",
+      "target": "```text\n1. Initialize sample weights: w_i = 1/N for all i\n\n2. For t = 1 to T:\n   a. Train weak learner h_t on weighted data\n   b. Compute weighted error:\n      err_t = sum(w_i * I(h_t(x_i) != y_i)) / sum(w_i)\n   c. Compute model weight:\n      alpha_t = 0.5 * ln((1 - err_t) / err_t)\n   d. Update sample weights:\n      w_i = w_i * exp(-alpha_t * y_i * h_t(x_i))\n   e. Normalize weights to sum to 1\n\n3. Final prediction: H(x) = sign(sum(alpha_t * h_t(x)))\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 31,
+      "source_sha256": "d847d07d9416da8776fb1c34d8bdd74b90a2c2b7e630d6ce353f053bba951cff",
+      "target": "误差较低的模型会得到更大的 alpha。误分类样本会获得更高权重，使下一个模型着重处理它们。\n"
+    },
+    {
+      "segment_id": "02-11:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### AdaBoost"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 32,
+      "source_sha256": "2cf740c1711cc0872891dd59fc7b157ab6c83bccf89f275e5a6b973d57508cfa",
+      "target": "### 梯度提升\n"
+    },
+    {
+      "segment_id": "02-11:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 33,
+      "source_sha256": "1b9c8445d0e2bd4b0a7b8f50db7d61f59e1079a00ab17424324de15bf7b0209b",
+      "target": "梯度提升将提升法推广到任意损失函数。它不重新调整样本权重，而是让每个新模型拟合当前集成的残差（损失的负梯度）。\n"
+    },
+    {
+      "segment_id": "02-11:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 34,
+      "source_sha256": "451bc869fa9f6113a919f6c7c52afd902a461607ec207d19596f1588e00c6476",
+      "target": "```text\n1. Initialize: F_0(x) = argmin_c sum(L(y_i, c))\n\n2. For t = 1 to T:\n   a. Compute pseudo-residuals:\n      r_i = -dL(y_i, F_{t-1}(x_i)) / dF_{t-1}(x_i)\n   b. Fit a tree h_t to the residuals r_i\n   c. Find optimal step size:\n      gamma_t = argmin_gamma sum(L(y_i, F_{t-1}(x_i) + gamma * h_t(x_i)))\n   d. Update:\n      F_t(x) = F_{t-1}(x) + learning_rate * gamma_t * h_t(x)\n\n3. Final prediction: F_T(x)\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 35,
+      "source_sha256": "0801c34c44e30f0f417036b40fdf19dcfe3ec38faf295f8934b61efaa61202a1",
+      "target": "对于平方误差损失，伪残差就是实际残差：`r_i = y_i - F_{t-1}(x_i)`。每棵树拟合的正是之前集成的错误。\n"
+    },
+    {
+      "segment_id": "02-11:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 36,
+      "source_sha256": "e507551ae75f4c10ad4f9fa8b56d1361c29b8cc45acddec4047940e0c9f810a9",
+      "target": "学习率（收缩系数，shrinkage）控制每棵树的贡献。较小的学习率需要更多树，但泛化更好。典型取值为 0.01 到 0.3。\n"
+    },
+    {
+      "segment_id": "02-11:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Gradient Boosting"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### XGBoost: Why It Dominates Tabular Data"
+      ],
+      "ordinal": 37,
+      "source_sha256": "afae471e91ca51ec78f4fb5d2a28a09f5a27c3cb3eeb91db477d11a34173382a",
+      "target": "### XGBoost：为何主导表格数据任务\n"
+    },
+    {
+      "segment_id": "02-11:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### XGBoost: Why It Dominates Tabular Data"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### XGBoost: Why It Dominates Tabular Data"
+      ],
+      "ordinal": 38,
+      "source_sha256": "60a35af48dea89100e226c60900e4251d7a8995d6ac45698f859205230b41c02",
+      "target": "XGBoost（eXtreme Gradient Boosting）在梯度提升的基础上加入工程优化，使其速度快、准确率高，并且能够抵抗过拟合：\n"
+    },
+    {
+      "segment_id": "02-11:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### XGBoost: Why It Dominates Tabular Data"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0077",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### XGBoost: Why It Dominates Tabular Data"
+      ],
+      "ordinal": 39,
+      "source_sha256": "c880228e06d94a9a7ccb0ebc53f6a72a7726cdfe655b926ace3e81eb5faf3536",
+      "target": "- **正则化目标：** 对叶节点权重施加 L1 和 L2 惩罚，防止单棵树过于自信\n- **二阶近似：** 同时使用损失的一阶与二阶导数，作出更好的分裂决策\n- **稀疏感知分裂：** 在每次分裂时学习缺失数据的最佳去向，从而原生处理缺失值\n- **列子采样：** 与随机森林类似，每次分裂时对特征进行抽样以增加多样性\n- **加权分位数摘要（weighted quantile sketch）：** 在分布式数据上高效寻找连续特征的分裂点\n- **缓存感知块结构：** 针对 CPU 缓存行优化内存布局\n"
+    },
+    {
+      "segment_id": "02-11:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### XGBoost: Why It Dominates Tabular Data"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### XGBoost: Why It Dominates Tabular Data"
+      ],
+      "ordinal": 40,
+      "source_sha256": "e6a2518ba211a9f22d76c0b8e5f0c710f2385a6262e1e95ecfbd17a1114f5bc6",
+      "target": "对于表格数据，XGBoost（及其后继者 LightGBM）始终优于神经网络。这种情况短期内不会改变。如果数据可以放进有行有列的表格，就从梯度提升开始。\n"
+    },
+    {
+      "segment_id": "02-11:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### XGBoost: Why It Dominates Tabular Data"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 41,
+      "source_sha256": "5eb6c90f6e3722755d832ee75eaf5e5a1d6b55d262d36ceaf4ac8d676cfdebc9",
+      "target": "### Stacking（元学习）\n"
+    },
+    {
+      "segment_id": "02-11:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 42,
+      "source_sha256": "c3b0bcf9b3fbbdaa2bafede976f597f2218e0b9bb8896940ffc87cf5002d6597",
+      "target": "Stacking 把多个基模型的预测作为元学习器的输入特征。\n"
+    },
+    {
+      "segment_id": "02-11:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 43,
+      "source_sha256": "a1544c3be54195ff4b12c25a250a6c06b0ee7513afae3fcf4e8d404bd0b2ff8f",
+      "target": "```mermaid\nflowchart TD\n    D[Training Data] --> M1[Model 1: Random Forest]\n    D --> M2[Model 2: SVM]\n    D --> M3[Model 3: Logistic Regression]\n\n    M1 --> P1[Predictions 1]\n    M2 --> P2[Predictions 2]\n    M3 --> P3[Predictions 3]\n\n    P1 --> META[Meta-Learner]\n    P2 --> META\n    P3 --> META\n\n    META --> F[Final Prediction]\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 44,
+      "source_sha256": "c617f7cb2eebd094380d3d99d9424c51a34829cca68b90acbd1adfd2ad100081",
+      "target": "元学习器会学习在面对哪些输入时应该信任哪个基模型。如果随机森林在某些区域表现更好，而 SVM 在另一些区域更好，元学习器就会学会相应地选择模型。\n"
+    },
+    {
+      "segment_id": "02-11:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 45,
+      "source_sha256": "a389067469508b0ce12300aba7eafe0b6d1e0001d80c755b468aa4846b42eef9",
+      "target": "为避免数据泄漏，基模型的预测必须通过在训练集上进行交叉验证来生成。绝不能在同一份数据上既训练基模型，又生成元特征。\n"
+    },
+    {
+      "segment_id": "02-11:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Stacking (Meta-Learning)"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Voting"
+      ],
+      "ordinal": 46,
+      "source_sha256": "93b12d35f5a211d23034567217ff4a388980678ffe3d58ca8e024f9e652154c2",
+      "target": "### 投票\n"
+    },
+    {
+      "segment_id": "02-11:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Voting"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Voting"
+      ],
+      "ordinal": 47,
+      "source_sha256": "4e2ea66cc7829f549760bac3dc201218da97a4811aaeae75b3c0337ae8e30135",
+      "target": "这是最简单的集成方式，直接组合预测即可。\n"
+    },
+    {
+      "segment_id": "02-11:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Voting"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0095",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Voting"
+      ],
+      "ordinal": 48,
+      "source_sha256": "9ce1d07e725a326300dd819813d500e1887dc899bcec7a662cab9ec092811cda",
+      "target": "- **硬投票：** 对类别标签进行多数投票。\n- **软投票：** 对预测概率取平均，选择平均概率最高的类别。由于利用了置信度信息，通常效果更好。\n"
+    },
+    {
+      "segment_id": "02-11:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Voting"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0097",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Voting"
+      ],
+      "ordinal": 49,
+      "source_sha256": "7d617aa2fffb48dc33728bd8c9cbe84bda17fb06bd09ceb3622b19a6e2b04cf7",
+      "target": "```figure\nf3-ensemble-average\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## The Concept",
+        "### Voting"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "02-11:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0101",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 1: Decision Stump (Base Learner)"
+      ],
+      "ordinal": 51,
+      "source_sha256": "3ea26c35b3027ce2bc1f9ae454cee1a41c557c6f56251e6951500716ef8d23fe",
+      "target": "### 步骤 1：决策树桩（基学习器）\n"
+    },
+    {
+      "segment_id": "02-11:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 1: Decision Stump (Base Learner)"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 1: Decision Stump (Base Learner)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "ca44189ddd2a022bfb06db4820c92931e8cfce3edee21d599f68a64b2111fe45",
+      "target": "`code/ensembles.py` 中的代码从零实现了全部内容。我们先从决策树桩开始：它是一棵只有一次分裂的树。\n"
+    },
+    {
+      "segment_id": "02-11:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 1: Decision Stump (Base Learner)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0105",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 1: Decision Stump (Base Learner)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "932e40444e25b328035cf506b7fae3bc13a59032bed59adefb3e1eeed70668fe",
+      "target": "```python\nclass DecisionStump:\n    def __init__(self):\n        self.feature_idx = None\n        self.threshold = None\n        self.polarity = 1\n        self.alpha = None\n\n    def fit(self, X, y, weights):\n        n_samples, n_features = X.shape\n        best_error = float(\"inf\")\n\n        for f in range(n_features):\n            thresholds = np.unique(X[:, f])\n            for thresh in thresholds:\n                for polarity in [1, -1]:\n                    pred = np.ones(n_samples)\n                    pred[polarity * X[:, f] < polarity * thresh] = -1\n                    error = np.sum(weights[pred != y])\n                    if error < best_error:\n                        best_error = error\n                        self.feature_idx = f\n                        self.threshold = thresh\n                        self.polarity = polarity\n\n    def predict(self, X):\n        n = X.shape[0]\n        pred = np.ones(n)\n        idx = self.polarity * X[:, self.feature_idx] < self.polarity * self.threshold\n        pred[idx] = -1\n        return pred\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 1: Decision Stump (Base Learner)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 2: AdaBoost from Scratch"
+      ],
+      "ordinal": 54,
+      "source_sha256": "cfe1dac7b2b8f64d3087144293fd55373f14621424522119bc77c3eb342914ef",
+      "target": "### 步骤 2：从零实现 AdaBoost\n"
+    },
+    {
+      "segment_id": "02-11:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 2: AdaBoost from Scratch"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0109",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 2: AdaBoost from Scratch"
+      ],
+      "ordinal": 55,
+      "source_sha256": "d8ce8a360e70af7560a2342cc3866c75126997d1a94c412c92334fab99a7839f",
+      "target": "```python\nclass AdaBoostScratch:\n    def __init__(self, n_estimators=50):\n        self.n_estimators = n_estimators\n        self.stumps = []\n        self.alphas = []\n\n    def fit(self, X, y):\n        n = X.shape[0]\n        weights = np.full(n, 1 / n)\n\n        for _ in range(self.n_estimators):\n            stump = DecisionStump()\n            stump.fit(X, y, weights)\n            pred = stump.predict(X)\n\n            err = np.sum(weights[pred != y])\n            err = np.clip(err, 1e-10, 1 - 1e-10)\n\n            alpha = 0.5 * np.log((1 - err) / err)\n            weights *= np.exp(-alpha * y * pred)\n            weights /= weights.sum()\n\n            stump.alpha = alpha\n            self.stumps.append(stump)\n            self.alphas.append(alpha)\n\n    def predict(self, X):\n        total = sum(a * s.predict(X) for a, s in zip(self.alphas, self.stumps))\n        return np.sign(total)\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 2: AdaBoost from Scratch"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 3: Gradient Boosting from Scratch"
+      ],
+      "ordinal": 56,
+      "source_sha256": "f82597dcb8f47304d21691a74e95c5b606d0e307466511afef343eb1ccede76a",
+      "target": "### 步骤 3：从零实现梯度提升\n"
+    },
+    {
+      "segment_id": "02-11:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 3: Gradient Boosting from Scratch"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0113",
+      "kind": "fence",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 3: Gradient Boosting from Scratch"
+      ],
+      "ordinal": 57,
+      "source_sha256": "a913e931351bd183a50dc5ee6f1080f5c724f73fdfb091178f537c8ea050cbd9",
+      "target": "```python\nclass GradientBoostingScratch:\n    def __init__(self, n_estimators=100, learning_rate=0.1, max_depth=3):\n        self.n_estimators = n_estimators\n        self.lr = learning_rate\n        self.max_depth = max_depth\n        self.trees = []\n        self.initial_pred = None\n\n    def fit(self, X, y):\n        self.initial_pred = np.mean(y)\n        current_pred = np.full(len(y), self.initial_pred)\n\n        for _ in range(self.n_estimators):\n            residuals = y - current_pred\n            tree = SimpleRegressionTree(max_depth=self.max_depth)\n            tree.fit(X, residuals)\n            update = tree.predict(X)\n            current_pred += self.lr * update\n            self.trees.append(tree)\n\n    def predict(self, X):\n        pred = np.full(X.shape[0], self.initial_pred)\n        for tree in self.trees:\n            pred += self.lr * tree.predict(X)\n        return pred\n```\n"
+    },
+    {
+      "segment_id": "02-11:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 3: Gradient Boosting from Scratch"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0115",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 4: Compare against sklearn"
+      ],
+      "ordinal": 58,
+      "source_sha256": "f1afe134dd91ae874a5df94ccc73497f7db57da9731493ea38fac28e156d751b",
+      "target": "### 步骤 4：与 sklearn 对比\n"
+    },
+    {
+      "segment_id": "02-11:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 4: Compare against sklearn"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 4: Compare against sklearn"
+      ],
+      "ordinal": 59,
+      "source_sha256": "cc75bba6102823d301cacd714046545e5a091b5f5468de1982c347b82f5da48d",
+      "target": "代码验证从零实现的模型与 sklearn 的 `AdaBoostClassifier` 和 `GradientBoostingClassifier` 能达到相近准确率，并将所有方法并列比较。\n"
+    },
+    {
+      "segment_id": "02-11:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Build It",
+        "### Step 4: Compare against sklearn"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0119",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "02-11:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### When to Use Each Method"
+      ],
+      "ordinal": 61,
+      "source_sha256": "569e84e703230493ce48ce55ee856d3a64ef7a06291273e60df33a5faa847de0",
+      "target": "### 各种方法分别适用于何时\n"
+    },
+    {
+      "segment_id": "02-11:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### When to Use Each Method"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0123",
+      "kind": "table",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### When to Use Each Method"
+      ],
+      "ordinal": 62,
+      "source_sha256": "6e387d77051aa62c81b11430dfaac36fafc5d5051a4d520d6c7554d7b54e1894",
+      "target": "| 方法 | 降低什么 | 最适合 | 注意事项 |\n|--------|---------|----------|---------------|\n| Bagging / 随机森林 | 方差 | 噪声数据、特征较多 | 对偏差无帮助 |\n| AdaBoost | 偏差 | 干净数据、简单基学习器 | 对离群点和噪声敏感 |\n| 梯度提升 | 偏差 | 表格数据、竞赛 | 训练慢，不调参容易过拟合 |\n| XGBoost / LightGBM | 两者 | 生产环境中的表格数据机器学习 | 超参数多 |\n| Stacking | 两者 | 争取最后 1-2% 的准确率 | 复杂，元学习器有过拟合风险 |\n| 投票 | 方差 | 快速组合多样化模型 | 只有模型具有多样性时才有帮助 |\n"
+    },
+    {
+      "segment_id": "02-11:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### When to Use Each Method"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### The Production Stack for Tabular Data"
+      ],
+      "ordinal": 63,
+      "source_sha256": "bb89ebebef1a9279c95ab0c8d543e8873b50d129a36c49aea9345c43584b25ee",
+      "target": "### 表格数据的生产技术栈\n"
+    },
+    {
+      "segment_id": "02-11:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### The Production Stack for Tabular Data"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0127",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### The Production Stack for Tabular Data"
+      ],
+      "ordinal": 64,
+      "source_sha256": "1dc47410988975471df8aa325f9c98e76781711e8536084d8e4ae8cb59129631",
+      "target": "对于大多数表格数据预测问题，可按以下顺序尝试：\n"
+    },
+    {
+      "segment_id": "02-11:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### The Production Stack for Tabular Data"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0129",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### The Production Stack for Tabular Data"
+      ],
+      "ordinal": 65,
+      "source_sha256": "7f94b57c1a1ba82a04c615baba4b7de16e288c9e91a70574d7a20795f30b3473",
+      "target": "1. 使用默认参数的 **LightGBM 或 XGBoost**\n2. 调整 n_estimators、learning_rate、max_depth、min_child_weight\n3. 如果需要最后 0.5% 的提升，用 3-5 个具有多样性的模型构建 Stacking 集成\n4. 全程使用交叉验证\n"
+    },
+    {
+      "segment_id": "02-11:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### The Production Stack for Tabular Data"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0131",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### The Production Stack for Tabular Data"
+      ],
+      "ordinal": 66,
+      "source_sha256": "4a7ff45c5582a38db01c2ec93e1b45b60499c4eeaf8c2b86b6d4ea7d0ae4c003",
+      "target": "尽管研究不断尝试，神经网络在表格数据上的表现几乎总是不如梯度提升。TabNet、NODE 等架构偶尔能够追平，但很少能超越经过充分调参的 XGBoost。\n"
+    },
+    {
+      "segment_id": "02-11:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Use It",
+        "### The Production Stack for Tabular Data"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0133",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Ship It"
+      ],
+      "ordinal": 67,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "02-11:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Ship It"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0135",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Ship It"
+      ],
+      "ordinal": 68,
+      "source_sha256": "c85752cf6c072fcab499be7346bf37f6c943d01ef6d567ab4ed6c5c472e56039",
+      "target": "本课产出 `outputs/prompt-ensemble-selector.md`，这是一个帮助你为给定数据集选择合适集成方法的提示词。描述你的数据（大小、特征类型、噪声水平、类别平衡情况）及所要解决的问题。该提示词会逐项检查决策清单，推荐方法，建议初始超参数，并提示该方法的常见错误。还会产出包含完整选择指南的 `outputs/skill-ensemble-builder.md`。\n"
+    },
+    {
+      "segment_id": "02-11:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Ship It"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0137",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 69,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "02-11:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0139",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 70,
+      "source_sha256": "9392b6b7a899343ddef518d12e34e0ca3e7f9d2a17d3b5cb6832247d4bd8b0c7",
+      "target": "1. 修改 AdaBoost 实现，记录每轮结束后的训练准确率。绘制准确率随估计器数量变化的曲线。它何时收敛？\n"
+    },
+    {
+      "segment_id": "02-11:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0141",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 71,
+      "source_sha256": "4e305db04787a224173c5ac37b5964cb117675ed162467df376b478b3f4afde5",
+      "target": "2. 给回归树加入随机特征子采样，从零实现随机森林。使用 `max_features=sqrt(n_features)` 训练 100 棵树并对预测取平均，与单棵树比较方差降低的程度。\n"
+    },
+    {
+      "segment_id": "02-11:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0143",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 72,
+      "source_sha256": "9f022f8473430f4475f91c31e7983ca7ebcf5e642a3f272cdac11e11792edad4",
+      "target": "3. 在梯度提升实现中加入早停：记录每轮结束后的验证损失，当连续 10 轮没有改善时停止。它实际需要多少棵树？\n"
+    },
+    {
+      "segment_id": "02-11:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0145",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 73,
+      "source_sha256": "30fa37aeb30225f5574391c69363415de3e6ddf99d60e76f694aa8d845c64182",
+      "target": "4. 用三个基模型（逻辑回归、决策树、K 近邻）和一个逻辑回归元学习器构建 Stacking 集成。使用 5 折交叉验证生成元特征，与每个单独基模型比较。\n"
+    },
+    {
+      "segment_id": "02-11:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0147",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 74,
+      "source_sha256": "331f373e14b3a2977a054a0ca1becdce417e7b42b7bfec1e08b3efac691a7a66",
+      "target": "5. 在同一数据集上用默认参数运行 XGBoost，将其准确率与自己从零实现的梯度提升比较。测量两者耗时，速度差异有多大？\n"
+    },
+    {
+      "segment_id": "02-11:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Exercises"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0149",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Key Terms"
+      ],
+      "ordinal": 75,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "02-11:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Key Terms"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0151",
+      "kind": "table",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Key Terms"
+      ],
+      "ordinal": 76,
+      "source_sha256": "50387d2119065df391d6d85fe80ccb51b98b9f1f0cd099b3a24614a5b3523ddf",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| Bagging | “在随机子集上训练” | 自助聚合：在 bootstrap 样本上训练模型，对预测取平均以降低方差 |\n| Boosting | “重点处理困难样本” | 按顺序训练模型，每个模型纠正当前集成的错误，以降低偏差 |\n| AdaBoost | “重新调整数据权重” | 通过更新样本权重进行提升；误分类点在下一个学习器中得到更高权重 |\n| 梯度提升 | “拟合残差” | 让每个新模型拟合损失函数的负梯度，以此进行提升 |\n| XGBoost | “Kaggle 利器” | 加入正则化、二阶优化与系统级加速技巧的梯度提升 |\n| Stacking | “模型上再叠模型” | 把基模型的预测作为元学习器的输入特征 |\n| 随机森林 | “很多随机化的树” | 使用决策树的 Bagging，并在每次分裂时加入随机特征子采样以增加多样性 |\n| 集成多样性 | “犯不同的错误” | 各模型的错误必须不相关，集成才能优于单独模型 |\n| 袋外误差 | “无需额外划分的验证” | 未被某次 bootstrap 抽样选中的样本（~36.8%）可充当验证集，无需另留出数据 |\n"
+    },
+    {
+      "segment_id": "02-11:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Key Terms"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0153",
+      "kind": "heading",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Further Reading"
+      ],
+      "ordinal": 77,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "02-11:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Further Reading"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "02-11:b0155",
+      "kind": "list",
+      "heading_path": [
+        "# Ensemble Methods",
+        "## Further Reading"
+      ],
+      "ordinal": 78,
+      "source_sha256": "195d24ecc701b1b52b9e98d580ae1c5aba345dfbda46095a8b39f3715d26f1d7",
+      "target": "- [Schapire & Freund: Boosting: Foundations and Algorithms](https://mitpress.mit.edu/9780262526036/) -- AdaBoost 创造者撰写的著作\n- [Friedman: Greedy Function Approximation: A Gradient Boosting Machine (2001)](https://doi.org/10.1214/aos/1013203451) -- 梯度提升的原始论文\n- [Chen & Guestrin: XGBoost (2016)](https://arxiv.org/abs/1603.02754) -- XGBoost 论文\n- [Wolpert: Stacked Generalization (1992)](https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231) -- Stacking 的原始论文\n- [scikit-learn Ensemble Methods](https://scikit-learn.org/stable/modules/ensemble.html) -- 实践参考\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+  "additional_glossary_sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3",
+  "quantity_mappings": [
+    {
+      "segment_id": "02-11:b0013",
+      "source": "single decision tree / single linear model",
+      "target": "单棵决策树 / 单个线性模型",
+      "equivalence": "single=one model; model count preserved"
+    },
+    {
+      "segment_id": "02-11:b0103",
+      "source": "single split",
+      "target": "一次分裂",
+      "equivalence": "one split; structural count preserved"
+    },
+    {
+      "segment_id": "02-11:b0145",
+      "source": "three base models / a meta-learner",
+      "target": "三个基模型 / 一个元学习器",
+      "equivalence": "three=3 base models, one=1 meta-learner; roles preserved"
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "8dfc409629ce62f3c02d37c0a8711eac8c9c6687",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S47-ensemble-methods/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "b63961790c8e40f9113709725f24aaed21fd0866129d35e27dc6c7849b3793fb"
+}
