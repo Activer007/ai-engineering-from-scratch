@@ -111,7 +111,7 @@
   "dependency_manifest_sha256": "b6289fc487763de3b7b4d8c3d06e5147f918c377a122f2058235d24ba5b51994",
   "batch": "S18",
   "review_date": "2026-10-02",
-  "reviewed_target_sha256": "198b3b288e39010a0b84d3624907db4c5c1370e3e8b5a12c8247730ebb5cbd18",
+  "reviewed_target_sha256": "7572cf2bbd12c8e3170177b4ee2146e60fa59e253f499feaeebb39c7b5a79909",
   "release_status": "draft-not-approved",
   "review_coverage": {
     "technical": "Independent complete 684-line,303-block,118-candidate EN/ZH comparison; not sampling",
@@ -4582,12 +4582,13 @@
         651
       ],
       "source_sha256": "764547e67e4d5e15d0a98f6f4c4203d7b58dfa48d7dbca72d7f9ef8fdce31a01",
-      "target_sha256": "65f683a4bbcaec14aa65a1fbbc3981ed9d1053b786adf9ce98e3ee4af3df163b",
+      "target_sha256": "4228e8374435e2975f9bfd5481b54efc9c6c207ddc74e3324c5f44a259217540",
       "kind": "list",
       "technical_review": "pass",
       "chinese_language_review": "pass",
       "source_issue_ids": [],
-      "note": "Entire 2D density expression checked manually; coefficients, negative sign, exponents and proposed std intact."
+      "note": "Entire 2D density expression checked manually; coefficients, negative sign, exponents and proposed std intact.",
+      "gfm_syntax_delta_review": "pass; only two reversible multiplication escapes; exact full old hash reconstructed"
     },
     {
       "segment_id": "01-16:b0294",
@@ -5826,14 +5827,54 @@
     {
       "segment_id": "01-16:b0209",
       "change": "bare fence labeled text; payload unchanged"
+    },
+    {
+      "segment_id": "01-16:b0293",
+      "before_target_sha256": "198b3b288e39010a0b84d3624907db4c5c1370e3e8b5a12c8247730ebb5cbd18",
+      "after_target_sha256": "7572cf2bbd12c8e3170177b4ee2146e60fa59e253f499feaeebb39c7b5a79909",
+      "before_segment_sha256": "65f683a4bbcaec14aa65a1fbbc3981ed9d1053b786adf9ce98e3ee4af3df163b",
+      "after_segment_sha256": "4228e8374435e2975f9bfd5481b54efc9c6c207ddc74e3324c5f44a259217540",
+      "exact_change": {
+        "before": "8*x - 8*y",
+        "after": "8\\*x - 8\\*y"
+      },
+      "extra_utf8_bytes": 2,
+      "inverse_exact_bytes_verified": true,
+      "reason": "coordinator actual GitHub GFM observed unwanted em swallowing two multipliers",
+      "review_binding": "old independent/public review now stale until external reviewer rebinds; not modified by author"
     }
   ],
   "assets": [],
   "checks": {
     "legacy_strict": "passed; no new symbolic exception",
     "independent_technical_and_chinese": "passed-full-final-hash",
-    "github_gfm": "pending actual browser",
-    "deterministic_replay": "pending final consolidated run",
+    "github_gfm": {
+      "status": "passed-desktop",
+      "content_commit": "7faf263219a27ba8c465a65c3bbe625f6ed4da48",
+      "browser": "dot cloud Chrome",
+      "headings": 34,
+      "tables": [
+        {
+          "rows_including_header": 19,
+          "columns": 3
+        }
+      ],
+      "strong": 25,
+      "unintended_em": 0,
+      "mermaid": 0,
+      "checked_sections": [
+        "LLM temperature and top-k/top-p",
+        "all five exercises",
+        "complete glossary and five references"
+      ],
+      "before_repair": {
+        "commit": "67d2ba51a7eb1c2ded6c2d81f8ba32112598df3e",
+        "unintended_em": 1,
+        "location": "exercise 4; literal 8*x - 8*y"
+      },
+      "repair": "Only two multiplication stars escaped; exact inverse restores prior fully reviewed hash. Original strict passes without exception."
+    },
+    "deterministic_replay": "author, independent reviewer and coordinator final replay outputs byte-identical; aggregate recorded in stage validation",
     "actual_site_browser": "not passed; source renderer limitations remain",
     "hosted_ci": "not run; Actions disabled"
   },
@@ -5910,5 +5951,18 @@
     "exact_runtime_model_id": "unavailable",
     "token_usage": "unavailable",
     "human_review_minutes": "unavailable"
+  },
+  "gfm_format_repair_review": {
+    "status": "pass",
+    "segment_id": "01-16:b0293",
+    "previous_target_sha256": "198b3b288e39010a0b84d3624907db4c5c1370e3e8b5a12c8247730ebb5cbd18",
+    "final_target_sha256": "7572cf2bbd12c8e3170177b4ee2146e60fa59e253f499feaeebb39c7b5a79909",
+    "change": "Only two backslashes added to escape the multiplication stars in 8*x - 8*y.",
+    "exact_inverse_reproduces_previous_hash": true,
+    "formula_semantics": "Unchanged; parentheses, signs, coefficients, x/y assignments and exponents preserved.",
+    "review_continuity": "Full bilingual and Chinese-only review remains anchored to prior frozen text; exact two-character reversible syntax delta independently reviewed, without claiming a new full read.",
+    "raw_block_before_sha256": "65f683a4bbcaec14aa65a1fbbc3981ed9d1053b786adf9ce98e3ee4af3df163b",
+    "raw_block_after_sha256": "4228e8374435e2975f9bfd5481b54efc9c6c207ddc74e3324c5f44a259217540",
+    "record_gate": "Coordinator rebind completed; original strict and final two replays independently rerun and passed."
   }
 }
