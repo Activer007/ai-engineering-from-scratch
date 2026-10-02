@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "date": "2026-10-02",
+  "stage": "S26-support-vector-machines",
+  "lesson_id": "02-05",
+  "status": "reviewed-draft-submitted",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "4032f704f9675d31f9c0a1dfbf768283b9c50b5699ccebc90fa5813819136ddd",
+  "target_sha256": "681de24e73856ec0b24c5bf7d228b0550ee589c4c9b5eeba16a8d51172abeaeb",
+  "observed_content_commit": "a7226b5de550c7d6fe35df9b1da3100c2ef89a5f",
+  "observed_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/a7226b5de550c7d6fe35df9b1da3100c2ef89a5f/i18n/zh/phases/02-ml-fundamentals/05-support-vector-machines/docs/zh.md",
+  "metrics": {
+    "source_lines": 376,
+    "blocks": 181,
+    "candidates": 70,
+    "fences": 21,
+    "headings": 21,
+    "tables": 3,
+    "table_dimensions_including_header": [
+      [
+        3,
+        2
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        14,
+        2
+      ]
+    ],
+    "strong": 4,
+    "em": 0,
+    "unintended_em": 0,
+    "unparsed_bold_labels": 0,
+    "mermaid_rendered": 3
+  },
+  "passed": {
+    "original_strict": true,
+    "original_regressions": 33,
+    "author_double_replay": "byte-identical to frozen target",
+    "independent_double_replay": "byte-identical to frozen target",
+    "independent_technical_and_chinese": "Full-text review, exact final hash, no mandatory translation changes",
+    "pinned_dependency_hashes": 34,
+    "source_and_control_diff": "unchanged",
+    "repository_audits": "Author ran lesson, certification and README count audits; all passed"
+  },
+  "actual_github_gfm": {
+    "status": "PASS_REPORTED_BY_COORDINATOR",
+    "evidence_owner": "Main coordinator performed actual browser inspection; author only consolidates supplied results",
+    "all_mermaid_frames_checked": true,
+    "screenshots_cover_full_key_terms_table": true,
+    "body_code_and_diagrams_modified": false,
+    "gfm_repairs_required": false,
+    "scope": "GitHub rendering only; does not establish live lesson-site interactive acceptance"
+  },
+  "finite_runtime": {
+    "canonical_lines_read_before_run": 566,
+    "canonical_demos": 9,
+    "canonical_completion": "SUMMARY reached, exit 0",
+    "external_timeout_seconds": 45,
+    "author_assertions": 13,
+    "peer_assertions": 8,
+    "doc_definition_blocks": [
+      "02-05:b0129",
+      "02-05:b0135",
+      "02-05:b0141",
+      "02-05:b0147"
+    ],
+    "shared_context": "Missing dot/math made explicit; stdlib math and external pointwise-product sum helper supplied in the QA context only. Peer first reproduced NameError.",
+    "canonical_rerun_by_peer": false,
+    "skipped": [
+      {
+        "block": "02-05:b0155",
+        "reason": "scikit-learn outside allowlist and missing train/test fixtures; stays stdlib-first for educational clarity"
+      },
+      {
+        "block": "02-05:b0161",
+        "reason": "scikit-learn outside allowlist; stays stdlib-first for educational clarity"
+      }
+    ]
+  },
+  "independent_source_issue_groups": 14,
+  "independent_source_issues": [
+    {
+      "id": "S26-IND-SRC-01",
+      "segments": [
+        "02-05:b0013",
+        "02-05:b0015",
+        "02-05:b0017",
+        "02-05:b0019",
+        "02-05:b0051",
+        "02-05:b0115",
+        "02-05:b0117",
+        "02-05:b0119"
+      ],
+      "topic": "Generalization and performance claims",
+      "finding": "Wider margin/confidence or lower support-vector fraction does not universally imply better generalization without scale/data assumptions; margin is not calibrated probability. Best-choice, training speed, GPU and table comparisons are source heuristics, not verified contemporary benchmarks.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-02",
+      "segments": [
+        "02-05:b0015",
+        "02-05:b0025",
+        "02-05:b0029",
+        "02-05:b0031",
+        "02-05:b0037",
+        "02-05:b0039",
+        "02-05:b0041",
+        "02-05:b0177"
+      ],
+      "topic": "Half versus full margin",
+      "finding": "Source alternates distance from boundary (half-width) and twice that distance (full-width2/||w||). For a non-optimal separating plane the nearest distances on each side may differ. Distance formula assumes nonzero w; all signs/norm factors faithfully retained.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-03",
+      "segments": [
+        "02-05:b0043"
+      ],
+      "topic": "Convexity, uniqueness and moving inactive points",
+      "finding": "Hard-margin uniqueness relies on the stated separable two-class setup, not convexity alone; cannot generalize to all dual coefficients or soft-margin intercepts. Removing strictly inactive constraints differs from arbitrarily moving their points: moving across a margin can make them active and change the solution.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-04",
+      "segments": [
+        "02-05:b0043",
+        "02-05:b0049",
+        "02-05:b0071",
+        "02-05:b0079",
+        "02-05:b0145",
+        "02-05:b0147",
+        "02-05:b0165",
+        "02-05:b0177"
+      ],
+      "topic": "Support vectors in soft-margin models",
+      "finding": "Boundary-only equality y*f=1 describes part of support vectors; soft-margin points with0<alpha<=C may lie inside the margin or be misclassified. Doc finder only abs(margin-1)<tol and may miss violating supports or find none after approximate training. Active boundary constraints can have zero multipliers in degenerate solutions.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-05",
+      "segments": [
+        "02-05:b0049",
+        "02-05:b0079",
+        "02-05:b0177"
+      ],
+      "topic": "Prediction memory and sparse solutions",
+      "finding": "Kernel prediction typically stores supports and coefficients; linear SVM/logistic prediction can both use w,b only. Hinge sparsity is primarily dual-coefficient sparsity, not necessarily sparse primal weights. Number of support vectors may approach n.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-06",
+      "segments": [
+        "02-05:b0055",
+        "02-05:b0057",
+        "02-05:b0059",
+        "02-05:b0061",
+        "02-05:b0063",
+        "02-05:b0069",
+        "02-05:b0085",
+        "02-05:b0167"
+      ],
+      "topic": "C, lambda and violations",
+      "finding": "Slack penalizes functional-margin violation rather than exactly the0-1 misclassification count. Large/small C do not guarantee over/underfit. The summed-loss C objective and mean-loss lambda objective use lambda=1/(n*C), not simply1/C absent normalization.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-07",
+      "segments": [
+        "02-05:b0071",
+        "02-05:b0077",
+        "02-05:b0083",
+        "02-05:b0085",
+        "02-05:b0087",
+        "02-05:b0129",
+        "02-05:b0135"
+      ],
+      "topic": "Subgradient and optimization notation",
+      "finding": "Hinge is nondifferentiable at margin1; code chooses a valid zero hinge subgradient there. Displayed formulas are per-example (sub)gradients although L includes the mean over n. Implementation uses cyclic online updates with constant learning rate, not full-batch gradient descent or a convergence guarantee. O(nd) describes dense pass, not sparse-efficient storage implementation.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-08",
+      "segments": [
+        "02-05:b0091",
+        "02-05:b0093",
+        "02-05:b0095",
+        "02-05:b0097",
+        "02-05:b0099",
+        "02-05:b0103",
+        "02-05:b0177"
+      ],
+      "topic": "Kernel prerequisites and capacity",
+      "finding": "A valid positive-semidefinite kernel and parameter restrictions are needed; gamma>0 and polynomial degree/nonnegative offset conditions are not stated. RBF closeness depends on gamma and input scaling. Universal approximation is not exact learning of every smooth boundary with finite data; O(D^d) feature count statement assumes fixed degree and homogeneous/inhomogeneous conventions.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-09",
+      "segments": [
+        "02-05:b0107",
+        "02-05:b0109",
+        "02-05:b0111",
+        "02-05:b0173",
+        "02-05:b0177"
+      ],
+      "topic": "SVR epsilon tube",
+      "finding": "Constraints use deviation<=epsilon on each side, so total vertical tube width is2epsilon, despite source width epsilon. Tube lies around prediction function rather than each observation. Support vectors can lie on the tube boundaries as well as outside; wider tube/fewer supports/smoother fit is not an unconditional identity.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-10",
+      "segments": [
+        "02-05:b0117",
+        "02-05:b0119",
+        "02-05:b0157",
+        "02-05:b0159",
+        "02-05:b0161"
+      ],
+      "topic": "Library/complexity simplifications",
+      "finding": "LinearSVC primal-versus-dual choice and loss differ by solver/configuration/version; not universally primal O(n). Feature and parameter dimensions affect all big-O comparisons. Scaling is context dependent. No current library behavior inferred or package installed.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-11",
+      "segments": [
+        "02-05:b0127",
+        "02-05:b0129",
+        "02-05:b0135",
+        "02-05:b0141",
+        "02-05:b0147"
+      ],
+      "topic": "Doc prerequisites and numerical boundaries",
+      "finding": "The displayed functions use undefined dot, and rbf_kernel also uses undefined math. External harness explicitly supplies math and elementary dot only after demonstrating NameError. hinge_loss empty data divides by zero; training inputs/labels/shapes and kernel parameters lack full validation. No source patched.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-12",
+      "segments": [
+        "02-05:b0073"
+      ],
+      "topic": "Inherited ASCII chart",
+      "finding": "Source hinge-loss ASCII chart retained byte-for-byte despite AGENTS preference for Mermaid/SVG; no redraw within translation scope.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-13",
+      "segments": [
+        "02-05:b0165",
+        "02-05:b0167",
+        "02-05:b0169",
+        "02-05:b0171",
+        "02-05:b0173"
+      ],
+      "topic": "Exercise scope",
+      "finding": "All five exercises and parameter ranges retained. The scratch class exposes lambda rather than C directly. RBF separability with distinct points and positive gamma is different from computing a Gram matrix alone being a proof in all datasets, especially conflicting duplicates. No external datasets/plotting/heavy studies performed.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    },
+    {
+      "id": "S26-IND-SRC-14",
+      "segments": [
+        "02-05:b0181"
+      ],
+      "topic": "References",
+      "finding": "All five reference URLs, authors, years, SMO and C++ labels preserved. Reference/library availability and broad dominance statements not newly researched or endorsed.",
+      "translation_action": "Source limitation retained faithfully; no required translation correction"
+    }
+  ],
+  "not_passed": {
+    "source_correctness": "Known limitations separated, no silent correction",
+    "actual_site_mobile_interactive": "Not accepted; offline source renderer Chinese heading ID defects remain",
+    "hosted_ci_execution": "Not run by this lane; no Actions triggered",
+    "release_merge_deployment": "Not performed",
+    "actual_site": "Original parser has12 empty IDs and duplicate svm; actual site/mobile/interactive acceptance remains unpassed"
+  },
+  "installed_packages": 0,
+  "external_model_api_calls": 0,
+  "model_data_downloads": 0,
+  "coordinator_validation": {
+    "combined_original_strict": 46,
+    "S07_exact_symbolic_exception": 1,
+    "S19_exact_pipe_repair": 1,
+    "original_regressions": 33,
+    "S07_guards": 24,
+    "S19_guards": 50,
+    "all_lessons_double_replay": {
+      "count": 48,
+      "result": "byte-identical"
+    },
+    "repository_audits": "523 lessons, 67 certification lessons, 12 assessments, 505 questions, zero issues; README counts pass",
+    "source_code_core_control_bytes": "unchanged"
+  },
+  "post_commit_verification": "Final remote bytes, PR metadata and CI state are checked after this evidence commit; authoritative final head and result are in the PR completion body and single rollout index. No release claim."
+}
