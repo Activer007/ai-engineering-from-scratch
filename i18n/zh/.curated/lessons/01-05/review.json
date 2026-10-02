@@ -66,7 +66,7 @@
   "dependency_manifest_sha256": "dfe357c210a6e9a8689ee28089d69bd3b8937c6c363713c3062131f168db8818",
   "batch": "S08",
   "review_date": "2026-10-02",
-  "reviewed_target_sha256": "3e7d073bb79d8d93c792b67d000508bb6e7a752f64d174a9bba4b4cf60b2ce13",
+  "reviewed_target_sha256": "e4327f20d275cc6044642b142a7568ba5158408604218d7a643d75f6728fd4f3",
   "release_status": "draft-not-approved",
   "review_coverage": {
     "technical": "Complete independent521-line203-block81-candidate English-to-Chinese comparison, not sampling",
@@ -93,7 +93,16 @@
       "category": "GFM formula preservation",
       "source_line": 515,
       "issue": "Two bare multiplication stars form emphasis and disappear in parsed output",
-      "resolution": "Exactly two reversible backslashes added; no other target change; final hash independently rechecked"
+      "resolution": "Exactly two reversible backslashes added; final hash independently rechecked"
+    },
+    {
+      "category": "GFM strong boundary",
+      "source_lines": [
+        91,
+        101
+      ],
+      "issue": "Translated closing punctuation followed immediately by Chinese prevented two mode labels from rendering as strong",
+      "resolution": "One ASCII space added after each closing strong delimiter; no semantic change; final hash independently rechecked"
     }
   ],
   "source_issues": [
@@ -216,7 +225,7 @@
     "fenced_payloads": "all21 byte-identical;6 bare fences tagged text only",
     "structure": "all203 blocks,25 headings,4 tables,lists and separators retained",
     "inline_code_numbers_units_roles": "per-block protection plus independent semantic role review passed",
-    "GFM_fix": "full-file reverse escaping restores previously reviewed target c777ab11988ad0cd859ccdb88b6d6c219cb22ec5cb6c2b2f5f58f5f43d2f965f"
+    "GFM_fix": "Removing only the two multiplication escapes and two strong-boundary spaces restores the previously fully reviewed target; each delta independently rechecked"
   },
   "format_repairs": [
     {
@@ -301,6 +310,32 @@
       "restored_formula_equals_source": true,
       "reason": "Independent review and offline GFM parsing found the two bare multiplication asterisks form emphasis; add only two reversible backslashes",
       "mathematical_content_changed": false
+    },
+    {
+      "type": "gfm-strong-boundary-space",
+      "segment_id": "01-05:b0059",
+      "source_lines": [
+        91,
+        91
+      ],
+      "before": "**前向模式（forward mode）**从",
+      "after": "**前向模式（forward mode）** 从",
+      "inserted_characters": "One ASCII space after closing strong delimiter",
+      "reason": "Actual GitHub GFM showed literal asterisks when the closing delimiter followed a fullwidth parenthesis and immediately preceded Chinese text",
+      "meaning_changed": false
+    },
+    {
+      "type": "gfm-strong-boundary-space",
+      "segment_id": "01-05:b0063",
+      "source_lines": [
+        101,
+        101
+      ],
+      "before": "**反向模式（reverse mode）**从",
+      "after": "**反向模式（reverse mode）** 从",
+      "inserted_characters": "One ASCII space after closing strong delimiter",
+      "reason": "Actual GitHub GFM showed literal asterisks when the closing delimiter followed a fullwidth parenthesis and immediately preceded Chinese text",
+      "meaning_changed": false
     }
   ],
   "assets": [],

@@ -88,7 +88,7 @@ graph TD
 
 在图中应用链式法则，有两种方式。
 
-**前向模式（forward mode）**从输入出发，向前传播导数。它先计算 `dx/dx = 1`，再经过每次运算逐步传播。适合输入少、输出多的情况。
+**前向模式（forward mode）** 从输入出发，向前传播导数。它先计算 `dx/dx = 1`，再经过每次运算逐步传播。适合输入少、输出多的情况。
 
 ```text
 Forward mode: seed dx/dx = 1, propagate forward
@@ -98,7 +98,7 @@ Forward mode: seed dx/dx = 1, propagate forward
   y = sin(a)  (dy/dx = cos(a) * da/dx = cos(4) * 4 = -2.615)
 ```
 
-**反向模式（reverse mode）**从输出出发，反向传播梯度。它先计算 `dy/dy = 1`，再按相反顺序经过每次运算逐步传播。适合输入多、输出少的情况。
+**反向模式（reverse mode）** 从输出出发，反向传播梯度。它先计算 `dy/dy = 1`，再按相反顺序经过每次运算逐步传播。适合输入多、输出少的情况。
 
 ```text
 Reverse mode: seed dy/dy = 1, propagate backward
