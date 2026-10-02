@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "lesson_id": "00-06",
+  "source_path": "phases/00-setup-and-tooling/06-python-environments/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "16aec2037d5cf9359d0c028836ee32e4a418742b",
+  "source_sha256": "eafe05c7f0cc6d66440c773d6e4e38b39c5fb099be6e031512c144a59e0c2ed9",
+  "target_path": "i18n/zh/phases/00-setup-and-tooling/06-python-environments/docs/zh.md",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+  "additional_glossary_sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    }
+  ],
+  "batch": "S01",
+  "reviewed_target_sha256": "e392c6b681570cd0f5415d4c49bbf850dad5a9bbc93b7b8caa7d5bc2b019fd99",
+  "release_status": "draft-not-approved",
+  "review_date": "2026-10-02",
+  "review_coverage": {
+    "technical": "Complete English-to-Chinese comparison of every translatable block, table row, metadata field, objective and exercise; no sampling",
+    "chinese": "Separate complete Chinese-only reading, including terminology, syntax, referents and instructional tone",
+    "independence": "The author did not perform the final independent review; all required changes were rechecked against the final target bytes",
+    "human_approval": "not requested or claimed"
+  },
+  "coverage_counts": {
+    "all_source_blocks": 137,
+    "nonempty_translatable_blocks": 50,
+    "fenced_blocks": 19
+  },
+  "resolved_translation_findings": [],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "issue_id": "SRC-00-06-01",
+      "severity": "S1",
+      "source_block_ids": [
+        "00-06:b0017",
+        "00-06:b0121"
+      ],
+      "source_lines": [
+        26,
+        237,
+        242
+      ],
+      "status": "source_internal_inconsistency; unchanged in faithful translation",
+      "description": "The prose says CUDA 11.8 builds do not work with CUDA 12.x drivers and vice versa, but the later protected code comment says the PyTorch CUDA version must be <= the driver CUDA version. These claims conflict for the presented 11.8/12.x direction.",
+      "recommendation": "Track separately for an English technical correction with official CUDA compatibility verification; do not silently repair Chinese or change protected code.",
+      "verification_update": "Subsequent official NVIDIA check on 2026-10-02 confirms the overbroad compatibility claim; see official-source item below"
+    },
+    {
+      "issue_id": "SRC-00-06-02",
+      "severity": "S2",
+      "source_block_ids": [
+        "00-06:b0013"
+      ],
+      "source_lines": [
+        19
+      ],
+      "status": "source_narrative_ambiguity; unchanged",
+      "description": "The narrative starts with project A on PyTorch 2.4 and project B requiring 2.1, then describes upgrade breaking the first and downgrade breaking the second. This does not explain a coherent version transition between the stated requirements.",
+      "recommendation": "Have the English author clarify the direction and affected project. Chinese correctly preserves the original sequence."
+    },
+    {
+      "issue_id": "SRC-00-06-03",
+      "severity": "S1",
+      "source_block_ids": [
+        "00-06:b0067"
+      ],
+      "source_lines": [
+        123,
+        134
+      ],
+      "status": "verified_against_pinned_repository_tree; unchanged protected payload",
+      "description": "The example environment tree names 04-neural-networks, 05-cnns, 08-transformers and 11-llm-apis, whereas the pinned repository directories are 04-computer-vision, 05-nlp-foundations-to-advanced, 08-generative-ai and 11-llm-engineering.",
+      "recommendation": "Correct the English example separately before presenting it as a directly applicable repository layout. Protected tree remains byte-identical in the translation."
+    },
+    {
+      "issue_id": "SRC-00-06-04",
+      "severity": "S2",
+      "source_block_ids": [
+        "00-06:b0073",
+        "00-06:b0083",
+        "00-06:b0137"
+      ],
+      "source_lines": [
+        141,
+        170,
+        267,
+        268
+      ],
+      "status": "external_technical_verification_needed; unchanged",
+      "description": "The source broadly says pyproject.toml replaces requirements.txt and a lockfile guarantees identical packages across machines, without stating platform, interpreter or locking-tool constraints. These categorical claims need a separate source review.",
+      "recommendation": "Verify intended packaging workflow and reproducibility scope in the English source; do not strengthen or weaken the translation on its own."
+    },
+    {
+      "severity": "S1",
+      "issue": "CUDA compatibility statement is overbroad: older-toolkit applications can run on newer drivers under binary backward compatibility",
+      "verification_date": "2026-10-02",
+      "official_source": "https://docs.nvidia.com/deploy/cuda-compatibility/minor-version-compatibility.html",
+      "handling": "Faithfully translated; source correction remains separate"
+    },
+    {
+      "severity": "S2",
+      "issue": "Conda/pip absolute ban conflicts with later source advice and official managed mixed-use guidance",
+      "verification_date": "2026-10-02",
+      "official_source": "https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html?highlight=prune",
+      "handling": "Both source passages preserved"
+    },
+    {
+      "severity": "S2",
+      "issue": "A universal uv lockfile selects packages by OS, architecture and Python markers; identical packages on every machine is too broad",
+      "verification_date": "2026-10-02",
+      "official_source": "https://docs.astral.sh/uv/concepts/projects/layout/",
+      "handling": "Original guarantee preserved and flagged"
+    },
+    {
+      "severity": "S2",
+      "issue": "Fastest/10-100x package-manager performance claims and universal venv availability are not independently established for every environment",
+      "handling": "Source qualifiers and numbers unchanged"
+    },
+    {
+      "severity": "S2",
+      "issue": "Exercise asks readers to deliberately install/uninstall globally; this can affect their environment",
+      "handling": "Not executed"
+    }
+  ],
+  "preservation": {
+    "fenced_payloads": "identical to fixed English source",
+    "numbers_units_inline_code": "same within-block inventory; semantic roles and multiplier x separately checked",
+    "metadata": "original keys and type/language values retained",
+    "structure": "block kinds, heading levels, lists and table columns preserved",
+    "links": "same destinations",
+    "formula": "preserved"
+  },
+  "format_repairs": [
+    {
+      "kind": "fence-language",
+      "segments": [
+        "00-06:b0067",
+        "00-06:b0111"
+      ],
+      "change": "bare fence to text only; all payload bytes preserved"
+    }
+  ],
+  "assets": [],
+  "checks": {
+    "source_and_target_hash": "passed",
+    "block_structure_and_protected_content": "passed",
+    "independent_technical_and_chinese_review": "passed; final hash rechecked",
+    "github_gfm": "pending actual browser verification",
+    "actual_site_browser": "not passed; not run for this stage; original renderer compatibility remains open",
+    "hosted_ci": "not run; Actions settings unchanged",
+    "deterministic_replay": "pending final consolidated rerun"
+  },
+  "runtime_checks": [
+    {
+      "command": "bash -n phases/00-setup-and-tooling/06-python-environments/code/env_setup.sh",
+      "result": "exit 0; shell syntax only"
+    },
+    {
+      "surface": "env_setup.sh and installer/package commands",
+      "result": "not executed; would create/alter an environment and install packages"
+    },
+    {
+      "surface": "Checked-in lesson test suite",
+      "result": "none present"
+    }
+  ]
+}
