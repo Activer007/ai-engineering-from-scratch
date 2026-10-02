@@ -1,0 +1,244 @@
+{
+  "stage_id": "S43-optimizers",
+  "lesson_id": "03-06",
+  "status": "reviewed-draft-submitted",
+  "final_acceptance": false,
+  "draft_pr_number": 48,
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "9af59689813d171106b558fca9875f7992c8e834b8d7a69310bbaf7428ff9ad9",
+  "target_sha256": "c2b1fd47f1c0d7f38515c10f1ce98316821021c420a68db2abc0cf17df7322c7",
+  "content_commit": "0b5b8d2ec08b1d9d156c22bff667b2337c4730b7",
+  "support_commit": "12a62ffad63a6459a319e85eb436070e51874849",
+  "coverage": {
+    "blocks": 167,
+    "translatable_candidates": 67,
+    "translated_candidates": 66,
+    "preserved_API_only_heading": "03-06:b0049 RMSProp",
+    "headings": 23,
+    "tables": 1,
+    "table_rows_including_header": 11,
+    "table_columns": 3,
+    "fences": 17,
+    "python_fences": 6,
+    "mermaid_fences": 3,
+    "figure_fences": 1,
+    "bare_fences_tagged_text": 7,
+    "exercises": 5,
+    "references": 4
+  },
+  "fixed_dependencies": {
+    "count": 51,
+    "manifest_sha256": "d3c10171ed818f62fc25eab1ec3fa816fde53e02b1ec5dc4229013d4700a8fe6",
+    "git_and_hash_verification": "PASS"
+  },
+  "author_reviews": {
+    "technical_full_text": "PASS",
+    "separate_chinese_full_text": "PASS"
+  },
+  "independent_reviews": {
+    "technical_full_text": "PASS",
+    "separate_chinese_full_text": "PASS",
+    "blocks": 167,
+    "required_translation_changes": 0
+  },
+  "validation": {
+    "original_strict": "PASS",
+    "original_control_regression": {
+      "status": "PASS",
+      "tests": 33
+    },
+    "author_two_fresh_workspace_replays": "PASS byte-identical",
+    "independent_two_fresh_workspace_replays": "PASS byte-identical",
+    "audit_lessons": {
+      "status": "PASS",
+      "lessons": 523,
+      "issues": 0
+    },
+    "audit_certifications": {
+      "status": "PASS",
+      "lessons": 67,
+      "assessments": 12,
+      "questions": 505,
+      "issues": 0
+    },
+    "readme_and_book_counts": "PASS"
+  },
+  "code_validation": {
+    "author": {
+      "canonical_lines_pre_read": 293,
+      "canonical_demo_sections_executed": 4,
+      "canonical_training_runs": 4,
+      "epochs_per_run": 300,
+      "documentary_definition_blocks": 5,
+      "finite_check_groups": 15,
+      "documentary_training_runs": 4,
+      "documentary_epochs_each": 300,
+      "shared_context": "Original documentary source order; math/random reused explicitly; isolated standalone AdamW missing math was reproduced"
+    },
+    "independent": {
+      "documentary_definition_blocks": 5,
+      "finite_check_groups": 17,
+      "network_fixture_examples": 8,
+      "network_fixture_epochs": 2,
+      "canonical_read": false,
+      "canonical_executed": false
+    },
+    "torch": "SKIPPED_UNAVAILABLE",
+    "scope": "Offline installed stdlib only with external timeout; no install, download, model/data service or paid API"
+  },
+  "quantity_equivalences": "Recorded and independently reviewed; parameter/layer counts, ten-times scale, 10x multiplier, minutes and epoch meanings preserved",
+  "actual_github_gfm": {
+    "status": "PASS",
+    "observer": "Author personally using dot cloud Chrome",
+    "verified_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/0b5b8d2ec08b1d9d156c22bff667b2337c4730b7/i18n/zh/phases/03-deep-learning-core/06-optimizers/docs/zh.md#%E5%90%84%E7%A7%8D%E4%BC%98%E5%8C%96%E5%99%A8%E4%BD%95%E6%97%B6%E6%9B%B4%E6%9C%89%E4%BC%98%E5%8A%BF",
+    "headings": 23,
+    "table_rows_including_header": 11,
+    "table_columns": 3,
+    "strong_total": 5,
+    "strong_metadata": 4,
+    "strong_body": 1,
+    "em_total": 0,
+    "unparsed_strong_markers": 0,
+    "multiplication_blocks": [
+      "03-06:b0067",
+      "03-06:b0081",
+      "03-06:b0089",
+      "03-06:b0151"
+    ],
+    "multiplication_signs_preserved": 8,
+    "mermaid_figures": 3,
+    "all_iframe_labels_read": true,
+    "all_nodes_and_edges_visually_checked": true,
+    "screenshots_recorded": true,
+    "long_graph_viewing": "Expanded views and normal viewer controls; optimization path covered in two viewport screenshots",
+    "syntax_repair_required": false,
+    "figure_widget_acceptance": false
+  },
+  "source_issues": [
+    {
+      "id": "S43-independent-01",
+      "summary": "Adam 不能无条件解决所有鞍点、平台和振荡问题；80%/20% 无指定基准。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-02",
+      "summary": "动量递推未乘 1-beta，是未归一化指数加权和，不能直接当作最近十个梯度的均值。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-03",
+      "summary": "10,000 与 3,000-5,000 步、3x 加速未给出可复现比较条件。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-04",
+      "summary": "RMSProp 的历史优先性及从未正式发表等源断言未另行考证。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-05",
+      "summary": "梯度幅度不能直接说明距最优点多近；epsilon 的除零保护范围不只限于未更新参数。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-06",
+      "summary": "梯度平方的二阶原始矩不等于方差，受保护公式注释保持原样。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-07",
+      "summary": "beta2=0.999 的校正时间尺度远长于 beta1=0.9，不能一概说 50 步后无关。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-08",
+      "summary": "lambda*w^2 的导数系数和 SGD 学习率因子在源文字中存在约定缺口。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-09",
+      "summary": "文档 AdamW 对更新后的权重衰减，与显示的同时更新公式及 canonical 次序有交叉项差异。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-10",
+      "summary": "AdamW 普遍优越、PyTorch 默认优化器、具名模型训练史及学习率推荐需要具体语境。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-11",
+      "summary": "逐样本固定顺序训练和在线训练准确率不构成泛化或优化器排名基准。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-12",
+      "summary": "sigmoid 饱和到精确 1 时，概率裁剪配合导数乘积仍可能给错误标签零梯度。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-13",
+      "summary": "PyTorch 裁剪和调度是独立调用；随机输入/标签示例只说明调用顺序。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-14",
+      "summary": "练习中的 lr*m_hat/(sqrt(v_hat)+eps) 是有符号更新量，不只是有效学习率乘子。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-15",
+      "summary": "给出的 Adam 构造器没有 weight_decay 参数；练习的基线定义及收缩结论需额外条件。",
+      "action": "Preserve fixed source; no silent correction"
+    },
+    {
+      "id": "S43-independent-16",
+      "summary": "简化优化器未验证参数/梯度长度、状态维度和 beta/epsilon 等输入边界。",
+      "action": "Preserve fixed source; no silent correction"
+    }
+  ],
+  "source_issue_groups": 16,
+  "pending_coordinator": {
+    "aggregate_replay": "PASS; 67 lessons, two byte-identical outputs",
+    "final_remote_bytes_and_pr_metadata": "POST_COMMIT; final result in PR body and rollout index",
+    "ci_status_query": "POST_COMMIT; final result in PR body and rollout index"
+  },
+  "not_passed": {
+    "website": "NOT_ACCEPTED",
+    "mobile": "NOT_ACCEPTED",
+    "interactive_figure": "NOT_ACCEPTED",
+    "hosted_ci": "NOT_QUERIED_NOT_CLAIMED_PASS",
+    "publication": "NOT_ACCEPTED"
+  },
+  "offline_site_parser": {
+    "executed": true,
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "empty_chinese_heading_ids": 14,
+    "browser_verified_by_parser": false
+  },
+  "next_owner": "coordinator; author stops stage-document writes after handoff",
+  "coordinator_validation": {
+    "combined_original_strict": 65,
+    "S07_exact_symbolic_exception": 1,
+    "S19_exact_pipe_repair": 1,
+    "original_regressions": 33,
+    "S07_guards": 24,
+    "S19_guards": 50,
+    "all_lessons_double_replay": {
+      "count": 67,
+      "result": "byte-identical",
+      "asset_scope": "Core renders Markdown; manifest SVG separately hash-verified/copied into both output trees then recursively compared"
+    },
+    "repository_audits": "523 lessons,67 certifications,12 assessments,505 questions; zero issues; README/book counts pass",
+    "source_and_generic_controls": "unchanged"
+  },
+  "snapshot": {
+    "reviewed_drafts": 67,
+    "in_progress": 1,
+    "unstarted": 455,
+    "curriculum_total": 523,
+    "merged": 0,
+    "released": 0,
+    "live_count_authority": "PR #7 single ROLLOUT-INDEX.json"
+  },
+  "post_commit_verification": "After final evidence commit, changed files are fetched and compared byte-for-byte and exact-head PR/CI metadata checked. Results are recorded in PR body and single rollout index to avoid a self-referencing evidence commit. Empty CI arrays are not a pass."
+}
