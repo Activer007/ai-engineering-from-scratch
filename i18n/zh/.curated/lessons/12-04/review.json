@@ -212,7 +212,7 @@
   "dependency_manifest_sha256": "9419de62307b974a79dd52d1da8411de6e173d6ac3fd3f5273200b35590369f7",
   "batch": "S38",
   "review_date": "2026-10-02",
-  "reviewed_target_sha256": "731e122789563d3d0224618e93bbda752f7f8ca0b7f12d4f772fcd4486e2b11d",
+  "reviewed_target_sha256": "a8310b5383faa97bc63ccf52e1eb9ec7d34486c3256fd8fe16f5a0f86847ed57",
   "release_status": "draft-not-approved",
   "review_coverage": {
     "technical": "Complete 161-line, 111-block, 53-candidate independent EN/ZH comparison, not sampled",
@@ -886,7 +886,7 @@
         62
       ],
       "source_sha256": "23d95f4568eb79ad778ee784a831d9bc33a914d694a1c26b57b1fc2dd4b02240",
-      "target_sha256": "dced4691469e1f129b14edc1a4c7ece5834a0469e470c118cfa478febf126d8d",
+      "target_sha256": "fe9a67380563f4f8a3471ffa396b809ffdbf63d235a59cfc173c35a928e99011",
       "kind": "paragraph",
       "technical_review": "PASS",
       "chinese_readthrough": "PASS",
@@ -2326,7 +2326,7 @@
             62
           ],
           "source_sha256": "23d95f4568eb79ad778ee784a831d9bc33a914d694a1c26b57b1fc2dd4b02240",
-          "target_sha256": "dced4691469e1f129b14edc1a4c7ece5834a0469e470c118cfa478febf126d8d"
+          "target_sha256": "fe9a67380563f4f8a3471ffa396b809ffdbf63d235a59cfc173c35a928e99011"
         },
         {
           "segment_id": "12-04:b0087",
@@ -2362,7 +2362,7 @@
             62
           ],
           "source_sha256": "23d95f4568eb79ad778ee784a831d9bc33a914d694a1c26b57b1fc2dd4b02240",
-          "target_sha256": "dced4691469e1f129b14edc1a4c7ece5834a0469e470c118cfa478febf126d8d"
+          "target_sha256": "fe9a67380563f4f8a3471ffa396b809ffdbf63d235a59cfc173c35a928e99011"
         },
         {
           "segment_id": "12-04:b0085",
@@ -2695,7 +2695,7 @@
             62
           ],
           "source_sha256": "23d95f4568eb79ad778ee784a831d9bc33a914d694a1c26b57b1fc2dd4b02240",
-          "target_sha256": "dced4691469e1f129b14edc1a4c7ece5834a0469e470c118cfa478febf126d8d"
+          "target_sha256": "fe9a67380563f4f8a3471ffa396b809ffdbf63d235a59cfc173c35a928e99011"
         },
         {
           "segment_id": "12-04:b0077",
@@ -2822,13 +2822,21 @@
   ],
   "format_repairs": {
     "protected_payloads": 3,
-    "new_GFM_repairs": false
+    "new_GFM_repairs": true,
+    "summary": "Exactly3 ASCII backslashes before3 opening angle brackets in b0047; literal image A/B/C placeholders preserved",
+    "inverse_exact_original": true,
+    "other110blocks_unchanged": true
   },
   "checks": {
     "legacy_strict": "passed without exception",
     "independent_technical_and_chinese": "passed-full-final-hash",
-    "github_gfm": "pending actual browser",
-    "deterministic_replay": "author and peer byte-identical; consolidated run pending",
+    "github_gfm": {
+      "status": "pending-recheck",
+      "observed_failed_commit": "37fa88e9b8b84ce016a69768542eaa25bdaffae6",
+      "observed_defect": "Three unescaped <image A>/<image B>/<image C> placeholders became empty image elements",
+      "next_gate": "Actual browser at new content commit must show all3 literal placeholders and no empty image elements"
+    },
+    "deterministic_replay": "Final original strict and two fresh workspace replays passed after coordinator rebind; both equal final a8310b53 hash; combined replay remains pending",
     "actual_site_browser": "not passed; original renderer limitations remain",
     "hosted_ci": "not run; Actions not enabled"
   },
@@ -3118,5 +3126,144 @@
       "lines": 175,
       "read_in_full": true
     }
-  ]
+  ],
+  "original_full_review_target_sha256": "731e122789563d3d0224618e93bbda752f7f8ca0b7f12d4f772fcd4486e2b11d",
+  "gfm_exact_delta_review": {
+    "stage": "S38-flamingo",
+    "reviewed_utc": "2026-10-02T11:43:16.747009+00:00",
+    "result": "PASS_EXACT_GFM_SYNTAX_DELTA",
+    "old_target_sha256": "731e122789563d3d0224618e93bbda752f7f8ca0b7f12d4f772fcd4486e2b11d",
+    "new_target_sha256": "a8310b5383faa97bc63ccf52e1eb9ec7d34486c3256fd8fe16f5a0f86847ed57",
+    "old_block_sha256": "dced4691469e1f129b14edc1a4c7ece5834a0469e470c118cfa478febf126d8d",
+    "new_block_sha256": "fe9a67380563f4f8a3471ffa396b809ffdbf63d235a59cfc173c35a928e99011",
+    "changed_segment_ids": [
+      "12-04:b0047"
+    ],
+    "inserted_ascii_backslashes": 3,
+    "deleted_bytes": 0,
+    "replaced_bytes": 0,
+    "old_bytes": 12206,
+    "new_bytes": 12209,
+    "old_reference": "two independently retained pre-change replay outputs",
+    "inverse_restores_exact_original": true,
+    "unchanged_other_blocks": 110,
+    "unchanged_fences": 3,
+    "raw_original_validate": "PASS",
+    "whole_changed_paragraph_semantic_and_chinese_reread": "PASS; only escapes literal image placeholders. i < i_t source formula and all Chinese wording unchanged.",
+    "original_full_bilingual_and_separate_chinese_review_preserved": true,
+    "full_strict_at_delta_review": {
+      "status": "EXPECTED_REVIEW_STALE",
+      "output": "12-04: FAIL: REVIEW_STALE: reviewed target hash differs\n"
+    },
+    "public_review_modified_by_reviewer": false,
+    "author_delta_qa_read": false,
+    "pending": "Original author actual repaired remote GFM and coordinator aggregate/remote/CI verification",
+    "byte_insertions": [
+      {
+        "old_offset": 5087,
+        "new_offset": 5087,
+        "byte": 92
+      },
+      {
+        "old_offset": 5106,
+        "new_offset": 5107,
+        "byte": 92
+      },
+      {
+        "old_offset": 5125,
+        "new_offset": 5127,
+        "byte": 92
+      }
+    ],
+    "final_post_rebind_checks": {
+      "status": "PASS",
+      "completed_utc": "2026-10-02T11:50:40.169685+00:00",
+      "target_sha256": "a8310b5383faa97bc63ccf52e1eb9ec7d34486c3256fd8fe16f5a0f86847ed57",
+      "original_check": "PASS without adapter or status downgrade",
+      "double_replay": "PASS two fresh workspace directories; exact byte comparison to target and final SHA256",
+      "new_directories": [],
+      "results": [
+        {
+          "command": [
+            "python3",
+            "scripts/curated_translation.py",
+            "check",
+            "--id",
+            "12-04"
+          ],
+          "exit_code": 0,
+          "stdout": "12-04: PASS\n"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/curated_translation.py",
+            "render",
+            "--id",
+            "12-04",
+            "--output-dir"
+          ],
+          "exit_code": 0,
+          "stdout": "12-04: PASS\n",
+          "output_sha256": "a8310b5383faa97bc63ccf52e1eb9ec7d34486c3256fd8fe16f5a0f86847ed57"
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/curated_translation.py",
+            "render",
+            "--id",
+            "12-04",
+            "--output-dir"
+          ],
+          "exit_code": 0,
+          "stdout": "12-04: PASS\n",
+          "output_sha256": "a8310b5383faa97bc63ccf52e1eb9ec7d34486c3256fd8fe16f5a0f86847ed57"
+        }
+      ],
+      "public_review_and_translation_unchanged": true
+    }
+  },
+  "review_continuity": "Original complete EN/ZH technical review plus separate complete Chinese readthrough on 731e1227...; exact three-backslash delta and complete changed-paragraph reread extend that approval to a8310b53.... No new full review claimed.",
+  "final_independent_controls": {
+    "strict": "PASS final original strict after coordinator public-review rebind",
+    "original_regression_tests": {
+      "passed": 33,
+      "failed": 0
+    },
+    "double_replay": "PASS final two fresh workspace directories reproduce exact a8310b53... bytes",
+    "replay_directories": [],
+    "dependencies": {
+      "count": 46,
+      "all_local_git_sha256_verified": true
+    },
+    "site_parser": {
+      "file": "i18n/zh/phases/12-multimodal-ai/04-flamingo-gated-cross-attention/docs/zh.md",
+      "parser_executed": true,
+      "html_bytes": 14490,
+      "tables": 2,
+      "code_blocks": 2,
+      "figures": 1,
+      "mermaid_sources": 0,
+      "empty_heading_ids": [
+        "学习目标",
+        "要解决的问题",
+        "核心概念",
+        "门控交叉注意力",
+        "面向交错输入的掩码交叉注意力",
+        "上下文少样本学习",
+        "训练数据",
+        "后续衍生模型",
+        "实际使用",
+        "交付成果",
+        "练习",
+        "关键术语",
+        "延伸阅读"
+      ],
+      "duplicate_heading_ids": [],
+      "browser_verified": false,
+      "result": "BLOCKED_SOURCE_RENDERER"
+    },
+    "original_pre_delta_replay_directories": []
+  }
 }
