@@ -1,0 +1,1660 @@
+{
+  "schema_version": 1,
+  "lesson_id": "12-04",
+  "source_path": "phases/12-multimodal-ai/04-flamingo-gated-cross-attention/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "fb786272154efb078a36ac30cfaeb0207dbda013",
+  "source_sha256": "ee025c471f27b129edbaa5930c75688306a349f57658b4d4bcf4059cd9919b8f",
+  "target_path": "i18n/zh/phases/12-multimodal-ai/04-flamingo-gated-cross-attention/docs/zh.md",
+  "target_sha256": "a8310b5383faa97bc63ccf52e1eb9ec7d34486c3256fd8fe16f5a0f86847ed57",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "12-04:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs"
+      ],
+      "ordinal": 1,
+      "source_sha256": "d71761b04e7a1241b56e6fbc61f66c9cec5629e9894b03dae382460dc9b6e80c",
+      "target": "# Flamingo 与少样本视觉语言模型中的门控交叉注意力\n",
+      "target_sha256": "4bc7740b0426da3673a0d2304782cefcdb9893265596a619e6987d9f40afa00d"
+    },
+    {
+      "segment_id": "12-04:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs"
+      ],
+      "ordinal": 2,
+      "source_sha256": "a34a62952f62937fea9f5fddb201f96d3e01625ed8d89c4737c57dd16fc57e07",
+      "target": "> DeepMind 的 Flamingo（2022）率先做到了两件事：它证明，单个模型可以处理图像、视频和文本任意交错的序列；它还证明，视觉语言模型（VLM）可以进行上下文学习（in-context learning）：只需在少样本（few-shot）提示词（prompt）中提供三组（图像、描述）示例，模型就能为新图像生成描述，无须进行任何梯度更新。背后的机制是门控交叉注意力（gated cross-attention）：在冻结的大语言模型（LLM）现有层之间插入交叉注意力层，并使用一个可学习的 tanh 门控。门控从零开始，使 LLM 在初始化时保留原有的文本能力。本课将逐步讲解 Flamingo 的 Perceiver 重采样器（Perceiver resampler）与门控交叉注意力架构。这套架构是 Gemini 交错输入和 Idefics2 视觉 token（词元）的先驱。\n",
+      "target_sha256": "abefceb2f9c5d95ee06242b442777a48bcf1c3e85cad222022863cfc53f6004e"
+    },
+    {
+      "segment_id": "12-04:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs"
+      ],
+      "ordinal": 3,
+      "source_sha256": "b1b3aed37e19fc251dac71b964946fc510b52e71366c391fc536130a608276ce",
+      "target": "**Type:** Learn\n**Languages:** Python (stdlib, gated cross-attention + Perceiver resampler demo)\n**Prerequisites:** 阶段 12 · 03（BLIP-2 Q-Former）\n**Time:** ~120 分钟\n",
+      "target_sha256": "f1f6523d4b82fea092e01f88bbeae935d0f9d51625c6f4ce6216eccbaa5ed8f8"
+    },
+    {
+      "segment_id": "12-04:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "12-04:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "729de52e377ec32fbb7dc7ba22cd4803cdedcada130de41e2a535f6218c32c6c",
+      "target": "- 解释门控交叉注意力如何通过 tanh(gate) = 0，在初始化时保留冻结 LLM 的文本能力。\n- 逐步说明 Perceiver 重采样器的处理过程：通过交叉注意力，将 N 个图像块映射为数量固定为 K 的“潜在查询”（latent queries）。\n- 描述 Flamingo 如何通过遵循图像位置的因果掩码（causal mask），处理图文交错序列。\n- 复现少样本多模态提示词的结构：先给出 3 组图像与描述示例，再给出待处理的图像。\n",
+      "target_sha256": "3c2c747f4fcf28efd53b9db1822bc29b00fd99e747414e373aa4314931f13451"
+    },
+    {
+      "segment_id": "12-04:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "12-04:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "905ec6d01bc21f49a0f685b918ed5135263c039093c99c23a396babee61c5674",
+      "target": "BLIP-2 将 32 个视觉 token 送入冻结 LLM 的输入层。这适用于每条提示词只包含一张图像的情况。但如果你想输入*多张*图像，并与文本交错排列呢？例如：“这是图像 A，请描述它；这是图像 B，请描述它；现在这是图像 C，请描述它。”LLM 的自注意力（self-attention）就需要在同一条序列中处理图像 token 和文本 token，而哪些位置可以关注哪些图像，也会变得难以处理。\n",
+      "target_sha256": "07a417f5f15a1184e7c02da40a73fcf5bfd93b98680b921114a70caf0076cb7c"
+    },
+    {
+      "segment_id": "12-04:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "9825509d84e0078fb1f12191d10273ea6f4c14c941648324eab8e5bef02b719d",
+      "target": "Flamingo 的回答是：完全不改变 LLM 的输入序列，而是在现有 LLM 块之间插入额外的交叉注意力层。文本 token 仍像往常一样经过 LLM 的因果自注意力。每隔几个 LLM 块，文本 token 还会通过一个新增的门控层，以交叉注意力关注图像特征。门控初始化为零，因此在第零步，新增层都是空操作（no-op），模型的行为与预训练 LLM 完全相同。随着训练推进，门控逐渐打开，视觉信息开始流入。\n",
+      "target_sha256": "2369c3e79f5a65844b888e87c3d9e52071fd7500853eaf5ccc71721a0dcfd9f3"
+    },
+    {
+      "segment_id": "12-04:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "19aedc2f17418f23e69e9bce47b310affa69934c0c2502d078a1ffae5f8cb64d",
+      "target": "Flamingo 回答的第二个问题是：如何处理每条提示词中数量不定的图像（0 张、1 张或多张）？答案是 Perceiver 重采样器。这个小型交叉注意力模块接收任意数量的图像块，生成数量固定的视觉潜向量 token。无论提示词中有多少张图像，LLM 的交叉注意力层看到的形状都相同。\n",
+      "target_sha256": "b905f7c93d53438017bd837cb12be089dc2e65ae2e110b1fcaaaedb38ff4fd55"
+    },
+    {
+      "segment_id": "12-04:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "12-04:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### The frozen LLM"
+      ],
+      "ordinal": 11,
+      "source_sha256": "5b8b011c35636cf66f79a3086d77d59f1d52ecd58ed57a123d6754c6bff02119",
+      "target": "### 冻结的 LLM\n",
+      "target_sha256": "98347d44b4d609615c218c00665f84c09b89e352eaf05f1ac91941f54c4a1c90"
+    },
+    {
+      "segment_id": "12-04:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### The frozen LLM"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### The frozen LLM"
+      ],
+      "ordinal": 12,
+      "source_sha256": "628442cb30c2f37a947af41190ab638040c2633c77fd0459977cb929eae06952",
+      "target": "Flamingo 以冻结的 Chinchilla 70B LLM 为起点（B 表示十亿）。全部 70B 权重都保持不变。原有的文本自注意力与前馈网络（FFN）照常运行。\n",
+      "target_sha256": "06c0d65b5d600226cad8bd3ccf7c7deae7a83bf835cbf1424018f3ebba643c2a"
+    },
+    {
+      "segment_id": "12-04:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### The frozen LLM"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 13,
+      "source_sha256": "1873e93c5ca76ddf1f6f59b9612908059fbdfcbc79720a2589c740afeee26835",
+      "target": "### Perceiver 重采样器\n",
+      "target_sha256": "ded8e0d1913c3d24212013c6598a8a1074e2009ff327c4f5bec4d3fe438187f0"
+    },
+    {
+      "segment_id": "12-04:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 14,
+      "source_sha256": "b09645f3e07996b191f0b2ad5638f69187c4e409f2c4f5b2e1f48260dcafcf6a",
+      "target": "对于提示词中的每张图像，视觉 Transformer（ViT）会生成 N 个图像块 token。Perceiver 重采样器有数量固定为 K 的可学习潜向量（latent vectors；Flamingo 使用 K=64）。每个重采样器块分为两个子步骤：\n",
+      "target_sha256": "a71189248637e4be2be9874dad2e66f2a54aa51cacded9d830409ef43d52a2df"
+    },
+    {
+      "segment_id": "12-04:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0029",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 15,
+      "source_sha256": "51e051b0d525609be6cb6b148dab6bd226a999589740465042e0450e4f273f94",
+      "target": "1. 交叉注意力：K 个潜向量关注 N 个图像块 token（Q 来自潜向量，K/V 来自图像块）。\n2. 在潜向量之间进行自注意力计算，再经过 FFN。\n",
+      "target_sha256": "3c40c292bacd7b539edb8bbfb21e9ecb8bc47459ab65f593a853943799898319"
+    },
+    {
+      "segment_id": "12-04:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 16,
+      "source_sha256": "06c2753998019185d162f9d08137b96ba67a9037a20c3c5c35587246142afbde",
+      "target": "经过 6 个重采样器块后，无论 ViT 生成了多少图像块，输出都是 K=64 个维度为 1024 的视觉 token。一张 224x224 图像（196 个图像块）和一张 480x480 图像（900 个图像块），最后都输出 64 个重采样器 token。\n",
+      "target_sha256": "b892ce6661558546f0a9755b2f6c715fb9cb8cbb30619af49f7e3da28dac0032"
+    },
+    {
+      "segment_id": "12-04:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 17,
+      "source_sha256": "5e2561b79276269d7847d1e64e91fc46585b244216ae31998ffe51d1a1e4cd5d",
+      "target": "对于视频，重采样器沿时间维度应用：每帧的图像块生成 64 个潜向量，时间位置编码使模型能够区分 t=0 与 t=N。整个视频最终表示为 T * 64 个视觉 token。\n",
+      "target_sha256": "c19f7a8853580ed2b936c9370f2af64983e5b0448767316bdafc3a5da4f2106b"
+    },
+    {
+      "segment_id": "12-04:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Perceiver resampler"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 18,
+      "source_sha256": "f4b2e696d5172ad48df01ddcf534ab03a277c612431cfd4f577a339585506aaf",
+      "target": "### 门控交叉注意力\n",
+      "target_sha256": "b186d444a8636e00a85d1953ccdb26d0045260d7b4d6721d15f2a2dcbe6a18e4"
+    },
+    {
+      "segment_id": "12-04:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 19,
+      "source_sha256": "aa489eeade5ab6d7913b31489be01fd01f48df76178e4872a64d8832175c5478",
+      "target": "在冻结 LLM 中，每隔 M 层（Flamingo 使用 M=4）插入一个新的门控交叉注意力块：\n",
+      "target_sha256": "6c0b85475553118697c097545c155583b798d615f560f5bc1e27d4fd36b26442"
+    },
+    {
+      "segment_id": "12-04:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 20,
+      "source_sha256": "6644729a3a6fc46f499bcff235ff68f2b335816f22b405c5f1e4b68ee6736515",
+      "target": "```text\nx_after_llm_block = llm_block(x_before)\ncross = cross_attn(x_after, resampler_output)\ngated = tanh(alpha) * cross + x_after\nx_before_next_block = gated\n```\n",
+      "target_sha256": "409d2d3e4b8969f19d465371778bc0ebf2402e02cf8bab60f7fab64188deaa41"
+    },
+    {
+      "segment_id": "12-04:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0041",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 21,
+      "source_sha256": "8a671c2498c38be543630dfda7027e3ca948740904d7ea57032d5ea2226efced",
+      "target": "- `alpha` 是初始化为零的可学习标量。\n- `tanh(0) = 0`，因此门控分支在初始化时的贡献为零。\n- 随着 `alpha` 偏离零，交叉注意力的贡献幅度平滑增大。\n- 残差连接（residual connection）意味着，即使门控完全打开，也不会覆盖 LLM 的文本表示，只会在其上叠加视觉信息。\n",
+      "target_sha256": "4baf610c87374f4d3e5816738b11c4603c560b5cc170652a63d2095c6987f74c"
+    },
+    {
+      "segment_id": "12-04:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 22,
+      "source_sha256": "a0dd971759313873dd83211b77587e34277eeee790f7efa97bb0d180ee545172",
+      "target": "这是 Flamingo 最重要的设计选择：视觉条件信息通过加法注入，并受门控控制，且在初始化时贡献为零。处于第 0 步的 Flamingo，在纯文本输入上的行为与 Chinchilla 70B 完全一致。\n",
+      "target_sha256": "2c8287b779c852d9648bbef38f6b84f81ce57985a07a8c6d843746086e9f9cf1"
+    },
+    {
+      "segment_id": "12-04:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Gated cross-attention"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Masked cross-attention for interleaved inputs"
+      ],
+      "ordinal": 23,
+      "source_sha256": "d8e96c1392c95d9a413f1a2432c6cc0ab1a2707557c9a879b830b74690b2c594",
+      "target": "### 面向交错输入的掩码交叉注意力\n",
+      "target_sha256": "0a64841ba1d565c090408539940ac7206fd4460540610fe3a9282d78870aceee"
+    },
+    {
+      "segment_id": "12-04:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Masked cross-attention for interleaved inputs"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Masked cross-attention for interleaved inputs"
+      ],
+      "ordinal": 24,
+      "source_sha256": "23d95f4568eb79ad778ee784a831d9bc33a914d694a1c26b57b1fc2dd4b02240",
+      "target": "在“\\<image A> 描述 A \\<image B> 描述 B \\<image C> ?”这样的提示词中，每个文本 token 都只能看到序列中出现在它之前的图像。交叉注意力掩码施加以下约束：位于 `t` 的文本 token，只能关注图像索引满足 `i < i_t` 的图像重采样器 token，其中 `i_t` 是位置 `t` 之前最近一张图像的索引。“只看到前面最近的一张图像”和“看到前面的所有图像”都是可行的选择；Flamingo 选择了前者。\n",
+      "target_sha256": "fe9a67380563f4f8a3471ffa396b809ffdbf63d235a59cfc173c35a928e99011"
+    },
+    {
+      "segment_id": "12-04:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Masked cross-attention for interleaved inputs"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### In-context few-shot learning"
+      ],
+      "ordinal": 25,
+      "source_sha256": "5bac09f2ad976208301f12d211f13a33514369455e9c88b58486d4c04b919e9f",
+      "target": "### 上下文少样本学习\n",
+      "target_sha256": "ae7a1fc4214802676ecd1a933096c37c7a0f6cfba972c6578c24a9c6d22657dc"
+    },
+    {
+      "segment_id": "12-04:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### In-context few-shot learning"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### In-context few-shot learning"
+      ],
+      "ordinal": 26,
+      "source_sha256": "cc968c52fe86d7141f28d7d41c85fc774e5457deca993b96593925074621df16",
+      "target": "Flamingo 的提示词如下所示：\n",
+      "target_sha256": "b914e4473c27f4e37f7d4833c299e601d2438e1e5235f7b21ee1f993225d8f0a"
+    },
+    {
+      "segment_id": "12-04:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### In-context few-shot learning"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### In-context few-shot learning"
+      ],
+      "ordinal": 27,
+      "source_sha256": "18f5b03385e9c8512d23cc060560d1e73f1c658dd3afd8b8b43aa2a21da3abee",
+      "target": "```text\n<image1> A photo of a cat. <image2> A photo of a dog. <image3> A photo of a\n```\n",
+      "target_sha256": "ebf886aa3c459f0e06892e1c421d37a15e4ddaa9efd782b4ae7be04be1a3f839"
+    },
+    {
+      "segment_id": "12-04:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### In-context few-shot learning"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### In-context few-shot learning"
+      ],
+      "ordinal": 28,
+      "source_sha256": "08aee993d2f9cfa0b46bf65f86b33017734dd3d1e39813584465043116eb9a31",
+      "target": "模型从中看出续写模式，输出“bird”（鸟），或 image3 中实际呈现的对象。整个过程没有梯度更新。冻结 LLM 的上下文学习能力通过门控交叉注意力得以延续。这是论文的核心结论，也是它的重要性所在。\n",
+      "target_sha256": "fc808b744f683abb208cae6d83f28503271ddf1d8d2e7dbda21062e49cba70e5"
+    },
+    {
+      "segment_id": "12-04:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### In-context few-shot learning"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Training data"
+      ],
+      "ordinal": 29,
+      "source_sha256": "d9fbbaebf32010b898a483a2ebd05e0839c8b8bbce3336df27e4ca960fa07b43",
+      "target": "### 训练数据\n",
+      "target_sha256": "089cf8635d8e76dd14bccb357439807a782aa7e8cf4a8b90194b29f8f29a2834"
+    },
+    {
+      "segment_id": "12-04:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Training data"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Training data"
+      ],
+      "ordinal": 30,
+      "source_sha256": "e658ac84a386016931237b0900951fd410eb2a02e86d167045c58af5d343910c",
+      "target": "Flamingo 使用了三个数据集进行训练：\n",
+      "target_sha256": "390d4e943bf079cf3e2a47865d29cb3f61a9071d0459db9dde4db49bc1f880fc"
+    },
+    {
+      "segment_id": "12-04:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Training data"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0061",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Training data"
+      ],
+      "ordinal": 31,
+      "source_sha256": "68a65e595b413d5c240cb5f8873b93ca59691fe118a06366481b867bc06577fd",
+      "target": "1. MultiModal MassiveWeb（M3W）：43M 个图文交错的网页（M 表示百万），重建其中的阅读顺序。\n2. 图文对（ALIGN + LTIP）：4.4B 对。\n3. 视频文本对（VTP）：27M 段短视频。\n",
+      "target_sha256": "5f3745dd39914c129d43090e0d8611d44c1047339bdbc35def266870f04fbf08"
+    },
+    {
+      "segment_id": "12-04:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Training data"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Training data"
+      ],
+      "ordinal": 32,
+      "source_sha256": "899102f681423d742ea1f3e63b523defcd4486f5c854417d6d391abed2969440",
+      "target": "OBELICS（2023）是交错网页语料库的开放复现版本，Idefics、Idefics2 和大多数开放的“类 Flamingo”模型都使用它训练。\n",
+      "target_sha256": "043c3eab7e72cd473b9efcf47c4761f28cbbb8e623f202146abfe9aa14057aaa"
+    },
+    {
+      "segment_id": "12-04:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Training data"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### OpenFlamingo and Otter"
+      ],
+      "ordinal": 33,
+      "source_sha256": "5d49473799b4704cb419b2ebc51ab1b60c763f4bd788c600ae5cec0df757e0e4",
+      "target": "### OpenFlamingo 与 Otter\n",
+      "target_sha256": "a36becd8696fa58f6e7b0b8d80afad572195b5f80c3dbaa91d40246a134461d3"
+    },
+    {
+      "segment_id": "12-04:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### OpenFlamingo and Otter"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### OpenFlamingo and Otter"
+      ],
+      "ordinal": 34,
+      "source_sha256": "f50b6ff91f0a1add5c21f5c94022c60c67525f9ecdc128ae98270a2563e90b45",
+      "target": "OpenFlamingo（2023）是开放复现版本，架构完全相同：在冻结的 LLaMA 或 MPT 上使用 Perceiver 重采样器与门控交叉注意力。其模型检查点有 3B、4B、9B 三种规模。由于基座 LLM 更小、数据更少，它的质量落后于 Flamingo。\n",
+      "target_sha256": "bac3f18177a8d57088e50e44f74eff70b12cd0c706c862bb58b29a86733f762d"
+    },
+    {
+      "segment_id": "12-04:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### OpenFlamingo and Otter"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### OpenFlamingo and Otter"
+      ],
+      "ordinal": 35,
+      "source_sha256": "635c37d357a1a7baf7e8c987144e53ecb7342adc207991faa5cabc1fad4f3106",
+      "target": "Otter（2023）在 OpenFlamingo 的基础上，使用多模态指令数据集 MIMIC-IT 进行指令微调（instruction tuning），表明门控交叉注意力同样适用于指令遵循。\n",
+      "target_sha256": "cdb5c52c8d16f20edaa3b44f4431261e42a9dd5fb1e013e108719993367a6f53"
+    },
+    {
+      "segment_id": "12-04:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### OpenFlamingo and Otter"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### The descendants"
+      ],
+      "ordinal": 36,
+      "source_sha256": "990e0b109f9b0affb97fd4990f0565d1e3de3aff93e59945928043d719b59178",
+      "target": "### 后续衍生模型\n",
+      "target_sha256": "9581c9da96e1e6b855abb87191411e7cfae72716236d18a908e3c8abe9740ac2"
+    },
+    {
+      "segment_id": "12-04:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### The descendants"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### The descendants"
+      ],
+      "ordinal": 37,
+      "source_sha256": "1ed461c9310bfd4560d783e3a8930b48b9a47f1da99aa26c0036fd4d765a4462",
+      "target": "- Idefics / Idefics2 / Idefics3：Hugging Face 的门控交叉注意力一系，架构逐步简化（Idefics2 移除了重采样器，改用图像块 token 与自适应池化）。\n- 从 Flamingo 到 Chameleon 的转变：到 2024 年，许多团队转向早期融合（early fusion，第 12.11 课）；在要求冻结主干网络的生产场景中，Flamingo 风格的门控交叉注意力仍在使用。\n- Gemini 的交错输入：从概念上继承了 Flamingo 交错格式的灵活性，但具体机制属于专有技术。\n",
+      "target_sha256": "76593bc2488b331ba3dc76f56a5e931a6c38c729f3d18309e593aa4cc6b2cf27"
+    },
+    {
+      "segment_id": "12-04:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### The descendants"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Comparison to BLIP-2"
+      ],
+      "ordinal": 38,
+      "source_sha256": "8f9814bd72d083c14f91ef60ee8e5dd8afc0261da64b17541dfcd70754aee40b",
+      "target": "### 与 BLIP-2 的比较\n",
+      "target_sha256": "342f6626d185bada1f9c34ade82090ed5ffb368adb87f42278d4922ba19e0910"
+    },
+    {
+      "segment_id": "12-04:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Comparison to BLIP-2"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0077",
+      "kind": "table",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Comparison to BLIP-2"
+      ],
+      "ordinal": 39,
+      "source_sha256": "759db1f35f2e67a1668db256c99143199a00420bad04b15a51ac57489bbe574d",
+      "target": "| | BLIP-2 | Flamingo |\n|---|---|---|\n| 视觉桥接模块 | 在输入端使用一次 Q-Former | 每隔 M 层使用一次门控交叉注意力 |\n| 视觉 token | 每张图像 32 个 | 每个交叉注意力层中，每张图像 64 个 |\n| 冻结 LLM | 是 | 是 |\n| 上下文少样本能力 | 弱 | 强，是论文的核心亮点 |\n| 交错输入 | 无原生支持 | 支持，这是设计目标 |\n| 训练数据 | 130M 对 | 1.3B 对 + 43M 个交错网页 |\n| 参数量 | 188M 参数参与训练 | 约 10B 参数参与训练（交叉注意力层） |\n| 计算资源 | 在 8 张 A100 上训练数天 | 在数千个 TPUv4 上训练数周 |\n",
+      "target_sha256": "45aec1ddb4dd8f52cb2ee85381d342edee0dd0425991a51afbb26ef5ee48ea53"
+    },
+    {
+      "segment_id": "12-04:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Comparison to BLIP-2"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Comparison to BLIP-2"
+      ],
+      "ordinal": 40,
+      "source_sha256": "27caadaa05b6ad2851aafde041f4000de4914d5f72b838161d568224c7999970",
+      "target": "如果预算有限，要做单图视觉问答（VQA），选 BLIP-2。如果需要交错输入、少样本学习或多图推理，选 Flamingo/Idefics2。\n",
+      "target_sha256": "be4189c90df57c894e45a71b0aa6790ce58ae2b961e37c570ab2602db1bc3554"
+    },
+    {
+      "segment_id": "12-04:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Comparison to BLIP-2"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Comparison to BLIP-2"
+      ],
+      "ordinal": 41,
+      "source_sha256": "904bdea116d20a707f9ac7f0529c28be5846fc422ceeb2bb5fb3ccd7bd12fcf5",
+      "target": "```figure\ncross-attention-fusion\n```\n",
+      "target_sha256": "904bdea116d20a707f9ac7f0529c28be5846fc422ceeb2bb5fb3ccd7bd12fcf5"
+    },
+    {
+      "segment_id": "12-04:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## The Concept",
+        "### Comparison to BLIP-2"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "12-04:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "39f649d78ffc89d8d67e47fb7d8e4bdf4e0b31ff546f333c4a26caf44de47360",
+      "target": "`code/main.py` 演示了：\n",
+      "target_sha256": "53ec8724c873fa949eb7339a19669c0ac4884bb91ee8b2eb34e047e4ac0ab65a"
+    },
+    {
+      "segment_id": "12-04:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0087",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Use It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "a681e77493c47ca41ad3124eea0b1c27eb374448708019e112bf0276bae25546",
+      "target": "1. 用 Perceiver 重采样器处理 36 个模拟图像块 token，并使用 8 个可学习潜向量（纯 Python 交叉注意力）。\n2. 执行一次门控交叉注意力计算：`alpha = 0` → 输出等于输入（LLM 不变）；随后设为 `alpha = 2.0` → 混入视觉信息。\n3. 构建交错输入掩码，为“（图像 1）（文本 1）（图像 2）（文本 2）”序列生成 2D（二维）注意力掩码。\n",
+      "target_sha256": "a72d4eb877c849033d63070e867add1e8c97383200642949765ca395ecbb8e7c"
+    },
+    {
+      "segment_id": "12-04:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Use It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "12-04:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Ship It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "a9a00c6b4a698b09e4ef08bc641c5c9343615aabdd56e04df5db5b9f00e782f6",
+      "target": "本课产出 `outputs/skill-gated-bridge-diagnostic.md`。给定一个开放 VLM 的配置（是否使用重采样器、交叉注意力频率、门控方案），它会识别其中源自 Flamingo 的组成部分，并解释其冻结策略。这有助于排查为什么微调会损害文本表现，答案是门控开得太大、太快。\n",
+      "target_sha256": "d3dda744de07792e34acc88e905b4d47e6f9c3fa95d0d86eefe2439147da8871"
+    },
+    {
+      "segment_id": "12-04:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Ship It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 47,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "12-04:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0095",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "de15315f74a45699e081f890b1eac634a9c7bbbf4ad7efda7077ccc51ee3ac2a",
+      "target": "1. 计算 Flamingo-9B 的视觉参数量：9B LLM + 1.4B 门控交叉注意力层 + 64M 重采样器。参与训练的参数占总参数量的比例是多少？\n",
+      "target_sha256": "8e73d3af3ab1cb61e5ee535c9d639a3b91a5e0ba790fd80d8bae79290cc4236d"
+    },
+    {
+      "segment_id": "12-04:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "2856717715906a7f0073611d3bd40ea7e51f15969b2c052ef4d04f92df8f8c1c",
+      "target": "2. 在 PyTorch 中实现门控残差 `y = tanh(alpha) * cross + x`。通过实验表明，当 `alpha=0` 时，初始化状态下严格满足 `y==x`。\n",
+      "target_sha256": "fd019906b5b873e3b8ea0b7f5b8e077751a6c7946bd263a52d38d4cbf6fc36b0"
+    },
+    {
+      "segment_id": "12-04:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0099",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 50,
+      "source_sha256": "ff802416935b2760780e6a3b25fe63852ee8cbb7bbc4feccb1a96dea334b15c6",
+      "target": "3. 阅读 OpenFlamingo 第 3.2 节（arXiv:2308.01390），了解一个批次中各条提示词的图像数量不同时，模型如何处理多张图像。描述其填充策略。\n",
+      "target_sha256": "0efff48cd4c1566ada4d07e16105f180482741f243aba4207be7ec63a519021b"
+    },
+    {
+      "segment_id": "12-04:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0101",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 51,
+      "source_sha256": "3980d76704d03fb03441750cd3f523a30983e54261976dccbc0c389a1eddc0d2",
+      "target": "4. 为什么 Flamingo 的交叉注意力掩码允许文本 token 关注的*只有前面最近的一张*图像，而不是前面所有图像？阅读 Flamingo 论文第 2.4 节，解释其中的权衡。\n",
+      "target_sha256": "fe3a31c1b8301e75d486c02b9b61490eb18c2cc4d36c87bf6077e80c21e7edd9"
+    },
+    {
+      "segment_id": "12-04:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0103",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 52,
+      "source_sha256": "bd3a8444baaa024d652908268ccb44d938006fe0f37756a86a75052514beae66",
+      "target": "5. 上下文少样本学习：为一个新的 Flamingo 变体构造提示词，其中包含 4 个“图像 → 主体对象颜色”的示例。描述当示例数量从 0 变到 8 时，你预期准确率会呈现怎样的变化。\n",
+      "target_sha256": "705b88a8c871eb4f293a0ee4b2a84a90123b23716ff6e9d34f6c834797e5f7d7"
+    },
+    {
+      "segment_id": "12-04:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Exercises"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0105",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Key Terms"
+      ],
+      "ordinal": 53,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "12-04:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Key Terms"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0107",
+      "kind": "table",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Key Terms"
+      ],
+      "ordinal": 54,
+      "source_sha256": "885e77b73222451e60de4ad3e72a024a10fab5a2f3ec46ff081a2bb950d61981",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|------------------------|\n| Perceiver 重采样器 | “潜向量数量固定的交叉注意力” | 将数量可变的输入图像块转换为固定 K 个 token 的模块 |\n| 门控交叉注意力 | “tanh 门控桥接模块” | 残差层 `y = tanh(alpha)*cross + x`，alpha 可学习，初始化为 0 |\n| 交错输入 | “混合序列” | 图像与文本按阅读顺序自由混合的提示词格式 |\n| 冻结的 LLM | “没有 LLM 梯度” | 文本 LLM 的权重不更新；只训练重采样器与交叉注意力层 |\n| 少样本 | “上下文中的示例” | 在提示词中给出少量（图像、答案）对，模型无须微调即可泛化 |\n| OBELICS | “交错网页语料库” | 开放数据集，包含 141M 个网页，其图像与文本按阅读顺序排列 |\n| Chinchilla | “70B 冻结基座” | Flamingo 冻结的文本 LLM，来自 DeepMind 的 Chinchilla 论文 |\n| 门控调度（gate schedule） | “alpha 如何变化” | 训练过程中交叉注意力门控打开的速率 |\n| 交叉注意力频率（cross-attn frequency） | “每隔 M 层” | 插入门控交叉注意力块的频率；Flamingo 使用 M=4 |\n| OpenFlamingo | “开放复现版本” | MosaicML/LAION 的 3-9B 开放模型检查点；架构与 Flamingo 完全相同 |\n",
+      "target_sha256": "0ad4981fc123d7f1d2951db8a0d35d93541090a25fe200e5a5d7a1dcc7414159"
+    },
+    {
+      "segment_id": "12-04:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Key Terms"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Further Reading"
+      ],
+      "ordinal": 55,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "12-04:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Further Reading"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "12-04:b0111",
+      "kind": "list",
+      "heading_path": [
+        "# Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+        "## Further Reading"
+      ],
+      "ordinal": 56,
+      "source_sha256": "0c2b960d39e3b60d9fd3a50a4576d9573c76e99d6336505b4506b9edb791ee2c",
+      "target": "- [Alayrac 等 — Flamingo（arXiv:2204.14198）](https://arxiv.org/abs/2204.14198) — 原始论文。\n- [Awadalla 等 — OpenFlamingo（arXiv:2308.01390）](https://arxiv.org/abs/2308.01390) — 开放复现。\n- [Laurençon 等 — OBELICS（arXiv:2306.16527）](https://arxiv.org/abs/2306.16527) — 交错网页语料库。\n- [Jaegle 等 — Perceiver IO（arXiv:2107.14795）](https://arxiv.org/abs/2107.14795) — 通用 Perceiver 架构。\n- [Li 等 — Otter（arXiv:2305.03726）](https://arxiv.org/abs/2305.03726) — 经指令微调的 Flamingo 衍生模型。\n- [Laurençon 等 — Idefics2（arXiv:2405.02246）](https://arxiv.org/abs/2405.02246) — 对 Flamingo 方法的现代简化版本。\n",
+      "target_sha256": "4b340ffd2a32199d0309fcd186bb10339e04d674ba08880a248fb6c117b4e510"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+  "additional_glossary_sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340",
+  "assets": [],
+  "stage_dependencies_path": "i18n/zh/.curated/stages/S38-flamingo/DEPENDENCIES.json",
+  "stage_dependencies_sha256": "9419de62307b974a79dd52d1da8411de6e173d6ac3fd3f5273200b35590369f7",
+  "quantity_mappings": [
+    {
+      "segment_id": "12-04:b0077",
+      "source_text": "thousands of TPUv4",
+      "target_text": "数千个 TPUv4",
+      "source_sha256": "759db1f35f2e67a1668db256c99143199a00420bad04b15a51ac57489bbe574d",
+      "target_sha256": "45aec1ddb4dd8f52cb2ee85381d342edee0dd0425991a51afbb26ef5ee48ea53",
+      "equivalence": "thousands 与数千同为未指定精确数量的千级自然语言量词；不把它改成确定数值，TPUv4保留。",
+      "review_reason": "Independent reviewer requested explicit quantity mapping; prose unchanged."
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "2a3e7a3fc9246418700423d948ac4cc0b10bd9c6",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S38-flamingo/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "9419de62307b974a79dd52d1da8411de6e173d6ac3fd3f5273200b35590369f7",
+  "formatting_amendments": [
+    {
+      "segment_id": "12-04:b0047",
+      "reason": "Actual GitHub Preview rendered three image placeholders as empty img elements",
+      "old_target_sha256": "731e122789563d3d0224618e93bbda752f7f8ca0b7f12d4f772fcd4486e2b11d",
+      "new_target_sha256": "a8310b5383faa97bc63ccf52e1eb9ec7d34486c3256fd8fe16f5a0f86847ed57",
+      "old_block_sha256": "dced4691469e1f129b14edc1a4c7ece5834a0469e470c118cfa478febf126d8d",
+      "new_block_sha256": "fe9a67380563f4f8a3471ffa396b809ffdbf63d235a59cfc173c35a928e99011",
+      "changes": [
+        {
+          "before": "<image A>",
+          "after": "\\<image A>"
+        },
+        {
+          "before": "<image B>",
+          "after": "\\<image B>"
+        },
+        {
+          "before": "<image C>",
+          "after": "\\<image C>"
+        }
+      ],
+      "inserted_ascii_backslashes": 3,
+      "other_blocks_unchanged": true,
+      "reverse_restoration_sha256": "731e122789563d3d0224618e93bbda752f7f8ca0b7f12d4f772fcd4486e2b11d",
+      "source_semantics_changed": false,
+      "original_validate_errors": [],
+      "public_review_changed": false,
+      "public_review_expected": "REVIEW_STALE pending independent delta review and coordinator rebinding",
+      "date_utc": "2026-10-02T11:39:49.832751+00:00"
+    }
+  ]
+}
