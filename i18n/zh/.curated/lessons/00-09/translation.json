@@ -1,0 +1,1647 @@
+{
+  "schema_version": 1,
+  "lesson_id": "00-09",
+  "source_path": "phases/00-setup-and-tooling/09-data-management/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "c126b8b1397265f0cdc3429ad64d8c5c6f249377",
+  "source_sha256": "21f3293155f3b48ef79eaef08e7bf86be58a791974ed7266cbe9f18681c9b237",
+  "target_path": "i18n/zh/phases/00-setup-and-tooling/09-data-management/docs/zh.md",
+  "target_sha256": "aa6810d17a612052e3722df449bca8302ccea3435db23c83caf8175fdcad05fe",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "00-09:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management"
+      ],
+      "ordinal": 1,
+      "source_sha256": "ac1d9a63a4e92bef3fbe408aca36b7327bc949e905f66c35f5c18b14b543d459",
+      "target": "# 数据管理\n"
+    },
+    {
+      "segment_id": "00-09:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Data Management"
+      ],
+      "ordinal": 2,
+      "source_sha256": "0f447d293b922ba2b634d45f79df3214cf25fecad88fa703faeabf1e833695ba",
+      "target": "> 数据是燃料。如何管理数据，决定了你能走多快。\n"
+    },
+    {
+      "segment_id": "00-09:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management"
+      ],
+      "ordinal": 3,
+      "source_sha256": "9b85353f22a375576a4e1737e24a3cc8c1846f9658249a1bb95572d584e1bd9b",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 第 0 阶段，第 01 课\n**Time:** ~45 分钟\n"
+    },
+    {
+      "segment_id": "00-09:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "00-09:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Data Management",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "4867f287f8af25138aa17ec4d92250ff24776deda1fc8f78feb9cffa25e3cdd4",
+      "target": "- 使用 Hugging Face 的 `datasets` 库加载、流式读取（streaming）和缓存（cache）数据集（dataset）\n- 在 CSV、JSON、Parquet 和 Arrow 格式之间转换，并解释它们各自的取舍\n- 使用固定的随机种子（seed），创建可复现的训练集/验证集/测试集划分\n- 使用 `.gitignore`、Git LFS（Git 大文件存储扩展）或 DVC（数据版本控制）管理大型模型文件和数据集文件\n"
+    },
+    {
+      "segment_id": "00-09:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "00-09:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "9603621b554bf07ce10127f3af8dcb76aa4c5d2d2039f99df92f3a048d78ab99",
+      "target": "每个人工智能（AI）项目都从数据开始。你需要寻找和下载数据集，在不同格式之间转换，为训练和评估划分数据集，并对数据集进行版本管理，以确保实验可复现。每次都手动完成这些工作，既慢又容易出错。你需要一套可重复执行的工作流程。\n"
+    },
+    {
+      "segment_id": "00-09:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "00-09:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0017",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "658b4db8c87cc9b249150438798bfcb65fe7472cd9689b70710858a2ff570ca0",
+      "target": "```mermaid\ngraph TD\n    A[\"Hugging Face Hub\"] --> B[\"datasets library\"]\n    B --> C[\"Load / Stream\"]\n    C --> D[\"Local Cache<br/>~/.cache/huggingface/\"]\n    B --> E[\"Format Conversion<br/>CSV, JSON, Parquet, Arrow\"]\n    E --> F[\"Data Splits<br/>train / val / test\"]\n    F --> G[\"Your Training Pipeline\"]\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "af948346f5437d9f1b9f56bbc27fbfd31adcc5f495272129a3069acf02b4a512",
+      "target": "Hugging Face 的 `datasets` 库是 AI 工作中加载数据的标准工具。它开箱即用，能够处理下载、缓存、格式转换和流式读取。\n"
+    },
+    {
+      "segment_id": "00-09:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0021",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c4c3eeaac0a8152da1da9fb9e9e0456b99fb4291b6c1ec3c35a1917fcbcba071",
+      "target": "```figure\ns0-data-pipeline\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It"
+      ],
+      "ordinal": 12,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "00-09:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 1: Install the datasets library"
+      ],
+      "ordinal": 13,
+      "source_sha256": "09eb7b75aed6268283c4ef02ef620b3e31c8dc1f1d35265def4f91c0425786b5",
+      "target": "### 步骤 1：安装 datasets 库\n"
+    },
+    {
+      "segment_id": "00-09:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 1: Install the datasets library"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0027",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 1: Install the datasets library"
+      ],
+      "ordinal": 14,
+      "source_sha256": "e62775bab7d1e1fa645bdeab8f849fd574fe55401095f867eda9dc12f1a88d5d",
+      "target": "```bash\npip install datasets huggingface_hub\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 1: Install the datasets library"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 2: Load a dataset"
+      ],
+      "ordinal": 15,
+      "source_sha256": "c136c1f2db2fa4a807e6637d78f5b75bba662df946cf7d34f39e2542c09d1d22",
+      "target": "### 步骤 2：加载数据集\n"
+    },
+    {
+      "segment_id": "00-09:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 2: Load a dataset"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 2: Load a dataset"
+      ],
+      "ordinal": 16,
+      "source_sha256": "9ee821f44a2e3a367b3e5b168a71f36800a5fbbdee9acd72c6a33548815b5eb2",
+      "target": "```python\nfrom datasets import load_dataset\n\ndataset = load_dataset(\"stanfordnlp/imdb\")\nprint(dataset)\nprint(dataset[\"train\"][0])\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 2: Load a dataset"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 2: Load a dataset"
+      ],
+      "ordinal": 17,
+      "source_sha256": "ba13601b8a305db988d9d8bfe3ed465f0db24e610340dfb6fbdbe4234996261a",
+      "target": "这会下载 IMDB 影评数据集。首次下载后，就会从 `~/.cache/huggingface/datasets/` 中的缓存加载。\n"
+    },
+    {
+      "segment_id": "00-09:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 2: Load a dataset"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 3: Stream large datasets"
+      ],
+      "ordinal": 18,
+      "source_sha256": "3c9b1d476b2922774669fe4c44dfc067ea6926f25618c249c56ac4ac646c4e15",
+      "target": "### 步骤 3：流式读取大型数据集\n"
+    },
+    {
+      "segment_id": "00-09:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 3: Stream large datasets"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 3: Stream large datasets"
+      ],
+      "ordinal": 19,
+      "source_sha256": "24fe99bd1faae9045074fa32a3a0f8bb470863b4a3372259c28a722971c993b9",
+      "target": "有些数据集太大，磁盘放不下。流式读取会逐行加载数据，无须下载完整的数据集。\n"
+    },
+    {
+      "segment_id": "00-09:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 3: Stream large datasets"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 3: Stream large datasets"
+      ],
+      "ordinal": 20,
+      "source_sha256": "e254258152c6b2c3b47880eefd58097f4334ce5a915ece31d3b99835cabaaa98",
+      "target": "```python\ndataset = load_dataset(\"wikimedia/wikipedia\", \"20231101.en\", split=\"train\", streaming=True)\n\nfor i, example in enumerate(dataset):\n    print(example[\"title\"])\n    if i >= 4:\n        break\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 3: Stream large datasets"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 3: Stream large datasets"
+      ],
+      "ordinal": 21,
+      "source_sha256": "05aaa39ec81c38746bf903012f995c456b543cd8a52b07e9310e309279be6bd9",
+      "target": "流式读取会返回一个 `IterableDataset`（可迭代数据集）。数据逐行到达，你也逐行处理。无论数据集有多大，内存占用都保持恒定。\n"
+    },
+    {
+      "segment_id": "00-09:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 3: Stream large datasets"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 22,
+      "source_sha256": "8f71ad626e08780a3ea87321ca7500eb5230303269ed886f8c83759b41d590b3",
+      "target": "### 步骤 4：数据集格式\n"
+    },
+    {
+      "segment_id": "00-09:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 23,
+      "source_sha256": "d8259523ab857b552bd7441f6babdfd6196815341cd26e3d448d5c8e68e92cd6",
+      "target": "`datasets` 库的底层使用 Apache Arrow。你可以根据数据处理流水线的需要，将数据转换为其他格式。\n"
+    },
+    {
+      "segment_id": "00-09:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 24,
+      "source_sha256": "2d992204dec2348492cb1e4cb4a9cc61c4aacfd34bee7cd62c5189893acc7442",
+      "target": "```python\ndataset = load_dataset(\"stanfordnlp/imdb\", split=\"train\")\n\ndataset.to_csv(\"imdb_train.csv\")\ndataset.to_json(\"imdb_train.json\")\ndataset.to_parquet(\"imdb_train.parquet\")\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 25,
+      "source_sha256": "babb18fd3188e77489bf2fed0358cab310b6b027e050ea88ba436e30a3eb8bcd",
+      "target": "格式对比：\n"
+    },
+    {
+      "segment_id": "00-09:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0051",
+      "kind": "table",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 26,
+      "source_sha256": "0aa21219c4bcea2a890e8dd39910e46b513d0a047119019d1017f985b7d3847d",
+      "target": "| 格式 | 体积 | 读取速度 | 最适合的场景 |\n|--------|------|-----------|----------|\n| CSV | 大 | 慢 | 便于人工阅读、电子表格 |\n| JSON | 大 | 慢 | API（应用程序编程接口）、嵌套数据 |\n| Parquet | 小 | 快 | 数据分析、列式（columnar）查询 |\n| Arrow | 小 | 最快 | 内存中处理（`datasets` 内部采用的方式） |\n"
+    },
+    {
+      "segment_id": "00-09:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 27,
+      "source_sha256": "ab8a289532e562ac95aadf579d4370fa436aea8f584ef254612df3ff77a826b9",
+      "target": "对于 AI 工作，Parquet 是最佳存储格式。内存中处理数据时使用的是 Arrow。CSV 和 JSON 则用于数据交换。\n"
+    },
+    {
+      "segment_id": "00-09:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 4: Dataset formats"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 28,
+      "source_sha256": "1476bcb6b893ed182d703cd2991d8f1df49dec98a3ff5e9d394e4c46bbe312d0",
+      "target": "### 步骤 5：数据集划分\n"
+    },
+    {
+      "segment_id": "00-09:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 29,
+      "source_sha256": "abac6679bcfbf0e22f6cbdbfc2a613c856a70add2e601b91a3dd48882b45722b",
+      "target": "每个机器学习（ML）项目都需要将数据集划分为三个子集：\n"
+    },
+    {
+      "segment_id": "00-09:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0059",
+      "kind": "list",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 30,
+      "source_sha256": "4400dddd6645f98e44284fb9c7d30fd8a62cd390509b76df419cb578cc12a084",
+      "target": "- **训练集（Train）**：模型从中学习（通常占 80%）\n- **验证集（Validation）**：用于在训练期间检查进展（通常占 10%）\n- **测试集（Test）**：用于训练完成后的最终评估（通常占 10%）\n"
+    },
+    {
+      "segment_id": "00-09:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 31,
+      "source_sha256": "8f82c183a21648a1d8668aeb583fc5b7fa9834c27fa408bb2d477f1b7e34f497",
+      "target": "有些数据集已经划分好了。如果没有，就自己划分：\n"
+    },
+    {
+      "segment_id": "00-09:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 32,
+      "source_sha256": "6f63e3f16d1b6eac2515f1042466f8295e678047b6c34420e618bffaed378e8f",
+      "target": "```python\ndataset = load_dataset(\"stanfordnlp/imdb\", split=\"train\")\n\nsplit = dataset.train_test_split(test_size=0.2, seed=42)\ntrain_val = split[\"train\"].train_test_split(test_size=0.125, seed=42)\n\ntrain_ds = train_val[\"train\"]\nval_ds = train_val[\"test\"]\ntest_ds = split[\"test\"]\n\nprint(f\"Train: {len(train_ds)}, Val: {len(val_ds)}, Test: {len(test_ds)}\")\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 33,
+      "source_sha256": "e61ff6a747ea99b4959744b4405dd0b59a95d24164daaf5a3f2d7ab8c7e8cf60",
+      "target": "始终设置随机种子，以保证可复现性。同一个种子每次都会得到相同的划分。\n"
+    },
+    {
+      "segment_id": "00-09:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 5: Data splits"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 6: Download and cache models"
+      ],
+      "ordinal": 34,
+      "source_sha256": "6343f22d3629bd2ea7b71e7332243db0d4f239d655641d55c89848e7c39cbb9e",
+      "target": "### 步骤 6：下载和缓存模型\n"
+    },
+    {
+      "segment_id": "00-09:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 6: Download and cache models"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 6: Download and cache models"
+      ],
+      "ordinal": 35,
+      "source_sha256": "16f05417277543b5237dc1aa7fca476f59599b7eb24679ee3b6f6ec1d08f9051",
+      "target": "模型文件很大。`huggingface_hub` 库负责处理下载和缓存。\n"
+    },
+    {
+      "segment_id": "00-09:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 6: Download and cache models"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0071",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 6: Download and cache models"
+      ],
+      "ordinal": 36,
+      "source_sha256": "a682d66f7881aae5307fec23cfe391dcf1d3f4e0cc0f58aaa460ca1eaddf274b",
+      "target": "```python\nfrom huggingface_hub import hf_hub_download, snapshot_download\n\nmodel_path = hf_hub_download(\n    repo_id=\"sentence-transformers/all-MiniLM-L6-v2\",\n    filename=\"config.json\"\n)\nprint(f\"Cached at: {model_path}\")\n\nmodel_dir = snapshot_download(\"sentence-transformers/all-MiniLM-L6-v2\")\nprint(f\"Full model at: {model_dir}\")\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 6: Download and cache models"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 6: Download and cache models"
+      ],
+      "ordinal": 37,
+      "source_sha256": "d5a18e07788e7e9cd0a2818897c44562b82c9f9c5884fd60ffe6ab0abacab08a",
+      "target": "模型会缓存到 `~/.cache/huggingface/hub/`。一旦下载完成，后续运行时就能立即加载。\n"
+    },
+    {
+      "segment_id": "00-09:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 6: Download and cache models"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 38,
+      "source_sha256": "3705d984fd034d119ec45f2e673bd00bafed53c886014e4196e73e30d142bbec",
+      "target": "### 步骤 7：处理大文件\n"
+    },
+    {
+      "segment_id": "00-09:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 39,
+      "source_sha256": "8e6ff99ca13eaeec888092c2d41c9b4309dc8e83a1ba034629abce02a7e92522",
+      "target": "模型权重和大型数据集不应直接放进 git。你有三种选择：\n"
+    },
+    {
+      "segment_id": "00-09:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 40,
+      "source_sha256": "08770035966823e64f1db6c77c497e3bd0568b54087959a1b6a6c0f43244c73f",
+      "target": "**方案 A：.gitignore（最简单）**\n"
+    },
+    {
+      "segment_id": "00-09:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 41,
+      "source_sha256": "ac854ac544d303869e9406f3bcfe01659eea634fd71c8c580962910f75e157e1",
+      "target": "```text\n*.bin\n*.safetensors\n*.pt\n*.onnx\ndata/*.parquet\ndata/*.csv\nmodels/\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 42,
+      "source_sha256": "1de2f3888b9aa04812db938cefd4e29b425e806a7bfe81a4155b30019627bcf8",
+      "target": "**方案 B：Git LFS（在 git 中跟踪大文件）**\n"
+    },
+    {
+      "segment_id": "00-09:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 43,
+      "source_sha256": "70657d18f0e951244b932afc5e0467b7d6673fe25c525041e0d579ac93412986",
+      "target": "```bash\ngit lfs install\ngit lfs track \"*.bin\"\ngit lfs track \"*.safetensors\"\ngit add .gitattributes\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 44,
+      "source_sha256": "bf404570c77244dd298c3cfab697b0ac32a00b487ee6c52da00bba2f383d06c4",
+      "target": "Git LFS 在仓库中存储指针，将实际文件存放在单独的服务器上。GitHub 提供 1 GB 的免费额度。\n"
+    },
+    {
+      "segment_id": "00-09:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 45,
+      "source_sha256": "84ffdbe549f80541f1448f246a2439d4d8fefff75ceb1adaf7805146e58001db",
+      "target": "**方案 C：DVC（数据版本控制）**\n"
+    },
+    {
+      "segment_id": "00-09:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0091",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 46,
+      "source_sha256": "9b65bd643c86c90b246c35178b1bc59097c7cbcf0ec1dd8688f083b52e91b312",
+      "target": "```bash\npip install dvc\ndvc init\ndvc add data/training_set.parquet\ngit add data/training_set.parquet.dvc data/.gitignore\ngit commit -m \"Track training data with DVC\"\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 47,
+      "source_sha256": "aad6aa5b64c6e930664c9b9691fecc8ccd27b7d180022c6c7772bbd9cf5c324f",
+      "target": "DVC 会创建小型 `.dvc` 文件，用来指向你的数据。数据本身存放在 S3、GCS 或其他远程存储后端。\n"
+    },
+    {
+      "segment_id": "00-09:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0095",
+      "kind": "table",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 48,
+      "source_sha256": "fc8d81d502866a130abb0acdda1b9a468eb425a07022fc3390a8a7665b9dc2fc",
+      "target": "| 方案 | 复杂度 | 最适合的场景 |\n|----------|-----------|----------|\n| .gitignore | 低 | 个人项目、可重新获取的已下载数据 |\n| Git LFS | 中 | 通过 git 共享模型权重的团队 |\n| DVC | 高 | 可复现实验、大型数据集、团队协作 |\n"
+    },
+    {
+      "segment_id": "00-09:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 49,
+      "source_sha256": "70d492a590563cebec0a10d7f79d16fea8efe8567c4f6ed00ea6fb5be62cbe9e",
+      "target": "本课程使用 `.gitignore` 就够了。当你需要在不同机器上精确复现实验时，再使用 DVC。\n"
+    },
+    {
+      "segment_id": "00-09:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 7: Handle large files"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 50,
+      "source_sha256": "1130ca804ac7eaf2111cabdfaac9c319bdfa39e2b3b34864f910fef845afd875",
+      "target": "### 步骤 8：存储方式\n"
+    },
+    {
+      "segment_id": "00-09:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 51,
+      "source_sha256": "de722daf1815a37f820ad661aa787bd5bb8cd77a143461050fa3002491b7d17e",
+      "target": "**本地存储**适用于小于 ~10 GB 的数据集。Hugging Face（HF）的缓存机制会自动处理这些数据。\n"
+    },
+    {
+      "segment_id": "00-09:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 52,
+      "source_sha256": "f665b4d502e10228c7c166f7116feea3f04574889614bd0c9ee27cbd236b2d9b",
+      "target": "**云存储**适用于更大的数据，或需要跨机器共享的数据：\n"
+    },
+    {
+      "segment_id": "00-09:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0105",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 53,
+      "source_sha256": "372fcfbe68b75de5a22ee0b969c2dd1414c1afa07d734fa612743bb72c92b07b",
+      "target": "```python\nimport os\n\nlocal_path = os.path.expanduser(\"~/.cache/huggingface/datasets/\")\n\n# s3_path = \"s3://my-bucket/datasets/\"\n# gcs_path = \"gs://my-bucket/datasets/\"\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 54,
+      "source_sha256": "d6f0d352a22265c5a1687ce7633283a1f81b2a4bb76714413fc8bc0ccea1a848",
+      "target": "DVC 可以直接与 S3 和 GCS 集成：\n"
+    },
+    {
+      "segment_id": "00-09:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0109",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 55,
+      "source_sha256": "6ad884c64310de4bcd8381f6fd2fe452d023c36d8397e310e228aa6607439d22",
+      "target": "```bash\ndvc remote add -d myremote s3://my-bucket/dvc-store\ndvc push\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 56,
+      "source_sha256": "3220634404eb4490a56796d6c371ea0f507b506bb79acb56eb68489452cb1ee0",
+      "target": "对本课程而言，本地存储已足够。当你在远程 GPU（图形处理器）实例上进行微调（fine-tuning）时，云存储就派上用场了。\n"
+    },
+    {
+      "segment_id": "00-09:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Build It",
+        "### Step 8: Storage patterns"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Datasets Used in This Course"
+      ],
+      "ordinal": 57,
+      "source_sha256": "26db996be5cda432c27de6e5c4e4a4f2d4aab9049da90b04f3b78eee0cc1698a",
+      "target": "## 本课程使用的数据集\n"
+    },
+    {
+      "segment_id": "00-09:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Datasets Used in This Course"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0115",
+      "kind": "table",
+      "heading_path": [
+        "# Data Management",
+        "## Datasets Used in This Course"
+      ],
+      "ordinal": 58,
+      "source_sha256": "fc6cf9a7a56b3362d3b9da31f4d5bf07dbaf61c048e9275be20033c957ddb8f5",
+      "target": "| 数据集 | 课程主题 | 大小 | 教学内容 |\n|---------|---------|------|----------------|\n| IMDB | 分词、分类 | 84 MB | 文本分类基础 |\n| WikiText | 语言建模 | 181 MB | 下一个 token（词元）的预测 |\n| SQuAD | 问答（QA）系统 | 35 MB | 问答、文本片段 |\n| Common Crawl（子集） | 嵌入（embedding） | 不固定 | 大规模文本处理 |\n| MNIST | 视觉基础 | 21 MB | 图像分类基础 |\n| COCO（子集） | 多模态 | 不固定 | 图文对 |\n"
+    },
+    {
+      "segment_id": "00-09:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Datasets Used in This Course"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Datasets Used in This Course"
+      ],
+      "ordinal": 59,
+      "source_sha256": "97df8b9b10e2f63b87197b8668681506208e4953cdd9bd4e1e21beef8e130adc",
+      "target": "你现在不需要下载所有这些数据集。每一课都会说明需要用到哪些数据集。\n"
+    },
+    {
+      "segment_id": "00-09:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Datasets Used in This Course"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0119",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "00-09:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Use It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "6a49cb858950a11cfdeac07426a3cb2a34d1a34af490d58c873623c45071d40e",
+      "target": "运行工具脚本，确认一切正常：\n"
+    },
+    {
+      "segment_id": "00-09:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Use It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0123",
+      "kind": "fence",
+      "heading_path": [
+        "# Data Management",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "80cfa7b321ebf4b71032f6e8a2cd0b3a63f5aa8647349789e034465823bf212b",
+      "target": "```bash\npython code/data_utils.py\n```\n"
+    },
+    {
+      "segment_id": "00-09:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Use It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "eb9e83c399cc43271e10375e1171efb45e3e9129ee3d27a30914e4f93a908f4a",
+      "target": "它会下载一个小型数据集，进行格式转换和划分，并打印摘要。\n"
+    },
+    {
+      "segment_id": "00-09:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Use It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0127",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Ship It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "00-09:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Ship It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Data Management",
+        "## Ship It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "45a8e8be4edf96d5067efcba56d1cbd9fcf1fcfa0f49730e18f306ba287075ae",
+      "target": "本课会产出：\n- `code/data_utils.py` - 可复用的数据加载和缓存工具\n- `outputs/prompt-data-helper.md` - 用于寻找适合特定任务的数据集的提示词（prompt）\n"
+    },
+    {
+      "segment_id": "00-09:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Ship It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Exercises"
+      ],
+      "ordinal": 66,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "00-09:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Exercises"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0133",
+      "kind": "list",
+      "heading_path": [
+        "# Data Management",
+        "## Exercises"
+      ],
+      "ordinal": 67,
+      "source_sha256": "67bdefd2b01b69daadb49cea7850a9e9568f451692f57896f19fc4fbc0fd5922",
+      "target": "1. 使用 `mrpc` 配置加载 `glue` 数据集，并查看前 5 个样本\n2. 流式读取 `c4` 数据集，统计你能在 10 seconds（秒）内处理多少个样本\n3. 将一个数据集转换为 Parquet，并将文件大小与 CSV 格式的文件进行比较\n4. 使用固定的种子，将数据集按 70/15/15 的比例划分为训练集/验证集/测试集，并核对各子集的大小\n"
+    },
+    {
+      "segment_id": "00-09:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Exercises"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# Data Management",
+        "## Key Terms"
+      ],
+      "ordinal": 68,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "00-09:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Data Management",
+        "## Key Terms"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-09:b0137",
+      "kind": "table",
+      "heading_path": [
+        "# Data Management",
+        "## Key Terms"
+      ],
+      "ordinal": 69,
+      "source_sha256": "27bb812a91e2cd57fe5b00a557474b56aa512b60b5f768744d9da213beec8589",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 数据集划分（Dataset split） | “训练数据” | 在机器学习生命周期的不同阶段使用的具名子集（train/val/test） |\n| 流式读取（Streaming） | “按需加载” | 逐行处理来自远程数据源的数据，无须下载完整的数据集 |\n| Parquet | “压缩版 CSV” | 一种列式文件格式，针对分析查询和存储效率进行优化 |\n| Arrow | “快速数据框（dataframe）” | 一种内存列式格式，datasets 库内部使用它来实现零拷贝（zero-copy）读取 |\n| Git LFS | “用于大文件的 Git” | 一种扩展，将大文件存储在 git 仓库外，同时在版本控制中保留指向它们的指针 |\n| DVC | “用于数据的 Git” | 一种与云存储集成的数据集和模型版本控制系统 |\n| 缓存（Cache） | “已经下载过了” | 先前获取的数据在本地的副本，默认存放在 ~/.cache/huggingface/ |\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+  "additional_glossary_sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    }
+  ]
+}

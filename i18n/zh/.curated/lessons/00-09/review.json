@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "lesson_id": "00-09",
+  "source_path": "phases/00-setup-and-tooling/09-data-management/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "c126b8b1397265f0cdc3429ad64d8c5c6f249377",
+  "source_sha256": "21f3293155f3b48ef79eaef08e7bf86be58a791974ed7266cbe9f18681c9b237",
+  "target_path": "i18n/zh/phases/00-setup-and-tooling/09-data-management/docs/zh.md",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+  "additional_glossary_sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    }
+  ],
+  "batch": "S04",
+  "review_date": "2026-10-02",
+  "reviewed_target_sha256": "aa6810d17a612052e3722df449bca8302ccea3435db23c83caf8175fdcad05fe",
+  "release_status": "draft-not-approved",
+  "review_coverage": {
+    "technical": "Independent full English-to-Chinese comparison of all 258 source/target lines and every block; no sampling",
+    "chinese": "Separate full Chinese-only reading",
+    "independence": "Final reviewer not the author; exact final target hash bound",
+    "human_approval": "not requested or claimed"
+  },
+  "coverage_counts": {
+    "all_blocks": 137,
+    "translatable_blocks": 55,
+    "fenced_payloads": 14,
+    "headings": 18,
+    "tables": 4
+  },
+  "resolved_translation_findings": [],
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "SRC-01",
+      "kind": "source-inconsistency",
+      "lines": "101-118",
+      "summary": "典型比例说明是80/10/10；示例先取20%测试集，再从余下80%取12.5%作验证集，实际为70/10/20。练习70/15/15是第三个独立目标。译文均忠实保留，不能以统一比例为由改代码。",
+      "evidence": [
+        "https://github.com/Activer007/ai-engineering-from-scratch/blob/1bafaa88bb4668356791150bec3a6d7df38387eb/phases/00-setup-and-tooling/09-data-management/docs/en.md#L101-L118",
+        "https://huggingface.co/docs/datasets/en/package_reference/main_classes#datasets.Dataset.train_test_split"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    },
+    {
+      "id": "SRC-02",
+      "kind": "source-precondition-omission",
+      "lines": "108-120",
+      "summary": "同种子保证同划分的说法缺少输入数据、行顺序、算法及环境不变的前提；示例也未锁定Hub revision。seed不能独自构成完整可复现性保证。",
+      "evidence": [
+        "https://huggingface.co/docs/datasets/en/package_reference/main_classes#datasets.Dataset.train_test_split",
+        "https://huggingface.co/docs/datasets/en/loading#hugging-face-hub"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    },
+    {
+      "id": "SRC-03",
+      "kind": "source-format-ambiguity",
+      "lines": "78-95",
+      "summary": "Dataset.to_json默认输出JSON Lines（lines=True、orient=records），即使扩展名是.json；不能据此把完整输出当作一个JSON数组。代码和扩展名在译文中原样保留。",
+      "evidence": [
+        "https://huggingface.co/docs/datasets/en/package_reference/main_classes#datasets.Dataset.to_json"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    },
+    {
+      "id": "SRC-04",
+      "kind": "source-cache-simplification",
+      "lines": "57;129-139",
+      "summary": "datasets缓存保存Arrow及索引；原始Hub文件另有hub缓存。已缓存不代表零I/O或加载耗时为零，且Hub下载默认跟随main，版本变化可触发新下载；立即加载应作为源文简化单列。",
+      "evidence": [
+        "https://huggingface.co/docs/datasets/en/cache",
+        "https://huggingface.co/docs/huggingface_hub/en/guides/download"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    },
+    {
+      "id": "SRC-05",
+      "kind": "source-outdated-quota",
+      "lines": "166",
+      "summary": "源文GitHub免费1 GB额度已过时；本次官方页面列GitHub Free/Pro为10 GiB存储和10 GiB下载带宽，其他计划不同。译文忠实保留1 GB，不静默更新。",
+      "evidence": [
+        "https://docs.github.com/en/billing/concepts/product-billing/git-lfs#free-use-of-git-lfs"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    },
+    {
+      "id": "SRC-06",
+      "kind": "source-storage-precondition-omission",
+      "lines": "170-178;205-208",
+      "summary": "dvc add首先记录.dvc并存入本地缓存；不因执行这些命令就已把数据存到S3/GCS。远程存储需先配置，之后由dvc push上传。Step 8才展示远程步骤；Step 7的概括容易误导。",
+      "evidence": [
+        "https://doc.dvc.org/command-reference/add",
+        "https://doc.dvc.org/command-reference/push"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    },
+    {
+      "id": "SRC-07",
+      "kind": "source-resource-simplification",
+      "lines": "61-72;190-192",
+      "summary": "逐行流式读取在固定行大小及缓冲策略下可避免随全数据量增长的内存需求，但恒定内存不是对任意行大小、批处理或保留全部结果的保证。~10 GB本地/云端分界也不是库的技术限制，应按磁盘容量、缓存和共享需求决定。",
+      "evidence": [
+        "https://huggingface.co/docs/datasets/en/about_mapstyle_vs_iterable",
+        "https://huggingface.co/docs/datasets/en/stream"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    },
+    {
+      "id": "SRC-08",
+      "kind": "source-format-performance-generalization",
+      "lines": "88-95",
+      "summary": "格式表的Small/Fastest和Parquet最佳存储格式是入门概括，不能当作无条件容量或速度保证；压缩、编码、数据内容和访问模式会改变结果。未在译文中擅自加入条件或改表。",
+      "evidence": [
+        "https://arrow.apache.org/docs/python/parquet.html#compression-encoding-and-file-compatibility",
+        "https://huggingface.co/docs/datasets/en/about_mapstyle_vs_iterable#speed-differences"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    },
+    {
+      "id": "SRC-09",
+      "kind": "source-demo-side-effects-omission",
+      "lines": "227-233;code/data_utils.py:155-186",
+      "summary": "工具脚本除下载数据集、转换和划分外，还调用hf_hub_download下载模型config.json，并写入/tmp/data_utils_demo、读取HF缓存。该脚本不是纯离线验证；本审校未运行。",
+      "evidence": [
+        "https://github.com/Activer007/ai-engineering-from-scratch/blob/1bafaa88bb4668356791150bec3a6d7df38387eb/phases/00-setup-and-tooling/09-data-management/code/data_utils.py#L155-L186"
+      ],
+      "verified_on": "2026-10-02",
+      "translation_action": "Preserve fixed English; record separately, not a translation blocker"
+    }
+  ],
+  "preservation": {
+    "fences": "14 payloads byte-identical; bare gitignore fence only gets text tag",
+    "structure": "block order/kinds, headings, lists, table rows/columns and metadata preserved",
+    "inline_code_numbers_roles": "same per-block inventories; mrpc remains config and glue remains dataset despite Chinese syntax reorder; prose/code/exercise ratios remain separately faithful",
+    "metadata": "singular Language unchanged; ordinary prerequisite/time metadata translated"
+  },
+  "format_repairs": [
+    {
+      "kind": "fence-language",
+      "change": "bare gitignore fence labeled text; payload unchanged"
+    }
+  ],
+  "assets": [],
+  "checks": {
+    "strict_source_target_review_binding": "passed",
+    "independent_technical_and_chinese": "passed for final hash",
+    "github_gfm": "passed-desktop: actual GitHub DOM and screenshots; 18 headings, four tables, ratio/field roles, metadata and Chinese anchors verified",
+    "deterministic_replay": "passed: two final output directories byte-identical",
+    "actual_site_browser": "not passed; not run this stage; known original renderer issues",
+    "hosted_ci": "not run; inherited Actions remain disabled",
+    "offline_site_parser": {
+      "file": "i18n/zh/phases/00-setup-and-tooling/09-data-management/docs/zh.md",
+      "parser_executed": true,
+      "html_bytes": 16078,
+      "tables": 4,
+      "code_blocks": 12,
+      "figures": 1,
+      "mermaid_sources": 1,
+      "empty_heading_ids": [
+        "数据管理",
+        "学习目标",
+        "要解决的问题",
+        "核心概念",
+        "动手实现",
+        "本课程使用的数据集",
+        "实际使用",
+        "交付成果",
+        "练习",
+        "关键术语"
+      ],
+      "duplicate_heading_ids": [],
+      "browser_verified": false,
+      "result": "BLOCKED_SOURCE_RENDERER"
+    }
+  },
+  "runtime_checks": {
+    "bash_fences": "5/5 syntax-only pass using env -u BASH_ENV bash --noprofile --norc -n; no payload executed",
+    "python_fences": "6/6 AST parse pass; no imports/downloads executed",
+    "data_utils_py": "AST parse pass; main not run because it downloads dataset/model files and accesses cache",
+    "lesson_unit_suite": "none checked in"
+  },
+  "not_run": [
+    "HF dataset/model downloads",
+    "dependency installs",
+    "Git LFS/DVC writes",
+    "cloud storage configuration/push",
+    "cache content inspection",
+    "credentials or account operations",
+    "data_utils.py full runtime"
+  ],
+  "github_gfm_evidence": {
+    "date": "2026-10-02",
+    "observed_commit": "c4debc5cad215ee6098894c9fecb3f14e368804b",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/c4debc5cad215ee6098894c9fecb3f14e368804b/i18n/zh/phases/00-setup-and-tooling/09-data-management/docs/zh.md",
+    "target_sha256": "aa6810d17a612052e3722df449bca8302ccea3435db23c83caf8175fdcad05fe",
+    "browser": "dot cloud Chrome desktop",
+    "headings": 18,
+    "tables": 4,
+    "table_column_counts": [
+      4,
+      3,
+      4,
+      3
+    ],
+    "chinese_permalink_clicked": true,
+    "mermaid": "pipeline rendered",
+    "figure": "identifier shown as code; not interactive site acceptance",
+    "focused_checks": "Language remains singular; train/validation/test bold labels and 80%/10%, test_size=0.2/0.125, exercise70/15/15 all preserved",
+    "mobile": "not tested"
+  }
+}
