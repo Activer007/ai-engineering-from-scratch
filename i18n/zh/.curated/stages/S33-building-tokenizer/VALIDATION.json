@@ -1,0 +1,852 @@
+{
+  "schema_version": 1,
+  "stage_id": "S33-building-tokenizer",
+  "lesson_id": "10-02",
+  "date": "2026-10-02",
+  "status": "reviewed-draft-submitted",
+  "final_acceptance": false,
+  "completion_total_claimed": 55,
+  "repository": "Activer007/ai-engineering-from-scratch",
+  "pull_request": 38,
+  "support_commit": "18d91e8419e56df8fe0ebf37b8b5ca31dba92be0",
+  "content_commit": "c9b2dcb245712c67611a3f5a8b770272cc627029",
+  "commit_information_source": "Coordinator handoff; final remote-byte validation pending",
+  "source": {
+    "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+    "source_path": "phases/10-llms-from-scratch/02-building-a-tokenizer/docs/en.md",
+    "source_blob": "8e2f007b9ca258b6955b4964dd6e1029926af7a9",
+    "source_sha256": "3e2af805d324028b1c673be3bebad6f17dc74ca2ffa0f1f050aa2d5d56d61da1"
+  },
+  "target": {
+    "path": "i18n/zh/phases/10-llms-from-scratch/02-building-a-tokenizer/docs/zh.md",
+    "sha256": "a7585d89f9d36d460a61428c8f33a34c222d6858358b87ea72871a1ddf464d7e",
+    "changed_after_independent_full_review": false,
+    "new_GFM_fix": false
+  },
+  "counts": {
+    "lines": 447,
+    "blocks": 175,
+    "translatable_blocks": 73,
+    "headings": 23,
+    "fences": 15,
+    "python_fences": 10,
+    "mermaid_fences": 1,
+    "figure_fences": 1,
+    "bare_fences_labeled_text": 3,
+    "tables": 3,
+    "key_terms": 8,
+    "exercises": 3,
+    "references": 5
+  },
+  "dependencies": {
+    "path": "i18n/zh/.curated/stages/S33-building-tokenizer/DEPENDENCIES.json",
+    "sha256": "0c7ec6bff2b00d4a9f4adff38bca480b0472c5e9067dbb0b78ecd4e6f0f5e488",
+    "count": 40,
+    "all_file_hashes_and_support_git_bytes_verified": true
+  },
+  "terminology": {
+    "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+    "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66",
+    "coordinator_approved": true
+  },
+  "authorship": {
+    "English_first": true,
+    "old_Chinese_cache_or_historical_PR_draft_used": false,
+    "author_full_technical_pass": true,
+    "author_separate_Chinese_only_pass": true
+  },
+  "independent_review": {
+    "verdict": "PASS_TRANSLATION_WITH_SOURCE_ISSUES",
+    "required_translation_changes": [],
+    "coverage": {
+      "source_lines": 447,
+      "target_lines": 447,
+      "blocks": 175,
+      "candidate_blocks": 73,
+      "fences": 15,
+      "python_fences": 10,
+      "mermaid_fences": 1,
+      "figure_fences": 1,
+      "bare_fences_labelled_text": 3,
+      "tables": 3,
+      "exercises": 3,
+      "references": 5,
+      "technical_full_EN_ZH_comparison": true,
+      "separate_full_Chinese_only_read": true
+    },
+    "author_QA_read_before_judgment": false,
+    "author_files_edited": false,
+    "all_blocks_hash_bound": 175
+  },
+  "local_controls": {
+    "author_original_strict": "PASS",
+    "independent_original_strict": "PASS",
+    "author_33_control_tests": "PASS_33_OF_33",
+    "independent_33_control_tests": "PASS_33_OF_33",
+    "author_double_markdown_replay": "PASS_EXACT_BYTES",
+    "independent_double_markdown_replay": "PASS_EXACT_BYTES",
+    "all_replay_sha256": "a7585d89f9d36d460a61428c8f33a34c222d6858358b87ea72871a1ddf464d7e",
+    "independent_dependency_hashes_checked": 40,
+    "aggregate_replay": "PENDING_COORDINATOR"
+  },
+  "author_code_validation": {
+    "canonical_path": "phases/10-llms-from-scratch/02-building-a-tokenizer/code/main.py",
+    "canonical_lines": 258,
+    "canonical_sha256": "af32402d7903d56545ac3e72b9ead141b45a587af46c9bb89e7f3c88a36ea6ff",
+    "full_source_read_before_execution": true,
+    "command": "timeout 30s python3 -I -S -B phases/10-llms-from-scratch/02-building-a-tokenizer/code/main.py",
+    "execution_scope": "Full canonical file, isolated/no-site Python; original regex/tiktoken imports fail with ImportError and original stdlib fallback/skip branches run. Not a full third-party-tokenizer execution.",
+    "canonical_exit_code": 0,
+    "original_50_merges_and_source_examples_preserved": true,
+    "nonallowlist_modules_loaded": false,
+    "observed_canonical_failure": {
+      "input": "你好世界 Hello World",
+      "decoded": " Hello World",
+      "printed_status": "Round-trip: FAIL",
+      "exit_zero_does_not_mean_lossless": true
+    },
+    "canonical_vocab_size": 310,
+    "canonical_special_ids": [
+      306,
+      307,
+      308,
+      309
+    ],
+    "bounded_checks": {
+      "result": "PASS_BOUNDED_CHECKS_WITH_REPRODUCED_SOURCE_FAILURES",
+      "execution": "python3 -I -S -B; original try-import regex raises ImportError and unchanged stdlib fallback runs",
+      "executed_document_blocks": [
+        "b0099",
+        "b0103",
+        "b0111",
+        "b0117",
+        "b0125",
+        "b0131",
+        "b0137",
+        "b0143"
+      ],
+      "original_50_merge_demo_preserved": true,
+      "checks": [
+        {
+          "name": "Raw UTF-8 helpers preserve valid multilingual strings",
+          "byte_counts": [
+            5,
+            6,
+            4,
+            15
+          ]
+        },
+        {
+          "name": "Original ASCII fallback silently omits CJK and underscore; leading space source examples disagree",
+          "chunks": [
+            "Hello",
+            ",",
+            " world",
+            "!",
+            " Don",
+            "'t",
+            " stop",
+            "."
+          ],
+          "CJK_underscore_chunks": [
+            "world"
+          ],
+          "CJK_encoded": []
+        },
+        {
+          "name": "NFKC normalizes compatibility forms but is not original-text lossless",
+          "input": "ﬁＡ",
+          "NFKC": "fiA",
+          "NFD_ligature": "ﬁ",
+          "NFKD_ligature": "fi"
+        },
+        {
+          "name": "Non-overlapping merge and finite ASCII training roundtrip",
+          "ids": [
+            257,
+            32,
+            256
+          ],
+          "vocab_size": 258,
+          "byte_length": 7,
+          "token_count": 3
+        },
+        {
+          "name": "Longest-first exact special matching also interprets literal user text as control marker",
+          "parts": [
+            [
+              "a",
+              false
+            ],
+            [
+              "<x>!",
+              true
+            ],
+            [
+              "b",
+              false
+            ],
+            [
+              "<x>",
+              true
+            ]
+          ],
+          "literal_user_marker_id": 256
+        },
+        {
+          "name": "Normalization precedes special matching and changes non-normalized marker",
+          "registered_marker": "Ａ",
+          "registered_id": 256,
+          "encoded_normalized_ids": [
+            65
+          ]
+        },
+        {
+          "name": "Unknown IDs silently skipped and invalid UTF-8 replaced",
+          "unknown_id_decode": "AB",
+          "invalid_byte_decode": "�"
+        },
+        {
+          "name": "Repeated training overwrites existing merge pair mapping while retaining old vocabulary",
+          "old_merges": [
+            [
+              97,
+              98,
+              256
+            ],
+            [
+              256,
+              256,
+              257
+            ]
+          ],
+          "new_merges": [
+            [
+              97,
+              98,
+              258
+            ],
+            [
+              256,
+              256,
+              257
+            ]
+          ],
+          "old_vocab_size": 258,
+          "new_vocab_size": 259
+        }
+      ],
+      "nonallowlist_modules_loaded": [],
+      "skipped_document_blocks": {
+        "b0153": "tiktoken outside allowlist and may retrieve encoding data",
+        "b0155": "transformers outside allowlist, from_pretrained downloads/models forbidden"
+      },
+      "network_install_external_corpus_or_model_calls": 0,
+      "source_modified": false
+    },
+    "bounded_check_count": 8
+  },
+  "independent_code_validation": {
+    "status": "PASS_BOUNDED_STDLIB_CHECKS",
+    "command_mode": "python3 -I -S; isolated, no site packages",
+    "all_original_payloads_read_before_execution": true,
+    "executed_original_doc_blocks": [
+      "10-02:b0099",
+      "10-02:b0103",
+      "10-02:b0111",
+      "10-02:b0117",
+      "10-02:b0125",
+      "10-02:b0131",
+      "10-02:b0137",
+      "10-02:b0143"
+    ],
+    "stdlib_fallback": "Original try import regex raises ImportError; original except branch executes without algorithm edits",
+    "forbidden_modules_loaded": false,
+    "checks": [
+      {
+        "name": "UTF8 byte counts",
+        "status": "pass",
+        "evidence": {
+          "hello": 5,
+          "你好": 6,
+          "🔥": 4,
+          "CJK_U20000": 4
+        }
+      },
+      {
+        "name": "Byte helper roundtrip and lossy invalid UTF8",
+        "status": "pass",
+        "evidence": {
+          "valid_roundtrip": "你好🔥",
+          "invalid_byte255": "�"
+        }
+      },
+      {
+        "name": "Regex never invents absent initial space",
+        "status": "pass",
+        "evidence": [
+          "the",
+          " cat"
+        ]
+      },
+      {
+        "name": "Unmodified stdlib fallback drops Unicode word letters and underscores",
+        "status": "pass",
+        "evidence": {
+          "你好世界": [],
+          "_": [],
+          "é": [],
+          "🔥": [
+            "🔥"
+          ]
+        }
+      },
+      {
+        "name": "Full original demo losses under fallback",
+        "status": "pass",
+        "evidence": {
+          "Chinese_ids": [],
+          "ASCII": "The quick brown fox.",
+          "emoji": "Hello 🌍 World"
+        }
+      },
+      {
+        "name": "NFKC differs from canonical-only decomposition",
+        "status": "pass",
+        "evidence": {
+          "NFD": "ﬁＡ",
+          "NFKD": "fiA",
+          "NFKC": "fiA"
+        }
+      },
+      {
+        "name": "Normalization makes text roundtrip nonidentity",
+        "status": "pass",
+        "evidence": {
+          "input": "ﬁＡ",
+          "decoded": "fiA"
+        }
+      },
+      {
+        "name": "Special markers retain exact fixed IDs",
+        "status": "pass",
+        "evidence": {
+          "ids": [
+            306,
+            72,
+            101,
+            108,
+            108,
+            111,
+            307
+          ],
+          "bos": 306,
+          "eos": 307
+        }
+      },
+      {
+        "name": "Longest overlapping special matched first",
+        "status": "pass",
+        "evidence": [
+          [
+            "x",
+            false
+          ],
+          [
+            "abc",
+            true
+          ],
+          [
+            "y",
+            false
+          ]
+        ]
+      },
+      {
+        "name": "apply_merge does nonoverlapping left-to-right pairing",
+        "status": "pass",
+        "evidence": [
+          256,
+          97
+        ]
+      },
+      {
+        "name": "Repeated train overwrites pair with a new ID and leaves old vocabulary",
+        "status": "pass",
+        "evidence": {
+          "first": [
+            256,
+            256
+          ],
+          "second": [
+            257,
+            257
+          ],
+          "vocab_size": 258
+        }
+      },
+      {
+        "name": "Unknown IDs silently skipped during decode",
+        "status": "pass",
+        "evidence": {
+          "decoded": ""
+        }
+      },
+      {
+        "name": "Throughput arithmetic only",
+        "status": "pass",
+        "evidence": {
+          "million_tokens_per_second_days": 173.61111111111111,
+          "hundred_million_days": 1.7361111111111112
+        }
+      }
+    ],
+    "check_count": 13,
+    "skipped_doc_blocks": [
+      {
+        "id": "10-02:b0153",
+        "reason": "tiktoken not allowlisted; may download encoding; never imported or called"
+      },
+      {
+        "id": "10-02:b0155",
+        "reason": "transformers not allowlisted; from_pretrained would download models; never imported or called"
+      }
+    ],
+    "canonical_source": "Not read or run by independent reviewer; this evidence covers displayed doc payloads only",
+    "external_calls": 0,
+    "source_or_body_modified": false
+  },
+  "execution_and_semantic_limits": {
+    "author_document_blocks_run": 8,
+    "independent_document_blocks_run": 8,
+    "independent_canonical_read_or_run": false,
+    "regex_import_behavior": "Original try import fails under -I -S; unchanged stdlib re fallback runs; no third-party code loaded",
+    "canonical_tiktoken_behavior": "Original optional import fails under -I -S; original skip branch runs; printed installation advice not acted on",
+    "tiktoken_doc_b0153": "NOT_RUN",
+    "transformers_doc_b0155": "NOT_RUN",
+    "network_install_external_corpus_encoding_or_model_downloads": false,
+    "model_API_calls": 0,
+    "production_grade_runtime_verified": false,
+    "lossless_all_input_runtime_passed": false,
+    "source_failure_repaired": false,
+    "benchmark_claimed": false
+  },
+  "independent_source_risks": {
+    "group_count": 14,
+    "groups": [
+      {
+        "id": "S33-IND-SRC-01",
+        "title": "生产级与固定流程概括",
+        "segments": [
+          "10-02:b0009",
+          "10-02:b0017",
+          "10-02:b0019",
+          "10-02:b0027",
+          "10-02:b0029",
+          "10-02:b0033"
+        ],
+        "detail": "生产分词器不必都做NFKC、不必正好五阶段，也不能只由该教学实现推断适合15trillion规模。词表与训练数据规模/版本断言原样保留，未做当前外部基准验证。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-02",
+        "title": "任意字节与本课字符串接口不同",
+        "segments": [
+          "10-02:b0037",
+          "10-02:b0039",
+          "10-02:b0097",
+          "10-02:b0099",
+          "10-02:b0137",
+          "10-02:b0145",
+          "10-02:b0171"
+        ],
+        "detail": "完整256字节基础词表可覆盖任意字节序列，但本课encode接收Python字符串并做Unicode NFKC/UTF8，而不是任意编码的原始二进制。decode errors=replace不是损坏字节的可逆还原。孤立代理码点等亦超出实现的正常输入域。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-03",
+        "title": "可打印字节映射未实现",
+        "segments": [
+          "10-02:b0041",
+          "10-02:b0097",
+          "10-02:b0099"
+        ],
+        "detail": "源称GPT-2空格映射为字符G；本文bytes_to_tokens仅返回0–255整数，没有实现或验证该可打印Unicode映射。此精确模型映射断言保留并标待核，不加载外部分词库或访问参考实现来扩展范围。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-04",
+        "title": "Unicode字节长度概括",
+        "segments": [
+          "10-02:b0043",
+          "10-02:b0103",
+          "10-02:b0105",
+          "10-02:b0145"
+        ],
+        "detail": "你好两个字符确为6UTF8字节、🔥为4字节，但不是所有汉字都为3字节；U+20000补充区汉字实测4字节。用户感知emoji还可能由多个码点组成，len(text)不是普适视觉字符数。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-05",
+        "title": "ASCII回退丢失CJK和下划线",
+        "segments": [
+          "10-02:b0111",
+          "10-02:b0113",
+          "10-02:b0137",
+          "10-02:b0143",
+          "10-02:b0145"
+        ],
+        "detail": "原re回退中ASCII字母/数字分支不接收CJK或é，标点分支又用Unicode感知的\\w排除这些字符；下划线也未被任何分支接收。因此finditer静默跳过内容，不是无损byte fallback。隔离模式原样运行后你好世界encode为[]，decode为空串；代码中下划线也丢失。未修改算法。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-06",
+        "title": "前导空格示例与实际模式不符",
+        "segments": [
+          "10-02:b0051",
+          "10-02:b0053",
+          "10-02:b0111",
+          "10-02:b0117",
+          "10-02:b0119"
+        ],
+        "detail": "模式保留已有前导空格，不会凭空添加；the cat实际片段是[the, 空格cat]，并非源例中首项也有空格。原Hello开头的示例注释同样多了空格。按语义边界是否可跨词需依具体预分词配置。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-07",
+        "title": "模型分词器及特殊标记的跨版本概括",
+        "segments": [
+          "10-02:b0019",
+          "10-02:b0055",
+          "10-02:b0057",
+          "10-02:b0063",
+          "10-02:b0077",
+          "10-02:b0151",
+          "10-02:b0157",
+          "10-02:b0167"
+        ],
+        "detail": "Llama各代、SentencePiece算法/配置与是否跨空白边界不能机械等同；特殊token表把Llama3列为<s>/<|user|>等使用者，而本课Llama3模板实际展示的是另一组header/eot标记，内部不一致。具体GPT模型词表数、模板与token ID依版本，未外部加载核实。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-08",
+        "title": "特殊token在流程图与训练中的位置",
+        "segments": [
+          "10-02:b0029",
+          "10-02:b0033",
+          "10-02:b0065",
+          "10-02:b0129",
+          "10-02:b0131",
+          "10-02:b0135",
+          "10-02:b0137"
+        ],
+        "detail": "图把Special Tokens放在BPE之后，文本与encode是在BPE前精确拆分。train不调用special_handler，已注册特殊标记也可成为训练字符片段；normalize先于special匹配，可能改变原标记。未区分普通用户字面标记与受信控制token，重复/空特殊串也缺校验；这里不执行或注入任何真实模型控制标记。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-09",
+        "title": "NFKC定义与可逆性",
+        "segments": [
+          "10-02:b0033",
+          "10-02:b0137",
+          "10-02:b0171"
+        ],
+        "detail": "源定义把规范/兼容分解与组合关系写反，译文忠实保留。stdlib对ﬁＡ的NFD保持原样、NFKD/NFKC产生fiA，显示兼容等价处理不是仅规范分解。NFKC本身会丢失原始表示，decode(encode(text))应比较规范化后文本而非所有原始文本。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-10",
+        "title": "BPE训练重复调用与教学接口",
+        "segments": [
+          "10-02:b0125",
+          "10-02:b0137",
+          "10-02:b0143"
+        ],
+        "detail": "get_byte_pairs只统计当前输入字节且train另实现计数；train重调用从原始字节开始，未先应用既有合并，可能为同一pair分配新ID并留下旧词表项。原序列abab两次单次合并的编码由[256,256]变为[257,257]，两ID对应相同字节。教学类缺持久化、输入约束与生产速度优化。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-11",
+        "title": "解码和单token显示的边界",
+        "segments": [
+          "10-02:b0099",
+          "10-02:b0137",
+          "10-02:b0153"
+        ],
+        "detail": "decode对未知ID静默跳过而不报错；单token可能只含UTF8字符的部分字节，用errors=replace显示会产生替换符。tiktoken逐token decode示例不能无条件当作原文的逐片段无损切分；未导入tiktoken。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-12",
+        "title": "速度、词表大小与fertility的概括",
+        "segments": [
+          "10-02:b0083",
+          "10-02:b0085",
+          "10-02:b0087",
+          "10-02:b0089",
+          "10-02:b0157",
+          "10-02:b0159",
+          "10-02:b0171"
+        ],
+        "detail": "15e12/1e6/86400=173.611天，100倍速约1.736天算术可复核；Python/Rust所给吞吐与10–100倍不是本次基准测试。更大词表不保证在任意新文本上更短；参数量还依embedding维度/共享方式，fertility依语料与词边界定义。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-13",
+        "title": "外部库、资源与练习范围",
+        "segments": [
+          "10-02:b0113",
+          "10-02:b0153",
+          "10-02:b0155",
+          "10-02:b0163",
+          "10-02:b0167",
+          "10-02:b0175"
+        ],
+        "detail": "regex/tiktoken/transformers不在本任务执行允许范围；只用python -I -S让原try/except进入stdlib回退，三包均未加载。未下载模型/编码文件、未调用API或产物提示词；练习HuggingFace对比和5参考链接的时效未核实。",
+        "treatment": "Faithfully retained; no silent source correction"
+      },
+      {
+        "id": "S33-IND-SRC-14",
+        "title": "保护载荷与实际渲染边界",
+        "segments": [
+          "10-02:b0029",
+          "10-02:b0051",
+          "10-02:b0063",
+          "10-02:b0073",
+          "10-02:b0077",
+          "10-02:b0091",
+          "10-02:b0167",
+          "10-02:b0171"
+        ],
+        "detail": "15围栏载荷原样，3裸围栏仅加text；源weight-tying figure标识原样保留不重画。特殊token表内转义竖线与代码标识保留，3个中文难度标签闭合后已有空格。实际GitHub GFM、Mermaid和课程站点figure交互仍待协调者实际观察。",
+        "treatment": "Faithfully retained; no silent source correction"
+      }
+    ]
+  },
+  "author_source_risks": {
+    "group_count": 13,
+    "groups": [
+      {
+        "id": "production-and-pipeline-claims",
+        "blocks": [
+          "b0009",
+          "b0017",
+          "b0027",
+          "b0033",
+          "b0135"
+        ],
+        "detail": "生产级/任意编码/无未知/五阶段普遍流程为源强断言；实现只接受可UTF-8编码的Python字符串，未实现所有空白规范化/可选lowercase/strip accents/模板/持久化等；图先BPE再special与正文先special再BPE不一致。"
+      },
+      {
+        "id": "NFKC-definition-and-losslessness",
+        "blocks": [
+          "b0033",
+          "b0171",
+          "b0137"
+        ],
+        "detail": "源关键术语把NFKC写为规范分解后兼容组合，通常应为兼容分解后规范组合。本轮stdlib实测ﬁＡ→fiA，以及NFD/NFKD连字差异；规范化并不保留原始字符串，源字面fi而非连字示例保留。"
+      },
+      {
+        "id": "byte-display-and-unicode-lengths",
+        "blocks": [
+          "b0041",
+          "b0043",
+          "b0097",
+          "b0105",
+          "b0145"
+        ],
+        "detail": "源GPT-2空格映射写字母G，需与实际byte-to-Unicode映射区分；本轮未读取远端实现。并非所有汉字都恰为3个UTF-8字节，补充平面字符可为4字节；emoji可多码点。正文代码未实现可打印Unicode显示映射。"
+      },
+      {
+        "id": "stdlib-fallback-data-loss",
+        "blocks": [
+          "b0111",
+          "b0113",
+          "b0117",
+          "b0143",
+          "b0145"
+        ],
+        "detail": "实际运行原ASCII回退后，中文/其他非ASCII字母和下划线不被任何分支匹配而静默丢失；你好世界→空ID/空串，canonical你好世界 Hello World→ Hello World并打印Round-trip FAIL。底层256字节覆盖无法修复上游丢失；没有未知token不意味着无损。"
+      },
+      {
+        "id": "pretok-example-and-model-family",
+        "blocks": [
+          "b0053",
+          "b0055",
+          "b0057",
+          "b0117",
+          "b0167"
+        ],
+        "detail": "the cat实际得到[the, 空格cat]，Hello例首项无额外空格，源文字/注释多写前导空格。Llama全用SentencePiece且不regex、SentencePiece原始长字节流/跨词规则等跨版本与配置概括未外部核验；练习Llama式规则也不直接等同所有模型。"
+      },
+      {
+        "id": "special-token-identities-and-input-control",
+        "blocks": [
+          "b0063",
+          "b0065",
+          "b0077",
+          "b0131",
+          "b0137"
+        ],
+        "detail": "表中Llama3标记与其模板示例不一致；真实型号/token literal保留未加载模型。special matcher无允许列表/转义策略，会把普通用户文本中的注册标记直接当特殊ID；NFKC先于匹配导致非规范化标记失配或被规范化为控制拼写。重复/空标记和ID冲突校验不足。"
+      },
+      {
+        "id": "special-training-and-retraining",
+        "blocks": [
+          "b0137"
+        ],
+        "detail": "train未调用split_with_specials，可能把注册标记内容学入普通BPE；重复train重新从原始字节训练，覆盖已有pair→ID映射而保留旧vocab。有限ababab重复训练复现ID由256改258。默认一次训练示例不触发此边界。"
+      },
+      {
+        "id": "decode-invalid-data",
+        "blocks": [
+          "b0039",
+          "b0099",
+          "b0137"
+        ],
+        "detail": "bytes(...).decode(errors=replace)不是任意二进制无损往返；无效UTF-8被替换字符，decode静默跳过未知ID，本轮[65,999999,66]→AB；输入surrogate/非str范围未由API校验。"
+      },
+      {
+        "id": "ordered-merge-and-compression-metrics",
+        "blocks": [
+          "b0125",
+          "b0137",
+          "b0157",
+          "b0159",
+          "b0171"
+        ],
+        "detail": "合并表与词表不是同一对象，合并规则依顺序/训练语料，词表更大不保证任意文本更短。token数/字节数压缩比不等同实际存储压缩率；fertility分母词定义跨语言不同，1.3/2-3不是通用固定值。"
+      },
+      {
+        "id": "vocabulary-model-version-claims",
+        "blocks": [
+          "b0019",
+          "b0063",
+          "b0079",
+          "b0151",
+          "b0157"
+        ],
+        "detail": "GPT-4/Llama3/Mistral词表规模、ChatGPT格式与任何空格偏差必错误均依具体模型版本/包装流程，未宣称为当前产品保证。源码例子与参考链接按原文保留。"
+      },
+      {
+        "id": "performance-and-scale",
+        "blocks": [
+          "b0083",
+          "b0085",
+          "b0087"
+        ],
+        "detail": "Python生产必慢、Rust固定10–100倍和1/100million每秒速率不是本轮基准；174/1.7天按假定吞吐作粗算，未运行大语料或声称实际实现达到吞吐。"
+      },
+      {
+        "id": "third-party-token-display-and-downloads",
+        "blocks": [
+          "b0153",
+          "b0155"
+        ],
+        "detail": "逐个token单独decode可能遇到不完整UTF-8字节片段，与整串decode不同；tiktoken.get_encoding和from_pretrained可能加载外部数据。非allowlist分支未加载，不安装、不联网、不下载模型或语料。"
+      },
+      {
+        "id": "artifact-and-test-boundaries",
+        "blocks": [
+          "b0091",
+          "b0163",
+          "b0167",
+          "b0175"
+        ],
+        "detail": "figure weight-tying注册名与本课分词主题关系不明确，载荷保持；没有本轮实现生产部署、聊天模板对HuggingFace验收或参考文献外部研究，5引用/3练习完整翻译。"
+      }
+    ]
+  },
+  "risk_group_counts_additive": false,
+  "actual_GitHub_GFM": {
+    "status": "PASS_REPORTED_COORDINATOR_OBSERVATION",
+    "observer": "Coordinator, dot cloud browser",
+    "draft_author_independently_browsed": false,
+    "content_commit": "c9b2dcb245712c67611a3f5a8b770272cc627029",
+    "headings": 23,
+    "tables_including_header": [
+      [
+        6,
+        3
+      ],
+      [
+        9,
+        3
+      ],
+      [
+        9,
+        3
+      ]
+    ],
+    "strong": 7,
+    "em_total": 0,
+    "unparsed_bold": 0,
+    "mermaid_count": 1,
+    "mermaid_all_pipeline_nodes_read": true,
+    "mermaid_screenshot_observed": true,
+    "new_GFM_repair": false,
+    "site_figure_interaction_accepted": false
+  },
+  "offline_site_parser": {
+    "file": "i18n/zh/phases/10-llms-from-scratch/02-building-a-tokenizer/docs/zh.md",
+    "parser_executed": true,
+    "html_bytes": 38303,
+    "tables": 3,
+    "code_blocks": 13,
+    "figures": 1,
+    "mermaid_sources": 1,
+    "empty_heading_ids": [
+      "从零构建分词器",
+      "学习目标",
+      "要解决的问题",
+      "核心概念",
+      "完整流程",
+      "预分词",
+      "聊天模板",
+      "速度",
+      "动手实现",
+      "实际使用",
+      "比较真实的分词器",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "duplicate_heading_ids": [],
+    "browser_verified": false,
+    "result": "BLOCKED_SOURCE_RENDERER"
+  },
+  "pending_or_not_passed": {
+    "final_remote_bytes": "Final remote bytes, PR metadata and CI-state are checked after evidence commit and recorded in PR completion body and single rollout index; no CI or user release pass claimed.",
+    "CI_query": "Final remote bytes, PR metadata and CI-state are checked after evidence commit and recorded in PR completion body and single rollout index; no CI or user release pass claimed.",
+    "complete_live_website": "NOT_PASSED",
+    "mobile_layout": "NOT_PASSED",
+    "interactive_site_figure": "NOT_PASSED",
+    "CI": "NOT_PASSED_NO_SUCCESS_VERIFIED",
+    "publication": "NOT_PASSED",
+    "final_acceptance": false,
+    "failing_CI_run_asserted": false
+  },
+  "reviewed_draft_snapshot": {
+    "reviewed": 55,
+    "in_progress_elsewhere": 0,
+    "unstarted": 468,
+    "total": 523
+  },
+  "coordinator_validation": {
+    "combined_original_strict": 53,
+    "S07_exact_symbolic_exception": 1,
+    "S19_exact_pipe_repair": 1,
+    "original_regressions": 33,
+    "S07_guards": 24,
+    "S19_guards": 50,
+    "all_lessons_double_replay": {
+      "count": 55,
+      "result": "byte-identical",
+      "assets": "Markdown core replays plus separately hash-verified/copied SVG assets"
+    },
+    "repository_audits": "523 lessons/67 certifications/12assessments/505questions; zeroissues; README/book counts pass",
+    "source_code_core_control_bytes": "unchanged"
+  },
+  "post_commit_verification": "Final remote bytes, PR metadata and CI-state are checked after evidence commit and recorded in PR completion body and single rollout index; no CI or user release pass claimed."
+}

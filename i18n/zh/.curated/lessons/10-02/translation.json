@@ -1,0 +1,2427 @@
+{
+  "schema_version": 1,
+  "lesson_id": "10-02",
+  "source_path": "phases/10-llms-from-scratch/02-building-a-tokenizer/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "8e2f007b9ca258b6955b4964dd6e1029926af7a9",
+  "source_sha256": "3e2af805d324028b1c673be3bebad6f17dc74ca2ffa0f1f050aa2d5d56d61da1",
+  "target_path": "i18n/zh/phases/10-llms-from-scratch/02-building-a-tokenizer/docs/zh.md",
+  "target_sha256": "a7585d89f9d36d460a61428c8f33a34c222d6858358b87ea72871a1ddf464d7e",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "10-02:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch"
+      ],
+      "ordinal": 1,
+      "source_sha256": "b47344bec7ee9c11bd379b3a0b1cc3ccdf03dbb8d4fd6c78a2506078a7c06a75",
+      "target": "# 从零构建分词器\n",
+      "target_sha256": "71f9c7b752278b310d876a7e096216150a05cf48bc453bb1d0ab0a2392a62918"
+    },
+    {
+      "segment_id": "10-02:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch"
+      ],
+      "ordinal": 2,
+      "source_sha256": "f9807cfe143bed13170c7eb7d1c4648962ccbba5c2e6ad3b07bc9839bbbb4eac",
+      "target": "> 第 01 课给了你一个玩具，这一课给你一件利器。\n",
+      "target_sha256": "614259d340c48b01b071aaef4a266432c0cf047747bdf1cb57c2f544ab4d1099"
+    },
+    {
+      "segment_id": "10-02:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch"
+      ],
+      "ordinal": 3,
+      "source_sha256": "c857450631871fcfcfa8a161dcf141cc1bf7a405671edbcc10020687872da0ad",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 10，课程 01（分词器：BPE、WordPiece、SentencePiece）\n**Time:** ~90 分钟\n",
+      "target_sha256": "c3c07b9beca40e100617e2720f9af31dd97ca5175325c8955de33c884fc2fff6"
+    },
+    {
+      "segment_id": "10-02:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "10-02:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "861e0524c14c01489ae1e044b1aa708d602fb2bdb74e521106665426d1c344e6",
+      "target": "- 构建一个生产级 BPE（字节对编码）分词器（tokenizer），处理 Unicode、空白字符规范化以及特殊 token（词元）\n- 实现字节级回退（byte-level fallback），让分词器无需未知 token 就能编码任意输入，包括 emoji、中日韩文字（CJK）和代码\n- 添加预分词（pre-tokenization）正则表达式，在应用 BPE 合并前，先按词边界切分文本\n- 在语料库上训练自定义分词器，并在多语言文本上与 tiktoken 比较，评估其压缩率\n",
+      "target_sha256": "64569e8467302fd3483e391813ec06fa18a77df79188503e4547d3cfa982b831"
+    },
+    {
+      "segment_id": "10-02:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "10-02:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "014a214de857f4a023fb0f60c98ce3ecf495333405eb9ca98476496db4791a09",
+      "target": "你在第 01 课构建的 BPE 分词器可以处理英文文本。现在把日语丢给它试试，或者 emoji，又或者混用了制表符和空格的 Python 代码。\n",
+      "target_sha256": "f8e52ef900e59963d1ac389044e01953bf9a678626f36de5beb8421398c7694e"
+    },
+    {
+      "segment_id": "10-02:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "8fd4269ff26e7fc701347c605b043f63d0803d58d6c1d23888dfac8332b95630",
+      "target": "它就出问题了。\n",
+      "target_sha256": "5405b83b620f48b82181511910c54931adae3573b95cad3cfb9c2a39754844e6"
+    },
+    {
+      "segment_id": "10-02:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "643bd697e0c2b85a520a6149ed43b646cd4871d1b215070c35e1dc699ebf41f6",
+      "target": "问题不在 BPE，而在于实现不完整。生产用的分词器要处理任意编码的原始字节，在切分前对 Unicode 做规范化，管理永不参与合并的特殊 token，将预分词与子词切分衔接起来，而且完成这一切的速度必须足够快，不能成为处理 15 trillion（万亿）个 token 的训练流程的瓶颈。\n",
+      "target_sha256": "c16430becf060b7bc1dead63089f5492d228322e0b29c669c3bba0b0760f4687"
+    },
+    {
+      "segment_id": "10-02:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "8b2f5a9ec116a1998910c1dcfb06c999ca715a6b27413af92e219c3d23955ebd",
+      "target": "GPT-2 的分词器有 50,257 个 token，Llama 3 有 128,256 个，GPT-4 则大约有 100,000 个。这些可不是玩具级的规模。这些词表背后的合并表（merge table）是在数百 gigabytes（十亿字节）文本上训练出来的，而围绕它们构建的整套机制，包括规范化、预分词、特殊 token 注入以及聊天模板（chat template）格式化，正是只能处理 \"hello world\" 的分词器与能够处理整个互联网的分词器之间的区别。\n",
+      "target_sha256": "6d0dcba8b7a83e54a9718fdf2efb2a0f9358d82cf6c248b0bd710775c0b904fc"
+    },
+    {
+      "segment_id": "10-02:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "b8b28c1e2c684ef79734af04c71b88176a04b5c4d852504280d1fe6e6d9ee6b1",
+      "target": "接下来，你就要构建这套机制。\n",
+      "target_sha256": "3f33f5f07daf2591de93cc865b7c5ede9f6e4eb9af5e6288caacf56eb60dbd55"
+    },
+    {
+      "segment_id": "10-02:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "10-02:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 13,
+      "source_sha256": "126aadfb1a731506fab738ad005f9ef601060deb5843ec5657a9aafea1904c32",
+      "target": "### 完整流程\n",
+      "target_sha256": "42c96f7bc2cb8f721073064057cb6559a46766fcb085c13fc2bdcd68f5697635"
+    },
+    {
+      "segment_id": "10-02:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 14,
+      "source_sha256": "113a228bab69226fdfa586aa90079186d745e541340baf1d59aa6e8290102a4f",
+      "target": "生产用的分词器并不是单一算法，而是由五个阶段组成的流程，每个阶段解决一种问题。\n",
+      "target_sha256": "05a2b162ab439331f21d713788175d8e325fd45af45abbefa4f19b62c8d6e947"
+    },
+    {
+      "segment_id": "10-02:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0029",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 15,
+      "source_sha256": "a60e1a76ef50094a48b657f72b0f1580e8c785eb5bcc7b42b0eb7556bf11e7e4",
+      "target": "```mermaid\ngraph LR\n    A[Raw Text] --> B[Normalize]\n    B --> C[Pre-Tokenize]\n    C --> D[BPE Merge]\n    D --> E[Special Tokens]\n    E --> F[Token IDs]\n\n    style A fill:#1a1a2e,stroke:#e94560,color:#fff\n    style B fill:#1a1a2e,stroke:#e94560,color:#fff\n    style C fill:#1a1a2e,stroke:#e94560,color:#fff\n    style D fill:#1a1a2e,stroke:#e94560,color:#fff\n    style E fill:#1a1a2e,stroke:#e94560,color:#fff\n    style F fill:#1a1a2e,stroke:#e94560,color:#fff\n```\n",
+      "target_sha256": "a60e1a76ef50094a48b657f72b0f1580e8c785eb5bcc7b42b0eb7556bf11e7e4"
+    },
+    {
+      "segment_id": "10-02:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 16,
+      "source_sha256": "4cfa91b7584161e4ea7053c76be10c0b834db34ea4a700f2e5c792d42c02a3aa",
+      "target": "每个阶段各有职责：\n",
+      "target_sha256": "64ef977f6a3902dad3c18a392cb03033ef443b5723eb851ee716c8dab4d4b8af"
+    },
+    {
+      "segment_id": "10-02:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0033",
+      "kind": "table",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 17,
+      "source_sha256": "fe36c94ac78a426abe5722c5760d606d7605430369858f84592166170e6d41eb",
+      "target": "| 阶段 | 做什么 | 为什么重要 |\n|-------|-------------|----------------|\n| 规范化 | Unicode NFKC 规范化，可选转小写、去除重音符号 | \"fi\" 连字（U+FB01）变成 \"fi\"（两个字符）。否则，同一个词会得到不同的 token。 |\n| 预分词 | 在 BPE 之前将文本切分成片段 | 防止 BPE 跨词边界合并。\"the cat\" 绝不应该产生 \"e c\" 这样的 token。 |\n| BPE 合并 | 将学到的合并规则应用到字节序列 | 压缩的核心，将原始字节变成子词 token。 |\n| 特殊 token | 插入 [BOS]、[EOS]、[PAD] 和聊天模板标记 | 这些 token 的 ID 固定，永远不参与 BPE 合并。模型需要它们来表达结构。 |\n| ID 映射 | 将 token 字符串转换为整数 ID | 模型看到的是整数，而不是字符串。 |\n",
+      "target_sha256": "ac46dfa9447256dfb9bdc75b6d29a6de523785b35d54f1a44e82c6cbad1ed25a"
+    },
+    {
+      "segment_id": "10-02:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### The Full Pipeline"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 18,
+      "source_sha256": "79c5fb7b09f779e6aaa8d0abf287f069c144b54594bd1b5742cefea22b5f3e41",
+      "target": "### 字节级 BPE\n",
+      "target_sha256": "d9637ddc33c39eb82ae3168eb22003d97fd428867633ed7601aa1bb336fba5dc"
+    },
+    {
+      "segment_id": "10-02:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 19,
+      "source_sha256": "ba3619c2de64e96b11cc1f626bfec49e4c8986a01fc96c264a943c6417484b33",
+      "target": "第 01 课的分词器处理的是 UTF-8 字节，这个选择是正确的。但我们略过了一个重要问题：如果这些字节不是有效的 UTF-8，会发生什么？\n",
+      "target_sha256": "cbcec8a445beb4670560b57e79e6a649cdf05030a651085a9338c271bbf16ab2"
+    },
+    {
+      "segment_id": "10-02:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 20,
+      "source_sha256": "6bf4fdc9b3ddf8820b5f1834832502888a7fe8c82c01996eab0e856d9a9e1e78",
+      "target": "字节级 BPE 将所有可能的字节值（0-255）都视为有效 token，从而解决这个问题。基础词表恰好包含 256 个条目。任何文件，无论是文本、二进制文件还是损坏的文件，都可以在不产生未知 token 的情况下完成分词。\n",
+      "target_sha256": "f751cbaa1a3e70a829ddafd867128cdb9516f80ded27c1fef5c944bac55b41cc"
+    },
+    {
+      "segment_id": "10-02:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 21,
+      "source_sha256": "e8e194f96174c7af978ed58ea70920cef0a7bb428f38efee258dc1cc24f08650",
+      "target": "GPT-2 加了一个技巧：将每个字节映射为可打印的 Unicode 字符，让词表保持可读。在它的映射中，字节 0x20（空格）会变成字符 \"G\"。这只是显示层面的处理，算法并不在意。\n",
+      "target_sha256": "76bb6268d47c78d3dd269f51152aec3ab2f2953bbc802e969d5e5fd971f322dc"
+    },
+    {
+      "segment_id": "10-02:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 22,
+      "source_sha256": "002626211688e5995443415c572fdb863225fc21d6348a70d0e529e836dbc37a",
+      "target": "真正强大之处在于：字节级 BPE 能处理地球上的每一种语言。汉字每个占 3 个 UTF-8 字节，日文字符可能占 3-4 个字节。阿拉伯文字、天城文、emoji，全都是字节序列。BPE 算法在这些字节序列中寻找模式的方式，与它在英文 ASCII 字节中寻找模式的方式完全相同。\n",
+      "target_sha256": "f68f1b617e9c46fe2a921c7580f436cd3099e42dc9e65a65aba51eecd157cb3e"
+    },
+    {
+      "segment_id": "10-02:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Byte-Level BPE"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 23,
+      "source_sha256": "29a810c2da2482b10f213782a02f97c0334ea6643a020a19691470a0ac6f40c0",
+      "target": "### 预分词\n",
+      "target_sha256": "36915305feda7eeedb8fee9509aa09853ca235b40160974c9bdcf2c8195a54d7"
+    },
+    {
+      "segment_id": "10-02:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 24,
+      "source_sha256": "320104196ed40833c878292783bdbf876bb5377f74e77317b6bce733b9f16bf1",
+      "target": "在 BPE 处理文本之前，你需要先将文本切分成片段。这样可以防止合并算法创建跨词边界的 token。\n",
+      "target_sha256": "13329d6e6342ad9d32658c75d303098954b8047cefa558b6c1a4df558cae3809"
+    },
+    {
+      "segment_id": "10-02:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 25,
+      "source_sha256": "2096f145dea1622bc31f3a64e886f7db48ef7dfbe60bb137edb31d176dd03589",
+      "target": "GPT-2 使用一个正则表达式来切分文本：\n",
+      "target_sha256": "18e8a1e898bc976324817dce6b5c836ab6a1b3bef0ff7beee50e27864d519985"
+    },
+    {
+      "segment_id": "10-02:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 26,
+      "source_sha256": "b6452e2ab5c18e8473e54cbd11ed682f1351b08a5eef98bf6123e5601505baf5",
+      "target": "```text\n'(?:[sdmt]|ll|ve|re)| ?\\p{L}+| ?\\p{N}+| ?[^\\s\\p{L}\\p{N}]+|\\s+(?!\\S)|\\s+\n```\n",
+      "target_sha256": "82108434a78c2243e1e39bac030235b96f72387e81dc7cc6d082055286e7f2ac"
+    },
+    {
+      "segment_id": "10-02:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 27,
+      "source_sha256": "4dbf284b3c34a0a36a09990d31d107cc315f757d83584e728bf5e5732f4141e2",
+      "target": "这个表达式会切分缩约词（\"don't\" 变为 \"don\" + \"'t\"）、可带前导空格的单词、数字、标点和空白字符。前导空格会与单词保留在一起，因此 \"the cat\" 会变成 [\" the\", \" cat\"]，而不是 [\"the\", \" \", \"cat\"]。\n",
+      "target_sha256": "e04f786c17666b599fc17ade2923af2865c6d491533f5ce7a52d4d859e1b895c"
+    },
+    {
+      "segment_id": "10-02:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 28,
+      "source_sha256": "a503699af566223cd4fbd111fef69caa395f810c3dde905db7f0a2256e27cd06",
+      "target": "Llama 使用 SentencePiece（分词库），完全跳过正则表达式。它把原始字节流当作一条长序列，让 BPE 算法自行确定边界。这样更简单，但也让 BPE 有更大的自由度来创建跨词 token。\n",
+      "target_sha256": "0fd8476d5a4a497c9a94bfc70750245c7d0bd2cf5612374ecd3fa1d3162912f6"
+    },
+    {
+      "segment_id": "10-02:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 29,
+      "source_sha256": "6a1da5ff560679635fde1aabd1bf43d9ab0537f16951e510e141da13a3aa3c3a",
+      "target": "这种选择很重要。GPT-2 的正则表达式会阻止分词器学到这样的合并：把一个词末尾的 \"the\" 与下一个词开头的 \"the\" 合在一起。SentencePiece 则允许这样做，有时能带来更高效的压缩，但 token 也会更难解释。\n",
+      "target_sha256": "6d4523098bf8421de4de7d607e26b04c8c7da8648498a2ca11fa8cda9beadf0d"
+    },
+    {
+      "segment_id": "10-02:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Pre-Tokenization"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Special Tokens"
+      ],
+      "ordinal": 30,
+      "source_sha256": "166d860fdc85d425a4b900a60ced31cac65f02b4bdf56f54fc329bfdbba006d9",
+      "target": "### 特殊 token\n",
+      "target_sha256": "7b43a7cd17c326228d9dfb5c5613ee384a771b169ca9f6262c76cf861fdec07c"
+    },
+    {
+      "segment_id": "10-02:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Special Tokens"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Special Tokens"
+      ],
+      "ordinal": 31,
+      "source_sha256": "33c202a237e6f603cbb5abe32d83a8405e0fb5753b0c7dcddc20bf1ee517ef74",
+      "target": "每个生产用的分词器都会为结构标记预留 token ID：\n",
+      "target_sha256": "b8bcba63296f4fcf8ba05996b221494306e8eab9e75fb6c62a17a6b3ca4c1299"
+    },
+    {
+      "segment_id": "10-02:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Special Tokens"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0063",
+      "kind": "table",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Special Tokens"
+      ],
+      "ordinal": 32,
+      "source_sha256": "d6de5e5c6ce2f2ddadb6044a053e00ca3600083df133f1e46f2dc9069ada3153",
+      "target": "| token | 用途 | 使用者 |\n|-------|---------|---------|\n| `[BOS]` / `<s>` | 序列起始 | Llama 3、GPT |\n| `[EOS]` / `</s>` | 序列结束 | 所有模型 |\n| `[PAD]` | 用于批次对齐的填充 | BERT、T5 |\n| `[UNK]` | 未知 token（字节级 BPE 无需使用它） | BERT、WordPiece |\n| `<\\|im_start\\|>` | 聊天消息边界的起始 | ChatGPT、Qwen |\n| `<\\|im_end\\|>` | 聊天消息边界的结束 | ChatGPT、Qwen |\n| `<\\|user\\|>` | 用户回合标记 | Llama 3 |\n| `<\\|assistant\\|>` | 助手回合标记 | Llama 3 |\n",
+      "target_sha256": "e92db02ffb403d9d40eae625c65d912fba95605943ea343945a7a75d1297f1af"
+    },
+    {
+      "segment_id": "10-02:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Special Tokens"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Special Tokens"
+      ],
+      "ordinal": 33,
+      "source_sha256": "dbfcc5fa42ed0ff445c4942c171c676d25cf8ac3232269ea75766a38218eddb8",
+      "target": "特殊 token 永远不会被 BPE 拆分。合并算法运行之前，会先精确匹配它们，将其替换为固定 ID，再对周围的文本正常分词。\n",
+      "target_sha256": "74c189d6560bb751c25feed4c3ae21ec2c54bdedc0f766da10ed7d9f9cdad932"
+    },
+    {
+      "segment_id": "10-02:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Special Tokens"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 34,
+      "source_sha256": "033c3317f1bc186f1996a5e67009d0c0950fbb82ba1ba29c0ad434b1149cb5cb",
+      "target": "### 聊天模板\n",
+      "target_sha256": "48631ac7bbc15fe3ba6ef40b56e4e569e8dcc6d5811ac7592f12ea427e4e75db"
+    },
+    {
+      "segment_id": "10-02:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 35,
+      "source_sha256": "459d3541a255f35477e28d1d2cce8b169e6d0d4c51b6f2898be83ffbb220b141",
+      "target": "这是大多数人感到困惑、也是大多数实现出错的地方。\n",
+      "target_sha256": "593100577cd610ade6029dbe21d8833509bc8ee864f05d39acb5f5d691714299"
+    },
+    {
+      "segment_id": "10-02:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 36,
+      "source_sha256": "f373eb6eedf9782ae3f234468a2bc450d96b18c67026ad857b38e4225be5b830",
+      "target": "向聊天模型发送消息时，API（应用程序编程接口）接收的是一个消息列表：\n",
+      "target_sha256": "47f9ed7b79e33748dec69e3be718dfc4ed8ebca256b42df4f366d7bad7d4c643"
+    },
+    {
+      "segment_id": "10-02:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 37,
+      "source_sha256": "54f31c72f3288f40e5a40c83d26ea86123e64ae21e0ee9373bf76e33d4c305d8",
+      "target": "```text\n[\n  {\"role\": \"system\", \"content\": \"You are helpful.\"},\n  {\"role\": \"user\", \"content\": \"Hello\"},\n  {\"role\": \"assistant\", \"content\": \"Hi there!\"}\n]\n```\n",
+      "target_sha256": "8a9a3a6eb582e7614e6e6b366f19683a09b5612ee85c496dfaa345d971b9f42d"
+    },
+    {
+      "segment_id": "10-02:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 38,
+      "source_sha256": "f3bac9bdd1983cdb48df8552bb0ce8174e25ac29d7598b7d6e0644bc5cd4e322",
+      "target": "模型看到的不是 JSON，而是一条平铺的 token 序列。聊天模板借助特殊 token，将消息转换成这样的序列。每个模型的做法都不一样：\n",
+      "target_sha256": "a8c0e2404cf340e06530f46812be3e28b66407a7ea4d6f4a30eacbe63c82dbdc"
+    },
+    {
+      "segment_id": "10-02:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0077",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 39,
+      "source_sha256": "82fa1ad4e3cdfa7163256580017030096cc61a2c85ded21e86e7baff0ada2341",
+      "target": "```text\nLlama 3:\n<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nYou are helpful.<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nHello<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\nHi there!<|eot_id|>\n\nChatGPT:\n<|im_start|>system\nYou are helpful.<|im_end|>\n<|im_start|>user\nHello<|im_end|>\n<|im_start|>assistant\nHi there!<|im_end|>\n```\n",
+      "target_sha256": "81294f893b5f7f9cfb418eeeccc28bd49a42d97ff6d57120dd7dbef7603c7aeb"
+    },
+    {
+      "segment_id": "10-02:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 40,
+      "source_sha256": "ad39e15c72df41d243f473e274ef992b18bcbb1002d07f21cb62ee223dd6d007",
+      "target": "模板弄错了，模型就会输出糟糕的结果。它训练时使用的是一个精确的格式。任何偏差，无论是少了一个换行、调换了一个 token，还是多了一个空格，都会让输入偏离训练分布。\n",
+      "target_sha256": "46bd7843c8c39d4b28dabaf1d8cab5dc8f459e3661d21fe98abf5f5b86102448"
+    },
+    {
+      "segment_id": "10-02:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Chat Templates"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 41,
+      "source_sha256": "cda4ca01d407f730f0adf7d4e09910ace3ab0234747d460d72de0dfc08d7bfaa",
+      "target": "### 速度\n",
+      "target_sha256": "1ea801b8a545f540cf8b7c815a7f152704ec2db0cb5a5383bf0f6f03920e1c70"
+    },
+    {
+      "segment_id": "10-02:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 42,
+      "source_sha256": "bea0a92d0b6497fcf7ad458072d99fc8d37ddfcb8b6db4ed0b411ef41e37786f",
+      "target": "对于生产环境中的分词，Python 太慢了。\n",
+      "target_sha256": "70d7756650b98f91cab4b02fccbb802ab58fb25a6cba1968ea4c860f1c0d1f4f"
+    },
+    {
+      "segment_id": "10-02:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 43,
+      "source_sha256": "d0e8f2aae55cbb7b80e78c1a8151b1ac4657b5bd920a04832ac492b71ee2eac3",
+      "target": "tiktoken（OpenAI）用 Rust 编写，并提供 Python 绑定。HuggingFace tokenizers 也用 Rust 编写，SentencePiece 则使用 C++。它们相对纯 Python 实现可获得 10-100 倍的加速。\n",
+      "target_sha256": "870199c8a950c4de69d3e2288c7b5f0ef02c9b90aee204baa2b8e9454d852185"
+    },
+    {
+      "segment_id": "10-02:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 44,
+      "source_sha256": "02aff94da69bae1f99afc51659d66e149c4dd68d048a6dfb809552174020cc9d",
+      "target": "举个规模上的例子：为 Llama 3 预训练对 15 trillion（万亿）个 token 做分词，若每秒处理 1 million（百万）个 token（较快的 Python 实现），需要 174 天；若每秒处理 100 million（百万）个 token（Rust 实现），则需要 1.7 天。\n",
+      "target_sha256": "575151014a3ea4f6432ca0edf07d84d7aa412c98762065cf59debd24c8f5de80"
+    },
+    {
+      "segment_id": "10-02:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 45,
+      "source_sha256": "8eb0c45e2d525b8aa080466b5f81d3dc6ba4cce20903efc287e5d02197480e86",
+      "target": "你用 Python 构建分词器，是为了理解算法。在生产环境中，你会使用编译型实现，只通过它的 Python 封装层操作。\n",
+      "target_sha256": "425e407ca55158bdb5fa7cf5354428e201f71a02012de4b2ca7de8251e722e3a"
+    },
+    {
+      "segment_id": "10-02:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0091",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 46,
+      "source_sha256": "ddac949591692ac5a4cdfb20bfd789522edb120107dda470f9c97b259092e5e0",
+      "target": "```figure\nweight-tying\n```\n",
+      "target_sha256": "ddac949591692ac5a4cdfb20bfd789522edb120107dda470f9c97b259092e5e0"
+    },
+    {
+      "segment_id": "10-02:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## The Concept",
+        "### Speed"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "10-02:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 48,
+      "source_sha256": "66d278bcf1f875225ef51de5f98bba243819f9b1364bdea4853182e06e307a41",
+      "target": "### 步骤 1：字节级编码\n",
+      "target_sha256": "2fb23156b1b1b6fefce4da35507e5b0eaf86acd02e01b4c936518b9022032358"
+    },
+    {
+      "segment_id": "10-02:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 49,
+      "source_sha256": "f44db8c9f935f221b48bbffd1ed7154b230626c4050cf9fa90ee4ca691d333ef",
+      "target": "先打好基础：将任意字符串转换为字节序列，将每个字节映射为可打印字符以供显示，再反向还原。\n",
+      "target_sha256": "03570859af30c1a209665b748e3e9d76215afa6ec154aa4f5b33b869da10d090"
+    },
+    {
+      "segment_id": "10-02:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 50,
+      "source_sha256": "0d120301516eff76638301a781ae8f510a4212e0fe8496d63c471bebd94848de",
+      "target": "```python\ndef bytes_to_tokens(text):\n    return list(text.encode(\"utf-8\"))\n\ndef tokens_to_text(token_bytes):\n    return bytes(token_bytes).decode(\"utf-8\", errors=\"replace\")\n```\n",
+      "target_sha256": "0d120301516eff76638301a781ae8f510a4212e0fe8496d63c471bebd94848de"
+    },
+    {
+      "segment_id": "10-02:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 51,
+      "source_sha256": "a9e7544faf043bcf8ef43683c0a7bc2d1a2eda4801af5b9fa817b0d1a05b72f0",
+      "target": "用多语言文本测试，观察字节数量：\n",
+      "target_sha256": "416e2de58c848717100292ca358ad31ef429e40a62e74a4c0be70bd3fdb42f8a"
+    },
+    {
+      "segment_id": "10-02:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 52,
+      "source_sha256": "8772bbf084cb6456aca684c5e814a3c6200b1fe26bbaa8b2ea3a14a713bb6855",
+      "target": "```python\ntexts = [\n    (\"English\", \"hello\"),\n    (\"Chinese\", \"你好\"),\n    (\"Emoji\", \"🔥\"),\n    (\"Mixed\", \"hello你好🔥\"),\n]\n\nfor label, text in texts:\n    b = bytes_to_tokens(text)\n    print(f\"{label}: {len(text)} chars -> {len(b)} bytes -> {b}\")\n```\n",
+      "target_sha256": "8772bbf084cb6456aca684c5e814a3c6200b1fe26bbaa8b2ea3a14a713bb6855"
+    },
+    {
+      "segment_id": "10-02:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 53,
+      "source_sha256": "6295f77cbbc1b22c3b321edf90ba0899532540ba383e67b6da8adcfdb3bb8ce5",
+      "target": "\"hello\" 是 5 个字节，\"你好\" 是 6 个字节（每个字符 3 个），火焰 emoji 是 4 个字节。字节级分词器并不关心文本属于哪种语言，字节就是字节。\n",
+      "target_sha256": "90527f169aee3b0c7f6a612a13432d3c1b840beccfbbddb0427036f6e6ba99ff"
+    },
+    {
+      "segment_id": "10-02:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 1: Byte-Level Encoding"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 54,
+      "source_sha256": "b4528486fdb753b8e836113fb1a03a102d0436a76326949526aa8eb28def6dc5",
+      "target": "### 步骤 2：用正则表达式构建预分词器\n",
+      "target_sha256": "f3002e8a40a96575bed3199731bfa0a04827d89289266b58c2c79e78554cdb33"
+    },
+    {
+      "segment_id": "10-02:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 55,
+      "source_sha256": "bf6e6a10839b6cd0fb8b4e942246b5312418db6b66a413e58f80d68692948307",
+      "target": "使用 GPT-2 的正则表达式将文本切分成片段，再由 BPE 独立处理每个片段。\n",
+      "target_sha256": "bee6999c3a935ba3846132b6ecb1bf5f024f01465e1e3ce119b9acf950fe9309"
+    },
+    {
+      "segment_id": "10-02:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0111",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 56,
+      "source_sha256": "8d7fe141f4560c1fcd7368fb1f4296ce0b4eae1539ea3139d19143e06a9c2ab6",
+      "target": "```python\nimport re\n\ntry:\n    import regex\n    GPT2_PATTERN = regex.compile(\n        r\"\"\"'(?:[sdmt]|ll|ve|re)| ?\\p{L}+| ?\\p{N}+| ?[^\\s\\p{L}\\p{N}]+|\\s+(?!\\S)|\\s+\"\"\"\n    )\nexcept ImportError:\n    GPT2_PATTERN = re.compile(\n        r\"\"\"'(?:[sdmt]|ll|ve|re)| ?[a-zA-Z]+| ?[0-9]+| ?[^\\s\\w]+|\\s+(?!\\S)|\\s+\"\"\"\n    )\n\ndef pre_tokenize(text):\n    return [match.group() for match in GPT2_PATTERN.finditer(text)]\n```\n",
+      "target_sha256": "8d7fe141f4560c1fcd7368fb1f4296ce0b4eae1539ea3139d19143e06a9c2ab6"
+    },
+    {
+      "segment_id": "10-02:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 57,
+      "source_sha256": "31b0db1bee02c9664ba46433c98f322cd2191cd9a9ee0cea6d7c9865b34e61dd",
+      "target": "`regex` 模块支持 Unicode 属性转义（`\\p{L}` 表示字母，`\\p{N}` 表示数字）。标准库的 `re` 模块不支持，因此这里回退到 ASCII 字符类。对于生产环境中的多语言分词器，请安装 `regex`。\n",
+      "target_sha256": "7dd2006678d49cde9921359c6954eead7b8fce6a431df19fa72cc6947ff5ca17"
+    },
+    {
+      "segment_id": "10-02:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 58,
+      "source_sha256": "ae8a1918f8deda4582e5709c65ffcb1183a33bde74b2842940dee4de5caa2cb9",
+      "target": "试一试：\n",
+      "target_sha256": "a8e4a8859fbaf88e141160365d9f4c028a7a3d12689d7f4551a0d4fb91f2b52d"
+    },
+    {
+      "segment_id": "10-02:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0117",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 59,
+      "source_sha256": "379fb1ffd9269c1f28e781499546c8992ceacf92405db0fa8071121a79fae21a",
+      "target": "```python\nprint(pre_tokenize(\"Hello, world! Don't stop.\"))\n# [' Hello', ',', ' world', '!', \" Don\", \"'t\", ' stop', '.']\n```\n",
+      "target_sha256": "379fb1ffd9269c1f28e781499546c8992ceacf92405db0fa8071121a79fae21a"
+    },
+    {
+      "segment_id": "10-02:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 60,
+      "source_sha256": "18d3a616b886f32e400b663ea4e8a7a831c0e43702986eadf9da4a03d053f06d",
+      "target": "前导空格仍与单词保留在一起，缩约词在撇号处切开，标点则成为单独的片段。BPE 永远不会跨越这些边界合并 token。\n",
+      "target_sha256": "db96eeb2cc25759734677b82b93da1ec074b0389a37001ac5b59fc460453567e"
+    },
+    {
+      "segment_id": "10-02:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 2: Pre-Tokenizer with Regex"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 3: BPE on Byte Sequences"
+      ],
+      "ordinal": 61,
+      "source_sha256": "808ff9c7c9ee3207bcea0c508242397a2f7dbf3d47d00a26d93909845a06bb48",
+      "target": "### 步骤 3：对字节序列执行 BPE\n",
+      "target_sha256": "37b8ab2754aa32ca805d81732b752c2270b8cd69b69b5767c29cda2efd830cd5"
+    },
+    {
+      "segment_id": "10-02:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 3: BPE on Byte Sequences"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 3: BPE on Byte Sequences"
+      ],
+      "ordinal": 62,
+      "source_sha256": "423e8afc4568d7a507f328fa9b342ea46b93a0b967860a29af32754482e325a9",
+      "target": "核心算法与第 01 课相同，但现在会独立处理预分词得到的各个片段。\n",
+      "target_sha256": "2528eaaa98dd0b5ba12675fa75229aa5702224d67ed810426a1d7b90a341d031"
+    },
+    {
+      "segment_id": "10-02:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 3: BPE on Byte Sequences"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0125",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 3: BPE on Byte Sequences"
+      ],
+      "ordinal": 63,
+      "source_sha256": "b6466a0e26436eec29a58bf57cc73a81df3df7e550fccac2e6b2af0fe656e538",
+      "target": "```python\nfrom collections import Counter\n\ndef get_byte_pairs(chunks):\n    pairs = Counter()\n    for chunk in chunks:\n        byte_seq = list(chunk.encode(\"utf-8\"))\n        for i in range(len(byte_seq) - 1):\n            pairs[(byte_seq[i], byte_seq[i + 1])] += 1\n    return pairs\n\ndef apply_merge(byte_seq, pair, new_id):\n    merged = []\n    i = 0\n    while i < len(byte_seq):\n        if i < len(byte_seq) - 1 and byte_seq[i] == pair[0] and byte_seq[i + 1] == pair[1]:\n            merged.append(new_id)\n            i += 2\n        else:\n            merged.append(byte_seq[i])\n            i += 1\n    return merged\n```\n",
+      "target_sha256": "b6466a0e26436eec29a58bf57cc73a81df3df7e550fccac2e6b2af0fe656e538"
+    },
+    {
+      "segment_id": "10-02:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 3: BPE on Byte Sequences"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0127",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 4: Special Token Handling"
+      ],
+      "ordinal": 64,
+      "source_sha256": "a3cf1849032ef34357e9ed5f8122efa83a2d38aceb963840adfc4d37092d69ca",
+      "target": "### 步骤 4：处理特殊 token\n",
+      "target_sha256": "c27ce7626fce6ff4593006d5144f74fa7029fe6c886861fa074a6d08363d86f5"
+    },
+    {
+      "segment_id": "10-02:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 4: Special Token Handling"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 4: Special Token Handling"
+      ],
+      "ordinal": 65,
+      "source_sha256": "c1492d27567866659ca459a70142ebe38d5c39f56ece3b9c3cd41155d1b9fd46",
+      "target": "特殊 token 需要精确匹配和固定 ID。它们完全绕过 BPE。\n",
+      "target_sha256": "236c28b7d3e5015a11ff4399290ccb841fab7b95aec4a489396daf7cb2cfde7b"
+    },
+    {
+      "segment_id": "10-02:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 4: Special Token Handling"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0131",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 4: Special Token Handling"
+      ],
+      "ordinal": 66,
+      "source_sha256": "ceae147453aa23160aa8a2ea2ad9120120a4deaedbf5cf6a5982600d2629d6e2",
+      "target": "```python\nclass SpecialTokenHandler:\n    def __init__(self):\n        self.special_tokens = {}\n        self.pattern = None\n\n    def add_token(self, token_str, token_id):\n        self.special_tokens[token_str] = token_id\n        escaped = [re.escape(t) for t in sorted(self.special_tokens.keys(), key=len, reverse=True)]\n        self.pattern = re.compile(\"|\".join(escaped))\n\n    def split_with_specials(self, text):\n        if not self.pattern:\n            return [(text, False)]\n        parts = []\n        last_end = 0\n        for match in self.pattern.finditer(text):\n            if match.start() > last_end:\n                parts.append((text[last_end:match.start()], False))\n            parts.append((match.group(), True))\n            last_end = match.end()\n        if last_end < len(text):\n            parts.append((text[last_end:], False))\n        return parts\n```\n",
+      "target_sha256": "ceae147453aa23160aa8a2ea2ad9120120a4deaedbf5cf6a5982600d2629d6e2"
+    },
+    {
+      "segment_id": "10-02:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 4: Special Token Handling"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0133",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 5: Full Tokenizer Class"
+      ],
+      "ordinal": 67,
+      "source_sha256": "bd60a693558ce819eb6e15e7d93bafafd5f004b9c9f19ecc1b6cd9831783bdfe",
+      "target": "### 步骤 5：完整的分词器类\n",
+      "target_sha256": "b759b99287bdfd463681e27254fb84301c44b4c7a33398721d8db4aa58d24595"
+    },
+    {
+      "segment_id": "10-02:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 5: Full Tokenizer Class"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0135",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 5: Full Tokenizer Class"
+      ],
+      "ordinal": 68,
+      "source_sha256": "6d3c35087d6a9733ddca513d51ff891c6610fd465ad5895d40e06237f1665345",
+      "target": "将各部分衔接起来：规范化、按特殊 token 切分、预分词、BPE 合并，再映射为 ID。\n",
+      "target_sha256": "f6bfea553cc1287b58f59c7efc4a3c6e846610b840372c61a80eae72cd0eaec2"
+    },
+    {
+      "segment_id": "10-02:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 5: Full Tokenizer Class"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0137",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 5: Full Tokenizer Class"
+      ],
+      "ordinal": 69,
+      "source_sha256": "aafc45f0db2a9320c6dc811cbb9c5a58d76c4e98da3bc8da4064812ef75ebdd5",
+      "target": "```python\nimport unicodedata\n\nclass ProductionTokenizer:\n    def __init__(self):\n        self.merges = {}\n        self.vocab = {i: bytes([i]) for i in range(256)}\n        self.special_handler = SpecialTokenHandler()\n        self.next_id = 256\n\n    def normalize(self, text):\n        return unicodedata.normalize(\"NFKC\", text)\n\n    def train(self, text, num_merges):\n        text = self.normalize(text)\n        chunks = pre_tokenize(text)\n        chunk_bytes = [list(chunk.encode(\"utf-8\")) for chunk in chunks]\n\n        for i in range(num_merges):\n            pairs = Counter()\n            for seq in chunk_bytes:\n                for j in range(len(seq) - 1):\n                    pairs[(seq[j], seq[j + 1])] += 1\n            if not pairs:\n                break\n            best = max(pairs, key=pairs.get)\n            new_id = self.next_id\n            self.next_id += 1\n            self.merges[best] = new_id\n            self.vocab[new_id] = self.vocab[best[0]] + self.vocab[best[1]]\n            chunk_bytes = [apply_merge(seq, best, new_id) for seq in chunk_bytes]\n\n    def add_special_token(self, token_str):\n        token_id = self.next_id\n        self.next_id += 1\n        self.special_handler.add_token(token_str, token_id)\n        self.vocab[token_id] = token_str.encode(\"utf-8\")\n        return token_id\n\n    def encode(self, text):\n        text = self.normalize(text)\n        parts = self.special_handler.split_with_specials(text)\n        all_ids = []\n        for part_text, is_special in parts:\n            if is_special:\n                all_ids.append(self.special_handler.special_tokens[part_text])\n            else:\n                for chunk in pre_tokenize(part_text):\n                    byte_seq = list(chunk.encode(\"utf-8\"))\n                    for pair, new_id in self.merges.items():\n                        byte_seq = apply_merge(byte_seq, pair, new_id)\n                    all_ids.extend(byte_seq)\n        return all_ids\n\n    def decode(self, ids):\n        byte_parts = []\n        for token_id in ids:\n            if token_id in self.vocab:\n                byte_parts.append(self.vocab[token_id])\n        return b\"\".join(byte_parts).decode(\"utf-8\", errors=\"replace\")\n\n    def vocab_size(self):\n        return len(self.vocab)\n```\n",
+      "target_sha256": "aafc45f0db2a9320c6dc811cbb9c5a58d76c4e98da3bc8da4064812ef75ebdd5"
+    },
+    {
+      "segment_id": "10-02:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 5: Full Tokenizer Class"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0139",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 6: Multilingual Test"
+      ],
+      "ordinal": 70,
+      "source_sha256": "8c0010f3b178154163e6106b9915a60e80916d57df30aff3f9f6df8ca0de1558",
+      "target": "### 步骤 6：多语言测试\n",
+      "target_sha256": "5732c9c305c04a870c314eecd33899628f99f27b9d59203fc846ad25b76783aa"
+    },
+    {
+      "segment_id": "10-02:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 6: Multilingual Test"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0141",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 6: Multilingual Test"
+      ],
+      "ordinal": 71,
+      "source_sha256": "fd9855602ddb29bb9c8a57941381fa98dcaa41d359b894ea8f47aca8d9ec5259",
+      "target": "真正的考验来了：把英文、中文、emoji 和代码都交给它。\n",
+      "target_sha256": "33149d8b05fa9098dfea2269901b7fa7aa94420bbf6889bcf00961fbfff5618a"
+    },
+    {
+      "segment_id": "10-02:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 6: Multilingual Test"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0143",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 6: Multilingual Test"
+      ],
+      "ordinal": 72,
+      "source_sha256": "1a08f7e250efe5be0c779b11de58f86cc563dd13ae95a1c270b601259a8cd990",
+      "target": "```python\ncorpus = (\n    \"The quick brown fox jumps over the lazy dog. \"\n    \"The quick brown fox runs through the forest. \"\n    \"Machine learning models process natural language. \"\n    \"Deep learning transforms how we build software. \"\n    \"def train(model, data): return model.fit(data) \"\n    \"def predict(model, x): return model(x) \"\n)\n\ntok = ProductionTokenizer()\ntok.train(corpus, num_merges=50)\n\nbos = tok.add_special_token(\"<|begin|>\")\neos = tok.add_special_token(\"<|end|>\")\n\ntest_texts = [\n    \"The quick brown fox.\",\n    \"你好世界\",\n    \"Hello 🌍 World\",\n    \"def foo(x): return x + 1\",\n    f\"<|begin|>Hello<|end|>\",\n]\n\nfor text in test_texts:\n    ids = tok.encode(text)\n    decoded = tok.decode(ids)\n    print(f\"Input:   {text}\")\n    print(f\"Tokens:  {len(ids)} ids\")\n    print(f\"Decoded: {decoded}\")\n    print()\n```\n",
+      "target_sha256": "1a08f7e250efe5be0c779b11de58f86cc563dd13ae95a1c270b601259a8cd990"
+    },
+    {
+      "segment_id": "10-02:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 6: Multilingual Test"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0145",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 6: Multilingual Test"
+      ],
+      "ordinal": 73,
+      "source_sha256": "0e005d3c8e11e19739cf1faaa466177f4b764f16a4b79d0f6fa6c2784e9df43f",
+      "target": "每个汉字会产生 3 个字节，这个 emoji 会产生 4 个字节。它们都不会让分词器崩溃，也都不会产生未知 token。这就是字节级 BPE 的力量。\n",
+      "target_sha256": "29bddc86771c15bfc9ab040c4752a37a587d072d587528a1e472f1de437df8b0"
+    },
+    {
+      "segment_id": "10-02:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Build It",
+        "### Step 6: Multilingual Test"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "10-02:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0149",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 75,
+      "source_sha256": "6a53f45d22c930d01caa0c3f6e0149754af74207069e62b22931415165fb42e6",
+      "target": "### 比较真实的分词器\n",
+      "target_sha256": "26177a36981ce72587a20052950723174a69586e9740cf4c33ebf8a70bd00745"
+    },
+    {
+      "segment_id": "10-02:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 76,
+      "source_sha256": "249e324e4f8b16a5bc32bd327b23cb14541cc24dd67da5ffac607b00a7b32268",
+      "target": "加载 Llama 3、GPT-4 和 Mistral 实际使用的分词器，看看它们各自如何处理同一段多语言文本。\n",
+      "target_sha256": "b7062d4ec45bd67539890be7ae0900c9ab7f4e9cd480ba3d5244bb0c37a80f10"
+    },
+    {
+      "segment_id": "10-02:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0153",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 77,
+      "source_sha256": "614ebb9044c28fa827e172b8c97b63626ced31e0e5691e63dd1cde2a7552e6ed",
+      "target": "```python\nimport tiktoken\n\ngpt4_enc = tiktoken.get_encoding(\"cl100k_base\")\n\ntest_paragraph = \"Machine learning is powerful. 机器学习很强大。 L'apprentissage automatique est puissant. 🤖💪\"\n\ntokens = gpt4_enc.encode(test_paragraph)\npieces = [gpt4_enc.decode([t]) for t in tokens]\nprint(f\"GPT-4 ({len(tokens)} tokens): {pieces}\")\n```\n",
+      "target_sha256": "614ebb9044c28fa827e172b8c97b63626ced31e0e5691e63dd1cde2a7552e6ed"
+    },
+    {
+      "segment_id": "10-02:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0155",
+      "kind": "fence",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 78,
+      "source_sha256": "1368072dba514dcc271fdb30f769e69d093b01ffead692921b14d97ed1bcc279",
+      "target": "```python\nfrom transformers import AutoTokenizer\n\nllama_tok = AutoTokenizer.from_pretrained(\"meta-llama/Meta-Llama-3-8B\")\nmistral_tok = AutoTokenizer.from_pretrained(\"mistralai/Mistral-7B-v0.1\")\n\nfor name, tok in [(\"Llama 3\", llama_tok), (\"Mistral\", mistral_tok)]:\n    tokens = tok.encode(test_paragraph)\n    pieces = tok.convert_ids_to_tokens(tokens)\n    print(f\"{name} ({len(tokens)} tokens): {pieces[:20]}...\")\n```\n",
+      "target_sha256": "1368072dba514dcc271fdb30f769e69d093b01ffead692921b14d97ed1bcc279"
+    },
+    {
+      "segment_id": "10-02:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 79,
+      "source_sha256": "0a8872bd28487dc0b57b4af6a66cc5965869c7600794bab7a5448e36ef1136c5",
+      "target": "同一段文本会得到不同的 token 数。Llama 3 的词表规模为 128K，会更积极地合并常见模式；GPT-4 的词表规模为 100K，处于中间；Mistral 的词表规模为 32K，产生的 token 更多，但嵌入层也更小。\n",
+      "target_sha256": "8dd7817ebe3d50281b127c8f4f6dede5749ac61439052ef613796a26e81a04a6"
+    },
+    {
+      "segment_id": "10-02:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0159",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 80,
+      "source_sha256": "38e63e373fc8c6ad2ce0a4cdb5b29e9aa6d7bf246be9d0da53a47b7839c7a270",
+      "target": "取舍始终相同：词表越大，序列越短，但参数也越多。\n",
+      "target_sha256": "3e1ffca087fdb51a5a7a7e563de2dc63ae7bd335edef706ab607a102196dccc8"
+    },
+    {
+      "segment_id": "10-02:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Use It",
+        "### Comparing Real Tokenizers"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0161",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "10-02:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0163",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 82,
+      "source_sha256": "c61c07846ae6244a1dfdb29c4c46310197ec3fe776baf5cee1d56a52278217d3",
+      "target": "本课产出一份用于构建和调试生产用分词器的提示词（prompt）。参见 `outputs/prompt-tokenizer-builder.md`。\n",
+      "target_sha256": "3fa21d7c13984e49c6a4e3f16873969007116756d8452f4d047c25b692ccb609"
+    },
+    {
+      "segment_id": "10-02:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Ship It"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0165",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "10-02:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0167",
+      "kind": "list",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "f3ae91083ef1eb0919bc9c0f0bd0b5d5107a44f2351c7947fc62c4572c0202ab",
+      "target": "1. **简单：** 添加一个 `get_token_bytes(id)` 方法，显示任意 token ID 对应的原始字节。用它检查最常见的合并 token 实际表示什么。\n2. **中等：** 实现一个 Llama 风格的预分词器，按空白字符和数字切分，但保留前导空格。在同一份语料库上，将其词表与 GPT-2 正则表达式方案的词表进行比较。\n3. **困难：** 添加一个聊天模板方法，接收 `{\"role\": ..., \"content\": ...}` 消息列表，生成符合 Llama 3 聊天格式的正确 token 序列。将结果与 HuggingFace 实现进行对照测试。\n",
+      "target_sha256": "962085072c4115ce755efdae3a8fbd3538bde5ef9cb0f2960fd1774a4633358d"
+    },
+    {
+      "segment_id": "10-02:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0169",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 85,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "10-02:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0171",
+      "kind": "table",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 86,
+      "source_sha256": "ed79ebc2a2e07d67058d2a387dbd857b333b72cc6bcbc522ea45a1a2ad3cfe63",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 字节级 BPE | “处理字节的分词器” | 基础词表包含 256 个字节值的 BPE，无需未知 token 就能处理任意输入 |\n| 预分词 | “在 BPE 之前切分” | 基于正则表达式或规则的切分，防止 BPE 跨词边界合并 |\n| NFKC 规范化 | “清理 Unicode” | 先做规范分解，再做兼容组合；\"fi\" 连字变为 \"fi\"，全角 \"A\" 变为 \"A\" |\n| 聊天模板 | “消息如何变成 token” | 将 role/content 消息列表转换为平铺 token 序列的精确格式；每个模型各不相同，必须与训练格式一致 |\n| 特殊 token | “控制 token” | 绕过 BPE 的预留 token ID，包括 [BOS]、[EOS]、[PAD] 和聊天标记；在合并前精确匹配 |\n| 平均每词 token 数（fertility） | “每个词有多少 token” | 输出 token 数与输入词数之比；GPT-4 的英文为 1.3，韩文为 2-3，越高意味着越浪费上下文 |\n| tiktoken | “OpenAI 分词器” | 提供 Python 绑定的 Rust BPE 实现，比纯 Python 快 10-100 倍 |\n| 合并表 | “词表” | 训练过程中学到的有序字节对合并列表，这就是分词器学到的知识 |\n",
+      "target_sha256": "ea40175d9f30ed5e3596cfccecfe742628f65e317de8f8c275935aa0dcb123d3"
+    },
+    {
+      "segment_id": "10-02:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Key Terms"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0173",
+      "kind": "heading",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 87,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "10-02:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-02:b0175",
+      "kind": "list",
+      "heading_path": [
+        "# Building a Tokenizer from Scratch",
+        "## Further Reading"
+      ],
+      "ordinal": 88,
+      "source_sha256": "e2e9802fe936e05808ed9f68e0ade161e659d6469271a596a4cc9ce0c4679c4b",
+      "target": "- [OpenAI tiktoken source](https://github.com/openai/tiktoken) -- GPT-3.5/4 使用的 Rust BPE 实现\n- [HuggingFace tokenizers](https://github.com/huggingface/tokenizers) -- 支持 BPE、WordPiece（子词分词算法）和 Unigram（基于概率的子词分词算法）的 Rust 分词库\n- [Llama 3 paper (Meta, 2024)](https://arxiv.org/abs/2407.21783) -- 关于 128K 词表及分词器训练的详细介绍\n- [SentencePiece (Kudo & Richardson, 2018)](https://arxiv.org/abs/1808.06226) -- 不依赖特定语言的分词\n- [GPT-2 tokenizer source](https://github.com/openai/gpt-2/blob/master/src/encoder.py) -- 原始的字节到 Unicode 映射\n",
+      "target_sha256": "7178802bcf8bc68487341b2f6ca30dc3215d393e9b62be74148c20b4c270e1fd"
+    }
+  ],
+  "stage_id": "S33-building-tokenizer",
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "stage_glossary_path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+  "stage_glossary_sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66",
+  "dependencies_path": "i18n/zh/.curated/stages/S33-building-tokenizer/DEPENDENCIES.json",
+  "dependencies_sha256": "0c7ec6bff2b00d4a9f4adff38bca480b0472c5e9067dbb0b78ecd4e6f0f5e488",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "18d91e8419e56df8fe0ebf37b8b5ca31dba92be0",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S33-building-tokenizer/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "0c7ec6bff2b00d4a9f4adff38bca480b0472c5e9067dbb0b78ecd4e6f0f5e488"
+}
