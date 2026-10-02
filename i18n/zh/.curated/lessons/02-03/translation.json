@@ -1,0 +1,2162 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-03",
+  "source_path": "phases/02-ml-fundamentals/03-logistic-regression/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "89965b45b1f780b29d5ba5e4e530210e7a4c894b",
+  "source_sha256": "28c89a0c75029f41edaaa3aae7428a8a5b30479765ec4c1afdf4853917c25954",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/03-logistic-regression/docs/zh.md",
+  "target_sha256": "a3a8f977134302bf98dcad08ebf3f0c6e7073e638fc7a723d7c715cf774f59f3",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "02-03:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression"
+      ],
+      "ordinal": 1,
+      "source_sha256": "412662241097e8ac3cdc1984e9957be959dcea0b803c07796211c39d21f22aeb",
+      "target": "# 逻辑回归\n",
+      "target_sha256": "2431f69d30e50255b57e98a5921ef2054cf50316988a41c8f021bc31f8613a4d"
+    },
+    {
+      "segment_id": "02-03:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Logistic Regression"
+      ],
+      "ordinal": 2,
+      "source_sha256": "048feb5c6df004bcec16e49e9c7713494bb64ee62213e1bb39b01cb14ebdec64",
+      "target": "> 逻辑回归（logistic regression）把直线映射成 S 形曲线，用概率回答“是或否”的问题。\n",
+      "target_sha256": "00c5097a13d4f0425d9ca66261cbaa3336570c9f16e7edec811e54ea3f91e415"
+    },
+    {
+      "segment_id": "02-03:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression"
+      ],
+      "ordinal": 3,
+      "source_sha256": "d6ba38f0570fbe0a8137f8e649474b8ae81378faf55736eacbc54f6195e07d5b",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 2 第 1-2 课（什么是机器学习、线性回归）\n**Time:** ~90 分钟\n",
+      "target_sha256": "81eee2b883ba13f4f9ebf2e7b0619d985c92fe388e41a8867ce50d0a6dd53eab"
+    },
+    {
+      "segment_id": "02-03:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "02-03:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "7a45968c0c043583aca4f202e5a26ce6ae937fc1aaa262d801668df60290942a",
+      "target": "- 使用 sigmoid 函数和二元交叉熵（binary cross-entropy）损失，从零实现逻辑回归\n- 计算并解释二分类中的精确率（precision）、召回率（recall）、F1分数和混淆矩阵\n- 解释为什么 MSE 不适合分类，以及二元交叉熵为什么能产生凸代价曲面\n- 构建用于多分类的 softmax 回归模型，并评估调整阈值时的权衡\n",
+      "target_sha256": "b4955472803086ffdc781f2709552a8b522686025592584764028b3b04638df4"
+    },
+    {
+      "segment_id": "02-03:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "02-03:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "e015d59bb20352c2a5210dd1cd0bbb208957bed5d970398f190f71511796a150",
+      "target": "你想根据肿瘤大小预测它是恶性还是良性，于是尝试线性回归。它输出 0.3、1.7 或 -0.5 这样的数。这些数是什么意思？1.7 表示“非常恶性”吗？-0.5 表示“非常良性”吗？线性回归的输出没有界限，而分类需要介于 0 和 1 之间的有界概率，以及一个明确的决策：是或否。\n",
+      "target_sha256": "b0f363a20786d50ee77b3778115f814b6b15decd09facd1d5648818bce42ea63"
+    },
+    {
+      "segment_id": "02-03:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "9770a0211ac344c65d0fc779cd1b3e28a675777754a65623db74373a98953c68",
+      "target": "逻辑回归解决了这个问题。它使用相同的线性组合（wx + b），再将其送入 sigmoid 函数，把任意数压缩到 (0, 1) 区间。输出是一个概率。你设定阈值（通常为 0.5），然后作出决策。\n",
+      "target_sha256": "e820fc92b6835ceee7729cc3a58d3019a1b3058fc706c5db668dab621fddc288"
+    },
+    {
+      "segment_id": "02-03:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "b8514b5a09d2f7cbd9b066229735235b52c837b0c6ea722a56278d65c15a44ee",
+      "target": "这是实际应用中最常用的算法之一。尽管名字里有“回归”，逻辑回归却是分类算法，而不是回归算法。它的名字来自所使用的 logistic（sigmoid）函数。\n",
+      "target_sha256": "39a39044f1c8acaefbd46ef59c2b820dc655979f312e383fd2a18843e5de6008"
+    },
+    {
+      "segment_id": "02-03:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "02-03:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 11,
+      "source_sha256": "567d3d3f8e013b00d61fbb8f7184edc31fae35af13ab57f6981dde03450b8c5d",
+      "target": "### 为什么线性回归不适合分类\n",
+      "target_sha256": "c816b2c04e19640f71bd532ef0cf77a82b445fd368d9748670fd45ab597e6caa"
+    },
+    {
+      "segment_id": "02-03:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 12,
+      "source_sha256": "d5a4b284fb7b1fc494b8b3c469ed413b8bef32b29a711e6343f50b71449e673a",
+      "target": "假设根据学习时长预测考试通过/未通过（1/0）。线性回归会拟合一条穿过数据的直线：\n",
+      "target_sha256": "9181485e933dee3c9e0f10971de791aa46606598614e91f68e597eadbe52529c"
+    },
+    {
+      "segment_id": "02-03:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0025",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 13,
+      "source_sha256": "8eef398a0872847c70118842b725c617f8a7db40b30375c37f7d1db8c035ad41",
+      "target": "```text\nhours:  1   2   3   4   5   6   7   8   9   10\nactual: 0   0   0   0   1   1   1   1   1   1\n```\n",
+      "target_sha256": "9ebc7784c8b19c6723ecf286ff903b4a03fffded150e39971a503636a8a9d323"
+    },
+    {
+      "segment_id": "02-03:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 14,
+      "source_sha256": "4cadc404ffcd9976ff598b215c3cddfb6750d3344fd0504e18a3e1d74642e1d6",
+      "target": "线性拟合可能在学习 1 小时时预测 -0.2，在 10 小时时预测 1.3。这些值不是概率，因为它们小于 0 或大于 1。更糟的是，一个离群点（例如学习了 50 小时的人）就会拉动整条直线，改变对所有人的预测。\n",
+      "target_sha256": "a523ed7a3bce8b299582310ae8fcf948646a43a5766469c1c9b98dd4302653a7"
+    },
+    {
+      "segment_id": "02-03:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 15,
+      "source_sha256": "20122ecd2fb7bdbc0ab346de2865ab231bcb38b0f6b2d30fe62d473d87b1f325",
+      "target": "分类需要一个具备以下性质的函数：\n- 输出介于 0 和 1 之间的值（概率）\n- 形成明显的过渡（决策边界）\n- 不会被远离边界的离群点扭曲\n",
+      "target_sha256": "c1777413a16604a1e66c48c542bc5302d972849ce11bf19fec7e38708bbdc2dc"
+    },
+    {
+      "segment_id": "02-03:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Why Linear Regression Fails for Classification"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 16,
+      "source_sha256": "9d1bcc6b7e7f65865954280b0089c081a8ec037dc7ced398ec44827cefc5ee3f",
+      "target": "### sigmoid 函数\n",
+      "target_sha256": "d66edec7e61a768e862303fe536ad148d42542d4cdf29a8b8128d968da593684"
+    },
+    {
+      "segment_id": "02-03:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 17,
+      "source_sha256": "e387189737e625482e345437e3a02c7e8df7c3ed397798d835716f9c017cba68",
+      "target": "sigmoid 函数恰好能做到这一点：\n",
+      "target_sha256": "39c32c4b2e16f0ee37721c956ef8d685fa2e362530995dc4b7535e52d3ed8ed2"
+    },
+    {
+      "segment_id": "02-03:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 18,
+      "source_sha256": "701469b4bd1a6d167d1f5245e28035f8794205dd82fea806ff3ea2893545c392",
+      "target": "```text\nsigmoid(z) = 1 / (1 + e^(-z))\n```\n",
+      "target_sha256": "52000d07dca1ef459d9cce1e57b46bb4aca6d75b1d19205012bfe2453cf8ec1b"
+    },
+    {
+      "segment_id": "02-03:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 19,
+      "source_sha256": "ad5df99598ef39033ceb69bcc3714f911d8a336594f3b7e657e7c6d3a541b289",
+      "target": "它的性质包括：\n- z 是很大的正数时，sigmoid(z) 趋近于 1\n- z 是绝对值很大的负数时，sigmoid(z) 趋近于 0\n- z = 0 时，sigmoid(z) = 0.5\n- 输出始终介于 0 和 1 之间\n- 函数光滑，且处处可微\n",
+      "target_sha256": "13afa64530d02b8d24d384bca3c733a01279c5103eaac365cd56b32ca4e08611"
+    },
+    {
+      "segment_id": "02-03:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 20,
+      "source_sha256": "304334c9b00c1e676d1b05330980106ba99216b901a459558875d4092c4b7b9d",
+      "target": "其导数形式很方便：sigmoid'(z) = sigmoid(z) * (1 - sigmoid(z))，因此可以高效计算梯度。\n",
+      "target_sha256": "b4752c1b9489a8cdb917779e0e37d04cd231250506eee316f37903974864dbdc"
+    },
+    {
+      "segment_id": "02-03:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Sigmoid Function"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Logistic Regression = Linear Model + Sigmoid"
+      ],
+      "ordinal": 21,
+      "source_sha256": "3ed7683970fcc43440bbaa1b34ba8a9e98195432b7058b08e1d30e2b2e9fa676",
+      "target": "### 逻辑回归 = 线性模型 + sigmoid\n",
+      "target_sha256": "bd4cc54f36f1b6810a81f429c182dc772fee857aab971b516b1daf5a64ee0a35"
+    },
+    {
+      "segment_id": "02-03:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Logistic Regression = Linear Model + Sigmoid"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Logistic Regression = Linear Model + Sigmoid"
+      ],
+      "ordinal": 22,
+      "source_sha256": "93a5bd928197b3baac12652f4034a5205330b444f6c08c6367481cbc360c5c9f",
+      "target": "模型先计算 z = wx + b（与线性回归相同），再应用 sigmoid：\n",
+      "target_sha256": "f8469ca878a511d833f96e24c56b67c05b5fc313993e4aff1e9876ad23653266"
+    },
+    {
+      "segment_id": "02-03:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Logistic Regression = Linear Model + Sigmoid"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Logistic Regression = Linear Model + Sigmoid"
+      ],
+      "ordinal": 23,
+      "source_sha256": "44c4ab57fa0e9dc9e0c7eddd0eed2413c33e27d1182822422cf2803ff395cff9",
+      "target": "```mermaid\nflowchart LR\n    X[Input features x] --> L[\"Linear: z = wx + b\"]\n    L --> S[\"Sigmoid: p = 1/(1+e^-z)\"]\n    S --> D{\"p >= 0.5?\"}\n    D -->|Yes| P[Predict 1]\n    D -->|No| N[Predict 0]\n```\n",
+      "target_sha256": "44c4ab57fa0e9dc9e0c7eddd0eed2413c33e27d1182822422cf2803ff395cff9"
+    },
+    {
+      "segment_id": "02-03:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Logistic Regression = Linear Model + Sigmoid"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Logistic Regression = Linear Model + Sigmoid"
+      ],
+      "ordinal": 24,
+      "source_sha256": "c44929e5ebc001f0aacbad29c63b84b6ab5d9b132e90e0fd64f6a6fe904cfb2f",
+      "target": "输出 p 被解释为 P(y=1 | x)，即输入属于类别 1 的概率。决策边界位于 wx + b = 0 处，此时 sigmoid 的输出恰好为 0.5。\n",
+      "target_sha256": "2157f629b37e19c81659fcf9ff909ffe3497f5fd8183ae9752e3c82f099c17c9"
+    },
+    {
+      "segment_id": "02-03:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Logistic Regression = Linear Model + Sigmoid"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 25,
+      "source_sha256": "51baee5667f4c5194a489cb6da68884b0daeacb825709969fd46917d0d2d6572",
+      "target": "### 二元交叉熵损失\n",
+      "target_sha256": "f350cf151d4b6af18413001f31b39ac44cc73446bdce1aa5f28cbf6daf1857ac"
+    },
+    {
+      "segment_id": "02-03:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 26,
+      "source_sha256": "9c29af7111a6052c56881eb5cfdce85660bbf4db9a8d69f42034ea507a6c6eaa",
+      "target": "逻辑回归不能使用 MSE。MSE 与 sigmoid 组合后会产生非凸代价曲面，其中有许多局部极小值。因此改用二元交叉熵（对数损失，log loss）：\n",
+      "target_sha256": "db7fe5f988b3e8d247d3698331625501795f61f4f4841d6e80f76dd16d29cb2e"
+    },
+    {
+      "segment_id": "02-03:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 27,
+      "source_sha256": "d3e7fdc02b4610320ba6898fdae0569896185e02ec2ab16033a3a7fa4265d5fb",
+      "target": "```text\nLoss = -(1/n) * sum(y * log(p) + (1-y) * log(1-p))\n```\n",
+      "target_sha256": "1e3d15ec194b30c858b89d5fcc563d0f8b411f3a3dc5420fb86bf7c8f53c02cd"
+    },
+    {
+      "segment_id": "02-03:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 28,
+      "source_sha256": "ddaaab4566260a27191e6ca3a1c7c5e8df10b307ce5837d352c629d39d53fe81",
+      "target": "它之所以有效，是因为：\n- y=1 且 p 接近 1 时：log(1) = 0，因此损失接近 0（预测正确，代价低）\n- y=1 且 p 接近 0 时：log(0) 趋近负无穷，因此损失很大（预测错误，代价高）\n- y=0 且 p 接近 0 时：log(1) = 0，因此损失接近 0（预测正确，代价低）\n- y=0 且 p 接近 1 时：log(0) 趋近负无穷，因此损失很大（预测错误，代价高）\n",
+      "target_sha256": "71db2fcb522071ce4321da2fa75789c79699fdb60af0b46d2d006675d18b262e"
+    },
+    {
+      "segment_id": "02-03:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 29,
+      "source_sha256": "4c2a573c6b9acd96614977a724d46eb1da01739d167e71fd5a1d537fee2fc002",
+      "target": "对于逻辑回归，这个损失函数是凸函数，因而保证只有一个全局极小值。\n",
+      "target_sha256": "28940e61572c40b1b932b0c10e239755e6a494fd865d65bfcd89e906c427583a"
+    },
+    {
+      "segment_id": "02-03:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Binary Cross-Entropy Loss"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 30,
+      "source_sha256": "f4a2ac2055cb0a577ff23747ad5992cdaf4085f382f702f853dc6e74b5ad86de",
+      "target": "### 逻辑回归的梯度下降\n",
+      "target_sha256": "de5b149df2f686f3de3ee1f43a2242ad13872d4908fb3c30862b33b743a2bf3f"
+    },
+    {
+      "segment_id": "02-03:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 31,
+      "source_sha256": "06f3e5e430e1e57a461f6bcd4161e948d98f0b2182deebd19c3555935bbadb66",
+      "target": "sigmoid 与二元交叉熵组合后的梯度形式很简洁：\n",
+      "target_sha256": "9dddbba058d0d7e4c85dfdc7d7aede7a66a8cefae3f9f3d1eee3ae4d55282b80"
+    },
+    {
+      "segment_id": "02-03:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 32,
+      "source_sha256": "244f90eb70bc67c8f72f2b2ac7519fec0997348ec8d7cbdbd96a1c34e84e873e",
+      "target": "```text\ndL/dw = (1/n) * sum((p - y) * x)\ndL/db = (1/n) * sum(p - y)\n```\n",
+      "target_sha256": "b25970a063d2be3e01440a297b897f7419c281a9794f917ae60db47251614927"
+    },
+    {
+      "segment_id": "02-03:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 33,
+      "source_sha256": "dec62c2351687b8276e28f21a63298d6d3acd54eada28b8feaf8c87e5133f9aa",
+      "target": "这些式子看起来与线性回归的梯度相同。区别是 p = sigmoid(wx + b)，而不是 p = wx + b。sigmoid 引入了非线性，但梯度更新规则保持不变。\n",
+      "target_sha256": "5b4672bc6a3527e9188705339e3b851285651d1b50c6fb7f530260501457d15f"
+    },
+    {
+      "segment_id": "02-03:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 34,
+      "source_sha256": "5e5422924c02a31e8db26d402d2ed8363717647bfa9aef1ff40fc43ef233962c",
+      "target": "```mermaid\nflowchart TD\n    A[Initialize w=0, b=0] --> B[Forward pass: z = wx+b, p = sigmoid z]\n    B --> C[Compute loss: binary cross-entropy]\n    C --> D[\"Compute gradients: dw = (1/n) * sum((p-y)*x)\"]\n    D --> E[Update: w = w - lr*dw, b = b - lr*db]\n    E --> F{Converged?}\n    F -->|No| B\n    F -->|Yes| G[Model trained]\n```\n",
+      "target_sha256": "5e5422924c02a31e8db26d402d2ed8363717647bfa9aef1ff40fc43ef233962c"
+    },
+    {
+      "segment_id": "02-03:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Gradient Descent for Logistic Regression"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Decision Boundary"
+      ],
+      "ordinal": 35,
+      "source_sha256": "7c3e19982b56994417d3ca0d6f3b6b2268fbfbfa606734b2eff14b0b0377efba",
+      "target": "### 决策边界\n",
+      "target_sha256": "c95f6044a2df9e1aec5fab78edcad9725c347937f643b8d81a084a03b87572c9"
+    },
+    {
+      "segment_id": "02-03:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Decision Boundary"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Decision Boundary"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01777409b94b649d6204449bdfb1639e46ab214987b4677f477498b86d9870fd",
+      "target": "对于 2D 输入（两个特征），决策边界是满足下式的直线：\n",
+      "target_sha256": "d5b99675f348420fca65c37ca4c396eee7bb2feee224aec78c93c66b9081791c"
+    },
+    {
+      "segment_id": "02-03:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Decision Boundary"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Decision Boundary"
+      ],
+      "ordinal": 37,
+      "source_sha256": "bf44004bdd3248d87ad3a1e4417464e0edebac8ea67770bf5e4b77cde3fa2b9a",
+      "target": "```text\nw1*x1 + w2*x2 + b = 0\n```\n",
+      "target_sha256": "b548868cd21538bfe032d7c9070d54f4bf473f4b85e8f7536cf42f72e2db9a91"
+    },
+    {
+      "segment_id": "02-03:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Decision Boundary"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Decision Boundary"
+      ],
+      "ordinal": 38,
+      "source_sha256": "16d2bd053a350cbfc79322600bc3df8f07802694592f135ebeb77532a32a7a7f",
+      "target": "直线一侧的点被分为 1，另一侧的点被分为 0。逻辑回归始终产生线性决策边界。如果需要曲线边界，就要增加多项式特征，或者使用非线性模型。\n",
+      "target_sha256": "bb93726bd999ca1ee02be980b579efb74094388261cb612a0e0d9dc2fd1d266b"
+    },
+    {
+      "segment_id": "02-03:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### The Decision Boundary"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 39,
+      "source_sha256": "103b7b859994e9c2ae3faa422297087bb2c2840050e3b42ca418b1335b0e489a",
+      "target": "### 用 softmax 进行多分类\n",
+      "target_sha256": "e2c0b7086a45d6a2324c6a542d96bdbf2c5cc2160a61a0cbdab682a5b457fa35"
+    },
+    {
+      "segment_id": "02-03:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 40,
+      "source_sha256": "9f12abbf9340c5ff2cf3939a0ca444839b9862a3d2cf2a4a900301afd6e63aec",
+      "target": "二元逻辑回归处理两个类别。对于 k 个类别，使用 softmax 函数：\n",
+      "target_sha256": "7146bd0921f40cc0c814b784f1872c15641568099219d0d57b6e2b71e60f8b16"
+    },
+    {
+      "segment_id": "02-03:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 41,
+      "source_sha256": "e30f68630bb6599284138e5c8dce2efd3137e611ec931c3801db47b8918d81ea",
+      "target": "```text\nsoftmax(z_i) = e^(z_i) / sum(e^(z_j) for all j)\n```\n",
+      "target_sha256": "83a52fe6a22713496108813d9f8b6e8d83829db523b4c50c26edb8c5b52cf270"
+    },
+    {
+      "segment_id": "02-03:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 42,
+      "source_sha256": "e1c9a73e4231fc4b16d19029789e21a80ddcda03a5105a350f8836c25321cbca",
+      "target": "每个类别都有自己的权重向量。模型为各类别计算分数 z_i，再由 softmax 将分数转换为总和为 1 的概率，预测概率最高的那个类别。\n",
+      "target_sha256": "167e73bf3982f7d074a20319e7ed240dcaae76f7426f2c99ed4e0258987a0241"
+    },
+    {
+      "segment_id": "02-03:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 43,
+      "source_sha256": "7009573c24f9455a893acdd4b02b41a21b3f1e9ad6764b7d90730c7c848e38cb",
+      "target": "损失函数变为类别交叉熵（categorical cross-entropy）：\n",
+      "target_sha256": "f2d56c13278d679b9ee4c13fa92eb49a88ba4e357e75811fab1fe76bc6c8c2fc"
+    },
+    {
+      "segment_id": "02-03:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 44,
+      "source_sha256": "fa7fff0876b629232ccc8f8cc51213cb633397e43514a12ab255495d1f8b2a92",
+      "target": "```text\nLoss = -(1/n) * sum(sum(y_k * log(p_k)))\n```\n",
+      "target_sha256": "9cd9007829d28adacd4539ef97c437ed4965c0a22fdedc788df1b2404f231dc4"
+    },
+    {
+      "segment_id": "02-03:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 45,
+      "source_sha256": "71093e97d94845b11da28eae92a874d983379d482ce525744ba47dc12c4da75d",
+      "target": "其中，真实类别对应的 y_k 为 1，其他类别均为 0，这就是 one-hot（独热）编码。\n",
+      "target_sha256": "02f87872412ce93659c2b946c22180519e2162af7b7e1c73ab7e864c5e4be759"
+    },
+    {
+      "segment_id": "02-03:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Multi-Class Classification with Softmax"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 46,
+      "source_sha256": "be47fb1fe36b7e9b7971136181adc3b123f35638f209fa63e2ff91e2b3cd9aa3",
+      "target": "### 评估指标\n",
+      "target_sha256": "19304b5d211a0c998873f2673760f7d9f9e573b41f501aec319a68e721977219"
+    },
+    {
+      "segment_id": "02-03:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 47,
+      "source_sha256": "ef427a06d23afc33abf598800641e678468432aea8194a6bdc9e4b06f0c81001",
+      "target": "只有准确率（accuracy）还不够。如果一个数据集有 95% 阴性、5% 阳性，那么始终预测阴性的模型能得到 95% 的准确率，却没有实际用处。\n",
+      "target_sha256": "fbb62f7a757800b5d287429b49a500d13d717630dab48d776ac42672bf051719"
+    },
+    {
+      "segment_id": "02-03:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 48,
+      "source_sha256": "ddcf42158464801a50acef769d1a1d19b72e4ffc654b2938735d19ae66dde675",
+      "target": "**混淆矩阵**：\n",
+      "target_sha256": "811909bf5b3391a2568e32f932fe62c0e7786818d42986f0603e6d90b8309654"
+    },
+    {
+      "segment_id": "02-03:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0097",
+      "kind": "table",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 49,
+      "source_sha256": "2035e623cefb224b9605e7ed8d667c8d0ab6296bf4adea9745ef36e13fda8c1f",
+      "target": "| | 预测为阳性 | 预测为阴性 |\n|---|---|---|\n| 实际为阳性 | 真阳性（TP） | 假阴性（FN） |\n| 实际为阴性 | 假阳性（FP） | 真阴性（TN） |\n",
+      "target_sha256": "f7ae930bc1b633c0de25eef0cdcaefa386b2407941b5a2b0068dbad9a7dc224b"
+    },
+    {
+      "segment_id": "02-03:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 50,
+      "source_sha256": "463a736c8cc9a3708cb511015b362ece449b14f73b9948d12999014e93fb3ca9",
+      "target": "**精确率**：在所有预测为阳性的样本中，有多少确实是阳性？\n",
+      "target_sha256": "ac7beae1eaff9c7d6404bb5027d0caa62e0fa8f83f80adb127d2920edcd2c097"
+    },
+    {
+      "segment_id": "02-03:b0100",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 51,
+      "source_sha256": "d214214acc3394b82a30eb2c2298a48a216eb0347c21db97cf323a9c7e9c3d3c",
+      "target": "```text\nPrecision = TP / (TP + FP)\n```\n",
+      "target_sha256": "9854b2a503b01213cee8e8b7dfdb82a8d9b7125a74d95a990c6f373e8f4bddac"
+    },
+    {
+      "segment_id": "02-03:b0101",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0102",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 52,
+      "source_sha256": "f46aad0ba7622a99d29faa8cecd0742cc431e0e9262fe89ae428fb4b0589e53e",
+      "target": "**召回率**（灵敏度）：在所有实际阳性的样本中，我们找出了多少？\n",
+      "target_sha256": "b2c9a883a12b6471569a2e0a4bc8eb6e5050e571f26c80e9af4c5cd3a5db3ffa"
+    },
+    {
+      "segment_id": "02-03:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 53,
+      "source_sha256": "f653ae439e9ce144a471aaa9c57f30ccee58c71761100a14d352c43507fcd03d",
+      "target": "```text\nRecall = TP / (TP + FN)\n```\n",
+      "target_sha256": "23f44da4a0ea583704977e0ed72450096ec186cc87df900852d624d7bc78d3c9"
+    },
+    {
+      "segment_id": "02-03:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 54,
+      "source_sha256": "402a25265bcb13fe380920fbd879519c48a51287107d6cef205c895e1eb9c0b3",
+      "target": "**F1分数**：精确率与召回率的调和平均值，兼顾这两个指标。\n",
+      "target_sha256": "ad34d5bf2b7de1e191b97d32603cf7214733eb48a74cb3aa3940c702d830f8b1"
+    },
+    {
+      "segment_id": "02-03:b0106",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 55,
+      "source_sha256": "0ffac79b7c2b7ef051338b81a14e4fd36a31b790be2f6a85f2b893367f7cfd92",
+      "target": "```text\nF1 = 2 * (Precision * Recall) / (Precision + Recall)\n```\n",
+      "target_sha256": "92db1dc22105616c247df417b32eeb7bbb954b8139d70e2b7b538fc513425553"
+    },
+    {
+      "segment_id": "02-03:b0107",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0108",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 56,
+      "source_sha256": "3d0c6a9c657517d762da1bf60e3258c77cc88a2e0bf976bc99cb8a01945c2f48",
+      "target": "何时优先考虑哪种指标：\n- **精确率**：假阳性代价较高时（例如垃圾邮件过滤器，不希望拦截正常邮件）\n- **召回率**：假阴性代价较高时（例如癌症筛查，不希望漏掉肿瘤）\n- **F1**：需要一个兼顾两者的单一指标时\n",
+      "target_sha256": "f6a8d0b6a9750547fc143a426e16b466f75f46efde3d11a7cc6e0bcfa252b9a2"
+    },
+    {
+      "segment_id": "02-03:b0109",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0110",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 57,
+      "source_sha256": "6957247b36e1cf2b79f8083fbfc83ba71c80748b4ebd75a62deb4ddac57c02fc",
+      "target": "```figure\nlogistic-sigmoid\n```\n",
+      "target_sha256": "6957247b36e1cf2b79f8083fbfc83ba71c80748b4ebd75a62deb4ddac57c02fc"
+    },
+    {
+      "segment_id": "02-03:b0111",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## The Concept",
+        "### Evaluation Metrics"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0112",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "02-03:b0113",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0114",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 1: Sigmoid function and data generation"
+      ],
+      "ordinal": 59,
+      "source_sha256": "bf51968a1ace0d30f5311a2b5e02095e185f4c00889885f51baafeb4879e8490",
+      "target": "### 步骤 1：sigmoid 函数与数据生成\n",
+      "target_sha256": "62aaa543a2f56f084194a6ff740cf944566a7ae6213c49cedb2173e45acab1dc"
+    },
+    {
+      "segment_id": "02-03:b0115",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 1: Sigmoid function and data generation"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0116",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 1: Sigmoid function and data generation"
+      ],
+      "ordinal": 60,
+      "source_sha256": "d84b55ced3e1ba332468ca47b26d3df751cb60a8ade9befdaff3a41db53b8e0a",
+      "target": "```python\nimport random\nimport math\n\ndef sigmoid(z):\n    z = max(-500, min(500, z))\n    return 1.0 / (1.0 + math.exp(-z))\n\n\nrandom.seed(42)\nN = 200\nX = []\ny = []\n\nfor _ in range(N // 2):\n    X.append([random.gauss(2, 1), random.gauss(2, 1)])\n    y.append(0)\n\nfor _ in range(N // 2):\n    X.append([random.gauss(5, 1), random.gauss(5, 1)])\n    y.append(1)\n\ncombined = list(zip(X, y))\nrandom.shuffle(combined)\nX, y = zip(*combined)\nX = list(X)\ny = list(y)\n\nprint(f\"Generated {N} samples (2 classes, 2 features)\")\nprint(f\"Class 0 center: (2, 2), Class 1 center: (5, 5)\")\nprint(f\"First 5 samples:\")\nfor i in range(5):\n    print(f\"  Features: [{X[i][0]:.2f}, {X[i][1]:.2f}], Label: {y[i]}\")\n```\n",
+      "target_sha256": "d84b55ced3e1ba332468ca47b26d3df751cb60a8ade9befdaff3a41db53b8e0a"
+    },
+    {
+      "segment_id": "02-03:b0117",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 1: Sigmoid function and data generation"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0118",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 2: Logistic regression from scratch"
+      ],
+      "ordinal": 61,
+      "source_sha256": "a69ceb90f3c10694977b7377f80ddaafea7625ec73a67ad895947eab03133057",
+      "target": "### 步骤 2：从零实现逻辑回归\n",
+      "target_sha256": "646558015e0feeabcc22297b7adb45bc16e14ec6930843dd4e7406da22732d55"
+    },
+    {
+      "segment_id": "02-03:b0119",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 2: Logistic regression from scratch"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0120",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 2: Logistic regression from scratch"
+      ],
+      "ordinal": 62,
+      "source_sha256": "88023c6b5ddf99555a7304034e017dfb1c33c6e850e781f3f2415d6b97b57743",
+      "target": "```python\nclass LogisticRegression:\n    def __init__(self, n_features, learning_rate=0.01):\n        self.weights = [0.0] * n_features\n        self.bias = 0.0\n        self.lr = learning_rate\n        self.loss_history = []\n\n    def predict_proba(self, x):\n        z = sum(w * xi for w, xi in zip(self.weights, x)) + self.bias\n        return sigmoid(z)\n\n    def predict(self, x, threshold=0.5):\n        return 1 if self.predict_proba(x) >= threshold else 0\n\n    def compute_loss(self, X, y):\n        n = len(y)\n        total = 0.0\n        for i in range(n):\n            p = self.predict_proba(X[i])\n            p = max(1e-15, min(1 - 1e-15, p))\n            total += y[i] * math.log(p) + (1 - y[i]) * math.log(1 - p)\n        return -total / n\n\n    def fit(self, X, y, epochs=1000, print_every=200):\n        n = len(y)\n        n_features = len(X[0])\n        for epoch in range(epochs):\n            dw = [0.0] * n_features\n            db = 0.0\n            for i in range(n):\n                p = self.predict_proba(X[i])\n                error = p - y[i]\n                for j in range(n_features):\n                    dw[j] += error * X[i][j]\n                db += error\n            for j in range(n_features):\n                self.weights[j] -= self.lr * (dw[j] / n)\n            self.bias -= self.lr * (db / n)\n            loss = self.compute_loss(X, y)\n            self.loss_history.append(loss)\n            if epoch % print_every == 0:\n                print(f\"  Epoch {epoch:4d} | Loss: {loss:.4f} | w: [{self.weights[0]:.3f}, {self.weights[1]:.3f}] | b: {self.bias:.3f}\")\n        return self\n\n    def accuracy(self, X, y):\n        correct = sum(1 for i in range(len(y)) if self.predict(X[i]) == y[i])\n        return correct / len(y)\n\n\nsplit = int(0.8 * N)\nX_train, X_test = X[:split], X[split:]\ny_train, y_test = y[:split], y[split:]\n\nprint(\"\\n=== Training Logistic Regression ===\")\nmodel = LogisticRegression(n_features=2, learning_rate=0.1)\nmodel.fit(X_train, y_train, epochs=1000, print_every=200)\n\nprint(f\"\\nTrain accuracy: {model.accuracy(X_train, y_train):.4f}\")\nprint(f\"Test accuracy:  {model.accuracy(X_test, y_test):.4f}\")\nprint(f\"Weights: [{model.weights[0]:.4f}, {model.weights[1]:.4f}]\")\nprint(f\"Bias: {model.bias:.4f}\")\n```\n",
+      "target_sha256": "88023c6b5ddf99555a7304034e017dfb1c33c6e850e781f3f2415d6b97b57743"
+    },
+    {
+      "segment_id": "02-03:b0121",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 2: Logistic regression from scratch"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0122",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 3: Confusion matrix and metrics from scratch"
+      ],
+      "ordinal": 63,
+      "source_sha256": "db06f380cda5575cf83ccc12161b808a85b78c0bd807bb29f9a4fe40f15d9b42",
+      "target": "### 步骤 3：从零实现混淆矩阵与指标\n",
+      "target_sha256": "9b3e2744033d65a2edecee3f66396ef216a5b459eca482ccd0635f73c3125bbd"
+    },
+    {
+      "segment_id": "02-03:b0123",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 3: Confusion matrix and metrics from scratch"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0124",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 3: Confusion matrix and metrics from scratch"
+      ],
+      "ordinal": 64,
+      "source_sha256": "dd2c84883179ac1e1a07c5bebf59a30d0c64c79c0f9dcc2a5af6f01640e28999",
+      "target": "```python\nclass ClassificationMetrics:\n    def __init__(self, y_true, y_pred):\n        self.tp = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 1)\n        self.tn = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 0)\n        self.fp = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 1)\n        self.fn = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 0)\n\n    def accuracy(self):\n        total = self.tp + self.tn + self.fp + self.fn\n        return (self.tp + self.tn) / total if total > 0 else 0\n\n    def precision(self):\n        denom = self.tp + self.fp\n        return self.tp / denom if denom > 0 else 0\n\n    def recall(self):\n        denom = self.tp + self.fn\n        return self.tp / denom if denom > 0 else 0\n\n    def f1(self):\n        p = self.precision()\n        r = self.recall()\n        return 2 * p * r / (p + r) if (p + r) > 0 else 0\n\n    def print_confusion_matrix(self):\n        print(f\"\\n  Confusion Matrix:\")\n        print(f\"                  Predicted\")\n        print(f\"                  Pos   Neg\")\n        print(f\"  Actual Pos     {self.tp:4d}  {self.fn:4d}\")\n        print(f\"  Actual Neg     {self.fp:4d}  {self.tn:4d}\")\n\n    def print_report(self):\n        self.print_confusion_matrix()\n        print(f\"\\n  Accuracy:  {self.accuracy():.4f}\")\n        print(f\"  Precision: {self.precision():.4f}\")\n        print(f\"  Recall:    {self.recall():.4f}\")\n        print(f\"  F1 Score:  {self.f1():.4f}\")\n\n\ny_pred_test = [model.predict(x) for x in X_test]\nprint(\"\\n=== Classification Report (Test Set) ===\")\nmetrics = ClassificationMetrics(y_test, y_pred_test)\nmetrics.print_report()\n```\n",
+      "target_sha256": "dd2c84883179ac1e1a07c5bebf59a30d0c64c79c0f9dcc2a5af6f01640e28999"
+    },
+    {
+      "segment_id": "02-03:b0125",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 3: Confusion matrix and metrics from scratch"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0126",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 4: Decision boundary analysis"
+      ],
+      "ordinal": 65,
+      "source_sha256": "ac71dccb4d2d072dbc2724f9eb8b6a12cf314fb7d01841c9b7c36555cb58a23c",
+      "target": "### 步骤 4：决策边界分析\n",
+      "target_sha256": "cee00e682c9bfb83ccef2100842a1fc101b154a67e54a213fbf96c310b7fc09d"
+    },
+    {
+      "segment_id": "02-03:b0127",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 4: Decision boundary analysis"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0128",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 4: Decision boundary analysis"
+      ],
+      "ordinal": 66,
+      "source_sha256": "bd964315c346637e6698a5ad96b5286f5c8be94e548a518cb501110ff48d4cae",
+      "target": "```python\nprint(\"\\n=== Decision Boundary ===\")\nw1, w2 = model.weights\nb = model.bias\nprint(f\"Decision boundary: {w1:.4f}*x1 + {w2:.4f}*x2 + {b:.4f} = 0\")\nif abs(w2) > 1e-10:\n    print(f\"Solved for x2:     x2 = {-w1/w2:.4f}*x1 + {-b/w2:.4f}\")\n\nprint(\"\\nSample predictions near the boundary:\")\ntest_points = [\n    [3.0, 3.0],\n    [3.5, 3.5],\n    [4.0, 4.0],\n    [2.5, 2.5],\n    [5.0, 5.0],\n]\nfor point in test_points:\n    prob = model.predict_proba(point)\n    pred = model.predict(point)\n    print(f\"  [{point[0]}, {point[1]}] -> prob={prob:.4f}, class={pred}\")\n```\n",
+      "target_sha256": "bd964315c346637e6698a5ad96b5286f5c8be94e548a518cb501110ff48d4cae"
+    },
+    {
+      "segment_id": "02-03:b0129",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 4: Decision boundary analysis"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0130",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 5: Multi-class with softmax"
+      ],
+      "ordinal": 67,
+      "source_sha256": "7936bdae8bc5ea75df769100941dc21c365da029872676ca00310c0dc157b387",
+      "target": "### 步骤 5：用 softmax 进行多分类\n",
+      "target_sha256": "82ff682f871c50d4c5be2c88fffead151fdb552ac04c17eb863c64dfce8d9c29"
+    },
+    {
+      "segment_id": "02-03:b0131",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 5: Multi-class with softmax"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0132",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 5: Multi-class with softmax"
+      ],
+      "ordinal": 68,
+      "source_sha256": "3e774c35682fa6fc0805c459b440526b13c8278eb5e36ce25b34c06d6aad98e8",
+      "target": "```python\nclass SoftmaxRegression:\n    def __init__(self, n_features, n_classes, learning_rate=0.01):\n        self.n_features = n_features\n        self.n_classes = n_classes\n        self.lr = learning_rate\n        self.weights = [[0.0] * n_features for _ in range(n_classes)]\n        self.biases = [0.0] * n_classes\n\n    def softmax(self, scores):\n        max_score = max(scores)\n        exp_scores = [math.exp(s - max_score) for s in scores]\n        total = sum(exp_scores)\n        return [e / total for e in exp_scores]\n\n    def predict_proba(self, x):\n        scores = [\n            sum(self.weights[k][j] * x[j] for j in range(self.n_features)) + self.biases[k]\n            for k in range(self.n_classes)\n        ]\n        return self.softmax(scores)\n\n    def predict(self, x):\n        probs = self.predict_proba(x)\n        return probs.index(max(probs))\n\n    def fit(self, X, y, epochs=1000, print_every=200):\n        n = len(y)\n        for epoch in range(epochs):\n            grad_w = [[0.0] * self.n_features for _ in range(self.n_classes)]\n            grad_b = [0.0] * self.n_classes\n            total_loss = 0.0\n            for i in range(n):\n                probs = self.predict_proba(X[i])\n                for k in range(self.n_classes):\n                    target = 1.0 if y[i] == k else 0.0\n                    error = probs[k] - target\n                    for j in range(self.n_features):\n                        grad_w[k][j] += error * X[i][j]\n                    grad_b[k] += error\n                true_prob = max(probs[y[i]], 1e-15)\n                total_loss -= math.log(true_prob)\n            for k in range(self.n_classes):\n                for j in range(self.n_features):\n                    self.weights[k][j] -= self.lr * (grad_w[k][j] / n)\n                self.biases[k] -= self.lr * (grad_b[k] / n)\n            if epoch % print_every == 0:\n                print(f\"  Epoch {epoch:4d} | Loss: {total_loss / n:.4f}\")\n        return self\n\n    def accuracy(self, X, y):\n        correct = sum(1 for i in range(len(y)) if self.predict(X[i]) == y[i])\n        return correct / len(y)\n\n\nrandom.seed(42)\nX_3class = []\ny_3class = []\n\ncenters = [(1, 1), (5, 1), (3, 5)]\nfor label, (cx, cy) in enumerate(centers):\n    for _ in range(50):\n        X_3class.append([random.gauss(cx, 0.8), random.gauss(cy, 0.8)])\n        y_3class.append(label)\n\ncombined = list(zip(X_3class, y_3class))\nrandom.shuffle(combined)\nX_3class, y_3class = zip(*combined)\nX_3class = list(X_3class)\ny_3class = list(y_3class)\n\nsplit_3 = int(0.8 * len(X_3class))\nX_train_3 = X_3class[:split_3]\ny_train_3 = y_3class[:split_3]\nX_test_3 = X_3class[split_3:]\ny_test_3 = y_3class[split_3:]\n\nprint(\"\\n=== Multi-class Softmax Regression (3 classes) ===\")\nsoftmax_model = SoftmaxRegression(n_features=2, n_classes=3, learning_rate=0.1)\nsoftmax_model.fit(X_train_3, y_train_3, epochs=1000, print_every=200)\nprint(f\"\\nTrain accuracy: {softmax_model.accuracy(X_train_3, y_train_3):.4f}\")\nprint(f\"Test accuracy:  {softmax_model.accuracy(X_test_3, y_test_3):.4f}\")\n\nprint(\"\\nSample predictions:\")\nfor i in range(5):\n    probs = softmax_model.predict_proba(X_test_3[i])\n    pred = softmax_model.predict(X_test_3[i])\n    print(f\"  True: {y_test_3[i]}, Predicted: {pred}, Probs: [{', '.join(f'{p:.3f}' for p in probs)}]\")\n```\n",
+      "target_sha256": "3e774c35682fa6fc0805c459b440526b13c8278eb5e36ce25b34c06d6aad98e8"
+    },
+    {
+      "segment_id": "02-03:b0133",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 5: Multi-class with softmax"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0134",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 6: Threshold tuning"
+      ],
+      "ordinal": 69,
+      "source_sha256": "1ae30f2448611a82a074e75c7030b1ac6e5f47cc65f50de0437369cbbc6f33e7",
+      "target": "### 步骤 6：阈值调优\n",
+      "target_sha256": "2e41b97aa43643e0e89e9936adc4a430e38f48e2ed46b7658920c393d4493a2e"
+    },
+    {
+      "segment_id": "02-03:b0135",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 6: Threshold tuning"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0136",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 6: Threshold tuning"
+      ],
+      "ordinal": 70,
+      "source_sha256": "a0c4085c3f4b5b5c4eb0c4a475af811dce07d5d3eafa74e5e7ad845f91f4d408",
+      "target": "```python\nprint(\"\\n=== Threshold Tuning ===\")\nprint(\"Default threshold: 0.5. Adjusting the threshold trades precision for recall.\\n\")\n\nthresholds = [0.3, 0.4, 0.5, 0.6, 0.7]\nprint(f\"{'Threshold':>10} {'Accuracy':>10} {'Precision':>10} {'Recall':>10} {'F1':>10}\")\nprint(\"-\" * 52)\n\nfor t in thresholds:\n    y_pred_t = [1 if model.predict_proba(x) >= t else 0 for x in X_test]\n    m = ClassificationMetrics(y_test, y_pred_t)\n    print(f\"{t:>10.1f} {m.accuracy():>10.4f} {m.precision():>10.4f} {m.recall():>10.4f} {m.f1():>10.4f}\")\n```\n",
+      "target_sha256": "a0c4085c3f4b5b5c4eb0c4a475af811dce07d5d3eafa74e5e7ad845f91f4d408"
+    },
+    {
+      "segment_id": "02-03:b0137",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Build It",
+        "### Step 6: Threshold tuning"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0138",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Use It"
+      ],
+      "ordinal": 71,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "02-03:b0139",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Use It"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0140",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Use It"
+      ],
+      "ordinal": 72,
+      "source_sha256": "c3d20d78d09ee83334a4b00e678ac3f9f4239e4e8829b8b4907da66e84dfdf74",
+      "target": "现在用 scikit-learn 完成相同的工作。\n",
+      "target_sha256": "26fdceb25f219e804d216745c7b1c43b0d271f6fa714ff74a603c053235e9538"
+    },
+    {
+      "segment_id": "02-03:b0141",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Use It"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0142",
+      "kind": "fence",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Use It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "42b594602845e761d1eff1da2dfdecd4427110ed93a3e776d0c02ca1b5478eb1",
+      "target": "```python\nfrom sklearn.linear_model import LogisticRegression as SklearnLR\nfrom sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score\nfrom sklearn.metrics import confusion_matrix, classification_report\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nimport numpy as np\n\nnp.random.seed(42)\nX_0 = np.random.randn(100, 2) + [2, 2]\nX_1 = np.random.randn(100, 2) + [5, 5]\nX_sk = np.vstack([X_0, X_1])\ny_sk = np.array([0] * 100 + [1] * 100)\n\nX_tr, X_te, y_tr, y_te = train_test_split(X_sk, y_sk, test_size=0.2, random_state=42)\n\nscaler = StandardScaler()\nX_tr_sc = scaler.fit_transform(X_tr)\nX_te_sc = scaler.transform(X_te)\n\nlr = SklearnLR()\nlr.fit(X_tr_sc, y_tr)\ny_pred = lr.predict(X_te_sc)\n\nprint(\"=== Scikit-learn Logistic Regression ===\")\nprint(f\"Accuracy:  {accuracy_score(y_te, y_pred):.4f}\")\nprint(f\"Precision: {precision_score(y_te, y_pred):.4f}\")\nprint(f\"Recall:    {recall_score(y_te, y_pred):.4f}\")\nprint(f\"F1:        {f1_score(y_te, y_pred):.4f}\")\nprint(f\"\\nConfusion Matrix:\\n{confusion_matrix(y_te, y_pred)}\")\nprint(f\"\\nClassification Report:\\n{classification_report(y_te, y_pred)}\")\n```\n",
+      "target_sha256": "42b594602845e761d1eff1da2dfdecd4427110ed93a3e776d0c02ca1b5478eb1"
+    },
+    {
+      "segment_id": "02-03:b0143",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Use It"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0144",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "83d3552404687a4b8b46840dfd7542560b768050b5a55816734dc8772f37f8e3",
+      "target": "你的从零实现会产生相同的决策边界和指标。Scikit-learn 还提供求解器选项（liblinear、lbfgs、saga）、自动正则化、多分类策略（one-vs-rest（一对其余）、multinomial（多项式）），以及数值稳定性优化。\n",
+      "target_sha256": "1b14f2d1b02136f630f0076b66d72431c1665a1adc1562cc73885e2509a50b4d"
+    },
+    {
+      "segment_id": "02-03:b0145",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Use It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0146",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Ship It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "02-03:b0147",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Ship It"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0148",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Ship It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "b25eee411affa14040325ea270bc66092a0b54f289166d2916c4b13d0b3c79fa",
+      "target": "本课产出：\n- `code/logistic_regression.py` - 带评估指标的从零实现逻辑回归\n",
+      "target_sha256": "e29721480648834b12b71556e48a51e1803f2b4291013bff7e9f0e113fe49914"
+    },
+    {
+      "segment_id": "02-03:b0149",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Ship It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0150",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Exercises"
+      ],
+      "ordinal": 77,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "02-03:b0151",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Exercises"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0152",
+      "kind": "list",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Exercises"
+      ],
+      "ordinal": 78,
+      "source_sha256": "e1b1c0b35bd4f4acdca375f85f84bf7e84388f1e536e3c88a513fb3b4a020133",
+      "target": "1. 生成一个线性不可分的数据集（例如两个同心圆）。训练逻辑回归并观察它的失败。随后增加多项式特征（x1^2, x2^2, x1*x2），重新训练，展示准确率的提升。\n2. 为 3 类 softmax 模型实现多分类混淆矩阵，计算各类别的精确率和召回率。哪个类别最难分类？\n3. 从零绘制 ROC 曲线。取 0 到 1 之间的 100 个阈值，计算真阳性率和假阳性率，并用梯形法计算 AUC（曲线下面积）。\n",
+      "target_sha256": "606e5c4d554319253bb4370236733d813aecb194ffd834f59d5399b5aaa45cdf"
+    },
+    {
+      "segment_id": "02-03:b0153",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Exercises"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0154",
+      "kind": "heading",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Key Terms"
+      ],
+      "ordinal": 79,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "02-03:b0155",
+      "kind": "separator",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Key Terms"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-03:b0156",
+      "kind": "table",
+      "heading_path": [
+        "# Logistic Regression",
+        "## Key Terms"
+      ],
+      "ordinal": 80,
+      "source_sha256": "59ba0bc25956299a2c9735705dd1f2f6d67ec208164692b341728f0039058d8c",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 逻辑回归 | “用来分类的回归” | 在线性模型后接一个 sigmoid 函数，输出类别概率 |\n| sigmoid 函数 | “S形曲线” | 函数 1/(1+e^(-z))，将任意实数映射到 (0, 1) 区间 |\n| 二元交叉熵 | “对数损失” | 损失函数 -[y*log(p) + (1-y)*log(1-p)]，对高置信度的错误预测施加很重的惩罚 |\n| 决策边界 | “分界线” | 模型输出概率等于 0.5 的曲面，将预测类别分开 |\n| softmax | “多分类 sigmoid” | 将分数向量转换为总和为 1 的概率的函数 |\n| 精确率 | “选中的有多少是相关的” | TP / (TP + FP)，阳性预测中真正阳性的比例 |\n| 召回率 | “相关的有多少被选中” | TP / (TP + FN)，实际阳性中被模型正确识别的比例 |\n| F1分数 | “平衡准确率” | 精确率与召回率的调和平均值：2\\*P\\*R / (P+R) |\n| 混淆矩阵 | “错误的分类统计” | 显示各类别配对中 TP、TN、FP、FN 计数的表格 |\n| 阈值 | “分界点” | 模型预测为类别 1 所需超过的概率值（默认 0.5，可调整） |\n| one-hot 编码 | “用二进制列表示类别” | 用一个全零向量表示类别 k，仅位置 k 上为 1 |\n| 类别交叉熵 | “多分类对数损失” | 利用 one-hot 编码标签，将二元交叉熵扩展到 k 个类别 |\n",
+      "target_sha256": "b0f0f0b262709a9efadb3d47799ffc3e0d0cd3c5dcb2ed9cc5f69c645aacea34"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+  "additional_glossary_sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "718cd1e2d08011340a8de969c7ac5b32056c9af3",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S28-logistic-regression/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "ef5744706557da73ef9341c3c250443a6044d95e129db41e3c57cc67066a75e6"
+}
