@@ -1,0 +1,28 @@
+# 先明确预期结果，再选择产出：翻译与验证报告
+
+[自有fork草稿PR #87](https://github.com/Activer007/ai-engineering-from-scratch/pull/87)；[固定中文正文](https://github.com/Activer007/ai-engineering-from-scratch/blob/6b176c885fabfe19d252fd87f4e3890de9d6ca5b/i18n/zh/phases/14-agent-engineering/47-outcomes-before-output/docs/zh.md)。
+
+固定英文源：1bafaa88bb4668356791150bec3a6d7df38387eb
+中文 SHA256：25264f677f7510c4d9698b4b711ba24aeb4b0044a09d2b9b5804090a925bfced
+正文 commit：6b176c885fabfe19d252fd87f4e3890de9d6ca5b
+支持 commit：d2095abf5833f7c1ba70eb44c4e371f02af92d4b
+原审校 SHA256：3352002ba973e2b5a39f8407270c8b24e2f04d664a61d805dca68370dc5cb62f
+候选审校 SHA256：e4249bf83d05543c9036db24e22a82c924708fa7dd901a53cdce1283b2b98200
+真实GFM报告 SHA256：a68a2eaef923561d49a33737d1fcd7d2cd50732fac725c9d871d609bd09ec1de
+实际101候选回归 SHA256：d7c844034af007deb66c1f8361dc93290d6ee7a576108ef2666650f8893fa14d
+正式96索引 commit：97440cffc4599f55e324f28c653ed000b58b3210
+正式96索引 SHA256：8de853ee12ac958ceb6d8afed15af4102850c596096c06c8462ba453d04c87cf
+
+作者与独立审校者各自完成全部67块英文/中文技术对照和单独中文通读，逐块hash与具体意见保持原样。83项支持依赖沿用原commit/SHA，不重新固定；source、target、record、support不变。
+
+独立复核者逐张查看5张实际GitHub截图；连续覆盖11个标题、两个引用块、一张表、列表、两行bash和完整正文。Mermaid六个标签与五条箭头均无遮挡；2个外链href精确保留，包括带括号的完整DOI。链接可达性和引用论文内容未验；无figure围栏。
+
+作者和独审原样主程序与6项原测试仅在临时副本执行，保留作者15项和独审10项合成边界检查；未在源目录运行产物写入。结果只证明字符串与列表规则，不能证明真实目标达成、语义安全或生产事件处置；没有网络、安装或真实事故操作。本构建器未重新执行课程代码。
+
+保留源风险：字符串子串匹配会漏检释义或空proposed_output，并误报否定提及；空列表成员可通过，ready-to-discover不等于语义充分或生产就绪；原程序按源文件目录写产物且假设目录存在；数据修复例子不授权只读诊断阶段写生产。图和DOI仅在本次固定GitHub桌面范围验证。完整源问题和作者/独审原执行证据保留在审校及VALIDATION.json中，原历史字段不覆盖。
+
+实际101回归运行时覆盖原正式95课、S73和S77–S81五课；strict直接99课通过，S07/S19仅沿用原精确适配，无新增例外。33/24/50控制、双新目录各101篇逐字节重放、14个SVG独立复制、课程审计、认证审计与README计数检查通过。原100报告仅为历史记录，101不意味着全验收；S61/S66继续排除。
+
+当前正式基线96，S73已经后续单独验收；这五课仍在待验集合，本候选增量0。本课站点解析仍有11个空标题ID、0组重复ID；真实课程站、移动端及交互未通过。托管CI未证明通过，空status/workflow数组不等于通过。book仅5/6，缺少xelatex.fmt阻塞PDF，未安装修复，完整译书未完成。
+
+review仅追加actual_GitHub_GFM与candidate_regression；全部旧字段和checks保持正文提交时历史快照。后续还须最终4文件发布、该head下9文件逐字节远端/Git读回、exact-head CI检查、最终PR正文实际读回和正式索引门禁。本报告不虚构自身最终commit；保持自有fork Draft，不合并、不发布、不向上游提交。
