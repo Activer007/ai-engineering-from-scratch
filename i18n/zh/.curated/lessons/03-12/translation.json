@@ -1,0 +1,3599 @@
+{
+  "schema_version": 1,
+  "lesson_id": "03-12",
+  "source_path": "phases/03-deep-learning-core/12-intro-to-jax/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "8ae40bd49a642653a1a645f02a86d28e22ee031b",
+  "source_sha256": "9fe3133043ee5c5841555859f2e60f3cd11c6ee194ae7dd4ff6788a97d307a50",
+  "target_path": "i18n/zh/phases/03-deep-learning-core/12-intro-to-jax/docs/zh.md",
+  "target_sha256": "efafead7777ce6c4a29d286758ec851da1b80f3f48057030a0085cccc9453eba",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-03"
+  },
+  "segments": [
+    {
+      "segment_id": "03-12:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX"
+      ],
+      "ordinal": 1,
+      "source_sha256": "4c65efa44b859a1ceaa580697a4e00ae23056c5a08bff53774c086c5f0dc7265",
+      "target": "# JAX 入门\n",
+      "target_sha256": "3e4fba852126e4d26c2f5e9898abb4e7abb3c77f277033c0ea95dd9ac4ee1f3e"
+    },
+    {
+      "segment_id": "03-12:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Introduction to JAX"
+      ],
+      "ordinal": 2,
+      "source_sha256": "45b5d24232c19e8cdf9229b9af6b5f528e81b6e9cb4c5584457b4f91746389d0",
+      "target": "> PyTorch 修改张量。TensorFlow 构建计算图。JAX 编译纯函数。最后这一点，会改变你思考深度学习的方式。\n",
+      "target_sha256": "95ca68cd08544b921d239bbc708bcfe470e8a20358d7aa92f3b38e61f0a67afc"
+    },
+    {
+      "segment_id": "03-12:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX"
+      ],
+      "ordinal": 3,
+      "source_sha256": "911e687216498aa3a4a1e0383d2eab54264ea9d08f6db339df912c58df3870d8",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 03 第 01-10 课、NumPy 基础\n**Time:** ~90 分钟\n",
+      "target_sha256": "20731beaa70f09322cd245c28e0bbc2e6c890ffd3d6f55864a110e7dc1578838"
+    },
+    {
+      "segment_id": "03-12:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "03-12:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "9765b0be264aaade31bf59081c4620dadb30ca4ea1560b2beb1bf9175ccdc5da",
+      "target": "- 使用 JAX 的函数式 API（应用程序编程接口，jax.numpy、jax.grad、jax.jit、jax.vmap）编写纯函数形式的神经网络代码\n- 解释 PyTorch 的即时修改方式与 JAX 的函数式编译模型之间的关键设计差异\n- 运用 jit 编译和 vmap 向量化，相比朴素 Python 实现加速训练循环\n- 在 JAX 中训练一个简单网络，并将其显式状态管理与 PyTorch 的面向对象方式进行对比\n",
+      "target_sha256": "64c56b28eccabe6b8ef0bc6408914bc0818de6a019dfc8c3731d3d395af6a9fd"
+    },
+    {
+      "segment_id": "03-12:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "03-12:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "5351492acbec8b830520d0afa68d4de4b0798747aa1458206576821467f5004c",
+      "target": "你已经知道如何用 PyTorch 构建神经网络：定义一个 `nn.Module`，调用 `.backward()`，再让优化器执行更新。这套方法行得通，有数百万人在使用。\n",
+      "target_sha256": "2c0bd0023c188d6aca8d9b99f9c3d0a5bd976f7dc251d9ea9230763607304776"
+    },
+    {
+      "segment_id": "03-12:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "f156be5f5db750192d567699b2b04599e7643de213569a598dd09cea26d0a55a",
+      "target": "但 PyTorch 有一个刻在骨子里的约束：它在 Python 中以即时方式逐个跟踪运算。每次 `tensor + tensor` 都会单独启动一个计算内核。每个训练步骤都会重新解释同样的 Python 代码。通常这没问题，但当你需要在 2,048 个 TPU 上训练一个具有 540 billion（十亿）个参数的模型时，开销就会变得难以承受。\n",
+      "target_sha256": "ba6bcd8900f8435d635c77776d56ab5240bb5cdb5e51d25e2889c7afbb82bae8"
+    },
+    {
+      "segment_id": "03-12:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "76fcd83e054fe0222c39467b810b785921141249b357c91977e73bac63fd674e",
+      "target": "Google DeepMind 用 JAX 训练 Gemini。Anthropic 曾用 JAX 训练 Claude。这些绝非小规模任务，而是地球上规模最大的神经网络训练任务。它们选择 JAX，是因为 JAX 将训练循环视为可编译的程序，而不是一连串 Python 调用。\n",
+      "target_sha256": "ac550ee621bb1b126bf2be7616455d527e864a30667ed2c8ae7fc8fc23ffb550"
+    },
+    {
+      "segment_id": "03-12:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "586ca57577e75feea9b4a5a94939f2fdec1366c4f30c020251f6433cd412103d",
+      "target": "JAX 就是拥有三项超能力的 NumPy：自动微分、编译到 XLA 的即时编译（JIT），以及自动向量化。你编写一个处理单个样本的函数，JAX 就能给你一个处理整个批次、计算梯度、编译成机器码并跨多个设备运行的函数，而无需修改原函数。\n",
+      "target_sha256": "1913cc0da0b7abf4ca87e00bc71a58297334330836890ff3ee2e850cf8909347"
+    },
+    {
+      "segment_id": "03-12:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "03-12:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Philosophy"
+      ],
+      "ordinal": 12,
+      "source_sha256": "84f7029dacc8677c5ad7fb7f35799193d5301052837248be5f365894b4bdb8be",
+      "target": "### JAX 的设计理念\n",
+      "target_sha256": "0d4694b3f62a996cce99d2f1bbd2be5d30336e25b35558d6ac2d82c59652f865"
+    },
+    {
+      "segment_id": "03-12:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Philosophy"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Philosophy"
+      ],
+      "ordinal": 13,
+      "source_sha256": "d0455659698440d82966245c3dc49d994fc423d0a55f87d2466bbc37263d1d9f",
+      "target": "JAX 是一个函数式框架。没有类，没有可变状态，也没有 `.backward()` 方法。它采用的是：\n",
+      "target_sha256": "a365042972b3497b04277a04f19673a2089368fe2d77321dedce748a4c79f28e"
+    },
+    {
+      "segment_id": "03-12:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Philosophy"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0027",
+      "kind": "table",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Philosophy"
+      ],
+      "ordinal": 14,
+      "source_sha256": "5378c74f9ffccf353f3329f153a0e66e550a00e82969b895585f591e56609417",
+      "target": "| PyTorch | JAX |\n|---------|-----|\n| 带有状态的 `nn.Module` 类 | 纯函数（pure function）：`f(params, x) -> y` |\n| `loss.backward()` | `jax.grad(loss_fn)(params, x, y)` |\n| 即时执行 | 通过 XLA 进行 JIT 编译 |\n| `for x in batch:` 手动循环 | `jax.vmap(f)` 自动向量化 |\n| `DataParallel` / `FSDP` | `jax.pmap(f)` 自动并行化 |\n| 可变的 `model.parameters()` | 由数组组成的不可变 pytree（嵌套树结构） |\n",
+      "target_sha256": "9fab180db8f876a27ae396e8576f378150bdb953407ac5b0ba7b281feedc80c3"
+    },
+    {
+      "segment_id": "03-12:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Philosophy"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Philosophy"
+      ],
+      "ordinal": 15,
+      "source_sha256": "4e935ff534ca54bcb6e96bcd608ab649a5df70d24242c315006d9181408c6be8",
+      "target": "这不是编程风格偏好，而是编译器的约束。JIT 编译要求纯函数：相同输入始终产生相同输出，并且没有副作用。正是这一限制，让 100 倍加速成为可能。\n",
+      "target_sha256": "7a6d61e1cae8d26e4357854511e4035a879d258025f1faf5d3802eca1b3edd14"
+    },
+    {
+      "segment_id": "03-12:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Philosophy"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 16,
+      "source_sha256": "7f104715de72e9cc2de2d2e84bb6aabfea3a7a5c0f96911812c41b5a16905530",
+      "target": "### jax.numpy：熟悉的接口\n",
+      "target_sha256": "93a99ea826461dc0a4f4097909cd2c31b0f674715ed247b3f8891902363c2b21"
+    },
+    {
+      "segment_id": "03-12:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 17,
+      "source_sha256": "91be9232c99f083db9387c02de14d7e03d920052d9a3e3435f098b23b1161464",
+      "target": "JAX 在加速器上重新实现了 NumPy API：\n",
+      "target_sha256": "db55c30ec8df78e03f36986122619d51f02323a69cf830e946d72ab795903a44"
+    },
+    {
+      "segment_id": "03-12:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 18,
+      "source_sha256": "fa6684bea2ea33e12072ada4ad6724e06af86b1277958b8933b37a72a04b7eba",
+      "target": "```python\nimport jax.numpy as jnp\n\na = jnp.array([1.0, 2.0, 3.0])\nb = jnp.array([4.0, 5.0, 6.0])\nc = jnp.dot(a, b)\n```\n",
+      "target_sha256": "fa6684bea2ea33e12072ada4ad6724e06af86b1277958b8933b37a72a04b7eba"
+    },
+    {
+      "segment_id": "03-12:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 19,
+      "source_sha256": "233b5a2d5b9053a042e6d8569517f3493b12b59f17f2d2bb83b8b45c7086ed6c",
+      "target": "函数名相同，广播规则相同，切片语义也相同。但数组位于 GPU/TPU 上，而且每次运算都能被编译器跟踪。\n",
+      "target_sha256": "723d5e07345382b43ccb0241898dc74957f255356255d2937d3d1d122c848f0a"
+    },
+    {
+      "segment_id": "03-12:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 20,
+      "source_sha256": "7286505d89efb62b143800880e2fed542a772ea400f0d2a56fcc8b475513c418",
+      "target": "一个关键区别是：JAX 数组不可变。不能使用 `a[0] = 5`，而要写成 `a = a.at[0].set(5)`。你可能会觉得别扭一周，然后便豁然开朗：正是不可变性，让 `grad`、`jit` 和 `vmap` 这样的变换能够组合使用。\n",
+      "target_sha256": "e476a1c7f99fc24f8ed9b43f255f93715a71c681475e3680f1fb1683e66a6543"
+    },
+    {
+      "segment_id": "03-12:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.numpy: The Familiar Surface"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01192fa7f9d20b93e76696872a712ab3190a346cf352c651b4daee3319026408",
+      "target": "### jax.grad：函数式自动微分\n",
+      "target_sha256": "5e7d3997ea174419e115a1ebb514adbc00c4f67f210ae1696b5a0732989df21e"
+    },
+    {
+      "segment_id": "03-12:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 22,
+      "source_sha256": "103170b333c30e807d0208c875d09133157651959d6d875fcc6cd59296c56d3f",
+      "target": "PyTorch 将梯度附着在张量上（`.grad`），JAX 则将梯度附着在函数上。\n",
+      "target_sha256": "ae43198554221d68b27f94d2d7f8ae172049fd5ac835e6a28c484e4930de7a88"
+    },
+    {
+      "segment_id": "03-12:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 23,
+      "source_sha256": "21b3c2da85e577691afe2a1f93b7de5507c04bd19dae68dd272af111972e8f07",
+      "target": "```python\nimport jax\n\ndef f(x):\n    return x ** 2\n\ndf = jax.grad(f)\ndf(3.0)\n```\n",
+      "target_sha256": "21b3c2da85e577691afe2a1f93b7de5507c04bd19dae68dd272af111972e8f07"
+    },
+    {
+      "segment_id": "03-12:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 24,
+      "source_sha256": "b25bfcde538d7fbcade960c9b697ca091246d8b18899ea3e36c360904ede902f",
+      "target": "`jax.grad` 接收一个函数，返回一个计算梯度的新函数。无需调用 `.backward()`，也不会在张量上存储计算图。梯度就是另一个函数，你可以调用它、组合它，或者对它进行 JIT 编译。\n",
+      "target_sha256": "0e3820ea2ed9c301b28904041f3dec668fd1ba94b4587eb2d1334bcc96636783"
+    },
+    {
+      "segment_id": "03-12:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 25,
+      "source_sha256": "d941b3612ce76544e2bd81cc8870d923ca59c46ffab268489f3c228f6a1465f7",
+      "target": "这种方式可以任意组合：\n",
+      "target_sha256": "e03154848e784bb748cb0516bae9445d9e4c1ea2dc01272bdc4ab7f9621a5be5"
+    },
+    {
+      "segment_id": "03-12:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 26,
+      "source_sha256": "60a2a4e14738d868fa02948cb1cc524c1cf77eb640af83b0581c2ed011b8173d",
+      "target": "```python\nd2f = jax.grad(jax.grad(f))\nd2f(3.0)\n```\n",
+      "target_sha256": "60a2a4e14738d868fa02948cb1cc524c1cf77eb640af83b0581c2ed011b8173d"
+    },
+    {
+      "segment_id": "03-12:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 27,
+      "source_sha256": "8ca5293feff07f798114bc83cde79e892fa083519e2d26655a8dea7abdb1b671",
+      "target": "二阶导数、三阶导数、Jacobian（雅可比矩阵）、Hessian（海森矩阵），都通过组合 `grad` 得到。PyTorch 也能做到（`torch.autograd.functional.hessian`），但那是后来附加的能力。在 JAX 中，这就是基础。\n",
+      "target_sha256": "50e38b12e19d9e239afc3bb1202e1984431c72f6606c2133fe2c6e3167ec253a"
+    },
+    {
+      "segment_id": "03-12:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 28,
+      "source_sha256": "0b2f5f81aba73d7f8134c10476ec5c76204f8698fb44aa8e74f9279c46bdf28b",
+      "target": "约束在于：`grad` 只适用于纯函数。函数内部不能有 print 语句，因为它们会在跟踪期间运行，而不是在执行期间运行。不能修改外部状态，也不能在没有显式密钥管理的情况下生成随机数。\n",
+      "target_sha256": "01a74ad4de187e817743e4ae0f075844bdb43425c04bd258ace39e9bee01fd11"
+    },
+    {
+      "segment_id": "03-12:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jax.grad: Functional Autodiff"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 29,
+      "source_sha256": "dee84ed046a9a729a9548928896efa19c702d916e37bae80b69383e7c1946400",
+      "target": "### jit：编译到 XLA\n",
+      "target_sha256": "ef238b3833d1b8cbb4f476c426bf308ea222a227d555fe9c8f4deae510011494"
+    },
+    {
+      "segment_id": "03-12:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0059",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 30,
+      "source_sha256": "43614bea6f5754b7006bb62b87a32a493bd66d4890057dd857d8e2ad50bfd4b0",
+      "target": "```python\n@jax.jit\ndef train_step(params, x, y):\n    loss = loss_fn(params, x, y)\n    return loss\n\nfast_step = jax.jit(train_step)\n```\n",
+      "target_sha256": "43614bea6f5754b7006bb62b87a32a493bd66d4890057dd857d8e2ad50bfd4b0"
+    },
+    {
+      "segment_id": "03-12:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 31,
+      "source_sha256": "0e8583833b376c1b67e05145f10cef955e2531c4e61d2456408d66d7e5f3e763",
+      "target": "第一次调用时，JAX 会跟踪函数：记录将发生哪些运算，而不执行这些运算。随后，它把跟踪结果交给 XLA（加速线性代数，Accelerated Linear Algebra），这是 Google 为 TPU 和 GPU 开发的编译器。XLA 会融合运算、消除冗余的内存复制，并生成优化后的机器码。\n",
+      "target_sha256": "6086dd49e51382973c2bc5c21740c3f6418e19a3a51c92bfd7904248dcb7a592"
+    },
+    {
+      "segment_id": "03-12:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 32,
+      "source_sha256": "e61ebc24ff0ea78de4bbeeec7d6a31f127a351257ead7ee2909087c958b569f0",
+      "target": "后续调用会完全跳过 Python。编译后的代码在加速器上以 C++ 的速度运行。\n",
+      "target_sha256": "a39678d17641a8727572715ade3cae7f0d5ff8f3f6623f0ab1bd4685745a8086"
+    },
+    {
+      "segment_id": "03-12:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 33,
+      "source_sha256": "d1a92e4a66a90cb5a88d80240c8ec69f82c2b04432509b79180cbdb092df4328",
+      "target": "JIT 适用的场景：\n- 训练步骤：相同计算重复数千次\n- 推理：相同模型处理不同输入\n- 任何使用形状相近的输入、被调用不止一次的函数\n",
+      "target_sha256": "66b4dd33022a1f47847b96e39a2f50c0502af52fe414122e73309ec03f75b5e3"
+    },
+    {
+      "segment_id": "03-12:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 34,
+      "source_sha256": "1d3e58d5e4cfe31654bae2adcd183e2d4de888ecf432a80a4ff39f353189a2af",
+      "target": "JIT 不利的场景：\n- Python 控制流依赖具体值的函数，例如 `if x > 0`，其中 x 是被跟踪的数组\n- 一次性计算：编译开销超过运行时间\n- 调试：跟踪过程掩盖了实际执行过程\n",
+      "target_sha256": "42bf480507e0069fccbd29567e10e7fa10f447c2295fa43d4068018440a58a96"
+    },
+    {
+      "segment_id": "03-12:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 35,
+      "source_sha256": "200c668c3363348d7fe90a95d1260ef44697a2045c12d32ae2f4a90e1de7e7f2",
+      "target": "控制流限制确实存在。`jax.lax.cond` 替代 `if/else`，`jax.lax.scan` 替代 `for` 循环。这些并非可选项，而是编译所需付出的代价。\n",
+      "target_sha256": "cf538c598cb29387c8a807ae9ae61d725ddd5e41b1072c47b3c536680f0c6d48"
+    },
+    {
+      "segment_id": "03-12:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### jit: Compile to XLA"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 36,
+      "source_sha256": "a64384c1d658e0be9c2dd367ed8ab97eda82c64bfe8a19af74b348bfbc8611b7",
+      "target": "### vmap：自动向量化\n",
+      "target_sha256": "ebdae27e203840003eadf035e409291a53df326c1c93abf1805979c3da16adca"
+    },
+    {
+      "segment_id": "03-12:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 37,
+      "source_sha256": "2587cc40eba10cc6ce448e4be94b79b106f85156adce5c0cd3c83a013daab7a9",
+      "target": "你先编写一个处理单个样本的函数：\n",
+      "target_sha256": "ed456bd4999e7a977b4589de720e7b830fbf0da86aba7d9fffa7d70fc9834103"
+    },
+    {
+      "segment_id": "03-12:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 38,
+      "source_sha256": "43551004ed6dda38a3738757cfc2ca31f7eb906365ecba85c3fea91acaa4cffd",
+      "target": "```python\ndef predict(params, x):\n    return jnp.dot(params['w'], x) + params['b']\n```\n",
+      "target_sha256": "43551004ed6dda38a3738757cfc2ca31f7eb906365ecba85c3fea91acaa4cffd"
+    },
+    {
+      "segment_id": "03-12:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 39,
+      "source_sha256": "e0b42ac2549e0c8079227ea13940a29644a0df90fe0b311b414e16cc674a8f9a",
+      "target": "`vmap` 将它提升为处理整个批次的函数：\n",
+      "target_sha256": "74029d1828a96d60f9120da3817b1f84f6480c9dced4a50b7bc3a47b19ebafb3"
+    },
+    {
+      "segment_id": "03-12:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 40,
+      "source_sha256": "7e121e02add3a536768f86cfd62c944f34af59fe4562d42c46b6d823efd59cd5",
+      "target": "```python\nbatch_predict = jax.vmap(predict, in_axes=(None, 0))\n```\n",
+      "target_sha256": "7e121e02add3a536768f86cfd62c944f34af59fe4562d42c46b6d823efd59cd5"
+    },
+    {
+      "segment_id": "03-12:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 41,
+      "source_sha256": "03c1bae0c7eed19695cc01bf247127953b973cb716247c3536d696e3fbd5409f",
+      "target": "`in_axes=(None, 0)` 的意思是：不沿 `params` 分批，因为参数是共享的；沿 `x` 的轴 0 分批。无需手写 `for` 循环，无需重塑形状，也无需在各处传递批次维度。JAX 会确定批次维度，并将整个计算向量化。\n",
+      "target_sha256": "432065e6d79cbb4c15e0bda4dc3d6a4eb7c2433e2721a1fe3097ded6685aed5e"
+    },
+    {
+      "segment_id": "03-12:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 42,
+      "source_sha256": "a7ffdd81a0c224aeb708642192643fce6c43b9025085a510f7cefad6798f2e6a",
+      "target": "这不是语法糖。`vmap` 会生成融合后的向量化代码，运行速度比 Python 循环快 10-100 倍。而且，它能与 `jit` 和 `grad` 组合：\n",
+      "target_sha256": "1d71a1adad4da23592468f1d16ae4a1797028b63382525db9185ba1c5846919d"
+    },
+    {
+      "segment_id": "03-12:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 43,
+      "source_sha256": "5b427a2d777f2b611f139c3b4c105f6186d24ca1cc779dd9d40732dbe6de6d1d",
+      "target": "```python\nper_example_grads = jax.vmap(jax.grad(loss_fn), in_axes=(None, 0, 0))\n```\n",
+      "target_sha256": "5b427a2d777f2b611f139c3b4c105f6186d24ca1cc779dd9d40732dbe6de6d1d"
+    },
+    {
+      "segment_id": "03-12:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 44,
+      "source_sha256": "d98aae16866fd1f3a72dc087c08fd6f54ca3a4bc0cd10d928cbce98b7eea8d1e",
+      "target": "一行代码就能得到逐样本梯度。在 PyTorch 中，如果不借助变通手段，这几乎不可能实现。\n",
+      "target_sha256": "cbe7df89615c519311e47618b0bcff597e8fbdcd52663b6cb3ddc231348b4f66"
+    },
+    {
+      "segment_id": "03-12:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### vmap: Automatic Vectorization"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### pmap: Data Parallelism Across Devices"
+      ],
+      "ordinal": 45,
+      "source_sha256": "2aa82e220c9de07f4f39cd8b336c3e187c7e92ead85a8d9ca915cce96d1cdc0b",
+      "target": "### pmap：跨设备数据并行\n",
+      "target_sha256": "3f61b87d1b84bd3a25e9c8d99bf14aab9164e2316a7be8ca5f0e1a24ef9ae44a"
+    },
+    {
+      "segment_id": "03-12:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### pmap: Data Parallelism Across Devices"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0091",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### pmap: Data Parallelism Across Devices"
+      ],
+      "ordinal": 46,
+      "source_sha256": "5984e6f5236755365f860ab9d817036df6481dc1da528c3b4276132ac9c92369",
+      "target": "```python\nparallel_step = jax.pmap(train_step, axis_name='devices')\n```\n",
+      "target_sha256": "5984e6f5236755365f860ab9d817036df6481dc1da528c3b4276132ac9c92369"
+    },
+    {
+      "segment_id": "03-12:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### pmap: Data Parallelism Across Devices"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### pmap: Data Parallelism Across Devices"
+      ],
+      "ordinal": 47,
+      "source_sha256": "88c15b148f68e14954f03a0ffcd56594c36e2f62e80c418a009450a0de5ead0f",
+      "target": "`pmap` 将函数复制到所有可用设备（GPU/TPU）上，并拆分批次。在函数内部，`jax.lax.pmean` 和 `jax.lax.psum` 用于跨设备同步梯度。\n",
+      "target_sha256": "3da48ea51cf1a7bff9760023e6ae5169a565ee9a07ffc8a1dd03a5ab79e9aab3"
+    },
+    {
+      "segment_id": "03-12:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### pmap: Data Parallelism Across Devices"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### pmap: Data Parallelism Across Devices"
+      ],
+      "ordinal": 48,
+      "source_sha256": "42daabe85bb6e69ac97c76fe0b043ed0bb7d637113625dd8b6dbe8607c89c67d",
+      "target": "Google 使用 `pmap` 及其后继者 `shard_map`，在数千颗 TPU v5e 芯片上训练 Gemini。编程模式就是：写好单设备版本，用 `pmap` 包装，完成。\n",
+      "target_sha256": "0666d61a125aabadb05c7ae8de7c0de813c08ccf94c69f812679e9c69d03761e"
+    },
+    {
+      "segment_id": "03-12:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### pmap: Data Parallelism Across Devices"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 49,
+      "source_sha256": "1dc21c2ddd8fc4a8a22cd9b33a43f356a9ea9d5872cceb2f77fd191c3feefc36",
+      "target": "### Pytrees：通用数据结构\n",
+      "target_sha256": "e264189a033e868acea7f54c1a22e6c02bee10c2412fc1ba359f49ac9b9e6fc5"
+    },
+    {
+      "segment_id": "03-12:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 50,
+      "source_sha256": "131b31764509612ba6583ca4cf26c8f88fd376d8588018714684d9ce9a364878",
+      "target": "JAX 操作的是“pytrees”，即列表、元组、字典和数组的嵌套组合。你的模型参数就是一个 pytree：\n",
+      "target_sha256": "9018cf92dcc1a02b8d14ef8f19fa8da3febc2a26f664e9bdd3247aea336ef564"
+    },
+    {
+      "segment_id": "03-12:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0101",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 51,
+      "source_sha256": "852f54957dff4c1a13f4b6450a5f23f7a8de9ba8ec7cc136a3bef9e57ac151e0",
+      "target": "```python\nparams = {\n    'layer1': {'w': jnp.zeros((784, 256)), 'b': jnp.zeros(256)},\n    'layer2': {'w': jnp.zeros((256, 128)), 'b': jnp.zeros(128)},\n    'layer3': {'w': jnp.zeros((128, 10)),  'b': jnp.zeros(10)},\n}\n```\n",
+      "target_sha256": "852f54957dff4c1a13f4b6450a5f23f7a8de9ba8ec7cc136a3bef9e57ac151e0"
+    },
+    {
+      "segment_id": "03-12:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 52,
+      "source_sha256": "a298e51d7cdf19cb16de3205a0a1d113ae9e08ee3777d203bc46036bb53fba25",
+      "target": "每种 JAX 变换，包括 `grad`、`jit` 和 `vmap`，都知道如何遍历 pytree。`jax.tree.map(f, tree)` 会将 `f` 应用于每个叶节点。优化器就是这样一次更新全部参数的：\n",
+      "target_sha256": "789ce3d9dd1e3e9cc4a6646956566615f6732c4152f687b905a5d2c8eef15a14"
+    },
+    {
+      "segment_id": "03-12:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0105",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 53,
+      "source_sha256": "facac4818771e5648065b876ab1050243b9c00b072492ea94c655301bb1faf78",
+      "target": "```python\nparams = jax.tree.map(lambda p, g: p - lr * g, params, grads)\n```\n",
+      "target_sha256": "facac4818771e5648065b876ab1050243b9c00b072492ea94c655301bb1faf78"
+    },
+    {
+      "segment_id": "03-12:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 54,
+      "source_sha256": "67c9c48f522602dcf7a8cb0c40fd5e7df5f7d1aaa9bc64d7d91a7cc4e278a72c",
+      "target": "没有 `.parameters()` 方法，也没有参数注册。树结构本身就是模型。\n",
+      "target_sha256": "a97fbc1778bb4ad779c91ae11c8501f0381af443ee28ce5f725b282994dc8eed"
+    },
+    {
+      "segment_id": "03-12:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Pytrees: The Universal Data Structure"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 55,
+      "source_sha256": "b7b6472191651c585d95f0afd978385cde24224b742ddf4a86bc5715977ad8a3",
+      "target": "### 函数式与面向对象\n",
+      "target_sha256": "a9997ab6a957c6c23b8eefca474fabd2773bd59616fb8dc8e8c44fb9e0c749bf"
+    },
+    {
+      "segment_id": "03-12:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 56,
+      "source_sha256": "5a80158f0a9c62cd2e4b7155db8c66d325b91250f239292f090316cd33d4c3e7",
+      "target": "PyTorch 将状态存储在对象内部：\n",
+      "target_sha256": "f37a20cf48633a3d377d8581d2e38a99d1bdd5ec3a981cef3f1d9621e5aab0bb"
+    },
+    {
+      "segment_id": "03-12:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0113",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 57,
+      "source_sha256": "babef0f4894895cd18ed86bfa4463dbdf84567977a22ba25cb6da6c0d8b3b27a",
+      "target": "```python\nclass Model(nn.Module):\n    def __init__(self):\n        self.linear = nn.Linear(784, 10)\n\n    def forward(self, x):\n        return self.linear(x)\n```\n",
+      "target_sha256": "babef0f4894895cd18ed86bfa4463dbdf84567977a22ba25cb6da6c0d8b3b27a"
+    },
+    {
+      "segment_id": "03-12:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 58,
+      "source_sha256": "255536251e410e16a4f10e771b473488de8ec02a60773e955cf1a7e1819ad8f3",
+      "target": "JAX 则使用具有显式状态的纯函数：\n",
+      "target_sha256": "cb4d96329b79b2e03d048a259da744e2498f46019cec828e780a31cab9c69b55"
+    },
+    {
+      "segment_id": "03-12:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0117",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 59,
+      "source_sha256": "d4523cf0715839b17e7a88bf6eca02aa495ec01f9d33299e33d588aa68d5d360",
+      "target": "```python\ndef predict(params, x):\n    return jnp.dot(x, params['w']) + params['b']\n```\n",
+      "target_sha256": "d4523cf0715839b17e7a88bf6eca02aa495ec01f9d33299e33d588aa68d5d360"
+    },
+    {
+      "segment_id": "03-12:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 60,
+      "source_sha256": "51ec9c7d9b784e6a3354fe144c7843d52793b88a05314395b209e94b3640731d",
+      "target": "参数被传入函数，不存储任何内容，也不修改任何内容。这使每个函数都可以测试、组合和编译，也意味着你要自己管理参数，或者使用 Flax、Equinox 这样的库。\n",
+      "target_sha256": "a391fec29792a01e6c91439d4831128943de661f2fc63dc847185c64822a1e4e"
+    },
+    {
+      "segment_id": "03-12:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Functional vs Object-Oriented"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 61,
+      "source_sha256": "b123b3678e3148e702dcc74ec4b994ffe43cc0a14e02eee480748bf8f3d49ef6",
+      "target": "### JAX 生态系统\n",
+      "target_sha256": "00fb7821a19ea00ddf79202e67665a9252a74a442b162039132a78648a616c2b"
+    },
+    {
+      "segment_id": "03-12:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 62,
+      "source_sha256": "74da89626b65837c90fb46f814757fc8163947b23d618d1e1bec0774e4df6862",
+      "target": "JAX 提供基本组件，库则让它们更易用：\n",
+      "target_sha256": "cfd7b2a78a9ddfa41496847f0fc3020e118d0bd11b6d064c9e6e67ba22f51db1"
+    },
+    {
+      "segment_id": "03-12:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0125",
+      "kind": "table",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 63,
+      "source_sha256": "1fbf9d7898956ba5c661bc68146047341aec2b472750d744a5edfcdfb960253b",
+      "target": "| 库 | 作用 | 风格 |\n|---------|------|-------|\n| **Flax** (Google) | 神经网络层 | 带显式状态的 `nn.Module` |\n| **Equinox** (Patrick Kidger) | 神经网络层 | 基于 pytree，符合 Python 风格 |\n| **Optax** (DeepMind) | 优化器 + 学习率调度 | 可组合的梯度变换 |\n| **Orbax** (Google) | 检查点保存与恢复 | 保存/恢复 pytree |\n| **CLU** (Google) | 指标 + 日志记录 | 训练循环工具 |\n",
+      "target_sha256": "35287ee6cadd8154b94193b71156e4110fb0a574e83914d6eca5b61a795c26f5"
+    },
+    {
+      "segment_id": "03-12:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0127",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 64,
+      "source_sha256": "2ce813d7dfa9ad391266d1a3979202257d9063a7d7926809bdad58b7ae81d87d",
+      "target": "Optax 是标准的优化器库。它将梯度变换（Adam、随机梯度下降 SGD、裁剪）与参数更新分离，让组合变得十分简单：\n",
+      "target_sha256": "f5098ee641daadb1a8abb3a062a740d6e7ec10e12538700e4802f9801e19cd8c"
+    },
+    {
+      "segment_id": "03-12:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0129",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 65,
+      "source_sha256": "96983161b397e09a4cacc679713d6d42674c97647d240c892cbe0854ee62d1da",
+      "target": "```python\noptimizer = optax.chain(\n    optax.clip_by_global_norm(1.0),\n    optax.adam(learning_rate=1e-3),\n)\n```\n",
+      "target_sha256": "96983161b397e09a4cacc679713d6d42674c97647d240c892cbe0854ee62d1da"
+    },
+    {
+      "segment_id": "03-12:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### The JAX Ecosystem"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### When to Use JAX vs PyTorch"
+      ],
+      "ordinal": 66,
+      "source_sha256": "77a6d6816bccc49d97c02c9e65ae3bd286b471c1b6c1d342ba0a0d201ba77d2d",
+      "target": "### 何时使用 JAX，何时使用 PyTorch\n",
+      "target_sha256": "0d4790fde23dab0bef0a3abd795e9d8f14c94090129d159a17d070c93dbbfb9c"
+    },
+    {
+      "segment_id": "03-12:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### When to Use JAX vs PyTorch"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0133",
+      "kind": "table",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### When to Use JAX vs PyTorch"
+      ],
+      "ordinal": 67,
+      "source_sha256": "76afff7bbbc0f8b8a918434276e15636aecdeab33775a1c9e645d50df8202ce2",
+      "target": "| 因素 | JAX | PyTorch |\n|--------|-----|---------|\n| TPU 支持 | 一等支持（两者都由 Google 构建） | 社区维护（torch_xla） |\n| GPU 支持 | 良好（通过 XLA 使用 CUDA） | 同类最佳（原生 CUDA） |\n| 调试 | 困难（跟踪 + 编译） | 容易（即时执行、逐行运行） |\n| 生态系统 | 侧重研究（Flax、Equinox） | 庞大（HuggingFace、torchvision 等） |\n| 招聘 | 小众（Google/DeepMind/Anthropic） | 主流（各处都有） |\n| 大规模训练 | 更优（XLA、pmap、mesh） | 良好（FSDP、DeepSpeed） |\n| 原型开发速度 | 较慢（函数式方式的额外负担） | 较快（修改后即可继续） |\n| 生产推理 | TensorFlow Serving, Vertex AI | TorchServe, Triton, ONNX |\n| 使用者 | DeepMind (Gemini), Anthropic (Claude) | Meta (Llama), OpenAI (GPT), Stability AI |\n",
+      "target_sha256": "59ebbc9a3cbbef652e8986dca8be9fd5c516102a40ec3413be980fd09aebefb5"
+    },
+    {
+      "segment_id": "03-12:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### When to Use JAX vs PyTorch"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0135",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### When to Use JAX vs PyTorch"
+      ],
+      "ordinal": 68,
+      "source_sha256": "7dbc093dca85fb568a4ed01da3e14a8c9376333ab9ccfbf959acdf04e9608811",
+      "target": "坦率地说，除非有使用 JAX 的特定理由，否则就用 PyTorch。这些理由包括：能够使用 TPU、需要逐样本梯度、进行超大规模多设备训练，或者在 Google/DeepMind/Anthropic 工作。\n",
+      "target_sha256": "5f626ca5d872583e71c0939e26ffc02f37aa62fc73f9281f21e92e45704d4075"
+    },
+    {
+      "segment_id": "03-12:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### When to Use JAX vs PyTorch"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0137",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 69,
+      "source_sha256": "508ba4c15804a2f8c670849f4ebbcd8cfdbb574e5aba045b4d7102354acb2731",
+      "target": "### JAX 中的随机数\n",
+      "target_sha256": "d9a68157e0460fc3098df66cf6dbd6b97ce75d3995cdcaeda9e902c52800fd53"
+    },
+    {
+      "segment_id": "03-12:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0139",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 70,
+      "source_sha256": "2215ce52c6d9e428043a1f8ba1787c454a5cbdbf27cb62e90946f665b7066e6b",
+      "target": "JAX 没有全局随机状态。每个随机操作都需要显式的伪随机数生成器（PRNG）密钥：\n",
+      "target_sha256": "b75c0f23cbe98582bf23c340648c251d7699eb25089a804448928f0e63dffeac"
+    },
+    {
+      "segment_id": "03-12:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0141",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 71,
+      "source_sha256": "2733b22c78662bde95d8a7bce0500f4ebee770f261202f660e49a4210b7fa8cb",
+      "target": "```python\nkey = jax.random.PRNGKey(42)\nkey1, key2 = jax.random.split(key)\nw = jax.random.normal(key1, shape=(784, 256))\n```\n",
+      "target_sha256": "2733b22c78662bde95d8a7bce0500f4ebee770f261202f660e49a4210b7fa8cb"
+    },
+    {
+      "segment_id": "03-12:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0143",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 72,
+      "source_sha256": "07ead299d743a53f12366d1d30323850d1f42d19aa6c6281259a37933c8981f5",
+      "target": "起初这会让人觉得麻烦，但它保证了跨设备、跨编译的可复现性，而 PyTorch 的 `torch.manual_seed` 无法在多 GPU 环境中保证这一点。\n",
+      "target_sha256": "ff776265cceebe605e297d2901d4e8cef696c2e91908b9cd1f0fc98d0de1161a"
+    },
+    {
+      "segment_id": "03-12:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0145",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 73,
+      "source_sha256": "671e07036d6342f4f428a7e6c6a6e6fe5a12cbc210c70bcda69c1bcd6bb26b93",
+      "target": "```figure\nbatchnorm-effect\n```\n",
+      "target_sha256": "671e07036d6342f4f428a7e6c6a6e6fe5a12cbc210c70bcda69c1bcd6bb26b93"
+    },
+    {
+      "segment_id": "03-12:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## The Concept",
+        "### Random Numbers in JAX"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "03-12:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0149",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 1: Setup and Data"
+      ],
+      "ordinal": 75,
+      "source_sha256": "dc40a309ab8ef5e6fe0190f048d71eb87c634b327c90fac5dbed60a2c227602a",
+      "target": "### 步骤 1：环境准备与数据\n",
+      "target_sha256": "25b3292107e24772071f0b15d07c132b72a290f50f1214ea89c6835c48f035f5"
+    },
+    {
+      "segment_id": "03-12:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 1: Setup and Data"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 1: Setup and Data"
+      ],
+      "ordinal": 76,
+      "source_sha256": "9203c254b079dbf6c0daa3b5433da34e69e60d00c223ee3d26e965139f2f601f",
+      "target": "我们将使用 JAX 和 Optax，在 MNIST 上训练一个 3 层多层感知机（MLP）。它有 784 个输入，两个隐藏层分别含 256 和 128 个神经元，输出分为 10 个类别。\n",
+      "target_sha256": "94f8b41d9638df83f4bf396679108d8fbdd90f8bd521d89b9ac8dfe37231d892"
+    },
+    {
+      "segment_id": "03-12:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 1: Setup and Data"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0153",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 1: Setup and Data"
+      ],
+      "ordinal": 77,
+      "source_sha256": "0ceb47b3420d96cb27369d098f34c7e942963a5fba95d7e028af4f2d6105c007",
+      "target": "```python\nimport jax\nimport jax.numpy as jnp\nfrom jax import random\nimport optax\n\ndef get_mnist_data():\n    from sklearn.datasets import fetch_openml\n    mnist = fetch_openml('mnist_784', version=1, as_frame=False, parser='auto')\n    X = mnist.data.astype('float32') / 255.0\n    y = mnist.target.astype('int')\n    X_train, X_test = X[:60000], X[60000:]\n    y_train, y_test = y[:60000], y[60000:]\n    return X_train, y_train, X_test, y_test\n```\n",
+      "target_sha256": "0ceb47b3420d96cb27369d098f34c7e942963a5fba95d7e028af4f2d6105c007"
+    },
+    {
+      "segment_id": "03-12:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 1: Setup and Data"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0155",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 2: Initialize Parameters"
+      ],
+      "ordinal": 78,
+      "source_sha256": "f4b3fa4f42a5826d540dd68fd69b352a0b98cfaf390552bb4d5abafbfbd0cc9f",
+      "target": "### 步骤 2：初始化参数\n",
+      "target_sha256": "eee8bb7ff8180f2738229bb97c708f51520a6a3f5e5b7f2ffc5dcbff4fea05fa"
+    },
+    {
+      "segment_id": "03-12:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 2: Initialize Parameters"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 2: Initialize Parameters"
+      ],
+      "ordinal": 79,
+      "source_sha256": "8eedffe8aae63fdc3d355441f5aab386f69e70622ad0f30815da89a03f6344a9",
+      "target": "没有类，只有一个返回 pytree 的函数：\n",
+      "target_sha256": "22008841295557c1c7220d354b3bf0991cf0f280d7e9426bd14622a2ef7ec5d8"
+    },
+    {
+      "segment_id": "03-12:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 2: Initialize Parameters"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0159",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 2: Initialize Parameters"
+      ],
+      "ordinal": 80,
+      "source_sha256": "cc303e5b1f5bdd8e4b968cb1deff34319be9e6150813fc2f81adb070c454b10b",
+      "target": "```python\ndef init_params(key):\n    k1, k2, k3 = random.split(key, 3)\n    scale1 = jnp.sqrt(2.0 / 784)\n    scale2 = jnp.sqrt(2.0 / 256)\n    scale3 = jnp.sqrt(2.0 / 128)\n    params = {\n        'layer1': {\n            'w': scale1 * random.normal(k1, (784, 256)),\n            'b': jnp.zeros(256),\n        },\n        'layer2': {\n            'w': scale2 * random.normal(k2, (256, 128)),\n            'b': jnp.zeros(128),\n        },\n        'layer3': {\n            'w': scale3 * random.normal(k3, (128, 10)),\n            'b': jnp.zeros(10),\n        },\n    }\n    return params\n```\n",
+      "target_sha256": "cc303e5b1f5bdd8e4b968cb1deff34319be9e6150813fc2f81adb070c454b10b"
+    },
+    {
+      "segment_id": "03-12:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 2: Initialize Parameters"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0161",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 2: Initialize Parameters"
+      ],
+      "ordinal": 81,
+      "source_sha256": "8379abd6cc0e9c20a71a2866fc371b22d9f2ec0e662c06f767b1da4e8a03bc87",
+      "target": "手动完成 He 初始化。从一个随机种子拆分出三个 PRNG 密钥。每个权重都是嵌套字典中的不可变数组。\n",
+      "target_sha256": "efd8d18700545751f95efdf90959edce76a1f3434d95a90f1949b1bb1d9e658b"
+    },
+    {
+      "segment_id": "03-12:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 2: Initialize Parameters"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0163",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 3: Forward Pass"
+      ],
+      "ordinal": 82,
+      "source_sha256": "f1b96d134b275cb9dae37defb6de8fb3ae25eec4b0881919e656e772212bef73",
+      "target": "### 步骤 3：前向传播\n",
+      "target_sha256": "291f78195447d802fff6f40289d90d13a58415ab7c5cdad344169add717f1b8f"
+    },
+    {
+      "segment_id": "03-12:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 3: Forward Pass"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0165",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 3: Forward Pass"
+      ],
+      "ordinal": 83,
+      "source_sha256": "37f0d37bd055f3b95f23a76e6601b46cc7b68a586355daf0a240fbadb73193b3",
+      "target": "```python\ndef forward(params, x):\n    x = jnp.dot(x, params['layer1']['w']) + params['layer1']['b']\n    x = jax.nn.relu(x)\n    x = jnp.dot(x, params['layer2']['w']) + params['layer2']['b']\n    x = jax.nn.relu(x)\n    x = jnp.dot(x, params['layer3']['w']) + params['layer3']['b']\n    return x\n\ndef loss_fn(params, x, y):\n    logits = forward(params, x)\n    one_hot = jax.nn.one_hot(y, 10)\n    return -jnp.mean(jnp.sum(jax.nn.log_softmax(logits) * one_hot, axis=-1))\n```\n",
+      "target_sha256": "37f0d37bd055f3b95f23a76e6601b46cc7b68a586355daf0a240fbadb73193b3"
+    },
+    {
+      "segment_id": "03-12:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 3: Forward Pass"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0167",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 3: Forward Pass"
+      ],
+      "ordinal": 84,
+      "source_sha256": "100b24e645c6429a77a6845b745627c1d80d40af1d9a75f7ab4ed8eee4ab0858",
+      "target": "这些都是纯函数：输入参数，输出预测。没有 `self`，也没有存储的状态。`loss_fn` 从零计算交叉熵，即 softmax、取对数、求均值并取负。\n",
+      "target_sha256": "62be947cce8f293d0a756a62841f3a6cc60e4a6d6ab1066f897739b608a85c38"
+    },
+    {
+      "segment_id": "03-12:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 3: Forward Pass"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0169",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 4: JIT-Compiled Training Step"
+      ],
+      "ordinal": 85,
+      "source_sha256": "0d535121cbded5c0ec2b6de54b28b7f89bfa4ad2d8afb67b065681c05998e06d",
+      "target": "### 步骤 4：经 JIT 编译的训练步骤\n",
+      "target_sha256": "9898173939cd59eadd7024b76be4f551a3735bb8f5f9a5ff955169b9dbcd07ed"
+    },
+    {
+      "segment_id": "03-12:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 4: JIT-Compiled Training Step"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0171",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 4: JIT-Compiled Training Step"
+      ],
+      "ordinal": 86,
+      "source_sha256": "c165e0fc8809a0a6f48614bfaaf14240b7962bdc59bc416c9d90b2f2b8903521",
+      "target": "```python\n@jax.jit\ndef train_step(params, opt_state, x, y):\n    loss, grads = jax.value_and_grad(loss_fn)(params, x, y)\n    updates, opt_state = optimizer.update(grads, opt_state, params)\n    params = optax.apply_updates(params, updates)\n    return params, opt_state, loss\n\n@jax.jit\ndef accuracy(params, x, y):\n    logits = forward(params, x)\n    preds = jnp.argmax(logits, axis=-1)\n    return jnp.mean(preds == y)\n```\n",
+      "target_sha256": "c165e0fc8809a0a6f48614bfaaf14240b7962bdc59bc416c9d90b2f2b8903521"
+    },
+    {
+      "segment_id": "03-12:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 4: JIT-Compiled Training Step"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0173",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 4: JIT-Compiled Training Step"
+      ],
+      "ordinal": 87,
+      "source_sha256": "b15acecd71cb8e0fce1175fc5f68ac4fec822851f566dab365bd914f5914a641",
+      "target": "`jax.value_and_grad` 在一次处理中同时返回损失值和梯度。`@jax.jit` 装饰器将这两个函数编译到 XLA。第一次调用之后，每个训练步骤都不再经过 Python。\n",
+      "target_sha256": "84ad74748ad9aec63bd585c07cc84c5b1ff5e0c397144b318c365df5abaf2e09"
+    },
+    {
+      "segment_id": "03-12:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 4: JIT-Compiled Training Step"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0175",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 5: Training Loop"
+      ],
+      "ordinal": 88,
+      "source_sha256": "2a9e41fa5b576f2ce7608c4764260faced98a6bfdc3b3ca0924cd4febb4bb615",
+      "target": "### 步骤 5：训练循环\n",
+      "target_sha256": "5dba6b3d060e72ce49d998a9093fa82410ee03d93034b993e128519cabcd9926"
+    },
+    {
+      "segment_id": "03-12:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 5: Training Loop"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0177",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 5: Training Loop"
+      ],
+      "ordinal": 89,
+      "source_sha256": "6de272c54f0af8b6527d9af283b3532d28e97cdf5a49b25eb3b1a0dc6b176cb0",
+      "target": "```python\noptimizer = optax.adam(learning_rate=1e-3)\n\nX_train, y_train, X_test, y_test = get_mnist_data()\nX_train, X_test = jnp.array(X_train), jnp.array(X_test)\ny_train, y_test = jnp.array(y_train), jnp.array(y_test)\n\nkey = random.PRNGKey(0)\nparams = init_params(key)\nopt_state = optimizer.init(params)\n\nbatch_size = 128\nn_epochs = 10\n\nfor epoch in range(n_epochs):\n    key, subkey = random.split(key)\n    perm = random.permutation(subkey, len(X_train))\n    X_shuffled = X_train[perm]\n    y_shuffled = y_train[perm]\n\n    epoch_loss = 0.0\n    n_batches = len(X_train) // batch_size\n    for i in range(n_batches):\n        start = i * batch_size\n        xb = X_shuffled[start:start + batch_size]\n        yb = y_shuffled[start:start + batch_size]\n        params, opt_state, loss = train_step(params, opt_state, xb, yb)\n        epoch_loss += loss\n\n    train_acc = accuracy(params, X_train[:5000], y_train[:5000])\n    test_acc = accuracy(params, X_test, y_test)\n    print(f\"Epoch {epoch + 1:2d} | Loss: {epoch_loss / n_batches:.4f} | \"\n          f\"Train Acc: {train_acc:.4f} | Test Acc: {test_acc:.4f}\")\n```\n",
+      "target_sha256": "6de272c54f0af8b6527d9af283b3532d28e97cdf5a49b25eb3b1a0dc6b176cb0"
+    },
+    {
+      "segment_id": "03-12:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 5: Training Loop"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0179",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 5: Training Loop"
+      ],
+      "ordinal": 90,
+      "source_sha256": "5bef9cc30db88fa02bf764664020efb51ea5678f2f7d8798de3a69cf0a620e6d",
+      "target": "训练 10 轮，测试准确率为 ~97%。第一轮很慢，因为需要 JIT 编译。第 2-10 轮则很快。\n",
+      "target_sha256": "9412f1aa1f75ffc2ca180edfc5ac226db812b6f71905688bbcbaa17a299e7015"
+    },
+    {
+      "segment_id": "03-12:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 5: Training Loop"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0181",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 5: Training Loop"
+      ],
+      "ordinal": 91,
+      "source_sha256": "88878679ec3025565b30c24c49ceedd21a89c080e32c0f365015956d7c69a494",
+      "target": "注意这里省去了什么：没有 `.zero_grad()`，没有 `.backward()`，也没有 `.step()`。整个更新就是一次组合函数调用。计算梯度、用 Adam 变换梯度、将其应用于参数，这些全都在 `train_step` 内部完成。\n",
+      "target_sha256": "3ef522ee36bb4a3874563fc365257f9d3606226e49142a99951489048d3afe3f"
+    },
+    {
+      "segment_id": "03-12:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Build It",
+        "### Step 5: Training Loop"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0183",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It"
+      ],
+      "ordinal": 92,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "03-12:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0185",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Flax: The Google Standard"
+      ],
+      "ordinal": 93,
+      "source_sha256": "18125c73f43b1f4c58b99da8bb2b7a299660f136f52b551e5baba8afa0758322",
+      "target": "### Flax：Google 的标准选择\n",
+      "target_sha256": "d8375ddaa677c8baa19a410545c2a070f955ce3714887c888d0161e04ab2622b"
+    },
+    {
+      "segment_id": "03-12:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Flax: The Google Standard"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0187",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Flax: The Google Standard"
+      ],
+      "ordinal": 94,
+      "source_sha256": "1e06b61d325ec87fd5a259132448c9d2fe7ab458cb68c5cd83e105bccda5be93",
+      "target": "Flax 是最常用的 JAX 神经网络库。它重新引入了 `nn.Module`，但采用显式状态管理：\n",
+      "target_sha256": "a8831671db66ca3d68ef25c6c2bcf440321fb0a5afe1dcf05e1ac4950fa20a93"
+    },
+    {
+      "segment_id": "03-12:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Flax: The Google Standard"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0189",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Flax: The Google Standard"
+      ],
+      "ordinal": 95,
+      "source_sha256": "7910388a25e223c8982cb6023cfcd1c09bef6fa9b8f68a7a3ce1591e18487ad4",
+      "target": "```python\nimport flax.linen as nn\n\nclass MLP(nn.Module):\n    @nn.compact\n    def __call__(self, x):\n        x = nn.Dense(256)(x)\n        x = nn.relu(x)\n        x = nn.Dense(128)(x)\n        x = nn.relu(x)\n        x = nn.Dense(10)(x)\n        return x\n\nmodel = MLP()\nparams = model.init(jax.random.PRNGKey(0), jnp.ones((1, 784)))\nlogits = model.apply(params, x_batch)\n```\n",
+      "target_sha256": "7910388a25e223c8982cb6023cfcd1c09bef6fa9b8f68a7a3ce1591e18487ad4"
+    },
+    {
+      "segment_id": "03-12:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Flax: The Google Standard"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0191",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Flax: The Google Standard"
+      ],
+      "ordinal": 96,
+      "source_sha256": "14f0ca0fb8e091190303a3c05d3f2b7e05a7d5e24d463b87ae7643e573b0b0c1",
+      "target": "结构与 PyTorch 相同，但 `params` 与模型分离。`model.init()` 创建参数，`model.apply(params, x)` 执行前向传播。模型对象没有状态。\n",
+      "target_sha256": "c9079aacd4062de666c141dce1d43f793b0b7c9a2f50ad04ff9c535264fd75f6"
+    },
+    {
+      "segment_id": "03-12:b0192",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Flax: The Google Standard"
+      ],
+      "ordinal": 96,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0193",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Equinox: The Pythonic Alternative"
+      ],
+      "ordinal": 97,
+      "source_sha256": "5b32abe23a540c9d5e92704c32b4561a0e83e5c058d9554576dcf77cd56187a0",
+      "target": "### Equinox：符合 Python 风格的替代方案\n",
+      "target_sha256": "2b30366612c1427c83e184e959b36ee94c2fc330ccc700ec5038f82a7229f4a4"
+    },
+    {
+      "segment_id": "03-12:b0194",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Equinox: The Pythonic Alternative"
+      ],
+      "ordinal": 97,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0195",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Equinox: The Pythonic Alternative"
+      ],
+      "ordinal": 98,
+      "source_sha256": "43af5fceaa47eaa61fbac731dbb086dce5ac75de17a5d033c82de4993daac9e2",
+      "target": "Equinox（由 Patrick Kidger 开发）将模型表示为 pytree：\n",
+      "target_sha256": "324b0c66951ec0c1a9c86d493bd9b5bb6b9df3e6c8b56f18ee75940f19d894e4"
+    },
+    {
+      "segment_id": "03-12:b0196",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Equinox: The Pythonic Alternative"
+      ],
+      "ordinal": 98,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0197",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Equinox: The Pythonic Alternative"
+      ],
+      "ordinal": 99,
+      "source_sha256": "455f6f0a59c1ba52aa65ac6b34a659d3ca0a50d2f58ea8c06b6c47e307d15fe1",
+      "target": "```python\nimport equinox as eqx\n\nmodel = eqx.nn.MLP(\n    in_size=784, out_size=10, width_size=256, depth=2,\n    activation=jax.nn.relu, key=jax.random.PRNGKey(0)\n)\nlogits = model(x)\n```\n",
+      "target_sha256": "455f6f0a59c1ba52aa65ac6b34a659d3ca0a50d2f58ea8c06b6c47e307d15fe1"
+    },
+    {
+      "segment_id": "03-12:b0198",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Equinox: The Pythonic Alternative"
+      ],
+      "ordinal": 99,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0199",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Equinox: The Pythonic Alternative"
+      ],
+      "ordinal": 100,
+      "source_sha256": "25a72f02972a0a5ab26f26908ac569b8a686a2fab02944cc2e0a8433d41abda8",
+      "target": "模型本身就是一个 pytree，无需 `.apply()`。参数就是模型的叶节点。这更接近 JAX 的思维方式。\n",
+      "target_sha256": "021ffc63500b8af5ba56b59c93a00045f92c6de69e596232477b1a703c2efdaa"
+    },
+    {
+      "segment_id": "03-12:b0200",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Equinox: The Pythonic Alternative"
+      ],
+      "ordinal": 100,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0201",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Optax: Composable Optimizers"
+      ],
+      "ordinal": 101,
+      "source_sha256": "c546d379cc461ad627a6ac2689520cd999df0ce7f4a8f8d26ac97c8cdd93df3e",
+      "target": "### Optax：可组合的优化器\n",
+      "target_sha256": "d4a0a00c408a14d62ac7b4b34a5a810aaf1271862e24f7ef48f421b44da40444"
+    },
+    {
+      "segment_id": "03-12:b0202",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Optax: Composable Optimizers"
+      ],
+      "ordinal": 101,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0203",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Optax: Composable Optimizers"
+      ],
+      "ordinal": 102,
+      "source_sha256": "103786551fe08a9fcdeeb7715fcc307bb53122f470f82989e000ab3983d0dce8",
+      "target": "Optax 将梯度变换与更新解耦：\n",
+      "target_sha256": "f5c7def10db1d27324c9b0445ac622f1e8a30c5c99f2c8a57a576bc28549171e"
+    },
+    {
+      "segment_id": "03-12:b0204",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Optax: Composable Optimizers"
+      ],
+      "ordinal": 102,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0205",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Optax: Composable Optimizers"
+      ],
+      "ordinal": 103,
+      "source_sha256": "ef5bf754e5acbb5ff69c85ecf0b411c9426c1a4d5fa1d8526ff4c57a11fe62f9",
+      "target": "```python\nschedule = optax.warmup_cosine_decay_schedule(\n    init_value=0.0, peak_value=1e-3,\n    warmup_steps=1000, decay_steps=50000\n)\n\noptimizer = optax.chain(\n    optax.clip_by_global_norm(1.0),\n    optax.adamw(learning_rate=schedule, weight_decay=0.01),\n)\n```\n",
+      "target_sha256": "ef5bf754e5acbb5ff69c85ecf0b411c9426c1a4d5fa1d8526ff4c57a11fe62f9"
+    },
+    {
+      "segment_id": "03-12:b0206",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Optax: Composable Optimizers"
+      ],
+      "ordinal": 103,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0207",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Optax: Composable Optimizers"
+      ],
+      "ordinal": 104,
+      "source_sha256": "550fb927d6abf4d80c3c0a11e61db723f43c6f06f1954daba182a149e921f23c",
+      "target": "梯度裁剪、学习率预热、权重衰减，全都组合成一条变换链。每个变换接收梯度、修改它们，再传递给下一个变换。无需一个包揽所有功能的优化器类。\n",
+      "target_sha256": "21eb24cb094be9df10382fce234edef187386223f74c6f58a820d7ad81e43dd0"
+    },
+    {
+      "segment_id": "03-12:b0208",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Use It",
+        "### Optax: Composable Optimizers"
+      ],
+      "ordinal": 104,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0209",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 105,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "03-12:b0210",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 105,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0211",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 106,
+      "source_sha256": "194f03c5e846120710a172b98d816a13ce0d2892b19d89ec133193d2fa496dfe",
+      "target": "**安装：**\n",
+      "target_sha256": "f4f95190f6ff96cf6b7e5805aec1517ab7e63fd25eda7c28bb04f0447fab1666"
+    },
+    {
+      "segment_id": "03-12:b0212",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 106,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0213",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 107,
+      "source_sha256": "5be3140dc5a808a87d8b06de6c72561d4b03d96bd362500f856729db7ffff7f2",
+      "target": "```bash\npip install jax jaxlib optax flax\n```\n",
+      "target_sha256": "5be3140dc5a808a87d8b06de6c72561d4b03d96bd362500f856729db7ffff7f2"
+    },
+    {
+      "segment_id": "03-12:b0214",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 107,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0215",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 108,
+      "source_sha256": "d6b3a2d578850b3fc6de2335c585bbd63cc763a93c3ccf9665edf8ea25a66c5f",
+      "target": "启用 GPU 支持：\n",
+      "target_sha256": "e9d74e716877df9da1decd1938eb837ad499122f8ab9ff7d76ccef33640c88e8"
+    },
+    {
+      "segment_id": "03-12:b0216",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 108,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0217",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 109,
+      "source_sha256": "eeefd7d10fbf2e18d37954ff53edf1362c0b520d86ed937994ed68169388611c",
+      "target": "```bash\npip install jax[cuda12]\n```\n",
+      "target_sha256": "eeefd7d10fbf2e18d37954ff53edf1362c0b520d86ed937994ed68169388611c"
+    },
+    {
+      "segment_id": "03-12:b0218",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 109,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0219",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 110,
+      "source_sha256": "44df0a3d9d8a5e2b9534dc7621d0eb5f6c61c4cd3c7b0ebc3cde2817d481149c",
+      "target": "用于 TPU（Google Cloud）：\n",
+      "target_sha256": "19995a043e7ca832e5c59fb9a5358a07afca5e9e2b6431e89282bc174b0ad466"
+    },
+    {
+      "segment_id": "03-12:b0220",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 110,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0221",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 111,
+      "source_sha256": "633fb2124838645e5a9e58cb2e908a10c6a0087d455f22b9d9c7ef2e169b4323",
+      "target": "```bash\npip install jax[tpu] -f https://storage.googleapis.com/jax-releases/libtpu_releases.html\n```\n",
+      "target_sha256": "633fb2124838645e5a9e58cb2e908a10c6a0087d455f22b9d9c7ef2e169b4323"
+    },
+    {
+      "segment_id": "03-12:b0222",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 111,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0223",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 112,
+      "source_sha256": "375b22889c86d7ea771f57f34da526ef94240a943571470ce3f6b2d8bbb6bb27",
+      "target": "**性能注意事项：**\n",
+      "target_sha256": "62c55385af91e3474442193683c8b09eefb0d9586ef597408e79b2db2ad5ea9a"
+    },
+    {
+      "segment_id": "03-12:b0224",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 112,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0225",
+      "kind": "list",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 113,
+      "source_sha256": "390f0fdef6e6ea171fb9ab9e4cfb6d7fefba7799a91353b841a7670dd1e852e5",
+      "target": "- 第一次 JIT 调用很慢，因为要编译。做基准测试前先预热。\n- 避免在 JIT 内部用 Python 循环遍历 JAX 数组，应使用 `jax.lax.scan` 或 `jax.lax.fori_loop`。\n- `jax.debug.print()` 可以在 JIT 内部工作，普通的 `print()` 则不行。\n- 使用 `jax.profiler` 或 TensorBoard 做性能分析。XLA 编译可能会掩盖瓶颈。\n- JAX 默认预分配 75% 的 GPU 内存。将 `XLA_PYTHON_CLIENT_PREALLOCATE=false` 设好即可禁用。\n",
+      "target_sha256": "2e3cc301491d34869d698692d89d43a0696153f03a3bf0ca639ba66e1abb0d2c"
+    },
+    {
+      "segment_id": "03-12:b0226",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 113,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0227",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 114,
+      "source_sha256": "e6590f8e8ef2bb043ec0fe178461ef2edac789293d24ecfe1c7de9355c154a10",
+      "target": "**检查点保存与恢复：**\n",
+      "target_sha256": "6f5261f679e3d5c6d5bdfc6d6ea53ca1f88f000dccf24a9f48e3240fb79372bd"
+    },
+    {
+      "segment_id": "03-12:b0228",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 114,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0229",
+      "kind": "fence",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 115,
+      "source_sha256": "a70b8625e0a375c9e3463e9b5f139f3ce00588cac9b735e7a3af2894a351b5db",
+      "target": "```python\nimport orbax.checkpoint as ocp\ncheckpointer = ocp.PyTreeCheckpointer()\ncheckpointer.save('/tmp/model', params)\nrestored = checkpointer.restore('/tmp/model')\n```\n",
+      "target_sha256": "a70b8625e0a375c9e3463e9b5f139f3ce00588cac9b735e7a3af2894a351b5db"
+    },
+    {
+      "segment_id": "03-12:b0230",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 115,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0231",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 116,
+      "source_sha256": "c2a060dc1472f4398bcfa06abfa2c5b43fd928d3aebacdb7f7037513f3db664c",
+      "target": "**本课产出：**\n- `outputs/prompt-jax-optimizer.md`：用于选择合适 JAX 优化器配置的提示词\n- `outputs/skill-jax-patterns.md`：涵盖 JAX 函数式模式的技能\n",
+      "target_sha256": "24046723fa024e1767f3cd746b27a380d62ec0a0e86038f520b0d7b9c76d138c"
+    },
+    {
+      "segment_id": "03-12:b0232",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Ship It"
+      ],
+      "ordinal": 116,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0233",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 117,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "03-12:b0234",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 117,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0235",
+      "kind": "list",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 118,
+      "source_sha256": "d9b674bd572ce1fa06e1d1c0db1fe87c0984853307af50df96c765486615ca91",
+      "target": "1. 给 MLP 添加 Dropout（随机失活）。在 JAX 中，Dropout 需要 PRNG 密钥：让密钥贯穿前向传播，并为每个 Dropout 层拆分密钥。比较使用与不使用 Dropout 时的测试准确率。\n",
+      "target_sha256": "d1e07ea533fa9d71eab96dd8af7e22da7a88f3a063fb3ec06bd43e6a0a5d906b"
+    },
+    {
+      "segment_id": "03-12:b0236",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 118,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0237",
+      "kind": "list",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 119,
+      "source_sha256": "6b6952540fb908c7dcf2db6e20362e3afa427fdaa6c3d3e29cb9df05133a0fee",
+      "target": "2. 使用 `jax.vmap` 为一个包含 32 张 MNIST 图像的批次计算逐样本梯度。计算每个样本的梯度范数。哪些样本的梯度最大？为什么？\n",
+      "target_sha256": "08df784994a1d7398be7432d9c4c7aedbf730a658925e4205ead866a4e70f749"
+    },
+    {
+      "segment_id": "03-12:b0238",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 119,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0239",
+      "kind": "list",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 120,
+      "source_sha256": "5556070ff3db9e201b32bda68493045c54b9547988b33570fc98fe921dd7d25c",
+      "target": "3. 将手写的前向函数替换为通用的 `mlp_forward(params, x)`，使其支持任意层数。使用 `jax.tree.leaves` 自动确定网络深度。\n",
+      "target_sha256": "c3cb8d15cf73766ef2d942f4a105920b68e771edc26284a0caeefe9d8e3069de"
+    },
+    {
+      "segment_id": "03-12:b0240",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 120,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0241",
+      "kind": "list",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 121,
+      "source_sha256": "7b493bf5d70457a987e1b043d2e3a67abc6a0cd51d8503b6f85e2aa3793ab046",
+      "target": "4. 对比使用与不使用 `@jax.jit` 时的训练步骤性能。分别测量 100 步的耗时。在你的硬件上能加速多少？第一次调用的编译开销是多少？\n",
+      "target_sha256": "d13b637b7fad1a8df45ee70ab75d121a6385502caffc094b3a4075135fdb0554"
+    },
+    {
+      "segment_id": "03-12:b0242",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 121,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0243",
+      "kind": "list",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 122,
+      "source_sha256": "e2918477e3645088c98c16a4069abaaa73329b2d33d41d0687dff0e4d73f897e",
+      "target": "5. 通过组合 `optax.chain(optax.clip_by_global_norm(1.0), optax.adam(1e-3))` 实现梯度裁剪。分别在使用与不使用裁剪时训练，绘制训练过程中的梯度范数曲线来观察效果。\n",
+      "target_sha256": "89b9f7277701919c31c1bdf0b1812ab7b249bd4e6c6056ec1abce9bdda699f31"
+    },
+    {
+      "segment_id": "03-12:b0244",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Exercises"
+      ],
+      "ordinal": 122,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0245",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Key Terms"
+      ],
+      "ordinal": 123,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "03-12:b0246",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Key Terms"
+      ],
+      "ordinal": 123,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0247",
+      "kind": "table",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Key Terms"
+      ],
+      "ordinal": 124,
+      "source_sha256": "fe35f35eb1db369f74db8826cd3543ba7320e0b85c95999630570084e05fd0bd",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| XLA | “让 JAX 变快的东西” | 加速线性代数（Accelerated Linear Algebra），一种将运算融合、从计算图生成优化后的 GPU/TPU 计算内核的编译器 |\n| JIT | “即时编译” | JAX 在首次调用时跟踪函数，编译到 XLA，然后在后续调用中运行编译后的版本 |\n| 纯函数 | “没有副作用” | 输出只依赖输入的函数，没有全局状态、没有修改操作，也没有不带显式密钥的随机性 |\n| vmap | “自动分批” | 将处理单个样本的函数变换为处理整个批次的函数，无需重写 |\n| pmap | “自动并行化” | 将函数复制到多个设备上，并拆分输入批次 |\n| Pytree | “数组的嵌套字典” | JAX 能够遍历和变换的、由列表、元组、字典和数组组成的任意嵌套结构 |\n| 跟踪 | “记录计算” | JAX 用抽象值执行函数来构建计算图，而不计算实际结果 |\n| 函数式自动微分 | “函数的 grad” | 通过变换函数计算导数，而不是给张量附加梯度存储 |\n| Optax | “JAX 的优化器库” | 可组合的梯度变换库，将 Adam、SGD、裁剪、调度串联起来 |\n| Flax | “JAX 的 nn.Module” | Google 为 JAX 提供的神经网络库，添加层抽象，同时保持状态显式 |\n",
+      "target_sha256": "2e6b3682aee8e2c4d39194d125e18a3f747c8f7b74413cb765d9f1a3f63cccf7"
+    },
+    {
+      "segment_id": "03-12:b0248",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Key Terms"
+      ],
+      "ordinal": 124,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0249",
+      "kind": "heading",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Further Reading"
+      ],
+      "ordinal": 125,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "03-12:b0250",
+      "kind": "separator",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Further Reading"
+      ],
+      "ordinal": 125,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-12:b0251",
+      "kind": "list",
+      "heading_path": [
+        "# Introduction to JAX",
+        "## Further Reading"
+      ],
+      "ordinal": 126,
+      "source_sha256": "d2ba572f486a3de18f7fa30a892c4ae6aa01dd0f324615b42e1b65212adcab42",
+      "target": "- JAX 文档：https://jax.readthedocs.io/ —— 官方文档，包含优秀的 grad、jit 和 vmap 教程\n- \"JAX: composable transformations of Python+NumPy programs\" (Bradbury 等人，2018)：解释设计理念的原始论文\n- Flax 文档：https://flax.readthedocs.io/ —— Google 的 JAX 神经网络库\n- Patrick Kidger，\"Equinox: neural networks in JAX via callable PyTrees and filtered transformations\" (2021)：符合 Python 风格的 Flax 替代方案\n- DeepMind，\"Optax: composable gradient transformation and optimisation\"：标准优化器库\n- \"You Don't Know JAX\" (Colin Raffel, 2020)：由 T5 作者之一撰写的实用指南，介绍 JAX 的常见陷阱和模式\n",
+      "target_sha256": "f4f8083fb9274df36de2812f2566cf3d4ddc54a3fe962671ad6142ddc60a516e"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "stage_glossary_path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+  "stage_glossary_sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S72-intro-to-jax/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "1ce63a85fc0cfa5e2581a16de16f17c85a6de4a37d0fa2d8fee7289f9d13c4dc",
+  "quantity_mappings": [
+    {
+      "source": "~90 minutes",
+      "target": "~90 分钟",
+      "treatment": "same unit scale and numerical value"
+    },
+    {
+      "source": "540-billion-parameter",
+      "target": "540 billion（十亿）个参数",
+      "treatment": "original 540 and billion retained; no numerical conversion"
+    },
+    {
+      "source": "100x / 10-100x",
+      "target": "100 倍 / 10-100 倍",
+      "treatment": "same multipliers; not percentage conversion"
+    },
+    {
+      "source": "Millions / thousands / three / two / one week",
+      "target": "数百万 / 数千 / 三 / 两 / 一周",
+      "treatment": "equivalent natural-language quantities"
+    }
+  ],
+  "assets": [],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "commit": "f52ee0ce1eac21c74e495018584bd3c48ffa54b9",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef"
+    }
+  ]
+}
