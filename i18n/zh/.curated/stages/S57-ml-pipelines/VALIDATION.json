@@ -1,0 +1,482 @@
+{
+  "schema_version": 1,
+  "stage_id": "S57-ml-pipelines",
+  "date": "2026-10-03",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "058d092b6ad38b5a9eaf4a3fc296aac5867d0e99e60ba40ce0cc20b7326820d9",
+  "target_sha256": "6e9dc9915cb4a2ec5f7aa04070fcd925f271b7bf7317910db266cdc013a03bb3",
+  "immutable_content_commit": "d386d000666ef718730c851129f0286268230715",
+  "immutable_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/d386d000666ef718730c851129f0286268230715/i18n/zh/phases/02-ml-fundamentals/13-ml-pipelines/docs/zh.md",
+  "support_commit": "5a71249369f8c54241519e9178559f95794f0210",
+  "support_dependencies": 66,
+  "dependency_manifest_sha256": "0c6f8a725497c1a36d2ed3fe59c505e60f343edb14b7582597512b54f88b23d3",
+  "coverage": {
+    "total_blocks": 157,
+    "nonempty_blocks": 80,
+    "technical_compared": 157,
+    "separate_chinese_read": 157
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; every final source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "location": "b17,b27,b41,b53,b153",
+      "source_claim": "Pipeline solves all problems / no leakage automatically",
+      "concern": "管线只有在正确划分数据和传入训练折时防止预处理泄漏，不能防止错误特征、时间或实体跨折泄漏",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b36,b143; demo_data_leakage",
+      "source_claim": "leaky preprocessing inflates accuracy",
+      "concern": "信息污染可能使评估偏乐观，但此具体缩放操作不保证每次准确率严格升高",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b59",
+      "source_claim": "ColumnTransformer complete example",
+      "concern": "GradientBoostingClassifier未在围栏或此前片段导入；gender列不在make_mixed_data中",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b61; OneHotEncoder.transform",
+      "source_claim": "unknown produces zero vector",
+      "concern": "对未知特征的编码组为零，不是整行所有特征为零；自制实现handle_unknown配置不生效",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "MedianImputer.fit / StandardScaler.fit",
+      "source_claim": "imputation/scaling robust preprocessing",
+      "concern": "全缺失列中位数仍为NaN，且模块全局忽略warnings可能隐藏异常；没有输入形状/未拟合检查",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b69,b71,b75",
+      "source_claim": "complete tracking / reproduce any experiment",
+      "concern": "记录参数未自动应用到早先LogisticRegression pipe；wandb片段未保存模型或数据版本；日志不自动实现任意实验复现",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b81",
+      "source_claim": "stages and approval workflow",
+      "concern": "产品版本变化未锁定；显式晋级不等于多方审批强制执行或瞬间部署回滚",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b85,b89,b91",
+      "source_claim": "git cannot handle large files; DVC checkout full reproducibility",
+      "concern": "git可存储大文件但不适合；DVC恢复依赖数据可用/本地缓存与远程配置，代码数据锁定不足以保证环境复现",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b97,b99",
+      "source_claim": "four things make reproducible experiment",
+      "concern": "种子不足以保证跨硬件/库版本完全确定性；代码没有设置每个独立随机状态或所有确定性算子",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b9,b117,b133,b137; FullPipeline",
+      "source_claim": "complete production pipeline and serialization",
+      "concern": "默认程序没有序列化演示；scratch类别侧没有众数填补；MLflow只在文档，源码实验日志为手工输出",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "cross_validate_pipeline",
+      "source_claim": "general CV utility",
+      "concern": "未验证n_folds边界，也非分层、时间或group-aware划分",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    },
+    {
+      "location": "b121,b125",
+      "source_claim": "custom transformers / pipeline",
+      "concern": "文档CustomTransformer使用mean/std而完整源码使用nanmean/nanstd；最简Pipeline未校验steps或空训练数据",
+      "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
+    }
+  ],
+  "runtime": {
+    "author": {
+      "finite_tests": 17,
+      "results": [
+        {
+          "name": "median equals2 fill nonmutating",
+          "pass": true
+        },
+        {
+          "name": "constant column std1",
+          "pass": true
+        },
+        {
+          "name": "zero mean scaled",
+          "pass": true
+        },
+        {
+          "name": "heldout cannot refit means",
+          "pass": true
+        },
+        {
+          "name": "all missing column remains nan",
+          "pass": true
+        },
+        {
+          "name": "unknown one column keeps known other",
+          "pass": true
+        },
+        {
+          "name": "error parameter ignored source behavior",
+          "pass": true
+        },
+        {
+          "name": "generated data same seed exact",
+          "pass": true
+        },
+        {
+          "name": "split cardinality",
+          "pass": true
+        },
+        {
+          "name": "same fitting predicts exact",
+          "pass": true
+        },
+        {
+          "name": "prediction preserves learned medians",
+          "pass": true
+        },
+        {
+          "name": "bounded4fold repeat exact",
+          "pass": true
+        },
+        {
+          "name": "zero folds raises unvalidated division",
+          "pass": true
+        },
+        {
+          "name": "eachfold disjoint and allvalidationcovered",
+          "pass": true
+        },
+        {
+          "name": "fold count larger than samples yields empty folds",
+          "pass": true
+        },
+        {
+          "name": "doc custom scaler constant handled",
+          "pass": true
+        },
+        {
+          "name": "doc CustomTransformer nan propagates",
+          "pass": true
+        }
+      ],
+      "canonical": "NOT RUN: default reaches sklearn/pandas and extensive demos"
+    },
+    "independent": {
+      "finite_tests": 20,
+      "scope": "Train-only preprocessing statistics, zero variance/all-missing columns, unknown categories, tiny classifier learning, fold isolation/coverage/remainder, same-seed split and self-generated serialization roundtrip",
+      "canonical": "NOT RUN; finite NumPy/stdlib fixtures only"
+    }
+  },
+  "actual_GitHub_GFM": {
+    "schema_version": 1,
+    "stage_id": "S57-ml-pipelines",
+    "lesson_id": "02-13",
+    "status": "PASS_ACTUAL_GITHUB_GFM_WITH_CUSTOM_FIGURE_LIMITATION",
+    "checked_utc": "2026-10-03T00:59:33.277750+00:00",
+    "read_only": true,
+    "immutable_commit": "d386d000666ef718730c851129f0286268230715",
+    "observed_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/d386d000666ef718730c851129f0286268230715/i18n/zh/phases/02-ml-fundamentals/13-ml-pipelines/docs/zh.md",
+    "source_sha256": "058d092b6ad38b5a9eaf4a3fc296aac5867d0e99e60ba40ce0cc20b7326820d9",
+    "target_sha256": "6e9dc9915cb4a2ec5f7aa04070fcd925f271b7bf7317910db266cdc013a03bb3",
+    "binding": "Local final SHA256 plus complete live rendered heading/table/emphasis/fenced-payload/prose comparison; coordinator independently verified publication bytes. Copy raw file clipboard returned empty, so browser raw byte hash not claimed.",
+    "full_rendered_article_DOM_read": true,
+    "headings": [
+      {
+        "level": "H1",
+        "text": "机器学习管线"
+      },
+      {
+        "level": "H2",
+        "text": "学习目标"
+      },
+      {
+        "level": "H2",
+        "text": "要解决的问题"
+      },
+      {
+        "level": "H2",
+        "text": "核心概念"
+      },
+      {
+        "level": "H3",
+        "text": "什么是管线"
+      },
+      {
+        "level": "H3",
+        "text": "数据泄漏：无声的杀手"
+      },
+      {
+        "level": "H3",
+        "text": "sklearn Pipeline"
+      },
+      {
+        "level": "H3",
+        "text": "ColumnTransformer：不同列使用不同管线"
+      },
+      {
+        "level": "H3",
+        "text": "实验跟踪"
+      },
+      {
+        "level": "H3",
+        "text": "模型版本管理"
+      },
+      {
+        "level": "H3",
+        "text": "使用 DVC 管理数据版本"
+      },
+      {
+        "level": "H3",
+        "text": "可复现的实验"
+      },
+      {
+        "level": "H3",
+        "text": "从 Notebook 到生产管线"
+      },
+      {
+        "level": "H3",
+        "text": "常见管线错误"
+      },
+      {
+        "level": "H2",
+        "text": "动手实现"
+      },
+      {
+        "level": "H3",
+        "text": "第 1 步：自定义转换器"
+      },
+      {
+        "level": "H3",
+        "text": "第 2 步：从零构建管线"
+      },
+      {
+        "level": "H3",
+        "text": "第 3 步：使用管线进行交叉验证"
+      },
+      {
+        "level": "H3",
+        "text": "第 4 步：使用 sklearn 构建完整生产管线"
+      },
+      {
+        "level": "H2",
+        "text": "交付成果"
+      },
+      {
+        "level": "H2",
+        "text": "练习"
+      },
+      {
+        "level": "H2",
+        "text": "关键术语"
+      },
+      {
+        "level": "H2",
+        "text": "延伸阅读"
+      }
+    ],
+    "tables": [
+      {
+        "rows_including_header": 7,
+        "columns": 3,
+        "all_cells_exact": true
+      },
+      {
+        "rows_including_header": 10,
+        "columns": 3,
+        "all_cells_exact": true
+      }
+    ],
+    "emphasis": {
+      "strong_count": 24,
+      "all_strong_exact": true,
+      "strong_text": [
+        "Type:",
+        "Language:",
+        "Prerequisites:",
+        "Time:",
+        "存在泄漏（错误）：",
+        "正确做法：",
+        "MLflow",
+        "Weights & Biases (wandb)",
+        "版本跟踪：",
+        "阶段转换：",
+        "审批流程：",
+        "回滚：",
+        "固定随机种子：",
+        "锁定依赖：",
+        "数据版本管理：",
+        "配置文件：",
+        "Notebook 探索：",
+        "提取函数：",
+        "构建管线：",
+        "配置管理：",
+        "实验跟踪：",
+        "数据验证：",
+        "测试：",
+        "部署："
+      ],
+      "em_count": 0,
+      "broken_markers_observed": false
+    },
+    "fences": {
+      "total": 13,
+      "by_language": {
+        "mermaid": 2,
+        "python": 9,
+        "text": 1,
+        "figure": 1
+      },
+      "all_payloads_exact_ignoring_boundary_newline": true
+    },
+    "mermaid": {
+      "rendered_iframes": 2,
+      "all_nodes_and_edges_personally_observed": true,
+      "parse_error_seen": false,
+      "visual_notes": "Horizontal Raw Data-to-Prediction flow complete. Tall Notebook-to-deployment flow inspected through top/lower views and zoom controls; all eight nodes and connecting arrows visible across screenshots."
+    },
+    "svg": {
+      "relative_svg_count": 0,
+      "broken_images": 0
+    },
+    "figure": {
+      "identifier": "f3-pipeline-flow",
+      "behavior": "ordinary code block with copy control, no interaction",
+      "source_preserved": true,
+      "interactive_pass": false
+    },
+    "math": {
+      "standalone_formula_blocks": 0,
+      "protected_code_expressions_preserved": true
+    },
+    "layout": {
+      "article_width": {
+        "client": 1012,
+        "scroll": 1012
+      },
+      "prose_and_tables_overflow_observed": false
+    },
+    "prose_normalized_missing": [],
+    "must_fix_translation_format_items": [],
+    "rendering_defects": [],
+    "limitations": [
+      "Custom figure does not become a functioning interactive component on GitHub.",
+      "No course-site/mobile/interactive/hosted-CI or runtime correctness pass implied.",
+      "Browser raw clipboard empty; exact target binding uses supplied/local hash and full live DOM comparison."
+    ]
+  },
+  "aggregate": {
+    "reviewed_lessons_in_local_snapshot": 82,
+    "original_strict_direct_pass": 80,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "82 exact-byte matches to each other and final records",
+    "svg_separate_copies": 7,
+    "repository_audits": "Lesson and certification audits plus README/book counts passed",
+    "book_rendering_regressions": {
+      "tests": 6,
+      "passed": 5,
+      "environment_blocked": 1,
+      "reason": "Missing xelatex.fmt; PDF format/cache environment unavailable. No system installation or workaround attempted."
+    },
+    "original_site_parser": {
+      "empty_heading_ids_in_four_accepted_stages": 50,
+      "empty_heading_ids_all_five_observed": 65,
+      "duplicate_nonempty_ids": 0,
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "cause": "Original ASCII-only slugify removes Chinese heading characters"
+    },
+    "excluded_pending_stage": "S61/10-05: source third 3D Mermaid has overlapping/occluded labels; visual acceptance remains unpassed",
+    "note": "Local accepted82 aggregate excludes S61 and is not final remote index acceptance"
+  },
+  "content_remote_verification": {
+    "stage": 57,
+    "commit": "d386d000666ef718730c851129f0286268230715",
+    "tree": "fe7daec047905ab391636cb8861d1ccbcbf30e61",
+    "changed_file_count": 6,
+    "files": [
+      {
+        "path": "i18n/zh/.curated/stages/S57-ml-pipelines/SCOPE.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S57-ml-pipelines/DEPENDENCIES.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/02-13/translation.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/02-13/review.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/02-ml-fundamentals/13-ml-pipelines/docs/zh.md",
+        "match": true
+      }
+    ],
+    "all_bytes_exact": true
+  },
+  "site_parser": {
+    "file": "i18n/zh/phases/02-ml-fundamentals/13-ml-pipelines/docs/zh.md",
+    "parser_executed": true,
+    "html_bytes": 25588,
+    "tables": 2,
+    "code_blocks": 10,
+    "figures": 1,
+    "mermaid_sources": 2,
+    "empty_heading_ids": [
+      "机器学习管线",
+      "学习目标",
+      "要解决的问题",
+      "核心概念",
+      "什么是管线",
+      "数据泄漏：无声的杀手",
+      "实验跟踪",
+      "模型版本管理",
+      "可复现的实验",
+      "常见管线错误",
+      "动手实现",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "duplicate_heading_ids": [],
+    "browser_verified": false,
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "stage": "S57-ml-pipelines",
+    "lesson_id": "02-13",
+    "target_sha256": "6e9dc9915cb4a2ec5f7aa04070fcd925f271b7bf7317910db266cdc013a03bb3",
+    "empty_heading_id_count": 15,
+    "duplicate_nonempty_id_distinct_count": 0
+  },
+  "final_remote_and_CI": "Final evidence commit readback and exact-head CI results belong in the PR body and single rollout index to avoid evidence self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
