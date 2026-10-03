@@ -1,0 +1,1420 @@
+{
+  "schema_version": 1,
+  "lesson_id": "00-01",
+  "source_path": "phases/00-setup-and-tooling/01-dev-environment/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "fea7bd8f7366c4d8db843b64b84a023f8dcd919f",
+  "source_sha256": "9be9bc9d7edf98913321bda6f10cc639e1f4341cd439001317e37c3bd6cc7163",
+  "target_path": "i18n/zh/phases/00-setup-and-tooling/01-dev-environment/docs/zh.md",
+  "target_sha256": "4b35c7799966715e4ffb836d35de512eade12bf0fe95dbe16c351b41aa975c7c",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "00-01:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment"
+      ],
+      "ordinal": 1,
+      "source_sha256": "a7a832bbf7a05d2525e7eba269741161f7a5509510856b72826986b4e3548e47",
+      "target": "# 开发环境\n"
+    },
+    {
+      "segment_id": "00-01:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Dev Environment"
+      ],
+      "ordinal": 2,
+      "source_sha256": "d482e7d3aa31ea21406b4298fe6b69395143bc984611030ac097af647449b1b2",
+      "target": "> 工具塑造你的思考方式。一次配置，就把它配好。\n"
+    },
+    {
+      "segment_id": "00-01:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment"
+      ],
+      "ordinal": 3,
+      "source_sha256": "7a6a8016d77014a02549d8bec66ed5403215568eccd7afcb38706f06e89d8e0d",
+      "target": "**Type:** Build\n**Languages:** Python, Node.js, Rust\n**Prerequisites:** 无\n**Time:** ~45 分钟\n"
+    },
+    {
+      "segment_id": "00-01:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "00-01:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Dev Environment",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "b135e603085239af858e19ef225b4dc5c29c2e44a2e30f0e79cb37a2536e07d1",
+      "target": "- 从零搭建 Python 3.11+、Node.js 20+ 和 Rust 工具链（toolchain）\n- 配置虚拟环境（virtual environment）和包管理器（package manager），实现可复现构建\n- 验证 CUDA/MPS 的 GPU 访问能力，并运行一次张量运算测试\n- 理解由系统、软件包、语言运行时（runtime）和 AI 库组成的四层技术栈\n"
+    },
+    {
+      "segment_id": "00-01:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "00-01:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "f5e2c90b5f6e806ef9bd69ee72292e666ba3e27cd6d173c6952c20136fa1adb8",
+      "target": "你即将使用 Python、TypeScript、Rust 和 Julia，通过 500+ 节课学习 AI 工程。如果环境出了问题，每一课都会变成与工具的较量，无法专心学习。\n"
+    },
+    {
+      "segment_id": "00-01:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "ac6ab70ab9b36c29d75016aeeb2802cc7677221d28ae8fcb8aa5076edab06da9",
+      "target": "大多数人会跳过环境配置，随后却花上数小时排查导入错误、版本冲突和 CUDA 驱动缺失等问题。我们要一次把这件事做好。\n"
+    },
+    {
+      "segment_id": "00-01:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "00-01:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "a4946e4f6c457d196905551c2735f448352bf05a5eb461a4ee544a802141a735",
+      "target": "AI 工程环境分为四层：\n"
+    },
+    {
+      "segment_id": "00-01:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0021",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "3719fbb0e80c47494880bd8d9407dd7af9cf1cc95d4ceb0a0570e7f409fd8da9",
+      "target": "```mermaid\ngraph TD\n    A[\"4. AI/ML Libraries\\nPyTorch, JAX, transformers, etc.\"] --> B[\"3. Language Runtimes\\nPython 3.11+, Node 20+, Rust, Julia\"]\n    B --> C[\"2. Package Managers\\nuv, pnpm, cargo, juliaup\"]\n    C --> D[\"1. System Foundation\\nOS, shell, git, editor, GPU drivers\"]\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "13d1d08a621881b5e7cebb99df7537fc58b1857324f9866e6a28c5d900f5ab4b",
+      "target": "我们从底层往上安装。每一层都依赖其下一层。\n"
+    },
+    {
+      "segment_id": "00-01:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0025",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "0eeae22628a7610ccf31d655d52084e14dd239cb704ed9223d9cbc6e58d23cee",
+      "target": "```figure\ns0-env-stack\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It"
+      ],
+      "ordinal": 14,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "00-01:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 1: System Foundation"
+      ],
+      "ordinal": 15,
+      "source_sha256": "79d51e9764b0599414eab0395de0cfe91d178aca795aeb61797523c53bedc212",
+      "target": "### 第 1 步：系统基础\n"
+    },
+    {
+      "segment_id": "00-01:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 1: System Foundation"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 1: System Foundation"
+      ],
+      "ordinal": 16,
+      "source_sha256": "c78665a8352f7ec338f99bc0d73d780a4d9c1e2c4048ac1f7c657a4e8a24e2d9",
+      "target": "检查系统，安装基础工具。\n"
+    },
+    {
+      "segment_id": "00-01:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 1: System Foundation"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 1: System Foundation"
+      ],
+      "ordinal": 17,
+      "source_sha256": "9618ee24e9714d0ff60e3b21041f98e1bce5697d9572ad11e3afc4bf4b5f9247",
+      "target": "```bash\n# macOS\nxcode-select --install\nbrew install git curl wget\n\n# Ubuntu/Debian\nsudo apt update && sudo apt install -y build-essential git curl wget unzip\n\n# Windows (use WSL2)\nwsl --install -d Ubuntu-24.04\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 1: System Foundation"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 18,
+      "source_sha256": "b1f854688ec3aa9cd54b3768bb47076d89b825cedff4ef873f8fabe2a8e86ed1",
+      "target": "### 第 2 步：使用 uv 配置 Python\n"
+    },
+    {
+      "segment_id": "00-01:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 19,
+      "source_sha256": "d7787e2354e7e4cc5ee66a5840c6305653ba847ffa1aa51f61e74ce035500017",
+      "target": "我们使用 `uv`：它比 pip 快 10-100x，还会自动管理虚拟环境。\n"
+    },
+    {
+      "segment_id": "00-01:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 20,
+      "source_sha256": "d87cac7bd235e176aee0b78da919823523d3acad1160ac11b4d6a5243ba0b0e6",
+      "target": "```bash\ncurl -LsSf https://astral.sh/uv/install.sh | sh\n\nuv python install 3.12\n\nuv venv\nsource .venv/bin/activate  # or .venv\\Scripts\\activate on Windows\n\nuv pip install numpy matplotlib jupyter\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 21,
+      "source_sha256": "e42dfb1460c7de8d8bd81c20485982671e169f86c882f8e4329948d603105720",
+      "target": "验证：\n"
+    },
+    {
+      "segment_id": "00-01:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 22,
+      "source_sha256": "34a6e57d267f0bfd78ed5294581e379d15928fa73ae12caa8a259af93a2a5843",
+      "target": "```python\nimport sys\nprint(f\"Python {sys.version}\")\n\nimport numpy as np\nprint(f\"NumPy {np.__version__}\")\na = np.array([1, 2, 3])\nprint(f\"Vector: {a}, dot product with itself: {np.dot(a, a)}\")\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 2: Python with uv"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 23,
+      "source_sha256": "6cf4644ebe7e121c81cdeb7599159e10a97a53f0cc15f73ca05f948d401409ba",
+      "target": "### 第 3 步：使用 pnpm 配置 Node.js\n"
+    },
+    {
+      "segment_id": "00-01:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 24,
+      "source_sha256": "9b5005e3f0f96a5f75b0fa9df9ab05c1ca5b3fdbe86a01f9ea1cc19d1ba7a16d",
+      "target": "用于 TypeScript 课程，内容包括智能体（agent）、MCP 服务器和 Web 应用。\n"
+    },
+    {
+      "segment_id": "00-01:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 25,
+      "source_sha256": "465c80bd89ea9800d8e98087668ed8bed7edcf5c1e5fdc0a559b09567c7c5b9c",
+      "target": "```bash\ncurl -fsSL https://fnm.vercel.app/install | bash\nfnm install 22\nfnm use 22\n\nnpm install -g pnpm\n\nnode -e \"console.log('Node', process.version)\"\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 26,
+      "source_sha256": "beb09dbb684452f08d5f099ee4ff8e45ce945cb9c2b1dbab7c24f693596dc884",
+      "target": "fnm 安装程序会先检查 `unzip`，如果未找到，就会显示 `Not installing fnm due to missing dependencies.` 并退出：在 Linux 上，它通过解压 zip 归档安装；在 macOS 上，则通过 Homebrew 安装。macOS 自带 `unzip`；Ubuntu、Debian 和 WSL2 会通过第 1 步的 apt 命令安装它（如果跳过了该步骤，请运行 `sudo apt install -y unzip`）。\n"
+    },
+    {
+      "segment_id": "00-01:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 27,
+      "source_sha256": "232864390e0ecfb25389f760babdcbbea60cd6f64bd4ec19dc01ab607f36b8c9",
+      "target": "**macOS / Apple Silicon（M1/M2/M3/M4）：** 如果安装程序显示 `Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)` 后停止，说明你的终端运行在 Rosetta 2 下（`arch` 的输出为 `i386`），而 Homebrew 是原生 arm64 版本。强制使用 arm64 安装 fnm，将它配置到 Shell（命令解释器）中，然后从 `fnm install 22` 开始重新运行上面的命令：\n"
+    },
+    {
+      "segment_id": "00-01:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 28,
+      "source_sha256": "07b4ef91963b65d376aaf46760d8fb5bbb180d0488f65d491a1f0d72a828e8ee",
+      "target": "```bash\narch -arm64 brew install fnm\necho 'eval \"$(fnm env --use-on-cd)\"' >> ~/.zshrc\nsource ~/.zshrc\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 3: Node.js with pnpm"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 4: Rust"
+      ],
+      "ordinal": 29,
+      "source_sha256": "5063bd73f4d4b0b5e5b3eccd64e5f9c1cc60a22db0704fa6c789ad95d5f1275c",
+      "target": "### 第 4 步：Rust\n"
+    },
+    {
+      "segment_id": "00-01:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 4: Rust"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 4: Rust"
+      ],
+      "ordinal": 30,
+      "source_sha256": "91815ca8270d364c5f380471afd9cca9ede779e3802f714cec96f69161dc1c0e",
+      "target": "用于对性能要求较高的课程（推理、系统）。\n"
+    },
+    {
+      "segment_id": "00-01:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 4: Rust"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 4: Rust"
+      ],
+      "ordinal": 31,
+      "source_sha256": "75d7d414ff859c841043d212d9a5c1eeca457b36c305e091485076f6d54fa4be",
+      "target": "```bash\ncurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\n\nrustc --version\ncargo --version\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 4: Rust"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 5: Julia (Optional)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "3608f7dfe69c6dc30991d28f0aaafcf2232777b3e765502acbc1f3a908f1d9b8",
+      "target": "### 第 5 步：Julia（可选）\n"
+    },
+    {
+      "segment_id": "00-01:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 5: Julia (Optional)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 5: Julia (Optional)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "583c9229a3884875dc4f204b1bfd0eb76149c671c7167d5a0e50d7d6a0337644",
+      "target": "用于数学内容较多的课程，这正是 Julia 的强项。\n"
+    },
+    {
+      "segment_id": "00-01:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 5: Julia (Optional)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 5: Julia (Optional)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "d514d6dddb0728d6e6d1d4f7af16c06f1e075f5684f389df6c57e075ceb14ef0",
+      "target": "```bash\ncurl -fsSL https://install.julialang.org | sh\n\njulia -e 'println(\"Julia \", VERSION)'\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 5: Julia (Optional)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "526b456ef007a67e9f31fecd5751adea371444ce093ce0a5aa1cce891a98ca5e",
+      "target": "### 第 6 步：配置 GPU（如果有）\n"
+    },
+    {
+      "segment_id": "00-01:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 36,
+      "source_sha256": "d679656d95fb10b83eb7388881f67d79bf2c99d3b27d74f911639306bfc22aa9",
+      "target": "**NVIDIA（Linux / Windows）：**\n"
+    },
+    {
+      "segment_id": "00-01:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 37,
+      "source_sha256": "a2b5d7f678b6f5d2e187bf95f931e3c21166e5eb59c5d6d59229db0b63efc49a",
+      "target": "```bash\nnvidia-smi\n\n# Install PyTorch with CUDA\nuv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 38,
+      "source_sha256": "3d1bd7167ee71a82c124d9592bea18ebad82535a193573ddf3d2468f2b493a4b",
+      "target": "**macOS / Apple Silicon（M1/M2/M3/M4）：** Mac 上没有 CUDA，这是预期情况，并非故障。**不要**传入 `--index-url .../cuXXX`（这些 wheel 安装包仅适用于 Linux/Windows，因此安装会失败）。安装常规版本即可，其中包含 Apple 的 MPS（Metal）GPU 后端：\n"
+    },
+    {
+      "segment_id": "00-01:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0077",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 39,
+      "source_sha256": "e53f087d8cf8b3ae0bf7c83eb1813e1662dec63cec6dbdbb40f4a2ae3ffff85e",
+      "target": "```bash\nuv pip install torch torchvision torchaudio\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 40,
+      "source_sha256": "c488145d153a0e2e927bad39771c38f84b359a9894357d9f33c9149bc6a1fd0d",
+      "target": "验证（适用于所有平台）：\n"
+    },
+    {
+      "segment_id": "00-01:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 41,
+      "source_sha256": "a1ce4e1a7de6274a3f0662c1a5b1ad2227e0619fc20567489c7e391dd8f91189",
+      "target": "```python\nimport torch\nprint(f\"CUDA available: {torch.cuda.is_available()}\")           # False on macOS — expected\nprint(f\"MPS available:  {torch.backends.mps.is_available()}\")   # True on Apple Silicon\nif torch.cuda.is_available():\n    print(f\"GPU: {torch.cuda.get_device_name(0)}\")\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 42,
+      "source_sha256": "780ac08e265701a29f1d0cb714dbc8b3e57059e843db3d24fc17ec4d1853b57d",
+      "target": "没有 GPU？没关系。大多数课程可以在 CPU 上运行。对于训练负载较大的课程，可以使用 Google Colab 或云端 GPU。\n"
+    },
+    {
+      "segment_id": "00-01:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 6: GPU Setup (If You Have One)"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 43,
+      "source_sha256": "03e5bfe2d8309d676fa3d4235dfea9a134d1270e58b328db57639b1d6af424dc",
+      "target": "### 第 7 步：验证你想开始的学习路线\n"
+    },
+    {
+      "segment_id": "00-01:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 44,
+      "source_sha256": "6bc978a73a926079ce9b98f4c9899c4f0ea881c4691ef6ae3a64eb4526fcf260",
+      "target": "本课的所有命令都应在仓库根目录运行，也就是包含 `README.md` 和 `phases/` 的目录。\n环境预检（preflight）只检查开始所选学习路线所需的条件。\n默认情况下，它会跳过后续课程才需要的工具，让初学者得到一个明确的结论，而不是看到满屏警告。\n"
+    },
+    {
+      "segment_id": "00-01:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 45,
+      "source_sha256": "701403a520a7b96946f53933fe4d37ad2fcb9312039acf74156c9f742aa75fc3",
+      "target": "开始完整的初学者学习序列：\n"
+    },
+    {
+      "segment_id": "00-01:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0091",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 46,
+      "source_sha256": "61ca5865f33e0980a3d732a54d71e71b15534297de66eeafadd727c1407a76a4",
+      "target": "```bash\npython3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 47,
+      "source_sha256": "0d15684cb08bb16a9198c9466041aaaabdb4dd073cd04cf036cba201d7ee0181",
+      "target": "或者只检查你想学习的路线：\n"
+    },
+    {
+      "segment_id": "00-01:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0095",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 48,
+      "source_sha256": "e614876dfac6a0c56716e5f9d2150fca1b8445605016538b06ac5bd6d4759d98",
+      "target": "```bash\npython3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route ml-foundations\npython3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route llm-engineering\npython3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route agents\npython3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route mcp\npython3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route agent-skills\npython3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route certification\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 49,
+      "source_sha256": "f15e709f980595afdaeec8ff6ab5d4015c140882edb6f264df9b70749ab99daf",
+      "target": "如果希望同一次预检也检查可选工具以及后续课程使用的依赖项（dependency），请添加 `--show-later`。\n后续课程所需工具的缺失不会阻止你开始所选路线。\n"
+    },
+    {
+      "segment_id": "00-01:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 50,
+      "source_sha256": "4da1fdd9d86812d523fd17f6826382c882971ce3b220b24b9b7da46deba973e8",
+      "target": "每项未通过的必需检查都会列出检测到的路径或导入错误，并给出可直接执行的修正命令。\nAgent Skills 和认证路线还会列出需要手动检查的宿主环境事项，因为 Python 脚本无法证明 AI 宿主\n已经发现某项技能，也无法确认你选定的技能安装范围是否可写。\n"
+    },
+    {
+      "segment_id": "00-01:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 51,
+      "source_sha256": "bbb6ba6d559f535b11fa6a96e2691f70941e6fcd5b0e3fff94c1b59604ac4e70",
+      "target": "初学者路线的预检通过后，会输出第一节可运行课程的具体命令：\n"
+    },
+    {
+      "segment_id": "00-01:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 52,
+      "source_sha256": "0321615e28dd8ce935ba32da98b3ce05982f5b7d375aead7258ea8f09b6cd1ad",
+      "target": "```text\nReady to start Beginner course.\nNext: python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py\n```\n"
+    },
+    {
+      "segment_id": "00-01:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Build It",
+        "### Step 7: Verify the route you want to start"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0105",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Use It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "00-01:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Use It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Use It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "45ec21ef1b8c1c0ba1b1a3d17b9db764e1ef26cd1f34d785cd5c9e1d3183f795",
+      "target": "环境已准备就绪，可以开始你刚检查过的学习路线。\n等课程要求时再安装后续工具，不必为了配齐整个技术栈而耽误第一课。\n下面列出了整个课程中会使用的语言和工具：\n"
+    },
+    {
+      "segment_id": "00-01:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Use It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0109",
+      "kind": "table",
+      "heading_path": [
+        "# Dev Environment",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "f566bb9965bc92a35399096a89e31ea0c5ae142a379560e7473115e793b26c6b",
+      "target": "| 语言 | 使用范围 | 包管理器 |\n|----------|---------|-----------------|\n| Python | 阶段 1-12，涵盖机器学习（ML）、深度学习（DL）、自然语言处理（NLP）、计算机视觉、音频和大语言模型（LLMs） | uv |\n| TypeScript | 阶段 13-17（工具、智能体、智能体群、基础设施） | pnpm |\n| Rust | 阶段 12、15-17（性能关键型系统） | cargo |\n| Julia | 阶段 1（数学基础） | Pkg |\n"
+    },
+    {
+      "segment_id": "00-01:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Ship It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "00-01:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Ship It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Ship It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "906c95b85eb5690d2d3c32897e7af99fac9ff8e0e94930d181f328296a1a4bd2",
+      "target": "本课的产出是一个验证脚本，任何人都可以运行它来检查自己的环境配置。\n"
+    },
+    {
+      "segment_id": "00-01:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Ship It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Dev Environment",
+        "## Ship It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "8308ca86589f6f47cb547eddd84516c99ce8af348923251c0140387d94b5b6ff",
+      "target": "`outputs/prompt-env-check.md` 中提供了一段提示词（prompt），可帮助 AI 助手诊断环境问题。\n"
+    },
+    {
+      "segment_id": "00-01:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Ship It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# Dev Environment",
+        "## Exercises"
+      ],
+      "ordinal": 59,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "00-01:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Dev Environment",
+        "## Exercises"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-01:b0119",
+      "kind": "list",
+      "heading_path": [
+        "# Dev Environment",
+        "## Exercises"
+      ],
+      "ordinal": 60,
+      "source_sha256": "613eacdc07bddb128bddf41bfc1633a05555f90f6a7dd38dc045ce1ee48cc32e",
+      "target": "1. 运行验证脚本，修复所有未通过的检查项\n2. 为本课程创建一个 Python 虚拟环境，并安装 PyTorch\n3. 用全部四种语言各写一个“hello world”程序，并分别运行\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+  "additional_glossary_sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    }
+  ]
+}
