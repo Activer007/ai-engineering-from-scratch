@@ -1,0 +1,1704 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-25",
+  "source_path": "phases/05-nlp-foundations-to-advanced/25-entity-linking/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "630d3db78712c5732e31083a1bc8a60aea6118da",
+  "source_sha256": "c3deeb045d0569a7afe14a30fcb58da1dd4f47317af7709c61ce090452b911c5",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/25-entity-linking/docs/zh.md",
+  "target_sha256": "cf2a6a0b40a03fde149a56793c64cc2dcb4a7390de29189c0d856d7932eac62a",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-03"
+  },
+  "segments": [
+    {
+      "segment_id": "05-25:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation"
+      ],
+      "ordinal": 1,
+      "source_sha256": "406122646eb387d9bfec8f7afff5c9b4161bb6304280b5cbe62409c8ac40557a",
+      "target": "# 实体链接与消歧\n",
+      "target_sha256": "9a7b6887c0a1b865af402a0327ceddc8fc0e6d7de4159b7629722ae512007ad7"
+    },
+    {
+      "segment_id": "05-25:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Entity Linking & Disambiguation"
+      ],
+      "ordinal": 2,
+      "source_sha256": "c4d894ef85e6ee8d38d80c5f6603661fd554679c41e33ad8079171e8a93ec132",
+      "target": "> 命名实体识别（NER）找到了“Paris”。实体链接要判断：是法国巴黎？Paris Hilton？得克萨斯州的 Paris？还是特洛伊王子 Paris？没有链接，知识图谱中的歧义就无法消除。\n",
+      "target_sha256": "a626401106d0270d1b2740fded290c904e1a796ffc599fffbb78678cb51df9aa"
+    },
+    {
+      "segment_id": "05-25:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation"
+      ],
+      "ordinal": 3,
+      "source_sha256": "6471ddb07f5c11f9d83840da42c2e74c9ab86feebc2bd3bd0fda2e51d0caea86",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 第 5 阶段 · 06（命名实体识别，NER），第 5 阶段 · 24（共指消解）\n**Time:** ~60 分钟\n",
+      "target_sha256": "fc953990135491f4fb9fc05651c1c2068e29cfc5c699e6cd217ee019adb69e5f"
+    },
+    {
+      "segment_id": "05-25:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "05-25:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "baed68347391dfcfd732bec86f08195973d23b53816e993a6adc7419a2dc9c7f",
+      "target": "句子写道：“Jordan beat the press.” 你的 NER 将“Jordan”标注为 PERSON。很好。但究竟是 *哪一个* Jordan？\n",
+      "target_sha256": "062d859b56234c3025781269084171449dc3dba43ab276f83db2f78046e9706c"
+    },
+    {
+      "segment_id": "05-25:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0011",
+      "kind": "list",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "b8e846e5024c541853d3c03dbcbaf8a975c7d309b2193e5484c1edf71fedd012",
+      "target": "- Michael Jordan（篮球运动员）？\n- Michael B. Jordan（演员）？\n- Michael I. Jordan（Berkeley 的机器学习教授；没错，机器学习论文中确实会出现这种混淆）？\n- Jordan（约旦这个国家）？\n- Jordan（希伯来语名字）？\n",
+      "target_sha256": "6f963e0a6329700c82088411b7fdb0dafae10d55da42a8a1b9e1cd058a9aa6ed"
+    },
+    {
+      "segment_id": "05-25:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "118767e15afd3223e4e1c95781c98f0786db744155fdfc5fafa24f271b3cf2a5",
+      "target": "实体链接（entity linking，EL）将每个提及（mention）解析为知识库（KB）中的唯一条目：知识库可以是 Wikidata、Wikipedia、DBpedia，也可以是你的领域知识库。这包含两个子任务：\n",
+      "target_sha256": "c70aadd4af06bf97bcacdbb090789ed63860fcaa4db9138485ead4af62fd3f16"
+    },
+    {
+      "segment_id": "05-25:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0015",
+      "kind": "list",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "8f77146f10ca401f407724899b687922e24d5a2a0daf6332ffdb1676c03d30b6",
+      "target": "1. **候选生成（candidate generation）。** 给定“Jordan”，哪些 KB 条目可能与之对应？\n2. **消歧（disambiguation）。** 给定上下文，哪个候选才是正确的？\n",
+      "target_sha256": "b0ccb2d60b96df357283ab7f3f020cbf0466f67dd90ea988def6bc3aea5a54b8"
+    },
+    {
+      "segment_id": "05-25:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "cb479554ccd866be301c0e53f60ceff857696bf01b8030b86ceffc17db8182dd",
+      "target": "这两个步骤都可以通过学习来实现，也都有基准评测。将它们组合起来的处理管线已有十年没有大的变化；不断变化的是消歧器的质量。\n",
+      "target_sha256": "5c7ca5001a812b72927ccab873c4dabd5e7242f68c05a8af8e2721a17cc69146"
+    },
+    {
+      "segment_id": "05-25:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "05-25:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "bd51dc435172f0f1f904882ed2ff3f8f2ebd9fa361d277130e674f7048edac3d",
+      "target": "![实体链接管线：提及 → 候选 → 消歧后的实体](../assets/entity-linking.svg)\n",
+      "target_sha256": "e420a06ecb6971514db2043d28efb4899a4ea8c1fe3dfe8fa47e7ae8ec7d32f3"
+    },
+    {
+      "segment_id": "05-25:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "8a084e7eaab709607dc33853b7b9b10d88552be98ff10345fc32edfb9fa0fc9d",
+      "target": "**候选生成。** 给定提及的表面形式（surface form，例如“Jordan”），在别名索引（alias index）中查找候选。Wikipedia 的别名词典覆盖了大多数命名实体：“JFK” → John F. Kennedy、Jacqueline Kennedy、JFK 机场、JFK（电影）。典型索引会为每个提及返回 10-30 个候选。\n",
+      "target_sha256": "7eefd9cab40788bf9d0d7a67f302f7129e65e7e0140effa41900911fae4e2341"
+    },
+    {
+      "segment_id": "05-25:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "b2cbe21c357ce9e8e8235cfbf19740e7b910ef90c3d1fa92cf1a71f49a93716e",
+      "target": "**消歧：三种方法。**\n",
+      "target_sha256": "099c242f39af5cf91dfa4458763a4dedb118184dea1572d7e5e5c630e0f9a2c5"
+    },
+    {
+      "segment_id": "05-25:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0027",
+      "kind": "list",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "bab59546b6920258f086b5f36335b386dad0d3e1fc100e594e6f8d9f5aa9619d",
+      "target": "1. **先验 + 上下文（Milne & Witten，2008）。** `P(entity | mention) × context-similarity(entity, text)`。效果好、速度快，无需训练。\n2. **基于嵌入（embedding；ESS / REL / Blink）。** 对提及 + 上下文进行编码，对每个候选的描述进行编码，然后选择余弦相似度最大的候选。这是 2020-2024 年的默认方案。\n3. **生成式（GENRE，2021；基于大语言模型（LLM），2023+）。** 逐 token（词元）解码实体的规范名称。将解码限制在由有效实体名称构成的前缀树（trie）中，从而保证输出是有效的 KB id。\n",
+      "target_sha256": "6b787bf57ee89664dfc727c968dd56337418555b84392a44d3d71d55beb70948"
+    },
+    {
+      "segment_id": "05-25:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "ed01a35ca775b842b5951d5fbad13efd8590eeed52efc89c054699fd48be90cd",
+      "target": "**端到端与管线。** 现代模型（ELQ、BLINK、ExtEnD、GENRE）在一次处理过程中完成 NER + 候选生成 + 消歧。管线系统仍在生产环境中占主导地位，因为其中的组件可以替换。\n",
+      "target_sha256": "561876884ab106deb8e9727a85f34ab99f57e327ed855fb1907a384b113203fc"
+    },
+    {
+      "segment_id": "05-25:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept",
+        "### The two measurements"
+      ],
+      "ordinal": 16,
+      "source_sha256": "ff8939123a075ecf8fc9f8943db3116f1297be92ec669a5bfaf7de58e813eb6c",
+      "target": "### 两项衡量指标\n",
+      "target_sha256": "8046de7a043eb2542f88f368eeb689651eeba870e05df4b33805c1747b0adf99"
+    },
+    {
+      "segment_id": "05-25:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept",
+        "### The two measurements"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0033",
+      "kind": "list",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept",
+        "### The two measurements"
+      ],
+      "ordinal": 17,
+      "source_sha256": "1478280bd8127370780b5c68f1fb37b06de63521143d9f7e3189e58632bd6cbc",
+      "target": "- **提及召回率（候选生成）。** 在标准答案中的提及里，正确 KB 条目出现在候选列表中的比例。这是整条管线的性能下限。\n- **消歧准确率 / F1。** 在候选中包含正确答案的前提下，top-1 结果正确的频率。\n",
+      "target_sha256": "68e85e4c91e9a120590c19752f3fad37964e1a56be84278a8ba9bf2d293413ad"
+    },
+    {
+      "segment_id": "05-25:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept",
+        "### The two measurements"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept",
+        "### The two measurements"
+      ],
+      "ordinal": 18,
+      "source_sha256": "1a4d061f3122792278bbf552413b6cf6b9494b99234beec84b426d5f1c430ab1",
+      "target": "始终同时报告这两项指标。一个候选召回率为 80%、消歧准确率为 99% 的系统，其管线表现为 80%。\n",
+      "target_sha256": "1ca5ec02c87cce915c317513e00e9f2eda63534f4094592e8fed166d23a68509"
+    },
+    {
+      "segment_id": "05-25:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept",
+        "### The two measurements"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept",
+        "### The two measurements"
+      ],
+      "ordinal": 19,
+      "source_sha256": "56ee662ba04cf2260fb9f531673a713d10be5148e1362fd8e1ed76d5db11055c",
+      "target": "```figure\ngx-entity-linking\n```\n",
+      "target_sha256": "56ee662ba04cf2260fb9f531673a713d10be5148e1362fd8e1ed76d5db11055c"
+    },
+    {
+      "segment_id": "05-25:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## The Concept",
+        "### The two measurements"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It"
+      ],
+      "ordinal": 20,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "05-25:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 1: build an alias index from Wikipedia redirects"
+      ],
+      "ordinal": 21,
+      "source_sha256": "a3b75b1272fee4de8c8dae4a257e18a59d50bca40b67432405d48c63f2c78b9c",
+      "target": "### 步骤 1：从 Wikipedia 重定向构建别名索引\n",
+      "target_sha256": "a01d5c3c01447b51fd7b1774ccb5d6ca955f950eb876af28863dc4339af7abff"
+    },
+    {
+      "segment_id": "05-25:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 1: build an alias index from Wikipedia redirects"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 1: build an alias index from Wikipedia redirects"
+      ],
+      "ordinal": 22,
+      "source_sha256": "6133f3882cd19e585320c6eb57eacd0c8f39580c9a32f344bca022c99ab3e76f",
+      "target": "```python\nalias_to_entities = {\n    \"jordan\": [\"Q41421 (Michael Jordan)\", \"Q810 (Jordan, country)\", \"Q254110 (Michael B. Jordan)\"],\n    \"paris\":  [\"Q90 (Paris, France)\", \"Q663094 (Paris, Texas)\", \"Q55411 (Paris Hilton)\"],\n    \"apple\":  [\"Q312 (Apple Inc.)\", \"Q89 (apple, fruit)\"],\n}\n```\n",
+      "target_sha256": "6133f3882cd19e585320c6eb57eacd0c8f39580c9a32f344bca022c99ab3e76f"
+    },
+    {
+      "segment_id": "05-25:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 1: build an alias index from Wikipedia redirects"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 1: build an alias index from Wikipedia redirects"
+      ],
+      "ordinal": 23,
+      "source_sha256": "6f4e496cc52c29494a4b4d6d76f371832f407bd731ca0bac29d4ba0fadd2cf6a",
+      "target": "Wikipedia 别名数据：~18M 个（别名，实体）对，M 表示百万。从 Wikidata 数据转储中下载，并存储为倒排索引。\n",
+      "target_sha256": "a0f33d4aab4f1887d4980672a6f31404e894c17a228c570e0cc3583c6a0531ee"
+    },
+    {
+      "segment_id": "05-25:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 1: build an alias index from Wikipedia redirects"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0047",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 2: context-based disambiguation"
+      ],
+      "ordinal": 24,
+      "source_sha256": "f5a7ff411498a7591b232079c7a038e93b7cc9b8dc6520dfa778108493e56308",
+      "target": "### 步骤 2：基于上下文的消歧\n",
+      "target_sha256": "a6a6809eaa4b6b5d6a20d202ae06bb2fe7f5b34b21dfaf615ec7eaed99c08447"
+    },
+    {
+      "segment_id": "05-25:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 2: context-based disambiguation"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 2: context-based disambiguation"
+      ],
+      "ordinal": 25,
+      "source_sha256": "9486e42d7fd8a039105ac3ba0d3f79ea84541938281c9ebb2291fa29ad28d285",
+      "target": "```python\ndef disambiguate(mention, context, alias_index, entity_desc):\n    candidates = alias_index.get(mention.lower(), [])\n    if not candidates:\n        return None, 0.0\n    context_words = set(tokenize(context))\n    best, best_score = None, -1\n    for entity_id in candidates:\n        desc_words = set(tokenize(entity_desc[entity_id]))\n        union = len(context_words | desc_words)\n        score = len(context_words & desc_words) / union if union else 0.0\n        if score > best_score:\n            best, best_score = entity_id, score\n    return best, best_score\n```\n",
+      "target_sha256": "9486e42d7fd8a039105ac3ba0d3f79ea84541938281c9ebb2291fa29ad28d285"
+    },
+    {
+      "segment_id": "05-25:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 2: context-based disambiguation"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 2: context-based disambiguation"
+      ],
+      "ordinal": 26,
+      "source_sha256": "31d01e7feb64e2c039c409fe1dfaa1753de034b3ad7d0a415313515250c93a93",
+      "target": "Jaccard 重叠度只是一个教学用的简化方案。将它替换为嵌入之间的余弦相似度（Transformer 版本见 `code/main.py` 的 step-2）。\n",
+      "target_sha256": "0b0145075b4011540a13aa1b1e51a86d043776770e23c9f2d9538abdcf98aede"
+    },
+    {
+      "segment_id": "05-25:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 2: context-based disambiguation"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 3: embedding-based (BLINK-style)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "11b5dd8998df86fbda8a0aef106172077129d612c42b9eccce411fe035d29497",
+      "target": "### 步骤 3：基于嵌入的消歧（BLINK 风格）\n",
+      "target_sha256": "d9fd47fa0e27cfc93a04cd010d7559a2fc976210e7fdaee9b6596ff3732bd0d8"
+    },
+    {
+      "segment_id": "05-25:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 3: embedding-based (BLINK-style)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 3: embedding-based (BLINK-style)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "2dcc8355472cfa1422760a49fdbf0c089b13230582a5028899215d27d7e6ac94",
+      "target": "```python\nfrom sentence_transformers import SentenceTransformer\nencoder = SentenceTransformer(\"sentence-transformers/all-MiniLM-L6-v2\")\n\ndef embed_mention(text, mention_span):\n    start, end = mention_span\n    marked = f\"{text[:start]} [MENTION] {text[start:end]} [/MENTION] {text[end:]}\"\n    return encoder.encode([marked], normalize_embeddings=True)[0]\n\ndef embed_entity(entity_id, description):\n    return encoder.encode([f\"{entity_id}: {description}\"], normalize_embeddings=True)[0]\n```\n",
+      "target_sha256": "2dcc8355472cfa1422760a49fdbf0c089b13230582a5028899215d27d7e6ac94"
+    },
+    {
+      "segment_id": "05-25:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 3: embedding-based (BLINK-style)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 3: embedding-based (BLINK-style)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "e47304313b5c2b204a598bde8c3897655625e4c441366d837258832efe55874a",
+      "target": "构建索引时，为每个 KB 实体计算一次嵌入。查询时，为提及 + 上下文计算一次嵌入，与候选池中的向量计算点积，并选取最大值对应的候选。\n",
+      "target_sha256": "c53f7b8522591cb58ff6b3166ddbbc473704eee4b4f59435a2edf58e4d687529"
+    },
+    {
+      "segment_id": "05-25:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 3: embedding-based (BLINK-style)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 4: generative entity linking (concept)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "5cf00ad40621b7ab431c9829fe1bbc52533889a0f5a10b2a8493e888ca456e3c",
+      "target": "### 步骤 4：生成式实体链接（概念）\n",
+      "target_sha256": "c79a6cc4a1db698482a5df208c865aa10eb05a1f2130418358ea2e6758f4a4cd"
+    },
+    {
+      "segment_id": "05-25:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 4: generative entity linking (concept)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 4: generative entity linking (concept)"
+      ],
+      "ordinal": 31,
+      "source_sha256": "8b9caf7f1085a264f092814a9f99e573d0546980f10497f3768c9b9755baed95",
+      "target": "GENRE 逐字符解码实体的 Wikipedia 标题。约束解码（constrained decoding，见第 20 课）保证只能输出有效标题，并与基于 KB 构建的前缀树紧密集成。如今沿着这一思路发展而来的有 REL-GEN，以及通过提示词（prompt）让 LLM 以结构化格式输出的 EL。\n",
+      "target_sha256": "4e12ebb409177c03ba87ebcdadac8756c0e00e65086a00a67f49fd16d9bdb1c5"
+    },
+    {
+      "segment_id": "05-25:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 4: generative entity linking (concept)"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 4: generative entity linking (concept)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "60346459b7e605d3a52f8c5a9f74662ed29286169b26ae0ac56f4431487b76ee",
+      "target": "```python\nprompt = f\"\"\"Text: {text}\nMention: {mention}\nList the best Wikipedia title for this mention.\nRespond with JSON: {{\"title\": \"...\"}}\"\"\"\n```\n",
+      "target_sha256": "60346459b7e605d3a52f8c5a9f74662ed29286169b26ae0ac56f4431487b76ee"
+    },
+    {
+      "segment_id": "05-25:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 4: generative entity linking (concept)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 4: generative entity linking (concept)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "bf503254ae3fd7c5c519d8c09afa0a40c8401b085142872b7fbb5a34d666aae0",
+      "target": "结合白名单（Outlines `choice`）使用，这是 2026 年最容易交付的 EL 管线。\n",
+      "target_sha256": "2ec1b5399453923c7db9e33b7ca281315a7539d2fec391af643cefb354bf72a3"
+    },
+    {
+      "segment_id": "05-25:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 4: generative entity linking (concept)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 5: evaluate on AIDA-CoNLL"
+      ],
+      "ordinal": 34,
+      "source_sha256": "107eb67046449b4256929dd009fcb15954a84eb6ad84dee1eac8763baab50fd2",
+      "target": "### 步骤 5：在 AIDA-CoNLL 上评测\n",
+      "target_sha256": "447682d147c6a32e5de0b7c89410bfc3d7344a95c8aded952f8c9ffa94600cd2"
+    },
+    {
+      "segment_id": "05-25:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 5: evaluate on AIDA-CoNLL"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 5: evaluate on AIDA-CoNLL"
+      ],
+      "ordinal": 35,
+      "source_sha256": "f97eda9bc8f39571fe16c9fa2ebdbcbefb4ae86ad2ff49a1efe1675f33238df7",
+      "target": "AIDA-CoNLL 是标准的 EL 基准：1,393 篇 Reuters 文章、34k 个提及（k 表示千），实体来自 Wikipedia。报告库内（in-KB）准确率（`P@1`）和库外（out-of-KB）NIL（知识库中无匹配条目）检测率。\n",
+      "target_sha256": "dfa27009d83533e50f655d1e98606f6049075060fc372ef1f41647e5d2129a61"
+    },
+    {
+      "segment_id": "05-25:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Build It",
+        "### Step 5: evaluate on AIDA-CoNLL"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Pitfalls"
+      ],
+      "ordinal": 36,
+      "source_sha256": "08cb057a9b38f546708b3f3b1b53987d4641ac598b82c51378c649e9705d2846",
+      "target": "## 常见陷阱\n",
+      "target_sha256": "0a2d366f240806ee8b05b41426f86853c6dbbf960fb110f9ed6f2061efd5b5ec"
+    },
+    {
+      "segment_id": "05-25:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Pitfalls"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Pitfalls"
+      ],
+      "ordinal": 37,
+      "source_sha256": "0a14fcf6e7f602258c49e29e80be36a9825857db9a4b674f877cf32485ccff56",
+      "target": "- **NIL 处理。** 某些提及不在 KB 中，例如新出现的实体或鲜为人知的人物。系统必须预测 NIL，而不是猜测一个错误实体。这项能力要单独衡量。\n- **提及边界错误。** 上游 NER 漏掉文本跨度的一部分，例如将“Bank of America”仅标注为“Bank”。这会降低 EL 召回率。\n- **热门实体偏差。** 训练后的系统过于倾向于预测高频实体。机器学习论文中对“Michael I. Jordan”的提及经常会被链接到篮球运动员 Jordan。\n- **跨语言 EL。** 将中文文本中的提及映射到英文 Wikipedia 实体。这需要多语言编码器或一个翻译步骤。\n- **KB 过时。** 新公司、事件和人物不会出现在去年的 Wikipedia 数据转储中。生产管线需要持续刷新知识库的机制。\n",
+      "target_sha256": "7d396c3ed0c85450daf2293f490fc04efa5c739b26cd2b09e352c0d351e719f0"
+    },
+    {
+      "segment_id": "05-25:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Pitfalls"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "05-25:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "b5f6d498dc25c78d94f60b46a9aaaab318a7bb444048551be1450bf0d7abfac3",
+      "target": "2026 年的技术栈：\n",
+      "target_sha256": "51db907c3b40c0de6ea2170983f32f6f748a8b657cfb3796bb10971b68cfeac3"
+    },
+    {
+      "segment_id": "05-25:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0079",
+      "kind": "table",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "2649183de54212d6292a0a8c89ba4d44df15da29614de370c289302d622f3828",
+      "target": "| 场景 | 选择 |\n|-----------|------|\n| 通用英文 + Wikipedia | BLINK 或 REL |\n| 跨语言，KB = Wikipedia | mGENRE |\n| 适合使用 LLM，每天只有少量提及 | 用候选列表 + 受约束的 JSON 向 Claude/GPT-4 提供提示词 |\n| 领域专用 KB（医疗、法律） | 结合 KB 感知检索的定制 BERT + 在该领域 AIDA 风格的数据集上微调（fine-tuning） |\n| 极低延迟 | 仅使用精确匹配的先验（Milne-Witten 基线） |\n| 研究领域的最先进水平（SOTA） | GENRE / ExtEnD / 生成式 LLM-EL |\n",
+      "target_sha256": "7c4bc999cc835d8fe50ce33f76c08984f451bb91db2b0bd293f8d06e2e769f1c"
+    },
+    {
+      "segment_id": "05-25:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "4488a4b66e93699f4d3194afc7b42727101c78909adfc216979aad177a8ded62",
+      "target": "2026 年可交付的生产模式：NER → 共指消解 → 对每个提及执行 EL → 将各簇合并为每簇一个规范实体。输出是文档中每个实体对应一个 KB id，而不是每个提及对应一个。\n",
+      "target_sha256": "23b9d09a86bd4b9cc69a3d076ad4e89110644efe30c53c00ce56098ab1d2a201"
+    },
+    {
+      "segment_id": "05-25:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Ship It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "05-25:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Ship It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Ship It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "e44c3b341a0545c769938e96e1cbf810f236ee2932b50d2d6d0b014c4f0a00fe",
+      "target": "保存为 `outputs/skill-entity-linker.md`：\n",
+      "target_sha256": "57db1e3e2e05581326aaca554c332c2dccefa319d2dea0881d8d8555e2f1a043"
+    },
+    {
+      "segment_id": "05-25:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Ship It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "3489a13b93d77430a2c7f5aef6998419fdcf09067d72cb2a7a7e7804d3385dc9",
+      "target": "```markdown\n---\nname: entity-linker\ndescription: Design an entity linking pipeline — KB, candidate generator, disambiguator, evaluation.\nversion: 1.0.0\nphase: 5\nlesson: 25\ntags: [nlp, entity-linking, knowledge-graph]\n---\n\nGiven a use case (domain KB, language, volume, latency budget), output:\n\n1. Knowledge base. Wikidata / Wikipedia / custom KB. Version date. Refresh cadence.\n2. Candidate generator. Alias-index, embedding, or hybrid. Target mention recall @ K.\n3. Disambiguator. Prior + context, embedding-based, generative, or LLM-prompted.\n4. NIL strategy. Threshold on top score, classifier, or explicit NIL candidate.\n5. Evaluation. Mention recall @ 30, top-1 accuracy, NIL-detection F1 on held-out set.\n\nRefuse any EL pipeline without a mention-recall baseline (you cannot evaluate a disambiguator without knowing candidate gen surfaced the right entity). Refuse any pipeline using LLM-prompted EL without constrained output to valid KB ids. Flag systems where popularity bias affects minority entities (e.g. name-clashes) without domain fine-tuning.\n```\n",
+      "target_sha256": "3489a13b93d77430a2c7f5aef6998419fdcf09067d72cb2a7a7e7804d3385dc9"
+    },
+    {
+      "segment_id": "05-25:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Exercises"
+      ],
+      "ordinal": 45,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "05-25:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Exercises"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0091",
+      "kind": "list",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "4d39ee799ec72a906f90de3ef72176b3bd92a611d0083a871cde154d176ff0cc",
+      "target": "1. **简单。** 在 `code/main.py` 中实现先验 + 上下文消歧器，并用于 10 个有歧义的提及（Paris、Jordan、Apple）。人工标注正确实体，然后衡量准确率。\n2. **中等。** 用句子 Transformer 对 50 个有歧义的提及进行编码，为每个候选的描述计算嵌入。比较基于嵌入的消歧与 Jaccard 上下文重叠度方法。\n3. **困难。** 构建一个包含 1k 个实体的领域 KB，例如你公司的员工 + 产品。端到端实现 NER + EL，并在 100 个留出句子上衡量精确率和召回率。\n",
+      "target_sha256": "47103ad4846825707d6c4f1fcc4f001419fc67b961928cade8803d27642ec882"
+    },
+    {
+      "segment_id": "05-25:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Key Terms"
+      ],
+      "ordinal": 47,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "05-25:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Key Terms"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0095",
+      "kind": "table",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Key Terms"
+      ],
+      "ordinal": 48,
+      "source_sha256": "d5c8d41cf4fe2d5fe4d1bf33fad6f9f790ea809410d8533da56e0a31cdfdf8f2",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 实体链接（EL） | 链接到 Wikipedia | 将一个提及映射到唯一的 KB 条目。 |\n| 候选生成 | 可能是谁？ | 返回某个提及可能对应的 KB 条目的候选短名单。 |\n| 消歧 | 选出正确的那个 | 根据上下文给候选打分，选出得分最高者。 |\n| 别名索引 | 查找表 | 从表面形式 → 候选实体的映射。 |\n| NIL | 不在 KB 中 | 明确预测没有匹配的 KB 条目。 |\n| KB | 知识库 | Wikidata、Wikipedia、DBpedia，或你的领域 KB。 |\n| AIDA-CoNLL | 那个基准 | 带有标准实体链接标注的 1,393 篇 Reuters 文章。 |\n",
+      "target_sha256": "bdd70fa824ddeb0040012d0ba12f312ec47b3a1e4e6452de930417f9455b8688"
+    },
+    {
+      "segment_id": "05-25:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Key Terms"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Further Reading"
+      ],
+      "ordinal": 49,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "05-25:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Further Reading"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-25:b0099",
+      "kind": "list",
+      "heading_path": [
+        "# Entity Linking & Disambiguation",
+        "## Further Reading"
+      ],
+      "ordinal": 50,
+      "source_sha256": "67cc5e7df0bf11234d1820cfb6d8853e86af65c0e24313e1ed48527ff4fe7bb0",
+      "target": "- [Milne, Witten (2008). Learning to Link with Wikipedia](https://researchcommons.waikato.ac.nz/entities/publication/b9a0b520-abc5-47c5-a86a-da6c579893ab) — 奠定基础的先验 + 上下文方法。\n- [Wu et al. (2020). Zero-shot Entity Linking with Dense Entity Retrieval (BLINK)](https://arxiv.org/abs/1911.03814) — 基于嵌入的主力方案。\n- [De Cao et al. (2021). Autoregressive Entity Retrieval (GENRE)](https://arxiv.org/abs/2010.00904) — 使用约束解码的生成式 EL。\n- [Hoffart et al. (2011). Robust Disambiguation of Named Entities in Text (AIDA)](https://www.aclweb.org/anthology/D11-1072.pdf) — 介绍该基准的论文。\n- [REL: An Entity Linker Standing on the Shoulders of Giants (2020)](https://arxiv.org/abs/2006.01969) — 开放的生产技术栈。\n",
+      "target_sha256": "4c96f3e0be44a406b6101604f2582dec5e99b551638182f421329b0c0acb3666"
+    }
+  ],
+  "stage_id": "S71-entity-linking",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+  "additional_glossary_sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S71-entity-linking/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "bf74624c8a1252cdc139b140b25c1f8f5324732beaa02e44fe2ee13e7c9e278e",
+  "terminology_addendum_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "terminology_addendum_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": [
+    {
+      "source_path": "phases/05-nlp-foundations-to-advanced/25-entity-linking/assets/entity-linking.svg",
+      "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/25-entity-linking/assets/entity-linking.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "3531cc8c4b7ebb3e409932d846b579207f166b0a4954abd39cb698268647248d"
+    }
+  ],
+  "quantity_mappings": [
+    {
+      "segment_id": "05-25:b0005",
+      "source": "~60 minutes",
+      "target": "~60 分钟",
+      "meaning": "Same approximate duration; metadata time unit translated"
+    },
+    {
+      "segment_id": "05-25:b0013",
+      "source": "Two subtasks",
+      "target": "两个子任务",
+      "meaning": "Natural-language two preserved"
+    },
+    {
+      "segment_id": "05-25:b0017",
+      "source": "a decade",
+      "target": "十年",
+      "meaning": "Same ten-year interval, numeric word rendered as Chinese"
+    },
+    {
+      "segment_id": "05-25:b0025",
+      "source": "three approaches",
+      "target": "三种方法",
+      "meaning": "Three alternatives"
+    },
+    {
+      "segment_id": "05-25:b0031",
+      "source": "two measurements",
+      "target": "两项衡量指标",
+      "meaning": "Two measurements"
+    },
+    {
+      "segment_id": "05-25:b0045",
+      "source": "~18M",
+      "target": "~18M",
+      "meaning": "M retained and explained as 百万"
+    },
+    {
+      "segment_id": "05-25:b0057",
+      "source": "every KB entity once; mention + context once",
+      "target": "每个 KB 实体计算一次；提及 + 上下文计算一次",
+      "meaning": "Both one-time embedding operations preserved"
+    },
+    {
+      "segment_id": "05-25:b0069",
+      "source": "34k",
+      "target": "34k",
+      "meaning": "k retained and explained as 千"
+    },
+    {
+      "segment_id": "05-25:b0081",
+      "source": "one canonical entity per cluster; one KB id per entity, not one per mention",
+      "target": "每簇一个规范实体；每个实体对应一个 KB id，而不是每个提及对应一个",
+      "meaning": "Per-cluster versus per-mention distinction unchanged"
+    },
+    {
+      "segment_id": "05-25:b0091",
+      "source": "1k-entity",
+      "target": "1k 个实体",
+      "meaning": "k abbreviation retained"
+    }
+  ],
+  "revision_history": [
+    {
+      "date": "2026-10-03",
+      "reason": "Independent peer required S57 pipeline terminology 管线; protected fences unchanged",
+      "previous_target_sha256": "33efb3f8a4e0b077607e07c0d3b1701a3d5f097ab478a7d376ce1b6d6072d27c",
+      "target_sha256": "cf2a6a0b40a03fde149a56793c64cc2dcb4a7390de29189c0d856d7932eac62a",
+      "segments": [
+        {
+          "segment_id": "05-25:b0017",
+          "before_sha256": "3ea105f1b39ed37ae006a775eed991e8bb7b1f395ee4b81c6b6102e576638187",
+          "after_sha256": "5c7ca5001a812b72927ccab873c4dabd5e7242f68c05a8af8e2721a17cc69146"
+        },
+        {
+          "segment_id": "05-25:b0021",
+          "before_sha256": "9c6a78ac49b8b88d51092f716aea1a952236dd5b0d53cbb281a7ed48dac77b8e",
+          "after_sha256": "e420a06ecb6971514db2043d28efb4899a4ea8c1fe3dfe8fa47e7ae8ec7d32f3"
+        },
+        {
+          "segment_id": "05-25:b0029",
+          "before_sha256": "be84c845ebae64bac2375f3b58ed744c2211a5b6a0081f18c1e7dee272071b48",
+          "after_sha256": "561876884ab106deb8e9727a85f34ab99f57e327ed855fb1907a384b113203fc"
+        },
+        {
+          "segment_id": "05-25:b0033",
+          "before_sha256": "9762216fae3371e025334ce402ede772e7fa4e3a08bef36c3d84dcf53672bb19",
+          "after_sha256": "68e85e4c91e9a120590c19752f3fad37964e1a56be84278a8ba9bf2d293413ad"
+        },
+        {
+          "segment_id": "05-25:b0035",
+          "before_sha256": "a0d32704eccb1a7c908242b3f72bc555f838a0d225238faa95cadbe9f152a26a",
+          "after_sha256": "1ca5ec02c87cce915c317513e00e9f2eda63534f4094592e8fed166d23a68509"
+        },
+        {
+          "segment_id": "05-25:b0065",
+          "before_sha256": "37473e52cd600c918ca35dc4f11cd19432c5ac23130d149319c4e99e993cc973",
+          "after_sha256": "2ec1b5399453923c7db9e33b7ca281315a7539d2fec391af643cefb354bf72a3"
+        },
+        {
+          "segment_id": "05-25:b0073",
+          "before_sha256": "d69ae07bcb3a5630c82e9f45a4a9c7fa0c2144ae2c7ba11a32ae38f5214fec8d",
+          "after_sha256": "7d396c3ed0c85450daf2293f490fc04efa5c739b26cd2b09e352c0d351e719f0"
+        }
+      ]
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "commit": "3911d2d8ad96e711e38b18a0fc252a629bfaa9ec",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44"
+    }
+  ]
+}
