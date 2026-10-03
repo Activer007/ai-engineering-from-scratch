@@ -1,0 +1,1981 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-06",
+  "source_path": "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "264e6d606ed8e570d30ee5d24856620692c69e17",
+  "source_sha256": "1234e5808229ac25f3c65b1fe1baab736e525591c4cf847cc28690af25d46e71",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/zh.md",
+  "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "recovery": "Exact original author tool-call prose + three original edits replayed; 14741 target bytes verified against original hash. All current review/run evidence newly generated; old PASS not inherited."
+  },
+  "segments": [
+    {
+      "segment_id": "05-06:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition"
+      ],
+      "ordinal": 1,
+      "source_sha256": "0bde9d478dfbb352cd2556905032f4a9de51920e190ffd92960afded7bd189b9",
+      "target": "# 命名实体识别\n",
+      "target_sha256": "c7dc649861671508101eaf2891af33c72ae024bcc3d596dc2e3b15e42221a868"
+    },
+    {
+      "segment_id": "05-06:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Named Entity Recognition"
+      ],
+      "ordinal": 2,
+      "source_sha256": "3cacd81e520b86a817d8e7a07d8b5e23ee53b939347f40ed4f86c72786fc0b4a",
+      "target": "> 把名称提取出来。听上去很简单，直到你遇到模糊的边界、嵌套实体（nested entity）和领域术语。\n",
+      "target_sha256": "7af8c1ed7b35832ee77b27706ca7f4be3e0f72a73cfef062a0d01fa6ece3eb48"
+    },
+    {
+      "segment_id": "05-06:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition"
+      ],
+      "ordinal": 3,
+      "source_sha256": "5fc5c40f721e4bae5c1e4a58673426bedff57d5ce516851e08802f48bbd4190c",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 02（词袋 BoW + TF-IDF），阶段 5 · 03（词嵌入）\n**Time:** ~75 分钟\n",
+      "target_sha256": "6c58765c70b522ff8f08d2cfae10bfd2578f12e60c238ac6d98c3eef33e48d43"
+    },
+    {
+      "segment_id": "05-06:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "05-06:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "7a28b088fd8ebadeeec5b12bba3a6a4e7199a56c0a4362ffea226aac7b263b7f",
+      "target": "“Apple sued Google over its iPhone search deal in the US.” 五个实体：Apple（ORG）、Google（ORG）、iPhone（PRODUCT）、search deal（也许算）、US（GPE）。好的命名实体识别（NER）系统会把它们全部提取出来，并正确标注类型。差的系统会漏掉 iPhone，把水果 Apple 和公司 Apple 混为一谈，还会把“US”标成 PERSON。\n",
+      "target_sha256": "1226a91e6d9084a23059d96051cae04b87ba9535f687df8fb5b10b953a89e166"
+    },
+    {
+      "segment_id": "05-06:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "e84fe9cab669136301d70b5e74eda947dece00a9014580d2e0a81e92447303de",
+      "target": "NER 是每条结构化抽取流水线背后的主力：简历解析、合规日志扫描、病历匿名化、搜索查询理解、为聊天机器人回复提供依据，以及法律合同信息抽取。你很少直接看到它，却一直在依赖它。\n",
+      "target_sha256": "54d86e26a3a374fedf2807fefecbf443dcd7af8753152b09d11a556b96e615f0"
+    },
+    {
+      "segment_id": "05-06:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "d9c3a854236251f1efa3abed18608889e0a6fcdff6018432ad7a7af84a5c61a6",
+      "target": "本课沿着经典方法（基于规则、HMM、CRF）一路走到现代方法（BiLSTM-CRF，再到 Transformer）。每一步都解决前一种方法的某个局限。理解这条演进规律，就是本课的重点。\n",
+      "target_sha256": "221b0cc25230eb9765e4b14f34e2f926facc9c815c61b8b18a12f2d042241732"
+    },
+    {
+      "segment_id": "05-06:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "05-06:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "8cbe8fd5be48c62d3fcd6217a7471e02c064195826f47ff1a99954226cceca7c",
+      "target": "**BIO 标注（BIO tagging）** （或 BILOU）把实体抽取转化为序列标注（sequence labeling）问题。为每个 token（词元）标注 `B-TYPE`（实体开头）、`I-TYPE`（实体内部）或 `O`（不属于任何实体）。\n",
+      "target_sha256": "3c4af6a454d641dcd70936136a07687407046753b992e2fffe81731da1128701"
+    },
+    {
+      "segment_id": "05-06:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0019",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01a1c88fafe3e67e9f9fcc1fb40f34eb0dab6ded82ec76af713549390fbbae83",
+      "target": "```text\nApple    B-ORG\nsued     O\nGoogle   B-ORG\nover     O\nits      O\niPhone   B-PRODUCT\nsearch   O\ndeal     O\nin       O\nthe      O\nUS       B-GPE\n.        O\n```\n",
+      "target_sha256": "5b83a016243fd297e52b7acdcc253f42028e386a93a9f3be179d72820f49966c"
+    },
+    {
+      "segment_id": "05-06:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "a03095643d0723003c513df742c0c91214f40fff5d3d56374b76d5498148981c",
+      "target": "包含多个 token 的实体可以串联起来：`New B-GPE`、`York I-GPE`、`City I-GPE`。理解 BIO 的模型能够提取任意文本跨度（span）。\n",
+      "target_sha256": "2db3157c67f8715d624f4e0db863b49058bef7e70407f0570d64b464bc3c28ce"
+    },
+    {
+      "segment_id": "05-06:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "8218caca2fbaa6c2995d142a5a51337fb1dd5f4cdd76f167a9de8ec0045b88f7",
+      "target": "架构的演进顺序如下：\n",
+      "target_sha256": "1e29a0572ed4e8ecf701a8de2bb819b2993bbf63aaebaf890d9b848de87fd449"
+    },
+    {
+      "segment_id": "05-06:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0025",
+      "kind": "list",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "86e5ca85f94a6257c09b5dee870bc79f85653f75ad664cffde0cae2adf26454e",
+      "target": "- **基于规则。** 正则表达式 + 专名词表（gazetteer）查询。对已知实体的精确率很高，对新实体的覆盖率为零。\n- **HMM。** 隐 Markov 模型（Hidden Markov Model）。建模给定标记时 token 的发射概率，以及标记之间的转移概率。使用 Viterbi 解码，以带标注的数据训练。\n- **CRF。** 条件随机场（Conditional Random Field）。与 HMM 类似，但属于判别式模型，因此可以混合使用任意特征（词形模式（word shape）、大小写、相邻词）。在 2026 年，它仍是资源有限的生产部署中经典的主力方法。\n- **BiLSTM-CRF。** 双向长短期记忆网络与 CRF 的组合。使用神经网络特征代替手工设计的特征。LSTM 从两个方向读取句子，上层 CRF 保证标记序列一致。\n- **基于 Transformer。** 用 token 分类头微调（fine-tune）BERT。准确率最高，计算量也最大。\n",
+      "target_sha256": "e0a0d34004a971f5ab4d7e1fd3fd292067aaeb7a938d9723fb3c7925815bcdcf"
+    },
+    {
+      "segment_id": "05-06:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0027",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "d5c051e7f4c0fcb0423e353eae5d01848b0d5fded1009790a1b0d9e1faaf9c19",
+      "target": "```figure\nner-bio-tagging\n```\n",
+      "target_sha256": "d5c051e7f4c0fcb0423e353eae5d01848b0d5fded1009790a1b0d9e1faaf9c19"
+    },
+    {
+      "segment_id": "05-06:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It"
+      ],
+      "ordinal": 15,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "05-06:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 1: BIO tagging helpers"
+      ],
+      "ordinal": 16,
+      "source_sha256": "fb6b01d37b9bdd2ede5732f73cc70e6cac6e357e4ca38456bb109fada5fc0e0e",
+      "target": "### 步骤 1：BIO 标注辅助函数\n",
+      "target_sha256": "80f16ca0f9f75cde742d4657124efa2ec956bdefc3d543695398d18ac6942b3d"
+    },
+    {
+      "segment_id": "05-06:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 1: BIO tagging helpers"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 1: BIO tagging helpers"
+      ],
+      "ordinal": 17,
+      "source_sha256": "5e05d8adf38ba7a40f78f50dbb92d8413538001c4617a4151a0b0cd2e8d80157",
+      "target": "```python\ndef spans_to_bio(tokens, spans):\n    labels = [\"O\"] * len(tokens)\n    for start, end, label in spans:\n        labels[start] = f\"B-{label}\"\n        for i in range(start + 1, end):\n            labels[i] = f\"I-{label}\"\n    return labels\n\n\ndef bio_to_spans(tokens, labels):\n    spans = []\n    current = None\n    for i, label in enumerate(labels):\n        if label.startswith(\"B-\"):\n            if current:\n                spans.append(current)\n            current = (i, i + 1, label[2:])\n        elif label.startswith(\"I-\") and current and current[2] == label[2:]:\n            current = (current[0], i + 1, current[2])\n        else:\n            if current:\n                spans.append(current)\n                current = None\n    if current:\n        spans.append(current)\n    return spans\n```\n",
+      "target_sha256": "5e05d8adf38ba7a40f78f50dbb92d8413538001c4617a4151a0b0cd2e8d80157"
+    },
+    {
+      "segment_id": "05-06:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 1: BIO tagging helpers"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0035",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 1: BIO tagging helpers"
+      ],
+      "ordinal": 18,
+      "source_sha256": "593aa7b6f493b8203c6eb7230fd529c0eff1cae99c81bd3e2f4bcfd47bd18bbd",
+      "target": "```python\n>>> tokens = [\"Apple\", \"sued\", \"Google\", \"over\", \"iPhone\", \"sales\", \".\"]\n>>> labels = [\"B-ORG\", \"O\", \"B-ORG\", \"O\", \"B-PRODUCT\", \"O\", \"O\"]\n>>> bio_to_spans(tokens, labels)\n[(0, 1, 'ORG'), (2, 3, 'ORG'), (4, 5, 'PRODUCT')]\n```\n",
+      "target_sha256": "593aa7b6f493b8203c6eb7230fd529c0eff1cae99c81bd3e2f4bcfd47bd18bbd"
+    },
+    {
+      "segment_id": "05-06:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 1: BIO tagging helpers"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 2: hand-crafted features"
+      ],
+      "ordinal": 19,
+      "source_sha256": "f7cbc1d3ae71195e0bfc789af8986e081df88aa1641afe654715aa558a7aa1f5",
+      "target": "### 步骤 2：手工设计的特征\n",
+      "target_sha256": "530b69b3b2140dd2bcb324c8730f0fce9b877672294f014d66066069f2e7855f"
+    },
+    {
+      "segment_id": "05-06:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 2: hand-crafted features"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 2: hand-crafted features"
+      ],
+      "ordinal": 20,
+      "source_sha256": "40bec8f1f7790b2c656c1433a5f27fab9b6ffd3e87fb257f140a1b5fb2b2acfd",
+      "target": "对于经典的非神经网络 NER，特征是关键。下面是一些有用的特征：\n",
+      "target_sha256": "7ad6f8de8cbc463f7cd93af02f16f89085718033046c75f003841e49c19f176a"
+    },
+    {
+      "segment_id": "05-06:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 2: hand-crafted features"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 2: hand-crafted features"
+      ],
+      "ordinal": 21,
+      "source_sha256": "d81d55cb5249b4ce7ffc5dd5e63d745c2bd4431df9b341d7f1444edf0b195706",
+      "target": "```python\ndef token_features(token, prev_token, next_token):\n    return {\n        \"lower\": token.lower(),\n        \"is_upper\": token.isupper(),\n        \"is_title\": token.istitle(),\n        \"has_digit\": any(c.isdigit() for c in token),\n        \"suffix_3\": token[-3:].lower(),\n        \"shape\": word_shape(token),\n        \"prev_lower\": prev_token.lower() if prev_token else \"<BOS>\",\n        \"next_lower\": next_token.lower() if next_token else \"<EOS>\",\n    }\n\n\ndef word_shape(word):\n    out = []\n    for c in word:\n        if c.isupper():\n            out.append(\"X\")\n        elif c.islower():\n            out.append(\"x\")\n        elif c.isdigit():\n            out.append(\"d\")\n        else:\n            out.append(c)\n    return \"\".join(out)\n```\n",
+      "target_sha256": "d81d55cb5249b4ce7ffc5dd5e63d745c2bd4431df9b341d7f1444edf0b195706"
+    },
+    {
+      "segment_id": "05-06:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 2: hand-crafted features"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 2: hand-crafted features"
+      ],
+      "ordinal": 22,
+      "source_sha256": "65c6954f4c14db5509d69e6dd6f942abf58a9e8908097f3b31af5449462d7328",
+      "target": "`word_shape(\"iPhone\")` 返回 `xXxxxx`。`word_shape(\"USA-2024\")` 返回 `XXX-dddd`。大小写模式是识别专名的强信号。\n",
+      "target_sha256": "7bf290aeceb368ab378e6960681e2c0658f2fadf0ac46030fcd7204efc60c65d"
+    },
+    {
+      "segment_id": "05-06:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 2: hand-crafted features"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 3: a simple rule-based + dictionary baseline"
+      ],
+      "ordinal": 23,
+      "source_sha256": "78fd0538d1c22b0688d66ec72c4f6f59dec700d9908dbe7aa7602fb1686436bb",
+      "target": "### 步骤 3：简单的规则与词典基线\n",
+      "target_sha256": "9fc31a0c87863b562f9618560cf8def007f9cd06541c6de1bcfc732e07a0690a"
+    },
+    {
+      "segment_id": "05-06:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 3: a simple rule-based + dictionary baseline"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 3: a simple rule-based + dictionary baseline"
+      ],
+      "ordinal": 24,
+      "source_sha256": "769e1f14a177db974afe976b13fa6ee4316a593e70af4e278123081bc1f9d08a",
+      "target": "```python\nORG_GAZETTEER = {\"Apple\", \"Google\", \"Microsoft\", \"OpenAI\", \"Meta\", \"Amazon\", \"Netflix\"}\nGPE_GAZETTEER = {\"US\", \"USA\", \"UK\", \"India\", \"Germany\", \"France\"}\nPRODUCT_GAZETTEER = {\"iPhone\", \"Android\", \"Windows\", \"ChatGPT\", \"Claude\"}\n\n\ndef rule_based_ner(tokens):\n    labels = []\n    for token in tokens:\n        if token in ORG_GAZETTEER:\n            labels.append(\"B-ORG\")\n        elif token in GPE_GAZETTEER:\n            labels.append(\"B-GPE\")\n        elif token in PRODUCT_GAZETTEER:\n            labels.append(\"B-PRODUCT\")\n        else:\n            labels.append(\"O\")\n    return labels\n```\n",
+      "target_sha256": "769e1f14a177db974afe976b13fa6ee4316a593e70af4e278123081bc1f9d08a"
+    },
+    {
+      "segment_id": "05-06:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 3: a simple rule-based + dictionary baseline"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 3: a simple rule-based + dictionary baseline"
+      ],
+      "ordinal": 25,
+      "source_sha256": "0cb7cbb8c12dbeaf9cd700f5db58b32f7e54313e1ff5644049832b4aafa7903b",
+      "target": "生产环境的专名词表包含从 Wikipedia 和 DBpedia 抓取的数百万个条目。覆盖情况不错，消歧能力却很差：例如区分公司 `Apple` 和水果。这就是统计模型胜出的原因。\n",
+      "target_sha256": "8b3e83a80a30c44b4e21b2dff210bafb767ba52853d4fe7116662e8d03c786a8"
+    },
+    {
+      "segment_id": "05-06:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 3: a simple rule-based + dictionary baseline"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 4: the CRF step (sketch, not full impl)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "4448adec966169f9734b6c79f0907a6889e53e3b53a8b71cdcbbb33b92f008e8",
+      "target": "### 步骤 4：加入 CRF（示意，非完整实现）\n",
+      "target_sha256": "c665467889d90ff666e9b275d4035e752c9219e198c52ffaee6804ae1b5892ce"
+    },
+    {
+      "segment_id": "05-06:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 4: the CRF step (sketch, not full impl)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 4: the CRF step (sketch, not full impl)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "7cfe7220a1b167485d0056a3ce9c24c791e48113ce53b4ee58f6d9b72ee0fa0e",
+      "target": "如果没有概率论基础，用 50 行代码从零实现完整 CRF 并不能帮助你理解它。这里使用 `sklearn-crfsuite`：\n",
+      "target_sha256": "317bf081eb408220c249cd0f16cf2ce11bea789c0ee6196c98125a472a050c1e"
+    },
+    {
+      "segment_id": "05-06:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 4: the CRF step (sketch, not full impl)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 4: the CRF step (sketch, not full impl)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "b982d686763536d8512e53a31630cd318e833790ae8a56c6fca2adc1faf43120",
+      "target": "```python\nimport sklearn_crfsuite\n\ndef to_features(tokens):\n    out = []\n    for i, tok in enumerate(tokens):\n        prev = tokens[i - 1] if i > 0 else \"\"\n        nxt = tokens[i + 1] if i + 1 < len(tokens) else \"\"\n        out.append({\n            \"word.lower()\": tok.lower(),\n            \"word.isupper()\": tok.isupper(),\n            \"word.istitle()\": tok.istitle(),\n            \"word.isdigit()\": tok.isdigit(),\n            \"word.suffix3\": tok[-3:].lower(),\n            \"word.shape\": word_shape(tok),\n            \"prev.word.lower()\": prev.lower(),\n            \"next.word.lower()\": nxt.lower(),\n            \"BOS\": i == 0,\n            \"EOS\": i == len(tokens) - 1,\n        })\n    return out\n\n\ncrf = sklearn_crfsuite.CRF(algorithm=\"lbfgs\", c1=0.1, c2=0.1, max_iterations=100, all_possible_transitions=True)\nX_train = [to_features(s) for s in sentences_tokenized]\ncrf.fit(X_train, bio_labels_train)\n```\n",
+      "target_sha256": "b982d686763536d8512e53a31630cd318e833790ae8a56c6fca2adc1faf43120"
+    },
+    {
+      "segment_id": "05-06:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 4: the CRF step (sketch, not full impl)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 4: the CRF step (sketch, not full impl)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "28d5ca0222f77d11a6985d6ae9fd312db1d61b441078186cbba4010b886f1a89",
+      "target": "`c1` 和 `c2` 分别对应 L1 和 L2 正则化。`all_possible_transitions=True` 让模型学到非法序列（例如在 `O` 后面接 `I-ORG`）不太可能出现。CRF 就是这样在你不手写约束的情况下保证 BIO 一致性的。\n",
+      "target_sha256": "c397f74c897332131b4bf9912d6bb4c1ac64ccb6cd0887978668b9eb38a31b68"
+    },
+    {
+      "segment_id": "05-06:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 4: the CRF step (sketch, not full impl)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 5: what a BiLSTM-CRF adds"
+      ],
+      "ordinal": 30,
+      "source_sha256": "925ecd5a62d87b9db9b204a9edda85e5618cf16bfa50f8cf4ac27706bea77838",
+      "target": "### 步骤 5：BiLSTM-CRF 增加了什么\n",
+      "target_sha256": "8ac15039aba50229b9beef92cf8dfa4be735b0dbfb5262b0bdd23b00032b2276"
+    },
+    {
+      "segment_id": "05-06:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 5: what a BiLSTM-CRF adds"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 5: what a BiLSTM-CRF adds"
+      ],
+      "ordinal": 31,
+      "source_sha256": "4b2c6ca310a14c282b8807703a43590491b6edf87a48f7717cd31e5857a8a617",
+      "target": "特征改由模型学习。输入是 token 嵌入（embedding，例如 GloVe 或 fastText）。LSTM 分别从左到右、从右到左读取文本，拼接后的隐藏状态进入 CRF 输出层。CRF 仍然保证标记序列一致；LSTM 则用学到的特征取代手工设计的特征。\n",
+      "target_sha256": "2c8387bfc71543b16c4eaa84b45712992c2a95f6fe4ebfd4d53fe9b94139572f"
+    },
+    {
+      "segment_id": "05-06:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 5: what a BiLSTM-CRF adds"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 5: what a BiLSTM-CRF adds"
+      ],
+      "ordinal": 32,
+      "source_sha256": "3a7c7fdf45e4ce7fd8d68f0ccf64d15e733b5ba0819726473a5bd6607929e6a1",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\n\nclass BiLSTM_CRF_Head(nn.Module):\n    def __init__(self, vocab_size, embed_dim, hidden_dim, n_labels):\n        super().__init__()\n        self.embed = nn.Embedding(vocab_size, embed_dim)\n        self.lstm = nn.LSTM(embed_dim, hidden_dim, bidirectional=True, batch_first=True)\n        self.fc = nn.Linear(hidden_dim * 2, n_labels)\n\n    def forward(self, token_ids):\n        e = self.embed(token_ids)\n        h, _ = self.lstm(e)\n        emissions = self.fc(h)\n        return emissions\n```\n",
+      "target_sha256": "3a7c7fdf45e4ce7fd8d68f0ccf64d15e733b5ba0819726473a5bd6607929e6a1"
+    },
+    {
+      "segment_id": "05-06:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 5: what a BiLSTM-CRF adds"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 5: what a BiLSTM-CRF adds"
+      ],
+      "ordinal": 33,
+      "source_sha256": "0a1e9a74d6cdc068d4a6157beb795b16a05363df2aef7f70467eaed81abf473e",
+      "target": "CRF 层使用 `torchcrf.CRF`（pip install pytorch-crf）。相比使用手工特征的 CRF，它的提升可以测量出来，但通常比你预期的小，除非你有数万条带标注的句子。\n",
+      "target_sha256": "10c8b5839606b76d098e5aa930b019de4ba49e8a8e556de103b25e8a0f13b7d7"
+    },
+    {
+      "segment_id": "05-06:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Build It",
+        "### Step 5: what a BiLSTM-CRF adds"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "05-06:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "ff617bebacea844cecf47ce85cfb2bed1654a553d333e55178144cc44b76cc21",
+      "target": "spaCy 自带可直接使用的生产级 NER。\n",
+      "target_sha256": "4309b682eadcfd6cf8db9eb7bec5988d3b3f884933aa9a8210385e18087e12f3"
+    },
+    {
+      "segment_id": "05-06:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0071",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "4b9cb0ba5d3f5e8a11e1e2b7f0f33677b5edcd39fd3d2aa713db96647ff238c5",
+      "target": "```python\nimport spacy\n\nnlp = spacy.load(\"en_core_web_sm\")\ndoc = nlp(\"Apple sued Google over its iPhone search deal in the US.\")\nfor ent in doc.ents:\n    print(f\"{ent.text:20s} {ent.label_}\")\n```\n",
+      "target_sha256": "4b9cb0ba5d3f5e8a11e1e2b7f0f33677b5edcd39fd3d2aa713db96647ff238c5"
+    },
+    {
+      "segment_id": "05-06:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "b8dd54085c1a699c8294e330890e02f490fa758a1a1327770a498cc4a730ba01",
+      "target": "```text\nApple                ORG\nGoogle               ORG\niPhone               ORG\nUS                   GPE\n```\n",
+      "target_sha256": "d9c72d6712b12dbe6c1f0bceaab1ff2f50d849801671a3eb08b6daff0805fe3f"
+    },
+    {
+      "segment_id": "05-06:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "e05f84e9023f7c2bd0d11e4f69170d5b80294e25062d94e82addbd55a1d8ec16",
+      "target": "注意，`iPhone` 被标成了 `ORG`，而不是 `PRODUCT`。spaCy 小模型对产品实体的覆盖较弱。大模型（`en_core_web_lg`）表现更好，Transformer 模型（`en_core_web_trf`）还要更好。\n",
+      "target_sha256": "bdd389a995f5955519707546494ae09f3f41c4c0fa2ced6beabb96d46fe90e1c"
+    },
+    {
+      "segment_id": "05-06:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "26ccd48f3c02378c75f1bdb8dfb2705a76ec2382d11c2bdb4191f65d8d72a4c5",
+      "target": "使用 Hugging Face 进行基于 BERT 的 NER：\n",
+      "target_sha256": "8b89de4c063b3961da2274b61a193abe8f5ff0e45a5b0f40da6951b8c08a4e05"
+    },
+    {
+      "segment_id": "05-06:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "f1718678328c11da30b0727c666fa2a0d0cab9dfc0e6ac6ee32d7ffda76ff525",
+      "target": "```python\nfrom transformers import pipeline\n\nner = pipeline(\"ner\", model=\"dslim/bert-base-NER\", aggregation_strategy=\"simple\")\nprint(ner(\"Apple sued Google over its iPhone in the US.\"))\n```\n",
+      "target_sha256": "f1718678328c11da30b0727c666fa2a0d0cab9dfc0e6ac6ee32d7ffda76ff525"
+    },
+    {
+      "segment_id": "05-06:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "bd7c27ee8c1f1757fde9be5678b09db14273bdd3c58596f610cf4e9f99e79c0f",
+      "target": "```text\n[{'entity_group': 'ORG', 'word': 'Apple', ...},\n {'entity_group': 'ORG', 'word': 'Google', ...},\n {'entity_group': 'MISC', 'word': 'iPhone', ...},\n {'entity_group': 'LOC', 'word': 'US', ...}]\n```\n",
+      "target_sha256": "f724ac123cbd224cab84960d7138084d994c46b0e7123bd15ce1af4f825b1496"
+    },
+    {
+      "segment_id": "05-06:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "5133baaf57da52d8bca21f3e8a1071617659bd20171ebd2185990d516a03efb5",
+      "target": "`aggregation_strategy=\"simple\"` 会把连续的 B-X、I-X token 合并成一个文本跨度。不使用它时，你得到的是 token 级标签，需要自行合并。\n",
+      "target_sha256": "520d5fbc9825340048718cbe545240160f95effaeb9abfea4161429423cd566b"
+    },
+    {
+      "segment_id": "05-06:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### LLM-based NER (the 2026 option)"
+      ],
+      "ordinal": 43,
+      "source_sha256": "2f09073a43f99da86891831555a051f98b29bad0595e459da32a3c941c1799eb",
+      "target": "### 基于大语言模型（LLM）的 NER（2026 年的选择）\n",
+      "target_sha256": "b95f71d93f1dbb818bceeaaa7e0866562bc2d0afdc7c21f214a62785e222ef82"
+    },
+    {
+      "segment_id": "05-06:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### LLM-based NER (the 2026 option)"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### LLM-based NER (the 2026 option)"
+      ],
+      "ordinal": 44,
+      "source_sha256": "1b0d67911873b4615fd71548bb0ff28f6854b08a7ffb6280f8e9788264f1f22e",
+      "target": "零样本（zero-shot）和少样本（few-shot）LLM NER 如今在许多领域已经能与微调模型竞争；当带标注的数据稀缺时，其表现还明显更好。\n",
+      "target_sha256": "2bc221980fefa9f1354988a709494aad59d2068bea04447a922ceac66057c9f4"
+    },
+    {
+      "segment_id": "05-06:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### LLM-based NER (the 2026 option)"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0089",
+      "kind": "list",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### LLM-based NER (the 2026 option)"
+      ],
+      "ordinal": 45,
+      "source_sha256": "35fa48313d112dd50c0fc0889830257c5b6cc185d1841d2dbd3cf16ff8a93baf",
+      "target": "- **零样本提示。** 给 LLM 一份实体类型列表和一个 schema（结构定义）示例，要求输出 JSON。无需额外训练即可使用；在新领域中的准确率一般。\n- **ZeroTuneBio 风格的提示。** 将任务分解为候选抽取 → 含义解释 → 判断 → 复查。多阶段提示词（而非单次提示）能显著提高生物医学 NER 的准确率。同样的模式也适用于法律、金融和科学领域。\n- **结合检索增强生成（RAG）的动态提示。** 每次推理调用时，都从小规模已标注的种子集中检索最相似的带标注示例，动态构建少样本提示词。在 2026 年的基准测试中，相比静态提示，这种方法让 GPT-4 在生物医学 NER 上的 F1 提高了 11-12%。\n- **按实体类型分解。** 对长文档而言，如果一次调用同时提取所有实体类型，召回率会随文档变长而下降。可以为每种实体类型各做一遍抽取。推理成本更高，但准确率也明显更高。这是处理临床记录和法律合同的标准模式。\n",
+      "target_sha256": "3f897a110a61b70870985da0f49cde1be1b2f080fe5a432f5bc1a8b035bc3742"
+    },
+    {
+      "segment_id": "05-06:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### LLM-based NER (the 2026 option)"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### LLM-based NER (the 2026 option)"
+      ],
+      "ordinal": 46,
+      "source_sha256": "8cae74c5a07af3740b712c86b8a2ec43dccd5bd1dc66b64163559a1adcf0dc9e",
+      "target": "截至 2026 年的生产建议：收集训练数据之前，先建立 LLM 零样本基线。F1 往往已经足够好，让你根本不必再微调。\n",
+      "target_sha256": "fa417555379f7325682cc6809dcda0244e28a2af5bfc522ff39f30a750380ac1"
+    },
+    {
+      "segment_id": "05-06:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### LLM-based NER (the 2026 option)"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where classical NER still wins"
+      ],
+      "ordinal": 47,
+      "source_sha256": "acd81bfc394299215c387177552fa2a1a393ceae5a34efed6af0cc1ef53602fb",
+      "target": "### 经典 NER 仍然占优的场景\n",
+      "target_sha256": "ff4d185b76e7e2f2e2a2375e15f106debe0b49207be1f123f7d4fe598827b559"
+    },
+    {
+      "segment_id": "05-06:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where classical NER still wins"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where classical NER still wins"
+      ],
+      "ordinal": 48,
+      "source_sha256": "66e553b9cdbeea707b77934934e70023d85805866c5747b64311a0a2bb5f4604",
+      "target": "即使可以使用 LLM，经典 NER 在以下情况下仍然占优：\n",
+      "target_sha256": "c7c1f6c9c56846b833825bda5f50e8dc7a3c0d5c0bf18506828bdc3715b10fee"
+    },
+    {
+      "segment_id": "05-06:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where classical NER still wins"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where classical NER still wins"
+      ],
+      "ordinal": 49,
+      "source_sha256": "8e0f668756add1869c1fe50f62fdf72e0f1d2e2a632c0a66e39977bdc58836b8",
+      "target": "- 延迟预算低于 50ms。\n- 你有数千个带标注的示例，并且需要 98%+ 的 F1。\n- 领域具有稳定的本体（ontology），预训练的 CRF 或 BiLSTM 能很好地迁移。\n- 监管约束要求使用本地部署的非生成式模型。\n",
+      "target_sha256": "57cf3b9eee3b7573e6c2c84d6a691c1e4bccfb4c2560ca7f678269741ee99ed9"
+    },
+    {
+      "segment_id": "05-06:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where classical NER still wins"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where it falls apart"
+      ],
+      "ordinal": 50,
+      "source_sha256": "acd3be19d74a9186e1c6c61eb25d3c2977ce4cd1ff7b6176cd9a32971cf78b9b",
+      "target": "### 容易失效的情况\n",
+      "target_sha256": "38ff6a66871507cf4dcf767430c3c1154a5ae0826bcf27afda802b40c895e432"
+    },
+    {
+      "segment_id": "05-06:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where it falls apart"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0101",
+      "kind": "list",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where it falls apart"
+      ],
+      "ordinal": 51,
+      "source_sha256": "9cdd377c6e6b67dc7dea972a2a1910c0965afa7c72c15d6c252730f2d20c2854",
+      "target": "- **领域偏移（domain shift）。** 用 CoNLL 训练的 NER 处理法律合同时，表现比专名词表还差。应在自己的领域上进行微调。\n- **嵌套实体。** “Bank of America Tower”同时是 ORG 和 FACILITY。标准 BIO 无法表示重叠的文本跨度。你需要嵌套 NER，即多遍处理或基于跨度的模型。\n- **长实体。** “United States Federal Deposit Insurance Corporation.” token 级模型有时会把它拆开。使用 `aggregation_strategy` 或进行后处理。\n- **样本稀少的类型。** 例如医疗 NER 中的 DRUG_BRAND、ADVERSE_EVENT、DOSE 标签，通用模型对此一无所知。Scispacy 和 BioBERT 是这类任务的起点。\n",
+      "target_sha256": "2ece23fca6fe91677d75c326909e327c58c1b4fe37cf6f25f9fb6a7745497215"
+    },
+    {
+      "segment_id": "05-06:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Use It",
+        "### Where it falls apart"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Ship It"
+      ],
+      "ordinal": 52,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "05-06:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Ship It"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Ship It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "115202296b590033a6554771d140135d7f38a5b0623a1445715797b873ca7fe4",
+      "target": "保存为 `outputs/skill-ner-picker.md`：\n",
+      "target_sha256": "53ca20a0a2037cbd54213ecdbb0bb4c6c4b988d3b16535ea9b49f06ca8fde28f"
+    },
+    {
+      "segment_id": "05-06:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Ship It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0107",
+      "kind": "fence",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Ship It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "b5f6599a69853b18cbc2aef3c9fb7e4ef05714db195c3597949cf5989eefeffb",
+      "target": "```markdown\n---\nname: ner-picker\ndescription: Pick the right NER approach for a given extraction task.\nversion: 1.0.0\nphase: 5\nlesson: 06\ntags: [nlp, ner, extraction]\n---\n\nGiven a task description (domain, label set, language, latency, data volume), output:\n\n1. Approach. Rule-based + gazetteer, CRF, BiLSTM-CRF, or transformer fine-tune.\n2. Starting model. Name it (spaCy model ID, Hugging Face checkpoint ID, or \"custom, trained from scratch\").\n3. Labeling strategy. BIO, BILOU, or span-based. Justify in one sentence.\n4. Evaluation. Use `seqeval`. Always report entity-level F1 (not token-level).\n\nRefuse to recommend fine-tuning a transformer for under 500 labeled examples unless the user already has a pretrained domain model. Flag nested entities as needing span-based or multi-pass models. Require a gazetteer audit if the user mentions \"production scale\" and labels are unchanged from CoNLL-2003.\n```\n",
+      "target_sha256": "b5f6599a69853b18cbc2aef3c9fb7e4ef05714db195c3597949cf5989eefeffb"
+    },
+    {
+      "segment_id": "05-06:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Ship It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Exercises"
+      ],
+      "ordinal": 55,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "05-06:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Exercises"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0111",
+      "kind": "list",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Exercises"
+      ],
+      "ordinal": 56,
+      "source_sha256": "07fc96fde29a9a07ef8d19fa61d66cf15912440619eca80252c40e73907ffe05",
+      "target": "1. **简单。** 实现 `bio_to_spans`（`spans_to_bio` 的逆操作），并在 10 个句子上验证往返转换的一致性。\n2. **中等。** 在 CoNLL-2003 英文 NER 数据集上训练上面的 sklearn-crfsuite CRF，使用 `seqeval` 报告各实体类型的 F1。典型结果约为 84 F1。\n3. **困难。** 在特定领域（医疗、法律或金融）的 NER 数据集上微调 `distilbert-base-cased`，与 spaCy 小模型比较。记录数据泄漏检查，并写下让你意外的发现。\n",
+      "target_sha256": "dc4bfe2c0c95c148f135b2b8ddb2ea39d4cd86c0eed52c333a490cd406e96930"
+    },
+    {
+      "segment_id": "05-06:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Exercises"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Key Terms"
+      ],
+      "ordinal": 57,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "05-06:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Key Terms"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0115",
+      "kind": "table",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Key Terms"
+      ],
+      "ordinal": 58,
+      "source_sha256": "3b6e5662d27e605c1779157ae957f3624a6809b341c3e4ec4ff885843d5d6d57",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| NER | 提取名称 | 为 token 跨度标注类型（PERSON、ORG、GPE、DATE 等）。 |\n| BIO | 标注方案 | `B-X` 表示开始，`I-X` 表示延续，`O` 表示实体之外。 |\n| BILOU | 更好的 BIO | 增加 `L-X`（最后一个）和 `U-X`（单个），让边界更清晰。 |\n| CRF | 结构化分类器 | 对标签之间的转移建模，而不只是对发射建模。保证序列合法。 |\n| 嵌套 NER | 重叠实体 | 某个跨度与其内部的子跨度分别是不同的实体。BIO 无法表达这种情况。 |\n| 实体级（Entity-level）F1 | 合适的 NER 指标 | 预测跨度必须与真实跨度完全匹配。token 级 F1 会高估准确性。 |\n",
+      "target_sha256": "eee70c1192bd3c7e12b26b867800f47aab3e247ce37bf9509aa51241efddaa5a"
+    },
+    {
+      "segment_id": "05-06:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Key Terms"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Further Reading"
+      ],
+      "ordinal": 59,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "05-06:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Further Reading"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-06:b0119",
+      "kind": "list",
+      "heading_path": [
+        "# Named Entity Recognition",
+        "## Further Reading"
+      ],
+      "ordinal": 60,
+      "source_sha256": "9eb855d124c112f3e87c865ea821f350bbf8b221814a74b887a2211228679524",
+      "target": "- [Lample et al. (2016). Neural Architectures for Named Entity Recognition](https://arxiv.org/abs/1603.01360) — BiLSTM-CRF 的经典论文。\n- [Devlin et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers](https://arxiv.org/abs/1810.04805) — 介绍后来成为标准的 token 分类模式。\n- [spaCy linguistic features — named entities](https://spacy.io/usage/linguistic-features#named-entities) — `Doc.ents` 和 `Span` 各项属性的实用参考。\n- [seqeval](https://github.com/chakki-works/seqeval) — 正确的指标计算库，始终使用它。\n",
+      "target_sha256": "a8345a436cc945250d5bcdcd5509e9df4a65d65cd7a36ecdc2fc869842a0c0e8"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+  "additional_glossary_sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201",
+  "dependency_manifest": {
+    "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/DEPENDENCIES.json",
+    "sha256": "76d8f679c62315b286cf662157d9eaa3d71f23f8dd09aa9b6ed0bcc00b6205fe",
+    "count": 61
+  },
+  "assets": [],
+  "quantity_mappings": [
+    {
+      "segment_id": "05-06:b0005",
+      "source_sha256": "5fc5c40f721e4bae5c1e4a58673426bedff57d5ce516851e08802f48bbd4190c",
+      "target_sha256": "6c58765c70b522ff8f08d2cfae10bfd2578f12e60c238ac6d98c3eef33e48d43",
+      "mappings": [
+        {
+          "source": "75 minutes",
+          "target": "75 分钟",
+          "equivalence": "minutes, not execution time"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0009",
+      "source_sha256": "7a28b088fd8ebadeeec5b12bba3a6a4e7199a56c0a4362ffea226aac7b263b7f",
+      "target_sha256": "1226a91e6d9084a23059d96051cae04b87ba9535f687df8fb5b10b953a89e166",
+      "mappings": [
+        {
+          "source": "Five entities",
+          "target": "五个实体",
+          "equivalence": "5 entities, original maybe qualification retained"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0021",
+      "source_sha256": "a03095643d0723003c513df742c0c91214f40fff5d3d56374b76d5498148981c",
+      "target_sha256": "2db3157c67f8715d624f4e0db863b49058bef7e70407f0570d64b464bc3c28ce",
+      "mappings": [
+        {
+          "source": "Multi-token",
+          "target": "多个 token",
+          "equivalence": "multiple tokens, not necessarily words or characters"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0025",
+      "source_sha256": "86e5ca85f94a6257c09b5dee870bc79f85653f75ad664cffde0cae2adf26454e",
+      "target_sha256": "e0a0d34004a971f5ab4d7e1fd3fd292067aaeb7a938d9723fb3c7925815bcdcf",
+      "mappings": [
+        {
+          "source": "zero coverage",
+          "target": "覆盖率为零",
+          "equivalence": "zero coverage claim retained"
+        },
+        {
+          "source": "both directions",
+          "target": "两个方向",
+          "equivalence": "2 reading directions"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0049",
+      "source_sha256": "0cb7cbb8c12dbeaf9cd700f5db58b32f7e54313e1ff5644049832b4aafa7903b",
+      "target_sha256": "8b3e83a80a30c44b4e21b2dff210bafb767ba52853d4fe7116662e8d03c786a8",
+      "mappings": [
+        {
+          "source": "millions of entries",
+          "target": "数百万个条目",
+          "equivalence": "order of 10^6 entries"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0053",
+      "source_sha256": "7cfe7220a1b167485d0056a3ce9c24c791e48113ce53b4ee58f6d9b72ee0fa0e",
+      "target_sha256": "317bf081eb408220c249cd0f16cf2ce11bea789c0ee6196c98125a472a050c1e",
+      "mappings": [
+        {
+          "source": "50 lines",
+          "target": "50 行代码",
+          "equivalence": "code-line count 50"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0061",
+      "source_sha256": "4b2c6ca310a14c282b8807703a43590491b6edf87a48f7717cd31e5857a8a617",
+      "target_sha256": "2c8387bfc71543b16c4eaa84b45712992c2a95f6fe4ebfd4d53fe9b94139572f",
+      "mappings": [
+        {
+          "source": "left-to-right and right-to-left",
+          "target": "从左到右、从右到左",
+          "equivalence": "two directions"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0065",
+      "source_sha256": "0a1e9a74d6cdc068d4a6157beb795b16a05363df2aef7f70467eaed81abf473e",
+      "target_sha256": "10c8b5839606b76d098e5aa930b019de4ba49e8a8e556de103b25e8a0f13b7d7",
+      "mappings": [
+        {
+          "source": "tens of thousands of labeled sentences",
+          "target": "数万条带标注的句子",
+          "equivalence": "order of 10^4 sentences"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0089",
+      "source_sha256": "35fa48313d112dd50c0fc0889830257c5b6cc185d1841d2dbd3cf16ff8a93baf",
+      "target_sha256": "3f897a110a61b70870985da0f49cde1be1b2f080fe5a432f5bc1a8b035bc3742",
+      "mappings": [
+        {
+          "source": "one-shot",
+          "target": "单次提示",
+          "equivalence": "one stage"
+        },
+        {
+          "source": "a single call",
+          "target": "一次调用",
+          "equivalence": "one call"
+        },
+        {
+          "source": "one extraction pass per entity type",
+          "target": "为每种实体类型各做一遍抽取",
+          "equivalence": "one pass per type"
+        },
+        {
+          "source": "11-12%",
+          "target": "11-12%",
+          "equivalence": "source relative-percentage notation; no percentage-point rewrite"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0097",
+      "source_sha256": "8e0f668756add1869c1fe50f62fdf72e0f1d2e2a632c0a66e39977bdc58836b8",
+      "target_sha256": "57cf3b9eee3b7573e6c2c84d6a691c1e4bccfb4c2560ca7f678269741ee99ed9",
+      "mappings": [
+        {
+          "source": "under 50ms",
+          "target": "低于 50ms",
+          "equivalence": "strict less than 50 milliseconds"
+        },
+        {
+          "source": "thousands of labeled examples",
+          "target": "数千个带标注的示例",
+          "equivalence": "order of 10^3 examples"
+        },
+        {
+          "source": "98%+ F1",
+          "target": "98%+ 的 F1",
+          "equivalence": "original score notation"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0111",
+      "source_sha256": "07fc96fde29a9a07ef8d19fa61d66cf15912440619eca80252c40e73907ffe05",
+      "target_sha256": "dc4bfe2c0c95c148f135b2b8ddb2ea39d4cd86c0eed52c333a490cd406e96930",
+      "mappings": [
+        {
+          "source": "10 sentences",
+          "target": "10 个句子",
+          "equivalence": "count 10"
+        },
+        {
+          "source": "~84 F1",
+          "target": "约为 84 F1",
+          "equivalence": "approximate score"
+        }
+      ]
+    },
+    {
+      "segment_id": "05-06:b0115",
+      "source_sha256": "3b6e5662d27e605c1779157ae957f3624a6809b341c3e4ec4ff885843d5d6d57",
+      "target_sha256": "eee70c1192bd3c7e12b26b867800f47aab3e247ce37bf9509aa51241efddaa5a",
+      "mappings": [
+        {
+          "source": "last / unit",
+          "target": "最后一个 / 单个",
+          "equivalence": "BILOU token roles"
+        },
+        {
+          "source": "One span / a sub-span",
+          "target": "某个跨度 / 子跨度",
+          "equivalence": "nested text intervals"
+        }
+      ]
+    }
+  ],
+  "author_reviews": {
+    "technical_full_bilingual_completed_at": "2026-10-02T23:29:30Z",
+    "separate_complete_Chinese_read_completed_at": "2026-10-02T23:29:39Z",
+    "all_119_blocks_reviewed": true,
+    "all_47_candidates_compared": true,
+    "all_13_fence_payloads_read": true,
+    "source_lines": 321,
+    "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+    "new_review_after_recovery": true,
+    "prior_pass_inherited": false
+  },
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "749ace2a3ae5eb50ef156b2e1d2d33d7df8244f9",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    }
+  ],
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S55-named-entity-recognition/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "76d8f679c62315b286cf662157d9eaa3d71f23f8dd09aa9b6ed0bcc00b6205fe"
+}

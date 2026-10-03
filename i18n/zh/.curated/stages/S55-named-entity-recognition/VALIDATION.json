@@ -1,0 +1,855 @@
+{
+  "schema_version": 1,
+  "stage_id": "S55-named-entity-recognition",
+  "date": "2026-10-03",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "1234e5808229ac25f3c65b1fe1baab736e525591c4cf847cc28690af25d46e71",
+  "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+  "immutable_content_commit": "ac6e8a6913f998dc5ee7eda3bb0a411b453f38e1",
+  "support_dependencies": 61,
+  "dependency_manifest_sha256": "76d8f679c62315b286cf662157d9eaa3d71f23f8dd09aa9b6ed0bcc00b6205fe",
+  "coverage": {
+    "source_lines": 321,
+    "target_lines": 321,
+    "blocks": 119,
+    "translatable_candidates": 47,
+    "headings": 17,
+    "fences": 13,
+    "python_fences": 8,
+    "text_fences": 3,
+    "figure_fences": 1,
+    "markdown_fences": 1,
+    "tables": 1,
+    "table_rows_including_header": 7,
+    "table_columns": 3,
+    "exercises": 3,
+    "references": 4
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; final hashes and every source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "S55-PEER-SOURCE-01",
+      "title": "实体数量依赖标注规则",
+      "detail": "开头称五个实体，但 search deal 带 maybe 限定，而示例 BIO 只标出 Apple、Google、iPhone、US 四个实体。译文保留这一区别，没有把示例擅自改成五个确定实体。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0009",
+          "source_sha256": "7a28b088fd8ebadeeec5b12bba3a6a4e7199a56c0a4362ffea226aac7b263b7f",
+          "target_sha256": "1226a91e6d9084a23059d96051cae04b87ba9535f687df8fb5b10b953a89e166"
+        },
+        {
+          "segment_id": "05-06:b0019",
+          "source_sha256": "01a1c88fafe3e67e9f9fcc1fb40f34eb0dab6ded82ec76af713549390fbbae83",
+          "target_sha256": "5b83a016243fd297e52b7acdcc253f42028e386a93a9f3be179d72820f49966c"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-02",
+      "title": "NER 的作用被泛化",
+      "detail": "NER 不等于每条结构化抽取流水线的必需组件，也不能单独保证完整匿名化、合规或聊天回复依据正确；这属于源概括，不是翻译遗漏。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0011",
+          "source_sha256": "e84fe9cab669136301d70b5e74eda947dece00a9014580d2e0a81e92447303de",
+          "target_sha256": "54d86e26a3a374fedf2807fefecbf443dcd7af8753152b09d11a556b96e615f0"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-03",
+      "title": "BIO 对跨度的表达有限",
+      "detail": "标准单层 BIO 表达平面连续跨度，不能表示任意重叠、嵌套或不连续实体。“任意跨度”的说法需要限制。Bank of America Tower 示例也依赖具体实体本体及内外跨度定义。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0017",
+          "source_sha256": "8cbe8fd5be48c62d3fcd6217a7471e02c064195826f47ff1a99954226cceca7c",
+          "target_sha256": "3c4af6a454d641dcd70936136a07687407046753b992e2fffe81731da1128701"
+        },
+        {
+          "segment_id": "05-06:b0021",
+          "source_sha256": "a03095643d0723003c513df742c0c91214f40fff5d3d56374b76d5498148981c",
+          "target_sha256": "2db3157c67f8715d624f4e0db863b49058bef7e70407f0570d64b464bc3c28ce"
+        },
+        {
+          "segment_id": "05-06:b0101",
+          "source_sha256": "9cdd377c6e6b67dc7dea972a2a1910c0965afa7c72c15d6c252730f2d20c2854",
+          "target_sha256": "2ece23fca6fe91677d75c326909e327c58c1b4fe37cf6f25f9fb6a7745497215"
+        },
+        {
+          "segment_id": "05-06:b0115",
+          "source_sha256": "3b6e5662d27e605c1779157ae957f3624a6809b341c3e4ec4ff885843d5d6d57",
+          "target_sha256": "eee70c1192bd3c7e12b26b867800f47aab3e247ce37bf9509aa51241efddaa5a"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-04",
+      "title": "转换函数缺输入校验",
+      "detail": "bio_to_spans 不读取 tokens 内容或长度来检查边界，孤立 I、类型不匹配 I 会丢弃；spans_to_bio 对负起点、空跨度和越界终点没有校验。本次分别复现静默标签和 IndexError；十句合法平面案例往返通过，不扩展成任意输入保证。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0033",
+          "source_sha256": "5e05d8adf38ba7a40f78f50dbb92d8413538001c4617a4151a0b0cd2e8d80157",
+          "target_sha256": "5e05d8adf38ba7a40f78f50dbb92d8413538001c4617a4151a0b0cd2e8d80157"
+        },
+        {
+          "segment_id": "05-06:b0035",
+          "source_sha256": "593aa7b6f493b8203c6eb7230fd529c0eff1cae99c81bd3e2f4bcfd47bd18bbd",
+          "target_sha256": "593aa7b6f493b8203c6eb7230fd529c0eff1cae99c81bd3e2f4bcfd47bd18bbd"
+        },
+        {
+          "segment_id": "05-06:b0111",
+          "source_sha256": "07fc96fde29a9a07ef8d19fa61d66cf15912440619eca80252c40e73907ffe05",
+          "target_sha256": "dc4bfe2c0c95c148f135b2b8ddb2ea39d4cd86c0eed52c333a490cd406e96930"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-05",
+      "title": "规则词典覆盖与消歧",
+      "detail": "正文实现仅作区分大小写的精确单 token 查询，没有 regex；新词、标点连接、多 token 实体缺支持。Apple 在水果语境也会被标成 ORG。“对新实体覆盖为零”不能泛指任意规则系统。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0025",
+          "source_sha256": "86e5ca85f94a6257c09b5dee870bc79f85653f75ad664cffde0cae2adf26454e",
+          "target_sha256": "e0a0d34004a971f5ab4d7e1fd3fd292067aaeb7a938d9723fb3c7925815bcdcf"
+        },
+        {
+          "segment_id": "05-06:b0047",
+          "source_sha256": "769e1f14a177db974afe976b13fa6ee4316a593e70af4e278123081bc1f9d08a",
+          "target_sha256": "769e1f14a177db974afe976b13fa6ee4316a593e70af4e278123081bc1f9d08a"
+        },
+        {
+          "segment_id": "05-06:b0049",
+          "source_sha256": "0cb7cbb8c12dbeaf9cd700f5db58b32f7e54313e1ff5644049832b4aafa7903b",
+          "target_sha256": "8b3e83a80a30c44b4e21b2dff210bafb767ba52853d4fe7116662e8d03c786a8"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-06",
+      "title": "canonical 与正文词典不同",
+      "detail": "canonical 的三个词表分别多 Anthropic、Japan、Gemini；本次验证正文对三者返回 O，canonical 返回三种实体类型。未跨改任何一份原程序。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0047",
+          "source_sha256": "769e1f14a177db974afe976b13fa6ee4316a593e70af4e278123081bc1f9d08a",
+          "target_sha256": "769e1f14a177db974afe976b13fa6ee4316a593e70af4e278123081bc1f9d08a"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-07",
+      "title": "CRF 软转移不保证合法 BIO",
+      "detail": "all_possible_transitions=True 允许学习转移特征，不自动施加不可违反的 BIO 约束。外置两位置分数反例中，有限非法转移惩罚被高发射分数压过。此为标准库代数核验，不冒称运行 CRF 包；正文 CRF 草图还依赖未定义训练数据。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0025",
+          "source_sha256": "86e5ca85f94a6257c09b5dee870bc79f85653f75ad664cffde0cae2adf26454e",
+          "target_sha256": "e0a0d34004a971f5ab4d7e1fd3fd292067aaeb7a938d9723fb3c7925815bcdcf"
+        },
+        {
+          "segment_id": "05-06:b0055",
+          "source_sha256": "b982d686763536d8512e53a31630cd318e833790ae8a56c6fca2adc1faf43120",
+          "target_sha256": "b982d686763536d8512e53a31630cd318e833790ae8a56c6fca2adc1faf43120"
+        },
+        {
+          "segment_id": "05-06:b0057",
+          "source_sha256": "28d5ca0222f77d11a6985d6ae9fd312db1d61b441078186cbba4010b886f1a89",
+          "target_sha256": "c397f74c897332131b4bf9912d6bb4c1ac64ccb6cd0887978668b9eb38a31b68"
+        },
+        {
+          "segment_id": "05-06:b0061",
+          "source_sha256": "4b2c6ca310a14c282b8807703a43590491b6edf87a48f7717cd31e5857a8a617",
+          "target_sha256": "2c8387bfc71543b16c4eaa84b45712992c2a95f6fe4ebfd4d53fe9b94139572f"
+        },
+        {
+          "segment_id": "05-06:b0115",
+          "source_sha256": "3b6e5662d27e605c1779157ae957f3624a6809b341c3e4ec4ff885843d5d6d57",
+          "target_sha256": "eee70c1192bd3c7e12b26b867800f47aab3e247ce37bf9509aa51241efddaa5a"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-08",
+      "title": "BiLSTM 示例只输出发射分数",
+      "detail": "BiLSTM_CRF_Head 只包含 Embedding、LSTM 和线性层，没有 CRF 层、解码、损失或训练代码，也未加载 GloVe/fastText。类别名不代表完整系统可独立运行。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0061",
+          "source_sha256": "4b2c6ca310a14c282b8807703a43590491b6edf87a48f7717cd31e5857a8a617",
+          "target_sha256": "2c8387bfc71543b16c4eaa84b45712992c2a95f6fe4ebfd4d53fe9b94139572f"
+        },
+        {
+          "segment_id": "05-06:b0063",
+          "source_sha256": "3a7c7fdf45e4ce7fd8d68f0ccf64d15e733b5ba0819726473a5bd6607929e6a1",
+          "target_sha256": "3a7c7fdf45e4ce7fd8d68f0ccf64d15e733b5ba0819726473a5bd6607929e6a1"
+        },
+        {
+          "segment_id": "05-06:b0065",
+          "source_sha256": "0a1e9a74d6cdc068d4a6157beb795b16a05363df2aef7f70467eaed81abf473e",
+          "target_sha256": "10c8b5839606b76d098e5aa930b019de4ba49e8a8e556de103b25e8a0f13b7d7"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-09",
+      "title": "外部模型输出与类型集合未复现",
+      "detail": "spaCy 与 Hugging Face 模型未加载；示例 iPhone 标签和不同模型优劣依赖版本、训练语料及标签本体。ORG/PRODUCT/MISC、GPE/LOC 不宜无条件视为相同类别。固定英文所列输出按原样保护。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0069",
+          "source_sha256": "ff617bebacea844cecf47ce85cfb2bed1654a553d333e55178144cc44b76cc21",
+          "target_sha256": "4309b682eadcfd6cf8db9eb7bec5988d3b3f884933aa9a8210385e18087e12f3"
+        },
+        {
+          "segment_id": "05-06:b0071",
+          "source_sha256": "4b9cb0ba5d3f5e8a11e1e2b7f0f33677b5edcd39fd3d2aa713db96647ff238c5",
+          "target_sha256": "4b9cb0ba5d3f5e8a11e1e2b7f0f33677b5edcd39fd3d2aa713db96647ff238c5"
+        },
+        {
+          "segment_id": "05-06:b0073",
+          "source_sha256": "b8dd54085c1a699c8294e330890e02f490fa758a1a1327770a498cc4a730ba01",
+          "target_sha256": "d9c72d6712b12dbe6c1f0bceaab1ff2f50d849801671a3eb08b6daff0805fe3f"
+        },
+        {
+          "segment_id": "05-06:b0075",
+          "source_sha256": "e05f84e9023f7c2bd0d11e4f69170d5b80294e25062d94e82addbd55a1d8ec16",
+          "target_sha256": "bdd389a995f5955519707546494ae09f3f41c4c0fa2ced6beabb96d46fe90e1c"
+        },
+        {
+          "segment_id": "05-06:b0079",
+          "source_sha256": "f1718678328c11da30b0727c666fa2a0d0cab9dfc0e6ac6ee32d7ffda76ff525",
+          "target_sha256": "f1718678328c11da30b0727c666fa2a0d0cab9dfc0e6ac6ee32d7ffda76ff525"
+        },
+        {
+          "segment_id": "05-06:b0081",
+          "source_sha256": "bd7c27ee8c1f1757fde9be5678b09db14273bdd3c58596f610cf4e9f99e79c0f",
+          "target_sha256": "f724ac123cbd224cab84960d7138084d994c46b0e7123bd15ce1af4f825b1496"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-10",
+      "title": "聚合策略不是任意边界修复",
+      "detail": "simple 聚合依赖模型标签和 token 边界，不能保证修复长实体拆分、不同类型或新的 B 起点；原简化说明保留。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0083",
+          "source_sha256": "5133baaf57da52d8bca21f3e8a1071617659bd20171ebd2185990d516a03efb5",
+          "target_sha256": "520d5fbc9825340048718cbe545240160f95effaeb9abfea4161429423cd566b"
+        },
+        {
+          "segment_id": "05-06:b0101",
+          "source_sha256": "9cdd377c6e6b67dc7dea972a2a1910c0965afa7c72c15d6c252730f2d20c2854",
+          "target_sha256": "2ece23fca6fe91677d75c326909e327c58c1b4fe37cf6f25f9fb6a7745497215"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-11",
+      "title": "2026 年结论和基准未外查",
+      "detail": "固定英文关于 ZeroTuneBio、多阶段提示、RAG、GPT-4 的 11-12% F1 提升及生产建议缺完整基准条件。本次只审译义和量纲，不验证论文或当前性能；百分比没有改成百分点。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0085",
+          "source_sha256": "2f09073a43f99da86891831555a051f98b29bad0595e459da32a3c941c1799eb",
+          "target_sha256": "b95f71d93f1dbb818bceeaaa7e0866562bc2d0afdc7c21f214a62785e222ef82"
+        },
+        {
+          "segment_id": "05-06:b0087",
+          "source_sha256": "1b0d67911873b4615fd71548bb0ff28f6854b08a7ffb6280f8e9788264f1f22e",
+          "target_sha256": "2bc221980fefa9f1354988a709494aad59d2068bea04447a922ceac66057c9f4"
+        },
+        {
+          "segment_id": "05-06:b0089",
+          "source_sha256": "35fa48313d112dd50c0fc0889830257c5b6cc185d1841d2dbd3cf16ff8a93baf",
+          "target_sha256": "3f897a110a61b70870985da0f49cde1be1b2f080fe5a432f5bc1a8b035bc3742"
+        },
+        {
+          "segment_id": "05-06:b0091",
+          "source_sha256": "8cae74c5a07af3740b712c86b8a2ec43dccd5bd1dc66b64163559a1adcf0dc9e",
+          "target_sha256": "fa417555379f7325682cc6809dcda0244e28a2af5bfc522ff39f30a750380ac1"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-12",
+      "title": "阈值与领域排序是源经验概括",
+      "detail": "数万标注句子、低于 50ms、98%+ F1、CoNLL 对法律领域不如词典等不能视为跨模型与硬件的普遍保证；需要数据、实体类型和评估方案。源数字和限制原样保留。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0065",
+          "source_sha256": "0a1e9a74d6cdc068d4a6157beb795b16a05363df2aef7f70467eaed81abf473e",
+          "target_sha256": "10c8b5839606b76d098e5aa930b019de4ba49e8a8e556de103b25e8a0f13b7d7"
+        },
+        {
+          "segment_id": "05-06:b0097",
+          "source_sha256": "8e0f668756add1869c1fe50f62fdf72e0f1d2e2a632c0a66e39977bdc58836b8",
+          "target_sha256": "57cf3b9eee3b7573e6c2c84d6a691c1e4bccfb4c2560ca7f678269741ee99ed9"
+        },
+        {
+          "segment_id": "05-06:b0101",
+          "source_sha256": "9cdd377c6e6b67dc7dea972a2a1910c0965afa7c72c15d6c252730f2d20c2854",
+          "target_sha256": "2ece23fca6fe91677d75c326909e327c58c1b4fe37cf6f25f9fb6a7745497215"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-13",
+      "title": "实体级 F1 不只看边界",
+      "detail": "实体精确匹配通常同时要求边界和类型一致。源术语表只强调跨度，且 token 级 F1 高估并非所有数据上的必然关系；本次外置集合检验区分边界错与类型错，未运行 seqeval。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0107",
+          "source_sha256": "b5f6599a69853b18cbc2aef3c9fb7e4ef05714db195c3597949cf5989eefeffb",
+          "target_sha256": "b5f6599a69853b18cbc2aef3c9fb7e4ef05714db195c3597949cf5989eefeffb"
+        },
+        {
+          "segment_id": "05-06:b0111",
+          "source_sha256": "07fc96fde29a9a07ef8d19fa61d66cf15912440619eca80252c40e73907ffe05",
+          "target_sha256": "dc4bfe2c0c95c148f135b2b8ddb2ea39d4cd86c0eed52c333a490cd406e96930"
+        },
+        {
+          "segment_id": "05-06:b0115",
+          "source_sha256": "3b6e5662d27e605c1779157ae957f3624a6809b341c3e4ec4ff885843d5d6d57",
+          "target_sha256": "eee70c1192bd3c7e12b26b867800f47aab3e247ce37bf9509aa51241efddaa5a"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-14",
+      "title": "依赖和练习运行边界",
+      "detail": "sklearn_crfsuite、spaCy、transformers、torchcrf、seqeval 不在本次允许加载范围，Torch 未安装；没有下载包、数据、模型或执行微调。受保护 markdown 的 ner-picker 提示词仅作为课程内容核对，不作为本代理行动指令。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0055",
+          "source_sha256": "b982d686763536d8512e53a31630cd318e833790ae8a56c6fca2adc1faf43120",
+          "target_sha256": "b982d686763536d8512e53a31630cd318e833790ae8a56c6fca2adc1faf43120"
+        },
+        {
+          "segment_id": "05-06:b0063",
+          "source_sha256": "3a7c7fdf45e4ce7fd8d68f0ccf64d15e733b5ba0819726473a5bd6607929e6a1",
+          "target_sha256": "3a7c7fdf45e4ce7fd8d68f0ccf64d15e733b5ba0819726473a5bd6607929e6a1"
+        },
+        {
+          "segment_id": "05-06:b0065",
+          "source_sha256": "0a1e9a74d6cdc068d4a6157beb795b16a05363df2aef7f70467eaed81abf473e",
+          "target_sha256": "10c8b5839606b76d098e5aa930b019de4ba49e8a8e556de103b25e8a0f13b7d7"
+        },
+        {
+          "segment_id": "05-06:b0071",
+          "source_sha256": "4b9cb0ba5d3f5e8a11e1e2b7f0f33677b5edcd39fd3d2aa713db96647ff238c5",
+          "target_sha256": "4b9cb0ba5d3f5e8a11e1e2b7f0f33677b5edcd39fd3d2aa713db96647ff238c5"
+        },
+        {
+          "segment_id": "05-06:b0079",
+          "source_sha256": "f1718678328c11da30b0727c666fa2a0d0cab9dfc0e6ac6ee32d7ffda76ff525",
+          "target_sha256": "f1718678328c11da30b0727c666fa2a0d0cab9dfc0e6ac6ee32d7ffda76ff525"
+        },
+        {
+          "segment_id": "05-06:b0107",
+          "source_sha256": "b5f6599a69853b18cbc2aef3c9fb7e4ef05714db195c3597949cf5989eefeffb",
+          "target_sha256": "b5f6599a69853b18cbc2aef3c9fb7e4ef05714db195c3597949cf5989eefeffb"
+        },
+        {
+          "segment_id": "05-06:b0111",
+          "source_sha256": "07fc96fde29a9a07ef8d19fa61d66cf15912440619eca80252c40e73907ffe05",
+          "target_sha256": "dc4bfe2c0c95c148f135b2b8ddb2ea39d4cd86c0eed52c333a490cd406e96930"
+        }
+      ]
+    },
+    {
+      "id": "S55-PEER-SOURCE-15",
+      "title": "渲染和参考范围",
+      "detail": "figure ner-bio-tagging 只核载荷，GitHub、站点、移动与交互尚未实际验收。英文未引用 ner.svg，所以没有新增无源图资源。四条参考的题名、URL 和 API 标识已核保留，但未宣称外部参考正文已读。",
+      "disposition": "Fixed English issue preserved; no must-fix translation issue",
+      "locations": [
+        {
+          "segment_id": "05-06:b0027",
+          "source_sha256": "d5c051e7f4c0fcb0423e353eae5d01848b0d5fded1009790a1b0d9e1faaf9c19",
+          "target_sha256": "d5c051e7f4c0fcb0423e353eae5d01848b0d5fded1009790a1b0d9e1faaf9c19"
+        },
+        {
+          "segment_id": "05-06:b0119",
+          "source_sha256": "9eb855d124c112f3e87c865ea821f350bbf8b221814a74b887a2211228679524",
+          "target_sha256": "a8345a436cc945250d5bcdcd5509e9df4a65d65cd7a36ecdc2fc869842a0c0e8"
+        }
+      ]
+    }
+  ],
+  "author_runtime": {
+    "path": "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/code/main.py",
+    "lines": 106,
+    "sha256": "3b5560e8b03e2758a694a4ddf1c906f4e12ea708fc978c832bed5a1089d5a3bd",
+    "complete_current_read_at": "2026-10-02T23:29:30Z",
+    "safety": "No imports/network/download/file writes/subprocess/unbounded loops; two short fixed example sentences and five word shapes",
+    "original_default_run_this_revalidation": true,
+    "command_and_result": {
+      "name": "canonical",
+      "started_at": "2026-10-02T23:33:29.339970+00:00",
+      "elapsed_seconds": 0.011995971000942518,
+      "exit_code": 0,
+      "log_sha256": "24ed5ac9723aaeaa1e17dc182c3a27addabc25147fe04348d652b46078b5e82a"
+    },
+    "observed": "Apple/Google/iPhone/US four extracted entities; five shapes; New York City/OpenAI roundtrip match=True",
+    "does_not_validate": [
+      "HMM training",
+      "CRF training/decoding",
+      "BiLSTM training",
+      "Transformer models",
+      "LLM prompting"
+    ]
+  },
+  "independent_runtime": {
+    "canonical": {
+      "pre_read": "All 106 lines read before this execution",
+      "exit_code": 0,
+      "output": "tokens  : ['Apple', 'sued', 'Google', 'over', 'iPhone', 'sales', 'in', 'the', 'US', '.']\nlabels  : ['B-ORG', 'O', 'B-ORG', 'O', 'B-PRODUCT', 'O', 'O', 'O', 'B-GPE', 'O']\nspans   :\n  [0:1] ORG      'Apple'\n  [2:3] ORG      'Google'\n  [4:5] PRODUCT  'iPhone'\n  [8:9] GPE      'US'\n\nword shapes (useful CRF features):\n  Apple        -> shape Xxxxx\n  iPhone       -> shape xXxxxx\n  IBM          -> shape XXX\n  USA-2024     -> shape XXX-dddd\n  apple        -> shape xxxxx\n\nround-trip (spans -> BIO -> spans):\n  tokens   : ['The', 'New', 'York', 'City', 'mayor', 'visited', 'OpenAI', '.']\n  bio      : ['O', 'B-GPE', 'I-GPE', 'I-GPE', 'O', 'O', 'B-ORG', 'O']\n  gold     : [(1, 4, 'GPE'), (6, 7, 'ORG')]\n  recovered: [(1, 4, 'GPE'), (6, 7, 'ORG')]\n  match    : True\n",
+      "log_sha256": "24ed5ac9723aaeaa1e17dc182c3a27addabc25147fe04348d652b46078b5e82a",
+      "source_sha256": "3b5560e8b03e2758a694a4ddf1c906f4e12ea708fc978c832bed5a1089d5a3bd",
+      "scope": "Original default main: four gazetteer entities, five word shapes, one two-entity round-trip; no ML model training"
+    },
+    "finite": {
+      "run_id": "S55-recovery-independent-20261002T233651Z",
+      "source_sha256": "1234e5808229ac25f3c65b1fe1baab736e525591c4cf847cc28690af25d46e71",
+      "documentary_definitions": [
+        {
+          "block": "b0033",
+          "payload_sha256": "b427432e941725a8f9d3a2da5b6cf9c5c730fa261e733bfca2f735edc8cd6281"
+        },
+        {
+          "block": "b0041",
+          "payload_sha256": "9656e7753ab9cd057f7c8fd8eab8c4400250aab888e2c9cfce17e786bf21dae2"
+        },
+        {
+          "block": "b0047",
+          "payload_sha256": "dbb98152d55d211444ffb1dc9dace458b8d1f857813b66258e884533c2dccb3e"
+        }
+      ],
+      "repl_block": "b0035",
+      "canonical_sha256": "3b5560e8b03e2758a694a4ddf1c906f4e12ea708fc978c832bed5a1089d5a3bd",
+      "checks": [
+        {
+          "name": "原 REPL 示例",
+          "result": "PASS",
+          "detail": "原 b0035 三个提示语句实际 doctest，0 失败；结果为 ORG/ORG/PRODUCT 三个跨度"
+        },
+        {
+          "name": "十个明确外置平面案例往返",
+          "result": "PASS",
+          "detail": "十句合成文本，覆盖无实体、多 token、末尾实体、相邻同类型实体；不冒称真实 CoNLL 数据集"
+        },
+        {
+          "name": "半开区间及相邻 B 标记",
+          "result": "PASS",
+          "detail": "结束索引不含实体末 token；相邻 B-X 保持为两个实体；空列表可返回空跨度"
+        },
+        {
+          "name": "非法 I 标签的原行为",
+          "result": "PASS",
+          "detail": "孤立 I 与类型不匹配的 I 会被忽略或结束当前实体；函数不抛一致性错误"
+        },
+        {
+          "name": "tokens 与 labels 长度不校验",
+          "result": "PASS",
+          "detail": "bio_to_spans 仅遍历标签，多余标签能生成超出 token 列表的跨度；短标签截断覆盖"
+        },
+        {
+          "name": "跨度输入边界",
+          "result": "PASS",
+          "detail": "负起点遵循 Python 负索引；空跨度仍写 B；超界终点原样抛 IndexError，源无校验"
+        },
+        {
+          "name": "嵌套跨度不能往返",
+          "result": "PASS",
+          "detail": "后写实体覆盖前写 BIO 标签，结果依赖顺序；平面 BIO 无法保存这组嵌套实体"
+        },
+        {
+          "name": "词典上下文与大小写边界",
+          "result": "PASS",
+          "detail": "只有精确 token 查询，无 regex 实现；水果语境 Apple 仍标 ORG，标点或多 token 新实体不识别"
+        },
+        {
+          "name": "canonical 与正文词典差异",
+          "result": "PASS",
+          "detail": "canonical 各词表多 Anthropic/Japan/Gemini，正文块原样保持未补项"
+        },
+        {
+          "name": "词形和特征语义",
+          "result": "PASS",
+          "detail": "示例大小写形状及 Unicode/数字分支实际核验；词形模式不等于词形还原；BOS/EOS 与三字母后缀正确"
+        },
+        {
+          "name": "函数定义顺序",
+          "result": "PASS",
+          "detail": "b0041 整段加载后，token_features 可正常调用随后定义的 word_shape；不是缺定义的运行错误"
+        },
+        {
+          "name": "有限 CRF 转移分数不等于硬约束",
+          "result": "PASS",
+          "detail": {
+            "scope": "外置二位置路径分数反例，仅标准库穷举；不是 sklearn_crfsuite 或 CRF 训练执行",
+            "winning_illegal_path": [
+              "O",
+              "I-X"
+            ],
+            "score": 19
+          }
+        },
+        {
+          "name": "实体级精确匹配",
+          "result": "PASS",
+          "detail": "外置集合核对边界与类型都要一致；未运行 seqeval，也未生成虚构 F1 基准"
+        }
+      ],
+      "count": 13,
+      "scope": "All 321 English lines and all 106 canonical lines read before execution; 3 unchanged stdlib definition blocks and original REPL; no author QA read",
+      "skipped": [
+        {
+          "block": "b0055",
+          "reason": "sklearn_crfsuite outside repository allowlist; undefined training data; not imported or installed"
+        },
+        {
+          "block": "b0063",
+          "reason": "Torch not installed; no package installation"
+        },
+        {
+          "block": "b0071",
+          "reason": "spaCy outside allowlist and requires a model; not imported or downloaded"
+        },
+        {
+          "block": "b0079",
+          "reason": "transformers outside allowlist and requires a model; not imported or downloaded"
+        }
+      ],
+      "other_limits": "torchcrf, seqeval, external data, model APIs and exercise fine-tuning not run; shipped markdown treated as protected data, not instructions"
+    }
+  },
+  "actual_GitHub_GFM": {
+    "stage_id": "S55-named-entity-recognition",
+    "status": "PASS_GITHUB_GFM_WITH_SOURCE_FIGURE_LIMITATION",
+    "reviewed_at": "2026-10-02T23:58:43.955092+00:00",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/ac6e8a6913f998dc5ee7eda3bb0a411b453f38e1/i18n/zh/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/zh.md",
+    "commit": "ac6e8a6913f998dc5ee7eda3bb0a411b453f38e1",
+    "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+    "hash_scope": "Current local final file, matched author and independent review hashes. Remote Preview structure and every code payload independently matched against this file. Browser copy-raw clipboard returned empty and download timed out; local git show could not resolve target path in this commit in this worktree. Therefore no claim of independently retrieved remote byte hash or local commit blob equality.",
+    "actual_cloud_browser_opened_this_review": true,
+    "actual_dom_read_this_review": true,
+    "actual_screenshot_read_this_review": true,
+    "comparison": {
+      "local_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+      "headings_match": true,
+      "strong_match": true,
+      "inline_code_match": true,
+      "fences_match": true,
+      "counts": {
+        "headings": 17,
+        "strong": 21,
+        "inline_code": 37,
+        "fences": 13,
+        "tables": 1,
+        "table_rows": [
+          7
+        ]
+      },
+      "bare_markup_outside_code": [],
+      "table_cells_match": true
+    },
+    "visual_review": {
+      "entire_article_read": true,
+      "all_17_headings": true,
+      "table_7_rows_3_columns": true,
+      "strong_21": true,
+      "inline_code_37": true,
+      "fences_13": true,
+      "python_highlight_fences_8": true,
+      "code_indentation_and_horizontal_overflow": "Preserved; long protected markdown payload scrolls horizontally, not prose overflow.",
+      "math": "Not applicable: no math formula delimiters or rendered math in source/DOM.",
+      "figure": "Source figure ner-bio-tagging preserved and rendered by GitHub as a fenced code block; GitHub does not instantiate the site-specific figure. No SVG/image references in target.",
+      "no_bare_markdown_outside_code": true
+    },
+    "must_fix_formatting_findings": [],
+    "limitations": [
+      "Site-specific figure not rendered interactively by GitHub; this is preserved-source compatibility behavior, not a new translation formatting defect.",
+      "No site, mobile, interaction, CI, external-reference correctness or final acceptance claim."
+    ],
+    "gfm_actual_browser_verified": true,
+    "site_mobile_interactive_verified": false,
+    "ci_verified": false,
+    "final_acceptance": false,
+    "remote_raw_byte_hash_verified": false
+  },
+  "aggregate": {
+    "reviewed_lessons": 78,
+    "original_strict_direct_pass": 76,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "78 byte-identical to each other and final records",
+    "svg_separate_copies": 5,
+    "repository_audits": "523 lessons, 67 certifications, 12 assessments, 505 questions; zero issues; README/book counts passed",
+    "book_rendering_regressions": {
+      "result": "ENVIRONMENT_BLOCKED_PDF_TEST",
+      "tests": 6,
+      "passed": 5,
+      "failed": 1,
+      "reason": "xelatex.fmt unavailable; mktexfmt cannot create default cache under read-only /home/agent/.texlive2025",
+      "source_or_translation_failure_established": false,
+      "retry": {
+        "returncode": 1,
+        "log_sha256": "b3c53dc26d1e1598392b6d4ddba0e0b5095f31bc1e211dd23aab7416ee83c573",
+        "environment_only": true,
+        "system_install_or_modification": false,
+        "timestamp_utc": "2026-10-03T00:01:08.839424+00:00",
+        "result": "STILL_BLOCKED_NO_SYSTEM_CHANGES",
+        "reason": "Writable process-local TeX cache resolves the permission error, but fmtutil has zero format entries and xelatex.fmt remains unavailable; no system installation or configuration change attempted"
+      }
+    }
+  },
+  "content_remote_verification": {
+    "stage": 55,
+    "commit": "ac6e8a6913f998dc5ee7eda3bb0a411b453f38e1",
+    "files": [
+      {
+        "path": "i18n/zh/.curated/lessons/05-06/review.json",
+        "sha256": "4ebdabd1416b1fcc1488c504f7ad43c4b3c514ac8b198219ddaa9f425f74e463",
+        "bytes": 95383
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-06/translation.json",
+        "sha256": "d61c4791fd41a89314f01049dd2ec9a32205a8a2d2464b7643dd281ca4b439f3",
+        "bytes": 85249
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/DEPENDENCIES.json",
+        "sha256": "76d8f679c62315b286cf662157d9eaa3d71f23f8dd09aa9b6ed0bcc00b6205fe",
+        "bytes": 14739
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/SCOPE.md",
+        "sha256": "bc4a5c88418cbff519946c46a40ad483771942e994c64d20d09552e3eda0d81e",
+        "bytes": 2326
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+        "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201",
+        "bytes": 3187
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/zh.md",
+        "sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+        "bytes": 14741
+      }
+    ],
+    "exact_byte_equal": true,
+    "tree": "d1067096b52eab5bc645a88f55985a613ad9810d"
+  },
+  "site_parser": {
+    "timestamp_utc": "2026-10-03T00:02:12.514789+00:00",
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "scope": "Repository original site/lesson.html parser executed offline on five final Chinese lesson bytes; not browser QA, not GitHub GFM, not deployed-site verification",
+    "cause": "Original slugify removes all characters outside ASCII a-z/0-9, causing empty IDs for Chinese-only headings",
+    "script_sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43",
+    "site_source_sha256": "03a79431a160d84c30793da3433d565b236db586ba53083b45b07e304d15757e",
+    "returncode": 0,
+    "log_sha256": "342c32c378c9b0556050a8a39034188c14adde779e2fa0f02b7f42b55e587d21",
+    "lessons": [
+      {
+        "file": "i18n/zh/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 46329,
+        "tables": 4,
+        "code_blocks": 9,
+        "figures": 1,
+        "mermaid_sources": 4,
+        "empty_heading_ids": [
+          "超参数调优",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "参数与超参数",
+          "网格搜索",
+          "随机搜索",
+          "贝叶斯优化",
+          "早停",
+          "学习率调度器",
+          "超参数重要性",
+          "实用策略",
+          "与交叉验证结合",
+          "实用建议",
+          "动手实现",
+          "实际使用",
+          "超参数调优中的常见错误",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [
+          "optuna"
+        ],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S52-hyperparameter-tuning",
+        "lesson_id": "02-12",
+        "target_sha256": "c0b27542fc52e55f6957a0f780849035d77733af72825baa119d8ab3e54a415e",
+        "empty_heading_id_count": 20,
+        "duplicate_nonempty_id_distinct_count": 1
+      },
+      {
+        "file": "i18n/zh/phases/03-deep-learning-core/08-weight-initialization/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 29717,
+        "tables": 1,
+        "code_blocks": 15,
+        "figures": 1,
+        "mermaid_sources": 3,
+        "empty_heading_ids": [
+          "权重初始化与训练稳定性",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "对称性问题",
+          "方差在各层间的传播",
+          "选择合适的初始化策略",
+          "动手实现",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S53-weight-initialization",
+        "lesson_id": "03-08",
+        "target_sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+        "empty_heading_id_count": 13,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 25348,
+        "tables": 2,
+        "code_blocks": 10,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "何时选择哪一种",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S54-glove-fasttext-subword",
+        "lesson_id": "05-04",
+        "target_sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 30544,
+        "tables": 1,
+        "code_blocks": 12,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "命名实体识别",
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "容易失效的情况",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S55-named-entity-recognition",
+        "lesson_id": "05-06",
+        "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+        "empty_heading_id_count": 10,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 16822,
+        "tables": 2,
+        "code_blocks": 3,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "什么情况下该选哪种方法",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S56-topic-modeling",
+        "lesson_id": "05-15",
+        "target_sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      }
+    ],
+    "total_empty_heading_ids": 61,
+    "source_or_translation_modified": false,
+    "github_gfm_verified_by_this_check": false,
+    "browser_verified": false
+  },
+  "final_remote_and_CI": "Final evidence commit readback and exact-head CI results are recorded in PR body and the single rollout index, avoiding self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
