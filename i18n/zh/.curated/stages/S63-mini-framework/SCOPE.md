@@ -1,0 +1,13 @@
+# S63 scope — Build Your Own Mini Framework
+
+Date: 2026-10-03. Activation: coordinator confirmed actual remote index 82 readback d1677171041e00a3ce9b3add935e792b76e41c5a. Fixed English baseline: 1bafaa88bb4668356791150bec3a6d7df38387eb.
+
+Source: phases/03-deep-learning-core/10-mini-framework/docs/en.md (711 lines); target: i18n/zh/phases/03-deep-learning-core/10-mini-framework/docs/zh.md. Code examined: code/main.py (603 lines). Only this lesson is authored. No old Chinese prose, caches, PR452/457, external translation service, or sibling lesson prose is consulted. The 00-04 original fixture is tests-only, excluded from authorship/publication/replay counts.
+
+Explicit prerequisites are all Phase 03 Lessons 01-09. Corresponding accepted terminology: S27 perceptron, S29 multi-layer networks, S32 backpropagation, S35 activation functions, S40 loss functions, S43 optimizers, S48 regularization, S53 initialization, S58 learning-rate schedules. DEPENDENCIES.json retains all 70 immutable pins, including accepted S57–60 and excluding pending S61. Core/addendum and relevant earlier glossary terms are read; local and Git bytes must match each declared hash.
+
+Protect all 15 fenced payloads (including three Mermaid and one figure), inline code, formulas, metadata labels and immutable values, links, paths, numbers and units. No relative SVG is referenced, so no SVG copy. Generic headings follow the addendum; natural-language prerequisites and minutes translate. English source technical issues are preserved and separately catalogued, including simplified BatchNorm, code/document divergence, samplewise updates and schematic PyTorch example.
+
+Execution: bounded offline stdlib only, with external timeout. Read all runnable code and original control tests first. Attempt original 500-sample three 100-epoch demos with a 180-second bound; use small deterministic finite fixtures for derivatives, mode propagation, optimizers, remainder batching and BatchNorm counterexamples. No installs, downloads, network/API calls, credentials, GPU or distributed work. Do not execute output prompt or incomplete PyTorch snippet. Finite fixtures do not prove general convergence.
+
+Author technical comparison and separate Chinese reading bind every final block. Keep translation record draft, single initial capture, deliberate hash-bound corrections only; independent reviewer owns review.json. Original strict check, unchanged 33 tests and two exact byte replays required. Actual GitHub GFM is coordinator-publication pending; website heading IDs, mobile/figure interaction, hosted CI remain unpassed; book PDF is environment-blocked by missing xelatex.fmt, with no system modification.
