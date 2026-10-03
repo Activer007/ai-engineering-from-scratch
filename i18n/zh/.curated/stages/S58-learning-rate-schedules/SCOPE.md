@@ -1,0 +1,11 @@
+# S58 scope: Learning Rate Schedules and Warmup
+
+2026-10-03. Exclusive new translation of 03-09, fixed English commit 1bafaa88bb4668356791150bec3a6d7df38387eb, source phases/03-deep-learning-core/09-learning-rate-schedules/docs/en.md (431 lines; SHA256 192874a3732b8f75bf87c252b2cabefb58a8df22db14a5ca0118bf8e812e2551). Target i18n/zh/phases/03-deep-learning-core/09-learning-rate-schedules/docs/zh.md. No old Chinese, cached translations, other lesson translations or PR452/457 consulted. No source, validator, dependency, total-index or remote edits by author.
+
+Prerequisites 03-06 Optimizers and 03-08 Weight Initialization are in coordinator-confirmed reviewed baseline 78. Core/addendum glossary and S43/S53 terminology govern; SGD step is not an epoch. PyTorch 03-11 is not yet mature: Use It is faithfully translated documentation only.
+
+All 161 canonical blocks retained, including 17 fences, three Mermaid diagrams and the lr-schedule figure payload. The six initially unlabelled formula fences gain only text labels under the original validator and AGENTS rule. No referenced relative SVG assets exist; no unsolicited assets added. Natural-language metadata translated, protected metadata keys/type/language, formulas, code, identifiers, numbers and source quantity-unit forms retained. No silent correction of source facts or implementation defects.
+
+Read canonical stdlib main.py completely before bounded offline timeout execution at its original scale. Additional finite fixtures separately probe schedule boundaries and tiny-training behavior; never count them as original-scale execution. No installation, networking, downloads, model providers, GPU/distributed jobs, output-prompt execution, PyTorch or transformers runtime.
+
+Validation: original strict check, 33 original control tests, two new out-of-repository replay outputs and exact bytes, 66 immutable dependency SHA256/Git checks. Author bilingual technical comparison and separate Chinese reading bind every block and final bytes. Remain draft until independent review. Actual GitHub GFM is coordinator's later published check; actual website/mobile/interactive and hosted CI are separate unpassed gates. Book PDF remains blocked by missing xelatex.fmt, no system changes.
