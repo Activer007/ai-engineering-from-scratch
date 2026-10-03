@@ -1,0 +1,443 @@
+{
+  "schema_version": 1,
+  "stage_id": "S64-embedding-models-deep-dive",
+  "date": "2026-10-02",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "bfb5483ccac7e580a5256434b2a7e4ea749c30999fabc4aead4a95189e8c96b0",
+  "target_sha256": "65881f601e369332be41c08908d9d45ea87579e8005a1db30e8331816b10a2c2",
+  "immutable_content_commit": "10af2b412b44b708200c2745a5ea9a7c80b896c4",
+  "immutable_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/10af2b412b44b708200c2745a5ea9a7c80b896c4/i18n/zh/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/docs/zh.md",
+  "support_commit": "5291069a7e001eb9caaa1935564d2fb34ecdef97",
+  "support_dependencies": 70,
+  "dependency_manifest_sha256": "9e9510e615851b256312ee2b5d44abe7eddf651b6586a20db7aac845d01cdf02",
+  "coverage": {
+    "all_blocks": 105,
+    "nonseparator": 53,
+    "technical": 105,
+    "separate_chinese": 105,
+    "by_kind": {
+      "heading": 17,
+      "separator": 52,
+      "blockquote": 1,
+      "paragraph": 21,
+      "list": 4,
+      "table": 3,
+      "fence": 7
+    }
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; every final source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "cost-and-capacity",
+      "source_segments": [
+        "05-22:b0009",
+        "05-22:b0013"
+      ],
+      "concern": "40% blame, 60-70% effective context, $1300/month and 4× saving are unsupported contextual assertions; 3072 float32 values are 12288 bytes and KB convention unstated.",
+      "evidence_and_treatment": "Source prose lacks workload/provider/date assumptions; preserve rather than verify as current purchasing guidance.",
+      "translation_defect": false
+    },
+    {
+      "id": "model-and-benchmark-claims",
+      "source_segments": [
+        "05-22:b0021",
+        "05-22:b0025",
+        "05-22:b0027",
+        "05-22:b0029",
+        "05-22:b0033",
+        "05-22:b0039",
+        "05-22:b0079",
+        "05-22:b0085",
+        "05-22:b0087"
+      ],
+      "concern": "Current model support, rankings/scores, universal modality advantages, production-stack majority and thresholds are not established by toy runtime.",
+      "evidence_and_treatment": "All names/scores faithfully preserved; no external API/model/leaderboard validation performed.",
+      "translation_defect": false
+    },
+    {
+      "id": "matryoshka-overclaim",
+      "source_segments": [
+        "05-22:b0029",
+        "05-22:b0053",
+        "05-22:b0055",
+        "05-22:b0097"
+      ],
+      "concern": "Arbitrary truncation is not MRL; lossless contradicts approximate loss claim, first BGE baseline/exercise is not shown trained for nested prefixes.",
+      "evidence_and_treatment": "Independent fixture: t0 normalized 256-dimensional hash vector loses all signal in first64.",
+      "translation_defect": false
+    },
+    {
+      "id": "svg-ratio",
+      "source_segments": [
+        "05-22:b0019"
+      ],
+      "concern": "SVG dense column states dim=1024, truncate256 and 6x savings; 1024/256 is4 rather than6, while prose1536/256 is6.",
+      "evidence_and_treatment": "Inspected SVG XML; copied byte-identically; no silent asset correction.",
+      "translation_defect": false
+    },
+    {
+      "id": "cosine-zero",
+      "source_segments": [
+        "05-22:b0049",
+        "05-22:b0053",
+        "05-22:b0075"
+      ],
+      "concern": "cosine helper is dot product requiring normalized nonzero inputs; empty/non-ASCII zero vectors treated as score0; NumPy truncation divides by zero norm without guard.",
+      "evidence_and_treatment": "Independent [2,0] dot [2,0]=4; Chinese-only hash_embed zero; stdlib prefix zero returns zero. NumPy snippet static review only.",
+      "translation_defect": false
+    },
+    {
+      "id": "toy-not-semantic",
+      "source_segments": [
+        "05-22:b0075"
+      ],
+      "concern": "Tokenization only ASCII alphanumerics; signed counts and hash collisions have no semantic or multilingual training; normalized sum called averaged but explicit averaging absent.",
+      "evidence_and_treatment": "Independent ASCII/non-ASCII/count/unit-norm tests; full116-line source read.",
+      "translation_defect": false
+    },
+    {
+      "id": "ranking-ties",
+      "source_segments": [
+        "05-22:b0075"
+      ],
+      "concern": "Dense/sparse reverse tuple sorting prioritizes larger document index for equal scores; demo ranks irrelevant iPod above desired iPhone, including fused ranking.",
+      "evidence_and_treatment": "Independent canonical output and exact tie fixture; demonstrations do not establish retrieval quality.",
+      "translation_defect": false
+    },
+    {
+      "id": "dimension-input",
+      "source_segments": [
+        "05-22:b0053",
+        "05-22:b0075"
+      ],
+      "concern": "No validation on dim/new_dim: zero hashing dimensions fail for nonempty text; negative truncation uses Python negative slicing, oversized requests silently cap.",
+      "evidence_and_treatment": "Independent zero/negative dimension fixtures.",
+      "translation_defect": false
+    },
+    {
+      "id": "rrf-interface",
+      "source_segments": [
+        "05-22:b0075"
+      ],
+      "concern": "rank returns score,index tuples; rrf returns index,score tuples; duplicate IDs and invalid k not validated.",
+      "evidence_and_treatment": "Read rrf loop and independent rank-score-invariance test; normal unique ranking case tested only.",
+      "translation_defect": false
+    },
+    {
+      "id": "snippet-completeness",
+      "source_segments": [
+        "05-22:b0047",
+        "05-22:b0059",
+        "05-22:b0063",
+        "05-22:b0069"
+      ],
+      "concern": "Examples require prohibited external packages/model or dataset downloads; fusion has Ellipsis and undefined q/d variables; custom-task section actually lists existing benchmark names; API compatibility unverified.",
+      "evidence_and_treatment": "Protected fences read only; no install/download/external execution.",
+      "translation_defect": false
+    },
+    {
+      "id": "asymmetry-generalization",
+      "source_segments": [
+        "05-22:b0079",
+        "05-22:b0101"
+      ],
+      "concern": "Different query/doc paths need not mean different models/projections; prefixes can use shared weights. Blanket bge-* prefix and recall gap overgeneralize.",
+      "evidence_and_treatment": "Source pitfall/table definitions retained, not changed by translator.",
+      "translation_defect": false
+    },
+    {
+      "id": "heuristic-output-policy",
+      "source_segments": [
+        "05-22:b0093"
+      ],
+      "concern": "Refuse ColBERT for <10k passages and truncate limits are context-dependent heuristics, not proven universal policies.",
+      "evidence_and_treatment": "Protected output prompt preserved but never executed.",
+      "translation_defect": false
+    },
+    {
+      "id": "source-example-law",
+      "source_segments": [
+        "05-22:b0075"
+      ],
+      "concern": "Toy corpus includes present-tense statement about Indian Penal Code Section420; historical/current legal applicability not validated.",
+      "evidence_and_treatment": "Only fixed corpus input in main.py; not advice or user-facing legal recommendation.",
+      "translation_defect": false
+    }
+  ],
+  "runtime": {
+    "author": {
+      "canonical_exit": 0,
+      "original_scale": true,
+      "result": "All four toy demonstrations completed; iPod ahead of iPhone, not evidence of correct semantic retrieval.",
+      "fixture_exit": 0,
+      "checks": 17,
+      "fixture_script_sha256": "3cfafa419c0e58dbf85129906abc2f0651330758d3577058c45fd1c027f3501a",
+      "not_run": [
+        "SentenceTransformers and model downloads",
+        "FlagEmbedding/BGE-M3 inference",
+        "MTEB datasets/evaluation",
+        "embedding APIs",
+        "production models/training/GPU",
+        "protected skill prompt",
+        "NumPy snippet with downloaded embeddings"
+      ],
+      "safety": "Read exact full main.py, controls and created fixtures before execution; offline stdlib with finite inputs and external timeout."
+    },
+    "independent": {
+      "runtime": "10 independently authored stdlib tests PASS; 20-second bounded canonical full116-line main PASS",
+      "limits": "toy only; no SentenceTransformer/FlagEmbedding/MTEB external code, model/dataset/API/GPU activity; no output prompt executed"
+    },
+    "limit": "Hash-trick toy is not trained Matryoshka representation; production model/accuracy/cost claims remain unverified."
+  },
+  "actual_GitHub_GFM": {
+    "stage": "S64",
+    "commit": "10af2b412b44b708200c2745a5ea9a7c80b896c4",
+    "target_sha256": "65881f601e369332be41c08908d9d45ea87579e8005a1db30e8331816b10a2c2",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/10af2b412b44b708200c2745a5ea9a7c80b896c4/i18n/zh/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/docs/zh.md",
+    "method": "actual published GitHub GFM in dot cloud Chromium via CUA; full rendered DOM read plus viewport screenshots through entire lesson",
+    "viewport": {
+      "width": 1180,
+      "height": 757
+    },
+    "body_status": "PASS",
+    "visual_status": "PASS",
+    "counts": {
+      "headings": 17,
+      "tables": 3,
+      "strong": 22,
+      "em": 1,
+      "fenced_displays": 7,
+      "svg": 1,
+      "mermaid": 0,
+      "display_math": 0
+    },
+    "checks": [
+      "All headings have usable GitHub Unicode anchors; explicit step1/step3 anchor navigation verified",
+      "All three tables complete and readable; row counts 4,8,8 including headers",
+      "All 22 expected bold spans and representative italic displayed; no literal emphasis delimiters",
+      "All seven protected fence texts retained, syntax highlighted where supported; gx-matryoshka displays code fallback",
+      "All body mathematical/numeric expressions readable: |vocab|, dimension arrows, ~1%,6×,weights and costs",
+      "Six reading links and SVG source link visible in actual DOM",
+      "Long skill fence has clientWidth968 and scrollWidth1998: scrollbar used to rightmost end and final 512-token windows text verified, not intrinsic clipping"
+    ],
+    "svg": {
+      "alt": "稠密、稀疏和多向量嵌入",
+      "display_width": 1012,
+      "display_height": 472,
+      "source_url": "https://github.com/Activer007/ai-engineering-from-scratch/raw/10af2b412b44b708200c2745a5ea9a7c80b896c4/i18n/zh/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/assets/embedding-modes.svg",
+      "all_labels_readable": true,
+      "intrinsic_clipping": false,
+      "checked_labels": [
+        "three embedding modes title",
+        "Apple released first iPhone input",
+        "dense/sparse/multi-vector panel headings",
+        "one vector fixed size/one weight per vocab/one vector per token",
+        "example vector/sparse weights/token vectors",
+        "dim=1024(BGE-M3),mostly zeros |vocab| slots,(n_tokens,128)",
+        "cosine ranking,learned BM25,MaxSim descriptions",
+        "Matryoshka truncate256/~1%/6x storage savings",
+        "keyword-heavy named entities rare terms",
+        "larger index better recall long specialized queries",
+        "BGE-M3 emits all three footer"
+      ],
+      "source_semantic_issues": [
+        "Dense diagram states dim1024 then truncate256 but 6x storage savings; preserved source arithmetic/model-training issue, not a visual obstruction"
+      ]
+    },
+    "transient": "One screenshot immediately after scroll showed unfinished paint; fresh AX observation and screenshot showed complete content, replacement captured",
+    "evidence": [
+      {
+        "sha256": "991f34915f5b39d2043cda1a3281daff00b26661e4f318c69acb0706e03b5e33",
+        "bytes": 77513
+      },
+      {
+        "sha256": "5662d258f8bfb5da22ad423196bbdb7520ae45f572071136c3b4af90dc8c2725",
+        "bytes": 105362
+      },
+      {
+        "sha256": "198fe7b613736aa6e86a93356a3a40576b7227dd9961ea1a238dcb522c923762",
+        "bytes": 116324
+      },
+      {
+        "sha256": "2cda29a3fa838b7d2bbc6d883b4eed0c9f47bad665497e642cc690503c3ca75c",
+        "bytes": 837768
+      },
+      {
+        "sha256": "074af1429b9c8b5df7edc59f72004ad64aa73db143252025207f92c5aff8553d",
+        "bytes": 83791
+      },
+      {
+        "sha256": "a8bb5f50f6cffee8f358b07770d92440854fcfed800d26a700d761b7840c96dd",
+        "bytes": 95040
+      },
+      {
+        "sha256": "6f15c4c985c193732b58bc5988a4d6930b2f25ff9ffb5cfd6bd7ce3ffeccc1fa",
+        "bytes": 72426
+      },
+      {
+        "sha256": "cd9e5debcfda7c0b939c8a56d2a5f37437b5350c9a1c74c8374853466b7a8407",
+        "bytes": 106458
+      },
+      {
+        "sha256": "7b2dcbd4a34c26261bf7dd95860f5d070ddf8476697c0f92e3a8d6e99a1aa8b4",
+        "bytes": 78778
+      },
+      {
+        "sha256": "464c7e92b83147de09eae3f57a95562bcf921abfcf9ba3301b09b7d9b48d6008",
+        "bytes": 94546
+      },
+      {
+        "sha256": "42a4f6b3bd926e93bf214300ad5018fb473d35ddbb0b2217fbc39c2a3e5c4475",
+        "bytes": 115013
+      },
+      {
+        "sha256": "a9570a5b9fd19a9637daff18ef0d55ea3214518501aa54790563643177a702c5",
+        "bytes": 121272
+      },
+      {
+        "sha256": "8cde1c314ede55f44e196e9fa08e17a8c25633dbabc8d098642edc09f91042ea",
+        "bytes": 77452
+      },
+      {
+        "sha256": "10a0930e9622fe924cc1d258152a35163f726260302ca83f68cece509e3ef245",
+        "bytes": 24559
+      },
+      {
+        "sha256": "c8738a428899d5ab67fe0ea32e1226424c327550cb146e0188d8f1a11f790ba3",
+        "bytes": 62076
+      }
+    ],
+    "separate_unpassed_gates": [
+      "course site Chinese heading IDs and image rendering",
+      "mobile/responsive acceptance",
+      "figure interaction",
+      "hosted CI",
+      "book PDF missing xelatex.fmt"
+    ],
+    "content_changes": false,
+    "remote_changes": false,
+    "target_hash_binding": "Coordinator-supplied published target hash verified against local final bytes; visual review bound to immutable GitHub URL/commit. Browser clipboard raw-copy returned empty text, so no independent raw-byte readback claimed from clipboard.",
+    "observation_limits": "Referenced SVG labels readable without intrinsic clipping; long protected skill fence inspected using native horizontal scroll. Source dimensional/storage arithmetic remains a semantic caveat. Custom figure remains code fallback."
+  },
+  "aggregate": {
+    "reviewed_lessons_in_local_snapshot": 86,
+    "original_strict_direct_pass": 84,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "86 exact-byte matches to each other and final records",
+    "svg_separate_copies": 9,
+    "repository_audits": "Lesson and certification audits plus README/book counts passed",
+    "book_rendering_regressions": {
+      "tests": 6,
+      "passed": 5,
+      "environment_blocked": 1,
+      "reason": "Missing xelatex.fmt; PDF environment unavailable. No system installation or workaround attempted."
+    },
+    "original_site_parser": {
+      "empty_heading_ids_accepted_four": 62,
+      "duplicate_nonempty_id_groups_accepted_four": 1,
+      "accepted_duplicates": {
+        "S63": [
+          "module"
+        ]
+      },
+      "empty_heading_ids_all_five_observed": 77,
+      "pending_S66_empty_ids": 15,
+      "pending_S66_duplicate_ids": [
+        "sft"
+      ],
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "cause": "Original ASCII-only slugify removes Chinese characters and collapses some mixed-language headings to the same nonempty ID"
+    },
+    "excluded_pending_stages": {
+      "S61/10-05": "Third source3D Mermaid labels remain obscured",
+      "S66/10-06": "Source Mermaid group labels (pre-trained) and (after SFT) obscured by first nodes in both English and Chinese; visual acceptance unpassed"
+    },
+    "note": "Local accepted86 aggregate excludes S61 and S66. Final acceptance count requires final remote/index readback."
+  },
+  "content_remote_verification": {
+    "stage": 64,
+    "commit": "10af2b412b44b708200c2745a5ea9a7c80b896c4",
+    "tree": "637e3b25a8ac934edd7a7852f2701f4e6b001a67",
+    "changed_file_count": 7,
+    "files": [
+      {
+        "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/SCOPE.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/DEPENDENCIES.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-22/translation.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-22/review.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/docs/zh.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/assets/embedding-modes.svg",
+        "match": true
+      }
+    ],
+    "all_bytes_exact": true
+  },
+  "site_parser": {
+    "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/docs/zh.md",
+    "parser_executed": true,
+    "html_bytes": 18375,
+    "tables": 3,
+    "code_blocks": 6,
+    "figures": 1,
+    "mermaid_sources": 0,
+    "empty_heading_ids": [
+      "要解决的问题",
+      "核心概念",
+      "三层模式",
+      "动手实现",
+      "常见陷阱",
+      "实际使用",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "duplicate_heading_ids": [],
+    "browser_verified": false,
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "stage": "S64-embedding-models-deep-dive",
+    "lesson_id": "05-22",
+    "target_sha256": "65881f601e369332be41c08908d9d45ea87579e8005a1db30e8331816b10a2c2",
+    "empty_heading_id_count": 10,
+    "duplicate_nonempty_id_distinct_count": 0
+  },
+  "final_remote_and_CI": "Final evidence commit byte readback and exact-head CI results belong in PR body and single rollout index to avoid self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
