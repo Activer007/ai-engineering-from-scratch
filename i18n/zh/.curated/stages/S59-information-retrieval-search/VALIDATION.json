@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "stage_id": "S59-information-retrieval-search",
+  "date": "2026-10-03",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "98979446e6bd498737c8ef8d4ce000e04f9345b82a5a860145bc5411cb71a2a3",
+  "target_sha256": "33c9dcba7a080ec3413ff257ced0ae93e425b6e3bfa2798303ec49be5afc3429",
+  "immutable_content_commit": "994cff72c82ce48e3305c9c98572f9020bfd0a5b",
+  "immutable_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/994cff72c82ce48e3305c9c98572f9020bfd0a5b/i18n/zh/phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/docs/zh.md",
+  "support_commit": "974fcb7deb9b24d7d550600eb7c9d5f7b68f01dd",
+  "support_dependencies": 66,
+  "dependency_manifest_sha256": "a46bb1eb9e7395a26693ea430e3059d0495798a6aa9cafed7e2f199940213859",
+  "coverage": {
+    "source_blocks": 91,
+    "target_blocks": 91,
+    "technical_compared": 91,
+    "chinese_read": 91,
+    "omissions": 0,
+    "kinds": {
+      "heading": 15,
+      "separator": 45,
+      "blockquote": 1,
+      "paragraph": 17,
+      "list": 4,
+      "fence": 6,
+      "table": 3
+    }
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; every final source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "location": "b3,b21,b23,b39,b65,b71,b73; SVG",
+      "source_claim": "2026 default, three-way superiority, latency, 80%, 70-90%, k=3 and 8K thresholds",
+      "concern": "Strong domain/hardware/time-sensitive recommendations and numerical claims lack supplied empirical methodology. Model performance rankings not verified.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b9",
+      "source_claim": "Keyword search entirely misses Section420 and embeddings miss without legal training",
+      "concern": "Illustrative search failure is conditional on corpus, model and ranking cutoff; not a universal necessity. IPC legal example is not current legal guidance.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b21 versus b31/main.py",
+      "source_claim": "Inverted index enables fast corpus search",
+      "concern": "Implementation tokenizes corpus and scans every document per query; rebuilds Counter each score and has no inverted postings structure.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b31/main.py tokenize/rank",
+      "source_claim": "General information retrieval",
+      "concern": "ASCII [a-z0-9]+ drops Chinese and splits accented text; zero-score ties order by descending doc index; negative top_k accepted as Python negative slice.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b33",
+      "source_claim": "Robertson original paper recommended exact default values; rarely tune",
+      "concern": "Exact attribution and general tuning claim unverified from fixed lesson alone.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b37,b49; canonical fake_dense_rank",
+      "source_claim": "Build dense and reranked hybrid search",
+      "concern": "Documentary Sentence Transformers blocks require non-allowlisted library/model downloads. Canonical module only lexical Jaccard plus substring bonus, no real dense encoder/cross-encoder.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b43,b87",
+      "source_claim": "RRF formula 1/(k+rank)",
+      "concern": "Formula needs one-based ranks while enumerate implementation compensates +1. Duplicate document entries counted multiple times; k=-1 causes division by zero.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b51",
+      "source_claim": "Three stages composed",
+      "concern": "Pipeline earlier lists four layers; here retrieval branches may count as one stage, but grouping not explicit.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b55,b57,b87 and output markdown evaluation plan",
+      "source_claim": "Recall@k is fraction of queries with correct document in top-k; MRR for multi-answer",
+      "concern": "Recall description is query success/hit rate under single relevant-document assumption; general recall divides retrieved relevant by all relevant per query. MRR only uses first relevant result.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b71 HyDE",
+      "source_claim": "Free precision lift with no training",
+      "concern": "Hypothetical-answer generation adds inference cost and can introduce false premises; accuracy increase not guaranteed.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    },
+    {
+      "location": "b49,b79",
+      "source_claim": "Cross-encoder rerank defaults and artifact policy",
+      "concern": "Global reranker construction may download at import; output contains prescriptive model-selection instructions, not runnable verification.",
+      "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
+    }
+  ],
+  "runtime": {
+    "author": [
+      {
+        "result": "exit0 actual original default7-doc canonical; sparse/fake-dense top document6; RRF top6,5,4,3,2",
+        "recovery_rerun": true
+      },
+      {
+        "result": "21 bounded stdlib cases pass including doc BM25/RRF snippets",
+        "recovery_rerun": true
+      }
+    ],
+    "independent": {
+      "canonical": {
+        "external_timeout_seconds": 30,
+        "exit_code": 0,
+        "original_scale": "Unmodified seven-document canonical main"
+      },
+      "finite_checks": [
+        {
+          "name": "ASCII tokenizer boundary",
+          "result": "PASS",
+          "detail": [
+            "foo",
+            "42",
+            "caf"
+          ]
+        },
+        {
+          "name": "empty corpus rejection",
+          "result": "PASS",
+          "detail": "BM25 corpus must not be empty"
+        },
+        {
+          "name": "hand-derived BM25 score",
+          "result": "PASS",
+          "detail": {
+            "expected": 0.6714337560653366,
+            "actual": 0.6714337560653366
+          }
+        },
+        {
+          "name": "query repetition counted twice",
+          "result": "PASS",
+          "detail": "Query term loop repeats contribution"
+        },
+        {
+          "name": "frequency saturation",
+          "result": "PASS",
+          "detail": "Equal lengths, two occurrences score above one but less than double"
+        },
+        {
+          "name": "OOV ties use reverse doc id",
+          "result": "PASS",
+          "detail": [
+            [
+              0.0,
+              2
+            ],
+            [
+              0.0,
+              1
+            ],
+            [
+              0.0,
+              0
+            ]
+          ]
+        },
+        {
+          "name": "all-empty docs safe zero score",
+          "result": "PASS",
+          "detail": "avg_dl=0 but f==0 guard avoids division"
+        },
+        {
+          "name": "zero top_k empty",
+          "result": "PASS",
+          "detail": "Python empty slice"
+        },
+        {
+          "name": "negative top_k not validated",
+          "result": "PASS",
+          "detail": "Negative slice returns all except last"
+        },
+        {
+          "name": "hand-derived RRF",
+          "result": "PASS",
+          "detail": [
+            [
+              0.03252247488101534,
+              1
+            ],
+            [
+              0.01639344262295082,
+              0
+            ],
+            [
+              0.016129032258064516,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "RRF ignores raw scores",
+          "result": "PASS",
+          "detail": "Same rank order, different raw numbers"
+        },
+        {
+          "name": "RRF duplicate doc double count",
+          "result": "PASS",
+          "detail": "No ranking deduplication"
+        },
+        {
+          "name": "empty RRF",
+          "result": "PASS",
+          "detail": "Empty rankings give empty list"
+        },
+        {
+          "name": "invalid RRF k unguarded",
+          "result": "PASS",
+          "detail": "k=-1 makes first denominator zero"
+        },
+        {
+          "name": "fake dense is lexical",
+          "result": "PASS",
+          "detail": "Semantic synonyms without overlap receive zero"
+        },
+        {
+          "name": "fake dense substring bonus",
+          "result": "PASS",
+          "detail": "Substring rule, no embedding"
+        },
+        {
+          "name": "documentary and canonical BM25 match",
+          "result": "PASS",
+          "detail": "Exact score/rank results"
+        },
+        {
+          "name": "documentary and canonical RRF match",
+          "result": "PASS",
+          "detail": "Same hand-derived lists"
+        }
+      ]
+    },
+    "limit": "Seven-document toy uses lexical fake-dense; no SentenceTransformer, CrossEncoder, model download or vector database run"
+  },
+  "actual_GitHub_GFM": {
+    "stage": "S59-information-retrieval-search",
+    "lesson_id": "05-14",
+    "commit": "994cff72c82ce48e3305c9c98572f9020bfd0a5b",
+    "target_sha256": "33c9dcba7a080ec3413ff257ced0ae93e425b6e3bfa2798303ec49be5afc3429",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/994cff72c82ce48e3305c9c98572f9020bfd0a5b/i18n/zh/phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/docs/zh.md",
+    "date": "2026-10-03",
+    "result": "PASS actual GitHub GFM with documented native fallback limits",
+    "personally_inspected": "Read complete rendered accessibility/DOM from title through references; scrolled full article and visually inspected SVG, concepts, every code section, evaluation tables, stack, strong production bullets, artifact, exercises, glossary and references.",
+    "checks": {
+      "headings": 15,
+      "headings_exact": true,
+      "strong": 20,
+      "strong_exact": true,
+      "em": 0,
+      "tables": [
+        {
+          "columns": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "rows": 4,
+          "text": "指标\t含义\nRecall@k（召回率）\t在存在正确文档的查询中，该文档出现在 top-k 的频率有多高？\nMRR（平均倒数排名，Mean Reciprocal Rank）\t第一个相关文档排名的倒数 1/rank 的平均值。\nnDCG@k（归一化折损累计增益）\t考虑相关性的不同程度，而不只是相关/不相关的二元判断。"
+        },
+        {
+          "columns": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "rows": 5,
+          "text": "规模\t技术栈\n1k-100k 篇文档\t内存中的 BM25 + all-MiniLM-L6-v2 嵌入 + RRF。无需独立数据库。\n100k-10M 篇文档\tFAISS 或 pgvector 用于稠密检索 + Elasticsearch / OpenSearch 用于 BM25。并行运行。\n10M+ 篇文档\t使用支持混合检索的 Qdrant / Weaviate / Vespa / Milvus。在 top-30 上进行交叉编码器重排序。\n质量最优的前沿方案\t三路检索（BM25 + 稠密检索 + SPLADE）+ ColBERT 后期交互重排序"
+        },
+        {
+          "columns": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "rows": 7,
+          "text": "术语\t通常的说法\t实际含义\nBM25\t关键词搜索\tOkapi BM25。根据词频、逆文档频率（IDF）和长度为文档打分。\n稠密检索\t向量搜索\t将查询 + 文档编码为向量，查找最近邻。\n双编码器\t嵌入模型\t分别对查询和文档编码。查询时速度快。\n交叉编码器\t重排序模型\t将查询 + 文档一起编码。速度慢但准确。\nRRF\t排名融合\t通过对 1/(k + rank) 求和来合并两个排名。\nRecall@k\t检索指标\t相关文档出现在 top-k 中的查询所占的比例。"
+        }
+      ],
+      "code_payloads_exact": true,
+      "fences": 6,
+      "highlighted_python": 4,
+      "highlighted_markdown": 1,
+      "figure_fallback": "gx-hybrid-retrieval displayed as plain code; not an interactive mechanism",
+      "images": [
+        {
+          "alt": "混合检索：BM25 + 稠密检索 + RRF + 交叉编码器重排序",
+          "complete": true,
+          "height": 133,
+          "src": "https://github.com/Activer007/ai-engineering-from-scratch/raw/994cff72c82ce48e3305c9c98572f9020bfd0a5b/i18n/zh/phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/assets/retrieval.svg",
+          "width": 300
+        }
+      ],
+      "svg_visually_loaded": true,
+      "math": "No display math;1/(k + rank) inline code visually and structurally preserved",
+      "layout": "Readable desktop page;long protected artifact lines horizontally scroll as native code;no translation-caused clipping or literal strong markers found"
+    },
+    "unpassed_separate_gates": [
+      "Course website",
+      "Mobile",
+      "Interactive figure functionality",
+      "Hosted CI"
+    ],
+    "edits": false
+  },
+  "aggregate": {
+    "reviewed_lessons_in_local_snapshot": 82,
+    "original_strict_direct_pass": 80,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "82 exact-byte matches to each other and final records",
+    "svg_separate_copies": 7,
+    "repository_audits": "Lesson and certification audits plus README/book counts passed",
+    "book_rendering_regressions": {
+      "tests": 6,
+      "passed": 5,
+      "environment_blocked": 1,
+      "reason": "Missing xelatex.fmt; PDF format/cache environment unavailable. No system installation or workaround attempted."
+    },
+    "original_site_parser": {
+      "empty_heading_ids_in_four_accepted_stages": 50,
+      "empty_heading_ids_all_five_observed": 65,
+      "duplicate_nonempty_ids": 0,
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "cause": "Original ASCII-only slugify removes Chinese heading characters"
+    },
+    "excluded_pending_stage": "S61/10-05: source third 3D Mermaid has overlapping/occluded labels; visual acceptance remains unpassed",
+    "note": "Local accepted82 aggregate excludes S61 and is not final remote index acceptance"
+  },
+  "content_remote_verification": {
+    "stage": 59,
+    "commit": "994cff72c82ce48e3305c9c98572f9020bfd0a5b",
+    "tree": "d6a216963c0b273f9b1891d056683547cc6a3664",
+    "changed_file_count": 7,
+    "files": [
+      {
+        "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/SCOPE.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/DEPENDENCIES.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-14/translation.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-14/review.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/docs/zh.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/assets/retrieval.svg",
+        "match": true
+      }
+    ],
+    "all_bytes_exact": true
+  },
+  "site_parser": {
+    "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/docs/zh.md",
+    "parser_executed": true,
+    "html_bytes": 24339,
+    "tables": 3,
+    "code_blocks": 5,
+    "figures": 1,
+    "mermaid_sources": 0,
+    "empty_heading_ids": [
+      "信息检索与搜索",
+      "要解决的问题",
+      "核心概念",
+      "动手实现",
+      "实际使用",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "duplicate_heading_ids": [],
+    "browser_verified": false,
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "stage": "S59-information-retrieval-search",
+    "lesson_id": "05-14",
+    "target_sha256": "33c9dcba7a080ec3413ff257ced0ae93e425b6e3bfa2798303ec49be5afc3429",
+    "empty_heading_id_count": 9,
+    "duplicate_nonempty_id_distinct_count": 0
+  },
+  "final_remote_and_CI": "Final evidence commit readback and exact-head CI results belong in the PR body and single rollout index to avoid evidence self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}

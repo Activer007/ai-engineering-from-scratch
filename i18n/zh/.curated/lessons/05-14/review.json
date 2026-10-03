@@ -1070,77 +1070,66 @@
       "location": "b3,b21,b23,b39,b65,b71,b73; SVG",
       "source_claim": "2026 default, three-way superiority, latency, 80%, 70-90%, k=3 and 8K thresholds",
       "concern": "Strong domain/hardware/time-sensitive recommendations and numerical claims lack supplied empirical methodology. Model performance rankings not verified.",
-      "evidence": "Only fixed source supplied; this offline review does not establish these claims as current facts.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b9",
       "source_claim": "Keyword search entirely misses Section420 and embeddings miss without legal training",
       "concern": "Illustrative search failure is conditional on corpus, model and ranking cutoff; not a universal necessity. IPC legal example is not current legal guidance.",
-      "evidence": "Canonical toy includes zero-score documents; no legal embedding model is run. Source frozen.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b21 versus b31/main.py",
       "source_claim": "Inverted index enables fast corpus search",
       "concern": "Implementation tokenizes corpus and scans every document per query; rebuilds Counter each score and has no inverted postings structure.",
-      "evidence": "Static score/rank code; no large-scale latency measurement.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b31/main.py tokenize/rank",
       "source_claim": "General information retrieval",
       "concern": "ASCII [a-z0-9]+ drops Chinese and splits accented text; zero-score ties order by descending doc index; negative top_k accepted as Python negative slice.",
-      "evidence": "Independent tokenizer, OOV and negative-top_k checks. All-empty corpus safely returns zero because f==0 guard avoids avg_dl division.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b33",
       "source_claim": "Robertson original paper recommended exact default values; rarely tune",
       "concern": "Exact attribution and general tuning claim unverified from fixed lesson alone.",
-      "evidence": "No paper fetch done; translation preserves attribution without citing it as independently established.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b37,b49; canonical fake_dense_rank",
       "source_claim": "Build dense and reranked hybrid search",
       "concern": "Documentary Sentence Transformers blocks require non-allowlisted library/model downloads. Canonical module only lexical Jaccard plus substring bonus, no real dense encoder/cross-encoder.",
-      "evidence": "Independent synonyms automobile/car score0; train/training bonus.15; canonical labels itself fake-dense.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b43,b87",
       "source_claim": "RRF formula 1/(k+rank)",
       "concern": "Formula needs one-based ranks while enumerate implementation compensates +1. Duplicate document entries counted multiple times; k=-1 causes division by zero.",
-      "evidence": "Hand-derived RRF and duplicate/invalid-k checks; ordinary distinct lists with k60 correctly implemented.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b51",
       "source_claim": "Three stages composed",
       "concern": "Pipeline earlier lists four layers; here retrieval branches may count as one stage, but grouping not explicit.",
-      "evidence": "BM25+dense, fusion, rerank can be three operational stages; preserve source wording without imposing a corrected count.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b55,b57,b87 and output markdown evaluation plan",
       "source_claim": "Recall@k is fraction of queries with correct document in top-k; MRR for multi-answer",
       "concern": "Recall description is query success/hit rate under single relevant-document assumption; general recall divides retrieved relevant by all relevant per query. MRR only uses first relevant result.",
-      "evidence": "Definitions in source; no evaluation implementation/qrels in canonical code. No correction in translation.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b71 HyDE",
       "source_claim": "Free precision lift with no training",
       "concern": "Hypothetical-answer generation adds inference cost and can introduce false premises; accuracy increase not guaranteed.",
-      "evidence": "Pipeline itself calls for generated answer and embedding; no evaluation evidence provided.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     },
     {
       "location": "b49,b79",
       "source_claim": "Cross-encoder rerank defaults and artifact policy",
       "concern": "Global reranker construction may download at import; output contains prescriptive model-selection instructions, not runnable verification.",
-      "evidence": "Static read only, no provider, package install, output prompt or training execution.",
       "translation_treatment": "Source faithfully preserved; no silent correction and no new endorsement."
     }
   ],
@@ -1149,77 +1138,66 @@
       "location": "b21,b31; code/main.py BM25.rank",
       "source_claim": "BM25 inverted index; sub-10ms over millions",
       "concern": "示例遍历所有文档并每次重建词频；没有倒排索引，也没有百万规模延迟实测。",
-      "evidence": "rank 使用 range(self.n_docs)，score 使用 Counter(doc)；canonical 只有 7 篇文档。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b21,b23,b39,b65,b71,b73",
       "source_claim": "2026 默认/最优栈、50-200ms、80%、70-90%、三路优于两路",
       "concern": "正文没有给出对应评测数据集、硬件或测量方法；效果比例/延迟/普遍优越性不能推定。",
-      "evidence": "固定源仅列五篇 2009-2021 论文，未列 2026 测量来源；本轮仅 toy 运行。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b71",
       "source_claim": "k_rerank=3 usually optimal; k=8 better implies weak reranker; under8K",
       "concern": "最优上下文数与预算依任务与模型，原文无充分实验条件；不能无条件判定。",
-      "evidence": "相同源前文保留 top-5；缺少比较 3/5/8 的任务或基准。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b71",
       "source_claim": "HyDE free precision lift with no training",
       "concern": "无训练不代表无生成/嵌入推理成本，且提高精确率非无条件保证。",
-      "evidence": "同一段明确先生成假设答案并嵌入，两者有计算步骤；本轮不运行。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b55,b87",
       "source_claim": "Recall@k fraction of queries with relevant doc in top-k",
       "concern": "这是单正确文档设定或 query-level hit rate，未覆盖多相关文档的 recall 定义。",
-      "evidence": "源练习给 known correct document；源文字没有每查询相关集合分母。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b79",
       "source_claim": "MRR for multi-answer",
       "concern": "MRR 只看第一项相关结果，不能反映多答案覆盖。",
-      "evidence": "b55 源自己定义 first relevant document 的 1/rank。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b31,code/main.py tokenize/rank",
       "source_claim": "toy BM25 and fake_dense",
       "concern": "ASCII-only tokenizer 丢弃中文及部分重音字符；无匹配仍返回零分文档，平分按文档下标降序；负 top_k 切片未验证。",
-      "evidence": "21 项 runtime：中文 École APPLE 123→cole/apple/123；top_k=-1 返回 n-1；零分按2,1,0。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b43,code/main.py reciprocal_rank_fusion",
       "source_claim": "RRF rank summation",
       "concern": "k=-1 对首名除零；没有输入有效性检查。公式表 rank 为一基，代码 enumerate 零基+1，语义可一致但读者需区分。",
-      "evidence": "runtime k=-1 捕获 ZeroDivisionError；正常 1/61+1/62 手算通过。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b37,b49; canonical code/main.py",
       "source_claim": "production dense + reranker example",
       "concern": "canonical 实际使用 Jaccard/substring fake-dense，非真实向量检索；模型示例需 sentence_transformers 和下载，因此不执行。",
-      "evidence": "main.py 明文打印 shape demonstration；automobile 对 car toy得0。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b33",
       "source_claim": "defaults Robertson recommendations and rarely tuning",
       "concern": "出处归因与很少需调优未由当前源实测或精确页码证实。",
-      "evidence": "固定源只链接 BM25 综述而没有参数推荐页码；本轮不擅自宣称证实。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     },
     {
       "location": "b9,canonical corpus Section 420",
       "source_claim": "IPC Section420 legal example",
       "concern": "法律例子不能当现行法适用意见；本轮仅翻译既定文本，不作法律有效性核验。",
-      "evidence": "固定课程文本没有现行法时效或地域条件，未开展外部法律核验。",
       "translation_treatment": "保留固定原文及代码，不静默修正；此项不构成本轮验证或推荐背书。"
     }
   ],
@@ -1285,32 +1263,22 @@
     "runtime": [
       {
         "result": "exit0 actual original default7-doc canonical; sparse/fake-dense top document6; RRF top6,5,4,3,2",
-        "log": "stage59_recovery_canonical.log",
         "recovery_rerun": true
       },
       {
         "result": "21 bounded stdlib cases pass including doc BM25/RRF snippets",
-        "log": "stage59_recovery_runtime.log",
         "recovery_rerun": true
       }
     ],
     "strict": {
-      "result": "PASS",
-      "log": "stage59_recovery_strict.log"
+      "result": "PASS"
     },
     "controls": {
-      "result": "PASS 33/33 fresh recovery run",
-      "log": "stage59_recovery_controls.log"
+      "result": "PASS 33/33 fresh recovery run"
     },
     "replay": {
-      "directories": [
-        "stage59_recovery_replay_a",
-        "stage59_recovery_replay_b"
-      ],
-      "commands": [
-        "timeout 30s python3 scripts/curated_translation.py render --id 05-14 --output-dir ../stage59_recovery_replay_a",
-        "timeout 30s python3 scripts/curated_translation.py render --id 05-14 --output-dir ../stage59_recovery_replay_b"
-      ],
+      "directories": [],
+      "commands": [],
       "result": "both new output directories equal current target exact bytes",
       "sha256": "33c9dcba7a080ec3413ff257ced0ae93e425b6e3bfa2798303ec49be5afc3429"
     },
@@ -1871,13 +1839,11 @@
       },
       "replays": [
         {
-          "directory": "stage59-peer-replay-a-5vfx_6f2",
           "exit_code": 0,
           "exact_bytes_equal": true,
           "sha256": "33c9dcba7a080ec3413ff257ced0ae93e425b6e3bfa2798303ec49be5afc3429"
         },
         {
-          "directory": "stage59-peer-replay-b-pr0trgop",
           "exit_code": 0,
           "exact_bytes_equal": true,
           "sha256": "33c9dcba7a080ec3413ff257ced0ae93e425b6e3bfa2798303ec49be5afc3429"
@@ -1905,9 +1871,11 @@
   "checks": {
     "legacy_strict": "passed-original-no-exception",
     "independent_technical_and_chinese": "passed-full-final-hash",
-    "deterministic_replay": "author and peer two fresh exact outputs; aggregate pending",
-    "github_gfm": "pending actual browser",
-    "actual_site_browser": "not passed",
-    "hosted_ci": "not passed; Actions not enabled"
-  }
+    "deterministic_replay": "passed-82-lesson-two-new-output-byte-comparison; 7 SVG assets separately copied and verified",
+    "github_gfm": "passed-actual-immutable-GitHub-render; custom figure remains a code placeholder",
+    "actual_site_browser": "not passed; offline original parser has empty Chinese heading IDs, separate from browser/mobile/interactive acceptance",
+    "hosted_ci": "not passed here; final exact-head query recorded in PR body/index"
+  },
+  "gfm_content_commit": "994cff72c82ce48e3305c9c98572f9020bfd0a5b",
+  "gfm_gate_status": "PASS actual GitHub GFM with documented native fallback limits"
 }
