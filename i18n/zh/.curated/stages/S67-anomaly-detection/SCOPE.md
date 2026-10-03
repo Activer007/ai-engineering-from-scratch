@@ -1,0 +1,9 @@
+# S67 anomaly detection scope
+
+2026-10-03. Activated by exact remote index 86 at 822c815af1fd7dfe57c159c9287dcaa9ceae5a3d. Source phases/02-ml-fundamentals/16-anomaly-detection/docs/en.md (463 lines), fixed English commit 1bafaa88bb4668356791150bec3a6d7df38387eb; target i18n/zh/phases/02-ml-fundamentals/16-anomaly-detection/docs/zh.md. Fresh English-first authoring. No legacy Chinese prose, caches or upstream translations. Preserve source numbers, code, formulae, Mermaid/figure payloads, URLs and paths; add text labels only to originally unlabelled fences. No referenced SVGs.
+
+Prerequisites 02-01 through 02-09 are already accepted: S22, S23, S24, S25, S26, S27, S28, S31 and S39. All 74 support dependencies remain immutable and are checked against working bytes and pinned Git objects. S61/S66 are not accepted prerequisites or glossary sources. Three original control-test fixtures are not translation memory or new publication content.
+
+All 340 lines of anomaly_detection.py read before execution. Only finite synthetic NumPy defaults with external timeout and one BLAS thread, plus bounded edge fixtures. No sklearn/PyOD installation or execution, Kaggle downloads, network, output prompt execution, personal decisions, GPU or distributed resources. Preserve and report source pseudocode syntax, documentation/implementation gaps, degenerate inputs and metric edge cases separately.
+
+Author comparison and separate Chinese reading bind every source/target block. Original strict, 33 controls, two fresh exact replays and independent review required. GitHub GFM requires actual published commit inspection. Website Chinese anchors, mobile, figure interaction and hosted CI remain separate unpassed gates. Empty CI is not passing CI. Additional book PDF remains blocked by missing xelatex.fmt; no system repair.
