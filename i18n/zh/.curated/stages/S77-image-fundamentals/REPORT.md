@@ -1,0 +1,28 @@
+# 图像基础：像素、通道与色彩空间：翻译与验证报告
+
+[自有fork草稿PR #83](https://github.com/Activer007/ai-engineering-from-scratch/pull/83)；[固定中文正文](https://github.com/Activer007/ai-engineering-from-scratch/blob/341ac93dd14e37c762057050c694e7964a61d1d7/i18n/zh/phases/04-computer-vision/01-image-fundamentals/docs/zh.md)。
+
+固定英文源：1bafaa88bb4668356791150bec3a6d7df38387eb
+中文 SHA256：22d526fb587206399aeac98438d101ff615cf8e71d69975d84391e0defaa9f9d
+正文 commit：341ac93dd14e37c762057050c694e7964a61d1d7
+支持 commit：3a5a360e924edff58452b8ef9b2de03f44da3ab6
+原审校 SHA256：cca18dd70b39f2fc6771d493ee3cb62ee5034ee3fbd9a844bf732d8b2b576732
+候选审校 SHA256：c9ff8baadb4ce4202bebb04764ec1dd4f35261edcec38c32e623719591194d85
+真实GFM报告 SHA256：2288ae7d939d9f11a44ebd2f3ca4e77339a70e3f7009230dd6f24cb3e112cc31
+实际101候选回归 SHA256：d7c844034af007deb66c1f8361dc93290d6ee7a576108ef2666650f8893fa14d
+正式96索引 commit：97440cffc4599f55e324f28c653ed000b58b3210
+正式96索引 SHA256：8de853ee12ac958ceb6d8afed15af4102850c596096c06c8462ba453d04c87cf
+
+作者与独立审校者各自完成全部167块英文/中文技术对照和单独中文通读，逐块hash与具体意见保持原样。83项支持依赖沿用原commit/SHA，不重新固定；source、target、record、support不变。
+
+独立复核者逐张查看26张实际GitHub截图；19张连续正文视口覆盖22个标题及16个围栏。两幅Mermaid共20个标签读全，第一图由全图和两张稳定左右平移图共同证明，第二图由两张重叠正文图覆盖；过渡或裁切图不充当完整证据。7处源无标签围栏仅保留既有text标记，保护载荷未改。figure仅字面占位；4个外链href准确，未测试访问。
+
+原独审保留CPU单线程、固定随机种子合成图像的原样NumPy默认演示与有限边界检查；默认128×192×3到384×576×3，往返最大像素差1。PyTorch缺失明确SKIP；未安装、未运行PIL/OpenCV/torchvision、真实图像、模型训练、下载、网络或GPU。本构建器未重新执行课程代码。
+
+保留源风险：不可逆裁剪/降采样与可逆性概括、轴序不等于连续内存、HSV/OpenCV范围概括、固定ImageNet统计不保证逐图零均值单位方差、NumPy端点坐标与PyTorch align_corners=False不等价、灰度二维与单像素NaN、float量化、标准化RGB加权不等于原uint8灰度，以及未交付YCbCr实现。图可读不证明源图语义正确。完整源问题和作者/独审原执行证据保留在审校及VALIDATION.json中，原历史字段不覆盖。
+
+实际101回归运行时覆盖原正式95课、S73和S77–S81五课；strict直接99课通过，S07/S19仅沿用原精确适配，无新增例外。33/24/50控制、双新目录各101篇逐字节重放、14个SVG独立复制、课程审计、认证审计与README计数检查通过。原100报告仅为历史记录，101不意味着全验收；S61/S66继续排除。
+
+当前正式基线96，S73已经后续单独验收；这五课仍在待验集合，本候选增量0。本课站点解析仍有15个空标题ID、0组重复ID；真实课程站、移动端及交互未通过。托管CI未证明通过，空status/workflow数组不等于通过。book仅5/6，缺少xelatex.fmt阻塞PDF，未安装修复，完整译书未完成。
+
+review仅追加actual_GitHub_GFM与candidate_regression；全部旧字段和checks保持正文提交时历史快照。后续还须最终4文件发布、该head下9文件逐字节远端/Git读回、exact-head CI检查、最终PR正文实际读回和正式索引门禁。本报告不虚构自身最终commit；保持自有fork Draft，不合并、不发布、不向上游提交。
