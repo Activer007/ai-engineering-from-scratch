@@ -1,0 +1,28 @@
+# 水印：SynthID、Stable Signature 与 C2PA：翻译与验证报告
+
+[自有fork草稿PR #86](https://github.com/Activer007/ai-engineering-from-scratch/pull/86)；[固定中文正文](https://github.com/Activer007/ai-engineering-from-scratch/blob/ca74f98371e3daf8b450a7959a2ab134fff63b97/i18n/zh/phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/docs/zh.md)。
+
+固定英文源：1bafaa88bb4668356791150bec3a6d7df38387eb
+中文 SHA256：680c819a1f89f96653ea209561fde34837626c3edc41ae2e747e542813c0ca4e
+正文 commit：ca74f98371e3daf8b450a7959a2ab134fff63b97
+支持 commit：095821fa68036a6f1a5425dd94b1fbd114768f4d
+原审校 SHA256：d684ffb848fe852afefbbcb11d2891d282e22ee61e6dd702afa242c310567b97
+候选审校 SHA256：f8094b1978140e392e5ecc305024d21b7b936cddd873259209362c114a4d8671
+真实GFM报告 SHA256：1f3f046cc43b6666e10363143e631efe77f1287d88567b3974d6591ce12bd100
+实际101候选回归 SHA256：d7c844034af007deb66c1f8361dc93290d6ee7a576108ef2666650f8893fa14d
+正式96索引 commit：97440cffc4599f55e324f28c653ed000b58b3210
+正式96索引 SHA256：8de853ee12ac958ceb6d8afed15af4102850c596096c06c8462ba453d04c87cf
+
+作者与独立审校者各自完成全部87块英文/中文技术对照和单独中文通读，逐块hash与具体意见保持原样。83项支持依赖沿用原commit/SHA，不重新固定；source、target、record、support不变。
+
+独立复核者逐张查看7张实际GitHub截图；连续覆盖全部16个标题、表格、列表、强调和完整正文。无Mermaid、SVG或图片；唯一figure围栏仅字面占位。6个外链的完整DOM href与源文一致，未测试外站访问、产品事实或法律适用性。
+
+作者与独审各自仅完成8次有限合成整数token采样或替换调用，独审序列最多64；默认100×1000实验未运行。随机整数替换不等于语义改写，均匀整数不等于人工文本；实际SynthID、Stable Signature、C2PA签名、媒体、模型、网络、生产鲁棒性和稀有误报率验证均未执行。本构建器未重新执行课程代码。
+
+保留源风险：toy仅两种奇偶分区而非生产词表划分/logit偏置、检测分母docstring差异、短前缀与K跳过、阈值/置信界/稀有FPR不足、图像基准未复现、产品发布日期和法律时间表仍是固定源快照、来源签名不证明事实真伪、无信号不证明人工来源。完整源问题和作者/独审原执行证据保留在审校及VALIDATION.json中，原历史字段不覆盖。
+
+实际101回归运行时覆盖原正式95课、S73和S77–S81五课；strict直接99课通过，S07/S19仅沿用原精确适配，无新增例外。33/24/50控制、双新目录各101篇逐字节重放、14个SVG独立复制、课程审计、认证审计与README计数检查通过。原100报告仅为历史记录，101不意味着全验收；S61/S66继续排除。
+
+当前正式基线96，S73已经后续单独验收；这五课仍在待验集合，本候选增量0。本课站点解析仍有9个空标题ID、0组重复ID；真实课程站、移动端及交互未通过。托管CI未证明通过，空status/workflow数组不等于通过。book仅5/6，缺少xelatex.fmt阻塞PDF，未安装修复，完整译书未完成。
+
+review仅追加actual_GitHub_GFM与candidate_regression；全部旧字段和checks保持正文提交时历史快照。后续还须最终4文件发布、该head下9文件逐字节远端/Git读回、exact-head CI检查、最终PR正文实际读回和正式索引门禁。本报告不虚构自身最终commit；保持自有fork Draft，不合并、不发布、不向上游提交。
