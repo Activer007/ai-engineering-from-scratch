@@ -1,0 +1,2081 @@
+{
+  "schema_version": 1,
+  "stage_id": "S60-subword-tokenization",
+  "date": "2026-10-03",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "6d67e864430ef41e47f3c0e115faead61da03cad377dca5a69f77513afc8f3eb",
+  "target_sha256": "1ef70628ad30440ba778c43d7e266656d6245f94093237b37351b611dfd7ed70",
+  "immutable_content_commit": "7d05d02c64366ebdf312e3e57f3b69c2849d672f",
+  "immutable_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/7d05d02c64366ebdf312e3e57f3b69c2849d672f/i18n/zh/phases/05-nlp-foundations-to-advanced/19-subword-tokenization/docs/zh.md",
+  "support_commit": "b85f164a723681841a5ac158a6c1e91aee59ecfa",
+  "support_dependencies": 66,
+  "dependency_manifest_sha256": "dcf3d584bfc0d1e97b1340056ad92845b9041636e24b35e9d63c46a10e6e05e6",
+  "coverage": {
+    "blocks": 91,
+    "technical_compared": 91,
+    "chinese_read": 91,
+    "full_technical_comparison": true,
+    "separate_full_chinese_read": true
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; every final source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "location": "b0009",
+      "source_claim": "40 rare words means40bits",
+      "concern": "No information-theoretic derivation; unknown words do not correspond to one bit each.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0011,b0013",
+      "source_claim": "covers everything/every2026frontier picks these",
+      "concern": "Character-level vocabulary may miss unseen characters and fixed examples do not establish universal architecture/library claims.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0019,b0023,b0087",
+      "source_claim": "Gemma/Llama grouped under algorithms",
+      "concern": "Generation-specific choices and Gemma appearing under both BPE/Unigram are not clarified by source; no current model verification implied.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0023",
+      "source_claim": "removal least increases log-likelihood",
+      "concern": "Pruning is usually characterized by likelihood loss/negative log-likelihood increase; source states sign differently and is preserved.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0023",
+      "source_claim": "probabilistic at inference",
+      "concern": "Sampling is optional; this wording must not be treated as mandatory stochastic inference.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0025",
+      "source_claim": "WordPiece maximizes likelihood",
+      "concern": "Conceptual description omits training scoring approximation, greedy inference and unknown-word behavior.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0041",
+      "source_claim": "docs train_bpe runnable example",
+      "concern": "Counter and apply_merge are not defined/imported in snippet; canonical accepts raw text and merge_pair, not shown corpus dict/apply_merge.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0043",
+      "source_claim": "low suffix/lower prefix",
+      "concern": "Word-end sentinel does not make these entire words suffix/prefix; distinction is presented imprecisely.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0049,TS rankedEncode",
+      "source_claim": "naive O(nM)/near-linear ranked",
+      "concern": "Repeated array slicing creates additional linear work; TS scans all adjacent pairs every merge rather than priority queue.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0053,b0055",
+      "source_claim": "character coverage and sample pieces",
+      "concern": "Unseen characters may be unk without byte fallback; example token list depends on training corpus and normalization can prevent exact raw roundtrip.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0059,b0061,b0071",
+      "source_claim": "o200k exact GPT4/5/byte counting",
+      "concern": "Encoding/model generation correspondence and token counts are not interchangeable with bytes; fixed source does not verify exact live model claims.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0065",
+      "source_claim": "always flags /5-10x",
+      "concern": "Flags are library-specific; ratios are corpus/model-specific, not proven universally by toy example.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0071,b0073,b0079",
+      "source_claim": "merge base vocab, thresholds, small-vocab recommendations",
+      "concern": "Appending or merging vocabulary requires compatible embeddings/output weights and version alignment; thresholds and unconditional refusal policy are heuristic source artifact, not runtime authority.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "b0083",
+      "source_claim": "500 merges and accuracy/F1",
+      "concern": "Early stopping can yield fewer than500; accuracy/F1 differ and study setup is unspecified.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "code word_counts/encode_bpe",
+      "source_claim": "character tokenizer generality",
+      "concern": "Training ASCII-only lowercases, encoding does not normalize; numbers,CJK omitted in training yet returned by encoding without OOV checks.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "code train_bpe",
+      "source_claim": "returned final_tokens vocabulary",
+      "concern": "Only surviving final corpus symbols are returned, excluding base/intermediate tokens used for held-out encodings.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "code pair selection and limits",
+      "source_claim": "stable general BPE",
+      "concern": "Ties depend on corpus insertion order; negative count silently means zero; no explicit vocab target; sentinel may collide with literal input strings.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    },
+    {
+      "location": "metadata/code main.ts",
+      "source_claim": "Languages Python",
+      "concern": "TypeScript main exists despite Python-only metadata; source metadata preserved under immutable field rule. TS only read, not executed.",
+      "translation_treatment": "Preserved source claim/code; no silent correction"
+    }
+  ],
+  "runtime": {
+    "author": {
+      "canonical": {
+        "exit_code": 0,
+        "scale": "Unmodified original default corpus, 30 and 150 merges",
+        "observed": "Printed surviving-token sizes 55 and 77; held-out piece counts 3/6/6/3; no source modification."
+      },
+      "finite_fixtures": {
+        "exit_code": 0,
+        "results": [
+          {
+            "test": "ASCII lowercase counting",
+            "actual": {
+              "low": 2,
+              "lower": 1
+            },
+            "expected": {
+              "low": 2,
+              "lower": 1
+            },
+            "pass": true
+          },
+          {
+            "test": "frequency weighted pairs",
+            "actual": {
+              "a|b": 3,
+              "b|</w>": 3,
+              "a|c": 1,
+              "c|</w>": 1
+            },
+            "expected": {
+              "a|b": 3,
+              "b|</w>": 3,
+              "a|c": 1,
+              "c|</w>": 1
+            },
+            "pass": true
+          },
+          {
+            "test": "highest weighted pair wins first",
+            "actual": [
+              [
+                "a",
+                "b"
+              ]
+            ],
+            "expected": [
+              [
+                "a",
+                "b"
+              ]
+            ],
+            "pass": true
+          },
+          {
+            "test": "ordered merges",
+            "actual": [
+              "abc",
+              "</w>"
+            ],
+            "expected": [
+              "abc",
+              "</w>"
+            ],
+            "pass": true
+          },
+          {
+            "test": "reverse order differs",
+            "actual": [
+              "ab",
+              "c",
+              "</w>"
+            ],
+            "expected": [
+              "ab",
+              "c",
+              "</w>"
+            ],
+            "pass": true
+          },
+          {
+            "test": "word end distinguishes prefix",
+            "actual": [
+              "low",
+              "e",
+              "r",
+              "</w>"
+            ],
+            "expected": [
+              "low",
+              "e",
+              "r",
+              "</w>"
+            ],
+            "pass": true
+          },
+          {
+            "test": "nonoverlapping identical pair merge",
+            "actual": [
+              [
+                "aa",
+                "a",
+                "</w>"
+              ]
+            ],
+            "expected": [
+              [
+                "aa",
+                "a",
+                "</w>"
+              ]
+            ],
+            "pass": true
+          },
+          {
+            "test": "zero merge retains chars",
+            "actual": [
+              "a",
+              "b",
+              "</w>"
+            ],
+            "expected": [
+              "a",
+              "b",
+              "</w>"
+            ],
+            "pass": true
+          },
+          {
+            "test": "empty ASCII corpus raises ''",
+            "actual": "word_counts: corpus produced no words",
+            "expected": "word_counts: corpus produced no words",
+            "pass": true
+          },
+          {
+            "test": "empty ASCII corpus raises '123 中文 😀'",
+            "actual": "word_counts: corpus produced no words",
+            "expected": "word_counts: corpus produced no words",
+            "pass": true
+          },
+          {
+            "test": "training ASCII limitation",
+            "actual": {
+              "caf": 1
+            },
+            "expected": {
+              "caf": 1
+            },
+            "pass": true
+          },
+          {
+            "test": "encoder accepts unseen unicode without token IDs",
+            "actual": [
+              "中",
+              "文",
+              "</w>"
+            ],
+            "expected": [
+              "中",
+              "文",
+              "</w>"
+            ],
+            "pass": true
+          },
+          {
+            "test": "empty word encodes end marker",
+            "actual": [
+              "</w>"
+            ],
+            "expected": [
+              "</w>"
+            ],
+            "pass": true
+          },
+          {
+            "test": "negative merge count silently no-ops",
+            "actual": [],
+            "expected": [],
+            "pass": true
+          },
+          {
+            "test": "canonical 150 requested merges",
+            "actual": 150,
+            "expected": 150,
+            "pass": true
+          },
+          {
+            "test": "held out reconstruction tokenizable",
+            "actual": "tokenizable",
+            "expected": "tokenizable",
+            "pass": true
+          },
+          {
+            "test": "held out reconstruction unlearnable",
+            "actual": "unlearnable",
+            "expected": "unlearnable",
+            "pass": true
+          },
+          {
+            "test": "held out reconstruction foxhound",
+            "actual": "foxhound",
+            "expected": "foxhound",
+            "pass": true
+          },
+          {
+            "test": "held out reconstruction languages",
+            "actual": "languages",
+            "expected": "languages",
+            "pass": true
+          },
+          {
+            "test": "deterministic train repeat",
+            "actual": [
+              [
+                [
+                  "e",
+                  "</w>"
+                ],
+                [
+                  "s",
+                  "</w>"
+                ],
+                [
+                  "n",
+                  "</w>"
+                ],
+                [
+                  "t",
+                  "i"
+                ],
+                [
+                  "l",
+                  "e"
+                ],
+                [
+                  "t",
+                  "o"
+                ],
+                [
+                  "t",
+                  "h"
+                ],
+                [
+                  "th",
+                  "e</w>"
+                ],
+                [
+                  "i",
+                  "n</w>"
+                ],
+                [
+                  "n",
+                  "i"
+                ],
+                [
+                  "t",
+                  "e"
+                ],
+                [
+                  "d",
+                  "</w>"
+                ],
+                [
+                  "a",
+                  "n"
+                ],
+                [
+                  "a",
+                  "r"
+                ],
+                [
+                  "a",
+                  "ti"
+                ],
+                [
+                  "a",
+                  "l"
+                ],
+                [
+                  "t",
+                  "</w>"
+                ],
+                [
+                  "to",
+                  "k"
+                ],
+                [
+                  "tok",
+                  "e"
+                ],
+                [
+                  "i",
+                  "n"
+                ],
+                [
+                  "o",
+                  "r"
+                ],
+                [
+                  "m",
+                  "p"
+                ],
+                [
+                  "r",
+                  "</w>"
+                ],
+                [
+                  "y",
+                  "</w>"
+                ],
+                [
+                  "d",
+                  "o"
+                ],
+                [
+                  "g",
+                  "</w>"
+                ],
+                [
+                  "a",
+                  "g"
+                ],
+                [
+                  "p",
+                  "a"
+                ],
+                [
+                  "t",
+                  "te"
+                ],
+                [
+                  "tte",
+                  "r"
+                ],
+                [
+                  "n",
+                  "s</w>"
+                ],
+                [
+                  "toke",
+                  "ni"
+                ],
+                [
+                  "tokeni",
+                  "z"
+                ],
+                [
+                  "tokeniz",
+                  "ati"
+                ],
+                [
+                  "tokenizati",
+                  "o"
+                ],
+                [
+                  "tokenizatio",
+                  "n</w>"
+                ],
+                [
+                  "t",
+                  "s</w>"
+                ],
+                [
+                  "w",
+                  "or"
+                ],
+                [
+                  "l",
+                  "e</w>"
+                ],
+                [
+                  "r",
+                  "o"
+                ],
+                [
+                  "w",
+                  "n</w>"
+                ],
+                [
+                  "f",
+                  "o"
+                ],
+                [
+                  "fo",
+                  "x"
+                ],
+                [
+                  "fox",
+                  "</w>"
+                ],
+                [
+                  "j",
+                  "u"
+                ],
+                [
+                  "ju",
+                  "mp"
+                ],
+                [
+                  "v",
+                  "e"
+                ],
+                [
+                  "l",
+                  "a"
+                ],
+                [
+                  "la",
+                  "z"
+                ],
+                [
+                  "laz",
+                  "y</w>"
+                ],
+                [
+                  "do",
+                  "g</w>"
+                ],
+                [
+                  "s",
+                  "ti"
+                ],
+                [
+                  "s",
+                  "a"
+                ],
+                [
+                  "o",
+                  "d"
+                ],
+                [
+                  "le",
+                  "ar"
+                ],
+                [
+                  "m",
+                  "</w>"
+                ],
+                [
+                  "c",
+                  "al"
+                ],
+                [
+                  "pa",
+                  "tter"
+                ],
+                [
+                  "patter",
+                  "ns</w>"
+                ],
+                [
+                  "te",
+                  "x"
+                ],
+                [
+                  "tex",
+                  "t</w>"
+                ],
+                [
+                  "in",
+                  "to"
+                ],
+                [
+                  "into",
+                  "</w>"
+                ],
+                [
+                  "ar",
+                  "e</w>"
+                ],
+                [
+                  "wor",
+                  "d"
+                ],
+                [
+                  "word",
+                  "s</w>"
+                ],
+                [
+                  "e",
+                  "c"
+                ],
+                [
+                  "ag",
+                  "a"
+                ],
+                [
+                  "aga",
+                  "in</w>"
+                ],
+                [
+                  "an",
+                  "d</w>"
+                ],
+                [
+                  "b",
+                  "le</w>"
+                ],
+                [
+                  "q",
+                  "u"
+                ],
+                [
+                  "qu",
+                  "i"
+                ],
+                [
+                  "qui",
+                  "c"
+                ],
+                [
+                  "quic",
+                  "k"
+                ],
+                [
+                  "quick",
+                  "</w>"
+                ],
+                [
+                  "b",
+                  "ro"
+                ],
+                [
+                  "bro",
+                  "wn</w>"
+                ],
+                [
+                  "jump",
+                  "s</w>"
+                ],
+                [
+                  "o",
+                  "ve"
+                ],
+                [
+                  "ove",
+                  "r</w>"
+                ],
+                [
+                  "a",
+                  "</w>"
+                ],
+                [
+                  "sti",
+                  "t"
+                ],
+                [
+                  "stit",
+                  "c"
+                ],
+                [
+                  "stitc",
+                  "h"
+                ],
+                [
+                  "stitch",
+                  "</w>"
+                ],
+                [
+                  "ti",
+                  "m"
+                ],
+                [
+                  "tim",
+                  "e</w>"
+                ],
+                [
+                  "sa",
+                  "ve"
+                ],
+                [
+                  "save",
+                  "s</w>"
+                ],
+                [
+                  "ni",
+                  "n"
+                ],
+                [
+                  "nin",
+                  "e</w>"
+                ],
+                [
+                  "l",
+                  "an"
+                ],
+                [
+                  "lan",
+                  "g"
+                ],
+                [
+                  "lang",
+                  "u"
+                ],
+                [
+                  "langu",
+                  "ag"
+                ],
+                [
+                  "languag",
+                  "e</w>"
+                ],
+                [
+                  "m",
+                  "od"
+                ],
+                [
+                  "mod",
+                  "e"
+                ],
+                [
+                  "mode",
+                  "l"
+                ],
+                [
+                  "model",
+                  "s</w>"
+                ],
+                [
+                  "lear",
+                  "n</w>"
+                ],
+                [
+                  "f",
+                  "ro"
+                ],
+                [
+                  "fro",
+                  "m</w>"
+                ],
+                [
+                  "s",
+                  "t"
+                ],
+                [
+                  "st",
+                  "ati"
+                ],
+                [
+                  "stati",
+                  "sti"
+                ],
+                [
+                  "statisti",
+                  "cal"
+                ],
+                [
+                  "statistical",
+                  "</w>"
+                ],
+                [
+                  "s",
+                  "p"
+                ],
+                [
+                  "sp",
+                  "l"
+                ],
+                [
+                  "spl",
+                  "i"
+                ],
+                [
+                  "spli",
+                  "ts</w>"
+                ],
+                [
+                  "s",
+                  "m"
+                ],
+                [
+                  "sm",
+                  "al"
+                ],
+                [
+                  "smal",
+                  "le"
+                ],
+                [
+                  "smalle",
+                  "r</w>"
+                ],
+                [
+                  "u",
+                  "ni"
+                ],
+                [
+                  "uni",
+                  "ts</w>"
+                ],
+                [
+                  "cal",
+                  "le"
+                ],
+                [
+                  "calle",
+                  "d</w>"
+                ],
+                [
+                  "toke",
+                  "ns</w>"
+                ],
+                [
+                  "s",
+                  "u"
+                ],
+                [
+                  "su",
+                  "b"
+                ],
+                [
+                  "sub",
+                  "wor"
+                ],
+                [
+                  "subwor",
+                  "d</w>"
+                ],
+                [
+                  "le",
+                  "ts</w>"
+                ],
+                [
+                  "r",
+                  "are</w>"
+                ],
+                [
+                  "d",
+                  "ec"
+                ],
+                [
+                  "dec",
+                  "o"
+                ],
+                [
+                  "deco",
+                  "mp"
+                ],
+                [
+                  "decomp",
+                  "o"
+                ],
+                [
+                  "decompo",
+                  "s"
+                ],
+                [
+                  "decompos",
+                  "e</w>"
+                ],
+                [
+                  "k",
+                  "n"
+                ],
+                [
+                  "kn",
+                  "o"
+                ],
+                [
+                  "kno",
+                  "wn</w>"
+                ],
+                [
+                  "p",
+                  "i"
+                ],
+                [
+                  "pi",
+                  "ec"
+                ],
+                [
+                  "piec",
+                  "e"
+                ],
+                [
+                  "piece",
+                  "s</w>"
+                ],
+                [
+                  "b",
+                  "y"
+                ],
+                [
+                  "by",
+                  "t"
+                ],
+                [
+                  "byt",
+                  "e</w>"
+                ],
+                [
+                  "pa",
+                  "i"
+                ],
+                [
+                  "pai",
+                  "r</w>"
+                ],
+                [
+                  "e",
+                  "n"
+                ],
+                [
+                  "en",
+                  "c"
+                ],
+                [
+                  "enc",
+                  "od"
+                ],
+                [
+                  "encod",
+                  "in"
+                ]
+              ],
+              [
+                "</w>",
+                "a",
+                "a</w>",
+                "again</w>",
+                "al",
+                "an",
+                "and</w>",
+                "are</w>",
+                "ble</w>",
+                "brown</w>",
+                "byte</w>",
+                "called</w>",
+                "d",
+                "d</w>",
+                "decompose</w>",
+                "do",
+                "dog</w>",
+                "e",
+                "encodin",
+                "f",
+                "fox</w>",
+                "from</w>",
+                "g",
+                "g</w>",
+                "h",
+                "i",
+                "in",
+                "in</w>",
+                "into</w>",
+                "jump",
+                "jumps</w>",
+                "known</w>",
+                "language</w>",
+                "lazy</w>",
+                "le",
+                "le</w>",
+                "lear",
+                "learn</w>",
+                "lets</w>",
+                "m",
+                "m</w>",
+                "models</w>",
+                "n",
+                "nine</w>",
+                "o",
+                "or",
+                "over</w>",
+                "p",
+                "pair</w>",
+                "patterns</w>",
+                "pieces</w>",
+                "quick</w>",
+                "r",
+                "rare</w>",
+                "s",
+                "s</w>",
+                "sa",
+                "saves</w>",
+                "smaller</w>",
+                "splits</w>",
+                "statistical</w>",
+                "stitch</w>",
+                "subword</w>",
+                "t</w>",
+                "text</w>",
+                "th",
+                "the</w>",
+                "time</w>",
+                "to",
+                "tokenization</w>",
+                "tokens</w>",
+                "tter",
+                "u",
+                "units</w>",
+                "w",
+                "words</w>",
+                "y</w>"
+              ]
+            ],
+            "expected": [
+              [
+                [
+                  "e",
+                  "</w>"
+                ],
+                [
+                  "s",
+                  "</w>"
+                ],
+                [
+                  "n",
+                  "</w>"
+                ],
+                [
+                  "t",
+                  "i"
+                ],
+                [
+                  "l",
+                  "e"
+                ],
+                [
+                  "t",
+                  "o"
+                ],
+                [
+                  "t",
+                  "h"
+                ],
+                [
+                  "th",
+                  "e</w>"
+                ],
+                [
+                  "i",
+                  "n</w>"
+                ],
+                [
+                  "n",
+                  "i"
+                ],
+                [
+                  "t",
+                  "e"
+                ],
+                [
+                  "d",
+                  "</w>"
+                ],
+                [
+                  "a",
+                  "n"
+                ],
+                [
+                  "a",
+                  "r"
+                ],
+                [
+                  "a",
+                  "ti"
+                ],
+                [
+                  "a",
+                  "l"
+                ],
+                [
+                  "t",
+                  "</w>"
+                ],
+                [
+                  "to",
+                  "k"
+                ],
+                [
+                  "tok",
+                  "e"
+                ],
+                [
+                  "i",
+                  "n"
+                ],
+                [
+                  "o",
+                  "r"
+                ],
+                [
+                  "m",
+                  "p"
+                ],
+                [
+                  "r",
+                  "</w>"
+                ],
+                [
+                  "y",
+                  "</w>"
+                ],
+                [
+                  "d",
+                  "o"
+                ],
+                [
+                  "g",
+                  "</w>"
+                ],
+                [
+                  "a",
+                  "g"
+                ],
+                [
+                  "p",
+                  "a"
+                ],
+                [
+                  "t",
+                  "te"
+                ],
+                [
+                  "tte",
+                  "r"
+                ],
+                [
+                  "n",
+                  "s</w>"
+                ],
+                [
+                  "toke",
+                  "ni"
+                ],
+                [
+                  "tokeni",
+                  "z"
+                ],
+                [
+                  "tokeniz",
+                  "ati"
+                ],
+                [
+                  "tokenizati",
+                  "o"
+                ],
+                [
+                  "tokenizatio",
+                  "n</w>"
+                ],
+                [
+                  "t",
+                  "s</w>"
+                ],
+                [
+                  "w",
+                  "or"
+                ],
+                [
+                  "l",
+                  "e</w>"
+                ],
+                [
+                  "r",
+                  "o"
+                ],
+                [
+                  "w",
+                  "n</w>"
+                ],
+                [
+                  "f",
+                  "o"
+                ],
+                [
+                  "fo",
+                  "x"
+                ],
+                [
+                  "fox",
+                  "</w>"
+                ],
+                [
+                  "j",
+                  "u"
+                ],
+                [
+                  "ju",
+                  "mp"
+                ],
+                [
+                  "v",
+                  "e"
+                ],
+                [
+                  "l",
+                  "a"
+                ],
+                [
+                  "la",
+                  "z"
+                ],
+                [
+                  "laz",
+                  "y</w>"
+                ],
+                [
+                  "do",
+                  "g</w>"
+                ],
+                [
+                  "s",
+                  "ti"
+                ],
+                [
+                  "s",
+                  "a"
+                ],
+                [
+                  "o",
+                  "d"
+                ],
+                [
+                  "le",
+                  "ar"
+                ],
+                [
+                  "m",
+                  "</w>"
+                ],
+                [
+                  "c",
+                  "al"
+                ],
+                [
+                  "pa",
+                  "tter"
+                ],
+                [
+                  "patter",
+                  "ns</w>"
+                ],
+                [
+                  "te",
+                  "x"
+                ],
+                [
+                  "tex",
+                  "t</w>"
+                ],
+                [
+                  "in",
+                  "to"
+                ],
+                [
+                  "into",
+                  "</w>"
+                ],
+                [
+                  "ar",
+                  "e</w>"
+                ],
+                [
+                  "wor",
+                  "d"
+                ],
+                [
+                  "word",
+                  "s</w>"
+                ],
+                [
+                  "e",
+                  "c"
+                ],
+                [
+                  "ag",
+                  "a"
+                ],
+                [
+                  "aga",
+                  "in</w>"
+                ],
+                [
+                  "an",
+                  "d</w>"
+                ],
+                [
+                  "b",
+                  "le</w>"
+                ],
+                [
+                  "q",
+                  "u"
+                ],
+                [
+                  "qu",
+                  "i"
+                ],
+                [
+                  "qui",
+                  "c"
+                ],
+                [
+                  "quic",
+                  "k"
+                ],
+                [
+                  "quick",
+                  "</w>"
+                ],
+                [
+                  "b",
+                  "ro"
+                ],
+                [
+                  "bro",
+                  "wn</w>"
+                ],
+                [
+                  "jump",
+                  "s</w>"
+                ],
+                [
+                  "o",
+                  "ve"
+                ],
+                [
+                  "ove",
+                  "r</w>"
+                ],
+                [
+                  "a",
+                  "</w>"
+                ],
+                [
+                  "sti",
+                  "t"
+                ],
+                [
+                  "stit",
+                  "c"
+                ],
+                [
+                  "stitc",
+                  "h"
+                ],
+                [
+                  "stitch",
+                  "</w>"
+                ],
+                [
+                  "ti",
+                  "m"
+                ],
+                [
+                  "tim",
+                  "e</w>"
+                ],
+                [
+                  "sa",
+                  "ve"
+                ],
+                [
+                  "save",
+                  "s</w>"
+                ],
+                [
+                  "ni",
+                  "n"
+                ],
+                [
+                  "nin",
+                  "e</w>"
+                ],
+                [
+                  "l",
+                  "an"
+                ],
+                [
+                  "lan",
+                  "g"
+                ],
+                [
+                  "lang",
+                  "u"
+                ],
+                [
+                  "langu",
+                  "ag"
+                ],
+                [
+                  "languag",
+                  "e</w>"
+                ],
+                [
+                  "m",
+                  "od"
+                ],
+                [
+                  "mod",
+                  "e"
+                ],
+                [
+                  "mode",
+                  "l"
+                ],
+                [
+                  "model",
+                  "s</w>"
+                ],
+                [
+                  "lear",
+                  "n</w>"
+                ],
+                [
+                  "f",
+                  "ro"
+                ],
+                [
+                  "fro",
+                  "m</w>"
+                ],
+                [
+                  "s",
+                  "t"
+                ],
+                [
+                  "st",
+                  "ati"
+                ],
+                [
+                  "stati",
+                  "sti"
+                ],
+                [
+                  "statisti",
+                  "cal"
+                ],
+                [
+                  "statistical",
+                  "</w>"
+                ],
+                [
+                  "s",
+                  "p"
+                ],
+                [
+                  "sp",
+                  "l"
+                ],
+                [
+                  "spl",
+                  "i"
+                ],
+                [
+                  "spli",
+                  "ts</w>"
+                ],
+                [
+                  "s",
+                  "m"
+                ],
+                [
+                  "sm",
+                  "al"
+                ],
+                [
+                  "smal",
+                  "le"
+                ],
+                [
+                  "smalle",
+                  "r</w>"
+                ],
+                [
+                  "u",
+                  "ni"
+                ],
+                [
+                  "uni",
+                  "ts</w>"
+                ],
+                [
+                  "cal",
+                  "le"
+                ],
+                [
+                  "calle",
+                  "d</w>"
+                ],
+                [
+                  "toke",
+                  "ns</w>"
+                ],
+                [
+                  "s",
+                  "u"
+                ],
+                [
+                  "su",
+                  "b"
+                ],
+                [
+                  "sub",
+                  "wor"
+                ],
+                [
+                  "subwor",
+                  "d</w>"
+                ],
+                [
+                  "le",
+                  "ts</w>"
+                ],
+                [
+                  "r",
+                  "are</w>"
+                ],
+                [
+                  "d",
+                  "ec"
+                ],
+                [
+                  "dec",
+                  "o"
+                ],
+                [
+                  "deco",
+                  "mp"
+                ],
+                [
+                  "decomp",
+                  "o"
+                ],
+                [
+                  "decompo",
+                  "s"
+                ],
+                [
+                  "decompos",
+                  "e</w>"
+                ],
+                [
+                  "k",
+                  "n"
+                ],
+                [
+                  "kn",
+                  "o"
+                ],
+                [
+                  "kno",
+                  "wn</w>"
+                ],
+                [
+                  "p",
+                  "i"
+                ],
+                [
+                  "pi",
+                  "ec"
+                ],
+                [
+                  "piec",
+                  "e"
+                ],
+                [
+                  "piece",
+                  "s</w>"
+                ],
+                [
+                  "b",
+                  "y"
+                ],
+                [
+                  "by",
+                  "t"
+                ],
+                [
+                  "byt",
+                  "e</w>"
+                ],
+                [
+                  "pa",
+                  "i"
+                ],
+                [
+                  "pai",
+                  "r</w>"
+                ],
+                [
+                  "e",
+                  "n"
+                ],
+                [
+                  "en",
+                  "c"
+                ],
+                [
+                  "enc",
+                  "od"
+                ],
+                [
+                  "encod",
+                  "in"
+                ]
+              ],
+              [
+                "</w>",
+                "a",
+                "a</w>",
+                "again</w>",
+                "al",
+                "an",
+                "and</w>",
+                "are</w>",
+                "ble</w>",
+                "brown</w>",
+                "byte</w>",
+                "called</w>",
+                "d",
+                "d</w>",
+                "decompose</w>",
+                "do",
+                "dog</w>",
+                "e",
+                "encodin",
+                "f",
+                "fox</w>",
+                "from</w>",
+                "g",
+                "g</w>",
+                "h",
+                "i",
+                "in",
+                "in</w>",
+                "into</w>",
+                "jump",
+                "jumps</w>",
+                "known</w>",
+                "language</w>",
+                "lazy</w>",
+                "le",
+                "le</w>",
+                "lear",
+                "learn</w>",
+                "lets</w>",
+                "m",
+                "m</w>",
+                "models</w>",
+                "n",
+                "nine</w>",
+                "o",
+                "or",
+                "over</w>",
+                "p",
+                "pair</w>",
+                "patterns</w>",
+                "pieces</w>",
+                "quick</w>",
+                "r",
+                "rare</w>",
+                "s",
+                "s</w>",
+                "sa",
+                "saves</w>",
+                "smaller</w>",
+                "splits</w>",
+                "statistical</w>",
+                "stitch</w>",
+                "subword</w>",
+                "t</w>",
+                "text</w>",
+                "th",
+                "the</w>",
+                "time</w>",
+                "to",
+                "tokenization</w>",
+                "tokens</w>",
+                "tter",
+                "u",
+                "units</w>",
+                "w",
+                "words</w>",
+                "y</w>"
+              ]
+            ],
+            "pass": true
+          },
+          {
+            "test": "final_tokens omits held-out emitted symbols",
+            "observed": [
+              "fox",
+              "languag",
+              "tokeniz"
+            ],
+            "source_issue": true
+          },
+          {
+            "test": "exercise finite 500 requested merges",
+            "actual_merge_count": 183,
+            "early_stop": true,
+            "three_held_out": {
+              "tokenizable": [
+                "tokeniz",
+                "a",
+                "ble</w>"
+              ],
+              "unlearnable": [
+                "u",
+                "n",
+                "learnable</w>"
+              ],
+              "foxhound": [
+                "fox",
+                "h",
+                "o",
+                "u",
+                "n",
+                "d</w>"
+              ]
+            }
+          },
+          {
+            "test": "document training snippet standalone",
+            "expected_failure": "name 'Counter' is not defined"
+          },
+          {
+            "test": "document training snippet with Counter",
+            "expected_failure": "name 'apply_merge' is not defined"
+          },
+          {
+            "test": "document encoding snippet matches canonical",
+            "actual": [
+              "u",
+              "n",
+              "lear",
+              "n",
+              "a",
+              "ble</w>"
+            ],
+            "expected": [
+              "u",
+              "n",
+              "lear",
+              "n",
+              "a",
+              "ble</w>"
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "not_run": [
+        "SentencePiece, tiktoken and HF production libraries: no install, download, corpus/model generation or external calls",
+        "TypeScript main.ts: no TypeScript runtime execution",
+        "Exercises 2 and 3: Wikipedia corpus, production tokenizers and downstream classifier not executed",
+        "Shipped artifact prompt: preserved data only, not executed",
+        "No canonical code/tests exists; bounded author assertions are supplementary tests, not repository unit-test claims"
+      ]
+    },
+    "independent": {
+      "canonical": {
+        "scope": "Unmodified Python original tiny corpus,30/150merge runs, four heldout words",
+        "exit_code": 0,
+        "log_sha256": "c72cd927868989cacbe74111491ee7d4af0513adeca124026b5669710e662895"
+      },
+      "finite": {
+        "tests": 19,
+        "results": [
+          {
+            "name": "ASCII lowering excludes digits and CJK",
+            "pass": true
+          },
+          {
+            "name": "overlapping pairs frequency weighted",
+            "pass": true
+          },
+          {
+            "name": "merges disjoint and preserves frequency",
+            "pass": true
+          },
+          {
+            "name": "first frequent merge ab",
+            "pass": true
+          },
+          {
+            "name": "zero merges yields chars and end",
+            "pass": true
+          },
+          {
+            "name": "training stops after pairs exhausted",
+            "pass": true
+          },
+          {
+            "name": "nonASCII corpus rejected",
+            "pass": true
+          },
+          {
+            "name": "empty encoding sentinel",
+            "pass": true
+          },
+          {
+            "name": "unknown character returned without vocabulary validation",
+            "pass": true
+          },
+          {
+            "name": "deterministic same corpus",
+            "pass": true
+          },
+          {
+            "name": "all word concatenations preserve original with sentinel",
+            "pass": true
+          },
+          {
+            "name": "final tokens are not complete encoder vocabulary",
+            "pass": true
+          },
+          {
+            "name": "training lowercase encoding no lowercase",
+            "pass": true
+          },
+          {
+            "name": "training ordering changes tied winner",
+            "pass": true
+          },
+          {
+            "name": "negative merge count accepted as zero",
+            "pass": true
+          },
+          {
+            "name": "ordered merge list has semantic effect",
+            "pass": true
+          },
+          {
+            "name": "full protected validation",
+            "pass": true
+          },
+          {
+            "name": "66 support exact SHA and git bytes",
+            "pass": true
+          },
+          {
+            "name": "SVG exact source and immutable git",
+            "pass": true
+          }
+        ],
+        "code_sha256": "e76404e1907bb0582847d1895a4d1cbd0da1a2f6bbed959e28e37cd9f982237d",
+        "source_sha256": "6d67e864430ef41e47f3c0e115faead61da03cad377dca5a69f77513afc8f3eb",
+        "target_sha256": "1ef70628ad30440ba778c43d7e266656d6245f94093237b37351b611dfd7ed70",
+        "limits": [
+          "Python stdlib only; no SentencePiece/tiktoken/HF/network/download",
+          "TypeScript fully read but not executed; metadata Python omits TS",
+          "No provided prompt artifact executed"
+        ]
+      }
+    }
+  },
+  "actual_GitHub_GFM": {
+    "stage": "S60-subword-tokenization",
+    "lesson_id": "05-19",
+    "commit": "7d05d02c64366ebdf312e3e57f3b69c2849d672f",
+    "target_sha256": "1ef70628ad30440ba778c43d7e266656d6245f94093237b37351b611dfd7ed70",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/7d05d02c64366ebdf312e3e57f3b69c2849d672f/i18n/zh/phases/05-nlp-foundations-to-advanced/19-subword-tokenization/docs/zh.md",
+    "date": "2026-10-03",
+    "result": "PASS actual GitHub GFM with documented source-asset and native fallback limits",
+    "personally_inspected": "Complete rendered DOM/accessibility read title through references; full article scrolled, representative visual inspection of SVG, strong concept labels, both italic spans, figure fallback, syntax-highlighted code, complexity notation, pitfalls, choice table, artifact, exercises, glossary and references.",
+    "checks": {
+      "headings": 14,
+      "headings_exact": true,
+      "strong": 19,
+      "strong_exact": true,
+      "em": [
+        "训练",
+        "编码器"
+      ],
+      "em_exact": true,
+      "tables": [
+        {
+          "columns": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "rows": 6,
+          "text": "场景\t选择\n从零训练单语言模型\tHF Tokenizers（BPE）\n训练多语言模型\tSentencePiece（Unigram，character_coverage=0.9995）\n提供兼容 OpenAI 的 API（应用程序编程接口）\ttiktoken（GPT-4+ 使用 o200k_base）\n领域专用词表（代码、数学、蛋白质）\t在领域语料上训练自定义 BPE，再与基础词表合并\n边缘推理、小模型\tUnigram（较小的词表效果更好）"
+        },
+        {
+          "columns": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "rows": 8,
+          "text": "术语\t人们怎么说\t实际含义\nBPE\t字节对编码\t贪心合并最频繁的字符对，直到达到目标词表大小。\n字节级 BPE\t永远没有未知 token\t在原始 256 个字节上进行 BPE；GPT-2 / Llama 使用这种方法。\nUnigram\t概率分词器\t利用对数似然从庞大的候选集合中剪枝；T5、Gemma 使用这种算法。\nSentencePiece\t处理空白字符的那个\t在原始文本上训练 BPE/Unigram 的库；空格编码为 ▁。\ntiktoken\t速度快的那个\tOpenAI 基于 Rust 的 BPE 编码器，使用预先构建的词表。不提供训练功能。\n合并列表\t神奇的数字\t(a, b) → ab 合并操作的有序列表；推理时依序应用。\n字符覆盖率\t多罕见才算过于罕见？\t分词器必须覆盖的训练语料字符比例；典型值为 ~0.9995。"
+        }
+      ],
+      "code_payloads_exact": true,
+      "fences": 6,
+      "highlighted_python": 4,
+      "highlighted_markdown": 1,
+      "figure_fallback": "bpe-merge displayed as plain code; not a functioning interactive mechanism",
+      "images": [
+        {
+          "alt": "逐字符对比 BPE、Unigram 与 WordPiece",
+          "complete": true,
+          "height": 150,
+          "src": "https://github.com/Activer007/ai-engineering-from-scratch/raw/7d05d02c64366ebdf312e3e57f3b69c2849d672f/i18n/zh/phases/05-nlp-foundations-to-advanced/19-subword-tokenization/assets/subword-tokenization.svg",
+          "width": 293
+        }
+      ],
+      "svg_visually_loaded": true,
+      "math": "No display math. O(n·|merges|) remains readable plain prose; (a, b) → ab remains inline code in glossary.",
+      "layout": "Readable desktop Chinese text and both tables; protected long artifact lines use native horizontal scrolling; no broken strong/em markers observed."
+    },
+    "source_asset_note": "Close reinspection on the actual immutable GitHub page confirms the entire Unigram label is visible and readable, including opening quotation mark, arrow, all three alternatives and final closing brace. It crosses only the inner red rectangle; remains wholly within the middle-column outer frame and outer SVG image/viewBox. No glyph/content loss and no image-edge clipping. Cosmetic inner-box overflow only; GFM PASS retained.",
+    "unpassed_separate_gates": [
+      "Course website",
+      "Mobile",
+      "Interactive figure functionality",
+      "Hosted CI"
+    ],
+    "edits": false,
+    "source_svg_text_complete": true,
+    "source_svg_text_readable": true,
+    "source_svg_text_clipped": false,
+    "svg_close_reinspection": {
+      "utc": "2026-10-03T01:13:55Z",
+      "commit": "7d05d02c64366ebdf312e3e57f3b69c2849d672f",
+      "target_sha256": "1ef70628ad30440ba778c43d7e266656d6245f94093237b37351b611dfd7ed70",
+      "browser_tab": 14,
+      "source_svg_sha256": "aa7f3569a995dfad47a6ca9f4dbcc4769b56d9eb4536f6ed31ff3c2898b5a470",
+      "source_viewBox": "0 0 900 460",
+      "complete_visible_text": "\"lower\" → {lo+wer, l+ower, low+er}",
+      "expected_visible_text": "\"lower\" → {lo+wer, l+ower, low+er}",
+      "source_svg_text_complete": true,
+      "source_svg_text_readable": true,
+      "source_svg_text_clipped": false,
+      "inner_rectangle_overflow": true,
+      "outer_column_frame_clipped": false,
+      "outer_viewBox_clipped": false,
+      "method": "Personally reread each character on fresh actual GitHub screenshot and native screenshot close-up. Full SVG screenshot shows all outer edges, title and footer; browser DOM says no CSS clip-path and visible overflow for image ancestors. Fixed source asset SHA matches manifest and source viewBox is0 0 900 460. The brief first capture before completed paint was replaced and not used as final evidence."
+    }
+  },
+  "aggregate": {
+    "reviewed_lessons_in_local_snapshot": 82,
+    "original_strict_direct_pass": 80,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "82 exact-byte matches to each other and final records",
+    "svg_separate_copies": 7,
+    "repository_audits": "Lesson and certification audits plus README/book counts passed",
+    "book_rendering_regressions": {
+      "tests": 6,
+      "passed": 5,
+      "environment_blocked": 1,
+      "reason": "Missing xelatex.fmt; PDF format/cache environment unavailable. No system installation or workaround attempted."
+    },
+    "original_site_parser": {
+      "empty_heading_ids_in_four_accepted_stages": 50,
+      "empty_heading_ids_all_five_observed": 65,
+      "duplicate_nonempty_ids": 0,
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "cause": "Original ASCII-only slugify removes Chinese heading characters"
+    },
+    "excluded_pending_stage": "S61/10-05: source third 3D Mermaid has overlapping/occluded labels; visual acceptance remains unpassed",
+    "note": "Local accepted82 aggregate excludes S61 and is not final remote index acceptance"
+  },
+  "content_remote_verification": {
+    "stage": 60,
+    "commit": "7d05d02c64366ebdf312e3e57f3b69c2849d672f",
+    "tree": "ed962a2b4e5addc1992ba411ebf231f22d6f8ba4",
+    "changed_file_count": 7,
+    "files": [
+      {
+        "path": "i18n/zh/.curated/stages/S60-subword-tokenization/SCOPE.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S60-subword-tokenization/DEPENDENCIES.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-19/translation.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-19/review.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/19-subword-tokenization/docs/zh.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/19-subword-tokenization/assets/subword-tokenization.svg",
+        "match": true
+      }
+    ],
+    "all_bytes_exact": true
+  },
+  "site_parser": {
+    "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/19-subword-tokenization/docs/zh.md",
+    "parser_executed": true,
+    "html_bytes": 17255,
+    "tables": 2,
+    "code_blocks": 5,
+    "figures": 1,
+    "mermaid_sources": 0,
+    "empty_heading_ids": [
+      "要解决的问题",
+      "核心概念",
+      "动手实现",
+      "实际使用",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "duplicate_heading_ids": [],
+    "browser_verified": false,
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "stage": "S60-subword-tokenization",
+    "lesson_id": "05-19",
+    "target_sha256": "1ef70628ad30440ba778c43d7e266656d6245f94093237b37351b611dfd7ed70",
+    "empty_heading_id_count": 8,
+    "duplicate_nonempty_id_distinct_count": 0
+  },
+  "final_remote_and_CI": "Final evidence commit readback and exact-head CI results belong in the PR body and single rollout index to avoid evidence self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
