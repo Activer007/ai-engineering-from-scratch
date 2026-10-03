@@ -1,0 +1,2898 @@
+{
+  "schema_version": 1,
+  "lesson_id": "10-05",
+  "source_path": "phases/10-llms-from-scratch/05-scaling-distributed/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "a73ad7afcfdefba1324b0ad8c1a3982bb4fc0b9e",
+  "source_sha256": "b9ae0ccea1f097aa7d3715f6578a007b167d065be32530ebb83dec516b2ca406",
+  "target_path": "i18n/zh/phases/10-llms-from-scratch/05-scaling-distributed/docs/zh.md",
+  "target_sha256": "12c0ec927fea8de02aeb367848c1eb0ad480cfc6756fe6beb19437006b90d032",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-03"
+  },
+  "segments": [
+    {
+      "segment_id": "10-05:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed"
+      ],
+      "ordinal": 1,
+      "source_sha256": "90296ef11174bd2c8880d5412d0e2297e57f25f7c647ddd875a692a5d8ad5e42",
+      "target": "# 扩展训练规模：分布式训练、FSDP、DeepSpeed\n",
+      "target_sha256": "8eb0880b4a6287a89b98c0c2f31ede4f95465cc743f9fa18b515d8b2f478dd9e"
+    },
+    {
+      "segment_id": "10-05:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed"
+      ],
+      "ordinal": 2,
+      "source_sha256": "5b0219f48abcfae71a4375f20efe33448cbf7a66bdf54d7758a23c1c56c3a56c",
+      "target": "> 你的 124M 模型用一块 GPU 就训练好了。现在试试 7 billion（十亿）个参数。显存放不下模型；单机处理数据要花数周。达到这样的规模，分布式训练（distributed training）就不再是可选项，而是唯一的前进道路。\n",
+      "target_sha256": "d04f9ecdff4e327357e782881fb9242180b37a7aef0238bea023e34583fc0f1d"
+    },
+    {
+      "segment_id": "10-05:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed"
+      ],
+      "ordinal": 3,
+      "source_sha256": "5d3d28acbc887d369d13b1b0f186b6684698d3f09ec2587061512812f327e81b",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 第 10 阶段，第 04 课（预训练 Mini GPT）\n**Time:** ~120 分钟\n",
+      "target_sha256": "64d8bcb218323a624e9b908eaf6c634717a32e770fa3b65b1b36afd91b817884"
+    },
+    {
+      "segment_id": "10-05:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "10-05:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "e8db2b19b015bf23c029d29d7622cb404ccbcebb4e83c5f6ad32e34a77e1971c",
+      "target": "- 解释三种并行方式（数据、张量、流水线），并根据模型和集群规模判断何时需要各自的方式\n- 使用 PyTorch 分布式数据并行（DDP）实现数据并行训练，在多个 GPU 间同步梯度\n- 为给定规模的模型计算显存预算（权重 + 优化器状态 + 梯度 + 激活），确定最低硬件要求\n- 配置 FSDP 或 DeepSpeed ZeRO 的阶段，将模型状态分片存放到多个 GPU 上，容纳超过单卡显存容量的模型\n",
+      "target_sha256": "4b8da39b87825bfda2ee6cbd8978e3bef39499c8c1842b94bf3c55cd77cd9025"
+    },
+    {
+      "segment_id": "10-05:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "10-05:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "91f2941b5f4ed62a15e1d41f358694e2a212eef1e3449839e1093787df6d0f4a",
+      "target": "一个 7B 参数的模型采用 FP16 时，仅权重就需要 14GB。Adam 优化器为每个参数额外存储两份副本（一阶矩和二阶矩估计），又占 28GB。反向传播期间的梯度再增加 14GB。在尚未存储任何激活值时，就已经占用了 56GB。\n",
+      "target_sha256": "b68fc49d1549095afdbb6df4db26b7b9b53b6c3cedd5ec605599f4850918c06c"
+    },
+    {
+      "segment_id": "10-05:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "0e63342d4cfad118b9c505dbf6aafebc82d9eea09b12cfe8dad48a6f4f6aa2e9",
+      "target": "一块 NVIDIA A100 有 80GB 显存。\n",
+      "target_sha256": "b7d4bb881623f861620ec6385b96f2e2b094484a1156d734cb25b8eab46e234b"
+    },
+    {
+      "segment_id": "10-05:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "79a13074fed1136a7fd20359f4eba7cde5c660480adb151797dbb412704f6fe5",
+      "target": "80GB 中已经用掉 56GB，只剩 24GB 留给激活值，也就是前向传播中计算出的、必须保留供反向传播使用的中间值。对于长度为 2048 个 token（词元）的序列和维度为 4096 的模型，单层激活约占 64MB。若有 32 层，每个样本就需要 2GB。批大小为 8 时需要 16GB，而你有 24GB。批大小达到 12 就会爆显存。\n",
+      "target_sha256": "1e82e4ed090e4f11dfec4c87e9a74d641aaf238ed00b10110969ec09d2cc2d6a"
+    },
+    {
+      "segment_id": "10-05:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "5f6680b72d835da1265d974b61f64742f1ad04ddcd7216b8bdccb9a24cdc5551",
+      "target": "现在试试 70B 参数。仅 FP16 权重就有 140GB，一块 GPU 放不下。光是存放权重，至少就需要 2 块 A100（2 x 80GB = 160GB）。加上优化器状态和梯度，需要的 GPU 还要多得多：最少 3+ 块，实际通常要 8-16 块，取决于分片策略。\n",
+      "target_sha256": "7d55f73d342bfcdbc1009242d68790e67106d667fb740c5394258826aca21aa4"
+    },
+    {
+      "segment_id": "10-05:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "9c513f854d88254f0974d1405b5f93ac7c982af0ed96a744074e33c9f881e92c",
+      "target": "Llama 3 405B 在 16,384 块 NVIDIA H100 GPU 上训练。这次训练的计算成本估计为 $100 million（百万）。DeepSeek V3 则通过巧妙的架构设计（混合专家，Mixture of Experts，意味着每个 token 只激活部分参数）和训练效率优化，以大约 $5.6 million（百万）训练出了相当的模型。\n",
+      "target_sha256": "9dfbe30a232e78873cac599ab70e8ac5e0ba15f8b1f7015c17c97fbfbe45cd46"
+    },
+    {
+      "segment_id": "10-05:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 12,
+      "source_sha256": "155aeb91728c647d74b576d1753a47b3fbf9ddbb3fb1ddf85456360881f0bd95",
+      "target": "本课介绍让大规模训练成为可能的四种策略：数据并行（data parallelism）、张量并行（tensor parallelism）、流水线并行（pipeline parallelism）以及完全分片数据并行（fully sharded data parallelism）。在接触分布式训练框架之前，你将用纯 Python 逐一模拟它们，理解其中的机制。\n",
+      "target_sha256": "74a8ba95551b3d31d194056920ac6445903053cd94aadfbd0ba472704079dca4"
+    },
+    {
+      "segment_id": "10-05:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Problem"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "10-05:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 14,
+      "source_sha256": "56172d59cc1bb42ecec6a412ad842b4cb6d2d9bb98f442209c5c6290c5140f46",
+      "target": "### 为什么必须分布式运行\n",
+      "target_sha256": "1fd8ffb9de73d120fa479594d5e66f3a37aaede0e6852e0d66c220a9815f5800"
+    },
+    {
+      "segment_id": "10-05:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 15,
+      "source_sha256": "00264ee8ec9e0b744a63f2e816fb62d30d433c87de36556d36a67529c7d8478a",
+      "target": "下面是实际模型的显存计算。每个数字都是算出来的，而不是估计出来的。\n",
+      "target_sha256": "c7b112d94ed2d7752795fc0a8b7157fbb0d9c499d0e7ccfd5117b129a93cb09a"
+    },
+    {
+      "segment_id": "10-05:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0031",
+      "kind": "table",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 16,
+      "source_sha256": "c041675e5946d1c1905276516bef594e7296794a679c781e5cbd09c09f5b8914",
+      "target": "| 模型 | 参数量 | 权重（FP16） | Adam 状态 | 梯度（FP16） | 总计（不含激活） |\n|-------|--------|----------------|-------------|------------------|----------------------|\n| GPT-2 Small | 124M | 248 MB | 992 MB | 248 MB | 1.5 GB |\n| Llama 3 8B | 8B | 16 GB | 64 GB | 16 GB | 96 GB |\n| Llama 3 70B | 70B | 140 GB | 560 GB | 140 GB | 840 GB |\n| Llama 3 405B | 405B | 810 GB | 3,240 GB | 810 GB | 4,860 GB |\n",
+      "target_sha256": "47f683b0e4e6f416026a2a7e155c0bbfee968e8b72e62121512f0a5e771f5afd"
+    },
+    {
+      "segment_id": "10-05:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 17,
+      "source_sha256": "d5d1fc1d6c040c5963732b54b470297c4897be5a7cf71bba6a9e7339bbd7aa5b",
+      "target": "“Adam 状态”这一列才是显存大户。Adam 为每个参数存储滚动均值（m）和滚动方差（v），两者都是 FP32。对于 70B 模型，这就是 70B x 4 bytes x 2 = 560GB。仅优化器就需要七块 A100。\n",
+      "target_sha256": "89213ac760f0e0c3e79786b97114a4e251ef210833357478884cadeb57e8f58b"
+    },
+    {
+      "segment_id": "10-05:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 18,
+      "source_sha256": "ae10440cae2680cf196da8f276138a0d7041f34b3f00a5119b105d202541a525",
+      "target": "一块 H100 有 80GB 显存。Llama 3 405B 至少需要 61 块 H100 才能放下权重、优化器和梯度。加上激活，数量还会进一步增加。Meta 使用 16,384 块 GPU，不是因为想这么做，而是因为不得不这么做。\n",
+      "target_sha256": "c4b6ad40daf8073bcb8fe53270bda6b25830ed70c223288c0ecc8284b91d47c0"
+    },
+    {
+      "segment_id": "10-05:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Why Distribution is Required"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 19,
+      "source_sha256": "2a9c891f776e29a7c52c5a0c1cdce8166d6ee7b0c5e90bed901b63b851288634",
+      "target": "### 数据并行\n",
+      "target_sha256": "f3f39ee20c91d96b64351f2c97440c3465741d007c98bf3bc0cb4de2635c99b4"
+    },
+    {
+      "segment_id": "10-05:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 20,
+      "source_sha256": "2a8d3a3e44b046ee550449feb47d282d7eaa22ada77b998cb465d6ec22a2c291",
+      "target": "这是最简单的分布式策略。把整个模型复制到 N 块 GPU 上，将每个训练批次等分成 N 份。每块 GPU 在自己的数据分片上执行前向和反向传播。反向传播后，对所有 GPU 的梯度求平均。每块 GPU 用同样的平均梯度更新自己的权重副本，让所有副本保持同步。\n",
+      "target_sha256": "2776dd5fa657366ba1748bfe680f4603270fdb3a030008c4f8e23a22b5f3ec8b"
+    },
+    {
+      "segment_id": "10-05:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 21,
+      "source_sha256": "1c11894c7eaac27598ef17bab5cc97266bc09ce90b437cbf1bfac1ae49f6d0ad",
+      "target": "**优点：** 吞吐量线性扩展。N 块 GPU 每步处理的数据量是原来的 N 倍。通信仅限于梯度平均，并可与计算重叠。\n",
+      "target_sha256": "8ed2a0096851a697dab778bb6c1a229338e20e535fa85e2f3527184ac6a95018"
+    },
+    {
+      "segment_id": "10-05:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 22,
+      "source_sha256": "9af03621a70daf299c5f6bb4f42eee9101237b1fb2ea9a87fac94777449e6c73",
+      "target": "**缺点：** 每块 GPU 都保存模型、优化器状态和梯度的完整副本。对于 70B 模型，每块 GPU 都需要 840GB。数据并行完全不能降低单卡显存需求，只能缩短训练时间。\n",
+      "target_sha256": "b934151851a91786abe1a630c194de5391d23e56a016352a04f700e70006d8b1"
+    },
+    {
+      "segment_id": "10-05:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 23,
+      "source_sha256": "d5cae9204e18efc30ce8577e413ccfdeb01a1d0679391ae5703c4f4187813b65",
+      "target": "**计算方式：** 有效批大小 = per_gpu_batch_size x N。当 N=64 块 GPU、每块 GPU 的批大小为 16 时，有效批大小为 1,024。Llama 3 使用的有效批大小是每步 16 million（百万）个 token。\n",
+      "target_sha256": "1b268242adf90a06942d2cb93d027da41fdc54f9d49ef2da5b660d1b8de4be08"
+    },
+    {
+      "segment_id": "10-05:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 24,
+      "source_sha256": "52b5772580e0aaf1929822ac73de48c6f000936c6351257f0041170561974c90",
+      "target": "```mermaid\ngraph TD\n    subgraph DataParallel[\"Data Parallelism (N=4 GPUs)\"]\n        B[\"Full Batch\\n(1024 samples)\"] --> S[\"Split\"]\n        S --> G1[\"GPU 1\\nFull Model Copy\\n256 samples\"]\n        S --> G2[\"GPU 2\\nFull Model Copy\\n256 samples\"]\n        S --> G3[\"GPU 3\\nFull Model Copy\\n256 samples\"]\n        S --> G4[\"GPU 4\\nFull Model Copy\\n256 samples\"]\n        G1 --> AR[\"AllReduce\\nAverage Gradients\"]\n        G2 --> AR\n        G3 --> AR\n        G4 --> AR\n        AR --> U[\"Update\\n(identical on all GPUs)\"]\n    end\n\n    style B fill:#1a1a2e,stroke:#e94560,color:#fff\n    style G1 fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style G2 fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style G3 fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style G4 fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style AR fill:#1a1a2e,stroke:#51cf66,color:#fff\n    style U fill:#1a1a2e,stroke:#51cf66,color:#fff\n```\n",
+      "target_sha256": "52b5772580e0aaf1929822ac73de48c6f000936c6351257f0041170561974c90"
+    },
+    {
+      "segment_id": "10-05:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Data Parallelism"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 25,
+      "source_sha256": "b1c4b249a0eac4a28d9032793334936f486bf463437c4d848e48f3da01df65bb",
+      "target": "### 张量并行\n",
+      "target_sha256": "07533a3f62688726e42f67a2af8ec4e782c0a4b6e0fd0c904fd47f0bef72c914"
+    },
+    {
+      "segment_id": "10-05:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 26,
+      "source_sha256": "3bfe9400353a44cfb424fb76e8b794590b34b44d96a1637fa02c9a679424c8d1",
+      "target": "将单个层拆分到多块 GPU 上。一次矩阵乘法分给多块 GPU，每块计算一部分结果。\n",
+      "target_sha256": "f5b881858bc4189fd0b8cda73b619cc7207e915093ec5639a8ae47024214c950"
+    },
+    {
+      "segment_id": "10-05:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 27,
+      "source_sha256": "35a396bedd3ca0629d8b60fa9ea30f0f462cb120b41f878908b3379c4cfa45fd",
+      "target": "考虑前馈层中形状为 (8192, 8192) 的权重矩阵。采用 4 路张量并行时，每块 GPU 持有一个 (8192, 2048) 的分片。每块 GPU 将输入与自己的分片相乘，得到部分结果。随后通过全归约（all-reduce）或全收集（all-gather）合并这些部分结果，得到完整输出。\n",
+      "target_sha256": "d3d051d7fd779e35658cca4718ee8e9c2b4fc58db8eb72beef447e49f11cce26"
+    },
+    {
+      "segment_id": "10-05:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 28,
+      "source_sha256": "f9fb3aa172b5acc8da802f0fb3871ececdd337a6b4a85dabe3f289ade34e5f9a",
+      "target": "**优点：** 降低每块 GPU 存放模型权重的显存需求。将 70B 模型拆分到 8 块 GPU 上，意味着每块 GPU 持有约 ~8.75B 个参数的权重。\n",
+      "target_sha256": "d3366992fcf7e9c2948ca1aac6db4c28c53cfba2bd9847a4736a00bb9ff6798f"
+    },
+    {
+      "segment_id": "10-05:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 29,
+      "source_sha256": "7cd9fc0536818a1cf081f73b867090a63e8436624540d97c7e8f349312e4e636",
+      "target": "**缺点：** 每层之后都需要快速的 GPU 间通信。每次矩阵乘法后的全归约会增加延迟。在 NVLink 上效果很好（同一节点内 GPU 之间为 900 GB/s），但在通过 InfiniBand 相连的跨节点场景下效果较差（400 Gb/s，约 50 GB/s）。张量并行几乎总是局限在单个节点内（8 块 GPU）。\n",
+      "target_sha256": "bdb7a8e42d761499ac0677eb3b1324ee4ea718c0fed482b5e6bed3439fa30a12"
+    },
+    {
+      "segment_id": "10-05:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 30,
+      "source_sha256": "d13bb67ff0b3fc5996670b2822cb4edcc4f28d4f8e991cb80b9887c7f1e6ef9b",
+      "target": "**实际应用：** Megatron-LM 开创了张量并行。Llama 3 405B 在每个节点内使用 8 路张量并行。\n",
+      "target_sha256": "fbdadd677dc84d1a5630e152160ff35f07ca2c8c41446b474a93501aac795d5f"
+    },
+    {
+      "segment_id": "10-05:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Tensor Parallelism"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 31,
+      "source_sha256": "8587eed134965a93bfade24921217a1a70d77890a318bd70e9c1d0f2411b24ac",
+      "target": "### 流水线并行\n",
+      "target_sha256": "813b34229e5d1c58617f93653cd8751154d611b234f0c18fa5a9d4ec198e1b12"
+    },
+    {
+      "segment_id": "10-05:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 32,
+      "source_sha256": "792450e3d09d77a116bd096d00c4e82aa591f1bc468462d9c517ab765d0a5286",
+      "target": "按层拆分模型。GPU 1 运行第 1-8 层，GPU 2 运行第 9-16 层，GPU 3 运行第 17-24 层，GPU 4 运行第 25-32 层。数据沿流水线流动：GPU 1 计算自己的层，并将激活发送给 GPU 2；后者计算自己的层，再发送给 GPU 3，以此类推。\n",
+      "target_sha256": "51c121e1f238c70e763cf8d33938b792bf8806bbc81831e4023403efeefb3c3f"
+    },
+    {
+      "segment_id": "10-05:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 33,
+      "source_sha256": "bc64f8c571c2c4600d0b74f06c3b6fc8a4ed31751d9627971e4f5457db0e5c38",
+      "target": "**优点：** GPU 间通信量很小，只传输层边界处的激活，与梯度或权重相比，它们的数据量很小。由于带宽要求低，也适合跨节点运行。\n",
+      "target_sha256": "4bed3a9afcc41637c9a987624ee505853fa5315b896ef0ae692c14dad18f40b4"
+    },
+    {
+      "segment_id": "10-05:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 34,
+      "source_sha256": "b54159301e25372a4f63fa90222de4e73f0df8011f7f09c8f01232d6c1bb8aca",
+      "target": "**缺点：** 存在流水线气泡。当 GPU 4 对微批次 1 做前向传播时，GPU 1、2 和 3 处于空闲状态，因为它们已经完成了各自部分的前向传播。反向传播时则反过来。对于包含 N 个流水线阶段的朴素流水线，GPU 利用率只有 1/N。\n",
+      "target_sha256": "b99bffc293ee24b52d75baa0600731d37d00ccd6e5b7f683ab13e2989996ebe6"
+    },
+    {
+      "segment_id": "10-05:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 35,
+      "source_sha256": "f090f0abde154604082a61a51612fa3ac7c1f6d0b60009673671dabaad9d5f45",
+      "target": "**GPipe 和 PipeDream** 通过将批次划分为微批次来解决气泡问题。GPU 1 一完成微批次 1 的前向传播，就开始处理微批次 2，让各流水线阶段的计算相互重叠。有 M 个微批次和 N 个阶段时，气泡比例降至 (N-1)/M。使用 M=16 个微批次和 N=4 个阶段，气泡对应的空闲时间比例为 3/16 = 18.75%。\n",
+      "target_sha256": "b9f6f8e62d39116acf35d1f31aa66b84e9cc22e6caedff71efe9f4679606d517"
+    },
+    {
+      "segment_id": "10-05:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Pipeline Parallelism"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 36,
+      "source_sha256": "b93f1916d26f304db415ed894011061471f4fe6bb3a4237eaef93564ada75eeb",
+      "target": "### FSDP：完全分片数据并行\n",
+      "target_sha256": "b7cdb5a7acb4348a9d0c00608f0f2cb47d95a057c5919a80bb6cb121575fb641"
+    },
+    {
+      "segment_id": "10-05:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 37,
+      "source_sha256": "6eed29d1e844dde932d978d1dda2e37f7583996233e06cd409173dc4435f3b4e",
+      "target": "FSDP 将数据并行的可扩展性与分片的显存效率结合起来。每块 GPU 不再持有模型的完整副本，而只持有参数、梯度和优化器状态的 1/N。\n",
+      "target_sha256": "710a88949bb8d7f80225e0f83e44122add594eb68f4117f07219be3e67075a38"
+    },
+    {
+      "segment_id": "10-05:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 38,
+      "source_sha256": "13716eca3b5c5ba8c6f6a24e3fdc34d6ced94ad04cec6860427496ac459e19bd",
+      "target": "在某层前向传播之前，FSDP 执行一次 **全收集（all-gather）** 操作，将所有 GPU 上的参数收集到每块 GPU 的显存中，得到完整参数。前向传播后，每块 GPU 丢弃不属于本地的参数。反向传播时，再次执行全收集，重建用于梯度计算的参数。反向传播后，通过 **归约散发（reduce-scatter）** 分发梯度分片，使每块 GPU 只存储梯度的 1/N。\n",
+      "target_sha256": "a051927ade57ecd869af83b56b2199e77429c4b2aebff1cdb1d76996529a1878"
+    },
+    {
+      "segment_id": "10-05:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 39,
+      "source_sha256": "2af42435eb281f38c43316021ce5f4f4994b03068ba395a590b543bd078f3ee5",
+      "target": "**70B 模型在 8 块 GPU 上的计算：**\n",
+      "target_sha256": "8ad9bd31ce98f8bbbc7a417d16cf320934cd7a25ea45e00659adcf931f0be06c"
+    },
+    {
+      "segment_id": "10-05:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0079",
+      "kind": "table",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 40,
+      "source_sha256": "a1e47e886d5b1a3e4321e716657f2a7aa1a97826de49a2fbe87a08476fe65f5c",
+      "target": "| 组成部分 | 不使用 FSDP | 使用 FSDP |\n|-----------|-------------|-----------|\n| 权重（FP16） | 每块 GPU 140 GB | 每块 GPU 17.5 GB |\n| Adam 状态（FP32） | 每块 GPU 560 GB | 每块 GPU 70 GB |\n| 梯度（FP16） | 每块 GPU 140 GB | 每块 GPU 17.5 GB |\n| **总计** | **每块 GPU 840 GB** | **每块 GPU 105 GB** |\n",
+      "target_sha256": "e36ac205b97c19530f3bd1985d47f6e866fb080099372c6f369afd9ac3451e86"
+    },
+    {
+      "segment_id": "10-05:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 41,
+      "source_sha256": "c067eea7b94973829c5061f3192b48acd6e7845aa62156837941f63c0b013ca7",
+      "target": "不用 FSDP，无法将 70B 模型放进一块 80GB GPU。用 8 块 GPU 运行 FSDP，每块 GPU 占用 105GB。等等，仍然放不下。你至少需要 16 块 GPU，才能让每块 GPU 的占用低于 80GB；或者将 FSDP 与激活检查点（activation checkpointing）结合，在反向传播时重新计算激活，而不是存储它们。\n",
+      "target_sha256": "1b34137073af8fb2aeb164f640e639ebe1facdb946bba290a62915ea1dd54f68"
+    },
+    {
+      "segment_id": "10-05:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 42,
+      "source_sha256": "b5002bc0cd6932cc6610aeead590fbace3c5e154fa96e980a56146fa1f9ebdbb",
+      "target": "由于每层之前都需要全收集，通信成本比普通数据并行更高。但省下的显存让此前无法进行的训练成为可能。\n",
+      "target_sha256": "5058a2c86307fd926706a73f412d064a54739665091d01abbbdf2b6527373b92"
+    },
+    {
+      "segment_id": "10-05:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 43,
+      "source_sha256": "88be333ceffe8edd9dc4456e6126d53bb2847770f608a4f935f3d6bd2733dea1",
+      "target": "```mermaid\ngraph TD\n    subgraph FSDP[\"FSDP: Fully Sharded Data Parallel (4 GPUs)\"]\n        direction TB\n        S[\"Model: 4 layers, sharded\"]\n\n        subgraph GPU1[\"GPU 1\"]\n            G1S[\"Shard: 1/4 params\\n1/4 optimizer\\n1/4 gradients\"]\n        end\n        subgraph GPU2[\"GPU 2\"]\n            G2S[\"Shard: 1/4 params\\n1/4 optimizer\\n1/4 gradients\"]\n        end\n        subgraph GPU3[\"GPU 3\"]\n            G3S[\"Shard: 1/4 params\\n1/4 optimizer\\n1/4 gradients\"]\n        end\n        subgraph GPU4[\"GPU 4\"]\n            G4S[\"Shard: 1/4 params\\n1/4 optimizer\\n1/4 gradients\"]\n        end\n\n        AG[\"All-Gather\\n(reconstruct full params\\nbefore each layer)\"]\n        FW[\"Forward Pass\\n(full params temporarily)\"]\n        RS[\"Reduce-Scatter\\n(distribute gradient shards\\nafter backward)\"]\n\n        S --> GPU1\n        S --> GPU2\n        S --> GPU3\n        S --> GPU4\n        GPU1 --> AG\n        GPU2 --> AG\n        GPU3 --> AG\n        GPU4 --> AG\n        AG --> FW\n        FW --> RS\n    end\n\n    style G1S fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style G2S fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style G3S fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style G4S fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style AG fill:#1a1a2e,stroke:#e94560,color:#fff\n    style FW fill:#1a1a2e,stroke:#51cf66,color:#fff\n    style RS fill:#1a1a2e,stroke:#e94560,color:#fff\n```\n",
+      "target_sha256": "88be333ceffe8edd9dc4456e6126d53bb2847770f608a4f935f3d6bd2733dea1"
+    },
+    {
+      "segment_id": "10-05:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### FSDP: Fully Sharded Data Parallel"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 44,
+      "source_sha256": "72547802e98889d248bb6d072f4d728a486d75c4e3f562d479df90f8ed52eee7",
+      "target": "### DeepSpeed ZeRO\n",
+      "target_sha256": "72547802e98889d248bb6d072f4d728a486d75c4e3f562d479df90f8ed52eee7"
+    },
+    {
+      "segment_id": "10-05:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 45,
+      "source_sha256": "394baa41c0ef6d653d3a9e617b73ee726d4b85c3c80cc04b0072de17fa308e0c",
+      "target": "DeepSpeed 的 ZeRO（Zero Redundancy Optimizer，零冗余优化器）在概念上与 FSDP 相同，但由 Microsoft 独立开发。它定义了三个阶段，分片范围逐步扩大：\n",
+      "target_sha256": "bc21a2d9037b4e3e1247d25deb1ff0c3f3ba136b5ab3de7dfde7785ef77db6b2"
+    },
+    {
+      "segment_id": "10-05:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0091",
+      "kind": "table",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 46,
+      "source_sha256": "f289920b6c27ee22c28df3a548041749b82fb32ffef070040aee19782ec0f71c",
+      "target": "| 阶段 | 分片对象 | 显存节省 | 通信 |\n|-------|--------|---------------|---------------|\n| ZeRO-1 | 仅优化器状态 | 约缩减 4x | 与数据并行相同 |\n| ZeRO-2 | + 梯度 | 约缩减 8x | 略多 |\n| ZeRO-3 | + 参数 | 约缩减 Nx（N 块 GPU） | 每层执行全收集 |\n",
+      "target_sha256": "617626118fda94d6b9c5ed33396793255e1b4bbd2b1b3100bc0967c815ba2f20"
+    },
+    {
+      "segment_id": "10-05:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 47,
+      "source_sha256": "6a5bdaeb1ef2ca16718fd15d500afd31c8600ed78996ec55fa2ea933ecf3f6bf",
+      "target": "ZeRO-3 等价于 FSDP。名字不同，机制相同。在 DeepSpeed 证明这一概念后，PyTorch 加入了原生 FSDP 实现。\n",
+      "target_sha256": "d8902f6ac6f61a5daedbd95e7954b1a1e158e444b391cdb031eaf9fc4450a9fc"
+    },
+    {
+      "segment_id": "10-05:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 48,
+      "source_sha256": "4446ccedb994402ebe49189e73317f3f626ecd780d5af8e09a78fe1218633dc4",
+      "target": "DeepSpeed 还推出了 ZeRO-Offload（将优化器状态卸载到更便宜、容量更大的 CPU RAM）和 ZeRO-Infinity（卸载到 NVMe SSD）。它们用计算速度换取内存容量：卸载后的操作更慢，但能释放 GPU 显存。\n",
+      "target_sha256": "e3ee73074597e9ea3d9fcb49a80342bd67fea87e795ca6f9b50c3af094e95858"
+    },
+    {
+      "segment_id": "10-05:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### DeepSpeed ZeRO"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 49,
+      "source_sha256": "a7026a0ab0a10af4de251d3a609a53360cbc5d03a40be54c30b7ee8504f9384f",
+      "target": "### 混合精度训练\n",
+      "target_sha256": "04861b623fe5e33642da8a01b5b1758c84c79d5abbe8cbbb779c2eaa6667a089"
+    },
+    {
+      "segment_id": "10-05:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 50,
+      "source_sha256": "f82a0a3deca30fc19be3cc9a86d0eeac11dcb47489abf9a77f224d413e59b288",
+      "target": "现代训练会同时使用多种浮点格式：\n",
+      "target_sha256": "1625475b8e888257c5ba750df2c7e17da9a6ebccaa143d8afa4537c56f3e6027"
+    },
+    {
+      "segment_id": "10-05:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0101",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 51,
+      "source_sha256": "5effce257ea275c1fdf06f88b9887c03ec3b39a35b9e2a99d5058e248c3e8924",
+      "target": "- **前向传播**: FP16 或 BF16（16-bit）。显存占用是 FP32 的一半。矩阵乘法在张量核心上运行速度为 2x。\n- **主权重**: FP32（32-bit）。由优化器维护，保证权重更新时的数值精度。\n- **损失缩放**: 反向传播前将损失乘以一个较大的常数，防止 FP16 梯度下溢为零。在优化器执行更新步骤前，再除以相同的常数。\n",
+      "target_sha256": "bae9960308f64051a913d8367236b2c8984efdd99df012360dfeaaadb7b4d105"
+    },
+    {
+      "segment_id": "10-05:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 52,
+      "source_sha256": "3eb8ba272734553c628ee600682650b949907e7498d9adbe7d6cfe10b2332cb3",
+      "target": "BF16（Brain Float 16）的指数范围与 FP32 相同（8 个指数位），但精度较低（7 个尾数位，而 FP32 为 23 个）。由于能表示相同范围的值，它很少需要损失缩放。FP16 有 5 个指数位和 10 个尾数位，可以表示更细粒度的数值，但在极端数量级下会溢出或下溢。\n",
+      "target_sha256": "2ba6e6158d70106fe8167e00317c6d6b15b6850e1392d712673aa6d28090037d"
+    },
+    {
+      "segment_id": "10-05:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 53,
+      "source_sha256": "05fff2aaef60d6b2c32362f8b89e4045b92a1be8f3aaac2acda76495c6336504",
+      "target": "Google 的 TPU 原生使用 BF16。NVIDIA 的 A100 和 H100 同时支持 FP16 与 BF16。业界已大体转向 BF16，因为它消除了损失缩放带来的麻烦。\n",
+      "target_sha256": "6890072b428389992b74a8fbced82d9bbb1798b7dfb7914ca1e3eacf18d41ccb"
+    },
+    {
+      "segment_id": "10-05:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 54,
+      "source_sha256": "fb7d07106fad82db6ca254b44257be7cb3bd2720348d2829e7361f39711bf149",
+      "target": "**7B 模型的显存比较：**\n",
+      "target_sha256": "35b4a1a3c60152d8a2fcd55e1979b7f1cbf0bfb31cc179e68de8c7b418c94ab0"
+    },
+    {
+      "segment_id": "10-05:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0109",
+      "kind": "table",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 55,
+      "source_sha256": "339049d4db5ebe98ab45c5b9951cce15591aa6816fccef78ec113d9c089ceb02",
+      "target": "| 精度 | 权重 | 优化器 | 梯度 | 总计 |\n|-----------|---------|-----------|-----------|-------|\n| 全部使用 FP32 | 28 GB | 56 GB | 28 GB | 112 GB |\n| 混合（BF16 + FP32 主权重） | 14 GB | 56 GB | 14 GB | 84 GB |\n",
+      "target_sha256": "3ca217cc7f7cabb1383fd5f715c4eefb45bb556a7a2775469c95accb02acf1f3"
+    },
+    {
+      "segment_id": "10-05:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 56,
+      "source_sha256": "7794c7c43b67e63ab17a0092785a8abf3b4304856b08c09da009da64e4bb4b7a",
+      "target": "混合精度为这个模型节省了 28GB。不论如何，优化器状态仍然保持 FP32，这正是显存占用的大头。\n",
+      "target_sha256": "ac24d08bd38038e2d670c2b68de5ae51856e4ce24c99274549ab6b25b970ff84"
+    },
+    {
+      "segment_id": "10-05:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Mixed Precision Training"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 57,
+      "source_sha256": "fe410ad26ae22fef4757e5b8a7fd47fb6443327d256ce3036660c707e22863f0",
+      "target": "### Megatron-LM 与 3D 并行\n",
+      "target_sha256": "ceec9cec726786e0fc3b8bb5683e1685c84ef31919a3f450df6f523ae9fe76f9"
+    },
+    {
+      "segment_id": "10-05:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 58,
+      "source_sha256": "e079e2080902a0d68d18eb38a7e7b5c24e4daa28b00e691a391624ec7f889315",
+      "target": "实际的大规模训练会将三种并行方式结合起来：\n",
+      "target_sha256": "5b8eccc793c7cc248c3cb7a06b5d2b05b1bd6b4a409139c74771f38f88c95ec1"
+    },
+    {
+      "segment_id": "10-05:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0117",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 59,
+      "source_sha256": "fb870bd5fbd5d4724d9845a0fd6eae664473d4d2b7d27b9ae37ed855b3da7851",
+      "target": "- 在节点组之间进行 **数据并行** （扩大批大小）\n- 在节点内部进行 **张量并行** （将层拆分到 8 块 GPU 上）\n- 在节点之间进行 **流水线并行** （将层组拆分到不同机器上）\n",
+      "target_sha256": "3eaf2d7ddf100734c33fdbdcc6a4bafb9c23cf1a0474d79b2658150de9e416ad"
+    },
+    {
+      "segment_id": "10-05:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 60,
+      "source_sha256": "effd80a1604bbfc11944d0604580ca12280fd0804db1d2f2884fc29215f3e580",
+      "target": "Llama 3 405B 在 16,384 块 H100 上运行：\n- 每个节点内部采用 8 路张量并行（每个节点 8 块 GPU）\n- 跨节点采用 16 路流水线并行（16 个流水线阶段）\n- 在剩余维度采用 128 路数据并行（16,384 / 8 / 16 = 128）\n",
+      "target_sha256": "0810b85411464dba3cac0841dc78dc879627ced015f4a81dda42394ac7449535"
+    },
+    {
+      "segment_id": "10-05:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 61,
+      "source_sha256": "3141e81d96a4619d6f4489cc155c5d9b77a597f51605a7fdfe693983ba3e3217",
+      "target": "这种 3D 分解（8 x 16 x 128 = 16,384）就是扩展到数千块 GPU 的方法。每块 GPU 看到不同的数据分片（数据并行），持有每层的一个切片（张量并行），并计算不同的一组层（流水线并行）。\n",
+      "target_sha256": "b2b33cdc873e8a31ca61250d45fc208a3635a060b4994cca59d632c20d531cd0"
+    },
+    {
+      "segment_id": "10-05:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 62,
+      "source_sha256": "de631c1d68715b5e47d8ff2ac4bbd9081599373484cb587031970bc6d172e3bf",
+      "target": "DeepSeek V3 走了另一条路。其混合专家架构对每个 token 只激活 671B 参数中的 37B。这意味着每块 GPU 只需计算活跃参数，并为其存储激活。他们使用 2,048 块 H800 GPU 训练，不到 Meta GPU 数量的 1/8，花费 $5.6M，而 Meta 的估计花费是 $100M。\n",
+      "target_sha256": "20cda50e0c288135ec4271fe3c2623f1b572b42cb14acbc566e102df517da8de"
+    },
+    {
+      "segment_id": "10-05:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0125",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 63,
+      "source_sha256": "2329dafd80c8993de80a27219d0c1923016e9e4d8d1cfab99a2f067c5646e755",
+      "target": "```mermaid\ngraph TD\n    subgraph ThreeD[\"3D Parallelism (Llama 3 405B)\"]\n        direction TB\n        subgraph DP[\"Data Parallel (128-way)\\nSplit batch across 128 groups\"]\n            subgraph PP[\"Pipeline Parallel (16-way)\\nSplit layers across 16 stages\"]\n                subgraph TP[\"Tensor Parallel (8-way)\\nSplit each layer across 8 GPUs\"]\n                    G1[\"GPU 1\\nSlice of layers 1-N\"]\n                    G2[\"GPU 2\\nSlice of layers 1-N\"]\n                    G8[\"GPU 8\\nSlice of layers 1-N\"]\n                end\n            end\n        end\n    end\n\n    N1[\"Total: 8 x 16 x 128 = 16,384 GPUs\"]\n\n    style G1 fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style G2 fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style G8 fill:#1a1a2e,stroke:#0f3460,color:#fff\n    style N1 fill:#1a1a2e,stroke:#e94560,color:#fff\n```\n",
+      "target_sha256": "2329dafd80c8993de80a27219d0c1923016e9e4d8d1cfab99a2f067c5646e755"
+    },
+    {
+      "segment_id": "10-05:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 64,
+      "source_sha256": "71d0616408f8c4464f914cd685910e3925bfec30791c3643f7b8e10784edce45",
+      "target": "```figure\npaged-kv-cache\n```\n",
+      "target_sha256": "71d0616408f8c4464f914cd685910e3925bfec30791c3643f7b8e10784edce45"
+    },
+    {
+      "segment_id": "10-05:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## The Concept",
+        "### Megatron-LM and 3D Parallelism"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0129",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "10-05:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 1: Simulate Data Parallelism"
+      ],
+      "ordinal": 66,
+      "source_sha256": "2caeee0ee29fc4022e4707ebe38000c83163d7db59d4f901c537ce3b8f53eafd",
+      "target": "### 步骤 1：模拟数据并行\n",
+      "target_sha256": "3d5f53d9854ee62b66f1bbd76c41c40c2fb0750a79989fa5f6537cc5c6a8220e"
+    },
+    {
+      "segment_id": "10-05:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 1: Simulate Data Parallelism"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 1: Simulate Data Parallelism"
+      ],
+      "ordinal": 67,
+      "source_sha256": "b216a132a87b8ad8e67214d4a8ccdefcbe61faba5fd5589c0a2af293edb56f90",
+      "target": "将一个批次拆分到模拟 GPU 上。每块 GPU 在自己的分片上计算前向传播。对“梯度”求平均，我们用损失值来模拟它们。\n",
+      "target_sha256": "044e4295584e91e4feaed068064c301af6e73c74c5416cd42009c56a3f05a0cf"
+    },
+    {
+      "segment_id": "10-05:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 1: Simulate Data Parallelism"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0135",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 1: Simulate Data Parallelism"
+      ],
+      "ordinal": 68,
+      "source_sha256": "185e25de21631aa4cf59b04511df723e405c2c2df7b696ceb5305c6c988b25db",
+      "target": "```python\nimport numpy as np\n\ndef simulate_data_parallelism(data, num_gpus, model_fn):\n    batch_size = len(data)\n    shard_size = batch_size // num_gpus\n    remainder = batch_size % num_gpus\n\n    gpu_losses = []\n    gpu_gradients = []\n\n    offset = 0\n    for gpu_id in range(num_gpus):\n        extra = 1 if gpu_id < remainder else 0\n        shard = data[offset:offset + shard_size + extra]\n        offset += shard_size + extra\n\n        loss, grad = model_fn(shard)\n        gpu_losses.append(loss)\n        gpu_gradients.append(grad)\n\n    avg_loss = np.mean(gpu_losses)\n    avg_gradient = np.mean(gpu_gradients, axis=0)\n\n    return avg_loss, avg_gradient\n```\n",
+      "target_sha256": "185e25de21631aa4cf59b04511df723e405c2c2df7b696ceb5305c6c988b25db"
+    },
+    {
+      "segment_id": "10-05:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 1: Simulate Data Parallelism"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0137",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 1: Simulate Data Parallelism"
+      ],
+      "ordinal": 69,
+      "source_sha256": "bc40871486bbb07cbfccefc3d8b4f19c82c111c932e66d51fbc41e7729c38f20",
+      "target": "全归约操作（梯度求平均）是数据并行中唯一的通信。实践中，NVIDIA GPU 上使用 NCCL 库来实现环形全归约：每块 GPU 将自己梯度的 1/N 发送给一个相邻 GPU，从另一个相邻 GPU 接收 1/N，经过 N-1 步之后，每块 GPU 都得到完整的平均值。总通信量为 2 x gradient_size x (N-1)/N，N 很大时接近梯度大小的 2x。\n",
+      "target_sha256": "d16855e393dc906d4204d91b57f60805bedbc89684b321e4ef3ad31097750144"
+    },
+    {
+      "segment_id": "10-05:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 1: Simulate Data Parallelism"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0139",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 70,
+      "source_sha256": "de4265e6035aa46b73790f911cef92033b898dcabc7be5065694f177e69b85bf",
+      "target": "### 步骤 2：模拟张量并行\n",
+      "target_sha256": "cf4764cd34f6f05981ff356e7f02fee04dc6bafd116641a8c7e553f1402075dc"
+    },
+    {
+      "segment_id": "10-05:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0141",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 71,
+      "source_sha256": "2c3125a871a474d156c91586b31217447944c90195b0da2ade6bb5c28effb208",
+      "target": "将权重矩阵拆分到多块 GPU 上。每块 GPU 计算部分矩阵乘法，再合并结果。\n",
+      "target_sha256": "0cc7432d56eb16e04939330f86f3dbf9cc9db591cba60da4eb90935fe9e2b2ec"
+    },
+    {
+      "segment_id": "10-05:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0143",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 72,
+      "source_sha256": "3d0a45f9541aafe0b3b6664b0a2cfc960c68de8862303745f6840da79f1a81bd",
+      "target": "```python\ndef simulate_tensor_parallelism(input_data, weight_matrix, num_gpus):\n    d_in, d_out = weight_matrix.shape\n    assert d_out % num_gpus == 0, f\"d_out {d_out} not divisible by num_gpus {num_gpus}\"\n    shard_size = d_out // num_gpus\n\n    partial_results = []\n    for gpu_id in range(num_gpus):\n        start = gpu_id * shard_size\n        end = start + shard_size\n        weight_shard = weight_matrix[:, start:end]\n\n        partial = input_data @ weight_shard\n        partial_results.append(partial)\n\n    full_output = np.concatenate(partial_results, axis=-1)\n\n    direct_output = input_data @ weight_matrix\n    error = np.abs(full_output - direct_output).max()\n\n    return full_output, error\n```\n",
+      "target_sha256": "3d0a45f9541aafe0b3b6664b0a2cfc960c68de8862303745f6840da79f1a81bd"
+    },
+    {
+      "segment_id": "10-05:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0145",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 73,
+      "source_sha256": "a1f0a1807268c1e123be5dd8500f5d09ff5ffe5fde2b565eebd61e583bc324ef",
+      "target": "误差应当恰好为零，或处于机器精度量级。张量并行在数学上是精确的，结果与在一块 GPU 上计算完整矩阵乘法相同。拆分沿输出维度进行，因此每块 GPU 生成不同的一组列，拼接后便可重建完整结果。\n",
+      "target_sha256": "89eb754c6293aaaab646ff5bf90aa0e51e9ff4d0d5d9260c9e135feae4f60bab"
+    },
+    {
+      "segment_id": "10-05:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0147",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 74,
+      "source_sha256": "c23351cccb22d2031ffd074af5832c971282558e516e0d7404166b72c138dc13",
+      "target": "对于列并行线性层（拆分输出维度），要做拼接。对于行并行（拆分输入维度），则要求和。在 Transformer 的 FFN 中，第一个线性层（扩张）采用列并行，第二个线性层（收缩）采用行并行，从而避免在两层之间进行全归约。\n",
+      "target_sha256": "c805f2da5f17150e35cecf192dc53ffc81d0a1b8f4446b2880c8c12717c71c6b"
+    },
+    {
+      "segment_id": "10-05:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 2: Simulate Tensor Parallelism"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0149",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 3: Simulate Pipeline Parallelism"
+      ],
+      "ordinal": 75,
+      "source_sha256": "119ebbf88919600badcc6b0ec959c1791fc5dff380e1d2ddfcbabace33dbed20",
+      "target": "### 步骤 3：模拟流水线并行\n",
+      "target_sha256": "80cb8df78edb9a40f185fde9225ac7f05004e94fb928c7ba96a293e3e71281c3"
+    },
+    {
+      "segment_id": "10-05:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 3: Simulate Pipeline Parallelism"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 3: Simulate Pipeline Parallelism"
+      ],
+      "ordinal": 76,
+      "source_sha256": "1d47359675cf1058f98f9dc6e9122a59050f3ae42fda44e3bf59d9e9b393b14a",
+      "target": "将模型的层拆分到虚拟 GPU 上，展示后续阶段进行计算时、前面阶段处于空闲状态的气泡问题。\n",
+      "target_sha256": "11544236c755e67389c15111b794ac5d9efb994470ebb4a8f7d92ae8caef3031"
+    },
+    {
+      "segment_id": "10-05:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 3: Simulate Pipeline Parallelism"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0153",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 3: Simulate Pipeline Parallelism"
+      ],
+      "ordinal": 77,
+      "source_sha256": "7d13692a5f6f32fab7aaa1ecd994febf1e477b626842c8218f62d65fc0ded073",
+      "target": "```python\ndef simulate_pipeline_parallelism(num_layers, num_stages, num_microbatches):\n    layers_per_stage = num_layers // num_stages\n\n    timeline = {}\n    clock = 0\n\n    for mb in range(num_microbatches):\n        for stage in range(num_stages):\n            start_time = max(\n                timeline.get((stage, mb - 1, \"fwd\"), (0, 0))[1] if mb > 0 else 0,\n                timeline.get((stage - 1, mb, \"fwd\"), (0, 0))[1] if stage > 0 else 0,\n            )\n            end_time = start_time + layers_per_stage\n            timeline[(stage, mb, \"fwd\")] = (start_time, end_time)\n\n    last_fwd_end = max(v[1] for v in timeline.values())\n\n    for mb in range(num_microbatches - 1, -1, -1):\n        for stage in range(num_stages - 1, -1, -1):\n            deps = [last_fwd_end]\n            if mb < num_microbatches - 1 and (stage, mb + 1, \"bwd\") in timeline:\n                deps.append(timeline[(stage, mb + 1, \"bwd\")][1])\n            if stage < num_stages - 1 and (stage + 1, mb, \"bwd\") in timeline:\n                deps.append(timeline[(stage + 1, mb, \"bwd\")][1])\n            start_time = max(deps)\n            end_time = start_time + layers_per_stage\n            timeline[(stage, mb, \"bwd\")] = (start_time, end_time)\n\n    total_time = max(v[1] for v in timeline.values())\n    compute_time = num_microbatches * num_stages * layers_per_stage * 2\n    bubble_fraction = 1.0 - compute_time / (total_time * num_stages)\n\n    return timeline, total_time, bubble_fraction\n```\n",
+      "target_sha256": "7d13692a5f6f32fab7aaa1ecd994febf1e477b626842c8218f62d65fc0ded073"
+    },
+    {
+      "segment_id": "10-05:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 3: Simulate Pipeline Parallelism"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0155",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 3: Simulate Pipeline Parallelism"
+      ],
+      "ordinal": 78,
+      "source_sha256": "2747f1e51dccc70793c7f3d6f9f5f4c42ecf6446c3d991836efb36cd5ca056ab",
+      "target": "当有 4 个阶段、1 个微批次时，气泡比例为 75%，即任意时刻四块 GPU 中有三块空闲。当有 16 个微批次时，气泡比例下降到约 19%。消除气泡的代价是显存：必须同时存储所有正在处理的微批次的激活。\n",
+      "target_sha256": "5892600e03d239d2e56cf039d768a482ae9d09ebf284b1cae9c90a808f9e4bcf"
+    },
+    {
+      "segment_id": "10-05:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 3: Simulate Pipeline Parallelism"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0157",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 4: Memory Calculator"
+      ],
+      "ordinal": 79,
+      "source_sha256": "4e2592a93d85220a33c3dbfe4e1cab989ee5446e79c89b2b35cbb84ced08bfca",
+      "target": "### 步骤 4：显存计算器\n",
+      "target_sha256": "89175fae140c889d87d6691618975b76b3c65f158eed24cdadf4f017c6a2d115"
+    },
+    {
+      "segment_id": "10-05:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 4: Memory Calculator"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0159",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 4: Memory Calculator"
+      ],
+      "ordinal": 80,
+      "source_sha256": "0d4b305351b2579e5e088f5e783a4f08b47a49a58b072e0ecc2462fe387021bc",
+      "target": "计算训练任意规模模型所需的精确显存。\n",
+      "target_sha256": "c752968f39bc6519d0d62b5856cb055fc7a367eae55d6a9a845c247774392322"
+    },
+    {
+      "segment_id": "10-05:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 4: Memory Calculator"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0161",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 4: Memory Calculator"
+      ],
+      "ordinal": 81,
+      "source_sha256": "39d2c2fb11355f023239ca3905c1b741348fdd16a4d1f2b8cf00062bf62b235d",
+      "target": "```python\ndef memory_calculator(\n    params_billions,\n    precision_bytes=2,\n    optimizer=\"adam\",\n    num_gpus=1,\n    sharding=\"none\",\n    sequence_length=2048,\n    batch_size_per_gpu=1,\n    hidden_dim=None,\n    num_layers=None,\n):\n    params = params_billions * 1e9\n\n    weight_memory = params * precision_bytes\n\n    if optimizer == \"adam\":\n        optimizer_memory = params * 4 * 2\n    elif optimizer == \"sgd\":\n        optimizer_memory = params * 4\n    else:\n        optimizer_memory = 0\n\n    gradient_memory = params * precision_bytes\n\n    total_no_activation = weight_memory + optimizer_memory + gradient_memory\n\n    if hidden_dim and num_layers:\n        activation_per_layer = (\n            sequence_length * batch_size_per_gpu * hidden_dim * precision_bytes * 4\n        )\n        activation_memory = activation_per_layer * num_layers\n    else:\n        activation_memory = params * precision_bytes * 0.5\n\n    if sharding == \"fsdp\" or sharding == \"zero3\":\n        weight_memory /= num_gpus\n        optimizer_memory /= num_gpus\n        gradient_memory /= num_gpus\n    elif sharding == \"zero2\":\n        optimizer_memory /= num_gpus\n        gradient_memory /= num_gpus\n    elif sharding == \"zero1\":\n        optimizer_memory /= num_gpus\n\n    per_gpu_total = weight_memory + optimizer_memory + gradient_memory + activation_memory\n\n    return {\n        \"params_billions\": params_billions,\n        \"weights_gb\": weight_memory / 1e9,\n        \"optimizer_gb\": optimizer_memory / 1e9,\n        \"gradients_gb\": gradient_memory / 1e9,\n        \"activations_gb\": activation_memory / 1e9,\n        \"per_gpu_total_gb\": per_gpu_total / 1e9,\n        \"total_across_gpus_gb\": per_gpu_total * num_gpus / 1e9,\n        \"fits_on_80gb\": per_gpu_total / 1e9 <= 80,\n        \"num_gpus\": num_gpus,\n        \"sharding\": sharding,\n    }\n```\n",
+      "target_sha256": "39d2c2fb11355f023239ca3905c1b741348fdd16a4d1f2b8cf00062bf62b235d"
+    },
+    {
+      "segment_id": "10-05:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 4: Memory Calculator"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0163",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 4: Memory Calculator"
+      ],
+      "ordinal": 82,
+      "source_sha256": "34b71229bf2d2be16e73e7ad7184ae42c74b594a41a0780f3ef4c9f318fdcf12",
+      "target": "这个计算器回答了每位 ML 工程师都会问的问题：“我需要多少块 GPU？”输入模型规模，看看是否放得下。调整分片策略，直到单卡总占用降到 80GB 以下。\n",
+      "target_sha256": "27a33832c7b3cf8e73bd74c92cf039da87aa67303ea003101b51ca38fbab7a50"
+    },
+    {
+      "segment_id": "10-05:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 4: Memory Calculator"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0165",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 5: Mixed Precision Simulation"
+      ],
+      "ordinal": 83,
+      "source_sha256": "67bd0de645bbba802d4630915914aa41b3a89130915ab913f686d61ecb26bd3e",
+      "target": "### 步骤 5：混合精度模拟\n",
+      "target_sha256": "834a0b6c656e8326fad16344f2e7a8b850f45ec7849260c123e4c7337c6a04ff"
+    },
+    {
+      "segment_id": "10-05:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 5: Mixed Precision Simulation"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0167",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 5: Mixed Precision Simulation"
+      ],
+      "ordinal": 84,
+      "source_sha256": "e2ca8608aaf68111a8821a20310f79efa1d52903572236b165bfa791d0a33172",
+      "target": "比较 FP32、FP16 和混合精度训练的显存用量。\n",
+      "target_sha256": "23c10068e4acbb4d3c85439a74260061d931a6dc072296525e26c71c707356ff"
+    },
+    {
+      "segment_id": "10-05:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 5: Mixed Precision Simulation"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0169",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 5: Mixed Precision Simulation"
+      ],
+      "ordinal": 85,
+      "source_sha256": "196a28dabf8a716f2513cc4341401a2795bc77ba89f05541a552bc2b600e31a4",
+      "target": "```python\ndef mixed_precision_comparison(params_billions):\n    params = params_billions * 1e9\n\n    fp32_weights = params * 4\n    fp32_optimizer = params * 4 * 2\n    fp32_gradients = params * 4\n    fp32_total = fp32_weights + fp32_optimizer + fp32_gradients\n\n    fp16_weights = params * 2\n    fp16_master = params * 4\n    fp16_optimizer = params * 4 * 2\n    fp16_gradients = params * 2\n    fp16_total = fp16_weights + fp16_master + fp16_optimizer + fp16_gradients\n\n    mixed_weights = params * 2\n    mixed_optimizer = params * 4 * 2\n    mixed_gradients = params * 2\n    mixed_total = mixed_weights + mixed_optimizer + mixed_gradients\n\n    return {\n        \"fp32_total_gb\": fp32_total / 1e9,\n        \"fp16_with_master_gb\": fp16_total / 1e9,\n        \"mixed_bf16_gb\": mixed_total / 1e9,\n        \"savings_vs_fp32\": 1 - mixed_total / fp32_total,\n    }\n```\n",
+      "target_sha256": "196a28dabf8a716f2513cc4341401a2795bc77ba89f05541a552bc2b600e31a4"
+    },
+    {
+      "segment_id": "10-05:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 5: Mixed Precision Simulation"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0171",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 5: Mixed Precision Simulation"
+      ],
+      "ordinal": 86,
+      "source_sha256": "9ae70d0a9f9f59709dd7980173f9c5db825a97655923d04c43cafe120286dc58",
+      "target": "最让许多人意外的是：混合精度不会让显存减半。无论采用什么精度，优化器状态（Adam 的 m 和 v）始终保持 FP32。对于 7B 模型，FP32 训练占用 112GB，混合精度占用 84GB。这是减少 25%，而不是 50%。优化器才是主要占用来源。\n",
+      "target_sha256": "8cef138465b55574ca2e7d52b27351a4b31943eadb6823ef3aa5d4e73158a008"
+    },
+    {
+      "segment_id": "10-05:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Build It",
+        "### Step 5: Mixed Precision Simulation"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0173",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Use It"
+      ],
+      "ordinal": 87,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "10-05:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Use It"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0175",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Use It",
+        "### Run All Simulations"
+      ],
+      "ordinal": 88,
+      "source_sha256": "25a4305acdff64372728720875308d1b5c650e1a62ffd9de79ed0ff05b02ea7b",
+      "target": "### 运行所有模拟\n",
+      "target_sha256": "af1d8dd3727da77a856fa764b0cd61fbe9c0c49a1e892ebbcb5cd275a6ac24b5"
+    },
+    {
+      "segment_id": "10-05:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Use It",
+        "### Run All Simulations"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0177",
+      "kind": "fence",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Use It",
+        "### Run All Simulations"
+      ],
+      "ordinal": 89,
+      "source_sha256": "c602141cd76e14eed515259ea6af78fb2547eb410f77ad34f06d88ed9c256e1c",
+      "target": "```python\ndef run_all_demos():\n    print(\"=\" * 70)\n    print(\"DATA PARALLELISM SIMULATION\")\n    print(\"=\" * 70)\n\n    np.random.seed(42)\n    data = np.random.randn(64, 32)\n    weight = np.random.randn(32, 16)\n\n    def model_fn(batch):\n        output = batch @ weight\n        loss = np.mean(output ** 2)\n        grad = 2 * batch.T @ (batch @ weight) / len(batch)\n        return loss, grad\n\n    for n_gpus in [1, 2, 4, 8]:\n        loss, grad = simulate_data_parallelism(data, n_gpus, model_fn)\n        print(f\"  {n_gpus} GPUs: loss={loss:.4f}, grad_norm={np.linalg.norm(grad):.4f}\")\n\n    print()\n    print(\"=\" * 70)\n    print(\"TENSOR PARALLELISM SIMULATION\")\n    print(\"=\" * 70)\n\n    x = np.random.randn(4, 8192)\n    W = np.random.randn(8192, 8192)\n\n    for n_gpus in [1, 2, 4, 8]:\n        output, error = simulate_tensor_parallelism(x, W, n_gpus)\n        print(f\"  {n_gpus} GPUs: output_shape={output.shape}, max_error={error:.2e}\")\n\n    print()\n    print(\"=\" * 70)\n    print(\"PIPELINE PARALLELISM SIMULATION\")\n    print(\"=\" * 70)\n\n    for n_mb in [1, 4, 8, 16, 32]:\n        _, total_t, bubble = simulate_pipeline_parallelism(32, 4, n_mb)\n        print(f\"  {n_mb:2d} micro-batches: total_time={total_t:4d}, bubble={bubble:.1%}\")\n\n    print()\n    print(\"=\" * 70)\n    print(\"MEMORY CALCULATOR\")\n    print(\"=\" * 70)\n\n    configs = [\n        (7, \"none\", 1),\n        (7, \"fsdp\", 8),\n        (70, \"none\", 1),\n        (70, \"fsdp\", 8),\n        (70, \"fsdp\", 16),\n        (405, \"fsdp\", 64),\n        (405, \"fsdp\", 128),\n    ]\n\n    print(f\"  {'Model':>8} {'Sharding':>8} {'GPUs':>5} {'Per-GPU':>10} {'Fits 80GB':>10}\")\n    print(\"  \" + \"-\" * 50)\n    for params, shard, gpus in configs:\n        result = memory_calculator(params, num_gpus=gpus, sharding=shard)\n        fits = \"Yes\" if result[\"fits_on_80gb\"] else \"No\"\n        print(f\"  {params:>6}B {shard:>8} {gpus:>5} {result['per_gpu_total_gb']:>8.1f}GB {fits:>10}\")\n\n    print()\n    print(\"=\" * 70)\n    print(\"MIXED PRECISION COMPARISON\")\n    print(\"=\" * 70)\n\n    for params_b in [7, 13, 70, 405]:\n        result = mixed_precision_comparison(params_b)\n        print(f\"  {params_b}B: FP32={result['fp32_total_gb']:.0f}GB, \"\n              f\"Mixed BF16={result['mixed_bf16_gb']:.0f}GB, \"\n              f\"Savings={result['savings_vs_fp32']:.0%}\")\n```\n",
+      "target_sha256": "c602141cd76e14eed515259ea6af78fb2547eb410f77ad34f06d88ed9c256e1c"
+    },
+    {
+      "segment_id": "10-05:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Use It",
+        "### Run All Simulations"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0179",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Ship It"
+      ],
+      "ordinal": 90,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "10-05:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Ship It"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0181",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Ship It"
+      ],
+      "ordinal": 91,
+      "source_sha256": "7e851de006c5b4f3c103bdca0d94bc6df27398cd7e7320d82aee2ef240899aaa",
+      "target": "本课产出 `outputs/prompt-distributed-training-planner.md`，这是一个提示词（prompt）：输入模型规模和可用硬件后，它会生成完整的分布式训练计划，包括并行策略、显存预算、通信开销和预期吞吐量。\n",
+      "target_sha256": "e88967867e599ec40f8787f1f56f9a3fece590b30f32b4447e8d9cbfdc457590"
+    },
+    {
+      "segment_id": "10-05:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Ship It"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0183",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 92,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "10-05:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0185",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 93,
+      "source_sha256": "001e79ef68b350adaf0f0302d4ba1f81d8c27a5ddfdbae2883c3b69dbb06dca1",
+      "target": "1. 修改显存计算器，使其包含激活检查点。使用检查点时，只存储每隔 K 层的激活（典型值 K=1，表示全部重新计算）。展示显存与计算量的权衡：检查点节省多少显存，又会让训练慢多少（完全启用检查点大约增加 33% 的计算量）？\n",
+      "target_sha256": "937db861c25cac4ee08d5a063e0ac2f3c3e479151b912aef151bc952b06851df"
+    },
+    {
+      "segment_id": "10-05:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0187",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 94,
+      "source_sha256": "2fdb36ae8fb87083a1d96675192ed25563018839db2dbb237d9a350ce659f0db",
+      "target": "2. 扩展流水线并行模拟，实现 PipeDream 使用的 1F1B（一次前向、一次反向）调度。对于 4 个阶段和 8 个微批次，将其气泡比例与朴素调度比较。由于更早开始反向传播，1F1B 调度的峰值显存应当更小。\n",
+      "target_sha256": "740b9d759bb3fd4ce81419177c51d6b6ddc1b2799f697b02bf21db9c03630136"
+    },
+    {
+      "segment_id": "10-05:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0189",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 95,
+      "source_sha256": "00c3af7e78e09aa43dffe6aec4e8db6df76fd425dfdb2688bed79ae03286db42",
+      "target": "3. 实现梯度累积模拟器。不在每个微批次之后执行全归约，而是先在本地累积 K 步的梯度，再全归约。展示这种做法如何将通信量降至原来的 K 分之一，同时得到完全相同的最终梯度，从而实现完全相同的训练。\n",
+      "target_sha256": "de76c030754a05ca4a5536c850068efb28fc1394575d4301ee6c7ee0ce1b70ba"
+    },
+    {
+      "segment_id": "10-05:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0191",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 96,
+      "source_sha256": "c9e343695c452ceb75279dc0934e2ce9e9ffc1d4f1ea22d44af1edbc521442c2",
+      "target": "4. 构建成本估算器。给定模型规模、目标 token 数、GPU 类型（A100 为 $2/hr，H100 为 $3.50/hr）以及并行策略，估计以美元计的总训练成本。对照已知成本验证：据报道，Llama 3 405B 约花费 ~$100M，DeepSeek V3 约花费 ~$5.6M。\n",
+      "target_sha256": "b7bf23d65d7c53a7c3b9def7a702ba5edb0aa5b8b89d440abc04a9572426b284"
+    },
+    {
+      "segment_id": "10-05:b0192",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 96,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0193",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 97,
+      "source_sha256": "2af9a8a180ef1dc52832dd12b4ab0e79177c49017c94bd833cea06a40eb9eaed",
+      "target": "5. 为显存计算器加入 ZeRO-Offload。假设每个节点有 512GB CPU RAM 和 2TB NVMe。展示如何通过将优化器状态卸载到 CPU，使 70B 模型只需 4 块 GPU 而非 16 块就能训练，代价是优化器更新步骤慢 30-50%。\n",
+      "target_sha256": "d77ac577a496a19c473c7945b2363cb8af5f3b1744e145cebe2b0851d918ce8c"
+    },
+    {
+      "segment_id": "10-05:b0194",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Exercises"
+      ],
+      "ordinal": 97,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0195",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Key Terms"
+      ],
+      "ordinal": 98,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "10-05:b0196",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Key Terms"
+      ],
+      "ordinal": 98,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0197",
+      "kind": "table",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Key Terms"
+      ],
+      "ordinal": 99,
+      "source_sha256": "fdd6375ba2f69635bbc52ce46592dc5e68a7cf3406799922b0aea3419e3b23c9",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 数据并行 | “把模型复制到每块 GPU” | 每块 GPU 处理不同的数据分片，每步之后通过全归约对梯度求平均 |\n| 张量并行 | “把一个层拆分到多块 GPU” | 划分权重矩阵，让每块 GPU 计算部分矩阵乘法，需要快速的 NVLink 互连 |\n| 流水线并行 | “把各层拆分到多块 GPU” | 每块 GPU 运行不同的层组，数据以微批次形式沿流水线流动，以减少气泡 |\n| FSDP | “把一切都分片” | 完全分片数据并行，每块 GPU 持有权重、梯度和优化器状态的 1/N，计算前执行全收集 |\n| ZeRO | “DeepSpeed 版 FSDP” | 零冗余优化器，分为 3 个阶段：优化器分片（阶段 1），+ 梯度（阶段 2），+ 参数（阶段 3） |\n| All-reduce | “在 GPU 间求平均” | 集合通信操作，每块 GPU 最终都得到所有 GPU 输入的总和或平均值，通常通过环形全归约实现 |\n| All-gather | “从所有 GPU 收集” | 集合通信操作，每块 GPU 最终都得到所有 GPU 数据的拼接结果，FSDP 用它重建完整参数 |\n| Reduce-scatter | “求和并分发” | 将数据归约（求和），并将不同块散发给不同 GPU 的集合通信操作，FSDP 用它对梯度分片 |\n| 混合精度 | “用半精度训练” | 前向和反向传播使用 FP16/BF16，优化器状态使用 FP32；由于优化器占用为主，显存节省约 ~25%，而非 50% |\n| 流水线气泡 | “流水线中的空闲时间” | GPU 等待前一阶段数据时处于空闲的时间比例，使用更多微批次可以降低这一比例 |\n",
+      "target_sha256": "824595f8027e5fa0d70634b2e5a0aafdf0a911b66327e0d4ad65da36a986c68d"
+    },
+    {
+      "segment_id": "10-05:b0198",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Key Terms"
+      ],
+      "ordinal": 99,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0199",
+      "kind": "heading",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Further Reading"
+      ],
+      "ordinal": 100,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "10-05:b0200",
+      "kind": "separator",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Further Reading"
+      ],
+      "ordinal": 100,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "10-05:b0201",
+      "kind": "list",
+      "heading_path": [
+        "# Scaling: Distributed Training, FSDP, DeepSpeed",
+        "## Further Reading"
+      ],
+      "ordinal": 101,
+      "source_sha256": "b5d5e28d49a7c92d2d4b770509dcb8441886f5d6ba3437fdea61f0d38f24d06d",
+      "target": "- [Rajbhandari et al., 2020 -- \"ZeRO: Memory Optimizations Toward Training Trillion Parameter Models\"](https://arxiv.org/abs/1910.02054) -- 定义了三个分片阶段的 DeepSpeed ZeRO 论文\n- [Shoeybi et al., 2020 -- \"Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism\"](https://arxiv.org/abs/1909.08053) -- NVIDIA 面向 Transformer 的张量并行\n- [Narayanan et al., 2021 -- \"Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM\"](https://arxiv.org/abs/2104.04473) -- 将数据、张量和流水线并行结合起来的 3D 并行\n- [Zhao et al., 2023 -- \"PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel\"](https://arxiv.org/abs/2304.11277) -- PyTorch 原生 FSDP 实现\n- [Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) -- 使用 16,384 块 GPU 训练时的 3D 并行细节\n- [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437) -- MoE 架构如何将训练成本降低一个数量级\n",
+      "target_sha256": "465d55bc958d44dc0850cdd08d616db402c04af33739cf9282c3b9df26adb005"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S61-scaling-distributed/TERMINOLOGY.md",
+  "additional_glossary_sha256": "dd726a3730c8a32da5041f0a84747c1a2b571c585e240ab917199f6a26d90da2",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S61-scaling-distributed/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "4e7e7fc76dd7541a3a4f0eb2e04a6e7fd1921dd573c752515d7e4f6fbf64f389",
+  "assets": [],
+  "quantity_mappings": [
+    {
+      "source": "billion",
+      "target": "billion（十亿）",
+      "treatment": "Keep number and English magnitude; explain 10^9 without changing Arabic numbers"
+    },
+    {
+      "source": "million",
+      "target": "million（百万）",
+      "treatment": "Keep number and English magnitude; explain 10^6"
+    },
+    {
+      "source": "~120 minutes",
+      "target": "~120 分钟",
+      "treatment": "Metadata natural-language unit only"
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S61-scaling-distributed/TERMINOLOGY.md",
+      "commit": "922c4b1bf601496936badd0ec4675c642878b9ae",
+      "sha256": "dd726a3730c8a32da5041f0a84747c1a2b571c585e240ab917199f6a26d90da2"
+    }
+  ]
+}
