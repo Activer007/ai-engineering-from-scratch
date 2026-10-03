@@ -1,0 +1,28 @@
+# 神经网络调试：恢复后翻译与验证报告
+
+[自有fork草稿PR #79](https://github.com/Activer007/ai-engineering-from-scratch/pull/79)；[固定正文](https://github.com/Activer007/ai-engineering-from-scratch/blob/5b515f4595240690183c6d3acdb8c42df700a484/i18n/zh/phases/03-deep-learning-core/13-debugging-neural-networks/docs/zh.md)。
+
+固定英文源：1bafaa88bb4668356791150bec3a6d7df38387eb
+中文 SHA256：917d30cc15a415864037926ea63d6ef416e97c6b34b9ff59872ac8fa9c7b633c
+正文 commit：5b515f4595240690183c6d3acdb8c42df700a484
+支持 commit：c5ec4ba217dee6808d861b596e073109ce642c0e
+原审校输入 SHA256：aa72608bb652858fe606d6aec5818ba7ed10e0e5c6069ff6c43be12d1b5dd848
+本次审校候选 SHA256：6a98c814c9622e0217dcb75c2603a900d328a6bf680801717847c7b586a68334
+真实 GFM 恢复报告 SHA256：fe8e0b69bf6d2f4adda3cba8f7dc427c05db78741e5600834fc89204754df38a
+真实101候选回归报告 SHA256：d7c844034af007deb66c1f8361dc93290d6ee7a576108ef2666650f8893fa14d
+
+作者与独立审校者均完成全部197块英文/中文技术对照以及单独中文通读；原记录和全部逐块审校数据保持不变。78项固定支持依赖保持原SHA和Git字节；record、source、target、support均不改。
+
+独立复核者直接查看全部38张保存的真实GitHub桌面截图；31张连续正文视口覆盖30个标题/锚点与16个围栏。5个Mermaid共50个保护标签全部读到；第一图使用两张原生展开视图联合覆盖24标签，第二图使用无遮挡缩小视图读全9标签，其余三图分别5/5/7标签。遮挡或过渡图保留为诊断，不替代有效验收图。公式运算符、表格、强调和长代码行均核对；figure仅显示字面代码占位。此证据不是新浏览器操作或课程站交互通过。
+
+实际101候选联合回归已完成：原正式95课，加S73及新S77–S81五课；S73正文、记录、原审校字节与固定content commit精确一致。原strict直接99课通过，仅S07/S19使用原有精确适配；33/24/50控制、两套全新目录各101篇Markdown逐字节重放、14个SVG独立复制以及课程审计、认证审计、README计数三项检查通过，无新增例外。S61/10-05与S66/10-06继续排除。本结论不替代其他五课各自的真实GFM或最终远端门禁。
+
+作者与独审均确认没有已安装的PyTorch，框架运行明确SKIP。作者14项、独审16项有限标准库诊断及学习率/有限差分算术已运行；对象是提取的标量方法与合成列表/字典。真实hook调度、autograd、dtype/训练模式变更、模型状态恢复、训练收敛、GPU、默认训练演示、数据下载、wandb和TensorBoard均未运行验证。相关框架风险来自静态源分析，不能升级为PyTorch运行通过。
+
+保留源风险：NaN/不足数据分支与最近窗口漏检，空或NaN激活/梯度摘要被报为HEALTHY，严格下降但斜率不均被报为振荡，梯度字典顺序与grad_output推断的限制，hook清理和异常安全、dtype/训练模式与state_dict恢复范围。默认LR扫描末点约8.31764而非10，十索引间隔约6.30957倍；这些是源限制，不是本次译文静默修复或训练成果。完整风险与有限执行观察保留在审校及验证说明中。
+
+真实课程站未通过；本课原解析器仍有13个空标题ID、6组重复ID。移动端与 learning-curves figure 交互未验。托管CI未通过验收，空checks/status数组不算通过。book仅5/6，缺少xelatex.fmt阻塞PDF，未安装修复；未完成完整译书构建。
+
+正式验收基线95；S73仍是待最终门禁的候选。本地101回归、GFM通过和草稿PR均不增加正式计数，本次增量0。最终证据commit的远端逐字节读回、exact-head CI检查与正式索引由协调者后续完成。本课只保留自有fork Draft PR，不合并、不发布、不向上游提交。
+
+review仅追加actual_GitHub_GFM与candidate_regression；原checks、acceptance_scope和审校时间完整保留为历史快照。本文件不虚构其自身最终commit，也不将历史95/96/100报告改写成101证明。
