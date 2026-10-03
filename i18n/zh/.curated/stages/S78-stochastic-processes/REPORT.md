@@ -1,0 +1,28 @@
+# 随机过程：翻译与验证报告
+
+[自有fork草稿PR #84](https://github.com/Activer007/ai-engineering-from-scratch/pull/84)；[固定中文正文](https://github.com/Activer007/ai-engineering-from-scratch/blob/b7577620ed5d6f6d50387bfd7ce7eaef479436f1/i18n/zh/phases/01-math-foundations/22-stochastic-processes/docs/zh.md)。
+
+固定英文源：1bafaa88bb4668356791150bec3a6d7df38387eb
+中文 SHA256：1daeba3b768a359a0509a4e5cf46cf88f7fcca5113a48e983223d570b38760d9
+正文 commit：b7577620ed5d6f6d50387bfd7ce7eaef479436f1
+支持 commit：b0bbb95403054c4e1e6547b4fc42a6109679f1db
+原审校 SHA256：7ac015810dad8579f0e00ba420b5f48f31d1d78dad5e4bad3711c6a4f9b15541
+候选审校 SHA256：368262a8a8689b018948423ffac70e62a65d27d67bc1f2290b7275ad723171d0
+真实GFM报告 SHA256：63e129ae2a419fff309671dd169919cb5f8f2e14a88aa7ac2595a85982adc838
+实际101候选回归 SHA256：d7c844034af007deb66c1f8361dc93290d6ee7a576108ef2666650f8893fa14d
+历史正式96索引 commit：97440cffc4599f55e324f28c653ed000b58b3210
+历史正式96索引 SHA256：8de853ee12ac958ceb6d8afed15af4102850c596096c06c8462ba453d04c87cf
+
+作者与独立审校者各自完成全部237块英文/中文技术对照和单独中文通读，逐块hash与具体意见保持原样。83项支持依赖沿用原commit/SHA，不重新固定；source、target、record、support不变。
+
+独立复核者逐张查看22张实际GitHub截图；连续覆盖25个标题、237块及20个围栏。两幅Mermaid共28个保护标签含重复边概率均逐一可读；第二图由三张重叠正文图覆盖。b0113两个既有正文反斜杠使两内乘号和外乘号实际可见，源问题历史记录不覆盖。10处源无标签围栏仅保留既有text标记，20个保护载荷与固定英文逐字节一致。blockquote由像素及正文/AX文本支持，不伪造不存在的专用DOM计数；figure仅字面占位。25个GitHub锚点准确，无外部Markdown href；点击导航未测。
+
+作者与独审均仅运行离线NumPy/stdlib有限夹具，固定种子、CPU单线程、外部30秒timeout；随机游走至多32条×256步，2–4态链至多1000步，1–2维Langevin/MH至多1000步或样本，扩散至多16点×32步。默认主程序、10000×1000游走、长天气链、50000步Langevin、100000样本MH及参数扫描未运行；没有训练、下载、网络、GPU、分布式、真实后验或输出提示词执行。小夹具不证明默认规模或收敛；本构建器未重新执行课程代码。
+
+保留全部源风险：sqrt(n)标准差与期望绝对距离、平稳分布存在/唯一/收敛条件、舍入天气向量与残差、绝对谱隙及混合时间、布朗维数/鞅简写、完整上下文与Markov状态、Langevin离散步长偏差/SGLD条件、有限扩散残余信号、MH接受率与混合、非法矩阵/空历史NaN/n_samples=1除零/负参数/越界beta，以及退火和框架概括。R16与作者历史pending措辞保持旧快照；新GFM仅证明两个内乘号和外乘号可见，不修复这些数学、算法或运行风险。完整源问题和作者/独审原执行证据保留在审校及VALIDATION.json中，原历史字段不覆盖。
+
+实际101回归运行时覆盖原正式95课、S73和S77–S81五课；strict直接99课通过，S07/S19仅沿用原精确适配，无新增例外。33/24/50控制、双新目录各101篇逐字节重放、14个SVG独立复制、课程审计、认证审计与README计数检查通过。原100报告仅为历史记录，101不意味着全验收；S61/S66继续排除。
+
+本构建器精确认证历史正式96索引快照，其中S73已单独验收；该快照不是当前正式计数，其他课程的后续验收不在本候选中断言。S78仍须其自身最终证据、正文和单课索引门禁，本候选增量0。协调者须读取届时正式索引后单独验收，不得用本历史快照覆盖后续进度。本课站点解析仍有17个空标题ID、0组重复ID；真实课程站、移动端及交互未通过。托管CI未证明通过，空status/workflow数组不等于通过。book仅5/6，缺少xelatex.fmt阻塞PDF，未安装修复，完整译书未完成。
+
+review仅追加actual_GitHub_GFM与candidate_regression；全部旧字段和checks保持正文提交时历史快照。后续还须最终4文件发布、该head下9文件逐字节远端/Git读回、exact-head CI检查、最终PR正文实际读回和正式索引门禁。本报告不虚构自身最终commit；保持自有fork Draft，不合并、不发布、不向上游提交。
