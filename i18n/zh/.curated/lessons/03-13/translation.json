@@ -1,0 +1,2888 @@
+{
+  "schema_version": 1,
+  "lesson_id": "03-13",
+  "source_path": "phases/03-deep-learning-core/13-debugging-neural-networks/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "2b140daf55e85827c19abd94062f0864cf0e8923",
+  "source_sha256": "93a9c9e91cc1312801ca02385de5891b2858f45a28a70a3dd099ce5848f21753",
+  "target_path": "i18n/zh/phases/03-deep-learning-core/13-debugging-neural-networks/docs/zh.md",
+  "target_sha256": "917d30cc15a415864037926ea63d6ef416e97c6b34b9ff59872ac8fa9c7b633c",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-03"
+  },
+  "segments": [
+    {
+      "segment_id": "03-13:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks"
+      ],
+      "ordinal": 1,
+      "source_sha256": "d0512985bd4868547c37e6ce0939df2a3f2cb6aea02182d1162b0e09e7640e07",
+      "target": "# 神经网络调试\n",
+      "target_sha256": "159a38bb81aa0ed6295ad80cf34ad77a0085d8630f9b6e73c0a041338d867101"
+    },
+    {
+      "segment_id": "03-13:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Debugging Neural Networks"
+      ],
+      "ordinal": 2,
+      "source_sha256": "9b1349f397d27054e9f40d7392e65b52e52a1ae78323a297ebb033fd6efe4b34",
+      "target": "> 你的网络编译通过了，运行了，也输出了一个数字。数字是错的，但没有任何东西崩溃。欢迎来到最难的调试场景：连一条错误信息都没有。\n",
+      "target_sha256": "7239cb818f03648869e93b2b921c50e60ccccb7c85deca7eaaa1989c79999f75"
+    },
+    {
+      "segment_id": "03-13:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks"
+      ],
+      "ordinal": 3,
+      "source_sha256": "21eb9f666bdea59f3ca66b8dbf13c44cbe6af2f0011770eb2b0e59bcef00dd07",
+      "target": "**Type:** Build\n**Languages:** Python, PyTorch\n**Prerequisites:** 阶段 03 第 01-10 课（尤其是反向传播、损失函数和优化器）\n**Time:** ~90 分钟\n",
+      "target_sha256": "41f04ede40f5fb9f3b5fd81b2a05d9af51ac5024ccdb70e6204a3d3b196fa58c"
+    },
+    {
+      "segment_id": "03-13:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "03-13:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "4ee6eab7527da270bf9d047db829e8e9eb02b8455ff818f75b6e8c75f65dbfc7",
+      "target": "- 运用系统化调试策略，诊断常见的神经网络故障（NaN 损失、平坦的损失曲线、过拟合、振荡）\n- 运用“单批次过拟合”（overfit one batch）技术，验证模型架构和训练循环是否正确\n- 检查梯度幅度、激活值分布和权重范数，识别梯度消失或梯度爆炸问题\n- 构建调试检查清单，覆盖数据管线、模型架构、损失函数、优化器和学习率问题\n",
+      "target_sha256": "56d74f6958ac4db7fab87c8264918230e23ce39e458440d4cb0d729f21f43888"
+    },
+    {
+      "segment_id": "03-13:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "03-13:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "632e67afa04d2e0a837f0882616e956ec158f2bacdc0b45f1832559d1014c778",
+      "target": "传统软件出故障时会崩溃。空指针会抛出异常，类型不匹配会在编译时失败，差一位错误会产生明显不对的输出。\n",
+      "target_sha256": "0da222437a3b4d3cfa5541bedc92f5993652e3fd02412b474a321e6baf6b5e33"
+    },
+    {
+      "segment_id": "03-13:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "d140f58b11fdc6a73eb61b411351a8b25adf6bdda58358d62c119cc762884cdd",
+      "target": "神经网络可不会给你这样的便利。\n",
+      "target_sha256": "e391301e14c15fa9fa3b1a2c908ae439b583cd896722b6f18de644a7a6cb7952"
+    },
+    {
+      "segment_id": "03-13:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "3ca01d9a3a2d01fb8077fcf2023d7578ea3e42f6d618ca48ecd2ef1b634a9a62",
+      "target": "一个有缺陷的神经网络会一直运行到结束，打印损失值并输出预测。损失可能下降，预测看起来也可能合情合理。但模型却在悄无声息地犯错：学习捷径、记忆噪声，或收敛到毫无用处的局部极小值。Google 研究人员估计，机器学习（ML）调试时间中有 60-70% 用于处理“静默”缺陷（silent bug）：它们不会报错，却会降低模型质量。\n",
+      "target_sha256": "06414465fc1d4cd0a8a94dc8c6564c39822dba4b9edc4f00ca97295f13bc2c9e"
+    },
+    {
+      "segment_id": "03-13:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "f4c8bd394cc07b25ed542e090eaf9e62efd17458710dcf19f40c93829d48d76c",
+      "target": "正常模型与故障模型之间的区别，往往只是一行放错位置的代码：漏掉一个 `zero_grad()`、转置了一个维度，或学习率差了 10x。经典的 \"Recipe for Training Neural Networks\" (2019) 开篇就写道：“最常见的神经网络错误，是那些不会让程序崩溃的缺陷。”\n",
+      "target_sha256": "4c5949492fea27d9c13c460852bcf5c688ef757b426e1bd12de105e0a5b827eb"
+    },
+    {
+      "segment_id": "03-13:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "b33ea2eaa02390808ce388a5787528b650866915b749d9a31051dcf5fab8266f",
+      "target": "本课教你找出这些缺陷。\n",
+      "target_sha256": "c1d3c9f1d05926d62f15c5ff8cbdc03213a6d946403922f3d85304783f8d394f"
+    },
+    {
+      "segment_id": "03-13:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Problem"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "03-13:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Debugging Mindset"
+      ],
+      "ordinal": 13,
+      "source_sha256": "3e63cfdfb42c619559fe4974cb1b2f7729bde22e1a5ec422aab686c7596e3a7c",
+      "target": "### 调试思路\n",
+      "target_sha256": "ec009b86c71cde6fcc3c69673e1c2eb18914519c6480ee4c786ea690320be151"
+    },
+    {
+      "segment_id": "03-13:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Debugging Mindset"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Debugging Mindset"
+      ],
+      "ordinal": 14,
+      "source_sha256": "bcbbdeef1506219aa1700d96cc36f0758a1c069f86ded279a0ae730fbe3b16be",
+      "target": "别再打印几行日志就祈祷一切正常了。神经网络调试需要系统化的方法，因为反馈周期很长（每次训练需要几分钟到几小时），而症状又很模糊（损失异常可能对应 20 种不同问题）。\n",
+      "target_sha256": "e9b31f9cf0edb8048154e28ad3f69c89017bbb047b7202ca31c13c8c16284b36"
+    },
+    {
+      "segment_id": "03-13:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Debugging Mindset"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Debugging Mindset"
+      ],
+      "ordinal": 15,
+      "source_sha256": "907153197f6c722d79227b7d8e2f2ab94d49d7706cb5e8fdf3ff76fc027fa014",
+      "target": "黄金法则：**从简单方案开始，每次只增加一部分复杂度，并独立验证每一部分。**\n",
+      "target_sha256": "0e0c12edbd23e7269e9ab48db568cf864669a9af01132039f009d9b64d3baf5c"
+    },
+    {
+      "segment_id": "03-13:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Debugging Mindset"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Debugging Mindset"
+      ],
+      "ordinal": 16,
+      "source_sha256": "e57f58b5997f96f2be92a6d136e020b3e8ac72f71ae843b277c6023e9593e57f",
+      "target": "```mermaid\nflowchart TD\n    A[\"Loss not decreasing\"] --> B{\"Check learning rate\"}\n    B -->|\"Too high\"| C[\"Loss oscillates or explodes\"]\n    B -->|\"Too low\"| D[\"Loss barely moves\"]\n    B -->|\"Reasonable\"| E{\"Check gradients\"}\n    E -->|\"All zeros\"| F[\"Dead ReLUs or vanishing gradients\"]\n    E -->|\"NaN/Inf\"| G[\"Exploding gradients\"]\n    E -->|\"Normal\"| H{\"Check data pipeline\"}\n    H -->|\"Labels shuffled\"| I[\"Random-chance accuracy\"]\n    H -->|\"Preprocessing bug\"| J[\"Model learns noise\"]\n    H -->|\"Data is fine\"| K{\"Check architecture\"}\n    K -->|\"Too small\"| L[\"Underfitting\"]\n    K -->|\"Too deep\"| M[\"Optimization difficulty\"]\n```\n",
+      "target_sha256": "e57f58b5997f96f2be92a6d136e020b3e8ac72f71ae843b277c6023e9593e57f"
+    },
+    {
+      "segment_id": "03-13:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Debugging Mindset"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 17,
+      "source_sha256": "9a3440e283a79a1823e925bb952f84be0b6f780eaa165e3f978ee523771125cc",
+      "target": "### 症状 1：损失不下降\n",
+      "target_sha256": "56ece421e1a4bf3bbd3dc523a224fd7fc62d62a99dd3e406bf3a43371963dacc"
+    },
+    {
+      "segment_id": "03-13:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 18,
+      "source_sha256": "7b872a95aa4be17ed2086789abf8f71a641a5a558db0d6f620e0d363e4e65269",
+      "target": "这是最常见的抱怨。训练循环在运行，一轮轮训练不断过去，损失却始终平坦，或剧烈振荡。\n",
+      "target_sha256": "6849e8d345505f4c35464d2872acf236336c1dba99ca5beb43c6f38ed892aa95"
+    },
+    {
+      "segment_id": "03-13:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 19,
+      "source_sha256": "3ea36890c3a446d23d0a1f751b536e05e6c410cde4053eb8a436238fed855fb1",
+      "target": "**学习率不对。** 过高时，损失会振荡或突然变成 NaN；过低时，损失下降得太慢，看起来像没有变化。Adam 从 1e-3 开始，随机梯度下降（SGD）从 1e-1 或 1e-2 开始。在断定其他地方出错之前，务必先尝试相邻值相差 10x 的 3 个学习率（例如 1e-2、1e-3、1e-4）。\n",
+      "target_sha256": "bed2e0fb66ff0ddc68d11288a58a362c3b2e02231d03fa174c791005838532a9"
+    },
+    {
+      "segment_id": "03-13:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 20,
+      "source_sha256": "37112a38ce03f36fc4dfedbf0f949dbefc6ff0db46312d69d2678cf937a95314",
+      "target": "**ReLU 失活。** 如果一个 ReLU 神经元接收到很大的负输入，它的输出为 0，梯度也为 0，之后就再也不会激活。如果足够多的神经元失活，网络就无法学习。检查方法：打印每个 ReLU 层之后恰好为 0 的激活值比例。如果 >50% 已失活，就改用 LeakyReLU 或降低学习率。\n",
+      "target_sha256": "3353fa2751744ae270c2658cc8a82c65b49549b1de489e49f831b13bbdfa3bb9"
+    },
+    {
+      "segment_id": "03-13:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 21,
+      "source_sha256": "6eb2eb5dcba85bbb68b6ff9754154539f4e38a7d96a58fc85a7499e846ddb8f2",
+      "target": "**梯度消失。** 在使用 sigmoid 或 tanh 激活函数的深层网络中，梯度在反向传播时会呈指数级缩小。到达第一层时，梯度已接近 ~0，前几层便停止学习。解决方法：使用 ReLU/GELU、添加残差连接，或使用批量归一化。\n",
+      "target_sha256": "989a3af6d52c78617cb14d73678f965844f8ecb6ac9fbb67d24f2e2f7e040752"
+    },
+    {
+      "segment_id": "03-13:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 22,
+      "source_sha256": "8d31db3e63e03de6f5ebf8dfae28a3fb481f49ec32c8dad998ed3e7a0330e68b",
+      "target": "**梯度爆炸。** 这是相反的问题：梯度呈指数级增长，常见于循环神经网络（RNN）和非常深的网络。损失会突然变成 NaN。解决方法：梯度裁剪（`torch.nn.utils.clip_grad_norm_`）、降低学习率，或添加归一化。\n",
+      "target_sha256": "58515a944ce42e9d62f90a7d07d1393a1022f4180f3fb1d67bd6dd396df35b50"
+    },
+    {
+      "segment_id": "03-13:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 1: Loss Not Decreasing"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 23,
+      "source_sha256": "9e798dac39553d59abf5e934bf04914ab040a1094aaf5825818f4fdca97fed23",
+      "target": "### 症状 2：损失下降，但模型表现很差\n",
+      "target_sha256": "904c85f46ac6a08e6169582e6a3a85c72ae73ac9d3524770f050031ca18ddc25"
+    },
+    {
+      "segment_id": "03-13:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 24,
+      "source_sha256": "ecf05ea66a2b3161e617f488f3debdf3dce7a0c8c30768e5775b54de2519bfa1",
+      "target": "损失在下降，训练准确率达到 99%，测试准确率却只有 55%。或者，模型在真实数据上给出毫无意义的输出。\n",
+      "target_sha256": "14489ae67b12c5338eedddcc14641f2a8a39e90e4e3d46d85f9884f9014c087c"
+    },
+    {
+      "segment_id": "03-13:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 25,
+      "source_sha256": "f6135b035c99ecb7c5dade8ddbc12faeeada7c8a35909d4c36b60b46a920912a",
+      "target": "**过拟合。** 模型记住了训练数据，而不是学到规律。训练损失与验证损失之间的差距随时间扩大。解决方法：更多数据、Dropout（随机失活）、权重衰减、早停和数据增强。\n",
+      "target_sha256": "62a9a14b4e60da3b0a5510ad3943c61dbab990818775eecf25d368a637c5def4"
+    },
+    {
+      "segment_id": "03-13:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 26,
+      "source_sha256": "1405fda79743650420964bfd8bcc03bacae9666ea0a17299232b0b55591fca0a",
+      "target": "**数据泄漏。** 测试数据泄漏进了训练过程，准确率高得令人怀疑。常见原因包括：划分前就打乱数据、使用整个数据集的统计量做预处理，以及不同划分之间存在重复样本。解决方法：先划分，再预处理，并检查重复样本。\n",
+      "target_sha256": "cd026b77d02794be96c0de4faa26db9fda96e694affa42b63a6d23e3a5a20796"
+    },
+    {
+      "segment_id": "03-13:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 27,
+      "source_sha256": "0cfe220e1ef66ba9e0d102b382444979733eaf3322978b567b7f6390e861a9ac",
+      "target": "**标签错误。** 大多数真实数据集有 5-10% 的标签是错的（Northcutt 等人，2021，\"Pervasive Label Errors in Test Sets\"）。模型会学到这些噪声。解决方法：使用置信学习（confident learning）找出并修正错误标签，或使用损失截断来忽略高损失样本。\n",
+      "target_sha256": "1a3f0df61c82d3d1ac198ae49725d43d99b787323c4c2eecf4bb6c4f2a3b2cf6"
+    },
+    {
+      "segment_id": "03-13:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 2: Loss Decreasing But Model is Bad"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 28,
+      "source_sha256": "9c8160254931ebaa66aeca64ef020a74973bb18e2c058384a93b42769318704a",
+      "target": "### 症状 3：损失中出现 NaN 或 Inf\n",
+      "target_sha256": "207009f0ba27398bfe1900c8d9d450dd09946209b834b3d90026d05eeb9fff49"
+    },
+    {
+      "segment_id": "03-13:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 29,
+      "source_sha256": "0e208d1464dee235fa1f4aedff3c086c9d7b6df295569fe5d99c4645a55af3c4",
+      "target": "损失值变成了 `nan` 或 `inf`，训练也就失效了。\n",
+      "target_sha256": "f9f6a320bd5a908480683d4d7ac7d1f650aeb3813b4703fb7962f4a14170ac00"
+    },
+    {
+      "segment_id": "03-13:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 30,
+      "source_sha256": "91d145c5481b1537eec16fea45e4b8056ffd6d246e2fd295766990fff8619f5e",
+      "target": "**学习率过高。** 梯度更新越过目标太远，导致权重爆炸。解决方法：将学习率缩小 10x。\n",
+      "target_sha256": "a9b650cf281344ec8e892495733b82a6a0f562b245fd08965d5469a305d6e7c1"
+    },
+    {
+      "segment_id": "03-13:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 31,
+      "source_sha256": "d8cc5871ea2763db4de0717759e9abc959c0304319fd7699653f490347cabfb9",
+      "target": "**log(0) 或 log(negative)。** 交叉熵损失会计算 `log(p)`。如果模型输出恰好为 0 或为负的概率，对数就会出问题。解决方法：将预测值钳制到 `[eps, 1-eps]`，其中 `eps=1e-7`。\n",
+      "target_sha256": "24a82832d035e04d6c8a8e43f591d92071f484f424b5c049d909cfd33df2744a"
+    },
+    {
+      "segment_id": "03-13:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 32,
+      "source_sha256": "f08c428bff5db0125e86830e6dee42a362d617c7b5d7f89c3dba6ba136facf78",
+      "target": "**除以零。** 批量归一化会除以标准差。取值恒定的批次有 std=0。解决方法：在分母中加入 epsilon（PyTorch 默认会这样做，但自定义实现未必会）。\n",
+      "target_sha256": "1dfde07d2b24b1371b64dde0cfa122cb3c16ce37c091c116613dac87455df884"
+    },
+    {
+      "segment_id": "03-13:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 33,
+      "source_sha256": "d64d216e5b82e3765294d1ca4fa10b165bb3f2fb530e2b38dfc7b82bfe73f206",
+      "target": "**数值溢出。** 很大的激活值传入 `exp()` 会产生 Inf，softmax 尤其容易出现这种问题。解决方法：取指数前先减去最大值（log-sum-exp 技巧）。\n",
+      "target_sha256": "2896874f8e752ada396c340cc0bc4b71c3a128c7f97914e63fee4578a6e2e005"
+    },
+    {
+      "segment_id": "03-13:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Symptom 3: NaN or Inf in Loss"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 34,
+      "source_sha256": "83b4b8ae2d04f86affdef74b4eddf42f109602b2a4bf83086c9a404177f8356b",
+      "target": "### 技术 1：梯度检查\n",
+      "target_sha256": "7c71e182476faa9aecedf7ba5a71d7ab6a3ec00c99497d44077840de832da8d8"
+    },
+    {
+      "segment_id": "03-13:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 35,
+      "source_sha256": "f8eaa58c75b8a6b4542fd029b6d79e52264dc77c06cef16599a3f40336b51d4f",
+      "target": "将解析梯度（来自反向传播）与数值梯度（来自有限差分）进行比较。如果两者不一致，说明反向传播存在缺陷。\n",
+      "target_sha256": "35c39f41ff911f3fa02b6e13de6be50fad8f61d7a1dffa13f19e34df64ab1251"
+    },
+    {
+      "segment_id": "03-13:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 36,
+      "source_sha256": "92f8a99b18d17032ab95ec4d12666193a7c4aea1adf663ef025fa2a891959092",
+      "target": "参数 `w` 的数值梯度：\n",
+      "target_sha256": "236d66bd9bcf9e89af4a58db4974bba5c8bd8b4dcd7babdb55e88db2e6ecb937"
+    },
+    {
+      "segment_id": "03-13:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 37,
+      "source_sha256": "bf58f156c41692b1c34badd664a6bbd307c9ae8e80b1d834c5c3831301a126e7",
+      "target": "```text\ngrad_numerical = (loss(w + eps) - loss(w - eps)) / (2 * eps)\n```\n",
+      "target_sha256": "b4be6e7501f63b905706ff8ac4189a6e05d6c581c480e37433fcf98d4f7517ac"
+    },
+    {
+      "segment_id": "03-13:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 38,
+      "source_sha256": "89944da1ef0dd8648cea73b1dd01ff95ffb369400140b79b87fc19a6209bbee4",
+      "target": "一致性指标（相对差异）：\n",
+      "target_sha256": "a04798a9a8bfd9cc8bb8938ad604997fac7f8f36e1804d252b1a7980f0fac39e"
+    },
+    {
+      "segment_id": "03-13:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0077",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 39,
+      "source_sha256": "1f3f1936aacf4957046072651d455ccaddfe429d794c8d37698cb55c4ddc5547",
+      "target": "```text\nrel_diff = |grad_analytical - grad_numerical| / max(|grad_analytical|, |grad_numerical|, 1e-8)\n```\n",
+      "target_sha256": "d13a8d532020e55bcecc7000862ae7cf04e85668d315c795017f751a8f755b6f"
+    },
+    {
+      "segment_id": "03-13:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 40,
+      "source_sha256": "1bf622b5a50ea48c91c930e843e4e5878add8eedc402b8701ff33096f9f0a0a7",
+      "target": "如果 `rel_diff < 1e-5`，则正确；如果 `rel_diff > 1e-3`，则几乎可以确定存在缺陷。\n",
+      "target_sha256": "8182d0498f6935ddbcd4548447e509c66dc68c73e2ca974c425eec9cf077509c"
+    },
+    {
+      "segment_id": "03-13:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 41,
+      "source_sha256": "bc8d63fb524b0f8b2f88f38076ab183b63bda23397f36fc0cf04e867abb44e6c",
+      "target": "```mermaid\nflowchart LR\n    A[\"Parameter w\"] --> B[\"w + eps\"]\n    A --> C[\"w - eps\"]\n    B --> D[\"Forward pass\"]\n    C --> E[\"Forward pass\"]\n    D --> F[\"loss+\"]\n    E --> G[\"loss-\"]\n    F --> H[\"(loss+ - loss-) / 2eps\"]\n    G --> H\n    H --> I[\"Compare to backprop gradient\"]\n```\n",
+      "target_sha256": "bc8d63fb524b0f8b2f88f38076ab183b63bda23397f36fc0cf04e867abb44e6c"
+    },
+    {
+      "segment_id": "03-13:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 1: Gradient Checking"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 2: Activation Statistics"
+      ],
+      "ordinal": 42,
+      "source_sha256": "4ee16bf418118fe28c1c828f2d1e5415f7825bc4915ca0d13748cbf51e5b260d",
+      "target": "### 技术 2：激活值统计量\n",
+      "target_sha256": "8a27a350ec35dcc22a0f34b9e77ca15816ee016762cae1ff426369224bf90aee"
+    },
+    {
+      "segment_id": "03-13:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 2: Activation Statistics"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 2: Activation Statistics"
+      ],
+      "ordinal": 43,
+      "source_sha256": "5233074560f8d0643360974e1ec121a18c7abf228b8684dcb05b813a8fa5b6a1",
+      "target": "训练时，监测每一层之后激活值的均值和标准差。健康网络会让激活值保持均值接近 0、标准差接近 1（归一化之后），或者至少保持有界。\n",
+      "target_sha256": "3c63df20046da61244607c3eada2924f973fb0d0ceb045a288c06fb49bdfb205"
+    },
+    {
+      "segment_id": "03-13:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 2: Activation Statistics"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0087",
+      "kind": "table",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 2: Activation Statistics"
+      ],
+      "ordinal": 44,
+      "source_sha256": "00a961164046a34d5ffff4fb830c672a7c7ecbf9fef169b54f3fde3af9d530c9",
+      "target": "| 健康指标 | 均值 | 标准差 | 诊断 |\n|-----------------|------|-----|-----------|\n| 健康 | ~0 | ~1 | 网络正在正常学习 |\n| 饱和 | >>0 或 <<0 | ~0 | 激活值停留在极端值 |\n| 失活 | 0 | 0 | 神经元已失活（全为零） |\n| 爆炸 | >>10 | >>10 | 激活值无界增长 |\n",
+      "target_sha256": "9e08cc3904bb61c2b710cc07ace1a1ca69dc424890302a9f73bd12563d0d82aa"
+    },
+    {
+      "segment_id": "03-13:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 2: Activation Statistics"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 3: Gradient Flow Visualization"
+      ],
+      "ordinal": 45,
+      "source_sha256": "9ccba25d45d2be8147fe85331a4b5b2e206f6c22c7f61845a0678c0c8f30b6a7",
+      "target": "### 技术 3：梯度流可视化\n",
+      "target_sha256": "1b7c833e9ee927f2853d33f25664c89a94f786cf56858dcc984c6659f37f6797"
+    },
+    {
+      "segment_id": "03-13:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 3: Gradient Flow Visualization"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 3: Gradient Flow Visualization"
+      ],
+      "ordinal": 46,
+      "source_sha256": "ecab7d9a4b92d8cc762f7b2940bbaf44fd5876e12092fb3974e8ba5e6c46d33a",
+      "target": "绘制每一层的平均梯度幅度。在健康网络中，各层梯度幅度应大致相似。如果前几层的梯度比后几层小 1000x，就存在梯度消失。\n",
+      "target_sha256": "9e2ce6db091d6a665ddb772a098336b84fee6479faea3d0ecda79d0c0d6cf9fd"
+    },
+    {
+      "segment_id": "03-13:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 3: Gradient Flow Visualization"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 3: Gradient Flow Visualization"
+      ],
+      "ordinal": 47,
+      "source_sha256": "062fda60784afd5d046dbf5a04079b7b0383b2c9f01668e576231867fa4aaae9",
+      "target": "```mermaid\ngraph LR\n    subgraph \"Healthy Gradient Flow\"\n        L1[\"Layer 1<br/>grad: 0.05\"] --- L2[\"Layer 2<br/>grad: 0.04\"] --- L3[\"Layer 3<br/>grad: 0.06\"] --- L4[\"Layer 4<br/>grad: 0.05\"]\n    end\n```\n",
+      "target_sha256": "062fda60784afd5d046dbf5a04079b7b0383b2c9f01668e576231867fa4aaae9"
+    },
+    {
+      "segment_id": "03-13:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 3: Gradient Flow Visualization"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0095",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 3: Gradient Flow Visualization"
+      ],
+      "ordinal": 48,
+      "source_sha256": "9c9d459eccc13e8d629aad7efd086fcd6cb7ed9d2b1b54ca7f59ff1b5b772af6",
+      "target": "```mermaid\ngraph LR\n    subgraph \"Vanishing Gradient Flow\"\n        V1[\"Layer 1<br/>grad: 0.0001\"] --- V2[\"Layer 2<br/>grad: 0.003\"] --- V3[\"Layer 3<br/>grad: 0.02\"] --- V4[\"Layer 4<br/>grad: 0.08\"]\n    end\n```\n",
+      "target_sha256": "9c9d459eccc13e8d629aad7efd086fcd6cb7ed9d2b1b54ca7f59ff1b5b772af6"
+    },
+    {
+      "segment_id": "03-13:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 3: Gradient Flow Visualization"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 49,
+      "source_sha256": "cd836732ffbccfb4fd4b5ae33721994e8a88df7bcaf1f823fcfd52e06da3235e",
+      "target": "### 技术 4：单批次过拟合测试\n",
+      "target_sha256": "aa30e7f3b00641725a38b07f90956f751cb2e340670ff616a50f7ecb9f43136e"
+    },
+    {
+      "segment_id": "03-13:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 50,
+      "source_sha256": "f292e712ea6b0e9b2eebc6fe0cc119c96d9aa7b4dae69aa54b30a796850020a9",
+      "target": "这是深度学习中最重要的一项调试技术。\n",
+      "target_sha256": "6831e6ef8ac7123bb53737a52cc8aab06424cc5d26289e0b5f0daeeeab79f9e2"
+    },
+    {
+      "segment_id": "03-13:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 51,
+      "source_sha256": "9810cdc13a6287f74f88f2060736883a662e793a3e8b2c85357bb991316aa4d1",
+      "target": "取一个小批次（8-32 个样本），在它上面训练 100+ 次迭代。损失应接近零，训练准确率应达到 100%。如果没有达到，说明模型或训练循环存在根本性缺陷，此时不要继续完整训练。\n",
+      "target_sha256": "c9a5629028897e2f902bd4f3c83722a84c1ef2e2a40ef163fcb90676f2aa1fbb"
+    },
+    {
+      "segment_id": "03-13:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 52,
+      "source_sha256": "941800608f574522f89d81958b2bfbec5ba571ec47b375d94b11218e2d943ada",
+      "target": "这项测试能够发现：\n- 有缺陷的损失函数\n- 有缺陷的反向传播\n- 太小而无法表示数据的架构\n- 没有连接到模型参数的优化器\n- 未对齐的数据与标签\n",
+      "target_sha256": "9b7276f1a2aa926f62a8f7f135ebef5b10df52dcac80fd747bf0435d633b8dff"
+    },
+    {
+      "segment_id": "03-13:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 53,
+      "source_sha256": "95b139c2518ef3827cdeeaff9920daf78b33993694dfc15a827a2b81ce6aa6bc",
+      "target": "运行它只需 30 秒，却能省下数小时调试完整训练的时间。\n",
+      "target_sha256": "79c6b5615d250d7c191cf92c307e2525c20e8b925945d0f55e65aecd3664a38c"
+    },
+    {
+      "segment_id": "03-13:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 4: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 5: Learning Rate Finder"
+      ],
+      "ordinal": 54,
+      "source_sha256": "1cd5e2eddf643e438e93196a87039d7f2b771829e5371ceb5d14c2828d97b515",
+      "target": "### 技术 5：学习率查找器\n",
+      "target_sha256": "c03839ab58e20c38c4aeeea7e53b82ff88e01076525a8f45a83b5a70ca870545"
+    },
+    {
+      "segment_id": "03-13:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 5: Learning Rate Finder"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 5: Learning Rate Finder"
+      ],
+      "ordinal": 55,
+      "source_sha256": "7efb6846a598c55e3f9ea550bad009eb396f446ace26420b660a9bcd512d89a4",
+      "target": "Leslie Smith (2017) 提出，在一轮训练中将学习率从很小（1e-7）扫描到很大（10），同时记录损失。绘制损失随学习率变化的曲线。最佳学习率大约比损失开始下降最快处的学习率小 10x。\n",
+      "target_sha256": "5e05e004eee7d7fba99c77c081b6231e93a449b543b1b8b67e9546819dc0d7a5"
+    },
+    {
+      "segment_id": "03-13:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 5: Learning Rate Finder"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0111",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 5: Learning Rate Finder"
+      ],
+      "ordinal": 56,
+      "source_sha256": "5f21ce26afc15276a11e506dd073714ff5e9eb7bdcfa4a46ddb6cc1d1062dc9d",
+      "target": "```mermaid\ngraph TD\n    subgraph \"LR Finder Plot\"\n        direction LR\n        A[\"1e-7: loss=2.3\"] --> B[\"1e-5: loss=2.3\"]\n        B --> C[\"1e-3: loss=1.8\"]\n        C --> D[\"1e-2: loss=0.9 -- steepest\"]\n        D --> E[\"1e-1: loss=0.5\"]\n        E --> F[\"1.0: loss=NaN -- too high\"]\n    end\n```\n",
+      "target_sha256": "5f21ce26afc15276a11e506dd073714ff5e9eb7bdcfa4a46ddb6cc1d1062dc9d"
+    },
+    {
+      "segment_id": "03-13:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 5: Learning Rate Finder"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 5: Learning Rate Finder"
+      ],
+      "ordinal": 57,
+      "source_sha256": "ff0e7056f98f5c0fdca3197551e07bf191c9e269843bd7dd424040ba1fb8c711",
+      "target": "本例中的最佳学习率（LR）：~1e-3（比最陡位置低一个数量级）。\n",
+      "target_sha256": "859005411507d331019b9d857f7bd644d7d0f03c2980be1c046db85c5483ce46"
+    },
+    {
+      "segment_id": "03-13:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Technique 5: Learning Rate Finder"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0115",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Common PyTorch Bugs"
+      ],
+      "ordinal": 58,
+      "source_sha256": "b5594e58ceacec9063ebac2ada95b53881726c98141d66976918c22ae7fca798",
+      "target": "### 常见 PyTorch 缺陷\n",
+      "target_sha256": "571d4aff47bdbd7c7b95d98dcb9b92fbc16b0d1574ce5b749fe74f2f1f8b36b6"
+    },
+    {
+      "segment_id": "03-13:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Common PyTorch Bugs"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Common PyTorch Bugs"
+      ],
+      "ordinal": 59,
+      "source_sha256": "5dd5072b953a51237b7c8acbe44a7cb63895a5ab164aa48f5b3d72cbb9c40743",
+      "target": "以下缺陷消耗了 PyTorch 社区最多的累计时间：\n",
+      "target_sha256": "d3dccc59d5850e60790329947adf3af2965e71a86adf2017e3bd63ca73a9b13a"
+    },
+    {
+      "segment_id": "03-13:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Common PyTorch Bugs"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0119",
+      "kind": "table",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Common PyTorch Bugs"
+      ],
+      "ordinal": 60,
+      "source_sha256": "723ab22cc5939fc428cce982629131cad2cdea66815582276565ba075a5d8691",
+      "target": "| 缺陷 | 症状 | 解决方法 |\n|-----|---------|-----|\n| 忘记 `optimizer.zero_grad()` | 梯度跨批次累积，损失振荡 | 在 `loss.backward()` 前添加 `optimizer.zero_grad()` |\n| 测试时忘记 `model.eval()` | Dropout 和批量归一化的行为不同，多次运行的测试准确率不一致 | 添加 `model.eval()` 和 `torch.no_grad()` |\n| 张量形状错误 | 静默广播产生错误结果，却不报错 | 调试时在每次运算后打印形状 |\n| CPU/GPU 不匹配 | `RuntimeError: expected CUDA tensor` | 对模型和数据都使用 `.to(device)` |\n| 未分离张量 | 计算图不断增长，内存耗尽（OOM） | 使用 `.detach()` 或 `with torch.no_grad()` |\n| 原地操作破坏 autograd | `RuntimeError: modified by in-place operation` | 将 `x += 1` 替换为 `x = x + 1` |\n| 数据未归一化 | 损失停留在随机猜测水平 | 将输入归一化到 mean=0、std=1 |\n| 标签的数据类型错误 | 交叉熵需要 `Long`，却收到 `Float` | 转换标签类型：`labels.long()` |\n",
+      "target_sha256": "d091edb5d53fb8103163d9a27a256f7900afd5463fe73f33673580dc57368036"
+    },
+    {
+      "segment_id": "03-13:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### Common PyTorch Bugs"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Master Debugging Table"
+      ],
+      "ordinal": 61,
+      "source_sha256": "eb78a3e6a85a91b2b5f235c16c2d698e1b96ad70d55c3f17793d9b68ddd0aece",
+      "target": "### 调试总表\n",
+      "target_sha256": "c3be61ac7a9f4820e8cb82878da04f39472562fbd665c89d7d9dc47be7005782"
+    },
+    {
+      "segment_id": "03-13:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Master Debugging Table"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0123",
+      "kind": "table",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Master Debugging Table"
+      ],
+      "ordinal": 62,
+      "source_sha256": "0a490fcee538be494f558ebb12ed091aad56c539295f4fea9c722db64091a8aa",
+      "target": "| 症状 | 可能原因 | 首先尝试 |\n|---------|-------------|-------------------|\n| 损失停在 -log(1/num_classes) | 模型预测均匀分布 | 检查数据管线，确认标签与输入对应 |\n| 几步之后损失变为 NaN | 学习率过高 | 将 LR 缩小 10x |\n| 损失立即变为 NaN | log(0) 或除以零 | 在对数或除法运算中添加 epsilon |\n| 损失剧烈振荡 | LR 过高或批次太小 | 降低 LR，增大批次 |\n| 损失下降后进入平台期 | LR 对微调阶段而言过高 | 添加 LR 调度（余弦或阶梯衰减） |\n| 训练准确率高，测试准确率低 | 过拟合 | 添加 Dropout、权重衰减，增加数据 |\n| 训练准确率 = 测试准确率 = 随机猜测水平 | 模型没有学到任何东西 | 运行单批次过拟合测试 |\n| 训练准确率 = 测试准确率，但两者都低 | 欠拟合 | 更大的模型、更多层、更多特征 |\n| 梯度全为零 | ReLU 失活或计算图被分离 | 换用 LeakyReLU，检查 `.requires_grad` |\n| 训练时内存耗尽 | 批次太大或计算图未释放 | 减小批次，评估时使用 `torch.no_grad()` |\n",
+      "target_sha256": "1166b9af2d32acc034fcdab60c5b2d0e3eff7e07b73628be951e54aa6c4fbb0a"
+    },
+    {
+      "segment_id": "03-13:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Master Debugging Table"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0125",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Master Debugging Table"
+      ],
+      "ordinal": 63,
+      "source_sha256": "e96cd0e62e03dbc48e7192d1fb97d4c0c9551cee05d701ba5998d2aec5b745ca",
+      "target": "```figure\nlearning-curves\n```\n",
+      "target_sha256": "e96cd0e62e03dbc48e7192d1fb97d4c0c9551cee05d701ba5998d2aec5b745ca"
+    },
+    {
+      "segment_id": "03-13:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## The Concept",
+        "### The Master Debugging Table"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0127",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "03-13:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "21e0e7e33252ef645716eb7f43f3ed63d210c66169ec5fc9f406fc1388544665",
+      "target": "一个监测激活值、梯度和损失曲线的诊断工具包。你将有意破坏网络，再用工具包诊断每个问题。\n",
+      "target_sha256": "b80ad725179bd8f5b9109df257226b0e1882d6ca3ae780f45c8bb8be5369f9d1"
+    },
+    {
+      "segment_id": "03-13:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 1: The NetworkDebugger Class"
+      ],
+      "ordinal": 66,
+      "source_sha256": "e5f39911187ffe58049ae73aa7b155fbc34ebaadf29034b5b2eb405fbbe596fb",
+      "target": "### 步骤 1：NetworkDebugger 类\n",
+      "target_sha256": "5f3c6f54a608b90f8fabb5d12f21c5d62cf070dcb45c63696e5f57ff1708e96e"
+    },
+    {
+      "segment_id": "03-13:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 1: The NetworkDebugger Class"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 1: The NetworkDebugger Class"
+      ],
+      "ordinal": 67,
+      "source_sha256": "de2645339bd3f3b31e639daf37a3f1cea72f4ccd399970f756fe5deb5267d5b0",
+      "target": "通过钩子（hook）接入 PyTorch 模型，记录每层的激活值和梯度统计量。\n",
+      "target_sha256": "8ede3d9df8eae07230d16af1d637dfc9a819d870a7e7decf1cc776c9df40309e"
+    },
+    {
+      "segment_id": "03-13:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 1: The NetworkDebugger Class"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0135",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 1: The NetworkDebugger Class"
+      ],
+      "ordinal": 68,
+      "source_sha256": "8d4a56575018183215877fe86532783d7e5c62bde78efd448a5b87962163db4f",
+      "target": "```python\nimport torch\nimport torch.nn as nn\nimport math\n\n\nclass NetworkDebugger:\n    def __init__(self, model):\n        self.model = model\n        self.activation_stats = {}\n        self.gradient_stats = {}\n        self.loss_history = []\n        self.lr_losses = []\n        self.hooks = []\n        self._register_hooks()\n\n    def _register_hooks(self):\n        for name, module in self.model.named_modules():\n            if isinstance(module, (nn.Linear, nn.Conv2d, nn.ReLU, nn.LeakyReLU)):\n                hook = module.register_forward_hook(self._make_activation_hook(name))\n                self.hooks.append(hook)\n                hook = module.register_full_backward_hook(self._make_gradient_hook(name))\n                self.hooks.append(hook)\n\n    def _make_activation_hook(self, name):\n        def hook(module, input, output):\n            with torch.no_grad():\n                out = output.detach().float()\n                self.activation_stats[name] = {\n                    \"mean\": out.mean().item(),\n                    \"std\": out.std().item(),\n                    \"fraction_zero\": (out == 0).float().mean().item(),\n                    \"min\": out.min().item(),\n                    \"max\": out.max().item(),\n                }\n        return hook\n\n    def _make_gradient_hook(self, name):\n        def hook(module, grad_input, grad_output):\n            if grad_output[0] is not None:\n                with torch.no_grad():\n                    grad = grad_output[0].detach().float()\n                    self.gradient_stats[name] = {\n                        \"mean\": grad.mean().item(),\n                        \"std\": grad.std().item(),\n                        \"abs_mean\": grad.abs().mean().item(),\n                        \"max\": grad.abs().max().item(),\n                    }\n        return hook\n\n    def record_loss(self, loss_value):\n        self.loss_history.append(loss_value)\n\n    def check_loss_health(self):\n        if len(self.loss_history) < 2:\n            return \"NOT_ENOUGH_DATA\"\n        recent = self.loss_history[-10:]\n        if any(math.isnan(v) or math.isinf(v) for v in recent):\n            return \"NAN_OR_INF\"\n        if len(self.loss_history) >= 20:\n            first_half = sum(self.loss_history[:10]) / 10\n            second_half = sum(self.loss_history[-10:]) / 10\n            if second_half >= first_half * 0.99:\n                return \"NOT_DECREASING\"\n        if len(recent) >= 5:\n            diffs = [recent[i+1] - recent[i] for i in range(len(recent)-1)]\n            if max(diffs) - min(diffs) > 2 * abs(sum(diffs) / len(diffs)):\n                return \"OSCILLATING\"\n        return \"HEALTHY\"\n\n    def check_activations(self):\n        issues = []\n        for name, stats in self.activation_stats.items():\n            if stats[\"fraction_zero\"] > 0.5:\n                issues.append(f\"DEAD_NEURONS: {name} has {stats['fraction_zero']:.0%} zero activations\")\n            if abs(stats[\"mean\"]) > 10:\n                issues.append(f\"EXPLODING_ACTIVATIONS: {name} mean={stats['mean']:.2f}\")\n            if stats[\"std\"] < 1e-6:\n                issues.append(f\"COLLAPSED_ACTIVATIONS: {name} std={stats['std']:.2e}\")\n        return issues if issues else [\"HEALTHY\"]\n\n    def check_gradients(self):\n        issues = []\n        grad_magnitudes = []\n        for name, stats in self.gradient_stats.items():\n            grad_magnitudes.append((name, stats[\"abs_mean\"]))\n            if stats[\"abs_mean\"] < 1e-7:\n                issues.append(f\"VANISHING_GRADIENT: {name} abs_mean={stats['abs_mean']:.2e}\")\n            if stats[\"abs_mean\"] > 100:\n                issues.append(f\"EXPLODING_GRADIENT: {name} abs_mean={stats['abs_mean']:.2e}\")\n        if len(grad_magnitudes) >= 2:\n            first_mag = grad_magnitudes[0][1]\n            last_mag = grad_magnitudes[-1][1]\n            if last_mag > 0 and first_mag / last_mag > 100:\n                issues.append(f\"GRADIENT_RATIO: first/last = {first_mag/last_mag:.0f}x (vanishing)\")\n        return issues if issues else [\"HEALTHY\"]\n\n    def print_report(self):\n        print(\"\\n=== NETWORK DEBUGGER REPORT ===\")\n        print(f\"\\nLoss health: {self.check_loss_health()}\")\n        if self.loss_history:\n            print(f\"  Last 5 losses: {[f'{v:.4f}' for v in self.loss_history[-5:]]}\")\n        print(\"\\nActivation diagnostics:\")\n        for item in self.check_activations():\n            print(f\"  {item}\")\n        print(\"\\nGradient diagnostics:\")\n        for item in self.check_gradients():\n            print(f\"  {item}\")\n        print(\"\\nPer-layer activation stats:\")\n        for name, stats in self.activation_stats.items():\n            print(f\"  {name}: mean={stats['mean']:.4f} std={stats['std']:.4f} zero={stats['fraction_zero']:.1%}\")\n        print(\"\\nPer-layer gradient stats:\")\n        for name, stats in self.gradient_stats.items():\n            print(f\"  {name}: abs_mean={stats['abs_mean']:.2e} max={stats['max']:.2e}\")\n\n    def remove_hooks(self):\n        for hook in self.hooks:\n            hook.remove()\n        self.hooks.clear()\n```\n",
+      "target_sha256": "8d4a56575018183215877fe86532783d7e5c62bde78efd448a5b87962163db4f"
+    },
+    {
+      "segment_id": "03-13:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 1: The NetworkDebugger Class"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0137",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 2: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 69,
+      "source_sha256": "61f4d3889d8a7cbe82fc9bba7ec140a74c05ac4c53c8a1f6bb85fb2283cd716d",
+      "target": "### 步骤 2：单批次过拟合测试\n",
+      "target_sha256": "7d47fad1b036c9438cdd8b19e01bea61f09acc31ff8c57420cb62b222ca5f65e"
+    },
+    {
+      "segment_id": "03-13:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 2: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0139",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 2: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 70,
+      "source_sha256": "17c04e9f4fa8f835e37a925db6492a8b5ddebe85d0d35748e006a9262ddd5f58",
+      "target": "```python\ndef overfit_one_batch(model, x_batch, y_batch, criterion, lr=0.01, steps=200):\n    optimizer = torch.optim.Adam(model.parameters(), lr=lr)\n    model.train()\n    print(\"\\n=== OVERFIT ONE BATCH TEST ===\")\n    print(f\"Batch size: {x_batch.shape[0]}, Steps: {steps}\")\n\n    for step in range(steps):\n        optimizer.zero_grad()\n        output = model(x_batch)\n        loss = criterion(output, y_batch)\n        loss.backward()\n        optimizer.step()\n\n        if step % 50 == 0 or step == steps - 1:\n            with torch.no_grad():\n                preds = (output > 0).float() if output.shape[-1] == 1 else output.argmax(dim=1)\n                targets = y_batch if y_batch.dim() == 1 else y_batch.squeeze()\n                acc = (preds.squeeze() == targets).float().mean().item()\n            print(f\"  Step {step:3d} | Loss: {loss.item():.6f} | Accuracy: {acc:.1%}\")\n\n    final_loss = loss.item()\n    if final_loss > 0.1:\n        print(f\"\\n  FAIL: Loss did not converge ({final_loss:.4f}). Model or training loop is broken.\")\n        return False\n    print(f\"\\n  PASS: Loss converged to {final_loss:.6f}\")\n    return True\n```\n",
+      "target_sha256": "17c04e9f4fa8f835e37a925db6492a8b5ddebe85d0d35748e006a9262ddd5f58"
+    },
+    {
+      "segment_id": "03-13:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 2: The Overfit-One-Batch Test"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0141",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 3: Learning Rate Finder"
+      ],
+      "ordinal": 71,
+      "source_sha256": "7b4cccffdfa25cca835c97a570c929a1d0152b19e5e54026612a8f90e4abe030",
+      "target": "### 步骤 3：学习率查找器\n",
+      "target_sha256": "3fd4dcea8b48dee5fb1c54a5c753cd23055d30438507eb5b1b110776259af1a0"
+    },
+    {
+      "segment_id": "03-13:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 3: Learning Rate Finder"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0143",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 3: Learning Rate Finder"
+      ],
+      "ordinal": 72,
+      "source_sha256": "33120348ae43f5e3ec87d456674086055792670f2da771b44c08b22e42b0bfba",
+      "target": "```python\ndef find_learning_rate(model, x_data, y_data, criterion, start_lr=1e-7, end_lr=10, steps=100):\n    import copy\n    original_state = copy.deepcopy(model.state_dict())\n    optimizer = torch.optim.SGD(model.parameters(), lr=start_lr)\n    lr_mult = (end_lr / start_lr) ** (1 / steps)\n\n    model.train()\n    results = []\n    best_loss = float(\"inf\")\n    current_lr = start_lr\n\n    print(\"\\n=== LEARNING RATE FINDER ===\")\n\n    for step in range(steps):\n        optimizer.zero_grad()\n        output = model(x_data)\n        loss = criterion(output, y_data)\n\n        if math.isnan(loss.item()) or loss.item() > best_loss * 10:\n            break\n\n        best_loss = min(best_loss, loss.item())\n        results.append((current_lr, loss.item()))\n\n        loss.backward()\n        optimizer.step()\n\n        current_lr *= lr_mult\n        for param_group in optimizer.param_groups:\n            param_group[\"lr\"] = current_lr\n\n    model.load_state_dict(original_state)\n\n    if len(results) < 10:\n        print(\"  Could not complete LR sweep -- loss diverged too quickly\")\n        return results\n\n    min_loss_idx = min(range(len(results)), key=lambda i: results[i][1])\n    suggested_lr = results[max(0, min_loss_idx - 10)][0]\n\n    print(f\"  Swept {len(results)} steps from {start_lr:.0e} to {results[-1][0]:.0e}\")\n    print(f\"  Minimum loss {results[min_loss_idx][1]:.4f} at lr={results[min_loss_idx][0]:.2e}\")\n    print(f\"  Suggested learning rate: {suggested_lr:.2e}\")\n\n    return results\n```\n",
+      "target_sha256": "33120348ae43f5e3ec87d456674086055792670f2da771b44c08b22e42b0bfba"
+    },
+    {
+      "segment_id": "03-13:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 3: Learning Rate Finder"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0145",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 4: Gradient Checker"
+      ],
+      "ordinal": 73,
+      "source_sha256": "547b02d19ac129a536d6fc38c741bcabfc9fb14a285161250c871b15600414b8",
+      "target": "### 步骤 4：梯度检查器\n",
+      "target_sha256": "18b10e36d3f435be1e6e6a4b1c99feb3d0d3705656dd5b9afcb7c2ebf3ae1218"
+    },
+    {
+      "segment_id": "03-13:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 4: Gradient Checker"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0147",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 4: Gradient Checker"
+      ],
+      "ordinal": 74,
+      "source_sha256": "9505cdab18e35a371ede1c380a4eaf1b895af318073546f3efa7aad2d9bc41c9",
+      "target": "```python\ndef _flat_to_multi_index(flat_idx, shape):\n    multi_idx = []\n    remaining = flat_idx\n    for dim in reversed(shape):\n        multi_idx.insert(0, remaining % dim)\n        remaining //= dim\n    return tuple(multi_idx)\n\n\ndef gradient_check(model, x, y, criterion, eps=1e-4):\n    model.train()\n    x_double = x.double()\n    y_double = y.double()\n    model_double = model.double()\n\n    print(\"\\n=== GRADIENT CHECK ===\")\n    overall_max_diff = 0\n    checked = 0\n\n    for name, param in model_double.named_parameters():\n        if not param.requires_grad:\n            continue\n\n        layer_max_diff = 0\n\n        model_double.zero_grad()\n        output = model_double(x_double)\n        loss = criterion(output, y_double)\n        loss.backward()\n        analytical_grad = param.grad.clone()\n\n        num_checks = min(5, param.numel())\n        for i in range(num_checks):\n            idx = _flat_to_multi_index(i, param.shape)\n            original = param.data[idx].item()\n\n            param.data[idx] = original + eps\n            with torch.no_grad():\n                loss_plus = criterion(model_double(x_double), y_double).item()\n\n            param.data[idx] = original - eps\n            with torch.no_grad():\n                loss_minus = criterion(model_double(x_double), y_double).item()\n\n            param.data[idx] = original\n\n            numerical = (loss_plus - loss_minus) / (2 * eps)\n            analytical = analytical_grad[idx].item()\n\n            denom = max(abs(numerical), abs(analytical), 1e-8)\n            rel_diff = abs(numerical - analytical) / denom\n\n            layer_max_diff = max(layer_max_diff, rel_diff)\n            checked += 1\n\n        overall_max_diff = max(overall_max_diff, layer_max_diff)\n        status = \"OK\" if layer_max_diff < 1e-5 else \"MISMATCH\"\n        print(f\"  {name}: max_rel_diff={layer_max_diff:.2e} [{status}]\")\n\n    model.float()\n\n    print(f\"\\n  Checked {checked} parameters\")\n    if overall_max_diff < 1e-5:\n        print(\"  PASS: Gradients match (rel_diff < 1e-5)\")\n    elif overall_max_diff < 1e-3:\n        print(\"  WARN: Small differences (1e-5 < rel_diff < 1e-3)\")\n    else:\n        print(\"  FAIL: Gradient mismatch detected (rel_diff > 1e-3)\")\n    return overall_max_diff\n```\n",
+      "target_sha256": "9505cdab18e35a371ede1c380a4eaf1b895af318073546f3efa7aad2d9bc41c9"
+    },
+    {
+      "segment_id": "03-13:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 4: Gradient Checker"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0149",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 5: Deliberately Broken Networks"
+      ],
+      "ordinal": 75,
+      "source_sha256": "17cdd9dc14d1d919bb310af06a31b6434683915ea65ccacfda4e5607012ae5f6",
+      "target": "### 步骤 5：有意构造的故障网络\n",
+      "target_sha256": "25798eaa19f9319d66e033d3771b203b2f602b0960f2ed15de47f59a1aeaf7e7"
+    },
+    {
+      "segment_id": "03-13:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 5: Deliberately Broken Networks"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0151",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 5: Deliberately Broken Networks"
+      ],
+      "ordinal": 76,
+      "source_sha256": "3c230d5632fbb7578e2b124a5b850fc993b59ebeaf5cf1e05cd5e734ee0ebc97",
+      "target": "现在，将工具包用于故障网络，逐个诊断。\n",
+      "target_sha256": "1e500c79af3d54c01659dc82c62f2f20dd16f767fcaf55a1730114d8c487c2e7"
+    },
+    {
+      "segment_id": "03-13:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 5: Deliberately Broken Networks"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0153",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 5: Deliberately Broken Networks"
+      ],
+      "ordinal": 77,
+      "source_sha256": "7ebb2a7c9edcd2be8511b740e2ef4f7e519fc4d46b8990344ce45e5d3f26d96c",
+      "target": "```python\ndef demo_broken_networks():\n    torch.manual_seed(42)\n    x = torch.randn(64, 10)\n    y = (x[:, 0] > 0).long()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"BUG 1: Learning rate too high (lr=10)\")\n    print(\"=\" * 60)\n    model1 = nn.Sequential(nn.Linear(10, 32), nn.ReLU(), nn.Linear(32, 2))\n    debugger1 = NetworkDebugger(model1)\n    optimizer1 = torch.optim.SGD(model1.parameters(), lr=10.0)\n    criterion = nn.CrossEntropyLoss()\n    for step in range(20):\n        optimizer1.zero_grad()\n        out = model1(x)\n        loss = criterion(out, y)\n        debugger1.record_loss(loss.item())\n        loss.backward()\n        optimizer1.step()\n    debugger1.print_report()\n    debugger1.remove_hooks()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"BUG 2: Dead ReLUs from bad initialization\")\n    print(\"=\" * 60)\n    model2 = nn.Sequential(nn.Linear(10, 32), nn.ReLU(), nn.Linear(32, 32), nn.ReLU(), nn.Linear(32, 2))\n    with torch.no_grad():\n        for m in model2.modules():\n            if isinstance(m, nn.Linear):\n                m.weight.fill_(-1.0)\n                m.bias.fill_(-5.0)\n    debugger2 = NetworkDebugger(model2)\n    optimizer2 = torch.optim.Adam(model2.parameters(), lr=1e-3)\n    for step in range(50):\n        optimizer2.zero_grad()\n        out = model2(x)\n        loss = criterion(out, y)\n        debugger2.record_loss(loss.item())\n        loss.backward()\n        optimizer2.step()\n    debugger2.print_report()\n    debugger2.remove_hooks()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"BUG 3: Missing zero_grad (gradients accumulate)\")\n    print(\"=\" * 60)\n    model3 = nn.Sequential(nn.Linear(10, 32), nn.ReLU(), nn.Linear(32, 2))\n    debugger3 = NetworkDebugger(model3)\n    optimizer3 = torch.optim.SGD(model3.parameters(), lr=0.01)\n    for step in range(50):\n        out = model3(x)\n        loss = criterion(out, y)\n        debugger3.record_loss(loss.item())\n        loss.backward()\n        optimizer3.step()\n    debugger3.print_report()\n    debugger3.remove_hooks()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"HEALTHY NETWORK: Correct setup for comparison\")\n    print(\"=\" * 60)\n    model_good = nn.Sequential(nn.Linear(10, 32), nn.ReLU(), nn.Linear(32, 2))\n    debugger_good = NetworkDebugger(model_good)\n    optimizer_good = torch.optim.Adam(model_good.parameters(), lr=1e-3)\n    for step in range(50):\n        optimizer_good.zero_grad()\n        out = model_good(x)\n        loss = criterion(out, y)\n        debugger_good.record_loss(loss.item())\n        loss.backward()\n        optimizer_good.step()\n    debugger_good.print_report()\n    debugger_good.remove_hooks()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"OVERFIT-ONE-BATCH TEST (healthy model)\")\n    print(\"=\" * 60)\n    model_test = nn.Sequential(nn.Linear(10, 32), nn.ReLU(), nn.Linear(32, 2))\n    overfit_one_batch(model_test, x[:8], y[:8], criterion)\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"LEARNING RATE FINDER\")\n    print(\"=\" * 60)\n    model_lr = nn.Sequential(nn.Linear(10, 32), nn.ReLU(), nn.Linear(32, 2))\n    find_learning_rate(model_lr, x, y, criterion)\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"GRADIENT CHECK\")\n    print(\"=\" * 60)\n    model_grad = nn.Sequential(nn.Linear(10, 8), nn.ReLU(), nn.Linear(8, 2))\n    gradient_check(model_grad, x[:4], y[:4], criterion)\n```\n",
+      "target_sha256": "7ebb2a7c9edcd2be8511b740e2ef4f7e519fc4d46b8990344ce45e5d3f26d96c"
+    },
+    {
+      "segment_id": "03-13:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Build It",
+        "### Step 5: Deliberately Broken Networks"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0155",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "03-13:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0157",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### PyTorch Built-in Tools"
+      ],
+      "ordinal": 79,
+      "source_sha256": "0de4e18e53c52afd5ff3662397d5b7fe90967f2407d359b48cde880d9e5b218b",
+      "target": "### PyTorch 内置工具\n",
+      "target_sha256": "80d7f46611f0f89d51f9160d7e03ca7cf097228331400121fb2c06485afeb464"
+    },
+    {
+      "segment_id": "03-13:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### PyTorch Built-in Tools"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0159",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### PyTorch Built-in Tools"
+      ],
+      "ordinal": 80,
+      "source_sha256": "d6a52aa1af6f3e75fc075924257fbc8fed4822fc7f32235e0e097c93d92699b1",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\nmodel = nn.Sequential(\n    nn.Linear(768, 256),\n    nn.ReLU(),\n    nn.Linear(256, 10),\n)\n\nwith torch.autograd.detect_anomaly():\n    output = model(input_tensor)\n    loss = criterion(output, target)\n    loss.backward()\n\nfor name, param in model.named_parameters():\n    if param.grad is not None:\n        print(f\"{name}: grad_mean={param.grad.abs().mean():.2e}\")\n```\n",
+      "target_sha256": "d6a52aa1af6f3e75fc075924257fbc8fed4822fc7f32235e0e097c93d92699b1"
+    },
+    {
+      "segment_id": "03-13:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### PyTorch Built-in Tools"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0161",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### Weights & Biases Integration"
+      ],
+      "ordinal": 81,
+      "source_sha256": "800ceb007419720742755d350f39f8ebef0f04fd8e8802664524366e0930125c",
+      "target": "### 集成 Weights & Biases\n",
+      "target_sha256": "d95a7f2cd00faea0b5175e3593fd0e53017ff544ec4c15fb60700625bb196f0c"
+    },
+    {
+      "segment_id": "03-13:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### Weights & Biases Integration"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0163",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### Weights & Biases Integration"
+      ],
+      "ordinal": 82,
+      "source_sha256": "d99349bdc372adb51b7d888a99aecec45ce28460d66630e534c1b2348d070ae1",
+      "target": "```python\nimport wandb\n\nwandb.init(project=\"debug-training\")\n\nfor epoch in range(100):\n    loss = train_one_epoch()\n    wandb.log({\n        \"loss\": loss,\n        \"lr\": optimizer.param_groups[0][\"lr\"],\n        \"grad_norm\": torch.nn.utils.clip_grad_norm_(model.parameters(), float(\"inf\")),\n    })\n\n    for name, param in model.named_parameters():\n        if param.grad is not None:\n            wandb.log({f\"grad/{name}\": wandb.Histogram(param.grad.cpu().numpy())})\n```\n",
+      "target_sha256": "d99349bdc372adb51b7d888a99aecec45ce28460d66630e534c1b2348d070ae1"
+    },
+    {
+      "segment_id": "03-13:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### Weights & Biases Integration"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0165",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### TensorBoard"
+      ],
+      "ordinal": 83,
+      "source_sha256": "ea1fdc3bd1a5fc70c2c516562bf074a65d56a8d0c0e6a79f141e80e0098faff5",
+      "target": "### TensorBoard\n",
+      "target_sha256": "ea1fdc3bd1a5fc70c2c516562bf074a65d56a8d0c0e6a79f141e80e0098faff5"
+    },
+    {
+      "segment_id": "03-13:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### TensorBoard"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0167",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### TensorBoard"
+      ],
+      "ordinal": 84,
+      "source_sha256": "ca46848ac860c8d35ef145115d0894081e563c22a6f2db318d09507fad00ae51",
+      "target": "```python\nfrom torch.utils.tensorboard import SummaryWriter\n\nwriter = SummaryWriter(\"runs/debug_experiment\")\n\nfor epoch in range(100):\n    loss = train_one_epoch()\n    writer.add_scalar(\"Loss/train\", loss, epoch)\n\n    for name, param in model.named_parameters():\n        writer.add_histogram(f\"weights/{name}\", param, epoch)\n        if param.grad is not None:\n            writer.add_histogram(f\"gradients/{name}\", param.grad, epoch)\n```\n",
+      "target_sha256": "ca46848ac860c8d35ef145115d0894081e563c22a6f2db318d09507fad00ae51"
+    },
+    {
+      "segment_id": "03-13:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### TensorBoard"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0169",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### The Debug Checklist (Before Full Training)"
+      ],
+      "ordinal": 85,
+      "source_sha256": "f339747e2f1c53e1808e81650c31655f38be5cebf5a693ab81912ffec40392f7",
+      "target": "### 调试检查清单（完整训练之前）\n",
+      "target_sha256": "5dd4095e4651fcc1e0989a7b233803fac23ef684f4ea0ec9e70b9a48bdfb7fdb"
+    },
+    {
+      "segment_id": "03-13:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### The Debug Checklist (Before Full Training)"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0171",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### The Debug Checklist (Before Full Training)"
+      ],
+      "ordinal": 86,
+      "source_sha256": "8f5ff8bff1a6095cc319a63be00a2698757d6899aa0c301b6624260e1e3ec9fd",
+      "target": "1. 运行单批次过拟合测试。如果失败，就停止。\n2. 打印模型概览，验证参数量是否合理。\n3. 用随机数据执行一次前向传播，检查输出形状。\n4. 训练 5 轮，验证损失是否下降。\n5. 检查激活值统计量，确保没有失活层或爆炸现象。\n6. 检查梯度流，确保没有梯度消失或爆炸。\n7. 验证数据管线，打印 5 个带标签的随机样本。\n",
+      "target_sha256": "c484b464862ff5a55e32c549ec613469f7f1f9bab820fd6d8f3f9fe95559ccb8"
+    },
+    {
+      "segment_id": "03-13:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Use It",
+        "### The Debug Checklist (Before Full Training)"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0173",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Ship It"
+      ],
+      "ordinal": 87,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "03-13:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Ship It"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0175",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Ship It"
+      ],
+      "ordinal": 88,
+      "source_sha256": "ae44d53c41fdae5c8f39d27903f98c97373c034213d6e0b64a1db51c26be1e23",
+      "target": "本课产出：\n- `outputs/prompt-nn-debugger.md`：用于诊断神经网络训练故障的提示词\n- `outputs/skill-debug-checklist.md`：用于调试训练问题的决策树检查清单\n",
+      "target_sha256": "297919eeb91ea3338a32858fd9b1a1aac4033bd44b6d47e3fc43ac8832468f88"
+    },
+    {
+      "segment_id": "03-13:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Ship It"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0177",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Ship It"
+      ],
+      "ordinal": 89,
+      "source_sha256": "cf0c57193fe26a3add789c03141a0ae3b2c0feafa46d40a7ff76fef64c433b53",
+      "target": "调试的关键部署模式：\n- 在生产训练脚本中添加监测钩子\n- 每 N 步将激活值和梯度统计量记录到 W&B 或 TensorBoard\n- 为 NaN 损失、失活神经元（>80% 为零）或梯度爆炸实现自动告警\n- 改变架构或数据管线时，始终运行单批次过拟合测试\n",
+      "target_sha256": "f5f1383891045810547bdd9702a41ff178450c9e431476deebe7e00b8d054f44"
+    },
+    {
+      "segment_id": "03-13:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Ship It"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0179",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 90,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "03-13:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0181",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 91,
+      "source_sha256": "75750dff652b56db867198fe2b5097cfaa001a06631bed267f167aad70bf1590",
+      "target": "1. **添加梯度爆炸检测器。** 修改 `NetworkDebugger`，检测梯度何时超过阈值，并自动建议梯度裁剪值。在一个没有归一化的 20 层网络上测试。\n",
+      "target_sha256": "7640ce9646776441ac7c9e5ee0ff69e4767a0e396f15d6dd888a3dc1e717d8fb"
+    },
+    {
+      "segment_id": "03-13:b0182",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 91,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0183",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 92,
+      "source_sha256": "e9cf32b148d5acd926bc5714e4199b3326cfedf492380649428b42c7401e4fdc",
+      "target": "2. **构建失活神经元恢复器。** 编写函数，识别失活的 ReLU 神经元（始终输出 0），并用 Kaiming 初始化重新初始化它们的输入权重。展示它能恢复一个 >70% 神经元已失活的网络。\n",
+      "target_sha256": "fd1467fcbe32d098a53fc2f70fd8691859ab2da1314df99258d8a4c5226bf374"
+    },
+    {
+      "segment_id": "03-13:b0184",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 92,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0185",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 93,
+      "source_sha256": "a8f3cf5277a7b9f388f32cc1dc3e8085c71f9c0bd9ef3146ad92b914f1caff98",
+      "target": "3. **实现带绘图功能的学习率查找器。** 扩展 `find_learning_rate`，将结果保存为 CSV，再编写单独的脚本读取 CSV，并使用 matplotlib 显示 LR 与损失曲线。找出 ResNet-18 在 CIFAR-10 上的最佳 LR。\n",
+      "target_sha256": "dfdb7203d739920e6d3040f8fba95162c09b777b44ad2633e1039f41a17748cc"
+    },
+    {
+      "segment_id": "03-13:b0186",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 93,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0187",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 94,
+      "source_sha256": "b49e3926c70248b5246c2db41075d65904bd20d6c9b430ec9277be37a3a6c286",
+      "target": "4. **创建数据管线验证器。** 编写函数，检查训练集与测试集之间的重复样本、标签分布不平衡（比例 >10:1）、输入归一化（均值接近 0、标准差接近 1），以及数据中的 NaN/Inf 值。在有意损坏的数据集上运行它。\n",
+      "target_sha256": "9c19648fe0f7705cb059cf06d66c711572269631ca3edc6a2c178d4924273561"
+    },
+    {
+      "segment_id": "03-13:b0188",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 94,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0189",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 95,
+      "source_sha256": "3f857bbaa5f3daf0da338505956f0a0fa7b86575eed73985cb7f07b7b802b8c4",
+      "target": "5. **调试一次真实故障。** 使用第 10 课的迷你框架，引入一个隐蔽的缺陷（例如，在反向传播中转置权重矩阵），再通过梯度检查准确定位哪个参数的梯度不正确。记录调试过程。\n",
+      "target_sha256": "6bce9a6271d6b0716da8fe5ca9ae484232ab6793939b2709e67eea0b8861e151"
+    },
+    {
+      "segment_id": "03-13:b0190",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Exercises"
+      ],
+      "ordinal": 95,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0191",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Key Terms"
+      ],
+      "ordinal": 96,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "03-13:b0192",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Key Terms"
+      ],
+      "ordinal": 96,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0193",
+      "kind": "table",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Key Terms"
+      ],
+      "ordinal": 97,
+      "source_sha256": "3116d286cd9c63f1d5ff037ba3578992b87d90f63d4d35e2db65d630e4b06534",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 静默缺陷 | “能运行，但结果很差” | 不报错却降低模型质量的缺陷，是 ML 中占主导的故障模式 |\n| 失活的 ReLU | “神经元死了” | 输入始终为负的 ReLU 神经元，因此它永久输出 0，并接收 0 梯度 |\n| 梯度消失 | “前几层停止学习” | 梯度经过各层时呈指数级缩小，使前几层权重实际上被冻结 |\n| 梯度爆炸 | “损失变成了 NaN” | 梯度经过各层时呈指数级增长，导致权重更新大到溢出 |\n| 梯度检查 | “验证反向传播是否正确” | 比较反向传播的解析梯度与有限差分的数值梯度 |\n| 单批次过拟合 | “最重要的调试测试” | 在单个小批次上训练，验证模型确实能够学习；如果不能，就存在根本性问题 |\n| LR 查找器 | “扫描以找到合适的学习率” | 在一轮训练中以指数方式增加学习率，并选择损失即将发散之前的学习率 |\n| 数据泄漏 | “测试数据泄漏进训练” | 测试集的信息污染训练过程，导致准确率虚高 |\n| 激活值统计量 | “监测层的健康状况” | 跟踪每层输出的均值、标准差和零值比例，检测失活、饱和或爆炸的神经元 |\n| 梯度裁剪 | “限制梯度幅度” | 当梯度范数超过阈值时将其缩小，防止梯度更新爆炸 |\n",
+      "target_sha256": "431fa4454132538926b0e11a0dbd2dca921fe6e9fb15f6e61d3315f0f82c5a3f"
+    },
+    {
+      "segment_id": "03-13:b0194",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Key Terms"
+      ],
+      "ordinal": 97,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0195",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Further Reading"
+      ],
+      "ordinal": 98,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "03-13:b0196",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Further Reading"
+      ],
+      "ordinal": 98,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "03-13:b0197",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging Neural Networks",
+        "## Further Reading"
+      ],
+      "ordinal": 99,
+      "source_sha256": "43f491462fdc8eb9f519053d0d43432a96c2879e4f558cb11fa0cae2658833a5",
+      "target": "- Smith，\"Cyclical Learning Rates for Training Neural Networks\" (2017)：介绍学习率范围测试（LR 查找器）的论文\n- Northcutt 等人，\"Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks\" (2021)：说明 ImageNet、CIFAR-10 及其他主要基准中有 3-6% 的标签错误\n- Zhang 等人，\"Understanding Deep Learning Requires Rethinking Generalization\" (2017)：说明神经网络能记忆随机标签的论文，这也是单批次过拟合测试有效的原因\n- PyTorch 关于 `torch.autograd.detect_anomaly` 和 `torch.autograd.set_detect_anomaly` 的文档，介绍内置 NaN/Inf 检测\n",
+      "target_sha256": "32dc24c7a919c870fea56f350f33685399d03f8f598ce7dff33806604cfd6526"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+  "additional_glossary_sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "05665df2222d82cff219676f1dbda7591ef3d6627e08e5843ce9522cc3554dd9",
+  "assets": [],
+  "quantity_mappings": [],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "commit": "c5ec4ba217dee6808d861b596e073109ce642c0e",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505"
+    }
+  ]
+}
