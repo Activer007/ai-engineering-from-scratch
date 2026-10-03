@@ -1,0 +1,1689 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-23",
+  "source_path": "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "635cf7a16ab07efbab5c966441b6f945ddc474d6",
+  "source_sha256": "b8b7d9323c9387e7f6b96b5590b767631de766b169b081a128bc70c9648b7372",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/docs/zh.md",
+  "target_sha256": "a47731e54657b34180889ab7e725c80da516299d0f0dee997925a0c168851148",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-03"
+  },
+  "segments": [
+    {
+      "segment_id": "05-23:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG"
+      ],
+      "ordinal": 1,
+      "source_sha256": "402e7b741fda0450c47898d129931cf75463125f7f7e70c6b1a3fa7adc3990af",
+      "target": "# RAG 分块策略\n",
+      "target_sha256": "dd01586cfbadb2f7ce03bba174de78b4dc4052ac43b24446438699dc8b40de86"
+    },
+    {
+      "segment_id": "05-23:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Chunking Strategies for RAG"
+      ],
+      "ordinal": 2,
+      "source_sha256": "7129347d444f8f562f80df41eec3127067cb392e8534fe5d1a81fd3cde90227d",
+      "target": "> 分块（chunking）配置对检索质量的影响，与嵌入（embedding）模型的选择同样重要（Vectara NAACL 2025）。分块做错了，再多重排序也救不了。\n",
+      "target_sha256": "943072a880596d68ad241a85d4e592af071e13a3719513bf1da08bba1985e6a5"
+    },
+    {
+      "segment_id": "05-23:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG"
+      ],
+      "ordinal": 3,
+      "source_sha256": "4159e2d0a72b4901fd589570bd680ee73ff69491297306038f4c7f8fca5e2da9",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 14（信息检索），阶段 5 · 22（嵌入模型）\n**Time:** ~60 分钟\n",
+      "target_sha256": "cff378b348e09b6d94757823062d80ab9761cfb047cce6ede439179c1ffc7a8c"
+    },
+    {
+      "segment_id": "05-23:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "05-23:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "17f6dd54edacd55a64bc69de6601f653370e118b2cfedb9bc087ab2e72590390",
+      "target": "你把一份 50 页的合同放进检索增强生成（RAG）系统。用户问：“终止条款是什么？”检索器却返回了封面。为什么？因为模型是用 512-token（词元）文本块训练的，而终止条款位于文档第 20 页处，被分页截断，局部又没有将它与查询关联起来的关键词。\n",
+      "target_sha256": "b5a78ad168b4aa4013fd069dd28e836336e91b5a19e96a74079541227f007928"
+    },
+    {
+      "segment_id": "05-23:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f0df5a76c3dda8fb836c01db65334e3970a100136c0fbc24fea891a34f3c1a5a",
+      "target": "解决办法不是“买个更好的嵌入模型”，而是做好分块。块要多大？是否重叠？在哪里切分？是否附带周围上下文？\n",
+      "target_sha256": "ecbf74e7917f3feee931fffd1e4dda06ba70835510238706bc25d443108db6b0"
+    },
+    {
+      "segment_id": "05-23:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "d37abf22089cc7078257ee447a641722852a781ee511282fcd06656045304549",
+      "target": "2026 年二月的基准测试给出了令人意外的结果：\n",
+      "target_sha256": "380bdb714394638b7ec4bf9b993aceb4a7cd4cb926892fc4b68919e7078b9ec6"
+    },
+    {
+      "segment_id": "05-23:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0015",
+      "kind": "list",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "8957bae2cb4b28f94db5a02813fc6ea8caf8524cac2ae59a60ecdcd105df730a",
+      "target": "- Vectara 的 2026 年研究：递归式 512-token 分块胜过语义分块，准确率为 69% → 54%。\n- SPLADE + Mistral-8B 在 Natural Questions 上的结果：重叠没有带来可测量的收益。\n- 上下文悬崖：上下文达到约 2,500 tokens 时，回答质量急剧下降。\n",
+      "target_sha256": "4abd08b4dbdcc3dbbf9669e4f65b38923a8e0af7fe2e3fd7a9bd2d240675dfcf"
+    },
+    {
+      "segment_id": "05-23:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "49e0209393aee00fa937ffd9d63e4835284daa2cd336ce7abf4acb3fa13fb224",
+      "target": "“显而易见”的答案（语义分块、20% 重叠、1000 tokens）往往是错的。本课将帮助你建立对六种策略的直觉，并告诉你何时该选哪种。\n",
+      "target_sha256": "c9ce2920f99755b1cd7ac4f9baa2b97af53b5e0435f49515f26f9a020530c93c"
+    },
+    {
+      "segment_id": "05-23:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "05-23:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "46ab441bccda86b66e5bb4fd79cbaa41f30d037a09ae275ef0986317121c8301",
+      "target": "![在同一段文本上展示六种分块策略](../assets/chunking.svg)\n",
+      "target_sha256": "e50b66c9f477ff0bbf1c0d7aaec4dab942a0e0af04dd26b6b58f866fa9ae2586"
+    },
+    {
+      "segment_id": "05-23:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "8fec3020b85671c747408e4a98d9bbba90625692f62a94ece422c63817d45521",
+      "target": "**固定长度分块。** 每隔 N 个字符或 tokens 切分一次。这是最简单的基线。它会在句子中间截断。压缩效果好，连贯性差。\n",
+      "target_sha256": "fa74529ac1255a37727df08122c0945673b1739de6ab731166e3845dceface21"
+    },
+    {
+      "segment_id": "05-23:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "8bb994b578148d26a346c7793775e86753ea09dc4d0228608e4f49bc4ea54318",
+      "target": "**递归分块。** 使用 LangChain 的 `RecursiveCharacterTextSplitter`。先尝试按 `\\n\\n` 切分，再按 `\\n`、`.`，最后按空格切分。可以顺畅地逐级回退。这是 2026 年的默认选择。\n",
+      "target_sha256": "46011da780368c2d815d2b505e5b89493efb56e446b42a13b9b9dbb54f1129dc"
+    },
+    {
+      "segment_id": "05-23:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "918182a4f4e01ce64c010bb8c79e7630bd8c628a8b980c054fb5e8f3095be593",
+      "target": "**语义分块。** 为每个句子生成嵌入。计算相邻句子之间的余弦相似度，在相似度低于阈值处切分。它能保持主题连贯，但速度较慢；有时会生成只有 40-token 的微小片段，损害检索效果。\n",
+      "target_sha256": "4f2bcd180e27fa975dc92bc9c976c810bc6dba3c1c5012f7028ff8fbcf4029f1"
+    },
+    {
+      "segment_id": "05-23:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "5015f499bbb1b47143426af1d2e6f1ac83366ff00cbf59e44c36be5396f6a587",
+      "target": "**句子分块。** 按句子边界切分。每块一个句子，或使用包含 N 个句子的窗口。在长度不超过 ~5k tokens（k 表示千）时，效果可媲美语义分块，成本却只需一小部分。\n",
+      "target_sha256": "247ebd4dcd6e82ae42120f0589aae2c02c5427643787b25192210bf96be148f6"
+    },
+    {
+      "segment_id": "05-23:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "3a609ad2d5b6f16eacfac506d44434465f50482e1f8276a84befa0e3f4507738",
+      "target": "**父文档。** 保存用于检索的小子块，*同时* 保存用于提供上下文的较大父块。按子块检索，返回父块。其效果退化较为平缓：即使子块质量不好，仍能返回合理的父块。\n",
+      "target_sha256": "3b0a9080f030bf80d79f34ea607b13385829ae5d17212cc5f46dbe953abe8804"
+    },
+    {
+      "segment_id": "05-23:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 17,
+      "source_sha256": "a41568e083ad1bccb94b09d817e32c8452d3296c04695336bedf1930efbb3ed4",
+      "target": "**后期分块（2024）。** 先在 token 层面为整个文档生成嵌入，再将 token 嵌入池化为文本块嵌入。这能保留跨块上下文。适用于长上下文嵌入模型（BGE-M3、Jina v3），但计算开销更高。\n",
+      "target_sha256": "7bc7d6645ce61d05f43960a0a40f0aa58ab678bd88125162e139a981c29aa13b"
+    },
+    {
+      "segment_id": "05-23:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 18,
+      "source_sha256": "0e8bcaae80fe17d7448c04f66d66a970724339daed220a90d818288c13ebdfaf",
+      "target": "**上下文检索（Anthropic，2024）。** 在每个文本块前加上一段由大语言模型（LLM）生成的摘要，说明该块在文档中的位置（“此块是终止条款的第 3.2 节……”）。在 Anthropic 自己的基准测试中，检索效果提升了 35-50%。建立索引的成本较高。\n",
+      "target_sha256": "baf499648ce000d1f6dfe44968d0569af2fa633d7b757a9b0114d975d786df8c"
+    },
+    {
+      "segment_id": "05-23:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 19,
+      "source_sha256": "5b6540324ea4c0ad58dff2367c6465b356de6c37899837ee1b9a73704c865f69",
+      "target": "### 胜过所有默认配置的规则\n",
+      "target_sha256": "739572b35c514d1bb090a5d52ac5445322bc581f7b32a34d35766063440fccde"
+    },
+    {
+      "segment_id": "05-23:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 20,
+      "source_sha256": "d8923c19437494a48e7f9d8725ebc6f41de26346b5610968bd071ff782f286f4",
+      "target": "让文本块大小与查询类型匹配：\n",
+      "target_sha256": "eca192f83114c4c3c520d4d099b44022f68cf30926bac98e1ca86b849dee8c8e"
+    },
+    {
+      "segment_id": "05-23:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0041",
+      "kind": "table",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 21,
+      "source_sha256": "dfb39f2063e9221ece2f5ee57af56a118b8bd479e4fb6868a698085cc49fb6a1",
+      "target": "| 查询类型 | 文本块大小 |\n|------------|-----------|\n| 事实型（“CEO 叫什么名字？”） | 256-512 tokens |\n| 分析型 / 多跳 | 512-1024 tokens |\n| 理解整个章节 | 1024-2048 tokens |\n",
+      "target_sha256": "00fa992619214f6d8d910de206ff25add31887762a8a422a708bb3b51711bcbb"
+    },
+    {
+      "segment_id": "05-23:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 22,
+      "source_sha256": "02bd8ea55e29be9954cc7d3a68ebd9a6b9dc185c99f9454497e85830cd10f1c0",
+      "target": "这是 NVIDIA 的 2026 年基准测试结论。文本块应大到足以容纳答案及其局部上下文，又应小到能让检索器返回的 top-K 结果聚焦于答案，而不是上下文噪声。\n",
+      "target_sha256": "af4564de702aeeaa4da72f2dffae2d606c79ed1bcdfc0d6808a6717f41edcd08"
+    },
+    {
+      "segment_id": "05-23:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 23,
+      "source_sha256": "ff4e282cf5c4fef551d5c3f2996f9ed29878b449d18145ff8467f2ae5ccba06c",
+      "target": "```figure\nn5-chunk-cuts\n```\n",
+      "target_sha256": "ff4e282cf5c4fef551d5c3f2996f9ed29878b449d18145ff8467f2ae5ccba06c"
+    },
+    {
+      "segment_id": "05-23:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## The Concept",
+        "### The rule that beats every default"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0047",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It"
+      ],
+      "ordinal": 24,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "05-23:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 1: fixed and recursive chunking"
+      ],
+      "ordinal": 25,
+      "source_sha256": "6fc9f2262f96d7af1c8affccad9b1cb9649154aef5c164da45416c0de54eab49",
+      "target": "### 步骤 1：固定长度分块与递归分块\n",
+      "target_sha256": "62f0c7cf1688459efd56dbcf6c1dcc3f4e1311bf4d2c4629682ad51cfb7e4dd1"
+    },
+    {
+      "segment_id": "05-23:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 1: fixed and recursive chunking"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 1: fixed and recursive chunking"
+      ],
+      "ordinal": 26,
+      "source_sha256": "9bf46ad0459d7513fa89fcf68175c99f97a11781f1337f0b70b78f30aa7267bc",
+      "target": "```python\ndef chunk_fixed(text, size=512, overlap=0):\n    step = size - overlap\n    return [text[i:i + size] for i in range(0, len(text), step)]\n\n\ndef chunk_recursive(text, size=512, seps=(\"\\n\\n\", \"\\n\", \". \", \" \")):\n    if len(text) <= size:\n        return [text]\n    for sep in seps:\n        if sep not in text:\n            continue\n        parts = text.split(sep)\n        chunks = []\n        buf = \"\"\n        for p in parts:\n            if len(p) > size:\n                if buf:\n                    chunks.append(buf)\n                    buf = \"\"\n                chunks.extend(chunk_recursive(p, size=size, seps=seps[1:] or (\" \",)))\n                continue\n            candidate = buf + sep + p if buf else p\n            if len(candidate) <= size:\n                buf = candidate\n            else:\n                if buf:\n                    chunks.append(buf)\n                buf = p\n        if buf:\n            chunks.append(buf)\n        return [c for c in chunks if c.strip()]\n    return chunk_fixed(text, size)\n```\n",
+      "target_sha256": "9bf46ad0459d7513fa89fcf68175c99f97a11781f1337f0b70b78f30aa7267bc"
+    },
+    {
+      "segment_id": "05-23:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 1: fixed and recursive chunking"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 2: semantic chunking"
+      ],
+      "ordinal": 27,
+      "source_sha256": "a242dea2adcce8085e8d9796fe7cc367130535413e48d5fd6d889065ac27f134",
+      "target": "### 步骤 2：语义分块\n",
+      "target_sha256": "a236dddaf57e0b6bb86394ed1044c8908517eef8bbe619c60b0522c2d7270fac"
+    },
+    {
+      "segment_id": "05-23:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 2: semantic chunking"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 2: semantic chunking"
+      ],
+      "ordinal": 28,
+      "source_sha256": "40b02ddce6b4aa5da59d3bea151206e14bdc133446b4abfd01b06664e2fec118",
+      "target": "```python\ndef chunk_semantic(text, encoder, threshold=0.6, min_chars=200, max_chars=2048):\n    sentences = split_sentences(text)\n    if not sentences:\n        return []\n    embs = encoder.encode(sentences, normalize_embeddings=True)\n    chunks = [[sentences[0]]]\n    for i in range(1, len(sentences)):\n        sim = float(embs[i] @ embs[i - 1])\n        current_len = sum(len(s) for s in chunks[-1])\n        if sim < threshold and current_len >= min_chars:\n            chunks.append([sentences[i]])\n        else:\n            chunks[-1].append(sentences[i])\n\n    result = []\n    for group in chunks:\n        text_group = \" \".join(group)\n        if len(text_group) > max_chars:\n            result.extend(chunk_recursive(text_group, size=max_chars))\n        else:\n            result.append(text_group)\n    return result\n```\n",
+      "target_sha256": "40b02ddce6b4aa5da59d3bea151206e14bdc133446b4abfd01b06664e2fec118"
+    },
+    {
+      "segment_id": "05-23:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 2: semantic chunking"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 2: semantic chunking"
+      ],
+      "ordinal": 29,
+      "source_sha256": "2af14d4655565ef36773beac674ed75eabd647a58efa7b4865c54d8b98765e58",
+      "target": "针对你的领域调节 `threshold`。太高 → 碎片过多。太低 → 只剩一个巨大的文本块。\n",
+      "target_sha256": "6db9013f5befa48e6baee72cb37a7e741c58461eddbb9d90fd128a3364dd063e"
+    },
+    {
+      "segment_id": "05-23:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 2: semantic chunking"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 3: parent-document"
+      ],
+      "ordinal": 30,
+      "source_sha256": "e0e00188f1295fb27a975618ea17cdecd728089e5feca83f6e9c680d74b5d41f",
+      "target": "### 步骤 3：父文档\n",
+      "target_sha256": "7d3f014abab5659c2c4b6521c7f848ff212462ff60fa7e748570bde9486eb047"
+    },
+    {
+      "segment_id": "05-23:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 3: parent-document"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 3: parent-document"
+      ],
+      "ordinal": 31,
+      "source_sha256": "60aadb59da49295965a10cc22798a9c181d8873cd11fb8388d12aa68bc175b34",
+      "target": "```python\ndef chunk_parent_child(text, parent_size=2048, child_size=256):\n    parents = chunk_recursive(text, size=parent_size)\n    mapping = []\n    for p_idx, parent in enumerate(parents):\n        children = chunk_recursive(parent, size=child_size)\n        for child in children:\n            mapping.append({\"child\": child, \"parent_idx\": p_idx, \"parent\": parent})\n    return mapping\n\n\ndef retrieve_parent(child_query, mapping, encoder, top_k=3):\n    child_embs = encoder.encode([m[\"child\"] for m in mapping], normalize_embeddings=True)\n    q_emb = encoder.encode([child_query], normalize_embeddings=True)[0]\n    scores = child_embs @ q_emb\n    top = np.argsort(-scores)[:top_k]\n    seen, parents = set(), []\n    for i in top:\n        if mapping[i][\"parent_idx\"] not in seen:\n            parents.append(mapping[i][\"parent\"])\n            seen.add(mapping[i][\"parent_idx\"])\n    return parents\n```\n",
+      "target_sha256": "60aadb59da49295965a10cc22798a9c181d8873cd11fb8388d12aa68bc175b34"
+    },
+    {
+      "segment_id": "05-23:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 3: parent-document"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 3: parent-document"
+      ],
+      "ordinal": 32,
+      "source_sha256": "dee9821d6db17c72d87fb76d92efe4ed642221022f1f944ca33ed954e32f8440",
+      "target": "关键点：对父块去重。多个子块可能映射到同一个父块；全部返回会浪费上下文。\n",
+      "target_sha256": "f4aad933a87fd7e87bc6b0e0182d0040d5767f5bb31cd3ccc06fb94165745e02"
+    },
+    {
+      "segment_id": "05-23:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 3: parent-document"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 4: contextual retrieval (Anthropic pattern)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "bfb54fb61d6656066557dd60282f4f447b68aa14e6e1684970e2edebcf0e4fbf",
+      "target": "### 步骤 4：上下文检索（Anthropic 模式）\n",
+      "target_sha256": "bcf013a3d4f8546ac46da461b7b84990cc567475ea7e94ace42a0c7456b72fdf"
+    },
+    {
+      "segment_id": "05-23:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 4: contextual retrieval (Anthropic pattern)"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 4: contextual retrieval (Anthropic pattern)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "c3648413b7e59630c7b86fc86b599934e14d073dfc3bae8d1c560825b36a19a5",
+      "target": "```python\ndef contextualize_chunks(document, chunks, llm):\n    context_prompts = [\n        f\"\"\"<document>{document}</document>\nHere is the chunk to situate: <chunk>{c}</chunk>\nWrite 50-100 words placing this chunk in the document's context.\"\"\"\n        for c in chunks\n    ]\n    contexts = llm.batch(context_prompts)\n    return [f\"{ctx}\\n\\n{c}\" for ctx, c in zip(contexts, chunks)]\n```\n",
+      "target_sha256": "c3648413b7e59630c7b86fc86b599934e14d073dfc3bae8d1c560825b36a19a5"
+    },
+    {
+      "segment_id": "05-23:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 4: contextual retrieval (Anthropic pattern)"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 4: contextual retrieval (Anthropic pattern)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "93b912e6113681ee04e1628f7bf559e3de5c9c39ffee1a8d2ef96b4bf147ce0e",
+      "target": "为添加了上下文的文本块建立索引。查询时，检索会受益于这些额外的周围语境信号。\n",
+      "target_sha256": "2fa82ad41b1cce01e6913e263a8bf3507b6b003c00b085a6c5d4cff557935e63"
+    },
+    {
+      "segment_id": "05-23:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 4: contextual retrieval (Anthropic pattern)"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 5: evaluate"
+      ],
+      "ordinal": 36,
+      "source_sha256": "fc31c95f5c20130b6d7821e51e6abc7efac128637352a3f339635f96d255090d",
+      "target": "### 步骤 5：评测\n",
+      "target_sha256": "7d6830b4f2796fc105c7ed4b9b82ce3b0b8ada44e3c1d05241c71b3f398800ed"
+    },
+    {
+      "segment_id": "05-23:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 5: evaluate"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 5: evaluate"
+      ],
+      "ordinal": 37,
+      "source_sha256": "6545240b753f398be458bc6a0584e627c3a6f6e8a47f81195df239827a0f9da2",
+      "target": "```python\ndef recall_at_k(queries, corpus_chunks, encoder, k=5):\n    chunk_embs = encoder.encode(corpus_chunks, normalize_embeddings=True)\n    hits = 0\n    for q_text, gold_idxs in queries:\n        q_emb = encoder.encode([q_text], normalize_embeddings=True)[0]\n        top = np.argsort(-(chunk_embs @ q_emb))[:k]\n        if any(i in gold_idxs for i in top):\n            hits += 1\n    return hits / len(queries)\n```\n",
+      "target_sha256": "6545240b753f398be458bc6a0584e627c3a6f6e8a47f81195df239827a0f9da2"
+    },
+    {
+      "segment_id": "05-23:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 5: evaluate"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 5: evaluate"
+      ],
+      "ordinal": 38,
+      "source_sha256": "fe49c6d32a599b86b9c32c64e8dfdf6ba6e7ba16f81b618dc0fc8e8e9cf02b67",
+      "target": "一定要做基准测试。最适合你语料库的策略，可能与任何一篇博客的结论都不同。\n",
+      "target_sha256": "a33841ee1e97a108385e932504e37cef7f00ffbd87711622db1d7856f920c174"
+    },
+    {
+      "segment_id": "05-23:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Build It",
+        "### Step 5: evaluate"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Pitfalls"
+      ],
+      "ordinal": 39,
+      "source_sha256": "08cb057a9b38f546708b3f3b1b53987d4641ac598b82c51378c649e9705d2846",
+      "target": "## 常见陷阱\n",
+      "target_sha256": "0a2d366f240806ee8b05b41426f86853c6dbbf960fb110f9ed6f2061efd5b5ec"
+    },
+    {
+      "segment_id": "05-23:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Pitfalls"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0079",
+      "kind": "list",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Pitfalls"
+      ],
+      "ordinal": 40,
+      "source_sha256": "e09d5f33f8707aaf3a07e816cf34e879a3fd4ae7204a6eb012ae492e6e54f2be",
+      "target": "- **只用事实型查询评测分块。** 多跳查询可能让完全不同的策略胜出。应使用按查询类型分层的评测集。\n- **语义分块不设最小大小。** 这会产生 40-token 的片段，损害检索效果。务必强制执行 `min_tokens`。\n- **盲目照搬重叠配置。** 2026 年的研究发现，重叠往往毫无收益，却使索引成本翻倍。应测量，不要想当然。\n- **不强制执行最小/最大大小限制。** 5 tokens 或 5000 tokens 的文本块都会破坏检索效果。应限制其大小。\n- **跨文档分块。** 绝不能让一个块横跨两个文档。始终先逐文档分块，再合并。\n",
+      "target_sha256": "9580911533624be247474f09c6d667fa824d662858d807f4941a7735ded030ab"
+    },
+    {
+      "segment_id": "05-23:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Pitfalls"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "05-23:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "b5f6d498dc25c78d94f60b46a9aaaab318a7bb444048551be1450bf0d7abfac3",
+      "target": "2026 年的技术组合：\n",
+      "target_sha256": "cba388d03517b2c43f30310c79d112ad1ac43bbfd91ef963b5f0e1288393c4cd"
+    },
+    {
+      "segment_id": "05-23:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0085",
+      "kind": "table",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "2f04439afe004e5f6f715e384a30ac0c8e2b2c488509e436128c72572f558e61",
+      "target": "| 场景 | 策略 |\n|-----------|----------|\n| 首次构建，语料库情况未知 | 递归分块，512 tokens，无重叠 |\n| 事实型问答 | 递归分块，256-512 tokens |\n| 分析型 / 多跳 | 递归分块，512-1024 tokens + 父文档 |\n| 大量交叉引用（合同、论文） | 后期分块或上下文检索 |\n| 会话 / 对话语料库 | 按对话轮次分块 + 说话者元数据 |\n| 短话语（推文、评论） | 一个文档 = 一个文本块 |\n",
+      "target_sha256": "dea976d6ca52513250d1428c43473234a70eca5c0eabd48f4b5cca9542033540"
+    },
+    {
+      "segment_id": "05-23:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Use It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "5d4a265383459119847fdfbdbb8bd17bbdc748e09b0857a3241db7ae0eeef22d",
+      "target": "先从递归分块、大小 512 开始。在包含 50 条查询的评测集上测量 recall@5（召回率），再据此调优。\n",
+      "target_sha256": "723549f8cfd5047719d409366068b56cb2c54a7b57c354676c1c4d8bcd4a2a4e"
+    },
+    {
+      "segment_id": "05-23:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Use It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "05-23:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Ship It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "3e6ab481d2967122bca1ed8e428d36d008f9db109b77349658f8c95af68f65ca",
+      "target": "保存为 `outputs/skill-chunker.md`：\n",
+      "target_sha256": "e66562ff89aa065ad13f4a0db3f293117583bbe282a30262298d01278b7e510a"
+    },
+    {
+      "segment_id": "05-23:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Ship It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Ship It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "66032cd3dcfe63dfcab2068fc2224609c465cb8f8f5e750e894725f6ba0df921",
+      "target": "```markdown\n---\nname: chunker\ndescription: Pick a chunking strategy, size, and overlap for a given corpus and query distribution.\nversion: 1.0.0\nphase: 5\nlesson: 23\ntags: [nlp, rag, chunking]\n---\n\nGiven a corpus (document types, avg length, domain) and query distribution (factoid / analytical / multi-hop), output:\n\n1. Strategy. Recursive / sentence / semantic / parent-document / late / contextual. Reason.\n2. Chunk size. Token count. Reason tied to query type.\n3. Overlap. Default 0; justify if >0.\n4. Min/max enforcement. `min_tokens`, `max_tokens` guards.\n5. Evaluation plan. Recall@5 on 50-query stratified eval set (factoid, analytical, multi-hop).\n\nRefuse any chunking strategy without min/max chunk size enforcement. Refuse overlap above 20% without an ablation showing it helps. Flag semantic chunking recommendations without a min-token floor.\n```\n",
+      "target_sha256": "66032cd3dcfe63dfcab2068fc2224609c465cb8f8f5e750e894725f6ba0df921"
+    },
+    {
+      "segment_id": "05-23:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Ship It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "05-23:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Exercises"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "3ece20e176cb80b01ca6362d41b7c794ba2a7b0f9345c57ee489462676fecbc6",
+      "target": "1. **简单。** 用 fixed(512, 0)、recursive(512, 0) 和 recursive(512, 100) 对一份 20 页文档分块。比较文本块数量和边界质量。\n2. **中等。** 围绕 5 个文档构建包含 30 条查询的评测集。测量递归分块、语义分块和父文档策略的 recall@5。哪种胜出？结果与博客文章一致吗？\n3. **困难。** 实现上下文检索。测量相对于递归分块基线的 MRR（平均倒数排名）提升。报告索引成本（LLM 调用次数）与准确率增益的对比。\n",
+      "target_sha256": "5a42e46bace0138ba46850d3f1d76477ace72aca0451501ea801c5cc7a59a039"
+    },
+    {
+      "segment_id": "05-23:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Exercises"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Key Terms"
+      ],
+      "ordinal": 50,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "05-23:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Key Terms"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0101",
+      "kind": "table",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Key Terms"
+      ],
+      "ordinal": 51,
+      "source_sha256": "b21fd411729e86a638240fc63a2880a89188b8a6f3ca2ee6305202a68162ee56",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 文本块 | 文档的一部分 | 文档内部用于生成嵌入、建立索引和检索的单位。 |\n| 重叠 | 安全余量 | 相邻文本块共享的 N tokens；在 2026 年的基准测试中往往无用。 |\n| 语义分块 | 智能分块 | 在相邻句子的嵌入相似度下降处切分。 |\n| 父文档 | 两级检索 | 检索小子块，返回较大的父块。 |\n| 后期分块 | 嵌入之后再分块 | 在 token 层面为全文生成嵌入，再池化为文本块向量。 |\n| 上下文检索 | Anthropic 的技巧 | 建立索引前，在每个文本块前添加由 LLM 生成的摘要。 |\n| 上下文悬崖 | 2500-token 高墙 | 在 RAG 中，上下文达到约 2.5k tokens 时观察到的质量下降（2026 年一月）。 |\n",
+      "target_sha256": "a8e7d99de60b70f098a7bfb03b5fda762284ff726dd95a6505b876f4f47d7928"
+    },
+    {
+      "segment_id": "05-23:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Key Terms"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Further Reading"
+      ],
+      "ordinal": 52,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "05-23:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Further Reading"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "05-23:b0105",
+      "kind": "list",
+      "heading_path": [
+        "# Chunking Strategies for RAG",
+        "## Further Reading"
+      ],
+      "ordinal": 53,
+      "source_sha256": "561ff5f61ab8befb249055e8370ef3fa37228fbd33455ba0ca3de29f8938026a",
+      "target": "- [Yepes et al. / LangChain — Recursive Character Splitting docs](https://python.langchain.com/docs/how_to/recursive_text_splitter/) — 生产环境中的默认选择。\n- [Vectara (2024, NAACL 2025). Chunking configurations analysis](https://arxiv.org/abs/2410.13070) — 分块与嵌入模型的选择同样重要。\n- [Jina AI — Late Chunking in Long-Context Embedding Models (2024)](https://jina.ai/news/late-chunking-in-long-context-embedding-models/) — 后期分块论文。\n- [Anthropic — Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval) — 借助 LLM 生成的上下文前缀，检索效果提升 35-50%。\n- [NVIDIA 2026 chunk-size benchmark — Premai summary](https://blog.premai.io/rag-chunking-strategies-the-2026-benchmark-guide/) — 根据查询类型选择文本块大小。\n",
+      "target_sha256": "6f01aa040d38df061d0e9c2c36d1c15d40c1663f72e1efecaf0fd0e2f69f2fb7"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+  "additional_glossary_sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "eb9d9025489902ec9a9af4fb34b9deb79c64615b2b15821d0b07c0994793046f",
+  "stage_id": "S70-chunking-strategies-rag",
+  "quantity_mappings": [
+    {
+      "source": "~60 minutes",
+      "target": "~60 分钟",
+      "meaning": "Metadata time, 60 unchanged"
+    },
+    {
+      "source": "Feb / Jan",
+      "target": "二月 / 一月",
+      "meaning": "Month names, same dates"
+    },
+    {
+      "source": "six / one / two / zero",
+      "target": "六 / 一个 / 两个 / 零",
+      "meaning": "Natural-language number words translated equivalently; numeric tokens retained"
+    },
+    {
+      "source": "~5k / 2.5k tokens",
+      "target": "~5k / 2.5k tokens",
+      "meaning": "Source unit retained; k explained as 千"
+    }
+  ],
+  "assets": [
+    {
+      "source_path": "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/assets/chunking.svg",
+      "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/assets/chunking.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "d8116307d7e797f7e1cc04f718ed36a2f23ab2d8f8f6d7a0372deb50c684b823"
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "commit": "9534b7a6119921fc108518adb5316944f580bdbe",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c"
+    }
+  ]
+}
