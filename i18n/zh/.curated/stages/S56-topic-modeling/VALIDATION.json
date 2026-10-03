@@ -1,0 +1,674 @@
+{
+  "schema_version": 1,
+  "stage_id": "S56-topic-modeling",
+  "date": "2026-10-03",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "0b8bfca1c418447199c2d11972a26da45b772de059db589c56f2e1127d38499b",
+  "target_sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+  "immutable_content_commit": "7e0be159cce8b9ff93c6d9f4994e1d5ef548383b",
+  "support_dependencies": 61,
+  "dependency_manifest_sha256": "0924d87144f44455db71f120ef9c7491cc2ee8ad591aefedd14fbb402f02e1ee",
+  "coverage": {
+    "lines": 184,
+    "blocks": 85,
+    "translatable_blocks": 39,
+    "fences": 4,
+    "headings": 13,
+    "tables": [
+      [
+        8,
+        2
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "exercises": 3,
+    "references": 4,
+    "full_technical_comparison": true,
+    "separate_full_chinese_read": true,
+    "author_QA_read": false,
+    "cross_edit": false
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; final hashes and every source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "S56-SRC-01",
+      "location": "The Problem",
+      "finding": "Generic coherent-topic and per-document distribution guarantees conflate LDA mixture with hard BERTopic assignments/outliers.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-02",
+      "location": "BERTopic pipeline",
+      "finding": "384 dimensions,~5 reduced dimensions and too-high-dimensional-for-clustering statements depend on model/backend.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-03",
+      "location": "LDA outputs/Step1",
+      "finding": "Snippet does not return a normalized topic_word matrix; components sorting is not row normalization.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-04",
+      "location": "Step1",
+      "finding": "English stopwords and min_df2/max_df.9 can remove all vocabulary or mismatch other languages; library not run.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-05",
+      "location": "Step2",
+      "finding": "min_topic_size defaults and recommended50/100 thresholds depend on version and data; not installed or benchmarked.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-06",
+      "location": "Step3/KeyTerms",
+      "finding": "Detailed NPMI/vector/cosine c_v description conflicts with glossary average-PMI simplification.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-07",
+      "location": "Topic diversity",
+      "finding": "Distinct top-word fraction does not guarantee semantic separation or topic quality.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-08",
+      "location": "Selection/2026stack",
+      "finding": "Length,resource,FASTopic speed and broad best/default choices are unverified source generalizations.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-09",
+      "location": "ShipIt/Exercises",
+      "finding": "sqrt topic-count and5/200/40000 thresholds and refusal rules are heuristics; discovered BERTopic counts differ from requested counts. Prompt/20Newsgroups/coherence exercises not run.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-10",
+      "location": "canonical tokenize",
+      "finding": "ASCII regex drops CJK, truncates café and retains stopwords/short allowlist, unlike documented CountVectorizer processing.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-11",
+      "location": "canonical inference",
+      "finding": "Single chain/final assignments lack convergence/burn-in averaging evidence; negative iterations skip,True accepted as1topic,NaN alpha escapes validation,zero-count topics still list vocabulary.",
+      "action": "Source retained, no cross-edit"
+    },
+    {
+      "id": "S56-SRC-12",
+      "location": "asset/canonical/render",
+      "finding": "SVG exact source payload preserved; static hash does not verify actual visibility. Canonical112lines lacks required citation header/tests;9doc300iteration demo is not production validation.",
+      "action": "Source retained, no cross-edit"
+    }
+  ],
+  "author_runtime": {
+    "canonical_sha256": "a95e79cf912be3be7b939b032c0717fa87aa7c27ae4354d07bbf5b139e3db26b",
+    "canonical_run": {
+      "run_at": "2026-10-02T23:26:42.237804+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.03466125800150621,
+      "stdout": "=== LDA topics (collapsed Gibbs, 300 iters) ===\n  topic 0: the, new, s, p, earnings, reports, openai, released\n  topic 1: cut, for, stocks, rose, after, fed, interest, rates\n  topic 2: bond, yields, fell, investors, bought, treasuries, 500, hit\n\n=== document mixtures ===\n  [0.13, 0.86, 0.01]  stocks rose after the fed cut interest rates\n  [0.02, 0.02, 0.97]  bond yields fell as investors bought treasuries\n  [0.66, 0.01, 0.33]  the s p 500 hit a new high on earnings reports\n  [0.01, 0.98, 0.01]  chip makers reported strong demand for ai accelera\n  [0.97, 0.01, 0.01]  openai released a new model with multimodal reason\n  [0.01, 0.01, 0.97]  deep learning researchers published a paper on eff\n  [0.81, 0.02, 0.17]  the senate passed a bill on healthcare spending\n  [0.97, 0.01, 0.01]  the president signed new tariffs on steel imports\n  [0.01, 0.97, 0.01]  congress debated a tax cut for small businesses\n",
+      "stderr": "",
+      "canonical_unmodified": true,
+      "fully_preread_lines": 112,
+      "actual_topics": 3,
+      "actual_iterations": 300
+    },
+    "finite_checks": {
+      "run_at": "2026-10-02T23:26:42.276677+00:00",
+      "status": "PASS",
+      "check_groups": 12,
+      "checks": [
+        {
+          "name": "ascii_tokenization_allowlist_and_numbers",
+          "status": "PASS"
+        },
+        {
+          "name": "actual_demo_dimensions",
+          "status": "PASS"
+        },
+        {
+          "name": "complete_demo_seed_reproducibility_and_normalization",
+          "status": "PASS"
+        },
+        {
+          "name": "input_and_global_rng_unchanged",
+          "status": "PASS"
+        },
+        {
+          "name": "collapsed_conditionals_exact_joint_comparison",
+          "status": "PASS"
+        },
+        {
+          "name": "final_assignments_reconstruct_counts",
+          "status": "PASS"
+        },
+        {
+          "name": "empty_document_prior_and_vocab_cap",
+          "status": "PASS"
+        },
+        {
+          "name": "one_topic_one_word",
+          "status": "PASS"
+        },
+        {
+          "name": "input_rejection_cases",
+          "status": "PASS"
+        },
+        {
+          "name": "unvalidated_parameters",
+          "status": "PASS"
+        },
+        {
+          "name": "alpha_smoothing",
+          "status": "PASS"
+        },
+        {
+          "name": "zero_count_topic_words",
+          "status": "PASS"
+        }
+      ],
+      "document_code_blocks_executed": 0,
+      "canonical_preread_lines": 112,
+      "all_document_fences_preread": 4,
+      "not_executed": [
+        "sklearn",
+        "BERTopic",
+        "gensim",
+        "downloads",
+        "external APIs",
+        "artifact prompt"
+      ],
+      "current_recovery_run": true
+    },
+    "stdlib_only": true,
+    "document_model_code_executed": false,
+    "no_install_download_or_external_API": true
+  },
+  "independent_runtime": {
+    "canonical": {
+      "full112lines_preread": true,
+      "sha256": "a95e79cf912be3be7b939b032c0717fa87aa7c27ae4354d07bbf5b139e3db26b",
+      "fixed_git_match": true,
+      "exit_code": 0,
+      "original_scale": "9 documents,3 topics,300 Gibbs iterations,seed42",
+      "output": "=== LDA topics (collapsed Gibbs, 300 iters) ===\n  topic 0: the, new, s, p, earnings, reports, openai, released\n  topic 1: cut, for, stocks, rose, after, fed, interest, rates\n  topic 2: bond, yields, fell, investors, bought, treasuries, 500, hit\n\n=== document mixtures ===\n  [0.13, 0.86, 0.01]  stocks rose after the fed cut interest rates\n  [0.02, 0.02, 0.97]  bond yields fell as investors bought treasuries\n  [0.66, 0.01, 0.33]  the s p 500 hit a new high on earnings reports\n  [0.01, 0.98, 0.01]  chip makers reported strong demand for ai accelera\n  [0.97, 0.01, 0.01]  openai released a new model with multimodal reason\n  [0.01, 0.01, 0.97]  deep learning researchers published a paper on eff\n  [0.81, 0.02, 0.17]  the senate passed a bill on healthcare spending\n  [0.97, 0.01, 0.01]  the president signed new tariffs on steel imports\n  [0.01, 0.97, 0.01]  congress debated a tax cut for small businesses\n"
+    },
+    "bounded": {
+      "fresh_after_recovery": true,
+      "groups": 8,
+      "results": [
+        {
+          "check": "ASCII tokenizer and short allowlist",
+          "status": "PASS"
+        },
+        {
+          "check": "default200 iterations and seeded normalization",
+          "status": "PASS"
+        },
+        {
+          "check": "smoothed rows recover integer topic counts",
+          "status": "PASS"
+        },
+        {
+          "check": "empty document and zero-count topic top words",
+          "status": "PASS"
+        },
+        {
+          "check": "single topic",
+          "status": "PASS"
+        },
+        {
+          "check": "six validation failures",
+          "status": "PASS"
+        },
+        {
+          "check": "negative iterations and bool topic boundary",
+          "status": "PASS"
+        },
+        {
+          "check": "NaN alpha escapes positive guard",
+          "status": "PASS"
+        }
+      ],
+      "source_unchanged": true,
+      "only_stdlib": true,
+      "not_run": [
+        "sklearn/BERTopic/gensim",
+        "network/models/corpora",
+        "output skill",
+        "all dataset exercises",
+        "GFM/site/CI"
+      ]
+    },
+    "libraries_not_imported": [
+      "sklearn",
+      "BERTopic",
+      "gensim"
+    ]
+  },
+  "actual_GitHub_GFM": {
+    "schema_version": 1,
+    "stage_id": "S56-topic-modeling",
+    "lesson_id": "05-15",
+    "status": "PASS_ACTUAL_GITHUB_GFM",
+    "checked_utc": "2026-10-02T23:43:08Z/2026-10-02T23:44:26Z",
+    "observer": "S56 author, personally using an own new dot cloud Chrome tab; coordinator did not perform this observation",
+    "browser": "dot cloud Chrome",
+    "tab_id": "3",
+    "read_only": true,
+    "immutable_commit": "7e0be159cce8b9ff93c6d9f4994e1d5ef548383b",
+    "observed_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/7e0be159cce8b9ff93c6d9f4994e1d5ef548383b/i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/zh.md",
+    "source_sha256": "0b8bfca1c418447199c2d11972a26da45b772de059db589c56f2e1127d38499b",
+    "target_sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+    "full_rendered_article_DOM_read": true,
+    "all_headings": [
+      "主题建模：LDA 与 BERTopic",
+      "要解决的问题",
+      "核心概念",
+      "动手实现",
+      "第 1 步：通过 scikit-learn 实现 LDA",
+      "第 2 步：BERTopic（生产环境）",
+      "第 3 步：评估",
+      "什么情况下该选哪种方法",
+      "实际使用",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "tables": [
+      {
+        "rows_including_header": 8,
+        "columns": 2,
+        "all_cells_observed": true
+      },
+      {
+        "rows_including_header": 6,
+        "columns": 3,
+        "all_cells_observed": true
+      }
+    ],
+    "emphasis": {
+      "strong_count": 19,
+      "strong_text": [
+        "Type:",
+        "Languages:",
+        "Prerequisites:",
+        "Time:",
+        "LDA 的生成过程。",
+        "BERTopic 流程。",
+        "主题连贯性（topic coherence，c_v）。",
+        "主题多样性（topic diversity）。",
+        "定性检查。",
+        "BERTopic。",
+        "gensim.models.LdaModel。",
+        "sklearn.decomposition.LatentDirichletAllocation。",
+        "NMF。",
+        "Top2Vec。",
+        "FASTopic。",
+        "基于 LLM 的标注。",
+        "简单。",
+        "中等。",
+        "困难。"
+      ],
+      "em_count": 0,
+      "unparsed_double_asterisk_in_prose": 0,
+      "unexpected_double_underscore_in_prose": 0,
+      "unintended_emphasis_observed": false
+    },
+    "fences": {
+      "total": 4,
+      "python": 2,
+      "markdown_artifact": 1,
+      "figure_placeholder": 1,
+      "figure_identifier": "topic-drift",
+      "figure_display": "ordinary code block with copy control; no site interaction inferred",
+      "source_payload_preserved": true
+    },
+    "math": {
+      "rendered_math_elements": 0,
+      "inline_matrix_shapes_observed": [
+        "(n_docs, n_topics)",
+        "(n_topics, vocab_size)"
+      ],
+      "artifact_expression_observed": "recommended = max(5, round(sqrt(n_docs)))"
+    },
+    "svg": {
+      "relative_reference": "../assets/topic-modeling.svg",
+      "resolved_src": "https://github.com/Activer007/ai-engineering-from-scratch/raw/7e0be159cce8b9ff93c6d9f4994e1d5ef548383b/i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/assets/topic-modeling.svg",
+      "alt": "LDA 混合模型与 BERTopic 聚类对比",
+      "complete": true,
+      "natural_width": 300,
+      "natural_height": 133,
+      "display_width": 1011.96875,
+      "display_height": 449.765625,
+      "sha256": "4bf98a1d0ab33604de5caf9777f4f399b14ec0454d871891bb97083c638e77fd",
+      "fixed_source_and_copied_asset_bytes_checked_separately": true,
+      "entire_image_personally_visible": true,
+      "visual_observation": "Both complete bordered panels, LDA document-to-mixture and topic-word matrix, BERTopic BERT/384-dim/UMAP/5-dim/HDBSCAN/clusters/class-based TF-IDF path and bottom captions visible; English labels retained from original SVG",
+      "broken_or_empty_images": 0
+    },
+    "exercises": 3,
+    "references": 4,
+    "all_reference_labels_and_links_visible": true,
+    "mermaid": 0,
+    "layout": {
+      "article_client_width": 1012,
+      "article_scroll_width": 1012,
+      "artifact_pre_client_width": 968,
+      "artifact_pre_scroll_width": 2561,
+      "artifact_overflow_x": "auto",
+      "observation": "Long protected artifact lines are inside their own horizontally scrollable code region; prose and tables do not overflow the article"
+    },
+    "screenshots_personally_examined": [
+      {
+        "utc": "2026-10-02T23:43:35Z",
+        "view": "first viewport: immutable commit, title, metadata, opening prose"
+      },
+      {
+        "utc": "2026-10-02T23:43:43Z",
+        "view": "entire relative SVG and LDA generative-process paragraph"
+      },
+      {
+        "utc": "2026-10-02T23:43:53Z",
+        "view": "BERTopic list, topic-drift placeholder, LDA code opening"
+      },
+      {
+        "utc": "2026-10-02T23:44:00Z",
+        "view": "LDA code tail and complete BERTopic code"
+      },
+      {
+        "utc": "2026-10-02T23:44:05Z",
+        "view": "evaluation emphasis and full 8 by 2 selection table"
+      },
+      {
+        "utc": "2026-10-02T23:44:17Z",
+        "view": "usage emphasis and preserved artifact code/formula"
+      },
+      {
+        "utc": "2026-10-02T23:44:26Z",
+        "view": "exercise tail, full 6 by 3 glossary and all four references"
+      }
+    ],
+    "rendering_defects": [],
+    "required_body_changes": [],
+    "limits": {
+      "actual_course_site": false,
+      "mobile": false,
+      "interactive_figure": false,
+      "production_model_execution": false,
+      "hosted_CI": false,
+      "aggregate_acceptance": "pending",
+      "final_remote_all_file_byte_readback": "pending"
+    },
+    "final_acceptance": false
+  },
+  "aggregate": {
+    "reviewed_lessons": 78,
+    "original_strict_direct_pass": 76,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "78 byte-identical to each other and final records",
+    "svg_separate_copies": 5,
+    "repository_audits": "523 lessons, 67 certifications, 12 assessments, 505 questions; zero issues; README/book counts passed",
+    "book_rendering_regressions": {
+      "result": "ENVIRONMENT_BLOCKED_PDF_TEST",
+      "tests": 6,
+      "passed": 5,
+      "failed": 1,
+      "reason": "xelatex.fmt unavailable; mktexfmt cannot create default cache under read-only /home/agent/.texlive2025",
+      "source_or_translation_failure_established": false,
+      "retry": {
+        "returncode": 1,
+        "log_sha256": "b3c53dc26d1e1598392b6d4ddba0e0b5095f31bc1e211dd23aab7416ee83c573",
+        "environment_only": true,
+        "system_install_or_modification": false,
+        "timestamp_utc": "2026-10-03T00:01:08.839424+00:00",
+        "result": "STILL_BLOCKED_NO_SYSTEM_CHANGES",
+        "reason": "Writable process-local TeX cache resolves the permission error, but fmtutil has zero format entries and xelatex.fmt remains unavailable; no system installation or configuration change attempted"
+      }
+    }
+  },
+  "content_remote_verification": {
+    "stage": 56,
+    "commit": "7e0be159cce8b9ff93c6d9f4994e1d5ef548383b",
+    "files": [
+      {
+        "path": "i18n/zh/.curated/lessons/05-15/review.json",
+        "sha256": "d1f27c0297aaad0aaeba925caca9d4946608327df857faab915870891e220a68",
+        "bytes": 62871
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-15/translation.json",
+        "sha256": "30f788728ca510bcdc8f6d58904226a9e52ddb993cf011e79a809402f2696114",
+        "bytes": 74434
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S56-topic-modeling/DEPENDENCIES.json",
+        "sha256": "0924d87144f44455db71f120ef9c7491cc2ee8ad591aefedd14fbb402f02e1ee",
+        "bytes": 14729
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S56-topic-modeling/SCOPE.md",
+        "sha256": "acbfb48d8ea9d2dd353d934ea8946c565190cbcf18f9532488539bcaea6684ee",
+        "bytes": 2292
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+        "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5",
+        "bytes": 2583
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/assets/topic-modeling.svg",
+        "sha256": "4bf98a1d0ab33604de5caf9777f4f399b14ec0454d871891bb97083c638e77fd",
+        "bytes": 4536
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/zh.md",
+        "sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+        "bytes": 10360
+      }
+    ],
+    "exact_byte_equal": true,
+    "tree": "80063ded2c2f336797f5b0b56b33227728354166"
+  },
+  "site_parser": {
+    "timestamp_utc": "2026-10-03T00:02:12.514789+00:00",
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "scope": "Repository original site/lesson.html parser executed offline on five final Chinese lesson bytes; not browser QA, not GitHub GFM, not deployed-site verification",
+    "cause": "Original slugify removes all characters outside ASCII a-z/0-9, causing empty IDs for Chinese-only headings",
+    "script_sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43",
+    "site_source_sha256": "03a79431a160d84c30793da3433d565b236db586ba53083b45b07e304d15757e",
+    "returncode": 0,
+    "log_sha256": "342c32c378c9b0556050a8a39034188c14adde779e2fa0f02b7f42b55e587d21",
+    "lessons": [
+      {
+        "file": "i18n/zh/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 46329,
+        "tables": 4,
+        "code_blocks": 9,
+        "figures": 1,
+        "mermaid_sources": 4,
+        "empty_heading_ids": [
+          "超参数调优",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "参数与超参数",
+          "网格搜索",
+          "随机搜索",
+          "贝叶斯优化",
+          "早停",
+          "学习率调度器",
+          "超参数重要性",
+          "实用策略",
+          "与交叉验证结合",
+          "实用建议",
+          "动手实现",
+          "实际使用",
+          "超参数调优中的常见错误",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [
+          "optuna"
+        ],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S52-hyperparameter-tuning",
+        "lesson_id": "02-12",
+        "target_sha256": "c0b27542fc52e55f6957a0f780849035d77733af72825baa119d8ab3e54a415e",
+        "empty_heading_id_count": 20,
+        "duplicate_nonempty_id_distinct_count": 1
+      },
+      {
+        "file": "i18n/zh/phases/03-deep-learning-core/08-weight-initialization/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 29717,
+        "tables": 1,
+        "code_blocks": 15,
+        "figures": 1,
+        "mermaid_sources": 3,
+        "empty_heading_ids": [
+          "权重初始化与训练稳定性",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "对称性问题",
+          "方差在各层间的传播",
+          "选择合适的初始化策略",
+          "动手实现",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S53-weight-initialization",
+        "lesson_id": "03-08",
+        "target_sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+        "empty_heading_id_count": 13,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 25348,
+        "tables": 2,
+        "code_blocks": 10,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "何时选择哪一种",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S54-glove-fasttext-subword",
+        "lesson_id": "05-04",
+        "target_sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 30544,
+        "tables": 1,
+        "code_blocks": 12,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "命名实体识别",
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "容易失效的情况",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S55-named-entity-recognition",
+        "lesson_id": "05-06",
+        "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+        "empty_heading_id_count": 10,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 16822,
+        "tables": 2,
+        "code_blocks": 3,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "什么情况下该选哪种方法",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S56-topic-modeling",
+        "lesson_id": "05-15",
+        "target_sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      }
+    ],
+    "total_empty_heading_ids": 61,
+    "source_or_translation_modified": false,
+    "github_gfm_verified_by_this_check": false,
+    "browser_verified": false
+  },
+  "final_remote_and_CI": "Final evidence commit readback and exact-head CI results are recorded in PR body and the single rollout index, avoiding self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
