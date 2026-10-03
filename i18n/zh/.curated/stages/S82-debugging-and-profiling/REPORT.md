@@ -1,0 +1,24 @@
+# 调试与性能剖析：翻译与验证报告
+
+[自有fork草稿PR #89](https://github.com/Activer007/ai-engineering-from-scratch/pull/89)；[固定中文正文](https://github.com/Activer007/ai-engineering-from-scratch/blob/1ea45c94bc21fe45d74039c96c754ef2f1095489/i18n/zh/phases/00-setup-and-tooling/12-debugging-and-profiling/docs/zh.md)。
+
+固定英文源：1bafaa88bb4668356791150bec3a6d7df38387eb
+中文SHA256：dd1d58cc7a09ee72490c308a8168aa1256bf2219a4d3512feda0ee02c4bc7fde
+正文commit：1ea45c94bc21fe45d74039c96c754ef2f1095489
+支持commit：0289c7a1ac67bcd5908ffac6ade768c704e25068
+原review SHA256：7d91a5b4b5ccbe62b1e14adab0f2a6f853f280b7d620a60fac9dbd8846e8b735
+本候选review SHA256：a469f3da04050145de565dc8109c4357198a0019d6e8e47adeeefa69c16ceed5
+真实GFM报告SHA256：4aa94a3536ebe655fecc8614a872267c6f910094f0735b6c081a93fe2694c9ee
+新单课累计回归SHA256：5a191e32d2fcbf7c427a16a9a775ce64a7e9be29e4dcc5ef4923e07b1820a93a
+
+作者与独立审校者分别完成173块技术对照及单独中文通读，逐块SHA和具体意见完整保留。87项冻结依赖及79项历史术语绑定未变；target、record、source和3份support字节不变。原审校记录仅追加两个新证据字段，历史观察和限制没有改写。
+
+作者与独审只验证所选择的原始标准库AST子集及有限检查。Torch未安装，动态Torch检查明确SKIP；未执行默认main、完整训练、GPU、5000/10000方阵、调试器或TensorBoard，没有安装依赖。源问题包括异步GPU计时缺同步、tracemalloc并不涵盖全部原生张量存储、数据泄漏与NaN检测边界、设备与hook前提、上下文不完整的训练片段、未证实的性能比例及启发式诊断。五题quiz和缺少标准main/tests等源契约偏差均原样保留；完整作者与独审风险清单见review与VALIDATION。
+
+真实固定提交GitHub GFM全篇与独立像素核验：24标题、22保护代码块、15处强调、30处行内代码；无表格、外链或相对资产。Mermaid3节点、2连线、6段标签均可读。20张原始JPEG/JFIF截图中19个文件验收，但06与08字节完全相同，所以仅18个不同验收hash；重复恢复图不增加独立正文覆盖，也不单独证明新标签页身份。1张空白恢复过渡图07保留且排除；像素1165×747。02只有单行粘性工具栏，后续截图为双行；采用保守112 CSS像素顶栏排除并由相邻帧文字锚点补证，不声称同步布局稳定。原标签页Page.getLayoutMetrics超时有原始记录；报告所述DOMSnapshot超时没有单独保存的原始AX超时文件，独审没有从像素重建该事件。同一固定URL新标签页恢复后的其余正文已完整覆盖，没有权限绕过。s0-flame-hot按原样作为保护代码显示，不代表交互图通过。
+
+本次候选严格为正式101课加本课，合计102；原strict直接100课，S07/S19仅沿用两处原精确适配，没有新例外。实际33/24/50控制、两个全新目录各102篇逐字节重放、13个SVG各两份独立复制及3项仓库审计通过。S61/S66/S79和活动S83均未纳入。本报告不增加正式计数。
+
+课程站原解析器仍有8个空标题ID；20个普通代码块、1个figure和1个Mermaid源码被解析；部署站、移动端与交互未验收。正文head的status和workflow真实查询均为空，不等于CI通过，也不代表未来finalhead已检查。book 实际重测5/6；xelatex.fmt缺失阻塞PDF；没有安装或配置修复；完整译书未完成。
+
+这是仅4文件的本地最终证据候选：review仅追加两个证据字段，TASKS/VALIDATION/REPORT新增。最终发布后的9文件不可变/当前分支/Git精确读回、finalhead CI检查、最终PR正文读回和正式单课索引仍待协调者完成。不合并、不发布课程、不向上游提交。
