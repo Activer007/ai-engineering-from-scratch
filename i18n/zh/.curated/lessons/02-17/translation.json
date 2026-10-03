@@ -1,0 +1,2676 @@
+{
+  "schema_version": 1,
+  "lesson_id": "02-17",
+  "source_path": "phases/02-ml-fundamentals/17-imbalanced-data/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "0d7000de9b9e018e47439e181e313030a48ed4cf",
+  "source_sha256": "1c1f6a2ec1c61310c203298b1eed4eae0923c41764e4f5ced9d86d752b223f40",
+  "target_path": "i18n/zh/phases/02-ml-fundamentals/17-imbalanced-data/docs/zh.md",
+  "target_sha256": "d40589afd9ebe83d0769ae72ed1092b8739e46024b0fe66b93042f4fbd30534d",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-03"
+  },
+  "segments": [
+    {
+      "segment_id": "02-17:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data"
+      ],
+      "ordinal": 1,
+      "source_sha256": "05d84e3b80a8bfb612349d31f3e8b6e5f56bb66a0652160ac2cfa0d133ba1d36",
+      "target": "# 不平衡数据处理\n",
+      "target_sha256": "db9ba1c97a1bb3e0a4d5bafe6a611ad5a2fa6366a8db997c683b350cedcb148e"
+    },
+    {
+      "segment_id": "02-17:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Handling Imbalanced Data"
+      ],
+      "ordinal": 2,
+      "source_sha256": "5b2d1547ab598d9b555df09eae2d09b3697a40dcadfba881ab2c2010d809df74",
+      "target": "> 当你的数据中有 99% 都是“正常”时，准确率就成了谎言。\n",
+      "target_sha256": "b844e4390f12dfc2a5885d42ea54bb0ae26aafb8b0664df6f10fe77d70c20db4"
+    },
+    {
+      "segment_id": "02-17:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data"
+      ],
+      "ordinal": 3,
+      "source_sha256": "2841129257ab1623c9737095181bf170394e9b65183a3dddb715f86d44e579b6",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 第 2 阶段，第 01-09 课（尤其是评估指标）\n**Time:** ~90 分钟\n",
+      "target_sha256": "052bf1fd2c5ee2aadbfeafb23c68c54c1f9215804f38375d9504667bea05fe22"
+    },
+    {
+      "segment_id": "02-17:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n",
+      "target_sha256": "d2e9ffddb07c2adf54516995f2b23561ca60b90edabd3134d054b9dadadf5106"
+    },
+    {
+      "segment_id": "02-17:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "b2a5e3b683f57898dd9628195baf0145c5ba243c3b2e6f09277dd58f534ca7af",
+      "target": "- 从零实现 SMOTE（合成少数类过采样技术），并解释合成过采样与随机复制有何不同\n- 使用 F1、AUPRC 和 Matthews 相关系数，而非准确率，评估不平衡分类器\n- 比较类别加权、阈值调优和重采样策略，并为给定的不平衡比例选择合适的方法\n- 构建完整的不平衡数据管线，结合 SMOTE、类别权重和阈值优化\n",
+      "target_sha256": "370e1ad46c16aab2dfaf686f219915c8a4cdc6e93d5ceba8238b94db8a0d1b00"
+    },
+    {
+      "segment_id": "02-17:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828"
+    },
+    {
+      "segment_id": "02-17:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "a157662e89a0e2c752e420cfc1437557641e30e3792babfc2c96ecc5832e72ef",
+      "target": "你构建了一个欺诈检测模型，准确率达到 99.9%。你欢呼庆祝，随后却发现，它把每一笔交易都预测为“非欺诈”。\n",
+      "target_sha256": "a0bd3ca5c06b635caf6202d3c6ee70ca6f316813c9ba0e21f5df491b97ecdeeb"
+    },
+    {
+      "segment_id": "02-17:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "93df8771003eeab911390b0df99c30508e3e7edcdfe05ba599126b5dabe1ac04",
+      "target": "这不是程序错误。当欺诈交易仅占 0.1% 时，这样做很合理。模型学到的是：始终猜测多数类能使总体错误最少。从技术上看没错，却完全没有用。\n",
+      "target_sha256": "27deba1aafd14fa45b1836cd1ca9a2355bbdddd315ee8efdd549f556d2a0e020"
+    },
+    {
+      "segment_id": "02-17:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "f5e211f0ac92d07f9152b67d674a9a4f0a9ec86a08570509f4cda3f6c1bf5153",
+      "target": "凡是真正需要分类的地方，都会遇到这种情况。疾病诊断：阳性率为 1%。网络入侵：攻击占 0.01%。制造缺陷：不良品占 0.5%。垃圾邮件过滤：垃圾邮件占 20%。客户流失预测：流失客户占 5%。少数类越是事关重大，往往就越稀少。\n",
+      "target_sha256": "7be6b6db0e7fd1d63117a7a51600d7cff16633740aea010eb01559367608ec71"
+    },
+    {
+      "segment_id": "02-17:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "fa23518b03ba5c57ad864cdfe70c52355cac42c1ce93822423deb9728222517f",
+      "target": "准确率失效，是因为它对所有正确预测一视同仁。正确标记一笔合法交易和正确识别一笔欺诈交易，都只给准确率贡献一次正确计数。但识别欺诈才是这个模型存在的全部意义。我们需要指标、技术和训练策略，迫使模型关注那个稀少却重要的类别。\n",
+      "target_sha256": "134fdd139976dc699eceb887357e0067306cad6f1ee3f1d417a6b1ddc69d018d"
+    },
+    {
+      "segment_id": "02-17:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52"
+    },
+    {
+      "segment_id": "02-17:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0023",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 12,
+      "source_sha256": "7e6d18953321e806a18dd4cecfa7a5b1b053f92fc6da97c2d08459c735edcd2d",
+      "target": "### 为什么准确率会失效\n",
+      "target_sha256": "c66ed28d401a93306cc0912492f3bfcabdd153b357b1dc2f5c3dc5cf92c2fe81"
+    },
+    {
+      "segment_id": "02-17:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 13,
+      "source_sha256": "ad209dc50d739b5cd2773125745f92896c79469391dd60e5f82f4157b449025c",
+      "target": "考虑一个包含 1000 个样本的数据集：990 个负类样本，10 个正类样本。对于一个始终预测为负类的模型：\n",
+      "target_sha256": "0f556c8bb7a7de9344ede121ecf192b06ee12e8d580441b68d88b59ac61b72a5"
+    },
+    {
+      "segment_id": "02-17:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0027",
+      "kind": "table",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 14,
+      "source_sha256": "67ed59d6e044268d0ae35717f43923da82bd97ef89ecf828bdb065908b3a8c13",
+      "target": "|  | 预测为正类 | 预测为负类 |\n|--|---|---|\n| 实际为正类 | 0 (TP) | 10 (FN) |\n| 实际为负类 | 0 (FP) | 990 (TN) |\n",
+      "target_sha256": "534bd899de17b65decee1a6afc6e809422704932e20dd1fcf035f1052c5d816e"
+    },
+    {
+      "segment_id": "02-17:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 15,
+      "source_sha256": "0251f8747bd9601734cd3b1138a0a1bc8192bae756fd284173a714a9e4523813",
+      "target": "准确率 = (0 + 990) / 1000 = 99.0%\n",
+      "target_sha256": "c516f5d2b5208ec9e27ec1646632220395be409015f26d210abc74da14f009ed"
+    },
+    {
+      "segment_id": "02-17:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 16,
+      "source_sha256": "bc5028a90aa9e0c6bb862e2fbd1326357eefa202c9dcb66926a9a794ec8c1c44",
+      "target": "模型没有识别出任何欺诈、任何疾病、任何缺陷。但准确率却显示为 99%。这就是准确率对不平衡问题具有误导危险的原因。\n",
+      "target_sha256": "566a974fba1c204b9fb49f6fa34cb744c29267123f567cf0160290f8e7649db9"
+    },
+    {
+      "segment_id": "02-17:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Why Accuracy Fails"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 17,
+      "source_sha256": "24c88a9a3b7e8f01facd91f692924dac196e3396bbb8d1628fef4dee1c90216f",
+      "target": "### 更好的指标\n",
+      "target_sha256": "e888dbc851c3af09db49f0551da4cbc48dc073532c9733576c89701e309dd7b1"
+    },
+    {
+      "segment_id": "02-17:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 18,
+      "source_sha256": "c979af8dec84a6d0c95cefa80d3e3b9937d40a4e9db947294574538449ad3ce2",
+      "target": "**精确率（Precision）** = TP / (TP + FP)。在所有被标记为正类的样本中，有多少确实是正类？精确率高意味着误报少。\n",
+      "target_sha256": "146d43a573eaec4497c1d3c869d7415d93e12f9149c57bd5f2a1e529f4a1cf52"
+    },
+    {
+      "segment_id": "02-17:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 19,
+      "source_sha256": "f30e075adb45a583372f450b58f3392035b9c51a066ff2f8bfdfa29643cb8f97",
+      "target": "**召回率（Recall）** = TP / (TP + FN)。在所有实际为正类的样本中，我们识别出了多少？召回率高意味着漏掉的正类样本少。\n",
+      "target_sha256": "e446682dba73d5ec785468d83cf6e6c47f5a121b623610a2267dd75933410f5a"
+    },
+    {
+      "segment_id": "02-17:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 20,
+      "source_sha256": "b75cc6fd9ae1c5cad44b44bdc22be306645d9ce7773851466e6a3c8002a5861c",
+      "target": "**F1 分数** = 2 * precision * recall / (precision + recall)。这是调和平均值。与算术平均值相比，它对精确率与召回率之间的极端不平衡惩罚更重。\n",
+      "target_sha256": "8b3ece94b31cefe594dc5d441b1e64fead0b9e138447a59d34af6c8d976d140c"
+    },
+    {
+      "segment_id": "02-17:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 21,
+      "source_sha256": "d1a311fa967c89d2c88b83b6ff13b27a51b9a713ebbcebee5f40c4de5eef1814",
+      "target": "**F-beta 分数** = (1 + beta^2) * precision * recall / (beta^2 * precision + recall)。当 beta > 1 时，召回率更重要；当 beta < 1 时，精确率更重要。F2 常用于欺诈检测（漏掉欺诈比误报更糟）。\n",
+      "target_sha256": "b9ff0927868124e74ac3e2e8f981a88968142963db65233c69b7ca68238718f1"
+    },
+    {
+      "segment_id": "02-17:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 22,
+      "source_sha256": "ffd8fc7b34487cc2957c0de04f16d6cde518572b70d32c91c961f9fe0a5d913d",
+      "target": "**AUPRC** （精确率-召回率曲线下面积）。它类似于 AUC-ROC，但对不平衡数据更有参考价值。随机分类器的 AUPRC 等于正类比例（不像 ROC 那样为 0.5）。这使改进更容易看出来。\n",
+      "target_sha256": "0851a4bb2b9ba86f79dd2c3a4b9575c48f30b9056442fabd7a2ce58cc606bd4a"
+    },
+    {
+      "segment_id": "02-17:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 23,
+      "source_sha256": "52fd41c5c4e6ac0878b84b27ee29d3c64f9b509078f9c0db642850453ce2e620",
+      "target": "**Matthews 相关系数** = (TP * TN - FP * FN) / sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN))。取值范围为 -1 到 +1。只有模型在两个类别上都表现良好时才会得到高分。即使类别规模相差很大，它也能兼顾两者。\n",
+      "target_sha256": "4dd7c3c1c6c4125257033f2f9eb4f36c387ec8bc71c082912c8d1c76aee1aa75"
+    },
+    {
+      "segment_id": "02-17:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 24,
+      "source_sha256": "fdaeeee60afe7efbed2c8a9d732f16e759e9609d863d8873040779ec926fde5f",
+      "target": "对于上面“始终预测为负类”的模型：precision = 0/0（未定义，通常设为 0），recall = 0/10 = 0，F1 = 0，MCC = 0。这些指标正确地指出了模型毫无用处。\n",
+      "target_sha256": "841d18a2f76d2ea6777d098ef2506f8696ee2bbd74c4362e8f4f2330232050f3"
+    },
+    {
+      "segment_id": "02-17:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Better Metrics"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### The Imbalanced Data Pipeline"
+      ],
+      "ordinal": 25,
+      "source_sha256": "14b9cb22053893515ff2849b01e189c1170267e6857b3ca3bb5e8793d0104df3",
+      "target": "### 不平衡数据管线\n",
+      "target_sha256": "6291ee0c5cd581514d902a6c2b1e0aa74b9eefcf8cb53fd7dfc453a624afa8d1"
+    },
+    {
+      "segment_id": "02-17:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### The Imbalanced Data Pipeline"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### The Imbalanced Data Pipeline"
+      ],
+      "ordinal": 26,
+      "source_sha256": "44ffd6ee420d8cc03181a31d9863ca1cf848fa36160f738d17f78d0ca914e203",
+      "target": "```mermaid\nflowchart TD\n    A[Imbalanced Dataset] --> B{Imbalance Ratio?}\n    B -->|Mild: 80/20| C[Class Weights]\n    B -->|Moderate: 95/5| D[SMOTE + Threshold Tuning]\n    B -->|Severe: 99/1| E[SMOTE + Class Weights + Threshold]\n    C --> F[Train Model]\n    D --> F\n    E --> F\n    F --> G[Evaluate with F1 / AUPRC / MCC]\n    G --> H{Good Enough?}\n    H -->|No| I[Try Different Strategy]\n    H -->|Yes| J[Deploy with Monitoring]\n    I --> B\n```\n",
+      "target_sha256": "44ffd6ee420d8cc03181a31d9863ca1cf848fa36160f738d17f78d0ca914e203"
+    },
+    {
+      "segment_id": "02-17:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### The Imbalanced Data Pipeline"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 27,
+      "source_sha256": "8fed1e798440d665611a51427157d9cf7f79ee6824379cc840071c56cf9479c3",
+      "target": "### SMOTE：合成少数类过采样技术\n",
+      "target_sha256": "4913955de063cd7f7914068b5188506d3eaf19e397dac74334874d8b308fe123"
+    },
+    {
+      "segment_id": "02-17:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 28,
+      "source_sha256": "8d6c90304229c753e5705804d65aaa94f6e2847701da2ba1955079698e75d602",
+      "target": "随机过采样会复制现有的少数类样本。这种做法有效，但有过拟合风险，因为模型会反复看到完全相同的数据点。\n",
+      "target_sha256": "279c018fa9b47f6781212381630990bdf641811d45d41c970d0d8d6b10321517"
+    },
+    {
+      "segment_id": "02-17:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 29,
+      "source_sha256": "0ba273ff74ab4c34cdf7f2cab7fd7b15ac6c2624f6b401bfd2824dcca337acc4",
+      "target": "SMOTE 创建合理的新合成少数类样本，而不是副本。算法如下：\n",
+      "target_sha256": "5be98f0b14766abaf1e81a15d88486ab4eb948da4ff03a8360f1d5e3c8b7d845"
+    },
+    {
+      "segment_id": "02-17:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0059",
+      "kind": "list",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 30,
+      "source_sha256": "bf46a77ab34ab142f29fc65b575f419c68826a0ac90a7aed2bd6e428575ad5dc",
+      "target": "1. 对每个少数类样本 x，在其他少数类样本中找到它的 k 个最近邻\n2. 随机选择一个近邻\n3. 在 x 与该近邻之间的线段上创建一个新样本\n",
+      "target_sha256": "e9f57629397486013ba8dd2c5cb522f951ad12f7e602d41172816432fefe8fb9"
+    },
+    {
+      "segment_id": "02-17:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 31,
+      "source_sha256": "710d32cdb286ca63fbe9a066a1a5d014de447c0381b468894c9454e0bdd6657c",
+      "target": "公式：`new_sample = x + random(0, 1) * (neighbor - x)`\n",
+      "target_sha256": "9646c7b2da033d6fab26d3bcd455412503d359dc4afdd8a02d4a484554300665"
+    },
+    {
+      "segment_id": "02-17:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 32,
+      "source_sha256": "cb52380a9bf59f14d22d3054238f8b4266c66183adb65576707d87cff81f1d7c",
+      "target": "这会在真实的少数类数据点之间插值，在特征空间的同一区域创建样本，而不只是复制现有数据。\n",
+      "target_sha256": "5033ce728bc56a7e20e514ab4a2b53aa90de8887af25b6d6b835374e5baf0a8c"
+    },
+    {
+      "segment_id": "02-17:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 33,
+      "source_sha256": "13db8f8312f748dd59973ed2165874694576c51fed95a1b4e62dc90f63e6c29a",
+      "target": "```mermaid\nflowchart LR\n    subgraph Original[\"Original Minority Points\"]\n        P1[\"x1 (1.0, 2.0)\"]\n        P2[\"x2 (1.5, 2.5)\"]\n        P3[\"x3 (2.0, 1.5)\"]\n    end\n    subgraph SMOTE[\"SMOTE Generation\"]\n        direction TB\n        S1[\"Pick x1, neighbor x2\"]\n        S2[\"random t = 0.4\"]\n        S3[\"new = x1 + 0.4*(x2-x1)\"]\n        S4[\"new = (1.2, 2.2)\"]\n        S1 --> S2 --> S3 --> S4\n    end\n    Original --> SMOTE\n    subgraph Result[\"Augmented Set\"]\n        R1[\"x1 (1.0, 2.0)\"]\n        R2[\"x2 (1.5, 2.5)\"]\n        R3[\"x3 (2.0, 1.5)\"]\n        R4[\"synthetic (1.2, 2.2)\"]\n    end\n    SMOTE --> Result\n```\n",
+      "target_sha256": "13db8f8312f748dd59973ed2165874694576c51fed95a1b4e62dc90f63e6c29a"
+    },
+    {
+      "segment_id": "02-17:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### SMOTE: Synthetic Minority Oversampling Technique"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 34,
+      "source_sha256": "7641f90a1abea0ba8463b6f8e88285745ad6eba7a6ff4743f9f2eb0962ca910b",
+      "target": "### 采样策略对比\n",
+      "target_sha256": "315952d6b2cd14d75b1d1bb12e1df4402ee58370bb382685f9135df1cdb4cf67"
+    },
+    {
+      "segment_id": "02-17:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 35,
+      "source_sha256": "932832014275e2760df1ed2d5133383fee0580d18569fdbe952d2b3cfa0d8123",
+      "target": "**随机过采样**: 复制少数类样本，使其数量与多数类一致。\n- 优点：简单，没有信息损失\n- 缺点：完全相同的副本会导致过拟合，并增加训练时间\n",
+      "target_sha256": "b7ab3632c907f94456a211aa1fc927349daf3d356858900725ed521aed9c4122"
+    },
+    {
+      "segment_id": "02-17:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 36,
+      "source_sha256": "1729e50edbadeea8858bb8a097a7126450e0fae1a2d53583c4efa3579ffe8abc",
+      "target": "**随机欠采样**: 移除多数类样本，使其数量与少数类一致。\n- 优点：训练快，简单\n- 缺点：丢弃可能有用的多数类数据，方差更大\n",
+      "target_sha256": "a5c51410f5163cc6325bd3814a22176740d222f2f283e2e10e5eae7372d9fc60"
+    },
+    {
+      "segment_id": "02-17:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 37,
+      "source_sha256": "3c7a52ba8b76f4839116b97e6b502de1b1d38c2db60690616c3243bc32195c94",
+      "target": "**SMOTE**: 通过插值创建合成少数类样本。\n- 优点：生成新的数据点，相比随机过采样可减少过拟合\n- 缺点：可能在决策边界附近创建噪声样本，没有考虑多数类的分布\n",
+      "target_sha256": "073f1641097876c6a536fa0a0eaf80a0f3a1c5ed353b1f38d4c3bc1c778d2971"
+    },
+    {
+      "segment_id": "02-17:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0075",
+      "kind": "table",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 38,
+      "source_sha256": "903a5a067441f33098360fae5479fc94a05980f23b290fa9f12cc34c4576607e",
+      "target": "| 策略 | 数据变化 | 风险 | 适用场景 |\n|----------|-------------|------|-------------|\n| 过采样 | 复制少数类 | 过拟合 | 小数据集，中度不平衡 |\n| 欠采样 | 移除多数类 | 信息损失 | 大数据集，希望快速训练 |\n| SMOTE | 添加合成少数类样本 | 边界噪声 | 中度不平衡，少数类样本足够用于 k-NN |\n",
+      "target_sha256": "48f15ec315f72cdd23cec864c31fb6acb7ca14e690e669f97ee57184ca920d27"
+    },
+    {
+      "segment_id": "02-17:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Sampling Strategies Compared"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 39,
+      "source_sha256": "82e6996fad07a44e335a5a5b70c88f4a1b681219770ca40e2402f467e8cc48cc",
+      "target": "### 类别权重\n",
+      "target_sha256": "463b283b501d5ef193f477066a7948aaa07f85f484aed09cc694bda86c0da7cb"
+    },
+    {
+      "segment_id": "02-17:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 40,
+      "source_sha256": "12d965a7350f8add6a1bce787eb6e5965f16492c885b1fddb967ff0d66a95eaa",
+      "target": "不改变数据，而是改变模型对待错误的方式。为少数类的误分类赋予更高的权重。\n",
+      "target_sha256": "cc628d51c56e0d901014fb71d337b7784022a92cdec10b611dd0b7fdb2569b2a"
+    },
+    {
+      "segment_id": "02-17:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 41,
+      "source_sha256": "e4aaf5323fe298e0021b080813cc85000b085fdcb16db79c7731b138a370ad9d",
+      "target": "对于一个包含 950 个负类样本和 50 个正类样本的二分类问题：\n- 负类权重 = n_samples / (2 * n_negative) = 1000 / (2 * 950) = 0.526\n- 正类权重 = n_samples / (2 * n_positive) = 1000 / (2 * 50) = 10.0\n",
+      "target_sha256": "00f9f4cb2a967bf9b865de1143ebad68947fa98232365e4793cee8a5018b606a"
+    },
+    {
+      "segment_id": "02-17:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 42,
+      "source_sha256": "278f7e6c45b11fe25d623b20e0a55411d5a5bd2cd773e1e30ec523447ec88da2",
+      "target": "正类获得的权重是负类的 19 倍。误分类一个正类样本的代价，与误分类 19 个负类样本一样。模型被迫关注少数类。\n",
+      "target_sha256": "3c2332200432d7812f5437e8f9092a05b1a14adddfc0d7d5a9685cb2fb0f754c"
+    },
+    {
+      "segment_id": "02-17:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 43,
+      "source_sha256": "cb07ed128264fadd33dff4dfc5a4fa2e1df8aa5bf78ae8080b4b9f98e8008d87",
+      "target": "在逻辑回归中，这会修改损失函数：\n",
+      "target_sha256": "919c92d4cfe1a96a4a925773f8fcd5418004eabe11bdccc4c1aaefea9e957297"
+    },
+    {
+      "segment_id": "02-17:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 44,
+      "source_sha256": "0bd76305459f3397e675d4fdcce9a890538fe6c60c7228e7c00a08a022bda454",
+      "target": "```text\nweighted_loss = -sum(w_i * [y_i * log(p_i) + (1-y_i) * log(1-p_i)])\n```\n",
+      "target_sha256": "9ed0cc96a790046175817571140675a900bef79c2dff5af8562fb10d5597b922"
+    },
+    {
+      "segment_id": "02-17:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 45,
+      "source_sha256": "ad8ce68491741356833ca2f92b483d9dbd293208b39a79d63b92c14ffe82f47b",
+      "target": "其中，w_i 取决于样本 i 所属的类别。\n",
+      "target_sha256": "dc86a8eaf2de82c90529e883ed91aee0ab9dab2b3863dbb171b81b9194bb673a"
+    },
+    {
+      "segment_id": "02-17:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 46,
+      "source_sha256": "1272c2c386e26041e08b1c19b64eff24be9d1275cc58cfd7267f8ddfe2501047",
+      "target": "从期望上看，类别权重在数学上等价于过采样，但不需要创建新的数据点。因此，它更快，也避免了重复样本带来的过拟合风险。\n",
+      "target_sha256": "7ab1bed97f977556817273b27727d8764a70d207cf0b256c7cf77bec43e0b968"
+    },
+    {
+      "segment_id": "02-17:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Class Weights"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 47,
+      "source_sha256": "ceea36883bfb633559016981562ff9f0297c9517ec5b4a2d8046092ec23ea48f",
+      "target": "### 阈值调优\n",
+      "target_sha256": "b1daaa238fe85dcf6e591cad0d80e91286353c7b65c98e1636401e7e007ce439"
+    },
+    {
+      "segment_id": "02-17:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 48,
+      "source_sha256": "4e92926b0a54868a2193160d37a9828b7ee97823eaf581f2cd7a29c9b5beb233",
+      "target": "大多数分类器输出概率。默认阈值为 0.5：若 P(positive) >= 0.5，就预测为正类。但 0.5 是任意选定的。当类别不平衡时，最优阈值通常会低得多。\n",
+      "target_sha256": "ada20801dae66c3fc54a3bd3a719f54f9bd646e69e6aeba10a8c05a3ddcacdfe"
+    },
+    {
+      "segment_id": "02-17:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 49,
+      "source_sha256": "b6f2b4811a469dbc80d5a58310ec875420c2406416ead0644f862c1aceded3c3",
+      "target": "流程如下：\n1. 训练模型\n2. 获取验证集上的预测概率\n3. 扫描从 0.0 到 1.0 的阈值\n4. 在每个阈值处计算 F1（或你选定的指标）\n5. 选择使指标最大的阈值\n",
+      "target_sha256": "eaf1704a3fa2da63448aaf13a002c234603dc5c49ec0389c3728c26690dcd7e0"
+    },
+    {
+      "segment_id": "02-17:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 50,
+      "source_sha256": "b7de2091553371060ed3dffa4c8fdceda05db9eea4ddd21d413d164da1113c32",
+      "target": "```mermaid\nflowchart LR\n    A[Model] --> B[Predict Probabilities]\n    B --> C[Sweep Thresholds 0.0 to 1.0]\n    C --> D[Compute F1 at Each]\n    D --> E[Pick Best Threshold]\n    E --> F[Use in Production]\n```\n",
+      "target_sha256": "b7de2091553371060ed3dffa4c8fdceda05db9eea4ddd21d413d164da1113c32"
+    },
+    {
+      "segment_id": "02-17:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 51,
+      "source_sha256": "84b2772d763344fe1b710855ae1d89a386d677e96e82cba393ff6ec6c6084c8d",
+      "target": "模型可能对一笔欺诈交易输出 P(fraud) = 0.15。阈值为 0.5 时，它被分类为非欺诈；阈值为 0.10 时，它就会被正确识别。概率校准的重要性低于排序 -- 只要欺诈交易的概率高于非欺诈交易，就存在一个能将它们分开的阈值。\n",
+      "target_sha256": "4edfb929268cee7a102620b40157699412f46248a2523a217985e506d13dafae"
+    },
+    {
+      "segment_id": "02-17:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Threshold Tuning"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 52,
+      "source_sha256": "1d915a92d1d63ef074978e98fe150cf7989400444c9c8d7b275f494fc6bede37",
+      "target": "### 代价敏感学习\n",
+      "target_sha256": "54b25dbb7ea6fa82ba02cf90f97aae568c60e9fbf29ec492754ecf78afc6b36d"
+    },
+    {
+      "segment_id": "02-17:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 53,
+      "source_sha256": "59b0e363bfc1f731f4cf635b04c25abd03b3cd46a73c1b074532626820129948",
+      "target": "这是类别权重的推广。不再使用统一的代价，而是指定具体的误分类代价：\n",
+      "target_sha256": "573d929a3b2775024156bd055f112b0834fa99194e0f4c5ee7c910fb689894e4"
+    },
+    {
+      "segment_id": "02-17:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0107",
+      "kind": "table",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 54,
+      "source_sha256": "7c6c450a48bea0cee86cb2d5aa50c403842cc025bd3f129efb46cc90a36da4fa",
+      "target": "| | 预测为正类 | 预测为负类 |\n|--|---|---|\n| 实际为正类 | 0（正确） | C_FN = 100 |\n| 实际为负类 | C_FP = 1 | 0（正确） |\n",
+      "target_sha256": "13c91707877a8947a2fa618c16d45bd285a94d6e2fd3fef66a6ae3a4addd89f5"
+    },
+    {
+      "segment_id": "02-17:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 55,
+      "source_sha256": "2e5e6df1fde7ba497ab4d0bd23bad506769c2d8c1c80ad588a1d3ac5bde727f9",
+      "target": "漏掉一笔欺诈交易（FN）的代价是一次误报（FP）的 100 倍。模型优化的是总代价，而不是总错误次数。\n",
+      "target_sha256": "e94738e4d4749e0e5ad367b7b47ad9e7467e1d8648fb2a9cc54184cab31e5e90"
+    },
+    {
+      "segment_id": "02-17:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 56,
+      "source_sha256": "55db94e304471a88df34f0fba2a5994b2d5e37bd9824caed57aba00d61843cdf",
+      "target": "当你能够估计现实世界的代价时，这是最有理论依据的方法。漏诊癌症的代价与一次导致额外活检的误报大不相同。明确这些代价，会促使我们做出恰当的权衡。\n",
+      "target_sha256": "22fe5c22401c2263bd1a0f5e07b48357fbe7301a59c2d69860911a4ac315e294"
+    },
+    {
+      "segment_id": "02-17:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Cost-Sensitive Learning"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 57,
+      "source_sha256": "1736ef2141f33e9c4e01e3916b919bb7ecc108d71c5d9ab3fdbc77b38b8c1887",
+      "target": "### 决策流程图\n",
+      "target_sha256": "227020de71ced0c40696ff3f8a98946fe95299d0cef92522f7c5d548ff974341"
+    },
+    {
+      "segment_id": "02-17:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0115",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 58,
+      "source_sha256": "fab088cbdcfe6b2faedc9c4df34a55a88decf6fd158baa62343cbbe5943894e4",
+      "target": "```mermaid\nflowchart TD\n    A[Start: Imbalanced Dataset] --> B{How imbalanced?}\n    B -->|\"< 70/30\"| C[\"Mild: try class weights first\"]\n    B -->|\"70/30 to 95/5\"| D[\"Moderate: SMOTE + class weights\"]\n    B -->|\"> 95/5\"| E[\"Severe: combine multiple strategies\"]\n    C --> F{Enough data?}\n    D --> F\n    E --> F\n    F -->|\"< 1000 samples\"| G[\"Oversample or SMOTE, avoid undersampling\"]\n    F -->|\"1000-10000\"| H[\"SMOTE + threshold tuning\"]\n    F -->|\"> 10000\"| I[\"Undersampling OK, or class weights\"]\n    G --> J[Train + Evaluate with F1/AUPRC]\n    H --> J\n    I --> J\n    J --> K{Recall high enough?}\n    K -->|No| L[Lower threshold]\n    K -->|Yes| M{Precision acceptable?}\n    M -->|No| N[Raise threshold or add features]\n    M -->|Yes| O[Ship it]\n```\n",
+      "target_sha256": "fab088cbdcfe6b2faedc9c4df34a55a88decf6fd158baa62343cbbe5943894e4"
+    },
+    {
+      "segment_id": "02-17:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0117",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 59,
+      "source_sha256": "5ece161d1d6c2024b43e98910f885947480558ce4111b3f7d7e8bd0e437ffaf7",
+      "target": "```figure\nclass-imbalance\n```\n",
+      "target_sha256": "5ece161d1d6c2024b43e98910f885947480558ce4111b3f7d7e8bd0e437ffaf7"
+    },
+    {
+      "segment_id": "02-17:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## The Concept",
+        "### Decision Flowchart"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0119",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54"
+    },
+    {
+      "segment_id": "02-17:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 1: Generate an imbalanced dataset"
+      ],
+      "ordinal": 61,
+      "source_sha256": "c27e7bf62ffc2566dbe7efacfaf95b7b0474e863bf21f7c59e5d45a4c02826be",
+      "target": "### 第 1 步：生成不平衡数据集\n",
+      "target_sha256": "a46b1bb97c69f1da52c266733e1e70abc32d57e8f082fdcc6df88660b650c7db"
+    },
+    {
+      "segment_id": "02-17:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 1: Generate an imbalanced dataset"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0123",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 1: Generate an imbalanced dataset"
+      ],
+      "ordinal": 62,
+      "source_sha256": "1a4e3e0eb44bb1393a06b0b7e01826f9f8b890f4951623c1a35034ccd2fed352",
+      "target": "```python\nimport numpy as np\n\n\ndef make_imbalanced_data(n_majority=950, n_minority=50, seed=42):\n    rng = np.random.RandomState(seed)\n\n    X_maj = rng.randn(n_majority, 2) * 1.0 + np.array([0.0, 0.0])\n    X_min = rng.randn(n_minority, 2) * 0.8 + np.array([2.5, 2.5])\n\n    X = np.vstack([X_maj, X_min])\n    y = np.concatenate([np.zeros(n_majority), np.ones(n_minority)])\n\n    shuffle_idx = rng.permutation(len(y))\n    return X[shuffle_idx], y[shuffle_idx]\n```\n",
+      "target_sha256": "1a4e3e0eb44bb1393a06b0b7e01826f9f8b890f4951623c1a35034ccd2fed352"
+    },
+    {
+      "segment_id": "02-17:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 1: Generate an imbalanced dataset"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 2: SMOTE from scratch"
+      ],
+      "ordinal": 63,
+      "source_sha256": "6a811513f35ca9871337420dcbdde055c88558899de2b4b08908aad056fe4a83",
+      "target": "### 第 2 步：从零实现 SMOTE\n",
+      "target_sha256": "2538d08b154fddba8eb30631e5754899f0befa2b0be41cfdb22bf6512b18c35b"
+    },
+    {
+      "segment_id": "02-17:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 2: SMOTE from scratch"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 2: SMOTE from scratch"
+      ],
+      "ordinal": 64,
+      "source_sha256": "fb71e8d9aefeca1273f1977d37c740b87030621cec1c442461fbef4a9286560c",
+      "target": "```python\ndef euclidean_distance(a, b):\n    return np.sqrt(np.sum((a - b) ** 2))\n\n\ndef find_k_neighbors(X, idx, k):\n    distances = []\n    for i in range(len(X)):\n        if i == idx:\n            continue\n        d = euclidean_distance(X[idx], X[i])\n        distances.append((i, d))\n    distances.sort(key=lambda x: x[1])\n    return [d[0] for d in distances[:k]]\n\n\ndef smote(X_minority, k=5, n_synthetic=100, seed=42):\n    rng = np.random.RandomState(seed)\n    n_samples = len(X_minority)\n    k = min(k, n_samples - 1)\n    synthetic = []\n\n    for _ in range(n_synthetic):\n        idx = rng.randint(0, n_samples)\n        neighbors = find_k_neighbors(X_minority, idx, k)\n        neighbor_idx = neighbors[rng.randint(0, len(neighbors))]\n        t = rng.random()\n        new_point = X_minority[idx] + t * (X_minority[neighbor_idx] - X_minority[idx])\n        synthetic.append(new_point)\n\n    return np.array(synthetic)\n```\n",
+      "target_sha256": "fb71e8d9aefeca1273f1977d37c740b87030621cec1c442461fbef4a9286560c"
+    },
+    {
+      "segment_id": "02-17:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 2: SMOTE from scratch"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0129",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 3: Random oversampling and undersampling"
+      ],
+      "ordinal": 65,
+      "source_sha256": "92a052d13ff2ce8af6b5ac9110213066f4721216475740ca2ffacc9646cb5bd6",
+      "target": "### 第 3 步：随机过采样与欠采样\n",
+      "target_sha256": "7999adfac59ecf9466389fd326982351d25c14a64437c0bcd7220ff079b89dfe"
+    },
+    {
+      "segment_id": "02-17:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 3: Random oversampling and undersampling"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0131",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 3: Random oversampling and undersampling"
+      ],
+      "ordinal": 66,
+      "source_sha256": "9fd96a9f6b907d281fa1c7683369ce4b13a51f91de768b53fb193e76d2c20403",
+      "target": "```python\ndef random_oversample(X, y, seed=42):\n    rng = np.random.RandomState(seed)\n    classes, counts = np.unique(y, return_counts=True)\n    max_count = counts.max()\n\n    X_resampled = list(X)\n    y_resampled = list(y)\n\n    for cls, count in zip(classes, counts):\n        if count < max_count:\n            cls_indices = np.where(y == cls)[0]\n            n_needed = max_count - count\n            chosen = rng.choice(cls_indices, size=n_needed, replace=True)\n            X_resampled.extend(X[chosen])\n            y_resampled.extend(y[chosen])\n\n    X_out = np.array(X_resampled)\n    y_out = np.array(y_resampled)\n    shuffle = rng.permutation(len(y_out))\n    return X_out[shuffle], y_out[shuffle]\n\n\ndef random_undersample(X, y, seed=42):\n    rng = np.random.RandomState(seed)\n    classes, counts = np.unique(y, return_counts=True)\n    min_count = counts.min()\n\n    X_resampled = []\n    y_resampled = []\n\n    for cls in classes:\n        cls_indices = np.where(y == cls)[0]\n        chosen = rng.choice(cls_indices, size=min_count, replace=False)\n        X_resampled.extend(X[chosen])\n        y_resampled.extend(y[chosen])\n\n    X_out = np.array(X_resampled)\n    y_out = np.array(y_resampled)\n    shuffle = rng.permutation(len(y_out))\n    return X_out[shuffle], y_out[shuffle]\n```\n",
+      "target_sha256": "9fd96a9f6b907d281fa1c7683369ce4b13a51f91de768b53fb193e76d2c20403"
+    },
+    {
+      "segment_id": "02-17:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 3: Random oversampling and undersampling"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0133",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 4: Logistic regression with class weights"
+      ],
+      "ordinal": 67,
+      "source_sha256": "c0156bb4c933e6de1192d58317bf58ee1eae4a3d338798b9814dafd6baae9d82",
+      "target": "### 第 4 步：带类别权重的逻辑回归\n",
+      "target_sha256": "9a43b437ea5d1878d69752e156342393173dddf9cb5e7b5e292b9e533cdd1f54"
+    },
+    {
+      "segment_id": "02-17:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 4: Logistic regression with class weights"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0135",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 4: Logistic regression with class weights"
+      ],
+      "ordinal": 68,
+      "source_sha256": "2286a9708edeaff728fd93cb6a273a60ed8d02d5a451f51cf79bf0dd8351e905",
+      "target": "```python\ndef sigmoid(z):\n    return 1.0 / (1.0 + np.exp(-np.clip(z, -500, 500)))\n\n\ndef logistic_regression_weighted(X, y, weights, lr=0.01, epochs=200):\n    n_samples, n_features = X.shape\n    w = np.zeros(n_features)\n    b = 0.0\n\n    for _ in range(epochs):\n        z = X @ w + b\n        pred = sigmoid(z)\n        error = pred - y\n        weighted_error = error * weights\n\n        gradient_w = (X.T @ weighted_error) / n_samples\n        gradient_b = np.mean(weighted_error)\n\n        w -= lr * gradient_w\n        b -= lr * gradient_b\n\n    return w, b\n\n\ndef compute_class_weights(y):\n    classes, counts = np.unique(y, return_counts=True)\n    n_samples = len(y)\n    n_classes = len(classes)\n    weight_map = {}\n    for cls, count in zip(classes, counts):\n        weight_map[cls] = n_samples / (n_classes * count)\n    return np.array([weight_map[yi] for yi in y])\n```\n",
+      "target_sha256": "2286a9708edeaff728fd93cb6a273a60ed8d02d5a451f51cf79bf0dd8351e905"
+    },
+    {
+      "segment_id": "02-17:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 4: Logistic regression with class weights"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0137",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 5: Threshold tuning"
+      ],
+      "ordinal": 69,
+      "source_sha256": "b8506308e0b799b9572cf78cb9c9b665edca32134b2fc26a1159f14ae452027d",
+      "target": "### 第 5 步：阈值调优\n",
+      "target_sha256": "8c4bd6efe474044b7ca7389e061cce46cd3e74e1d89dd1435fbe40ba301fcfe6"
+    },
+    {
+      "segment_id": "02-17:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 5: Threshold tuning"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0139",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 5: Threshold tuning"
+      ],
+      "ordinal": 70,
+      "source_sha256": "71b42c8492e2f032a4fb235102a2a1a9feca5d3bdb3b421452f11da15b3c5f6d",
+      "target": "```python\ndef find_optimal_threshold(y_true, y_probs, metric=\"f1\"):\n    best_threshold = 0.5\n    best_score = -1.0\n\n    for threshold in np.arange(0.05, 0.96, 0.01):\n        y_pred = (y_probs >= threshold).astype(int)\n        tp = np.sum((y_pred == 1) & (y_true == 1))\n        fp = np.sum((y_pred == 1) & (y_true == 0))\n        fn = np.sum((y_pred == 0) & (y_true == 1))\n\n        if metric == \"f1\":\n            precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0\n            recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0\n            score = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0\n        elif metric == \"recall\":\n            score = tp / (tp + fn) if (tp + fn) > 0 else 0.0\n        elif metric == \"precision\":\n            score = tp / (tp + fp) if (tp + fp) > 0 else 0.0\n\n        if score > best_score:\n            best_score = score\n            best_threshold = threshold\n\n    return best_threshold, best_score\n```\n",
+      "target_sha256": "71b42c8492e2f032a4fb235102a2a1a9feca5d3bdb3b421452f11da15b3c5f6d"
+    },
+    {
+      "segment_id": "02-17:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 5: Threshold tuning"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0141",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 6: Evaluation functions"
+      ],
+      "ordinal": 71,
+      "source_sha256": "a20afb107cd4464c2f96362d1beb31dc55cebda43576d7baa2d2e7042a82c3f3",
+      "target": "### 第 6 步：评估函数\n",
+      "target_sha256": "ca30548d98efafc80bec67e127ae3b29424765c56cd872836f3ea918af6cb6c9"
+    },
+    {
+      "segment_id": "02-17:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 6: Evaluation functions"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0143",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 6: Evaluation functions"
+      ],
+      "ordinal": 72,
+      "source_sha256": "b59ab61e00a72e6105bee6501209452fe9a42b0ff381b15cbb14835e7f4f7b86",
+      "target": "```python\ndef confusion_matrix_values(y_true, y_pred):\n    tp = np.sum((y_pred == 1) & (y_true == 1))\n    tn = np.sum((y_pred == 0) & (y_true == 0))\n    fp = np.sum((y_pred == 1) & (y_true == 0))\n    fn = np.sum((y_pred == 0) & (y_true == 1))\n    return tp, tn, fp, fn\n\n\ndef compute_metrics(y_true, y_pred):\n    tp, tn, fp, fn = confusion_matrix_values(y_true, y_pred)\n    accuracy = (tp + tn) / (tp + tn + fp + fn)\n    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0\n    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0\n    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0\n\n    denom = np.sqrt(float((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)))\n    mcc = (tp * tn - fp * fn) / denom if denom > 0 else 0.0\n\n    return {\n        \"accuracy\": accuracy,\n        \"precision\": precision,\n        \"recall\": recall,\n        \"f1\": f1,\n        \"mcc\": mcc,\n    }\n```\n",
+      "target_sha256": "b59ab61e00a72e6105bee6501209452fe9a42b0ff381b15cbb14835e7f4f7b86"
+    },
+    {
+      "segment_id": "02-17:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 6: Evaluation functions"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0145",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 7: Compare all approaches"
+      ],
+      "ordinal": 73,
+      "source_sha256": "14672f1f1858e7db7c7728402446842a51337c7520341554448807b0103676c2",
+      "target": "### 第 7 步：比较所有方法\n",
+      "target_sha256": "7b5467705d06dab9ff92453707c5457151e07d2774423a8bca05b0a37b293072"
+    },
+    {
+      "segment_id": "02-17:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 7: Compare all approaches"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0147",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 7: Compare all approaches"
+      ],
+      "ordinal": 74,
+      "source_sha256": "f611ee711af344beeb2e2722bc37645140e4cef60ada471c893a12ffc4637b51",
+      "target": "```python\nX, y = make_imbalanced_data(950, 50, seed=42)\nsplit = int(0.8 * len(y))\nX_train, X_test = X[:split], X[split:]\ny_train, y_test = y[:split], y[split:]\n\n# Baseline: no treatment\nw_base, b_base = logistic_regression_weighted(\n    X_train, y_train, np.ones(len(y_train)), lr=0.1, epochs=300\n)\nprobs_base = sigmoid(X_test @ w_base + b_base)\npreds_base = (probs_base >= 0.5).astype(int)\n\n# Oversampled\nX_over, y_over = random_oversample(X_train, y_train)\nw_over, b_over = logistic_regression_weighted(\n    X_over, y_over, np.ones(len(y_over)), lr=0.1, epochs=300\n)\npreds_over = (sigmoid(X_test @ w_over + b_over) >= 0.5).astype(int)\n\n# SMOTE\nminority_mask = y_train == 1\nX_minority = X_train[minority_mask]\nsynthetic = smote(X_minority, k=5, n_synthetic=len(y_train) - 2 * int(minority_mask.sum()))\nX_smote = np.vstack([X_train, synthetic])\ny_smote = np.concatenate([y_train, np.ones(len(synthetic))])\nw_sm, b_sm = logistic_regression_weighted(\n    X_smote, y_smote, np.ones(len(y_smote)), lr=0.1, epochs=300\n)\npreds_smote = (sigmoid(X_test @ w_sm + b_sm) >= 0.5).astype(int)\n\n# Class weights\nsample_weights = compute_class_weights(y_train)\nw_cw, b_cw = logistic_regression_weighted(\n    X_train, y_train, sample_weights, lr=0.1, epochs=300\n)\nprobs_cw = sigmoid(X_test @ w_cw + b_cw)\npreds_cw = (probs_cw >= 0.5).astype(int)\n\n# Threshold tuning (tune on held-out validation set, not test set)\nprobs_val = sigmoid(X_val @ w_cw + b_cw)\nbest_thresh, best_f1 = find_optimal_threshold(y_val, probs_val, metric=\"f1\")\npreds_thresh = (probs_cw >= best_thresh).astype(int)\n```\n",
+      "target_sha256": "f611ee711af344beeb2e2722bc37645140e4cef60ada471c893a12ffc4637b51"
+    },
+    {
+      "segment_id": "02-17:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 7: Compare all approaches"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0149",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 7: Compare all approaches"
+      ],
+      "ordinal": 75,
+      "source_sha256": "a92aaf6d576aa2e5a9e1a6155ccd02dd4ab9dc6a5010bf3946e507da6a46fd76",
+      "target": "代码文件在一个脚本中运行上述全部内容，并打印结果。\n",
+      "target_sha256": "aee6f1c1b449a515009e192e90c7cf1d4a0c1cd7cbf9d96322fa9cc76ade3ac7"
+    },
+    {
+      "segment_id": "02-17:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Build It",
+        "### Step 7: Compare all approaches"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0151",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Use It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5"
+    },
+    {
+      "segment_id": "02-17:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Use It"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Use It"
+      ],
+      "ordinal": 77,
+      "source_sha256": "58914f9e29421719715d470181ed57bb1679325296cdf6de7047763b9c4a4a06",
+      "target": "使用 scikit-learn 和 imbalanced-learn，这些技术都能通过一行调用实现：\n",
+      "target_sha256": "01a482f358b18d70cb5514eb0537e0a0df3ff351032bc06e07646b5b06e1a960"
+    },
+    {
+      "segment_id": "02-17:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Use It"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0155",
+      "kind": "fence",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "811cdbcb9ac950a6a503e912c4fa26085d1d823037f792f7c76f702d69d59af3",
+      "target": "```python\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import classification_report, f1_score\nfrom sklearn.model_selection import train_test_split\nfrom imblearn.over_sampling import SMOTE\nfrom imblearn.under_sampling import RandomUnderSampler\nfrom imblearn.pipeline import Pipeline\n\nX_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y)\n\nmodel_weighted = LogisticRegression(class_weight=\"balanced\")\nmodel_weighted.fit(X_train, y_train)\nprint(classification_report(y_test, model_weighted.predict(X_test)))\n\nsmote = SMOTE(random_state=42)\nX_resampled, y_resampled = smote.fit_resample(X_train, y_train)\nmodel_smote = LogisticRegression()\nmodel_smote.fit(X_resampled, y_resampled)\nprint(classification_report(y_test, model_smote.predict(X_test)))\n\npipeline = Pipeline([\n    (\"smote\", SMOTE()),\n    (\"model\", LogisticRegression(class_weight=\"balanced\")),\n])\npipeline.fit(X_train, y_train)\nprint(classification_report(y_test, pipeline.predict(X_test)))\n```\n",
+      "target_sha256": "811cdbcb9ac950a6a503e912c4fa26085d1d823037f792f7c76f702d69d59af3"
+    },
+    {
+      "segment_id": "02-17:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Use It"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0157",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "fd0d3c9ab4d0fb50aef049b9725a3728fcaf6cf2aaad1baffdb640e41eaef4bb",
+      "target": "从零实现能准确展示每种技术的作用。SMOTE 就是在少数类上进行 k-NN 插值。类别权重对损失进行加权。阈值调优就是遍历截断值的 for 循环。没有什么魔法。\n",
+      "target_sha256": "b83709b72cad0717ffab8e488bf7ee62ea5a61d9577b4ea24756bae05cdc96fd"
+    },
+    {
+      "segment_id": "02-17:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0159",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Ship It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1"
+    },
+    {
+      "segment_id": "02-17:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Ship It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0161",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Ship It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "cffb64f6795b1301c93bfe465f0906530b6311d8eaee71d624f3af9501cf62a3",
+      "target": "本课产出：\n- `outputs/skill-imbalanced-data.md` -- 用于处理不平衡分类问题的决策检查清单\n",
+      "target_sha256": "7dbbc03de583b79a252308d999bfa2f0525fff1412b98f192d79d2ebe00d295a"
+    },
+    {
+      "segment_id": "02-17:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Ship It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0163",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626"
+    },
+    {
+      "segment_id": "02-17:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0165",
+      "kind": "list",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "1f2f5ca3638f1dbe2dee276f5164c5dc8e3143844314aab49fcbbeba5f7f2ca4",
+      "target": "1. **Borderline-SMOTE**: 修改 SMOTE 实现，只为靠近决策边界的少数类数据点（其 k 个最近邻中包含多数类样本的点）生成合成样本。在类别重叠的数据集上，与标准 SMOTE 比较结果。\n",
+      "target_sha256": "85cc3767b4094ce8d90007df53d3cf3fda7816a10d31a2a72bf4c2d18d4e7bf7"
+    },
+    {
+      "segment_id": "02-17:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0167",
+      "kind": "list",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "0f739afda38f8039fe2e4cb58de1682068b7435a871ef53ce68a5c834613495f",
+      "target": "2. **代价矩阵优化**: 实现代价敏感学习，将代价矩阵作为参数。创建一个接收代价矩阵并返回最优预测的函数，使期望代价最小。用不同的代价比例（1:10、1:100、1:1000）进行测试，并绘图展示精确率-召回率权衡如何变化。\n",
+      "target_sha256": "05df7b30725c43f79948434c935ea2bfd60939867d192ff75b43e89ebbb789a7"
+    },
+    {
+      "segment_id": "02-17:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0169",
+      "kind": "list",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "667a389fe409bb12997d82315b9a7aad439f3b14c300f4c1053388775aa12232",
+      "target": "3. **阈值校准**: 实现 Platt 缩放（在模型的原始输出上拟合逻辑回归，以生成校准后的概率）。比较校准前后的精确率-召回率曲线。展示校准不会改变排序（AUC 保持不变），但能让概率更有意义。\n",
+      "target_sha256": "08928e9188d82866e271999b06763d6cdb3b18f6b20a4f0a489c3b6913d51b89"
+    },
+    {
+      "segment_id": "02-17:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0171",
+      "kind": "list",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "dc1374d7f00df931ab66564bada49f120a08dd6c4b5dd1efa88ae5f2714b1b2e",
+      "target": "4. **平衡 Bagging 集成**: 训练多个模型，每个模型使用一个平衡的 bootstrap 样本（自助抽样样本，包含全部少数类 + 多数类的随机子集）。对它们的预测取平均。将这种方法与使用 SMOTE 的单个模型进行比较。测量性能以及多次运行之间的方差。\n",
+      "target_sha256": "5f60c7bdef18f486c0c2dced6cb3261fab7a4970242b50e1ff58decb4d1b6ed6"
+    },
+    {
+      "segment_id": "02-17:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0173",
+      "kind": "list",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "9fe20537860089e85857bd61f54ada5921f3338a3a871a6a281eb10cd00ebb82",
+      "target": "5. **不平衡比例实验**: 取一个平衡数据集，逐步增大不平衡比例（50/50、70/30、90/10、95/5、99/1）。在每个比例下，分别使用和不使用 SMOTE 进行训练。为这两种方法绘制 F1 随不平衡比例变化的曲线。SMOTE 从什么比例开始带来有意义的改善？\n",
+      "target_sha256": "55ed73d925033464498c31b9837030a265cbfd1d687e1a3c0a545a5c88b47013"
+    },
+    {
+      "segment_id": "02-17:b0174",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0175",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Key Terms"
+      ],
+      "ordinal": 88,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364"
+    },
+    {
+      "segment_id": "02-17:b0176",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Key Terms"
+      ],
+      "ordinal": 88,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0177",
+      "kind": "table",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Key Terms"
+      ],
+      "ordinal": 89,
+      "source_sha256": "755791a7b68dfa310079226c1e448fa0e5fb64fb31d14dbc20420dcafd31200f",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 类别不平衡 | “某一类的样本多得多” | 数据集中的类别分布明显偏斜，导致模型偏向多数类 |\n| SMOTE | “合成过采样” | 在现有少数类样本与其 k 个最近的少数类近邻之间插值，创建新的少数类样本 |\n| 类别权重 | “让稀有类别上的错误更昂贵” | 将损失函数乘以类别专属的权重，让模型对少数类误分类施加更重的惩罚 |\n| 阈值调优 | “移动决策边界” | 将分类的概率截断值从默认的 0.5 改为能优化目标指标的值 |\n| 精确率-召回率权衡 | “鱼与熊掌不可兼得” | 降低阈值会识别出更多正类（召回率更高），但也会产生更多假阳性（精确率更低），反之亦然 |\n| AUPRC | “PR 曲线下面积” | 将精确率-召回率曲线概括为一个数值；类别严重不平衡时，比 AUC-ROC 更有参考价值 |\n| Matthews 相关系数 | “兼顾两类的指标” | 预测标签与实际标签之间的相关性，只有模型在两个类别上都表现良好时才会得到高分 |\n| 代价敏感学习 | “不同错误的代价不同” | 将现实中的误分类代价纳入训练目标，让模型优化总代价，而不是错误次数 |\n| 随机过采样 | “复制少数类” | 重复少数类样本，以平衡类别数量；简单，但有对重复数据点过拟合的风险 |\n",
+      "target_sha256": "0e13746057273365caedb8c8584cd554ca6b4c378a8b2bda418636a26232f280"
+    },
+    {
+      "segment_id": "02-17:b0178",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Key Terms"
+      ],
+      "ordinal": 89,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0179",
+      "kind": "heading",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Further Reading"
+      ],
+      "ordinal": 90,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58"
+    },
+    {
+      "segment_id": "02-17:b0180",
+      "kind": "separator",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Further Reading"
+      ],
+      "ordinal": 90,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "segment_id": "02-17:b0181",
+      "kind": "list",
+      "heading_path": [
+        "# Handling Imbalanced Data",
+        "## Further Reading"
+      ],
+      "ordinal": 91,
+      "source_sha256": "300ab41b317ff1bcbbf7b9f954cf30bec03fa778b37b5df1880a971800a7b4ec",
+      "target": "- [SMOTE: Synthetic Minority Over-sampling Technique (Chawla et al., 2002)](https://arxiv.org/abs/1106.1813) -- SMOTE 的原始论文，仍是不平衡学习领域被引用最多的工作\n- [Learning from Imbalanced Data (He & Garcia, 2009)](https://ieeexplore.ieee.org/document/5128907) -- 全面综述，涵盖采样、代价敏感和算法层面的方法\n- [imbalanced-learn 文档](https://imbalanced-learn.org/stable/) -- 提供 SMOTE 变体、欠采样策略和管线集成的 Python 库\n- [The Precision-Recall Plot Is More Informative than the ROC Plot (Saito & Rehmsmeier, 2015)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432) -- 在不平衡问题中，何时以及为何应优先采用 PR 曲线而不是 ROC 曲线\n",
+      "target_sha256": "be905c0167bd6d40457cf2b5f233ac1cdb87eef57c921e3aaa489c132d277291"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+  "additional_glossary_sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S68-imbalanced-data/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "8bddc8a9420236c3cb1753e2d1d461da31929271fd86de87a966859728af4916",
+  "assets": [],
+  "quantity_mappings": [
+    {
+      "source": "~90 minutes",
+      "target": "~90 分钟",
+      "equivalence": "same duration; metadata unit localized"
+    },
+    {
+      "source": "19x / 100x",
+      "target": "19 倍 / 100 倍",
+      "equivalence": "same multiplicative ratios"
+    },
+    {
+      "source": "zero / one / both / single / multiple",
+      "target": "没有任何 / 一个或一次 / 两个或两者 / 单个 / 多个",
+      "equivalence": "natural-language counts preserved in context; no numeric token changes"
+    }
+  ],
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "commit": "aa57056c17c149129c450ce2424b35a6eff852db",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198"
+    }
+  ]
+}
