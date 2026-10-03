@@ -1,0 +1,562 @@
+{
+  "schema_version": 1,
+  "stage_id": "S63-mini-framework",
+  "date": "2026-10-02",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "94d283931d471f9a757d50d4f12656d497b3cb78aacebeb7619a55e5c0e67325",
+  "target_sha256": "588a0dae949020cd32755998db3311445527bfaa6ab94085399f4078ac2ad244",
+  "immutable_content_commit": "411482c66d44a72310fa4ca09d0717b3b307da82",
+  "immutable_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/411482c66d44a72310fa4ca09d0717b3b307da82/i18n/zh/phases/03-deep-learning-core/10-mini-framework/docs/zh.md",
+  "support_commit": "715cc1cbd6d1591cee5a559583691511db86c534",
+  "support_dependencies": 70,
+  "dependency_manifest_sha256": "abe2ddf5d075aa71de51f34e2118df8f3d423f6d71f2ac5173f5654c64aa091f",
+  "coverage": {
+    "total_blocks": 155,
+    "nonseparator_blocks": 78,
+    "technical_pass": 155,
+    "separate_chinese_pass": 155,
+    "fences": 15
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; every final source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "P01",
+      "source_segments": [
+        "03-10:b0089",
+        "03-10:b0091"
+      ],
+      "source_claim": "BatchNorm normalization/backward",
+      "concern": "Documentation singleton forward yields beta regardless of input, but backward returns gamma/sqrt(eps), independently verified as316.227766 vs numeric0. Main file has a different running-mean single-sample implementation; runtime gradient .999995 vs numeric .899995. Running variance unchanged in this path.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P02",
+      "source_segments": [
+        "03-10:b0091"
+      ],
+      "source_claim": "BatchNorm batch and running stats",
+      "concern": "Backward omits mean/variance derivatives and only uses first normalized sample. Population variance with epsilon and gamma/beta does not guarantee exactly zero mean/unit variance output.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P03",
+      "source_segments": [
+        "03-10:b0045",
+        "03-10:b0121",
+        "03-10:b0127",
+        "03-10:b0129",
+        "03-10:b0147"
+      ],
+      "source_claim": "Minibatch and framework equivalence",
+      "concern": "Educational loops perform zero_grad/backward/step per sample, not once per loader batch. Exercise5 faithfully asks for actual accumulation; PyTorch snippet batches updates.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P04",
+      "source_segments": [
+        "03-10:b0041",
+        "03-10:b0109"
+      ],
+      "source_claim": "Adam variance",
+      "concern": "Second moment is uncentered squared-gradient EMA, not centered variance; translation preserves source wording.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P05",
+      "source_segments": [
+        "03-10:b0083",
+        "03-10:b0085"
+      ],
+      "source_claim": "Dropout eval no-op",
+      "concern": "Eval forward is identity but backward may reuse stale training mask; independent fixture confirms discrepancy. No p range validation.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P06",
+      "source_segments": [
+        "03-10:b0017",
+        "03-10:b0141"
+      ],
+      "source_claim": "Complete framework and scheduler",
+      "concern": "Scheduler is promised but only assigned as exercise. Arbitrary networks/activations require additional implementations; baseline is sequential single-example.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P07",
+      "source_segments": [
+        "03-10:b0045",
+        "03-10:b0115"
+      ],
+      "source_claim": "Memory scalability through DataLoader",
+      "concern": "Data and all indices remain resident; no streaming loader is implemented. Remainder inclusion verified on5 samples.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P08",
+      "source_segments": [
+        "03-10:b0127"
+      ],
+      "source_claim": "Runnable PyTorch equivalent",
+      "concern": "Undefined dataloader and test_inputs render snippet schematic. No torch execution or install performed.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P09",
+      "source_segments": [
+        "03-10:b0025",
+        "03-10:b0027",
+        "03-10:b0057"
+      ],
+      "source_claim": "Module backward abstraction",
+      "concern": "Educational explicit-backward interface differs from production autograd operation; parenthetical caveat preserved.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P10",
+      "source_segments": [
+        "03-10:b0079",
+        "03-10:b0103"
+      ],
+      "source_claim": "Numerical loss/activation derivatives",
+      "concern": "Clamp derivative omitted at saturated boundaries; finite differences passed only interior MSE/BCE. Empty/mismatched inputs not checked.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P11",
+      "source_segments": [
+        "03-10:b0145"
+      ],
+      "source_claim": "Weight decay equals L2 in Adam",
+      "concern": "Coupled regularization and decoupled shrinkage differ under adaptive optimization; exercise leaves convention unspecified.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    },
+    {
+      "id": "P12",
+      "source_segments": [
+        "03-10:b0013",
+        "03-10:b0017",
+        "03-10:b0053",
+        "03-10:b0059",
+        "03-10:b0155"
+      ],
+      "source_claim": "Source count,diagram and figure scope",
+      "concern": "Ten lessons conflicts with prerequisites01–09;~500 versus603 executable lines is approximate. Diagram clears gradients after update whereas code clears before backward. gradient-clipping figure lacks implemented clipping. Bibliographic attribution unverified.",
+      "translation_treatment": "Faithfully preserved fixed English and protected payloads; no silent technical fixes. These source issues do not block semantic Chinese acceptance."
+    }
+  ],
+  "runtime": {
+    "author": {
+      "canonical": {
+        "exit": 0,
+        "scale": "unmodified original 500 samples, 400 training/100 test, three 100-epoch demos",
+        "results": {
+          "Adam_accuracy_percent": 94.0,
+          "SGD_accuracy_percent": 95.0,
+          "Adam_Dropout_accuracy_percent": 98.0
+        },
+        "limits": "one fixed-seed toy split; no correctness/generalization guarantee; BatchNorm not used in demos"
+      },
+      "finite": "14/14 finite stdlib checks PASS including explicit source-error counterexamples"
+    },
+    "independent": {
+      "canonical": {
+        "exit_code": 0,
+        "original_scale": true,
+        "observed_accuracy_percent": {
+          "adam": 94.0,
+          "sgd": 95.0,
+          "adam_dropout": 98.0
+        },
+        "interpretation": "Original fixed source demo completes; does not certify general correctness or BatchNorm, which is absent from demo architectures."
+      },
+      "finite": {
+        "exit_code": 0,
+        "checks": [
+          {
+            "name": "linear_chain_rule",
+            "passed": true,
+            "evidence": {
+              "output": [
+                -0.31
+              ],
+              "dx": [
+                0.6,
+                -1.4
+              ],
+              "dw": [
+                [
+                  0.8,
+                  1.8
+                ]
+              ]
+            }
+          },
+          {
+            "name": "sgd_update",
+            "passed": true,
+            "evidence": "0.3 - 0.1*0.8 =0.22"
+          },
+          {
+            "name": "zero_grad",
+            "passed": true,
+            "evidence": "All parameters cleared"
+          },
+          {
+            "name": "MSELoss_finite_difference",
+            "passed": true,
+            "evidence": {
+              "analytic": [
+                0.2,
+                -0.30000000000000004
+              ],
+              "numeric": [
+                0.19999999999881224,
+                -0.3000000000086267
+              ]
+            }
+          },
+          {
+            "name": "BCELoss_finite_difference",
+            "passed": true,
+            "evidence": {
+              "analytic": [
+                0.625,
+                -0.7142857142857143
+              ],
+              "numeric": [
+                0.6250000000040945,
+                -0.7142857142983239
+              ]
+            }
+          },
+          {
+            "name": "dataloader_remainder",
+            "passed": true,
+            "evidence": "5 samples =>2,2,1; none discarded"
+          },
+          {
+            "name": "docs_singleton_batchnorm_gradient_bug",
+            "passed": true,
+            "evidence": {
+              "value": 0.0,
+              "analytic": 316.2277660168379,
+              "numeric": 0.0
+            }
+          },
+          {
+            "name": "runtime_docs_batchnorm_divergence",
+            "passed": true,
+            "evidence": {
+              "runtime_value": 1.7999910000674997,
+              "docs_value": 0.0,
+              "runtime_analytic": 0.9999950000374997,
+              "runtime_numeric": 0.8999955001254278,
+              "running_var": [
+                1.0
+              ]
+            }
+          },
+          {
+            "name": "dropout_eval_stale_backward",
+            "passed": true,
+            "evidence": {
+              "training_output": [
+                2.0,
+                2.0,
+                2.0,
+                2.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0
+              ],
+              "eval_output": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "eval_backward": [
+                2.0,
+                2.0,
+                2.0,
+                2.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          {
+            "name": "recursive_eval_mode",
+            "passed": true,
+            "evidence": "Parent and children eval flags all false"
+          },
+          {
+            "name": "adam_bias_correction_first_step",
+            "passed": true,
+            "evidence": {
+              "weight": 0.9000000005,
+              "t": 1,
+              "m": [
+                0.19999999999999996
+              ],
+              "v": [
+                0.0040000000000000036
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "limit": "Original fixed toy demonstrations omit BatchNorm; completion does not establish framework correctness or generalization."
+  },
+  "actual_GitHub_GFM": {
+    "stage": "S63",
+    "lesson_id": "03-10",
+    "date": "2026-10-03",
+    "commit": "411482c66d44a72310fa4ca09d0717b3b307da82",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/411482c66d44a72310fa4ca09d0717b3b307da82/i18n/zh/phases/03-deep-learning-core/10-mini-framework/docs/zh.md",
+    "target_sha256": "588a0dae949020cd32755998db3311445527bfaa6ab94085399f4078ac2ad244",
+    "source_sha256": "94d283931d471f9a757d50d4f12656d497b3cb78aacebeb7619a55e5c0e67325",
+    "scope": "Read entire actual rendered DOM; inspected complete body screenshots in consecutive full-resolution crops plus live Mermaid viewport/expanded controls. No source, payload, DOM or remote writes.",
+    "decision": "PASS_ACTUAL_GFM_WITH_VIEWER_CAVEATS",
+    "full_visual_acceptance": true,
+    "structure": {
+      "headings": 28,
+      "heading_texts": [
+        "构建你自己的迷你框架",
+        "学习目标",
+        "要解决的问题",
+        "核心概念",
+        "Module 抽象",
+        "Sequential 容器",
+        "训练模式与评估模式",
+        "优化器",
+        "DataLoader",
+        "框架架构",
+        "训练循环",
+        "Module 层次结构",
+        "动手实现",
+        "第 1 步：Module 基类",
+        "第 2 步：Linear 层",
+        "第 3 步：激活模块",
+        "第 4 步：Dropout 模块",
+        "第 5 步：BatchNorm 模块",
+        "第 6 步：Sequential 容器",
+        "第 7 步：损失函数",
+        "第 8 步：SGD 和 Adam 优化器",
+        "第 9 步：DataLoader",
+        "第 10 步：在圆形区域分类任务上训练一个 4 层网络",
+        "实际使用",
+        "交付成果",
+        "练习",
+        "关键术语",
+        "延伸阅读"
+      ],
+      "heading_inventory_exact": true,
+      "tables": [
+        {
+          "cells": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "rows": 11
+        }
+      ],
+      "fences": 15,
+      "all_fence_text_exact_except_renderer_final_newline": true,
+      "strong_nodes": 7,
+      "strong_inventory_complete": true,
+      "em_nodes": 0,
+      "mermaid": 3,
+      "figure": 1
+    },
+    "body_checks": [
+      "Every heading from title through Further Reading present, readable and with nonempty GitHub permalink anchors",
+      "All table rows/cells read in actual rendered DOM and body screenshots; no column collapse or missing cell content",
+      "Bold metadata and all source emphasis rendered as strong nodes; no literal broken delimiters",
+      "All fenced payloads compared against actual DOM pre text in source order; only normal terminal-newline presentation differs",
+      "All code blocks syntax-highlighted/monospace and readable; long lines retain native horizontal scrolling when needed",
+      "Source formulas are ordinary prose/code formulas rather than display-math blocks; diff, lag/metric expressions or activation/loss/optimizer expressions remain readable",
+      "Complete figure payload displayed as native code fallback, not a working course-site interaction"
+    ],
+    "separate_gates": [
+      "Course-site renderer/heading IDs/mobile/interactivity NOT passed by this GitHub inspection",
+      "Hosted CI NOT run or certified",
+      "Book PDF remains separately environment-blocked"
+    ],
+    "content_edits": false,
+    "remote_writes": false,
+    "inventory_sha256": "7a5c447e41e061bb7279ca9489788d11ef2717b6f61a8f2902bbb1e0010749ac",
+    "hash_binding": "Observed immutable GitHub URL and commit; target SHA bound to actual local peer-reviewed bytes supplied by coordinator. Actual DOM headings/fences/strong/table inventory cross-checked; no independent raw browser hash claim.",
+    "mermaid_checks": [
+      {
+        "index": 1,
+        "result": "PASS after supported viewer interaction",
+        "normal_view": "Lower Modules/Loss Functions area cropped by normal iframe; expanded view initially places navigation controls over BatchNorm text",
+        "recovery": "Expanded view plus Zoom out and Pan right exposes BatchNorm and normalize activations. All other nodes/labels seen in earlier expanded/top screenshot. English same-commit view has matching crop/control behavior and readable recovered labels.",
+        "intrinsic_overlap": false,
+        "evidence": []
+      },
+      {
+        "index": 2,
+        "result": "PASS across expanded top and lower views",
+        "detail": "DataLoader,Model,Loss,Optimizer;EachEpoch;all eight message labels including zero gradients;top/bottom participant boxes legible. Tall diagram needs native scroll/zoom.",
+        "evidence": []
+      },
+      {
+        "index": 3,
+        "result": "PASS",
+        "detail": "Module plus all method fields,Linear weights/biases,ReLU and Sequential modules[]/methods clearly visible.",
+        "evidence": []
+      }
+    ],
+    "figure_check": "gradient-clipping shown as native code fallback directly below class diagram; not functioning course widget.",
+    "initial_transient_failure": {
+      "message": "Unable to render rich display / Cannot read properties of undefined (reading 'render')",
+      "recovery": "One page reload recovered first Mermaid; final actual DOM has three rendered iframe diagrams and no rich-display error.",
+      "classification": "Transient GitHub renderer failure, not persistent source syntax failure"
+    },
+    "same_commit_english_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/411482c66d44a72310fa4ca09d0717b3b307da82/phases/03-deep-learning-core/10-mini-framework/docs/en.md",
+    "viewer_caveat": "PASS means every label demonstrably available through existing GitHub viewer controls; it does not mean every diagram fits the initial viewport without scrolling/panning. No intrinsic obscured source label remains.",
+    "observation_limits": "Initial transient GitHub render error recovered after one reload. All diagram labels readable using native expanded/scroll/zoom/pan controls, including the first diagram lower labels. Initial viewport does not fit every label; final recovery evidence supersedes initial error screenshots. No intrinsic obscured label remains."
+  },
+  "aggregate": {
+    "reviewed_lessons_in_local_snapshot": 86,
+    "original_strict_direct_pass": 84,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "86 exact-byte matches to each other and final records",
+    "svg_separate_copies": 9,
+    "repository_audits": "Lesson and certification audits plus README/book counts passed",
+    "book_rendering_regressions": {
+      "tests": 6,
+      "passed": 5,
+      "environment_blocked": 1,
+      "reason": "Missing xelatex.fmt; PDF environment unavailable. No system installation or workaround attempted."
+    },
+    "original_site_parser": {
+      "empty_heading_ids_accepted_four": 62,
+      "duplicate_nonempty_id_groups_accepted_four": 1,
+      "accepted_duplicates": {
+        "S63": [
+          "module"
+        ]
+      },
+      "empty_heading_ids_all_five_observed": 77,
+      "pending_S66_empty_ids": 15,
+      "pending_S66_duplicate_ids": [
+        "sft"
+      ],
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "cause": "Original ASCII-only slugify removes Chinese characters and collapses some mixed-language headings to the same nonempty ID"
+    },
+    "excluded_pending_stages": {
+      "S61/10-05": "Third source3D Mermaid labels remain obscured",
+      "S66/10-06": "Source Mermaid group labels (pre-trained) and (after SFT) obscured by first nodes in both English and Chinese; visual acceptance unpassed"
+    },
+    "note": "Local accepted86 aggregate excludes S61 and S66. Final acceptance count requires final remote/index readback."
+  },
+  "content_remote_verification": {
+    "stage": 63,
+    "commit": "411482c66d44a72310fa4ca09d0717b3b307da82",
+    "tree": "0f93020a9fcf30258a8da26369d57d9b657c1136",
+    "changed_file_count": 6,
+    "files": [
+      {
+        "path": "i18n/zh/.curated/stages/S63-mini-framework/SCOPE.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S63-mini-framework/DEPENDENCIES.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/03-10/translation.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/03-10/review.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/03-deep-learning-core/10-mini-framework/docs/zh.md",
+        "match": true
+      }
+    ],
+    "all_bytes_exact": true
+  },
+  "site_parser": {
+    "file": "i18n/zh/phases/03-deep-learning-core/10-mini-framework/docs/zh.md",
+    "parser_executed": true,
+    "html_bytes": 62454,
+    "tables": 1,
+    "code_blocks": 11,
+    "figures": 1,
+    "mermaid_sources": 3,
+    "empty_heading_ids": [
+      "构建你自己的迷你框架",
+      "学习目标",
+      "要解决的问题",
+      "核心概念",
+      "训练模式与评估模式",
+      "优化器",
+      "框架架构",
+      "训练循环",
+      "动手实现",
+      "实际使用",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "duplicate_heading_ids": [
+      "module"
+    ],
+    "browser_verified": false,
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "stage": "S63-mini-framework",
+    "lesson_id": "03-10",
+    "target_sha256": "588a0dae949020cd32755998db3311445527bfaa6ab94085399f4078ac2ad244",
+    "empty_heading_id_count": 14,
+    "duplicate_nonempty_id_distinct_count": 1
+  },
+  "final_remote_and_CI": "Final evidence commit byte readback and exact-head CI results belong in PR body and single rollout index to avoid self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
