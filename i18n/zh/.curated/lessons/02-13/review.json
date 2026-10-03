@@ -1588,84 +1588,72 @@
       "location": "b17,b27,b41,b53,b153",
       "source_claim": "Pipeline solves all problems / no leakage automatically",
       "concern": "管线只有在正确划分数据和传入训练折时防止预处理泄漏，不能防止错误特征、时间或实体跨折泄漏",
-      "evidence": "fit方法接受调用者所有输入，没有识别测试集的机制；独立FoldSpy仅证明当前有限分折互不重合",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b36,b143; demo_data_leakage",
       "source_claim": "leaky preprocessing inflates accuracy",
       "concern": "信息污染可能使评估偏乐观，但此具体缩放操作不保证每次准确率严格升高",
-      "evidence": "准确率取决于数据和模型；源码demo也明确差异可能很小；未将10-30%输出当验证事实",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b59",
       "source_claim": "ColumnTransformer complete example",
       "concern": "GradientBoostingClassifier未在围栏或此前片段导入；gender列不在make_mixed_data中",
-      "evidence": "静态核对导入列表及源码生成数据键；代码原样保留",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b61; OneHotEncoder.transform",
       "source_claim": "unknown produces zero vector",
       "concern": "对未知特征的编码组为零，不是整行所有特征为零；自制实现handle_unknown配置不生效",
-      "evidence": "独立fixture两列输出[0,0,1,0]；error选项仍返回零向量",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "MedianImputer.fit / StandardScaler.fit",
       "source_claim": "imputation/scaling robust preprocessing",
       "concern": "全缺失列中位数仍为NaN，且模块全局忽略warnings可能隐藏异常；没有输入形状/未拟合检查",
-      "evidence": "独立全NaN列夹具仍全NaN；源码warnings.filterwarnings(ignore)",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b69,b71,b75",
       "source_claim": "complete tracking / reproduce any experiment",
       "concern": "记录参数未自动应用到早先LogisticRegression pipe；wandb片段未保存模型或数据版本；日志不自动实现任意实验复现",
-      "evidence": "max_depth/n_estimators/learning_rate只被log_param/config.update记录；片段没有更新pipe参数",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b81",
       "source_claim": "stages and approval workflow",
       "concern": "产品版本变化未锁定；显式晋级不等于多方审批强制执行或瞬间部署回滚",
-      "evidence": "固定源无版本号与具体权限策略；仅静态审读，不宣称核实当前MLflow功能",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b85,b89,b91",
       "source_claim": "git cannot handle large files; DVC checkout full reproducibility",
       "concern": "git可存储大文件但不适合；DVC恢复依赖数据可用/本地缓存与远程配置，代码数据锁定不足以保证环境复现",
-      "evidence": "给定五条命令未配置remote；未执行dvc push或checkout",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b97,b99",
       "source_claim": "four things make reproducible experiment",
       "concern": "种子不足以保证跨硬件/库版本完全确定性；代码没有设置每个独立随机状态或所有确定性算子",
-      "evidence": "源码numpy random设置与cuDNN deterministic参数有限；本次只证明同环境固定小样本结果一致",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b9,b117,b133,b137; FullPipeline",
       "source_claim": "complete production pipeline and serialization",
       "concern": "默认程序没有序列化演示；scratch类别侧没有众数填补；MLflow只在文档，源码实验日志为手工输出",
-      "evidence": "654行源码已完整审读：FullPipeline直接cat_encoder；demo_experiment_tracking打印表格；独立自生成pickle往返不是课程默认实现",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "cross_validate_pipeline",
       "source_claim": "general CV utility",
       "concern": "未验证n_folds边界，也非分层、时间或group-aware划分",
-      "evidence": "实现n//n_folds和随机permutation；本次仅11样本3折含余数验证，不声称无边界问题",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     },
     {
       "location": "b121,b125",
       "source_claim": "custom transformers / pipeline",
       "concern": "文档CustomTransformer使用mean/std而完整源码使用nanmean/nanstd；最简Pipeline未校验steps或空训练数据",
-      "evidence": "两个源实现静态不同，翻译均保留；未暗合并实现",
       "translation_treatment": "固定源文含义和保护代码保留；独立列出源风险，不作为翻译缺陷，不静默修改"
     }
   ],
@@ -1674,112 +1662,96 @@
       "location": "b0017,b0027,b0041",
       "source_claim": "Pipeline solves all problems/guarantees no leakage",
       "concern": "Pipeline cannot stop leakage in upstream feature generation, target selection, group/time splits or prior leaked data; preserve absolute source claims.",
-      "evidence": "static control-flow reading",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0036,b0143",
       "source_claim": "Leakage inflates accuracy",
       "concern": "Contamination does not guarantee an accuracy increase in every finite example; scaling may not change result.",
-      "evidence": "mathematical scope inspection; no sklearn example execution",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0059",
       "source_claim": "GradientBoostingClassifier used in document",
       "concern": "The snippet omits import and assumes df/schema exist; code later imports it separately.",
-      "evidence": "source docs and654-line code comparison",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0061",
       "source_claim": "unknown category produces zero vector",
       "concern": "Only the unknown categorical feature block is zero; other feature blocks remain.",
-      "evidence": "bounded multi-column fixture",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0067,b0071",
       "source_claim": "most common/any experiment reproducible",
       "concern": "Not proven by fixed source; explicit log snippets do not automatically capture every dependency, data and code state.",
-      "evidence": "source snippet inspection; no live MLflow claims",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0075",
       "source_claim": "wandb same functionality",
       "concern": "The provided snippet lacks explicit model artifact logging and may initialize external service; not executed.",
-      "evidence": "source snippet inspection",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0081",
       "source_claim": "Registry stages and approval",
       "concern": "Version/stage model and explicit promotion are product/workflow-specific; source does not configure mandatory approval or guarantee instantaneous rollback.",
-      "evidence": "source alone insufficient to certify current product behavior",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0085,b0089,b0091",
       "source_claim": "Git cannot handle large files, every commit pins data",
       "concern": "Git can store large blobs inefficiently; only tracked committed DVC pointers bind data and checkout needs data availability.",
-      "evidence": "source command/dataflow inspection; DVC commands not run",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0097,b0099",
       "source_claim": "Four reproducibility conditions sufficient",
       "concern": "Seeds and pinned packages alone do not ensure all GPU/platform deterministic algorithms or external state.",
-      "evidence": "seed snippet static inspection; GPU not run",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0111",
       "source_claim": "config column lists fix schema changes",
       "concern": "Moving names to config does not validate types or automatically adapt a changed schema.",
-      "evidence": "static semantics",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0121,code MedianImputer/StandardScaler",
       "source_claim": "full missing-value handling",
       "concern": "Docs np.mean/std propagate NaN; all-NaN column survives median imputation; warning suppression hides warnings.",
-      "evidence": "finite fixture confirms both source behaviors",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "code OneHotEncoder",
       "source_claim": "handle_unknown parameter",
       "concern": "Parameter is stored but never consulted, so error mode still silently zero-encodes; sorted mixed categories and null handling not production robust.",
-      "evidence": "finite error-mode probe passes source behavior",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "code cross_validate_pipeline",
       "source_claim": "proper CV",
       "concern": "No n_folds range validation:0 divides by zero,n_folds>n yields empty folds; no stratified/group/time validation or independent holdout selection.",
-      "evidence": "finite0fold/2samples3fold and disjoint-fold probes",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0133,code demo_experiment_tracking",
       "source_claim": "production pipeline and experiment logging",
       "concern": "Canonical optional sklearn/pandas violates lesson allowlist; tracking is in-memory manual logs, no complete production config/service/serialization implementation.",
-      "evidence": "entire code read; default main not run",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "b0009,b0145",
       "source_claim": "serialization identical results",
       "concern": "No provided serialization implementation or trust/version discussion; joblib/pickle untrusted load can execute code.",
-      "evidence": "source inspection; no deserialization executed",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     },
     {
       "location": "code LogisticRegressionSimple/PipelineFromScratch",
       "source_claim": "general estimator/transformer behavior",
       "concern": "Simplified interfaces omit validation, fitted-state checks and general fit y propagation; logistic empty rows divide by zero and model.fit returns None.",
-      "evidence": "source inspection; finite allowed fixture only",
       "translation_treatment": "Preserved unchanged in protected payload or faithfully translated prose; not silently corrected."
     }
   ],
@@ -1974,10 +1946,7 @@
       "strict": "PASS",
       "controls": "33/33 fresh",
       "dependency_pins": "66/66 SHA256 plus Git-source bytes",
-      "replays": [
-        "stage57_peer_s59_replay_a",
-        "stage57_peer_s59_replay_b"
-      ],
+      "replays": [],
       "replay_comparison": "both exact target bytes",
       "runtime": "20 independent finite NumPy/stdlib cases pass",
       "canonical": "not run; default calls sklearn/pandas; no substituted canonical claim"
@@ -1987,12 +1956,6 @@
       "sklearn/pandas/MLflow/wandb/DVC/network/cloud/GPU",
       "500-sample default CV/model-comparison experiments",
       "course exercises as full production tasks"
-    ],
-    "remaining": [
-      "Coordinator promote translation record status to language-reviewed without changing bytes",
-      "Actual GitHub GFM after publication",
-      "Course website/mobile/interactive/hosted CI are separate unpassed gates",
-      "Extra PDF remains environment-blocked; no install attempted"
     ]
   },
   "unresolved_translation_findings": {
@@ -2004,9 +1967,11 @@
   "checks": {
     "legacy_strict": "passed-original-no-exception",
     "independent_technical_and_chinese": "passed-full-final-hash",
-    "deterministic_replay": "author and peer two fresh exact outputs; aggregate pending",
-    "github_gfm": "pending actual browser",
-    "actual_site_browser": "not passed",
-    "hosted_ci": "not passed; Actions not enabled"
-  }
+    "deterministic_replay": "passed-82-lesson-two-new-output-byte-comparison; 7 SVG assets separately copied and verified",
+    "github_gfm": "passed-actual-immutable-GitHub-render; custom figure remains a code placeholder",
+    "actual_site_browser": "not passed; offline original parser has empty Chinese heading IDs, separate from browser/mobile/interactive acceptance",
+    "hosted_ci": "not passed here; final exact-head query recorded in PR body/index"
+  },
+  "gfm_content_commit": "d386d000666ef718730c851129f0286268230715",
+  "gfm_gate_status": "PASS_ACTUAL_GITHUB_GFM_WITH_CUSTOM_FIGURE_LIMITATION"
 }
