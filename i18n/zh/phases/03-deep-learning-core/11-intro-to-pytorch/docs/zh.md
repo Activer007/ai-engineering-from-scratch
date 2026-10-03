@@ -531,6 +531,6 @@ PyTorch 提供 15+ 种调度器：StepLR、ExponentialLR、CosineAnnealingLR、O
 ## 延伸阅读
 
 - Paszke 等人，"PyTorch: An Imperative Style, High-Performance Deep Learning Library" (2019)：解释 PyTorch 设计权衡的原始论文
-- PyTorch Tutorials: "Learning PyTorch with Examples" (https://pytorch.org/tutorials/beginner/pytorch_with_examples.html)：从张量到 nn.Module 的官方学习路径
-- PyTorch Performance Tuning Guide (https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html)：混合精度、DataLoader 工作进程、锁页内存及其他生产优化
-- Horace He，"Making Deep Learning Go Brrrr" (https://horace.io/brrr_intro.html)：GPU 训练为什么快，以及 PyTorch 专用的优化策略
+- PyTorch Tutorials: "Learning PyTorch with Examples" (https://pytorch.org/tutorials/beginner/pytorch_with_examples.html) ：从张量到 nn.Module 的官方学习路径
+- PyTorch Performance Tuning Guide (https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html) ：混合精度、DataLoader 工作进程、锁页内存及其他生产优化
+- Horace He，"Making Deep Learning Go Brrrr" (https://horace.io/brrr_intro.html) ：GPU 训练为什么快，以及 PyTorch 专用的优化策略
