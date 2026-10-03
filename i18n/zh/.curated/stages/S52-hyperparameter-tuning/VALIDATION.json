@@ -1,0 +1,751 @@
+{
+  "schema_version": 1,
+  "stage_id": "S52-hyperparameter-tuning",
+  "date": "2026-10-03",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "ec61d03f29614e7a330e9fbee1c08deb4da99e42efc6984dc83d55142615ee85",
+  "target_sha256": "c0b27542fc52e55f6957a0f780849035d77733af72825baa119d8ab3e54a415e",
+  "immutable_content_commit": "08c6d320468c326f15910a021f35c7086eba5eaf",
+  "support_dependencies": 61,
+  "dependency_manifest_sha256": "c3c871858798b7b60c99805001f5bc651c9cb9f93671c77a4a34392c4ac79567",
+  "coverage": {
+    "blocks": 211,
+    "translatable_blocks": 92,
+    "lines": 565,
+    "headings": 27,
+    "fences": 14,
+    "mermaid": 4,
+    "figure": 1,
+    "tables": [
+      [
+        7,
+        3
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        7,
+        4
+      ],
+      [
+        10,
+        3
+      ]
+    ],
+    "exercises": 5,
+    "references": 5,
+    "fresh_full_technical_read": true,
+    "fresh_separate_full_chinese_read": true,
+    "author_QA_read": false,
+    "cross_edit": false
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; final hashes and every source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "S52-SRC-01",
+      "location": "b0013/b0015/b0057/b0065/b0091",
+      "topic": "Cost and performance claims",
+      "finding": "43 hours rounds43.40278; superiority and2-5x/10-50x/default80percent claims are not universal or benchmarked.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-02",
+      "location": "b0035/b0037",
+      "topic": "Unique samples",
+      "finding": "Nine integer/categorical draws can repeat; distinct values require suitable continuous-distribution assumptions.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-03",
+      "location": "b0041",
+      "topic": "Probability versus distance",
+      "finding": "1-.95^60=.95393 means hitting a5percent sampling-mass region, not objective value within5percent of optimum.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-04",
+      "location": "b0051/b0057/b0143",
+      "topic": "Surrogate overhead",
+      "finding": "Covariance solves and500 candidate scoring are not negligible for all objectives or dimensions.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-05",
+      "location": "b0063/b0065/b0197",
+      "topic": "Early stopping and Hyperband",
+      "finding": "Schedule is a successive-halving example; early performance need not predict final quality; total versus incremental budget matters.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-06",
+      "location": "b0075-b0081/b0111/b0117/b0121",
+      "topic": "Importance rankings",
+      "finding": "Random forests lack a boosting learning rate; max_features and batch-size importance,always-first learning rate and60/40 split depend on task.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-07",
+      "location": "b0095-b0107",
+      "topic": "Nested CV and fits",
+      "finding": "675 omits5 default refits, giving680 fits. Exact unbiasedness is not unconditional; training folds are smaller and must remain leakage-free.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-08",
+      "location": "b0119",
+      "topic": "Batch-scale contradiction",
+      "finding": "Never search batch size on a log scale conflicts with geometrically spaced16,32,64 example.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-09",
+      "location": "b0133/b0137/b0143",
+      "topic": "Missing helpers and API differences",
+      "finding": "Document needs np,itertools,evaluate,sample,sample_random,to_vector,norm_cdf/norm_pdf. Canonical APIs and return histories differ; missing names newly reproduced before declared external fixture context.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-10",
+      "location": "b0143/canonical GP",
+      "topic": "Approximate model assumptions",
+      "finding": "Fixed kernels/noise, categorical numeric geometry, scaling and error handling differ between document and canonical; no general numerical guarantee.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-11",
+      "location": "canonical _norm_cdf",
+      "topic": "Negative expected improvement",
+      "finding": "At z=-2 tanh CDF=.0394854 versus true normalCDF=.0227501; canonical EI=-.02497983. Nonnegative expected positive improvement definition is violated by approximation.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-12",
+      "location": "canonical GBMForTuning.fit",
+      "topic": "Repeated-fit state",
+      "finding": "Second fit appends trees:2 become4 and predictions change; source search uses fresh model instances.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-13",
+      "location": "b0151/b0153",
+      "topic": "Synthetic optimum already on grid",
+      "finding": "Original28-point grid attains exact maximum10 atlr.01/depth4; does not demonstrate universal Bayes superiority. Full28x3 comparison not run.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-14",
+      "location": "b0169/b0171",
+      "topic": "Pruning ineffective as shown",
+      "finding": "Only step0 is reported after full3-foldCV while warmup_steps5 blocks pruning at0; no within-training stopping, so shown40-60percent savings not established.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-15",
+      "location": "b0177/canonical sample_param",
+      "topic": "Endpoints and library context",
+      "finding": "scipy randint excludes high while canonical int includes high. Unknown source specs silently return low; production library blocks require external data/model context and were skipped.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-16",
+      "location": "b0187-b0191",
+      "topic": "Absolute practical advice",
+      "finding": "Boundary optimum can be valid; joint search and early stopping strictly-better claims need conditions, and stopping introduces its own criterion choices.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-17",
+      "location": "canonical/exercises",
+      "topic": "Execution boundary",
+      "finding": "572 lines fully reread; only8 selected original definitions and explicit tiny fixtures run. Default479 evaluations+3refits,Optuna and full exercises not run.",
+      "action": "Source faithfully retained"
+    },
+    {
+      "id": "S52-SRC-18",
+      "location": "b0071/diagrams/repository",
+      "topic": "Rendering and contract",
+      "finding": "Three bare multiplication asterisks await actual GFM; source diagrams/figure retained. No citation header and tests absent; fullsite/mobile/interactive/CI not checked.",
+      "action": "Source faithfully retained"
+    }
+  ],
+  "author_runtime": {
+    "status": "FRESH_RECOVERY_LIMITED_PASS_WITH_SOURCE_ISSUES",
+    "executed_at": "2026-10-02T23:41:10.532810+00:00",
+    "canonical_sha256": "fd97f10b3d47fe3f4d49628d8cddef99ec2c79453f927b106b499ccb5f647080",
+    "canonical_lines": 572,
+    "canonical_safety_read": "Complete fixedcode read earlier in sameconversation; currentbytes reverified exacthash beforethisrun",
+    "canonical_full_default_run": false,
+    "canonical_default_evaluations_skipped": 479,
+    "canonical_default_refits_skipped": 3,
+    "document_definitions": [
+      133,
+      137,
+      143
+    ],
+    "full_document_demo_run": false,
+    "old_pass_inherited": false,
+    "external_fixtures_disclosed": true,
+    "checks": [
+      {
+        "name": "small_data",
+        "detail": "40samples,5features,seed7,24/8/8; not default400",
+        "result": "PASS"
+      },
+      {
+        "name": "generator_boundary",
+        "detail": "n_features4raisesIndexError; indexesfeature4",
+        "result": "PASS"
+      },
+      {
+        "name": "grid",
+        "detail": "2evaluations,2trees,depth1",
+        "result": "PASS"
+      },
+      {
+        "name": "random_seed",
+        "detail": "two3trialhistoriesidentical",
+        "result": "PASS"
+      },
+      {
+        "name": "discrete_repetition",
+        "detail": "50draws from2values cannot allbeunique; endpointsinclusive",
+        "result": "PASS"
+      },
+      {
+        "name": "GP_prior",
+        "detail": "zero/unit",
+        "result": "PASS"
+      },
+      {
+        "name": "bounded_BO",
+        "detail": "8scalarquadratic evaluations;original500candidate loop;notGBM/defaultdemo",
+        "result": "PASS"
+      },
+      {
+        "name": "log_mapping",
+        "detail": "geometricmidpoint maps .5",
+        "result": "PASS"
+      },
+      {
+        "name": "CDF_error",
+        "detail": {
+          "approx": 0.8314262305919433,
+          "exact": 0.8413447460685429,
+          "absolute_error": 0.00991851547659961
+        },
+        "result": "PASS"
+      },
+      {
+        "name": "negative_EI",
+        "detail": {
+          "mu": -2,
+          "var": 1,
+          "best": 0,
+          "EI": -0.024979830142649158,
+          "sourceissue": "tanhCDF/exactPDF mismatch"
+        },
+        "result": "PASS"
+      },
+      {
+        "name": "running_max",
+        "detail": "nondecreasingbestscore",
+        "result": "PASS"
+      },
+      {
+        "name": "refit_appends",
+        "detail": "two successive2treefits leave4trees",
+        "result": "PASS"
+      },
+      {
+        "name": "empty_grid",
+        "detail": "None,-inf,[]",
+        "result": "PASS"
+      },
+      {
+        "name": "doc_grid_missing_context",
+        "detail": "name 'itertools' is not defined",
+        "result": "PASS"
+      },
+      {
+        "name": "doc_grid_fixture",
+        "detail": "explicititertools/neg_mse/originalGBM supplied,2evals",
+        "result": "PASS"
+      },
+      {
+        "name": "doc_random_missing_context",
+        "detail": "name 'np' is not defined",
+        "result": "PASS"
+      },
+      {
+        "name": "doc_random_fixture",
+        "detail": "explicitnp/canonicalsample helper;2evals",
+        "result": "PASS"
+      },
+      {
+        "name": "doc_BO_missing_helpers",
+        "detail": "name 'sample_random' is not defined",
+        "result": "PASS"
+      },
+      {
+        "name": "doc_GP_EI_fixture",
+        "detail": "explicitexactmath.erf/PDF only;missing sampling/vector helpers notsupplied;fulldocdemo notrun",
+        "result": "PASS"
+      },
+      {
+        "name": "quantile_bound",
+        "detail": {
+          "probability": 0.953930201013048,
+          "condition": "IID targetregion mass5%,not objectivegap5%"
+        },
+        "result": "PASS"
+      },
+      {
+        "name": "CV_count",
+        "detail": "675innerfits +5winnerrefits ifperformed;sklearnnotexecuted",
+        "result": "PASS"
+      },
+      {
+        "name": "grid_hours",
+        "detail": 43.40277777777778,
+        "result": "PASS"
+      },
+      {
+        "name": "scope",
+        "detail": "default479search/3refit/sklearn/scipy/Optuna/main skipped;noinstallnetworkmodels",
+        "result": "PASS"
+      }
+    ],
+    "count": 23
+  },
+  "independent_runtime": {
+    "canonical": {
+      "path": "phases/02-ml-fundamentals/12-hyperparameter-tuning/code/tuning.py",
+      "lines": 572,
+      "sha256": "fd97f10b3d47fe3f4d49628d8cddef99ec2c79453f927b106b499ccb5f647080",
+      "full_preread": true,
+      "fixed_git_match": true,
+      "main_run": false,
+      "Optuna_imported": false
+    },
+    "bounded": {
+      "fresh_after_recovery": true,
+      "numpy_version": "2.3.5",
+      "groups": 12,
+      "results": [
+        {
+          "check": "arithmetic and probability distinction",
+          "status": "PASS"
+        },
+        {
+          "check": "inclusive integer sampling and normalized log/category coordinates",
+          "status": "PASS"
+        },
+        {
+          "check": "canonical four-evaluation tiny grid",
+          "status": "PASS"
+        },
+        {
+          "check": "canonical three-evaluation random fixture repeated",
+          "status": "PASS"
+        },
+        {
+          "check": "repeated-fit tree accumulation defect",
+          "status": "PASS"
+        },
+        {
+          "check": "canonical five-evaluation Bayes fixture,500 candidates unchanged",
+          "status": "PASS"
+        },
+        {
+          "check": "GP prior and best-so-far curve",
+          "status": "PASS"
+        },
+        {
+          "check": "negative EI from tanh CDF",
+          "status": "PASS"
+        },
+        {
+          "check": "document missing globals independently reproduced",
+          "status": "PASS"
+        },
+        {
+          "check": "document constant-model fixtures with declared external globals",
+          "status": "PASS"
+        },
+        {
+          "check": "document GP and EI external exact-normal fixture",
+          "status": "PASS"
+        },
+        {
+          "check": "source28-point grid contains exact optimum",
+          "status": "PASS"
+        }
+      ],
+      "canonical572lines_preread": true,
+      "canonical_definitions_executed": [
+        "GBMForTuning",
+        "SimpleBayesianOptimizer",
+        "SimpleTree",
+        "convergence_curve",
+        "grid_search",
+        "neg_mse",
+        "random_search",
+        "sample_param"
+      ],
+      "canonical_main_run": false,
+      "document_blocks": [
+        "b0133",
+        "b0137",
+        "b0143",
+        "b0151 function definition only"
+      ],
+      "not_run": [
+        "479 default evaluations+3refits",
+        "Optuna/sklearn/scipy",
+        "downloads/network",
+        "exercises/plots",
+        "GFM/site/CI"
+      ]
+    }
+  },
+  "actual_GitHub_GFM": {
+    "stage": "S52-hyperparameter-tuning",
+    "status": "PASS_GITHUB_GFM_WITH_SOURCE_FIGURE_LIMITATION",
+    "reviewed_at": "2026-10-03T00:00:19.760813+00:00",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/08c6d320468c326f15910a021f35c7086eba5eaf/i18n/zh/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/zh.md",
+    "commit": "08c6d320468c326f15910a021f35c7086eba5eaf",
+    "target_sha256": "c0b27542fc52e55f6957a0f780849035d77733af72825baa119d8ab3e54a415e",
+    "actual_cloud_browser": true,
+    "full_local_document_read": true,
+    "full_actual_DOM_read": true,
+    "checks": {
+      "headings_exact": true,
+      "headings_count": 27,
+      "tables_exact": true,
+      "table_shapes": [
+        [
+          7,
+          3
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          10,
+          3
+        ]
+      ],
+      "strong_exact": true,
+      "strong_count": 33,
+      "all14_fence_payloads_exact": false,
+      "fence_languages": [
+        "text",
+        "mermaid",
+        "mermaid",
+        "mermaid",
+        "mermaid",
+        "python",
+        "figure",
+        "python",
+        "python",
+        "python",
+        "python",
+        "python",
+        "python",
+        "python"
+      ],
+      "final_mermaid_containers": 4,
+      "final_mermaid_iframe_documents": 4,
+      "final_error_present": false,
+      "no_raw_emphasis_markers": true,
+      "all14_fence_payloads_exact_ignoring_only_final_newline": true,
+      "fence_DOM_normalization": "GitHub removes terminal newline in 8 highlighted Python pre elements; all characters, internal whitespace and line breaks otherwise identical"
+    },
+    "formula": {
+      "cosine_table": "lr * 0.5 * (1 + cos(pi * t / T)) preserved literally in rendered cell; multiplication signs are intentional plain-text formula, not leaked emphasis",
+      "latex_blocks": 0
+    },
+    "mermaid": {
+      "initial": "first diagram failed with Cannot read properties of undefined (reading render); other 3 rendered",
+      "one_reload": "all 4 diagrams rendered successfully with complete node labels",
+      "payloads_unchanged": true
+    },
+    "figure": {
+      "source": "```figure\nk-fold-cv\n```",
+      "github_behavior": "GFM renders as a fenced code block showing k-fold-cv, not the site-specific interactive figure",
+      "classification": "inherited source/custom-renderer limitation; not new Chinese formatting defect; no interactive figure claim"
+    },
+    "must_fix_translation_formatting": [],
+    "scope_limits": [
+      "Not a course-site browser acceptance",
+      "Not a mobile acceptance",
+      "Not an interactive figure acceptance",
+      "Not CI acceptance",
+      "No document or remote edits"
+    ]
+  },
+  "aggregate": {
+    "reviewed_lessons": 78,
+    "original_strict_direct_pass": 76,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "78 byte-identical to each other and final records",
+    "svg_separate_copies": 5,
+    "repository_audits": "523 lessons, 67 certifications, 12 assessments, 505 questions; zero issues; README/book counts passed",
+    "book_rendering_regressions": {
+      "result": "ENVIRONMENT_BLOCKED_PDF_TEST",
+      "tests": 6,
+      "passed": 5,
+      "failed": 1,
+      "reason": "xelatex.fmt unavailable; mktexfmt cannot create default cache under read-only /home/agent/.texlive2025",
+      "source_or_translation_failure_established": false,
+      "retry": {
+        "returncode": 1,
+        "log_sha256": "b3c53dc26d1e1598392b6d4ddba0e0b5095f31bc1e211dd23aab7416ee83c573",
+        "environment_only": true,
+        "system_install_or_modification": false,
+        "timestamp_utc": "2026-10-03T00:01:08.839424+00:00",
+        "result": "STILL_BLOCKED_NO_SYSTEM_CHANGES",
+        "reason": "Writable process-local TeX cache resolves the permission error, but fmtutil has zero format entries and xelatex.fmt remains unavailable; no system installation or configuration change attempted"
+      }
+    }
+  },
+  "content_remote_verification": {
+    "stage": 52,
+    "commit": "08c6d320468c326f15910a021f35c7086eba5eaf",
+    "files": [
+      {
+        "path": "i18n/zh/.curated/lessons/02-12/review.json",
+        "sha256": "8fdc46d91f16d44791acc68b8dc89b61d518ca84bd5f76999266aa4ffcbf404c",
+        "bytes": 103117
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/02-12/translation.json",
+        "sha256": "7be50aee6c65deaf7173665bb01981c8813e495098094a3e4e2aacd511008b9c",
+        "bytes": 111435
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/DEPENDENCIES.json",
+        "sha256": "c3c871858798b7b60c99805001f5bc651c9cb9f93671c77a4a34392c4ac79567",
+        "bytes": 14736
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/SCOPE.md",
+        "sha256": "7877b165da43ed2f52e9724760008539d1d658f694ac658e96cd0bfd98e11854",
+        "bytes": 897
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+        "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0",
+        "bytes": 2038
+      },
+      {
+        "path": "i18n/zh/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/zh.md",
+        "sha256": "c0b27542fc52e55f6957a0f780849035d77733af72825baa119d8ab3e54a415e",
+        "bytes": 25010
+      }
+    ],
+    "exact_byte_equal": true,
+    "tree": "1f68a7a64a82e07fdf049b52f3eb6de158e6c36c"
+  },
+  "site_parser": {
+    "timestamp_utc": "2026-10-03T00:02:12.514789+00:00",
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "scope": "Repository original site/lesson.html parser executed offline on five final Chinese lesson bytes; not browser QA, not GitHub GFM, not deployed-site verification",
+    "cause": "Original slugify removes all characters outside ASCII a-z/0-9, causing empty IDs for Chinese-only headings",
+    "script_sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43",
+    "site_source_sha256": "03a79431a160d84c30793da3433d565b236db586ba53083b45b07e304d15757e",
+    "returncode": 0,
+    "log_sha256": "342c32c378c9b0556050a8a39034188c14adde779e2fa0f02b7f42b55e587d21",
+    "lessons": [
+      {
+        "file": "i18n/zh/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 46329,
+        "tables": 4,
+        "code_blocks": 9,
+        "figures": 1,
+        "mermaid_sources": 4,
+        "empty_heading_ids": [
+          "超参数调优",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "参数与超参数",
+          "网格搜索",
+          "随机搜索",
+          "贝叶斯优化",
+          "早停",
+          "学习率调度器",
+          "超参数重要性",
+          "实用策略",
+          "与交叉验证结合",
+          "实用建议",
+          "动手实现",
+          "实际使用",
+          "超参数调优中的常见错误",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [
+          "optuna"
+        ],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S52-hyperparameter-tuning",
+        "lesson_id": "02-12",
+        "target_sha256": "c0b27542fc52e55f6957a0f780849035d77733af72825baa119d8ab3e54a415e",
+        "empty_heading_id_count": 20,
+        "duplicate_nonempty_id_distinct_count": 1
+      },
+      {
+        "file": "i18n/zh/phases/03-deep-learning-core/08-weight-initialization/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 29717,
+        "tables": 1,
+        "code_blocks": 15,
+        "figures": 1,
+        "mermaid_sources": 3,
+        "empty_heading_ids": [
+          "权重初始化与训练稳定性",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "对称性问题",
+          "方差在各层间的传播",
+          "选择合适的初始化策略",
+          "动手实现",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S53-weight-initialization",
+        "lesson_id": "03-08",
+        "target_sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+        "empty_heading_id_count": 13,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 25348,
+        "tables": 2,
+        "code_blocks": 10,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "何时选择哪一种",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S54-glove-fasttext-subword",
+        "lesson_id": "05-04",
+        "target_sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 30544,
+        "tables": 1,
+        "code_blocks": 12,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "命名实体识别",
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "容易失效的情况",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S55-named-entity-recognition",
+        "lesson_id": "05-06",
+        "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+        "empty_heading_id_count": 10,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 16822,
+        "tables": 2,
+        "code_blocks": 3,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "什么情况下该选哪种方法",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S56-topic-modeling",
+        "lesson_id": "05-15",
+        "target_sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      }
+    ],
+    "total_empty_heading_ids": 61,
+    "source_or_translation_modified": false,
+    "github_gfm_verified_by_this_check": false,
+    "browser_verified": false
+  },
+  "final_remote_and_CI": "Final evidence commit readback and exact-head CI results are recorded in PR body and the single rollout index, avoiding self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
