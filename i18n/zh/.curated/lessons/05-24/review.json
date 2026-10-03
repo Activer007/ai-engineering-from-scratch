@@ -1347,14 +1347,12 @@
       "location": "code/main.py recency_score; b0051",
       "source_claim": "Closer wins",
       "concern": "At sentence-start pronouns, max(0, token difference) ties prior same-sentence candidates; max picks earliest rather than nearest.",
-      "evidence": "stage65_runtime_checks.py test_nominal_nearest fails: The company showed a laptop. It shipped. resolves It → The company instead of a laptop. Canonical demo agrees.",
       "translation_treatment": "Preserved in Chinese/protected payload without correction; separated from translation acceptance."
     },
     {
       "location": "code/main.py agreement_score/resolve/infer_gender",
       "source_claim": "Gender/number agreement heuristics",
       "concern": "Agreement is soft and has no reject threshold; all NE/nominal candidates singular; unknown gender acts as wildcard. Wrong gender, singular they, recency dominance and Her → AI are demonstrated.",
-      "evidence": "stage65_main.log; finite tests forced_gender_mismatch, number_is_not_hard_constraint, recency_overrides_gender, gender_toy_lookup.",
       "translation_treatment": "Preserved in Chinese/protected payload without correction; separated from translation acceptance."
     },
     {
@@ -1389,7 +1387,6 @@
       "location": "site/lesson.html parser",
       "source_claim": "Chinese headings and relative SVG display",
       "concern": "ASCII-only slugify produces ten empty Chinese heading IDs; inlineFormat removes relative link destinations and lacks image rendering. Figure placeholder is not an interactive test.",
-      "evidence": "stage65_site_parser.log reports BLOCKED_SOURCE_RENDERER; parser source read prior to executing pinned script.",
       "translation_treatment": "Preserved in Chinese/protected payload without correction; separated from translation acceptance."
     }
   ],
@@ -1600,9 +1597,12 @@
   "checks": {
     "legacy_strict": "passed-original-no-exception",
     "independent_technical_and_chinese": "passed-full-final-hash",
-    "deterministic_replay": "author and peer two fresh exact outputs; aggregate pending",
-    "github_gfm": "pending actual browser",
-    "actual_site_browser": "not passed",
-    "hosted_ci": "not passed; Actions not enabled"
-  }
+    "deterministic_replay": "passed86 lessons in two fresh output directories;9SVGs separately copied and verified",
+    "github_gfm": "PASS_ACTUAL_GFM",
+    "actual_site_browser": "not passed; original parser has62 empty IDs and duplicate module(S63) in accepted four; pending S66 separately adds15 empty and duplicate sft; browser/mobile/interaction are separate",
+    "hosted_ci": "not passed here; final exact-head query belongs in PR body/index",
+    "gfm_observation_limits": "Referenced SVG labels readable without intrinsic clipping; long skill fence inspected with native horizontal scroll. Source caption count and pronoun ambiguity remain semantic issues. Empty raw-copy clipboard output was not used as independent byte evidence; coordinator exact immutable remote readback provides hash binding."
+  },
+  "gfm_content_commit": "69cdc7563ced2b319ca45951ad5741c55f511646",
+  "gfm_gate_status": "PASS_ACTUAL_GFM"
 }

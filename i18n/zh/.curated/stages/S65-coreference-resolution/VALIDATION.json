@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "stage_id": "S65-coreference-resolution",
+  "date": "2026-10-02",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "5737352d097d9de94f3107cee673829c3dd42daf2b0229f0771e0f78489ccabe",
+  "target_sha256": "9c3f59f5a6e6fb9187b0cee8f0bbfd943a5f13b9cf3593e57dddf030bc005bd8",
+  "immutable_content_commit": "69cdc7563ced2b319ca45951ad5741c55f511646",
+  "immutable_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/69cdc7563ced2b319ca45951ad5741c55f511646/i18n/zh/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/docs/zh.md",
+  "support_commit": "f45195880b3e89944f04987eeb54463ae369cb57",
+  "support_dependencies": 70,
+  "dependency_manifest_sha256": "c1c1dfabb338daf1c1d05f1bdce3eb9bb547558ab29f6d16d1b96d2aa7274fc9",
+  "coverage": {
+    "blocks": 93,
+    "technical_compared": 93,
+    "chinese_read": 93,
+    "full_technical_comparison": true,
+    "separate_full_chinese_read": true
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; every final source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "location": "b0003",
+      "source_claim": "three references to two people",
+      "concern": "The doctor is not explicitly linked to either pronoun referent; counting and entity identity are underdetermined from this example.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "b0009,b0031,b0067,b0073",
+      "source_claim": "coverage loss and2026 scores/thresholds",
+      "concern": "60–80%,~83F1,~15F1/2000tokens and50paragraph limits lack specified models, benchmark settings or evidence in the source; no current metric claims verified.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "b0011,b0035,b0089",
+      "source_claim": "identity coreference and bridging",
+      "concern": "Bridging car-to-wheels links distinct related entities, not strict entity identity; broadtask discussion should not imply interchangeable evaluation.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "b0029",
+      "source_claim": "Lee2017 usesTransformer",
+      "concern": "The cited original paper uses bidirectional LSTM span representations; the Transformer attribution is a source error.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Primary paper section4 Span Representations explicitly uses bidirectional LSTMs; checked2026-10-03",
+      "evidence_url": "https://arxiv.org/html/1707.07045v2#S4"
+    },
+    {
+      "location": "b0043,b0073",
+      "source_claim": "pretrained spaCy example",
+      "concern": "Experimental model package and doc._.coref_clusters extension compatibility are not version-pinned or validated; no production-library execution was performed.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "b0051,code resolve",
+      "source_claim": "previousK/subject preference",
+      "concern": "resolve scans all previous NE/nominal mentions without a K cap; no syntactic-role feature or subject parser exists.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "code recency_score",
+      "source_claim": "closer antecedent wins",
+      "concern": "Token indices reset each sentence and max(0,delta) collapses earlier-sentence distances. The company and a laptop tie before sentence-startIt; earliest candidate wins.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "code agreement_score/resolve",
+      "source_claim": "gender andnumber agreement",
+      "concern": "Agreement is only a softscore, not constraint; pluralThey can link singularAlice and masculineHe can link a laptop; recency can dominate mismatch penalties.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "code extract_mentions",
+      "source_claim": "general mentions andspan offsets",
+      "concern": "ASCII-centric tokenization, capitalized tokens and a smallhead list over/underextract. It returns sentence/token start indices, not end or character offsets needed for proposed span checks.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "code clusters",
+      "source_claim": "allmentions sameentity clustered",
+      "concern": "Only pronouns link to NE/nominal candidates; identical names and nominal-to-name identity are not merged, cataphora unsupported, no pronoun antecedent chain or abstention threshold.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "b0067,b0079",
+      "source_claim": "metric generalizations/prompt thresholds",
+      "concern": "Singleton treatment varies with evaluation protocol; CoNLL definitions cannot be replaced by mention accuracy, and unconditional prompt refusal thresholds are heuristic source artifact, not agent authority.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "assets/coref.svg",
+      "source_claim": "three entities sevenmentions",
+      "concern": "There are six highlighted mentions in three two-item clusters; caption says seven. The company/It referent is ambiguous in the laptop example. SVG bytes preserved.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "canonical main.py",
+      "source_claim": "easypronouns demo correctness",
+      "concern": "Default demo links Her to AI. That successful process exit does not establish semantic resolution quality; bounded cases preserve observed incorrect behavior.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    },
+    {
+      "location": "b0073,b0075",
+      "source_claim": "2026 integration recommendations",
+      "concern": "Model checkpoint language coverage and pipeline ordering are task-dependent; recommendations are source claims, not verified current product advice.",
+      "translation_treatment": "Original prose and protected code/asset preserved; issue disclosed separately, no silent correction",
+      "evidence": "Independent full source/code/asset inspection; relevant own finite fixtures and canonical output"
+    }
+  ],
+  "runtime": {
+    "author": [
+      {
+        "exit": 0,
+        "scope": "Full original default demo, unchanged",
+        "result": "12 mentions; He→Tim Cook; It→The company; She→Mary Chen; Her→AI"
+      },
+      {
+        "exit": 1,
+        "scope": "12 finite stdlib tests; 11 pass, 1 source recency expectation fails",
+        "result": "Nearest-nominal failure retained with original diagnostic; no change to code or expectation to conceal defect"
+      }
+    ],
+    "independent": {
+      "canonical": {
+        "exit_code": 0,
+        "scope": "Original eight-sentence stdlib demo, no modifications",
+        "log_sha256": "d6e725619e3655a359e1e1996ad782a82de190e7e3f17de3a48ece22f14f56a9"
+      },
+      "finite": {
+        "tests": 15,
+        "results": [
+          {
+            "name": "easy female and male antecedents",
+            "pass": true
+          },
+          {
+            "name": "first pronoun no antecedent",
+            "pass": true
+          },
+          {
+            "name": "same sentence recency",
+            "pass": true
+          },
+          {
+            "name": "cross-sentence token reset causes recency tie",
+            "pass": true
+          },
+          {
+            "name": "nominal tie exact despite position distance",
+            "pass": true
+          },
+          {
+            "name": "plural mention can pick singular candidate",
+            "pass": true
+          },
+          {
+            "name": "gender mismatch can still win recency",
+            "pass": true
+          },
+          {
+            "name": "no eligible antecedent null list",
+            "pass": true
+          },
+          {
+            "name": "determiner heads extracted",
+            "pass": true
+          },
+          {
+            "name": "unrecognized definite description not extracted",
+            "pass": true
+          },
+          {
+            "name": "capitalized nonentity overextracts",
+            "pass": true
+          },
+          {
+            "name": "Chinese text unsupported",
+            "pass": true
+          },
+          {
+            "name": "canonical source has no finite K-window",
+            "pass": true
+          },
+          {
+            "name": "duplicate names stay distinct without pronoun union",
+            "pass": true
+          },
+          {
+            "name": "union preserves all recognized mentions",
+            "pass": true
+          }
+        ],
+        "target_sha256": "9c3f59f5a6e6fb9187b0cee8f0bbfd943a5f13b9cf3593e57dddf030bc005bd8",
+        "source_code_sha256": "a1597c2fb5a049d66eb4199f1c66dc79466c9a61550e527240fd7ce9478ec306",
+        "dependencies": 70,
+        "all_exact": true,
+        "assets": [
+          {
+            "source_path": "phases/05-nlp-foundations-to-advanced/24-coreference-resolution/assets/coref.svg",
+            "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/assets/coref.svg",
+            "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+            "sha256": "7ee1d68439234f6b9f34f83652b9c8b489c8203de57cc023db1b243ca07bbde4"
+          }
+        ],
+        "replays": [
+          {
+            "exit": 0,
+            "sha256": "9c3f59f5a6e6fb9187b0cee8f0bbfd943a5f13b9cf3593e57dddf030bc005bd8"
+          },
+          {
+            "exit": 0,
+            "sha256": "9c3f59f5a6e6fb9187b0cee8f0bbfd943a5f13b9cf3593e57dddf030bc005bd8"
+          }
+        ],
+        "not_run": [
+          "spaCy/AllenNLP/LLM/model downloads",
+          "production coreference evaluation",
+          "output artifact prompt"
+        ]
+      }
+    },
+    "source_failure_preserved": "Author finite semantic expectation suite:11/12 pass,1 nearest-nominal recency failure retained. Independent diagnostic checks characterize defects; they do not negate the failure."
+  },
+  "actual_GitHub_GFM": {
+    "stage": "S65",
+    "commit": "69cdc7563ced2b319ca45951ad5741c55f511646",
+    "target_sha256": "9c3f59f5a6e6fb9187b0cee8f0bbfd943a5f13b9cf3593e57dddf030bc005bd8",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/69cdc7563ced2b319ca45951ad5741c55f511646/i18n/zh/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/docs/zh.md",
+    "method": "actual published GitHub GFM in dot cloud Chromium via CUA; full rendered DOM read plus viewport screenshots through complete lesson",
+    "viewport": {
+      "width": 1180,
+      "height": 757
+    },
+    "body_status": "PASS",
+    "visual_status": "PASS",
+    "counts": {
+      "headings": 14,
+      "tables": 2,
+      "strong": 26,
+      "em": 0,
+      "fenced_displays": 4,
+      "svg": 1,
+      "mermaid": 0,
+      "display_math": 0
+    },
+    "checks": [
+      "All fourteen headings and GitHub Unicode anchors present",
+      "All table cells readable, rows6/8 including headers and columns2/3",
+      "All26 bold spans including embedded she rendered correctly, no literal delimiters",
+      "Nested bullet criteria inside numbered resolver sequence properly indented",
+      "B³, CEAF-φ4, ~83 F1,60-80%,~15 F1,2025–26 and mention-pair notation visibly readable",
+      "All four protected code displays retain content; coref-links is plain code fallback only",
+      "Long skill fence clientWidth968,scrollWidth1990; horizontal scrollbar used to rightmost end, final demographically diverse text sentence visible",
+      "All five reading links visible and recorded in rendered DOM"
+    ],
+    "svg": {
+      "alt": "共指聚类：提及 → 实体",
+      "display_width": 1012,
+      "display_height": 495,
+      "source_url": "https://github.com/Activer007/ai-engineering-from-scratch/raw/69cdc7563ced2b319ca45951ad5741c55f511646/i18n/zh/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/assets/coref.svg",
+      "all_labels_readable": true,
+      "intrinsic_clipping": false,
+      "checked_labels": [
+        "mentions → clusters → entities title",
+        "document header",
+        "Tim Cook walked onto stage/He announced iPhone",
+        "The company showed laptop/It will ship in June",
+        "Mary Chen leads AI/She built voice assistant",
+        "three entities seven mentions across three sentences caption",
+        "coreference clustering heading",
+        "Entity#1 Tim Cook He typePERSON",
+        "Entity#2 The company It typeORG",
+        "Entity#3 Mary Chen She typePERSON",
+        "resolved clusters feed IE QA summarization bottom caption"
+      ],
+      "source_semantic_issues": [
+        "Caption says seven mentions across three sentences although displayed text has six sentences and six highlighted mention strings",
+        "It after laptop naturally permits laptop referent; source groups it with company. Ambiguity/semantic mismatch preserved, not a visual obstruction"
+      ]
+    },
+    "evidence": [
+      {
+        "sha256": "a4145a6cfca73e7d01f5da1f02d34e252101d75f15d7f22e0ca41a26ed4eb103",
+        "bytes": 103579
+      },
+      {
+        "sha256": "c9229adef0746fbca65f6956c882a459196d1e1c4eacd1d6de99f7c498998e78",
+        "bytes": 75273
+      },
+      {
+        "sha256": "89579cdb341905ad1e8f7977bb72608224c4dc8b94b128c1fa0ca38c89fddcae",
+        "bytes": 95866
+      },
+      {
+        "sha256": "b46762456de419ed74f55b2dbcb0e4dd5a41fb8372c910ac71b0812de9e4450b",
+        "bytes": 98974
+      },
+      {
+        "sha256": "04dfcf05aa71124abb2771f4f08463e8e82355c07088c007cfbfb27b34b35c36",
+        "bytes": 68228
+      },
+      {
+        "sha256": "a3d81b0e1fdbb1d499e52c88832d299d67db9241743b8b516697b3d1037dc04e",
+        "bytes": 103510
+      },
+      {
+        "sha256": "df41441149d6167fc5f2670df7eae6763457babf512f0df974710f300f09a192",
+        "bytes": 113120
+      },
+      {
+        "sha256": "d373a1dbef1d19fa0120e5c579b149c9e307b7d0f79a4617054d13f331b1df6d",
+        "bytes": 91829
+      },
+      {
+        "sha256": "7557d68ae7edb837cb458eb17c337ca83ea4eb18573d530af10ef08465cb7c57",
+        "bytes": 84664
+      },
+      {
+        "sha256": "3314dd59a27e58f87332fa27bf90ae450181239b53b140f40bbbcfb9d49cb927",
+        "bytes": 122934
+      },
+      {
+        "sha256": "7f9bb771dce82662f0945b79bec395085a116f50155ad22336e024d77cc0fef1",
+        "bytes": 64472
+      },
+      {
+        "sha256": "24a59e0e034ed2d883c2b2ee8874e7703663ccebbdeebb44d3e3eff960fbb03b",
+        "bytes": 664344
+      },
+      {
+        "sha256": "7306b5d1f0d2f8c6db8afcef2e7d5802faa57730258ac4331374c15e05f2ccc5",
+        "bytes": 21607
+      },
+      {
+        "sha256": "bc0805fbad3391d1ac7fd05c265d8ede58875c4b67bc8dc76138bfd9c7fc31c4",
+        "bytes": 44904
+      }
+    ],
+    "separate_unpassed_gates": [
+      "course site Chinese heading/image rendering",
+      "mobile/responsive acceptance",
+      "figure interaction",
+      "hosted CI",
+      "book PDF missing xelatex.fmt"
+    ],
+    "content_changes": false,
+    "remote_changes": false,
+    "target_hash_binding": "Coordinator-supplied published target hash verified against local final bytes; visual review bound to immutable GitHub URL/commit. Browser clipboard raw-copy returned empty text, so no independent raw-byte readback claimed from clipboard.",
+    "observation_limits": "Referenced SVG labels readable without intrinsic clipping; long skill fence inspected with native horizontal scroll. Source caption count and pronoun ambiguity remain semantic issues. Empty raw-copy clipboard output was not used as independent byte evidence; coordinator exact immutable remote readback provides hash binding."
+  },
+  "aggregate": {
+    "reviewed_lessons_in_local_snapshot": 86,
+    "original_strict_direct_pass": 84,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "86 exact-byte matches to each other and final records",
+    "svg_separate_copies": 9,
+    "repository_audits": "Lesson and certification audits plus README/book counts passed",
+    "book_rendering_regressions": {
+      "tests": 6,
+      "passed": 5,
+      "environment_blocked": 1,
+      "reason": "Missing xelatex.fmt; PDF environment unavailable. No system installation or workaround attempted."
+    },
+    "original_site_parser": {
+      "empty_heading_ids_accepted_four": 62,
+      "duplicate_nonempty_id_groups_accepted_four": 1,
+      "accepted_duplicates": {
+        "S63": [
+          "module"
+        ]
+      },
+      "empty_heading_ids_all_five_observed": 77,
+      "pending_S66_empty_ids": 15,
+      "pending_S66_duplicate_ids": [
+        "sft"
+      ],
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "cause": "Original ASCII-only slugify removes Chinese characters and collapses some mixed-language headings to the same nonempty ID"
+    },
+    "excluded_pending_stages": {
+      "S61/10-05": "Third source3D Mermaid labels remain obscured",
+      "S66/10-06": "Source Mermaid group labels (pre-trained) and (after SFT) obscured by first nodes in both English and Chinese; visual acceptance unpassed"
+    },
+    "note": "Local accepted86 aggregate excludes S61 and S66. Final acceptance count requires final remote/index readback."
+  },
+  "content_remote_verification": {
+    "stage": 65,
+    "commit": "69cdc7563ced2b319ca45951ad5741c55f511646",
+    "tree": "e25ce4c2cb159d371ff92bd53501bf79d101aeeb",
+    "changed_file_count": 7,
+    "files": [
+      {
+        "path": "i18n/zh/.curated/stages/S65-coreference-resolution/SCOPE.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S65-coreference-resolution/DEPENDENCIES.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-24/translation.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-24/review.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/docs/zh.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/assets/coref.svg",
+        "match": true
+      }
+    ],
+    "all_bytes_exact": true
+  },
+  "site_parser": {
+    "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/docs/zh.md",
+    "parser_executed": true,
+    "html_bytes": 14303,
+    "tables": 2,
+    "code_blocks": 3,
+    "figures": 1,
+    "mermaid_sources": 0,
+    "empty_heading_ids": [
+      "共指消解",
+      "要解决的问题",
+      "核心概念",
+      "动手实现",
+      "常见陷阱",
+      "实际使用",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "duplicate_heading_ids": [],
+    "browser_verified": false,
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "stage": "S65-coreference-resolution",
+    "lesson_id": "05-24",
+    "target_sha256": "9c3f59f5a6e6fb9187b0cee8f0bbfd943a5f13b9cf3593e57dddf030bc005bd8",
+    "empty_heading_id_count": 10,
+    "duplicate_nonempty_id_distinct_count": 0
+  },
+  "final_remote_and_CI": "Final evidence commit byte readback and exact-head CI results belong in PR body and single rollout index to avoid self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
