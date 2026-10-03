@@ -1,0 +1,1786 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-04",
+  "source_path": "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "a009de0bfcdaa2ebfa116c09818d8eb4e663c414",
+  "source_sha256": "b92cf9d14b8729b4a378b0b4f468f4d957f6600c15d876b091d8dec54d8d3e47",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/zh.md",
+  "target_sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02",
+    "recovery": "Rebuilt after environment loss from complete original author mapping, exact target hash restored; author and independent review newly required; no prior PASS inherited."
+  },
+  "segments": [
+    {
+      "segment_id": "05-04:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings"
+      ],
+      "ordinal": 1,
+      "source_sha256": "8cea18628c12e2a192f0657b1e29f48d7399cbe296a6df29e844635c2264d016",
+      "target": "# GloVe、FastText 与子词嵌入\n",
+      "target_sha256": "2e6ad4190162c3e86d4f15e27262ad728d4e842a5708711f06ca46cc4310febb",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings"
+      ],
+      "ordinal": 2,
+      "source_sha256": "edceb5c150da32811eeefe6ad37c3da862efc4c0bb7585bcb72f46e7cce34489",
+      "target": "> Word2Vec 为每个词训练一个词嵌入（word embedding）。GloVe 对共现矩阵进行分解。FastText 为词的片段学习嵌入。BPE（字节对编码）则搭起了通向 Transformer 的桥梁。\n",
+      "target_sha256": "0822cd5efad785fa1c0b7f592bb43f232bcc05e3fa5e6b10c27b3fdffb9451d2",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings"
+      ],
+      "ordinal": 3,
+      "source_sha256": "2aed6d9c55ea2f6a081705e4a1e00330e41eb62ca2ba676d9cd444a0d93d6e66",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 03（从零实现 Word2Vec）\n**Time:** ~45 分钟\n",
+      "target_sha256": "72967d62726ed57c2c517a8a7ee3b451f164c7d16cab32f90afcb676555994e0",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n",
+      "target_sha256": "0c296dbe3cad72cd26f97be00f7bb50d2133791375ed689e76233014a68f8828",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "477ac4bef8a6c8b81e8c0d84481ff2e79f8839896482e642eda31912ea85557b",
+      "target": "Word2Vec 留下了两个未解决的问题。\n",
+      "target_sha256": "cbe5da947108c45901f1b8911f7e62bc4dc4a5d7f2a8869a0f5cbb87c2b64fee",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "30156cd06ff25022550824f8cc692c394a343903e2981ee376786acf985db3a2",
+      "target": "首先，当时还有一条并行的研究路线，直接分解共现矩阵（LSA、HAL），而不是进行在线 Skip-gram 更新。Word2Vec 的迭代方法是从根本上更好，还是差异仅仅源于两种方法处理计数的方式？**GloVe** 回答了这个问题：为矩阵分解精心选择损失函数，就能达到或超过 Word2Vec 的效果，而且训练成本更低。\n",
+      "target_sha256": "dbd4503673bf26a78155d16db7097a79fed3a99023b4cff09f04c50ef53ea9dc",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "6477e06aee3066dd79fa88db9b6dd45b1832f0c69032b1b6a5a5f5c5bcac0747",
+      "target": "其次，这两种方法都无法处理从未见过的词，例如 `Zoomer-approved`、`dogecoin`、上周刚造出的任何专有名词，以及罕见词根的每一种屈折形式。**FastText** 通过为字符连续 n 元片段（character n-gram）学习嵌入解决了这个问题：一个词是其各个组成部分的总和，其中包括语素（morpheme），因此即使是词表外（OOV，out-of-vocabulary）的词，也能得到合理的向量。\n",
+      "target_sha256": "8f963edaad4f41ec1a1975d9578a48f9df217e7be4d2a64f74261dc15784f468",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "2c2ca3ceb84db97ff6e0600d2997f7d6d9f972dceb491e396c32f45d488c5e2d",
+      "target": "第三，Transformer 出现后，问题又发生了变化。词级词表的上限大约是一百万个条目，而真实语言的开放程度远不止于此。**字节对编码（BPE）** 及其相关方法通过学习一个由常见子词单元组成、能够覆盖一切的词表，解决了这个问题。每一种现代大语言模型（LLM）的每一种现代分词器，都是子词分词器。\n",
+      "target_sha256": "3ea136c7db7cee1fcc787411db710e3145aee1c0767e7ba9a2c19cd45787ea29",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "f7e8508b8ce9083998937a6574469f284fc17ea51ec9c039bff27e78bbfa4466",
+      "target": "本课将逐一介绍这三种方法，再说明何时该选哪一种。\n",
+      "target_sha256": "cc913ce98dad569cb40dec0c3bc7750a2967ecb4b1bd194115596c3db645ab60",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n",
+      "target_sha256": "0e85ef3f7a5d978221dcf89ec4f6d1d675e31927238141af38438f71744d1b52",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "4e3df587b6c3af75bf9daafd342f7296d08ba7f53571e3033b661bbe9506d920",
+      "target": "**GloVe（Global Vectors，全局向量）。** 构建词与词的共现矩阵 `X`，其中 `X[i][j]` 表示词 `j` 在词 `i` 的上下文中出现的次数。训练向量，使其满足 `v_i · v_j + b_i + b_j ≈ log(X[i][j])`。对损失加权，避免高频词对占据主导。就这么简单。\n",
+      "target_sha256": "9208720b5ce65807dabd3c43558c05f76de39cf630a0b0fbec38893ef3351cd8",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "4dcb7b28287365be81b725842b5417257704eeab4959539b61bfe22e4e395879",
+      "target": "**FastText。** 一个词是其字符连续 n 元片段与该词本身之和。`where` 变成 `<wh, whe, her, ere, re>, <where>`。词向量就是这些组成部分向量的总和。按 Word2Vec 的方式训练。好处是：未见过的词（`whereupon`）可以由已知的连续 n 元片段组合而成。\n",
+      "target_sha256": "cceb58c44876c27b7a16c791d41e79b97f8ba6c4a98d6d5b063ed7fafd825cf4",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "1d8c961a768aeae15f66cdef6b53c537b76a53ba59f3bc391d739af9ae72b2d3",
+      "target": "**BPE（Byte-Pair Encoding，字节对编码）。** 从由单个字节（或字符）组成的词表开始。统计语料中每一对相邻符号的次数。把出现最频繁的一对合并为一个新的 token（词元）。重复 `k` 轮迭代。结果是一个包含 `k + 256` 个 token 的词表，其中常见序列（`ing`、`tion`、`the`）各自成为单个 token，罕见词则被拆成已知的片段。每个句子都能分出相应的 token。\n",
+      "target_sha256": "b41dc92a7ee3158e6b011f3d74032fd493e86bbd35467069aba12f87699be29f",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0027",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "98e4a5b71e938e861ea762875d332ed08ad4638c0f104cf99dbc296255d83351",
+      "target": "```figure\nn5-subword-merge\n```\n",
+      "target_sha256": "98e4a5b71e938e861ea762875d332ed08ad4638c0f104cf99dbc296255d83351",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It"
+      ],
+      "ordinal": 15,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n",
+      "target_sha256": "ad2837c6c88c415a0f567e44a64186a28eeab40bdcc97ca457b6760777a48d54",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### GloVe: factorize the co-occurrence matrix"
+      ],
+      "ordinal": 16,
+      "source_sha256": "4c1544e9e12481ad84071e0a43d0e8783515a0a54075409fb4002d503a7a151b",
+      "target": "### GloVe：分解共现矩阵\n",
+      "target_sha256": "7fa3f9c9bd779e6fb0c4e44ddde3abf71bb765333e215ae595d6e8a581a537f0",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### GloVe: factorize the co-occurrence matrix"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### GloVe: factorize the co-occurrence matrix"
+      ],
+      "ordinal": 17,
+      "source_sha256": "022883f0d15678e32b7c2fefbf8a8d8aec1923044db27953fb20bc277e38a206",
+      "target": "```python\nimport numpy as np\nfrom collections import Counter\n\n\ndef build_cooccurrence(docs, window=5):\n    pair_counts = Counter()\n    vocab = {}\n    for doc in docs:\n        for token in doc:\n            if token not in vocab:\n                vocab[token] = len(vocab)\n    for doc in docs:\n        indexed = [vocab[t] for t in doc]\n        for i, center in enumerate(indexed):\n            for j in range(max(0, i - window), min(len(indexed), i + window + 1)):\n                if i != j:\n                    distance = abs(i - j)\n                    pair_counts[(center, indexed[j])] += 1.0 / distance\n    return vocab, pair_counts\n\n\ndef glove_train(vocab, pair_counts, dim=16, epochs=100, lr=0.05, x_max=100, alpha=0.75, seed=0):\n    n = len(vocab)\n    rng = np.random.default_rng(seed)\n    W = rng.normal(0, 0.1, size=(n, dim))\n    W_tilde = rng.normal(0, 0.1, size=(n, dim))\n    b = np.zeros(n)\n    b_tilde = np.zeros(n)\n\n    for epoch in range(epochs):\n        for (i, j), x_ij in pair_counts.items():\n            weight = (x_ij / x_max) ** alpha if x_ij < x_max else 1.0\n            diff = W[i] @ W_tilde[j] + b[i] + b_tilde[j] - np.log(x_ij)\n            coef = weight * diff\n\n            grad_W_i = coef * W_tilde[j]\n            grad_W_tilde_j = coef * W[i]\n            W[i] -= lr * grad_W_i\n            W_tilde[j] -= lr * grad_W_tilde_j\n            b[i] -= lr * coef\n            b_tilde[j] -= lr * coef\n\n    return W + W_tilde\n```\n",
+      "target_sha256": "022883f0d15678e32b7c2fefbf8a8d8aec1923044db27953fb20bc277e38a206",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### GloVe: factorize the co-occurrence matrix"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### GloVe: factorize the co-occurrence matrix"
+      ],
+      "ordinal": 18,
+      "source_sha256": "7b33bd4ed1dd0efd4c63dd347ea01fe097d371689ccde2b33ad3bb5e40d7f825",
+      "target": "有两个组成部分值得明确说明。加权函数 `f(x) = (x/x_max)^alpha` 会降低极高频词对（例如 `(the, and)`）的权重，避免它们主导损失。最终嵌入是 `W`（中心词）与 `W_tilde`（上下文词）两张表之和。将两者相加是一种已发表的技巧，通常比只使用其中一张表效果更好。\n",
+      "target_sha256": "529cc07d3eeb09dac2b009cc00d0dfe97b4f106a6a57d1cb4570c4781f599f61",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### GloVe: factorize the co-occurrence matrix"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 19,
+      "source_sha256": "de3e8ad5ef360257b7b9cc85272f780a2c8976394e6017b81d2438909c2b8e61",
+      "target": "### FastText：感知子词的嵌入\n",
+      "target_sha256": "f77b60d8ef7ae1d5a1830ab14e6ddc7f96b9c3b3b860924897698ca46db18957",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0039",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 20,
+      "source_sha256": "450f3b090a57131d3a1fa0c3ac7329266947e808b0ee442a95bc497a6c6ab67b",
+      "target": "```python\ndef char_ngrams(word, n_min=3, n_max=6):\n    wrapped = f\"<{word}>\"\n    grams = {wrapped}\n    for n in range(n_min, n_max + 1):\n        for i in range(len(wrapped) - n + 1):\n            grams.add(wrapped[i:i + n])\n    return grams\n```\n",
+      "target_sha256": "450f3b090a57131d3a1fa0c3ac7329266947e808b0ee442a95bc497a6c6ab67b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 21,
+      "source_sha256": "532f0326e0e90c59cbda1ae9ddbd72701e735884c2fc99acdeee68175abf078d",
+      "target": "```python\n>>> char_ngrams(\"where\")\n{'<where>', '<wh', 'whe', 'her', 'ere', 're>', '<whe', 'wher', 'here', 'ere>', '<wher', 'where', 'here>'}\n```\n",
+      "target_sha256": "532f0326e0e90c59cbda1ae9ddbd72701e735884c2fc99acdeee68175abf078d",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 22,
+      "source_sha256": "c2b5aacd040922b35ee0e2968d077cf01df797acef9936a1daea4f25418f61ba",
+      "target": "每个词都由它的连续 n 元片段集合表示（通常每个片段有 3 到 6 个字符）。词嵌入就是其连续 n 元片段嵌入的总和。进行 Skip-gram 训练时，把这种表示放到 Word2Vec 原先使用单个向量的位置即可。\n",
+      "target_sha256": "5bb613153b93d3083ebbf44aaaea4975d9d984a99fc5e7f0795135f168d14fa8",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0045",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 23,
+      "source_sha256": "5178064cac9b30c4a126ed18fc5168030ea991a201a4d9eab96a7a93a75ac483",
+      "target": "```python\ndef fasttext_vector(word, ngram_table):\n    grams = char_ngrams(word)\n    vecs = [ngram_table[g] for g in grams if g in ngram_table]\n    if not vecs:\n        return None\n    return np.sum(vecs, axis=0)\n```\n",
+      "target_sha256": "5178064cac9b30c4a126ed18fc5168030ea991a201a4d9eab96a7a93a75ac483",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 24,
+      "source_sha256": "b1ed5641afec37a554485e3e6c7d86f1773c1a03cda4f49337fb641f41a2e929",
+      "target": "对于一个未见过的词，只要它的某些连续 n 元片段已知，仍然可以得到一个向量。`whereupon` 与 `where` 共享 `<wh`、`her`、`ere` 和 `<where`，因此两者在向量空间中的位置接近。\n",
+      "target_sha256": "8a109a9c24d1fbe5617682ecc5b5fa3098ac4e680836cb3685998b3116b0e9f0",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### FastText: subword-aware embeddings"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 25,
+      "source_sha256": "ad02a499c307b0df37be867d343426dc5d7383c5e629dd2ad20859e4a44f444b",
+      "target": "### BPE：学习得到的子词词表\n",
+      "target_sha256": "f0046e8c953b50e6787b3cbb5244f0df93eec2151fc629647cfa7ed2a9eee636",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 26,
+      "source_sha256": "4930476c362d0a3f88abacffbf896b865ee6953777b1a808882c51bba718528b",
+      "target": "```python\ndef learn_bpe(corpus, k_merges):\n    vocab = Counter()\n    for word, freq in corpus.items():\n        tokens = tuple(word) + (\"</w>\",)\n        vocab[tokens] = freq\n\n    merges = []\n    for _ in range(k_merges):\n        pair_freq = Counter()\n        for tokens, freq in vocab.items():\n            for a, b in zip(tokens, tokens[1:]):\n                pair_freq[(a, b)] += freq\n        if not pair_freq:\n            break\n        best = pair_freq.most_common(1)[0][0]\n        merges.append(best)\n\n        new_vocab = Counter()\n        for tokens, freq in vocab.items():\n            new_tokens = []\n            i = 0\n            while i < len(tokens):\n                if i + 1 < len(tokens) and (tokens[i], tokens[i + 1]) == best:\n                    new_tokens.append(tokens[i] + tokens[i + 1])\n                    i += 2\n                else:\n                    new_tokens.append(tokens[i])\n                    i += 1\n            new_vocab[tuple(new_tokens)] = freq\n        vocab = new_vocab\n    return merges\n\n\ndef apply_bpe(word, merges):\n    tokens = list(word) + [\"</w>\"]\n    for a, b in merges:\n        new_tokens = []\n        i = 0\n        while i < len(tokens):\n            if i + 1 < len(tokens) and tokens[i] == a and tokens[i + 1] == b:\n                new_tokens.append(a + b)\n                i += 2\n            else:\n                new_tokens.append(tokens[i])\n                i += 1\n        tokens = new_tokens\n    return tokens\n```\n",
+      "target_sha256": "4930476c362d0a3f88abacffbf896b865ee6953777b1a808882c51bba718528b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 27,
+      "source_sha256": "b71ca951b1d01dae491c417b209d4988abce2aca3c666393e73ba5907e13cb28",
+      "target": "```python\n>>> corpus = Counter({\"low\": 5, \"lower\": 2, \"newest\": 6, \"widest\": 3})\n>>> merges = learn_bpe(corpus, k_merges=10)\n>>> apply_bpe(\"lowest\", merges)\n['low', 'est</w>']\n```\n",
+      "target_sha256": "b71ca951b1d01dae491c417b209d4988abce2aca3c666393e73ba5907e13cb28",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 28,
+      "source_sha256": "23bc2cdcd15925c6365f7e4db573d735bc9b84227f13428347d52694d6156acb",
+      "target": "第一轮迭代会合并最常见的相邻符号对。经过足够多轮迭代后，常见子串（`low`、`est`、`tion`）会成为单个 token，罕见词则能被清晰地拆分。\n",
+      "target_sha256": "eee1012a4fb43beaf6c873f38df1454af5974d7e4a1e0b9c6df95fb91ea25566",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 29,
+      "source_sha256": "0832df20e010e295f0ee5389a496192584f2510846b40a6bb0d25768504ab28a",
+      "target": "实际的 GPT / BERT / T5 分词器会学习 30k-100k（k 表示千）次合并。结果是：任何文本都能分成长度有界、由已知 ID 构成的序列，永远不会出现 OOV。\n",
+      "target_sha256": "f7b38861f4e7fafef914e8e486542f90b748632fb29a3db7ea1c93a6cb1ddb0b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Build It",
+        "### BPE: learned subword vocabulary"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 30,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n",
+      "target_sha256": "87a4fe5b85acd2b87fd0b30eee778db4437d02b46cb7b5d991fd85f8b39dadf5",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 31,
+      "source_sha256": "514a50ae2316177469937e751a5b45a963ee380a7cbbfdb1ea3f8ba2df7c604f",
+      "target": "在实际工作中，你很少会自己训练这些方法，而是加载预训练检查点。\n",
+      "target_sha256": "025edfd2f0bbbe0bdfe191f8bf6520436ce8370d4333c9e3de973b37e051406d",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "5a6a16cd9d924aaf6830445dbff7ccb6576806c882f0d1240c29f3897dfc1623",
+      "target": "```python\nimport fasttext.util\nfasttext.util.download_model(\"en\", if_exists=\"ignore\")\nft = fasttext.load_model(\"cc.en.300.bin\")\nprint(ft.get_word_vector(\"whereupon\").shape)\nprint(ft.get_word_vector(\"zoomerapproved\").shape)\n```\n",
+      "target_sha256": "5a6a16cd9d924aaf6830445dbff7ccb6576806c882f0d1240c29f3897dfc1623",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "484711e74f45f10db66fd009d5339cd8d167ee714a92487e661226fcf899e638",
+      "target": "在 Transformer 时代，要进行 BPE 风格的子词分词：\n",
+      "target_sha256": "ef2f25f2c602b7eaf778a5a96f4c4b190c6bc375aeeaff91e5b6e04e214f6d46",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "89c071c0cd7dbe1a860287d29f0afa3146a633a2c9c695d5af26fd7c8279cd5e",
+      "target": "```python\nfrom transformers import AutoTokenizer\n\ntok = AutoTokenizer.from_pretrained(\"gpt2\")\nprint(tok.tokenize(\"unbelievably tokenized\"))\n```\n",
+      "target_sha256": "89c071c0cd7dbe1a860287d29f0afa3146a633a2c9c695d5af26fd7c8279cd5e",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "408d781f01a052e44d0ce05a65f85879b84f56d88bb4b2d1251e1ac7cc3ecc0a",
+      "target": "```text\n['un', 'bel', 'iev', 'ably', 'Ġtoken', 'ized']\n```\n",
+      "target_sha256": "14fc04999f825197dfa06933fbecaa4b6b886e80a47c84add1dc453096225330",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "12d67081b37ca9734d22003d00dca28f61b8817ec5b7eddb4f558b4db15bb4eb",
+      "target": "前缀 `Ġ` 标记词边界（这是 GPT-2 的约定）。每一种现代分词器都属于 BPE 的变体、WordPiece（子词分词算法，用于 BERT）或 SentencePiece（分词库，用于 T5、LLaMA）。\n",
+      "target_sha256": "2c6d421e0790366d73ad299fb1c762aaee825b9264e4cd5fb3a096b16b530c7e",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It",
+        "### When to pick which"
+      ],
+      "ordinal": 37,
+      "source_sha256": "791d22ae9e0b2101df1a5524f3b6479035ae4852da88c18d9b3c219cb74387e6",
+      "target": "### 何时选择哪一种\n",
+      "target_sha256": "e90ae687d215b03ef0a26eb74f5c818c86a72113c243644f9d1f8494d0f0a9e7",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It",
+        "### When to pick which"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0075",
+      "kind": "table",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It",
+        "### When to pick which"
+      ],
+      "ordinal": 38,
+      "source_sha256": "c80d2af6e768eb5086f8373afc2fd58b5bcbaa0ea67ef2dcaddd4aeb36a8d671",
+      "target": "| 使用场景 | 选择 |\n|-----------|------|\n| 需要预训练的通用词向量，不要求容忍 OOV | GloVe 300d（d 表示维数） |\n| 需要预训练的通用词向量，必须处理拼写错误 / 新造词 / 词形变化丰富的语言 | FastText |\n| 任何要输入 Transformer 的内容（训练或推理） | 使用模型随附的分词器。绝不更换。 |\n| 从零训练自己的语言模型 | 先在自己的语料上训练一个 BPE 或 SentencePiece 分词器 |\n| 用线性模型进行生产环境中的文本分类 | 仍然选择 TF-IDF（词频-逆文档频率）。参见第 02 课。 |\n",
+      "target_sha256": "0ffe66a89c7b487e4749a62a8c2013c2e041f8b60cdb6b8c7502bf5ca994b79d",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Use It",
+        "### When to pick which"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n",
+      "target_sha256": "aaab488e5c8f3f110974b80e0b33ae02aaec29ea727724e60804aa212e74cbc1",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Ship It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "e400ddc0a90b2a34a040e0e6f542f4226906cd9c56370fc0fda0710215e766c7",
+      "target": "保存为 `outputs/skill-embeddings-picker.md`：\n",
+      "target_sha256": "bcba68306c71c5aa38af70f776be61a981656d69fdc84d951c7f57f18849e022",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Ship It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Ship It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "e8fd425ece82c12dd921c2ba6fea9d0213cec0ae33b69a70372b2b04ccee97dc",
+      "target": "```markdown\n---\nname: tokenizer-picker\ndescription: Pick a tokenization approach for a new language model or text pipeline.\nversion: 1.0.0\nphase: 5\nlesson: 04\ntags: [nlp, tokenization, embeddings]\n---\n\nGiven a task and dataset description, you output:\n\n1. Tokenization strategy (word-level, BPE, WordPiece, SentencePiece, byte-level). One-sentence reason.\n2. Vocabulary size target (e.g., 32k for an English-only LM, 64k-100k for multilingual).\n3. Library call with the exact training command. Name the library. Quote the arguments.\n4. One reproducibility pitfall. Tokenizer-model mismatch is the single most common silent production bug; call out which pair must be used together.\n\nRefuse to recommend training a custom tokenizer when the user is fine-tuning a pretrained LLM. Refuse to recommend word-level tokenization for any model targeting production inference. Flag non-English / multi-script corpora as needing SentencePiece with byte fallback.\n```\n",
+      "target_sha256": "e8fd425ece82c12dd921c2ba6fea9d0213cec0ae33b69a70372b2b04ccee97dc",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Ship It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Exercises"
+      ],
+      "ordinal": 42,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n",
+      "target_sha256": "656fb1f2fb6b1f455cb5def669a5194fc8f2f810e3cc1632a43f85d88ca86626",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Exercises"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0085",
+      "kind": "list",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Exercises"
+      ],
+      "ordinal": 43,
+      "source_sha256": "53c61b73faec61011bac84bbc2f1250cd6e251ba1fdc34113d23b04538314914",
+      "target": "1. **简单。** 运行 `char_ngrams(\"playing\")` 和 `char_ngrams(\"played\")`。计算两个连续 n 元片段集合的 Jaccard 重叠度。你应该能看到大量共享片段（`pla`、`lay`、`play`），这就是 FastText 能在不同词形变体之间良好迁移的原因。\n2. **中等。** 扩展 `learn_bpe`，跟踪词表增长。绘制每个语料字符对应的 token 数随合并次数变化的曲线。你应该看到最初压缩很快，随后渐近于每个 token 约 ~2-3 个字符。\n3. **困难。** 在 Shakespeare 全集上训练一个执行 1k 次合并的 BPE。比较常见词与罕见专有名词的分词结果。测量前后平均每词 token 数。写下让你意外的发现。\n",
+      "target_sha256": "e6028aa5b403178e3562812aba366c6ab22c97b6deea50de53d38be5c4184f55",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Exercises"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Key Terms"
+      ],
+      "ordinal": 44,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n",
+      "target_sha256": "9aaf2a64a261c8538d349f249970b7bc37d719e6571c6df1571bcc4be0d72364",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Key Terms"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0089",
+      "kind": "table",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Key Terms"
+      ],
+      "ordinal": 45,
+      "source_sha256": "9d3bd3260e4d3787d2442d3b3d55c80ecf9233c29e29d958aa3c7791e2ce2bc1",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 共现矩阵 | 词与词的频次表 | `X[i][j]` = 词 `j` 在词 `i` 周围的窗口中出现的次数。 |\n| 子词 | 词的一部分 | 字符连续 n 元片段（FastText）或学习得到的 token（BPE/WordPiece/SentencePiece）。 |\n| BPE | 字节对编码 | 迭代合并出现最频繁的相邻符号对，直到词表达到目标大小。 |\n| OOV | 词表外 | 模型从未见过的词。Word2Vec/GloVe 无法处理，FastText 和 BPE 可以处理。 |\n| 字节级 BPE | 对原始字节执行 BPE | GPT-2 的方案。词表从 256 个字节开始，因此任何内容都不会成为 OOV。 |\n",
+      "target_sha256": "a97c658f6afa05f24d5ecf4cf1125972e7b90216b46feccb19d29d14793a3d02",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Key Terms"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Further Reading"
+      ],
+      "ordinal": 46,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n",
+      "target_sha256": "ff1d8e56686095a233209da7f4243c549fa77f7fab69a775cea2eb6216ad1d58",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Further Reading"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n",
+      "target_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    },
+    {
+      "segment_id": "05-04:b0093",
+      "kind": "list",
+      "heading_path": [
+        "# GloVe, FastText, and Subword Embeddings",
+        "## Further Reading"
+      ],
+      "ordinal": 47,
+      "source_sha256": "e18bc9084530517ed0f60c700ac02bfb50f7775ad68e3749f57f6092ef193fc2",
+      "target": "- [Pennington, Socher, Manning (2014). GloVe: Global Vectors for Word Representation](https://nlp.stanford.edu/pubs/glove.pdf) — GloVe 论文，共七页，至今仍给出了最好的损失函数推导。\n- [Bojanowski et al. (2017). Enriching Word Vectors with Subword Information](https://arxiv.org/abs/1607.04606) — FastText。\n- [Sennrich, Haddow, Birch (2016). Neural Machine Translation of Rare Words with Subword Units](https://arxiv.org/abs/1508.07909) — 将 BPE 引入现代 NLP 的论文。\n- [Hugging Face tokenizer summary](https://huggingface.co/docs/transformers/tokenizer_summary) — BPE、WordPiece 与 SentencePiece 在实际使用中的区别。\n",
+      "target_sha256": "dcb6c4c340652da0446980c793ca25cf9925f744def45d30d367ade4ba8d1520",
+      "author_technical": "Fresh complete review 2026-10-02 after23:25UTC",
+      "author_language": "Fresh separate full Chinese read after23:28UTC"
+    }
+  ],
+  "stage_id": "S54-glove-fasttext-subword",
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "stage_terminology_path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+  "stage_terminology_sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "609f3b787bcd3db17207d358b39881c136fd9373398c30f22c0f5dfba4736b5f",
+  "quantity_mappings": [
+    {
+      "segment_id": "05-04:b0003",
+      "source": "one embedding per word",
+      "target": "每个词训练一个词嵌入",
+      "equivalence": "1 embedding per word",
+      "source_sha256": "edceb5c150da32811eeefe6ad37c3da862efc4c0bb7585bcb72f46e7cce34489",
+      "target_sha256": "0822cd5efad785fa1c0b7f592bb43f232bcc05e3fa5e6b10c27b3fdffb9451d2"
+    },
+    {
+      "segment_id": "05-04:b0005",
+      "source": "~45 minutes",
+      "target": "~45 分钟",
+      "equivalence": "same duration",
+      "source_sha256": "2aed6d9c55ea2f6a081705e4a1e00330e41eb62ca2ba676d9cd444a0d93d6e66",
+      "target_sha256": "72967d62726ed57c2c517a8a7ee3b451f164c7d16cab32f90afcb676555994e0"
+    },
+    {
+      "segment_id": "05-04:b0009",
+      "source": "two open questions",
+      "target": "两个未解决的问题",
+      "equivalence": "2; source later enumerates3",
+      "source_sha256": "477ac4bef8a6c8b81e8c0d84481ff2e79f8839896482e642eda31912ea85557b",
+      "target_sha256": "cbe5da947108c45901f1b8911f7e62bc4dc4a5d7f2a8869a0f5cbb87c2b64fee"
+    },
+    {
+      "segment_id": "05-04:b0011",
+      "source": "two methods",
+      "target": "两种方法",
+      "equivalence": "2",
+      "source_sha256": "30156cd06ff25022550824f8cc692c394a343903e2981ee376786acf985db3a2",
+      "target_sha256": "dbd4503673bf26a78155d16db7097a79fed3a99023b4cff09f04c50ef53ea9dc"
+    },
+    {
+      "segment_id": "05-04:b0013",
+      "source": "neither method",
+      "target": "这两种方法都",
+      "equivalence": "2",
+      "source_sha256": "6477e06aee3066dd79fa88db9b6dd45b1832f0c69032b1b6a5a5f5c5bcac0747",
+      "target_sha256": "8f963edaad4f41ec1a1975d9578a48f9df217e7be4d2a64f74261dc15784f468"
+    },
+    {
+      "segment_id": "05-04:b0015",
+      "source": "a million entries",
+      "target": "一百万个条目",
+      "equivalence": "1000000 vocabulary entries",
+      "source_sha256": "2c2ca3ceb84db97ff6e0600d2997f7d6d9f972dceb491e396c32f45d488c5e2d",
+      "target_sha256": "3ea136c7db7cee1fcc787411db710e3145aee1c0767e7ba9a2c19cd45787ea29"
+    },
+    {
+      "segment_id": "05-04:b0017",
+      "source": "all three",
+      "target": "这三种方法",
+      "equivalence": "3",
+      "source_sha256": "f7e8508b8ce9083998937a6574469f284fc17ea51ec9c039bff27e78bbfa4466",
+      "target_sha256": "cc913ce98dad569cb40dec0c3bc7750a2967ecb4b1bd194115596c3db645ab60"
+    },
+    {
+      "segment_id": "05-04:b0025",
+      "source": "individual bytes (or characters)",
+      "target": "单个字节（或字符）",
+      "equivalence": "1 base symbol",
+      "source_sha256": "1d8c961a768aeae15f66cdef6b53c537b76a53ba59f3bc391d739af9ae72b2d3",
+      "target_sha256": "b41dc92a7ee3158e6b011f3d74032fd493e86bbd35467069aba12f87699be29f"
+    },
+    {
+      "segment_id": "05-04:b0025",
+      "source": "a new token",
+      "target": "一个新的 token",
+      "equivalence": "1",
+      "source_sha256": "1d8c961a768aeae15f66cdef6b53c537b76a53ba59f3bc391d739af9ae72b2d3",
+      "target_sha256": "b41dc92a7ee3158e6b011f3d74032fd493e86bbd35467069aba12f87699be29f"
+    },
+    {
+      "segment_id": "05-04:b0025",
+      "source": "single tokens",
+      "target": "单个 token",
+      "equivalence": "1 each",
+      "source_sha256": "1d8c961a768aeae15f66cdef6b53c537b76a53ba59f3bc391d739af9ae72b2d3",
+      "target_sha256": "b41dc92a7ee3158e6b011f3d74032fd493e86bbd35467069aba12f87699be29f"
+    },
+    {
+      "segment_id": "05-04:b0035",
+      "source": "Two moving pieces",
+      "target": "两个组成部分",
+      "equivalence": "2",
+      "source_sha256": "7b33bd4ed1dd0efd4c63dd347ea01fe097d371689ccde2b33ad3bb5e40d7f825",
+      "target_sha256": "529cc07d3eeb09dac2b009cc00d0dfe97b4f106a6a57d1cb4570c4781f599f61"
+    },
+    {
+      "segment_id": "05-04:b0035",
+      "source": "both / just one",
+      "target": "两者 / 其中一张表",
+      "equivalence": "2 versus1",
+      "source_sha256": "7b33bd4ed1dd0efd4c63dd347ea01fe097d371689ccde2b33ad3bb5e40d7f825",
+      "target_sha256": "529cc07d3eeb09dac2b009cc00d0dfe97b4f106a6a57d1cb4570c4781f599f61"
+    },
+    {
+      "segment_id": "05-04:b0043",
+      "source": "a single vector",
+      "target": "单个向量",
+      "equivalence": "1",
+      "source_sha256": "c2b5aacd040922b35ee0e2968d077cf01df797acef9936a1daea4f25418f61ba",
+      "target_sha256": "5bb613153b93d3083ebbf44aaaea4975d9d984a99fc5e7f0795135f168d14fa8"
+    },
+    {
+      "segment_id": "05-04:b0047",
+      "source": "the two",
+      "target": "两者",
+      "equivalence": "2 words",
+      "source_sha256": "b1ed5641afec37a554485e3e6c7d86f1773c1a03cda4f49337fb641f41a2e929",
+      "target_sha256": "8a109a9c24d1fbe5617682ecc5b5fa3098ac4e680836cb3685998b3116b0e9f0"
+    },
+    {
+      "segment_id": "05-04:b0055",
+      "source": "First iteration",
+      "target": "第一轮迭代",
+      "equivalence": "ordinal1",
+      "source_sha256": "23bc2cdcd15925c6365f7e4db573d735bc9b84227f13428347d52694d6156acb",
+      "target_sha256": "eee1012a4fb43beaf6c873f38df1454af5974d7e4a1e0b9c6df95fb91ea25566"
+    },
+    {
+      "segment_id": "05-04:b0055",
+      "source": "single tokens",
+      "target": "单个 token",
+      "equivalence": "1",
+      "source_sha256": "23bc2cdcd15925c6365f7e4db573d735bc9b84227f13428347d52694d6156acb",
+      "target_sha256": "eee1012a4fb43beaf6c873f38df1454af5974d7e4a1e0b9c6df95fb91ea25566"
+    },
+    {
+      "segment_id": "05-04:b0085",
+      "source": "two n-gram sets",
+      "target": "两个连续 n 元片段集合",
+      "equivalence": "2",
+      "source_sha256": "53c61b73faec61011bac84bbc2f1250cd6e251ba1fdc34113d23b04538314914",
+      "target_sha256": "e6028aa5b403178e3562812aba366c6ab22c97b6deea50de53d38be5c4184f55"
+    },
+    {
+      "segment_id": "05-04:b0093",
+      "source": "seven pages",
+      "target": "七页",
+      "equivalence": "7 source-claimed pages",
+      "source_sha256": "e18bc9084530517ed0f60c700ac02bfb50f7775ad68e3749f57f6092ef193fc2",
+      "target_sha256": "dcb6c4c340652da0446980c793ca25cf9925f744def45d30d367ade4ba8d1520"
+    }
+  ],
+  "author_review": {
+    "fresh_technical_all93": true,
+    "fresh_chinese_full261": true,
+    "independent": false,
+    "status": "draft awaiting newly repeated independent review",
+    "recovery_timestamp": "2026-10-02T23:28:29Z"
+  },
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "d5014f58559c7093943820ae6eafc485e2139371",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    }
+  ]
+}

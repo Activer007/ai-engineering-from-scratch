@@ -1,0 +1,730 @@
+{
+  "schema_version": 1,
+  "stage_id": "S54-glove-fasttext-subword",
+  "date": "2026-10-03",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "b92cf9d14b8729b4a378b0b4f468f4d957f6600c15d876b091d8dec54d8d3e47",
+  "target_sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+  "immutable_content_commit": "7433f3d5b6fa72641e306d1b7544af4d7ce2933b",
+  "support_dependencies": 61,
+  "dependency_manifest_sha256": "609f3b787bcd3db17207d358b39881c136fd9373398c30f22c0f5dfba4736b5f",
+  "coverage": {
+    "lines": 261,
+    "blocks": 93,
+    "translatable_blocks": 36,
+    "headings": 13,
+    "fences": 11,
+    "python_fences": 8,
+    "figure_fences": 1,
+    "bare_to_text_fences": 1,
+    "artifact_fences": 1,
+    "table_dimensions_including_header": [
+      [
+        6,
+        2
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "exercises": 3,
+    "references": 4,
+    "relative_SVG": 0,
+    "mermaid": 0
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; final hashes and every source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "S54-SRC-01",
+      "blocks": [
+        "05-04:b0009",
+        "05-04:b0011",
+        "05-04:b0013",
+        "05-04:b0015"
+      ],
+      "category": "enumeration",
+      "finding": "Source says two questions then enumerates three. Retained faithfully.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-02",
+      "blocks": [
+        "05-04:b0011",
+        "05-04:b0035"
+      ],
+      "category": "performance",
+      "finding": "GloVe quality, lower cost and summed-table gains are broad source claims without a reproduced controlled comparison.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-03",
+      "blocks": [
+        "05-04:b0013",
+        "05-04:b0015"
+      ],
+      "category": "morphology_and_coverage",
+      "finding": "Character fragments need not be morphemes; million-entry ceiling, sensible OOV vectors and universal modern-tokenizer claims omit conditions.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-04",
+      "blocks": [
+        "05-04:b0021",
+        "05-04:b0033",
+        "05-04:b0089"
+      ],
+      "category": "cooccurrence",
+      "finding": "Source prose says counts; implementation uses inverse-distance directed weights. Same-word entries may arise from distinct repeated positions.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-05",
+      "blocks": [
+        "05-04:b0035"
+      ],
+      "category": "weight_direction",
+      "finding": "Weight increases with x up to one, whereas prose says very frequent pairs are downweighted. Fresh numeric checks independently reproduce the inconsistency.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-06",
+      "blocks": [
+        "05-04:b0033"
+      ],
+      "category": "optimizer_and_validation",
+      "finding": "Fresh finite differences confirm gradient of one-half weighted squared residual with both pre-update vectors. Empty table is allowed; log-zero count produces nonfinite output. No real GloVe benchmark implied.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-07",
+      "blocks": [
+        "05-04:b0039",
+        "05-04:b0041"
+      ],
+      "category": "ngram_set_example",
+      "finding": "Printed where set has 13 items; current implementation returns 15, adding <where and where>. Code and example are preserved.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-08",
+      "blocks": [
+        "05-04:b0023",
+        "05-04:b0043",
+        "05-04:b0045",
+        "05-04:b0047"
+      ],
+      "category": "fasttext_scope",
+      "finding": "Set-based summed lookup is not complete FastText training. No known fragment returns None; shared fragments alone do not guarantee close vectors, confirmed by an opposite-vector construction.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-09",
+      "blocks": [
+        "05-04:b0025",
+        "05-04:b0051",
+        "05-04:b0089"
+      ],
+      "category": "bpe_base",
+      "finding": "k+256 assumes complete byte coverage and enough successful merges. Toy starts from characters plus end marker, can stop early and does not return a closed ID vocabulary.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-10",
+      "blocks": [
+        "05-04:b0057",
+        "05-04:b0071"
+      ],
+      "category": "algorithm_families",
+      "finding": "GPT/BERT/T5 merge-count and no-OOV statements conflate BPE, WordPiece, Unigram and SentencePiece. Fresh official tokenizer documentation distinguishes these and the byte-level coverage condition.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-11",
+      "blocks": [
+        "05-04:b0067",
+        "05-04:b0069",
+        "05-04:b0071"
+      ],
+      "category": "boundary_and_model_output",
+      "finding": "GPT2 displayed output not model-run. Ġ is a space-encoding convention, not a universal linguistic boundary.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-12",
+      "blocks": [
+        "05-04:b0051",
+        "05-04:b0053"
+      ],
+      "category": "bpe_demo_and_validation",
+      "finding": "Four-word document REPL is reproduced; six-word canonical gives a different lowest split. Frequency/order affect merges, zero frequencies are accepted, and unknown Unicode is emitted literally without known-ID validation.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-13",
+      "blocks": [
+        "05-04:b0075"
+      ],
+      "category": "selection_rules",
+      "finding": "Never swap and still TF-IDF are broad source guidance, not measured task-independent production guarantees.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-14",
+      "blocks": [
+        "05-04:b0081"
+      ],
+      "category": "artifact",
+      "finding": "Vocabulary sizes and refusal rules in the protected prompt are heuristics; no artifact prompt executed.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-15",
+      "blocks": [
+        "05-04:b0085"
+      ],
+      "category": "exercise",
+      "finding": "Fresh Jaccard is 6/36 for playing/played. Source compression task switches reciprocal units and asserts a non-universal asymptote. No Shakespeare download/run.",
+      "translation_action": "Preserve source and disclose separately."
+    },
+    {
+      "id": "S54-SRC-16",
+      "blocks": [
+        "05-04:b0027",
+        "05-04:b0029",
+        "05-04:b0033",
+        "05-04:b0045",
+        "05-04:b0051"
+      ],
+      "category": "execution_and_render_scope",
+      "finding": "Canonical runs only n-grams and six-word ten-merge BPE. GloVe document definition checked separately on tiny NumPy data. Original parser has nine empty heading IDs; figure requires separate real-site validation.",
+      "translation_action": "Preserve source and disclose separately."
+    }
+  ],
+  "author_runtime": {
+    "canonical": {
+      "path": "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/code/main.py",
+      "sha256": "eb7974ca43d19115615bd05db1c59d1b36589caa9bd705aea8dce3df10f8e43b",
+      "lines": 88,
+      "fixed_git_match": true,
+      "full_preread": true,
+      "fresh_command": "timeout 30s python3 -I -S -B phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/code/main.py",
+      "exit_code": 0,
+      "scope": "Original six-word Counter and10 merges; no GloVe/FastText full training",
+      "output": "=== FastText n-grams ===\nwhere        15 grams, e.g., ['<wh', '<whe', '<wher', '<where', '<where>']\nwhereupon    31 grams, e.g., ['<wh', '<whe', '<wher', '<where', '<whereupon>']\nshared n-grams between where / whereupon: 10\n\n=== BPE on toy corpus ===\nlearned 10 merges:\n  'w' + 'e' -> 'we'\n  's' + 't' -> 'st'\n  'st' + '</w>' -> 'st</w>'\n  'l' + 'o' -> 'lo'\n  'we' + 'st</w>' -> 'west</w>'\n  'n' + 'e' -> 'ne'\n  'ne' + 'west</w>' -> 'newest</w>'\n  'lo' + 'w' -> 'low'\n  'low' + '</w>' -> 'low</w>'\n  'we' + 'r' -> 'wer'\n\nlowest     -> ['lo', 'west</w>']\nslowest    -> ['s', 'lo', 'west</w>']\nlower      -> ['lo', 'wer', '</w>']\nnewish     -> ['ne', 'w', 'i', 's', 'h', '</w>']\n"
+    },
+    "bounded": {
+      "fresh_recovery_run": true,
+      "numpy_version": "2.3.5",
+      "groups": 12,
+      "results": [
+        {
+          "name": "inverse distance and document boundary",
+          "status": "PASS"
+        },
+        {
+          "name": "default100 epochs on explicit two-word fixture",
+          "status": "PASS"
+        },
+        {
+          "name": "both-table and bias gradient finite difference",
+          "status": "PASS"
+        },
+        {
+          "name": "weight saturation and invalid zero-count boundary",
+          "status": "PASS"
+        },
+        {
+          "name": "source n-gram REPL mismatch reproduced",
+          "status": "PASS"
+        },
+        {
+          "name": "Jaccard and set deduplication",
+          "status": "PASS"
+        },
+        {
+          "name": "partial vector sum and no proximity guarantee",
+          "status": "PASS"
+        },
+        {
+          "name": "original four-word REPL",
+          "status": "PASS"
+        },
+        {
+          "name": "canonical six-word ten-merge parity",
+          "status": "PASS"
+        },
+        {
+          "name": "Unicode preserved as strings, not known IDs",
+          "status": "PASS"
+        },
+        {
+          "name": "early stop, insertion-order ties and unchecked zero frequency",
+          "status": "PASS"
+        },
+        {
+          "name": "ordered nonoverlap rules and negative merge count",
+          "status": "PASS"
+        }
+      ],
+      "executed_doc_blocks": [
+        "b0033",
+        "b0039",
+        "b0045",
+        "b0051"
+      ],
+      "canonical_default_main_separately_run": true,
+      "source_edits": false,
+      "not_run": [
+        "fasttext/transformers",
+        "network/model/corpus downloads",
+        "Shakespeare/full plots",
+        "output skill",
+        "large training",
+        "GFM/website/CI"
+      ]
+    }
+  },
+  "independent_runtime": {
+    "canonical_sha256": "eb7974ca43d19115615bd05db1c59d1b36589caa9bd705aea8dce3df10f8e43b",
+    "canonical_run": {
+      "run_at": "2026-10-02T23:30:05.204505+00:00",
+      "exit_code": 0,
+      "stdout": "=== FastText n-grams ===\nwhere        15 grams, e.g., ['<wh', '<whe', '<wher', '<where', '<where>']\nwhereupon    31 grams, e.g., ['<wh', '<whe', '<wher', '<where', '<whereupon>']\nshared n-grams between where / whereupon: 10\n\n=== BPE on toy corpus ===\nlearned 10 merges:\n  'w' + 'e' -> 'we'\n  's' + 't' -> 'st'\n  'st' + '</w>' -> 'st</w>'\n  'l' + 'o' -> 'lo'\n  'we' + 'st</w>' -> 'west</w>'\n  'n' + 'e' -> 'ne'\n  'ne' + 'west</w>' -> 'newest</w>'\n  'lo' + 'w' -> 'low'\n  'low' + '</w>' -> 'low</w>'\n  'we' + 'r' -> 'wer'\n\nlowest     -> ['lo', 'west</w>']\nslowest    -> ['s', 'lo', 'west</w>']\nlower      -> ['lo', 'wer', '</w>']\nnewish     -> ['ne', 'w', 'i', 's', 'h', '</w>']\n",
+      "stderr": "",
+      "elapsed_seconds": 0.015104246000191779,
+      "canonical_unmodified": true,
+      "fully_preread_lines": 88,
+      "actual_corpus_words": 6,
+      "actual_merges": 10
+    },
+    "finite_checks": {
+      "checked_at": "2026-10-02T23:30:43.473024+00:00",
+      "current_recovery_run": true,
+      "status": "PASS",
+      "check_groups": 14,
+      "numpy_version": "2.3.5",
+      "canonical_preread_lines": 88,
+      "all_document_fences_preread": 11,
+      "definition_blocks_executed": [
+        "b0033",
+        "b0039",
+        "b0045",
+        "b0051"
+      ],
+      "REPL_values_compared": [
+        "b0041",
+        "b0053"
+      ],
+      "checks": [
+        {
+          "name": "cooccurrence_direction_distance_and_repeated_word",
+          "status": "PASS"
+        },
+        {
+          "name": "weight_increases_then_saturates",
+          "status": "PASS"
+        },
+        {
+          "name": "all_matrix_and_bias_gradients",
+          "status": "PASS"
+        },
+        {
+          "name": "default100_epoch_small_glove",
+          "status": "PASS"
+        },
+        {
+          "name": "empty_and_zero_count_glove",
+          "status": "PASS"
+        },
+        {
+          "name": "printed_ngram_set_mismatch",
+          "status": "PASS"
+        },
+        {
+          "name": "whole_word_boundary_and_empty_gram",
+          "status": "PASS"
+        },
+        {
+          "name": "partial_known_subword_lookup",
+          "status": "PASS"
+        },
+        {
+          "name": "shared_substrings_no_similarity_guarantee",
+          "status": "PASS"
+        },
+        {
+          "name": "four_word_document_REPL",
+          "status": "PASS"
+        },
+        {
+          "name": "frequency_weighted_and_nonoverlapping_merges",
+          "status": "PASS"
+        },
+        {
+          "name": "early_stop_and_unvalidated_counts",
+          "status": "PASS"
+        },
+        {
+          "name": "reconstruction_and_unknown_symbol_output",
+          "status": "PASS"
+        },
+        {
+          "name": "jaccard_finite_exercise",
+          "status": "PASS"
+        }
+      ],
+      "not_executed": [
+        "fasttext download b0063",
+        "transformers model download b0067",
+        "GPT2 output b0069",
+        "artifact b0081",
+        "Shakespeare corpus",
+        "external models or pretrained vectors"
+      ]
+    },
+    "no_installs_downloads_model_APIs": true
+  },
+  "actual_GitHub_GFM": {
+    "stage_id": "S54-glove-fasttext-subword",
+    "status": "PASS_ACTUAL_GITHUB_GFM",
+    "observed_at_utc": "2026-10-02T23:42:23Z to 2026-10-02T23:43:02Z",
+    "observer": "S54 author personally using a newly created tab in dot cloud Chrome",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/7433f3d5b6fa72641e306d1b7544af4d7ce2933b/i18n/zh/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/zh.md",
+    "immutable_content_commit": "7433f3d5b6fa72641e306d1b7544af4d7ce2933b",
+    "target_sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+    "method": "Full rendered accessibility article read, read-only article DOM counts/cell text, and five viewport screenshots personally inspected. No GitHub edits or other tabs operated.",
+    "counts": {
+      "headings": 13,
+      "tables": 2,
+      "table_dimensions_including_header": [
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "strong": 13,
+      "em": 0,
+      "unexpected_em": 0,
+      "unparsed_double_asterisks": 0,
+      "pre": 11,
+      "iframes": 0,
+      "images": 0,
+      "mermaid": 0
+    },
+    "headings": [
+      "GloVe、FastText 与子词嵌入",
+      "要解决的问题",
+      "核心概念",
+      "动手实现",
+      "GloVe：分解共现矩阵",
+      "FastText：感知子词的嵌入",
+      "BPE：学习得到的子词词表",
+      "实际使用",
+      "何时选择哪一种",
+      "交付成果",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "strong_text": [
+      "Type:",
+      "Languages:",
+      "Prerequisites:",
+      "Time:",
+      "GloVe",
+      "FastText",
+      "字节对编码（BPE）",
+      "GloVe（Global Vectors，全局向量）。",
+      "FastText。",
+      "BPE（Byte-Pair Encoding，字节对编码）。",
+      "简单。",
+      "中等。",
+      "困难。"
+    ],
+    "unit_explanations": {
+      "b0057": "30k-100k（k 表示千）",
+      "b0075": "GloVe 300d（d 表示维数）",
+      "both_visible_complete": true
+    },
+    "protected_figure": {
+      "identifier": "n5-subword-merge",
+      "rendered_as": "code placeholder",
+      "interactive_verified": false,
+      "source_svg_reference_exists": false,
+      "unreferenced_svg_copied": false
+    },
+    "screenshot_storage": "Displayed and personally inspected in browser tool results; no image files or attachments claimed.",
+    "required_format_changes": [],
+    "scope_exclusions": [
+      "actual curriculum website",
+      "mobile layout",
+      "interactive figure behavior",
+      "CI",
+      "aggregate replay",
+      "final remote byte reconciliation"
+    ],
+    "final_acceptance": false
+  },
+  "aggregate": {
+    "reviewed_lessons": 78,
+    "original_strict_direct_pass": 76,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "78 byte-identical to each other and final records",
+    "svg_separate_copies": 5,
+    "repository_audits": "523 lessons, 67 certifications, 12 assessments, 505 questions; zero issues; README/book counts passed",
+    "book_rendering_regressions": {
+      "result": "ENVIRONMENT_BLOCKED_PDF_TEST",
+      "tests": 6,
+      "passed": 5,
+      "failed": 1,
+      "reason": "xelatex.fmt unavailable; mktexfmt cannot create default cache under read-only /home/agent/.texlive2025",
+      "source_or_translation_failure_established": false,
+      "retry": {
+        "returncode": 1,
+        "log_sha256": "b3c53dc26d1e1598392b6d4ddba0e0b5095f31bc1e211dd23aab7416ee83c573",
+        "environment_only": true,
+        "system_install_or_modification": false,
+        "timestamp_utc": "2026-10-03T00:01:08.839424+00:00",
+        "result": "STILL_BLOCKED_NO_SYSTEM_CHANGES",
+        "reason": "Writable process-local TeX cache resolves the permission error, but fmtutil has zero format entries and xelatex.fmt remains unavailable; no system installation or configuration change attempted"
+      }
+    }
+  },
+  "content_remote_verification": {
+    "stage": 54,
+    "commit": "7433f3d5b6fa72641e306d1b7544af4d7ce2933b",
+    "files": [
+      {
+        "path": "i18n/zh/.curated/lessons/05-04/review.json",
+        "sha256": "021159be1b58441d0d71f869b94d52d3b655d794e25f9e8b626de8bdda81ffd8",
+        "bytes": 77290
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/05-04/translation.json",
+        "sha256": "fd0c9cddaef90568563028854edfe254f59a17da428836cd1ca9eba99b5ef6c7",
+        "bytes": 86666
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/DEPENDENCIES.json",
+        "sha256": "609f3b787bcd3db17207d358b39881c136fd9373398c30f22c0f5dfba4736b5f",
+        "bytes": 14737
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/SCOPE.md",
+        "sha256": "3718eec3fc6ecb27d9acaa6783dedcc3a7fec4b2f59f93589d3ffa3027032493",
+        "bytes": 1556
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+        "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99",
+        "bytes": 2488
+      },
+      {
+        "path": "i18n/zh/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/zh.md",
+        "sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+        "bytes": 12509
+      }
+    ],
+    "exact_byte_equal": true,
+    "tree": "3c79ff1e3e9ee51183a4af56dcbd32b0e78ddae3"
+  },
+  "site_parser": {
+    "timestamp_utc": "2026-10-03T00:02:12.514789+00:00",
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "scope": "Repository original site/lesson.html parser executed offline on five final Chinese lesson bytes; not browser QA, not GitHub GFM, not deployed-site verification",
+    "cause": "Original slugify removes all characters outside ASCII a-z/0-9, causing empty IDs for Chinese-only headings",
+    "script_sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43",
+    "site_source_sha256": "03a79431a160d84c30793da3433d565b236db586ba53083b45b07e304d15757e",
+    "returncode": 0,
+    "log_sha256": "342c32c378c9b0556050a8a39034188c14adde779e2fa0f02b7f42b55e587d21",
+    "lessons": [
+      {
+        "file": "i18n/zh/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 46329,
+        "tables": 4,
+        "code_blocks": 9,
+        "figures": 1,
+        "mermaid_sources": 4,
+        "empty_heading_ids": [
+          "超参数调优",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "参数与超参数",
+          "网格搜索",
+          "随机搜索",
+          "贝叶斯优化",
+          "早停",
+          "学习率调度器",
+          "超参数重要性",
+          "实用策略",
+          "与交叉验证结合",
+          "实用建议",
+          "动手实现",
+          "实际使用",
+          "超参数调优中的常见错误",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [
+          "optuna"
+        ],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S52-hyperparameter-tuning",
+        "lesson_id": "02-12",
+        "target_sha256": "c0b27542fc52e55f6957a0f780849035d77733af72825baa119d8ab3e54a415e",
+        "empty_heading_id_count": 20,
+        "duplicate_nonempty_id_distinct_count": 1
+      },
+      {
+        "file": "i18n/zh/phases/03-deep-learning-core/08-weight-initialization/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 29717,
+        "tables": 1,
+        "code_blocks": 15,
+        "figures": 1,
+        "mermaid_sources": 3,
+        "empty_heading_ids": [
+          "权重初始化与训练稳定性",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "对称性问题",
+          "方差在各层间的传播",
+          "选择合适的初始化策略",
+          "动手实现",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S53-weight-initialization",
+        "lesson_id": "03-08",
+        "target_sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+        "empty_heading_id_count": 13,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 25348,
+        "tables": 2,
+        "code_blocks": 10,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "何时选择哪一种",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S54-glove-fasttext-subword",
+        "lesson_id": "05-04",
+        "target_sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 30544,
+        "tables": 1,
+        "code_blocks": 12,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "命名实体识别",
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "容易失效的情况",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S55-named-entity-recognition",
+        "lesson_id": "05-06",
+        "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+        "empty_heading_id_count": 10,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 16822,
+        "tables": 2,
+        "code_blocks": 3,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "什么情况下该选哪种方法",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S56-topic-modeling",
+        "lesson_id": "05-15",
+        "target_sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      }
+    ],
+    "total_empty_heading_ids": 61,
+    "source_or_translation_modified": false,
+    "github_gfm_verified_by_this_check": false,
+    "browser_verified": false
+  },
+  "final_remote_and_CI": "Final evidence commit readback and exact-head CI results are recorded in PR body and the single rollout index, avoiding self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
