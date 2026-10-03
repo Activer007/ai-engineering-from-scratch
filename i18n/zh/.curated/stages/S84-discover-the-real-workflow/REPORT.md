@@ -1,0 +1,24 @@
+# 发现人们实际执行的工作流：翻译与验证报告
+
+[自有fork草稿PR #88](https://github.com/Activer007/ai-engineering-from-scratch/pull/88)；[固定中文正文](https://github.com/Activer007/ai-engineering-from-scratch/blob/d9f86cdcabe013b0d0853835936ae55cef57394d/i18n/zh/phases/14-agent-engineering/48-discover-the-real-workflow/docs/zh.md)。
+
+固定英文源：1bafaa88bb4668356791150bec3a6d7df38387eb
+中文SHA256：185059e6b13c57ac6a24235e13215797822775090db9fdf619ef4d8087b6b674
+正文commit：d9f86cdcabe013b0d0853835936ae55cef57394d
+支持commit：431e274b792e5c4d5b5306cd2456d2e70f126e6e
+原review SHA256：c3cb204a3d12c595fab0a58a4a5d1b7f81d3d06ac76087e4a8ee785f224f46b0
+本候选review SHA256：0103522323fe360e7092a28a4404afae12ca5dad84b9ba90c9413e62647283dc
+真实GFM报告SHA256：a2743fe1e70de32d3efb46b8b7eec73b037f62d4c62bf697cfbc40ea1132a0ce
+新单课累计回归SHA256：3dd34c7b7e22cecc7d447accd302848a00c7c89a7927c699d2fd9c606dd5069f
+
+作者与独立审校者分别完成63块技术对照及单独中文通读，逐块SHA和具体审校意见完整保留。87项冻结依赖及79项历史术语绑定未变；target、record、source和3份support字节不变。作者及独审分别在完整临时课目录运行原main与6个原测试，另有12项作者、14项独立有限测试；绿灯仅说明所测输入的观察，不消除源实现的边界。
+
+源问题包括操作手册不必然证明行为发生、直接证据占比按证据条目而非步骤计数、grounded只要求全局至少一条直接证据、置信度不是事实权重、分支任务并未由线性模型实现，以及Python类型注解不提供运行时数据验证。main基于__file__写outputs，全部运行保持在整课临时副本中。完整原始问题列表仍在review和VALIDATION中。
+
+实际GitHub固定提交全篇GFM与独立像素核验通过：10标题、2列表格（含表头共9行）、12处强调、2个保护代码块、2个行内路径与2个外链均核对；实际Mermaid8节点、7连线及3处supports完整可读。10张真实截图中7张稳态截图用于验收，3张诊断/过渡截图保留。原文件虽以.png命名，实际为JPEG/JFIF（1165×747）；原字节、名称与hash均保留，未转码。原截图调用曾未获批准，经明确授权对同一调用重试一次成功；失败历史未删除。外链目的站没有逐一测试。
+
+本次真实候选严格为正式100课加本课，合计101；原strict直接99课，S07/S19只沿用两处原精确适配，没有新例外。实际33/24/50控制、两个全新目录各101篇逐字节重放、13个SVG各两份独立复制及3项仓库审计通过；旧含S79的101集合没有重用。正式计数本报告不增加。
+
+课程站原解析器仍有10个空标题ID；部署站、移动端与交互未通过。正文head的status及workflow真实查询均为空，不等于CI通过，也不代表未来finalhead已检查。book实际重测5/6，缺少xelatex.fmt阻塞PDF；没有安装或配置修复，完整译书未完成。
+
+这是仅4文件的本地最终证据候选：review仅追加两个证据字段，TASKS/VALIDATION/REPORT新增。最终发布后的9文件不可变/当前分支/Git精确读回、finalhead CI检查、最终PR正文读回和正式单课索引仍待协调者完成。不合并、不发布课程、不向上游提交。
