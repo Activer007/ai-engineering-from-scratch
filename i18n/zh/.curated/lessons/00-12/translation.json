@@ -1,0 +1,2506 @@
+{
+  "schema_version": 1,
+  "lesson_id": "00-12",
+  "source_path": "phases/00-setup-and-tooling/12-debugging-and-profiling/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "a219911c2836b9bd90eb02958591888bdd6d1d6e",
+  "source_sha256": "5257eaa5d4a138f143ba3169ba7e469b43f1aba819a769ea64da4eb9505fc550",
+  "target_path": "i18n/zh/phases/00-setup-and-tooling/12-debugging-and-profiling/docs/zh.md",
+  "target_sha256": "dd1d58cc7a09ee72490c308a8168aa1256bf2219a4d3512feda0ee02c4bc7fde",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-03",
+    "full_translation_started_utc": "2026-10-03T15:13:06Z"
+  },
+  "segments": [
+    {
+      "segment_id": "00-12:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling"
+      ],
+      "ordinal": 1,
+      "source_sha256": "42febe2299651c8edd2c27a7639cd1c0bb0438745ab73d17fdf6f38952148e3e",
+      "target": "# 调试与性能剖析\n"
+    },
+    {
+      "segment_id": "00-12:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Debugging and Profiling"
+      ],
+      "ordinal": 2,
+      "source_sha256": "afcb5448f2df97f7e104bc035ad27cf0210999cf5b2e79103a20f64e64699c1d",
+      "target": "> 最糟糕的 AI 缺陷不会让程序崩溃。模型会悄无声息地在垃圾数据上训练，还给出一条漂亮的损失曲线。\n"
+    },
+    {
+      "segment_id": "00-12:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling"
+      ],
+      "ordinal": 3,
+      "source_sha256": "94995b864511193e513261e82ac3207c16e8bd90de928a9e9754964af0b61058",
+      "target": "**Type:** Build\n**Language:** Python\n**Prerequisites:** 第 1 课（开发环境），具备 PyTorch 基础知识\n**Time:** ~60 分钟\n"
+    },
+    {
+      "segment_id": "00-12:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "00-12:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "f26348711da096f45794895eed363813b802fcc91f614208fc3acc0442753500",
+      "target": "- 使用带条件的 `breakpoint()` 和 `debug_print`，在训练过程中检查张量（tensor）的形状（shape）、数据类型（dtype）和 NaN（非数）值\n- 使用 `cProfile`、`line_profiler` 和 `tracemalloc` 对训练循环进行性能剖析（profiling），找出瓶颈\n- 检测常见的 AI 缺陷：形状不匹配、NaN 损失、数据泄漏，以及位于错误设备上的张量\n- 配置 TensorBoard，将损失曲线、权重直方图和梯度分布可视化\n"
+    },
+    {
+      "segment_id": "00-12:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "00-12:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "0482087c3f876d98123d7e160f3c0b1f97aea051f4c3bc32472d4de5aa95c7fc",
+      "target": "AI 代码的出错方式与普通代码不同。Web 应用崩溃时会给出调用栈信息（stack trace）。配置错误的训练循环却会运行 8 小时，花掉价值 $200 的 GPU 时间，最后得到一个对每个输入都只预测均值的模型。代码始终没有报错。缺陷的原因是张量放在了错误的设备（device）上、忘记调用 `.detach()`，或者标签泄漏到了特征中。\n"
+    },
+    {
+      "segment_id": "00-12:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "e16dcce2e28199527fcbd195021c1d1aa124924c5533432d6e49c6fc3fb8d355",
+      "target": "你需要调试工具，在这些静默故障浪费你的时间和算力之前就把它们找出来。\n"
+    },
+    {
+      "segment_id": "00-12:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "00-12:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "d6d77d218076fc18c28281c8362cc720bf7b19fc9da13ed46f700ae688c210ec",
+      "target": "AI 调试分为三个层次：\n"
+    },
+    {
+      "segment_id": "00-12:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0021",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "ec682482565a623ecae2d1054a1c62b2f06a78ad0c4b4e61e6aeae73697c26d0",
+      "target": "```mermaid\ngraph TD\n    L3[\"3. Training Dynamics<br/>Loss curves, gradient norms, activations\"] --> L2\n    L2[\"2. Tensor Operations<br/>Shapes, dtypes, devices, NaN/Inf values\"] --> L1\n    L1[\"1. Standard Python<br/>Breakpoints, logging, profiling, memory\"]\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "64777750ed1685e70dc1d854da76a1d94fa6d202520a8947702675a1cdee7b44",
+      "target": "大多数人直接跳到第 3 层（盯着 TensorBoard 看）。但 80% 的 AI 缺陷位于第 1 层和第 2 层。\n"
+    },
+    {
+      "segment_id": "00-12:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0025",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "960f6ac2a8fa0328920b94a1a68f4f9670937b7a92b76cc6876a2cfdd62a08a5",
+      "target": "```figure\ns0-flame-hot\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It"
+      ],
+      "ordinal": 14,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "00-12:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 1: Print Debugging (Yes, It Works)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "ebd461dccfceb7425505287c3f4ba2ede01d2c3e78375dc2ead3cf9adad53899",
+      "target": "### 第 1 部分：打印调试（没错，它确实管用）\n"
+    },
+    {
+      "segment_id": "00-12:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 1: Print Debugging (Yes, It Works)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 1: Print Debugging (Yes, It Works)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "fd6a34762afa33ceeea563adca1c07e9a8f38ad1331063755e6f4b2b26456b0d",
+      "target": "打印调试常被轻视，但它不该受到这样的待遇。对于张量代码，一条有针对性的打印语句比在调试器中单步执行更有效，因为你需要同时看到形状、数据类型和值的范围。\n"
+    },
+    {
+      "segment_id": "00-12:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 1: Print Debugging (Yes, It Works)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 1: Print Debugging (Yes, It Works)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "ff5f55ec9675e3961b6be1cc59fc37233082c3e4a6f60594d1080c985856e70b",
+      "target": "```python\ndef debug_print(name, tensor):\n    print(f\"{name}: shape={tensor.shape}, dtype={tensor.dtype}, \"\n          f\"device={tensor.device}, \"\n          f\"min={tensor.min().item():.4f}, max={tensor.max().item():.4f}, \"\n          f\"mean={tensor.mean().item():.4f}, \"\n          f\"has_nan={tensor.isnan().any().item()}\")\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 1: Print Debugging (Yes, It Works)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 1: Print Debugging (Yes, It Works)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "e75adc4bbdc8eb2232d16abd7afa151162592bd075795582d0e28c6a8accec4b",
+      "target": "在每个可疑操作之后调用这个函数。找到缺陷后，删除这些打印语句。就这么简单。\n"
+    },
+    {
+      "segment_id": "00-12:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 1: Print Debugging (Yes, It Works)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 19,
+      "source_sha256": "c5bd03ddedf275eb2eef5a7a2002768089e82b651832c88aec00bf548941757a",
+      "target": "### 第 2 部分：Python 调试器（pdb 和 breakpoint）\n"
+    },
+    {
+      "segment_id": "00-12:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 20,
+      "source_sha256": "2b73db4972eb44f5ea30d25d8a8a702716e0312fa4d451947d7a2d63f20a3346",
+      "target": "在 AI 开发中，内置调试器的价值被低估了。在训练循环中插入 `breakpoint()`，就能交互式地检查张量。\n"
+    },
+    {
+      "segment_id": "00-12:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "02183ac65b5b08e5e2185645757a20c35e4e2b0ff6e41563e156218b63f35c5c",
+      "target": "```python\ndef training_step(model, batch, criterion, optimizer):\n    inputs, labels = batch\n    outputs = model(inputs)\n    loss = criterion(outputs, labels)\n\n    if loss.item() > 100 or torch.isnan(loss):\n        breakpoint()\n\n    loss.backward()\n    optimizer.step()\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "a36add96d639865b09c9820db45d67adac88d1ec3d80bbc3b0d5abbbd4b5c896",
+      "target": "进入调试器后，以下命令很有用：\n"
+    },
+    {
+      "segment_id": "00-12:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0045",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "4318ace63a4b1e3e75cb8bd4d01f217b1d3cade70b2671e7878fb2e24ab26c46",
+      "target": "- 用 `p outputs.shape` 检查形状\n- 用 `p loss.item()` 查看损失值\n- 用 `p torch.isnan(outputs).sum()` 统计 NaN 的数量\n- 用 `p model.fc1.weight.grad` 检查梯度\n- 用 `c` 继续执行，用 `q` 退出\n"
+    },
+    {
+      "segment_id": "00-12:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "8b2a7b385c02ef016a9363b81dffdf83ef9aeb2ac062b8f4c5a4158d2dd331ec",
+      "target": "这就是条件调试。只有看起来不对劲时才暂停。对于一次有 10,000 步的训练运行，这一点很重要。\n"
+    },
+    {
+      "segment_id": "00-12:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 2: Python Debugger (pdb and breakpoint)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 3: Python Logging"
+      ],
+      "ordinal": 25,
+      "source_sha256": "18a74e2f5a22691a123a434ebd9c10042d8b403511fe35693e454ee1111255a6",
+      "target": "### 第 3 部分：Python 日志记录\n"
+    },
+    {
+      "segment_id": "00-12:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 3: Python Logging"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 3: Python Logging"
+      ],
+      "ordinal": 26,
+      "source_sha256": "e749b6091f18c1398e4ebb81b22a815b3c13c4c3871b188606839eedbd683837",
+      "target": "当调试不再只是快速检查一下时，用日志记录替代打印语句。\n"
+    },
+    {
+      "segment_id": "00-12:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 3: Python Logging"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 3: Python Logging"
+      ],
+      "ordinal": 27,
+      "source_sha256": "31f001d0adc4e4e2e46d6e091cd9e2820225a3c87f8e8bb748d39f033f054450",
+      "target": "```python\nimport logging\n\nlogging.basicConfig(\n    level=logging.INFO,\n    format=\"%(asctime)s [%(levelname)s] %(message)s\",\n    handlers=[\n        logging.FileHandler(\"training.log\"),\n        logging.StreamHandler()\n    ]\n)\nlogger = logging.getLogger(__name__)\n\nlogger.info(\"Starting training: lr=%.4f, batch_size=%d\", lr, batch_size)\nlogger.warning(\"Loss spike detected: %.4f at step %d\", loss.item(), step)\nlogger.error(\"NaN loss at step %d, stopping\", step)\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 3: Python Logging"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 3: Python Logging"
+      ],
+      "ordinal": 28,
+      "source_sha256": "3a8a33de677a605cd17a2e835a34aab64f8c4eb0578a4bb9f15765383f73b319",
+      "target": "日志记录提供时间戳、严重级别和文件输出。训练在凌晨 3 点出错时，你需要的是日志文件，而不是早已滚出屏幕的终端输出。\n"
+    },
+    {
+      "segment_id": "00-12:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 3: Python Logging"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 4: Timing Code Sections"
+      ],
+      "ordinal": 29,
+      "source_sha256": "d6e49b4c6ea75f550d81b5dc2b0696af59628ed76691d86e922592e6b08c925d",
+      "target": "### 第 4 部分：为代码段计时\n"
+    },
+    {
+      "segment_id": "00-12:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 4: Timing Code Sections"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 4: Timing Code Sections"
+      ],
+      "ordinal": 30,
+      "source_sha256": "e2b88f0f85169ed13df0e4042f622316f46923c3749a34717e2d01bd8faf52a7",
+      "target": "知道时间花在哪里，是优化的第一步。\n"
+    },
+    {
+      "segment_id": "00-12:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 4: Timing Code Sections"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 4: Timing Code Sections"
+      ],
+      "ordinal": 31,
+      "source_sha256": "a9926702a2fcc81c2b44d16a8abb49c6a97ace2ef331dde04a37aec9c57f3821",
+      "target": "```python\nimport time\n\nclass Timer:\n    def __init__(self, name=\"\"):\n        self.name = name\n\n    def __enter__(self):\n        self.start = time.perf_counter()\n        return self\n\n    def __exit__(self, *args):\n        elapsed = time.perf_counter() - self.start\n        print(f\"[{self.name}] {elapsed:.4f}s\")\n\nwith Timer(\"data loading\"):\n    batch = next(dataloader_iter)\n\nwith Timer(\"forward pass\"):\n    outputs = model(batch)\n\nwith Timer(\"backward pass\"):\n    loss.backward()\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 4: Timing Code Sections"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 4: Timing Code Sections"
+      ],
+      "ordinal": 32,
+      "source_sha256": "9bd463671640dab24042af9714f38f9aa1e0e3178e3a4c0c327c0cb1a3b18675",
+      "target": "常见的发现是：数据加载占用了 60% 的训练时间。解决办法是在 DataLoader（数据加载器）中设置 `num_workers > 0`，而不是换一块更快的 GPU。\n"
+    },
+    {
+      "segment_id": "00-12:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 4: Timing Code Sections"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 33,
+      "source_sha256": "b17bc213ef7fc1620e97a5adbe69c0f52e3f582dca4d39cc5d0252cf88b10c31",
+      "target": "### 第 5 部分：cProfile 和 line_profiler\n"
+    },
+    {
+      "segment_id": "00-12:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 34,
+      "source_sha256": "9a6fdf082ee7176e648ee702199bdaff6ef17339f3293c68f896830ea9104f33",
+      "target": "当手动计时已经不够用时：\n"
+    },
+    {
+      "segment_id": "00-12:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 35,
+      "source_sha256": "da44254868b6139b2e5b1787a47a37b4fafcaaf69f55142c9a3c4b8805b3b0fa",
+      "target": "```bash\npython -m cProfile -s cumtime train.py\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 36,
+      "source_sha256": "4601d159f7dd088b06ddd1b5432abc0a2390dff8e848191340d70a3b6a75bbf0",
+      "target": "这会显示每次函数调用，并按累计耗时排序。要进行逐行性能剖析：\n"
+    },
+    {
+      "segment_id": "00-12:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 37,
+      "source_sha256": "8336597e65ab45f14691d28006c586c1494744b18babca15c05aa4adcb1ccd4e",
+      "target": "```bash\npip install line_profiler\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 38,
+      "source_sha256": "b754f9e4429ad5c110d705af040bbb10c0c4bb95f9dbc900f02af785abc7858f",
+      "target": "```python\n@profile\ndef train_step(model, data, target):\n    output = model(data)\n    loss = F.cross_entropy(output, target)\n    loss.backward()\n    return loss\n\n# Run with: kernprof -l -v train.py\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 5: cProfile and line_profiler"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling"
+      ],
+      "ordinal": 39,
+      "source_sha256": "99ad1f8c08fde5b561c06eca67361a3b359adf54c5ab43d926cb227e307a2a61",
+      "target": "### 第 6 部分：内存剖析\n"
+    },
+    {
+      "segment_id": "00-12:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with tracemalloc"
+      ],
+      "ordinal": 40,
+      "source_sha256": "9887da6677f25fda15bab18f441ad8954209313944256986390543d0c36a73ad",
+      "target": "#### 使用 tracemalloc 检查 CPU 内存\n"
+    },
+    {
+      "segment_id": "00-12:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with tracemalloc"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with tracemalloc"
+      ],
+      "ordinal": 41,
+      "source_sha256": "6cbd6a60eb23df70265527da2f259aa830acbc1ef88d2163aa284f00e15a0b08",
+      "target": "```python\nimport tracemalloc\n\ntracemalloc.start()\n\n# your code here\nmodel = build_model()\ndata = load_dataset()\n\nsnapshot = tracemalloc.take_snapshot()\ntop_stats = snapshot.statistics(\"lineno\")\nfor stat in top_stats[:10]:\n    print(stat)\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with tracemalloc"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with memory_profiler"
+      ],
+      "ordinal": 42,
+      "source_sha256": "2effc2be8f782ce9182015b14748f2fe7098bae26289b9b40dc32c89f19aa902",
+      "target": "#### 使用 memory_profiler 检查 CPU 内存\n"
+    },
+    {
+      "segment_id": "00-12:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with memory_profiler"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with memory_profiler"
+      ],
+      "ordinal": 43,
+      "source_sha256": "e07d0f736ddf755df1863899e04e01d5a1448f9606c4f88f43ea9c3ee431966e",
+      "target": "```bash\npip install memory_profiler\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with memory_profiler"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with memory_profiler"
+      ],
+      "ordinal": 44,
+      "source_sha256": "9883e1759ae5c6984735613a36a8d59b002165232d663ef6efbdd08956fcd849",
+      "target": "```python\nfrom memory_profiler import profile\n\n@profile\ndef load_data():\n    raw = read_csv(\"data.csv\")       # watch memory jump here\n    processed = preprocess(raw)       # and here\n    return processed\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with memory_profiler"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with memory_profiler"
+      ],
+      "ordinal": 45,
+      "source_sha256": "d04d433307349eaea0e7315f4c52cd977eef924b0b5c3bb17b59bd9bdb95cb9c",
+      "target": "运行 `python -m memory_profiler your_script.py`，查看每一行的内存使用情况。\n"
+    },
+    {
+      "segment_id": "00-12:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### CPU Memory with memory_profiler"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### GPU Memory with PyTorch"
+      ],
+      "ordinal": 46,
+      "source_sha256": "232e1b9148f5ddb56c6ef50ea9f66f581cfe9fd6e419322142834b4e8b9cdb04",
+      "target": "#### 使用 PyTorch 检查 GPU 显存\n"
+    },
+    {
+      "segment_id": "00-12:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### GPU Memory with PyTorch"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### GPU Memory with PyTorch"
+      ],
+      "ordinal": 47,
+      "source_sha256": "ffe352a9f495a37f6f22544cd7d89b15c8943dd826ed55b66b2582dbb37f7e14",
+      "target": "```python\nimport torch\n\nif torch.cuda.is_available():\n    print(torch.cuda.memory_summary())\n\n    print(f\"Allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB\")\n    print(f\"Cached: {torch.cuda.memory_reserved() / 1e9:.2f} GB\")\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### GPU Memory with PyTorch"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### GPU Memory with PyTorch"
+      ],
+      "ordinal": 48,
+      "source_sha256": "6c7fed0da414d26d4f4dc71216bc0f003b03706e9b38cdce9375e38ef250d727",
+      "target": "遇到 OOM（Out of Memory，内存不足）时：\n"
+    },
+    {
+      "segment_id": "00-12:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### GPU Memory with PyTorch"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### GPU Memory with PyTorch"
+      ],
+      "ordinal": 49,
+      "source_sha256": "64d2724e19cc7e4b79b67ec6a969bbfbe6d73cbea879827f7f11770ac20199fc",
+      "target": "1. 减小批量大小（始终先尝试这一项）\n2. 使用 `torch.cuda.empty_cache()` 释放缓存内存\n3. 对于较大的中间张量，先使用 `del tensor`，再调用 `torch.cuda.empty_cache()`\n4. 使用混合精度（`torch.cuda.amp`），将内存用量减半\n5. 对于非常深的模型，使用梯度检查点（gradient checkpointing）\n"
+    },
+    {
+      "segment_id": "00-12:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 6: Memory Profiling",
+        "#### GPU Memory with PyTorch"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them"
+      ],
+      "ordinal": 50,
+      "source_sha256": "7666ff06eeaeb0b64091a7895a75cf9a8c08725427216b090053619156dc334a",
+      "target": "### 第 7 部分：常见的 AI 缺陷及其检测方法\n"
+    },
+    {
+      "segment_id": "00-12:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0101",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Shape Mismatch"
+      ],
+      "ordinal": 51,
+      "source_sha256": "d23fab994b1c0dd3cd4957e714291b987f3d3931a889fc33bd7279f59ee7a81c",
+      "target": "#### 形状不匹配\n"
+    },
+    {
+      "segment_id": "00-12:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Shape Mismatch"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Shape Mismatch"
+      ],
+      "ordinal": 52,
+      "source_sha256": "f7d421addc74af7cde0ce2144387ce280bd75c797570b24e342bd7cb2954f88e",
+      "target": "这是最常见的缺陷。张量的形状是 `[batch, features]`，而模型预期的是 `[batch, channels, height, width]`。\n"
+    },
+    {
+      "segment_id": "00-12:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Shape Mismatch"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0105",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Shape Mismatch"
+      ],
+      "ordinal": 53,
+      "source_sha256": "dcca6a5d65be54b5a54dedbd138936bcd385a60e043cdc385398a1c89ef7b398",
+      "target": "```python\ndef check_shapes(model, sample_input):\n    print(f\"Input: {sample_input.shape}\")\n    hooks = []\n\n    def make_hook(name):\n        def hook(module, inp, out):\n            in_shape = inp[0].shape if isinstance(inp, tuple) else inp.shape\n            out_shape = out.shape if hasattr(out, \"shape\") else type(out)\n            print(f\"  {name}: {in_shape} -> {out_shape}\")\n        return hook\n\n    for name, module in model.named_modules():\n        hooks.append(module.register_forward_hook(make_hook(name)))\n\n    with torch.no_grad():\n        model(sample_input)\n\n    for h in hooks:\n        h.remove()\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Shape Mismatch"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Shape Mismatch"
+      ],
+      "ordinal": 54,
+      "source_sha256": "9df5757f8f9b1770d4b498784394de53b262c1d5eaca23884be3587e6bec677a",
+      "target": "用一个样本批次运行一次这个函数。它会列出模型中的每一次形状变换。\n"
+    },
+    {
+      "segment_id": "00-12:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Shape Mismatch"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### NaN Loss"
+      ],
+      "ordinal": 55,
+      "source_sha256": "80bb0a9b14a505fd67f67c5ee0a07f5f2f898977d503c842df5bd8568c7ee0e9",
+      "target": "#### NaN 损失\n"
+    },
+    {
+      "segment_id": "00-12:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### NaN Loss"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### NaN Loss"
+      ],
+      "ordinal": 56,
+      "source_sha256": "e26e124483ea4a136f8cd419ac99b8e9e3c9027888d7a1f3684ed1dbe912d8f6",
+      "target": "出现 NaN 损失，说明某处发生了数值爆炸。常见原因包括：\n"
+    },
+    {
+      "segment_id": "00-12:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### NaN Loss"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0113",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### NaN Loss"
+      ],
+      "ordinal": 57,
+      "source_sha256": "aef4aabaa2c800e0473b5e11766960c6ef920a914a1d3ed1c81397385cb9da50",
+      "target": "- 学习率过高\n- 自定义损失中出现除以零的运算\n- 对零或负数取对数\n- RNN（循环神经网络）中发生梯度爆炸\n"
+    },
+    {
+      "segment_id": "00-12:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### NaN Loss"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0115",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### NaN Loss"
+      ],
+      "ordinal": 58,
+      "source_sha256": "0965b0e549e8fd3a94ca0f5f4f57123e0dc0356d3986d7f907ab21ca89887446",
+      "target": "```python\ndef detect_nan(model, loss, step):\n    if torch.isnan(loss):\n        print(f\"NaN loss at step {step}\")\n        for name, param in model.named_parameters():\n            if param.grad is not None:\n                if torch.isnan(param.grad).any():\n                    print(f\"  NaN gradient in {name}\")\n                if torch.isinf(param.grad).any():\n                    print(f\"  Inf gradient in {name}\")\n        return True\n    return False\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### NaN Loss"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Data Leakage"
+      ],
+      "ordinal": 59,
+      "source_sha256": "3defdf2283538c1d2457a572085be6c3f5d9267b4ab5e2504b5860f12195aa00",
+      "target": "#### 数据泄漏\n"
+    },
+    {
+      "segment_id": "00-12:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Data Leakage"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Data Leakage"
+      ],
+      "ordinal": 60,
+      "source_sha256": "6d605539f693769c914578bdb4b21cb25a063592a962c6c39fb064f32e6d58ce",
+      "target": "你的模型在测试集上达到了 99% 的准确率。听起来很棒，但这是一个缺陷。\n"
+    },
+    {
+      "segment_id": "00-12:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Data Leakage"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0121",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Data Leakage"
+      ],
+      "ordinal": 61,
+      "source_sha256": "99536ddc997de1084d264b189af507bc959ad4367a790bc1c89f724b9e262293",
+      "target": "```python\ndef check_data_leakage(train_set, test_set, id_column=\"id\"):\n    train_ids = set(train_set[id_column].tolist())\n    test_ids = set(test_set[id_column].tolist())\n    overlap = train_ids & test_ids\n    if overlap:\n        print(f\"DATA LEAKAGE: {len(overlap)} samples in both train and test\")\n        return True\n    return False\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Data Leakage"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Data Leakage"
+      ],
+      "ordinal": 62,
+      "source_sha256": "d33598867911e191b9155afa46c0a889d56be01d08d0a5f40e941e8ae11e9fce",
+      "target": "还要检查时间泄漏（temporal leakage）：用未来的数据预测过去。划分数据之前，先按时间戳排序。\n"
+    },
+    {
+      "segment_id": "00-12:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Data Leakage"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Wrong Device"
+      ],
+      "ordinal": 63,
+      "source_sha256": "3250c0748266db762b51a3f957c491d806eb8c765bc130f0311601905f555b2e",
+      "target": "#### 设备错误\n"
+    },
+    {
+      "segment_id": "00-12:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Wrong Device"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0127",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Wrong Device"
+      ],
+      "ordinal": 64,
+      "source_sha256": "bfd4dd0dea3e210fa2e34c98467fce3d753ab42d09dc460b9935b5bf8d3668fe",
+      "target": "位于不同设备（CPU 和 GPU）上的张量会引发运行时错误。但有时，一个张量会悄无声息地留在 CPU 上，其他所有内容都在 GPU 上，结果只是训练运行得很慢。\n"
+    },
+    {
+      "segment_id": "00-12:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Wrong Device"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0129",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Wrong Device"
+      ],
+      "ordinal": 65,
+      "source_sha256": "24c95197f166655a7b9bd066bc1743c6144607d926856437be2fe31418b12db9",
+      "target": "```python\ndef check_devices(model, *tensors):\n    model_device = next(model.parameters()).device\n    print(f\"Model device: {model_device}\")\n    for i, t in enumerate(tensors):\n        if t.device != model_device:\n            print(f\"  WARNING: tensor {i} on {t.device}, model on {model_device}\")\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 7: Common AI Bugs and How to Catch Them",
+        "#### Wrong Device"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 66,
+      "source_sha256": "a75e24758ae8f9d8edd7af1fa95084e6de70c74e15523f12b8f7c76bb2bcb2e3",
+      "target": "### 第 8 部分：TensorBoard 基础\n"
+    },
+    {
+      "segment_id": "00-12:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0133",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 67,
+      "source_sha256": "4ee2accc7549ffa57ef2e799b64cd7cc01af9cea3d4785725696e27ef1373ec1",
+      "target": "TensorBoard 能让你看到训练过程中内部情况随时间的变化。\n"
+    },
+    {
+      "segment_id": "00-12:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0135",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 68,
+      "source_sha256": "ea40308219c8a35d937ca99cf6c555e2a95748997b7b1806e907beac9b0f5419",
+      "target": "```bash\npip install tensorboard\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0137",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 69,
+      "source_sha256": "44dca7b94ff75177fb5182ad450f9856ec803cfc09c3a0ce6cb2c5e7a4748e0c",
+      "target": "```python\nfrom torch.utils.tensorboard import SummaryWriter\n\nwriter = SummaryWriter(\"runs/experiment_1\")\n\nfor step in range(num_steps):\n    loss = train_step(model, batch)\n\n    writer.add_scalar(\"loss/train\", loss.item(), step)\n    writer.add_scalar(\"lr\", optimizer.param_groups[0][\"lr\"], step)\n\n    if step % 100 == 0:\n        for name, param in model.named_parameters():\n            writer.add_histogram(f\"weights/{name}\", param, step)\n            if param.grad is not None:\n                writer.add_histogram(f\"grads/{name}\", param.grad, step)\n\nwriter.close()\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0139",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 70,
+      "source_sha256": "e579762a4b55cb052a6b63a87daf63fee838f9714a57b376a45b13c96f325624",
+      "target": "启动它：\n"
+    },
+    {
+      "segment_id": "00-12:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0141",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 71,
+      "source_sha256": "0e2ac466ae35609f5e787863a464a94f95b6202daf00a72ac8b5eb4594465ed9",
+      "target": "```bash\ntensorboard --logdir=runs\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0142",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 71,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0143",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 72,
+      "source_sha256": "881739caf5141af2682b12285e419f254f42bb9f1d5aa3e5640f02d6f4124256",
+      "target": "需要关注的现象：\n"
+    },
+    {
+      "segment_id": "00-12:b0144",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 72,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0145",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 73,
+      "source_sha256": "ae279e03de8998563dc307ea08ef76de56d27f0a7cdc7f141c8d94d56c9e199b",
+      "target": "- **损失没有下降**：学习率过低，或模型架构有问题\n- **损失剧烈振荡**：学习率过高\n- **损失变成 NaN**：数值不稳定（见上面的 NaN 一节）\n- **训练损失下降，验证损失上升**：过拟合\n- **权重直方图收缩到零**：梯度消失\n- **梯度直方图中的数值急剧增大**：需要梯度裁剪\n"
+    },
+    {
+      "segment_id": "00-12:b0146",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 8: TensorBoard Basics"
+      ],
+      "ordinal": 73,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0147",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 74,
+      "source_sha256": "fc56f245fe4f15eef20c2e17012b45a0abaa26bdac2352c26be6393a2d3c9a85",
+      "target": "### 第 9 部分：VS Code 调试器\n"
+    },
+    {
+      "segment_id": "00-12:b0148",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 74,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0149",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 75,
+      "source_sha256": "ac5795bbfd2fb8158db3610bb396be48ec2e9c6ace7e32e3ccc9099767eaab30",
+      "target": "要进行交互式调试，请通过 `launch.json` 配置 VS Code：\n"
+    },
+    {
+      "segment_id": "00-12:b0150",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 75,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0151",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 76,
+      "source_sha256": "8e1b6cb591bbea1b8d7cadb13b94ed4301b8e77e4a32ce5ca7d42a48f7ce9432",
+      "target": "```json\n{\n    \"version\": \"0.2.0\",\n    \"configurations\": [\n        {\n            \"name\": \"Debug Training\",\n            \"type\": \"debugpy\",\n            \"request\": \"launch\",\n            \"program\": \"${file}\",\n            \"console\": \"integratedTerminal\",\n            \"justMyCode\": false\n        }\n    ]\n}\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0152",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 76,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0153",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 77,
+      "source_sha256": "998dab469dd6cb2ebdbc76228173f5df5af8d58142e3b5ecec6498bdf6a57b61",
+      "target": "点击行号旁的区域来设置断点。使用 Variables 窗格检查张量属性。Debug Console（调试控制台）可让你在程序执行过程中运行任意 Python 表达式。\n"
+    },
+    {
+      "segment_id": "00-12:b0154",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 77,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0155",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 78,
+      "source_sha256": "1c0d53aa75e883675472ab6c71e451ac291f2e8295bd79533f9255d1ed5327ac",
+      "target": "如果你想查看数据预处理管线中的每一次变换，单步执行会很有帮助。\n"
+    },
+    {
+      "segment_id": "00-12:b0156",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Build It",
+        "### Part 9: VS Code Debugger"
+      ],
+      "ordinal": 78,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0157",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "00-12:b0158",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Use It"
+      ],
+      "ordinal": 79,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0159",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Use It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "dc9538a1fc71c57af9cb8c31e6af833f50e9eaeab03a23f6ee06632175ec9e2b",
+      "target": "以下调试工作流能发现大多数 AI 缺陷：\n"
+    },
+    {
+      "segment_id": "00-12:b0160",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Use It"
+      ],
+      "ordinal": 80,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0161",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Use It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "8fdedf82bb863c9e2689d23709b43247b1c5deafc537743156601214aef37ed4",
+      "target": "1. **训练之前**：用一个样本批次运行 `check_shapes`。确认输入和输出的维度符合预期。\n2. **前 10 步**：对损失、输出和梯度使用 `debug_print`。确认没有 NaN，且数值处于合理范围内。\n3. **训练过程中**：记录损失、学习率和梯度范数。使用 TensorBoard 进行可视化。\n4. **出错时**：在出错位置插入 `breakpoint()`。交互式地检查张量。\n5. **检查性能时**：分别测量数据加载、前向传播和反向传播的耗时。接近 OOM 时，对内存进行剖析。\n"
+    },
+    {
+      "segment_id": "00-12:b0162",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Use It"
+      ],
+      "ordinal": 81,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0163",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Ship It"
+      ],
+      "ordinal": 82,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "00-12:b0164",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Ship It"
+      ],
+      "ordinal": 82,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0165",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Ship It"
+      ],
+      "ordinal": 83,
+      "source_sha256": "6bb7905db30e11272569901db19ecaf879c891be951b7552f7a38f9b6ef45449",
+      "target": "运行调试工具包脚本：\n"
+    },
+    {
+      "segment_id": "00-12:b0166",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Ship It"
+      ],
+      "ordinal": 83,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0167",
+      "kind": "fence",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Ship It"
+      ],
+      "ordinal": 84,
+      "source_sha256": "ffc54b6634eedd7546e29bab86ae7560a47a0aed53a8660db00e576b4b9c97a4",
+      "target": "```bash\npython phases/00-setup-and-tooling/12-debugging-and-profiling/code/debug_tools.py\n```\n"
+    },
+    {
+      "segment_id": "00-12:b0168",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Ship It"
+      ],
+      "ordinal": 84,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0169",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Ship It"
+      ],
+      "ordinal": 85,
+      "source_sha256": "e28a7fe7ffb5367ffd445d1f1b40a7a3766a58a31a7699a5afa8370c742e9a96",
+      "target": "参见 `outputs/prompt-debug-ai-code.md`，其中的提示词（prompt）可以帮助诊断 AI 特有的缺陷。\n"
+    },
+    {
+      "segment_id": "00-12:b0170",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Ship It"
+      ],
+      "ordinal": 85,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0171",
+      "kind": "heading",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "00-12:b0172",
+      "kind": "separator",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Exercises"
+      ],
+      "ordinal": 86,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-12:b0173",
+      "kind": "list",
+      "heading_path": [
+        "# Debugging and Profiling",
+        "## Exercises"
+      ],
+      "ordinal": 87,
+      "source_sha256": "80c87055a203e8c140cc3eeaf3b0d91a3ce062cf0e9b3251214f9579cbbc9625",
+      "target": "1. 运行 `debug_tools.py`，通读每个部分的输出。修改示例模型以引入 NaN（提示：在前向传播中除以零），观察检测器如何发现它。\n2. 使用 `cProfile` 对训练循环进行性能剖析，找出最慢的函数。\n3. 使用 `tracemalloc`，找出数据加载管线中分配内存最多的那一行。\n4. 为一次简单的训练运行配置 TensorBoard，并判断模型是否过拟合。\n5. 在训练循环中使用 `breakpoint()`。练习在调试器提示符下检查张量形状、设备和梯度值。\n"
+    }
+  ],
+  "stage_id": "S82-debugging-and-profiling",
+  "stage_glossary_path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+  "stage_glossary_sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "34f0e4d1a98601ffb65b0b36b73b8d9188cdf4287cc60078e8fb3701c8ff5d2e",
+  "support_commit": "0289c7a1ac67bcd5908ffac6ade768c704e25068",
+  "additional_glossary_path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+  "additional_glossary_sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e",
+  "reference_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "1f5b209c1a2d3491e880c95c984a80ff19a1415a",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "23097e747610a353cfa975a56c80e56620e57186",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "4ade87006bbc2c76856311ffb0536a3c02fa743f",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "638956558aabbbbc9b83798a1e71e2d9129fec1f",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "1cf5fe0270450a03e48d8c04f2ddda3f9197182c",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "ba21f516c8169c62e1c1e5404d7b522980357e7b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ef4124ca03775b29a7b4a6628dcdcb8caac8f589",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "c7cab5746a7f32221586bc65d3115acbb93028ad",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b"
+    }
+  ]
+}
