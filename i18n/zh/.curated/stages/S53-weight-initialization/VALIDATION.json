@@ -1,0 +1,779 @@
+{
+  "schema_version": 1,
+  "stage_id": "S53-weight-initialization",
+  "date": "2026-10-03",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "9c270a87d2872791247c02d3d471bc82bd76ea116df35c80143bc1b53a08c87b",
+  "target_sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+  "immutable_content_commit": "034f60c4ef7c081248e81ae15d145bc2f3a05787",
+  "support_dependencies": 61,
+  "dependency_manifest_sha256": "2da954c7c6713eec8685bbac5eeb488045843a49e6cdf56a758507a8895d11c9",
+  "coverage": {
+    "blocks": 169,
+    "candidate_blocks": 66,
+    "headings": 23,
+    "fences": 19,
+    "bare_to_text": 8,
+    "Python": 7,
+    "Mermaid": 3,
+    "figure": 1,
+    "table_body_rows": 10,
+    "table_including_header": [
+      11,
+      3
+    ],
+    "exercises": 5,
+    "references": 4,
+    "kinds": {
+      "heading": 23,
+      "separator": 84,
+      "blockquote": 1,
+      "paragraph": 34,
+      "list": 7,
+      "fence": 19,
+      "table": 1
+    }
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; final hashes and every source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "id": "S53-peer-current-source-01",
+      "blocks": [
+        "03-08:b0003",
+        "03-08:b0013",
+        "03-08:b0025",
+        "03-08:b0027",
+        "03-08:b0129",
+        "03-08:b0165"
+      ],
+      "title": "Zero-init/symmetry generalization",
+      "evidence_and_boundary": "Equal weights alone do not establish every claimed update symmetry without matching biases/downstream structure. Neuron counts are not parameter counts; forward symmetry demonstration does not prove one effective trainable parameter.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-02",
+      "blocks": [
+        "03-08:b0015",
+        "03-08:b0017",
+        "03-08:b0019"
+      ],
+      "title": "Fixed-depth infinity/learnability claims",
+      "evidence_and_boundary": "EXPLODED is a display threshold; original default random-normal ReLU values remain finite in the displayed50-layer run. No universal layer20 overflow or layer3 success established.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-03",
+      "blocks": [
+        "03-08:b0037",
+        "03-08:b0039",
+        "03-08:b0045"
+      ],
+      "title": "Variance formula omits assumptions",
+      "evidence_and_boundary": "Product formula needs suitable independent/zero-mean variables and covariance assumptions; arbitrary inputs do not obey it.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-04",
+      "blocks": [
+        "03-08:b0043"
+      ],
+      "title": "Source power arithmetic incorrect",
+      "evidence_and_boundary": "Current external arithmetic check:0.512**10=0.0012379400392853805 rather than0.00013. Translation keeps original equation.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-05",
+      "blocks": [
+        "03-08:b0049",
+        "03-08:b0061",
+        "03-08:b0087",
+        "03-08:b0165"
+      ],
+      "title": "Xavier/sigmoid variance and gradient guarantee overstated",
+      "evidence_and_boundary": "Nonzero-centered sigmoid/local slope differ from tanh; stable average absolute activation does not imply stable centered variance or gradients.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-06",
+      "blocks": [
+        "03-08:b0065",
+        "03-08:b0075",
+        "03-08:b0165"
+      ],
+      "title": "ReLU half and moments simplified",
+      "evidence_and_boundary": "Half-zero assumption depends on preactivation symmetry; second moment and centered variance differ. Current external {-1,+1} fixture gives.5 second moment versus.25variance.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-07",
+      "blocks": [
+        "03-08:b0009",
+        "03-08:b0087",
+        "03-08:b0095"
+      ],
+      "title": "GELU/Swish/leaky gain generalized",
+      "evidence_and_boundary": "Original source recommends same formulas without activation parameter conditions. Canonical only demonstrates sigmoid/tanh/ReLU.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-08",
+      "blocks": [
+        "03-08:b0091",
+        "03-08:b0095"
+      ],
+      "title": "Diagram magnitudes contradicted by current canonical run",
+      "evidence_and_boundary": "Current default L50:Xavier+sigmoid=.4982,Xavier+tanh=.0576,Kaiming+ReLU=.0971; diagram approximately1.0 and universal.5–2.0 range unsupported.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-09",
+      "blocks": [
+        "03-08:b0083",
+        "03-08:b0145",
+        "03-08:b0155",
+        "03-08:b0165"
+      ],
+      "title": "Residual scaling coefficients and targets inconsistent",
+      "evidence_and_boundary": "Source alternates1/sqrt(2N),1/sqrt(N),weight/projection scaling and whole-layer-output scaling. Current scalar fixture confirms coefficients differ.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-10",
+      "blocks": [
+        "03-08:b0079",
+        "03-08:b0083",
+        "03-08:b0085"
+      ],
+      "title": "Variance accumulation omits covariance/normalization",
+      "evidence_and_boundary": "Residual addition need not always increase variance; proportional growth and unboundedness are not guaranteed by finite depth alone.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-11",
+      "blocks": [
+        "03-08:b0085"
+      ],
+      "title": "Llama configuration claim unverified",
+      "evidence_and_boundary": "405B parameter/126-layer initialization claim retained; no config/model download or external confirmation. B correctly remains parameter scale.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-12",
+      "blocks": [
+        "03-08:b0103",
+        "03-08:b0105",
+        "03-08:b0117"
+      ],
+      "title": "Shape and empty-input contracts",
+      "evidence_and_boundary": "Current finite calls show zero width/sample counts produce division by zero, zero-layer request yields[]; initializers lack general validation.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-13",
+      "blocks": [
+        "03-08:b0111"
+      ],
+      "title": "Clipping does not prevent saturation",
+      "evidence_and_boundary": "Current sigmoid(500)=1 and derived derivative=0. No guarantee of nonzero gradient.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-14",
+      "blocks": [
+        "03-08:b0117",
+        "03-08:b0123"
+      ],
+      "title": "Global RNG reset",
+      "evidence_and_boundary": "Current finite repeated calls resetseed42 and reproduce following global random draw. One fixed seed is not multi-seed robustness.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-15",
+      "blocks": [
+        "03-08:b0115",
+        "03-08:b0117",
+        "03-08:b0133"
+      ],
+      "title": "Magnitude differs from variance/backpropagation",
+      "evidence_and_boundary": "Mean of abs activation is measured. Current zero+sigmoid fixture has magnitude.5 but variance0; document experiment has no backward pass.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-16",
+      "blocks": [],
+      "title": "Canonical variance analysis uses z squared",
+      "evidence_and_boundary": "Code averages z*z without sample centering; zero-mean construction permits expectation approximation, not arbitrary sample variance.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-17",
+      "blocks": [],
+      "title": "Canonical reported-loss gradient scale",
+      "evidence_and_boundary": "Current finite-difference check shows d_out equals gradient of half squared error, while printedloss is full squarederror; source left unchanged.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-18",
+      "blocks": [],
+      "title": "Training comparison is shallow and in-sample",
+      "evidence_and_boundary": "Original default6configs×300epochs on200circle examples use one hidden layer ofwidth8; separate50-layer forward experiment is not50-layer training or generalization evaluation.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-19",
+      "blocks": [
+        "03-08:b0141",
+        "03-08:b0143",
+        "03-08:b0145"
+      ],
+      "title": "Framework defaults not verified in runtime",
+      "evidence_and_boundary": "No torch execution or HuggingFace implementation inspection. Correct-choice explanation and default gain specifics remain unverified source claims.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-20",
+      "blocks": [
+        "03-08:b0153",
+        "03-08:b0155",
+        "03-08:b0157",
+        "03-08:b0159",
+        "03-08:b0161",
+        "03-08:b0169"
+      ],
+      "title": "Exercises/references outside executed evidence",
+      "evidence_and_boundary": "LeCun/SELU-versus-tanh,whole-residual-output scaling,rectangular SVD U andfan_in1024 exercises not run; shipped prompt and external references not executed.",
+      "translation_action": "Faithful source retained; no required edit"
+    },
+    {
+      "id": "S53-peer-current-source-21",
+      "blocks": [
+        "03-08:b0087",
+        "03-08:b0091",
+        "03-08:b0095",
+        "03-08:b0097"
+      ],
+      "title": "Rendered/interactive claims pending",
+      "evidence_and_boundary": "Three Mermaid andfigure payloads identical; no browser/site/mobile/interaction/CI verification in this review.",
+      "translation_action": "Faithful source retained; no required edit"
+    }
+  ],
+  "author_runtime": {
+    "pre_read": "All 273 lines read during this recovery run before execution",
+    "exit_code": 0,
+    "default_scale_reduced": false,
+    "scope": "Five original demo sections; variance analysis four sets of 10000 trials; six 50-layer forward configurations (width 64, 100 samples); six two-layer 300-epoch training configurations (200 samples, eight hidden neurons)",
+    "log_sha256": "3809dc3841bc22600f546c2c351d8bc72d07ba89d5cda19bd2fb0600ce4df2d3",
+    "canonical_sha256": "c2a34155c06c030de80a88a2fd4d8a06c197bf7b2c1bd1e05c5d25a42ea2ca74",
+    "elapsed_seconds": "Not separately measured; no invented duration"
+  },
+  "independent_runtime": {
+    "canonical": {
+      "path": "phases/03-deep-learning-core/08-weight-initialization/code/main.py",
+      "sha256": "c2a34155c06c030de80a88a2fd4d8a06c197bf7b2c1bd1e05c5d25a42ea2ca74",
+      "lines": 273,
+      "complete_current_pre_read": true,
+      "network_download_or_write_actions": false,
+      "original_default_executed": true,
+      "original_scale_preserved": {
+        "forward_configs": 6,
+        "layers": 50,
+        "width": 64,
+        "samples": 100,
+        "variance_configs": 4,
+        "variance_trials_each": 10000,
+        "training_configs": 6,
+        "training_epochs": 300,
+        "training_examples": 200,
+        "training_hidden_width": 8
+      },
+      "command_and_result": {
+        "name": "canonical",
+        "started_at": "2026-10-02T23:39:13.593092+00:00",
+        "elapsed_seconds": 9.973693070998706,
+        "exit_code": 0,
+        "log_sha256": "3809dc3841bc22600f546c2c351d8bc72d07ba89d5cda19bd2fb0600ce4df2d3"
+      },
+      "observed_L50_mean_absolute": {
+        "zero_sigmoid": 0.5,
+        "xavier_sigmoid": 0.4982,
+        "xavier_tanh": 0.0576,
+        "kaiming_relu": 0.0971
+      },
+      "does_not_establish": "50-layer training convergence,realTransformertraining,multi-seed/generalization guarantees"
+    },
+    "finite": {
+      "count": 28,
+      "checks": [
+        {
+          "name": "document_matrix_orientation",
+          "pass": true
+        },
+        {
+          "name": "document_independent_rows",
+          "pass": true
+        },
+        {
+          "name": "document_xavier_standard_deviation",
+          "pass": true
+        },
+        {
+          "name": "document_kaiming_standard_deviation",
+          "pass": true
+        },
+        {
+          "name": "document_activation_values",
+          "pass": true
+        },
+        {
+          "name": "document_clipped_sigmoid_still_saturates",
+          "pass": true
+        },
+        {
+          "name": "document_mean_absolute_not_variance",
+          "pass": true
+        },
+        {
+          "name": "document_zero_relu",
+          "pass": true
+        },
+        {
+          "name": "document_global_seed_reset",
+          "pass": true
+        },
+        {
+          "name": "document_empty_dimension_errors",
+          "pass": true
+        },
+        {
+          "name": "document_zero_layers",
+          "pass": true
+        },
+        {
+          "name": "document_symmetry_forward_demo",
+          "pass": true
+        },
+        {
+          "name": "canonical_matrix_orientation",
+          "pass": true
+        },
+        {
+          "name": "canonical_independent_rows",
+          "pass": true
+        },
+        {
+          "name": "canonical_xavier_standard_deviation",
+          "pass": true
+        },
+        {
+          "name": "canonical_kaiming_standard_deviation",
+          "pass": true
+        },
+        {
+          "name": "canonical_activation_values",
+          "pass": true
+        },
+        {
+          "name": "canonical_clipped_sigmoid_still_saturates",
+          "pass": true
+        },
+        {
+          "name": "canonical_mean_absolute_not_variance",
+          "pass": true
+        },
+        {
+          "name": "canonical_zero_relu",
+          "pass": true
+        },
+        {
+          "name": "canonical_global_seed_reset",
+          "pass": true
+        },
+        {
+          "name": "canonical_empty_dimension_errors",
+          "pass": true
+        },
+        {
+          "name": "canonical_zero_layers",
+          "pass": true
+        },
+        {
+          "name": "canonical_symmetry_forward_demo",
+          "pass": true
+        },
+        {
+          "name": "source_arithmetic_mismatch",
+          "pass": true
+        },
+        {
+          "name": "external_ReLU_moment_counterexample",
+          "pass": true
+        },
+        {
+          "name": "different_residual_scaling_formulas",
+          "pass": true
+        },
+        {
+          "name": "half_MSE_gradient_convention",
+          "pass": true
+        }
+      ],
+      "complete_doc_blocks_loaded": [
+        105,
+        111,
+        117,
+        123,
+        129,
+        135
+      ],
+      "finite_forward_dimensions": [
+        3,
+        4,
+        5
+      ],
+      "doc_run_experiment_not_called": true,
+      "production_or_torch_executed": false,
+      "old_test_results_reused": false
+    }
+  },
+  "actual_GitHub_GFM": {
+    "schema_version": 1,
+    "stage_id": "S53-weight-initialization",
+    "role": "actual_github_gfm_browser_reviewer",
+    "created_at": "2026-10-02T23:58:59.654693+00:00",
+    "result": "GFM_SYNTAX_AND_MERMAID_PASS_WITH_CUSTOM_FIGURE_LIMITATION",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/034f60c4ef7c081248e81ae15d145bc2f3a05787/i18n/zh/phases/03-deep-learning-core/08-weight-initialization/docs/zh.md",
+    "commit": "034f60c4ef7c081248e81ae15d145bc2f3a05787",
+    "final_target_sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+    "local_commit_blob_sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+    "hash_matches_author_and_independent_review": true,
+    "browser": "actual dedicated cloud Chrome, GitHub Preview",
+    "method": "Read entire live DOM including expanded Mermaid iframe content; compare local complete Markdown to live rendered structure; inspect screenshots. Author and independent reports used only for hash binding, never as browser evidence.",
+    "checks": {
+      "headings": {
+        "expected": 23,
+        "exact": true
+      },
+      "table": {
+        "tables": 1,
+        "columns": 3,
+        "body_rows": 10,
+        "all_cells_exact": true
+      },
+      "strong": {
+        "expected": [
+          "Type:",
+          "Languages:",
+          "Prerequisites:",
+          "Time:"
+        ],
+        "actual": [
+          "Type:",
+          "Languages:",
+          "Prerequisites:",
+          "Time:"
+        ]
+      },
+      "emphasis": {
+        "expected": [
+          "尺度"
+        ],
+        "actual": [
+          "尺度"
+        ]
+      },
+      "fenced_payloads": {
+        "total": 19,
+        "each_exact_ignoring_only_boundary_newline": true,
+        "text_formula_blocks": 8,
+        "python_blocks": 7,
+        "mermaid_blocks": 3,
+        "figure_blocks": 1
+      },
+      "prose": {
+        "nonheading_nontable_nonfence_lines_checked": 52,
+        "missing_after_whitespace_and_markdown_normalization": []
+      },
+      "mermaid": {
+        "rendered_iframe_diagrams": 3,
+        "visually_observed": true,
+        "parse_error_seen": false,
+        "note": "First wide diagram scales small at default viewport; diagram zoom controls present. No claim that source scientific statements are verified."
+      },
+      "raw_markers": {
+        "raw_fence_delimiters_seen": false,
+        "broken_bold_or_emphasis_seen": false,
+        "raw_table_separator_seen": false,
+        "raw_mermaid_source_shown_in_preview": false
+      },
+      "figure": {
+        "github_behavior": "weight-init-variance appears inside a code block, not an interactive visualization",
+        "status": "CUSTOM_SITE_FIGURE_UNSUPPORTED_BY_GITHUB_PREVIEW",
+        "source_payload_preserved": true,
+        "not_claimed_as_rendered_interactive_figure": true
+      }
+    },
+    "must_fix_translation_format_items": [],
+    "limitations": [
+      "Custom figure is a visible code fallback on GitHub; cannot claim complete interactive figure rendering or a blanket all-diagrams pass.",
+      "No website, mobile, interactive lab, hosted CI, runtime, mathematical correctness, or external references verified by this review.",
+      "Remote raw clipboard returned empty; browser raw download timed out. Final SHA is computed from local final file and local exact commit blob; live DOM matches all fenced payloads, headings, table cells and prose."
+    ]
+  },
+  "aggregate": {
+    "reviewed_lessons": 78,
+    "original_strict_direct_pass": 76,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "78 byte-identical to each other and final records",
+    "svg_separate_copies": 5,
+    "repository_audits": "523 lessons, 67 certifications, 12 assessments, 505 questions; zero issues; README/book counts passed",
+    "book_rendering_regressions": {
+      "result": "ENVIRONMENT_BLOCKED_PDF_TEST",
+      "tests": 6,
+      "passed": 5,
+      "failed": 1,
+      "reason": "xelatex.fmt unavailable; mktexfmt cannot create default cache under read-only /home/agent/.texlive2025",
+      "source_or_translation_failure_established": false,
+      "retry": {
+        "returncode": 1,
+        "log_sha256": "b3c53dc26d1e1598392b6d4ddba0e0b5095f31bc1e211dd23aab7416ee83c573",
+        "environment_only": true,
+        "system_install_or_modification": false,
+        "timestamp_utc": "2026-10-03T00:01:08.839424+00:00",
+        "result": "STILL_BLOCKED_NO_SYSTEM_CHANGES",
+        "reason": "Writable process-local TeX cache resolves the permission error, but fmtutil has zero format entries and xelatex.fmt remains unavailable; no system installation or configuration change attempted"
+      }
+    }
+  },
+  "content_remote_verification": {
+    "stage": 53,
+    "commit": "034f60c4ef7c081248e81ae15d145bc2f3a05787",
+    "files": [
+      {
+        "path": "i18n/zh/.curated/lessons/03-08/review.json",
+        "sha256": "7bbdebba8da55c28de5d05c4556920e46dbb2fee76204e539b405620599542e1",
+        "bytes": 109472
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/03-08/translation.json",
+        "sha256": "047d6496dd29b7f21b21a9af18fdde54d9271cf00743f849ad873d35be3026e2",
+        "bytes": 129626
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S53-weight-initialization/DEPENDENCIES.json",
+        "sha256": "2da954c7c6713eec8685bbac5eeb488045843a49e6cdf56a758507a8895d11c9",
+        "bytes": 14736
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S53-weight-initialization/SCOPE.md",
+        "sha256": "f77542f52a7d73aee1a81806954f95464b28c57ea12a50480592a11f4d2be60f",
+        "bytes": 1810
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+        "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340",
+        "bytes": 2508
+      },
+      {
+        "path": "i18n/zh/phases/03-deep-learning-core/08-weight-initialization/docs/zh.md",
+        "sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+        "bytes": 15820
+      }
+    ],
+    "exact_byte_equal": true,
+    "tree": "ee678b57a84612a57c86cea17833dca87da1ffd2"
+  },
+  "site_parser": {
+    "timestamp_utc": "2026-10-03T00:02:12.514789+00:00",
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "scope": "Repository original site/lesson.html parser executed offline on five final Chinese lesson bytes; not browser QA, not GitHub GFM, not deployed-site verification",
+    "cause": "Original slugify removes all characters outside ASCII a-z/0-9, causing empty IDs for Chinese-only headings",
+    "script_sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43",
+    "site_source_sha256": "03a79431a160d84c30793da3433d565b236db586ba53083b45b07e304d15757e",
+    "returncode": 0,
+    "log_sha256": "342c32c378c9b0556050a8a39034188c14adde779e2fa0f02b7f42b55e587d21",
+    "lessons": [
+      {
+        "file": "i18n/zh/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 46329,
+        "tables": 4,
+        "code_blocks": 9,
+        "figures": 1,
+        "mermaid_sources": 4,
+        "empty_heading_ids": [
+          "超参数调优",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "参数与超参数",
+          "网格搜索",
+          "随机搜索",
+          "贝叶斯优化",
+          "早停",
+          "学习率调度器",
+          "超参数重要性",
+          "实用策略",
+          "与交叉验证结合",
+          "实用建议",
+          "动手实现",
+          "实际使用",
+          "超参数调优中的常见错误",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [
+          "optuna"
+        ],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S52-hyperparameter-tuning",
+        "lesson_id": "02-12",
+        "target_sha256": "c0b27542fc52e55f6957a0f780849035d77733af72825baa119d8ab3e54a415e",
+        "empty_heading_id_count": 20,
+        "duplicate_nonempty_id_distinct_count": 1
+      },
+      {
+        "file": "i18n/zh/phases/03-deep-learning-core/08-weight-initialization/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 29717,
+        "tables": 1,
+        "code_blocks": 15,
+        "figures": 1,
+        "mermaid_sources": 3,
+        "empty_heading_ids": [
+          "权重初始化与训练稳定性",
+          "学习目标",
+          "要解决的问题",
+          "核心概念",
+          "对称性问题",
+          "方差在各层间的传播",
+          "选择合适的初始化策略",
+          "动手实现",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S53-weight-initialization",
+        "lesson_id": "03-08",
+        "target_sha256": "4694494b0a2f93476424f2d004722b7eacc4fac6d7de072b25c9f2af1c173573",
+        "empty_heading_id_count": 13,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 25348,
+        "tables": 2,
+        "code_blocks": 10,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "何时选择哪一种",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S54-glove-fasttext-subword",
+        "lesson_id": "05-04",
+        "target_sha256": "98bb3acff92780f0aa487cef062f000b016ece28c0d063bf20c6353a927b7ba9",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 30544,
+        "tables": 1,
+        "code_blocks": 12,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "命名实体识别",
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "实际使用",
+          "容易失效的情况",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S55-named-entity-recognition",
+        "lesson_id": "05-06",
+        "target_sha256": "c49a9f7561c2c5472b720e228889c20a5f04075c68fb8a39db5631a63bede0ec",
+        "empty_heading_id_count": 10,
+        "duplicate_nonempty_id_distinct_count": 0
+      },
+      {
+        "file": "i18n/zh/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/zh.md",
+        "parser_executed": true,
+        "html_bytes": 16822,
+        "tables": 2,
+        "code_blocks": 3,
+        "figures": 1,
+        "mermaid_sources": 0,
+        "empty_heading_ids": [
+          "要解决的问题",
+          "核心概念",
+          "动手实现",
+          "什么情况下该选哪种方法",
+          "实际使用",
+          "交付成果",
+          "练习",
+          "关键术语",
+          "延伸阅读"
+        ],
+        "duplicate_heading_ids": [],
+        "browser_verified": false,
+        "result": "BLOCKED_SOURCE_RENDERER",
+        "stage": "S56-topic-modeling",
+        "lesson_id": "05-15",
+        "target_sha256": "b069b132ec962b32a4d96775ee37fa543fb9c195fc3cb2ea3e944d0a0a382d31",
+        "empty_heading_id_count": 9,
+        "duplicate_nonempty_id_distinct_count": 0
+      }
+    ],
+    "total_empty_heading_ids": 61,
+    "source_or_translation_modified": false,
+    "github_gfm_verified_by_this_check": false,
+    "browser_verified": false
+  },
+  "final_remote_and_CI": "Final evidence commit readback and exact-head CI results are recorded in PR body and the single rollout index, avoiding self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
