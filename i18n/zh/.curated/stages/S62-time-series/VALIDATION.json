@@ -1,0 +1,532 @@
+{
+  "schema_version": 1,
+  "stage_id": "S62-time-series",
+  "date": "2026-10-02",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_sha256": "48ffca9e2410801a507c35ebc6769ba0ecf075a51bb943684c219198a75b9d81",
+  "target_sha256": "9478f4914d259f035319c8bd8266cb6665b062cb6bd05ec60d98a191eb291a78",
+  "immutable_content_commit": "949b4251e8891469370183b05b7ffc75d1a3661f",
+  "immutable_content_url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/949b4251e8891469370183b05b7ffc75d1a3661f/i18n/zh/phases/02-ml-fundamentals/15-time-series/docs/zh.md",
+  "support_commit": "737e4d0e38c0526edebfe7a8bb2762f8c9b3c951",
+  "support_dependencies": 70,
+  "dependency_manifest_sha256": "712616e2c1ce99fcf6538eac7e31bb2d9961a508ed2c821064d45b7ba8eb8d83",
+  "coverage": {
+    "blocks": 253,
+    "technical_comparison": 253,
+    "chinese_readthrough": 253,
+    "kinds": {
+      "heading": 30,
+      "separator": 126,
+      "blockquote": 1,
+      "paragraph": 60,
+      "list": 18,
+      "fence": 14,
+      "table": 4
+    }
+  },
+  "author_and_independent_full_technical_and_chinese_reads": "PASS; every final source/target block bound",
+  "unresolved_translation_findings": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 0,
+    "S3": 0
+  },
+  "source_issues": [
+    {
+      "location": "blocks3,27,35,47,49,51,65",
+      "source_claim": "Stationarity assures prediction; every series violates iid; mean drift/rolling stats/ADF establish stationarity",
+      "concern": "Overgeneralizations: stationary noise may not be predictable, some time series iid, nonstationarity need not involve mean; rolling stats are heuristic and ADF tests a specified unit-root null.",
+      "evidence": "Source wording plus constant-series fixture returns False despite constant mean/variance; no ADF executed.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "blocks71,73,87",
+      "source_claim": "ACF zero implies irrelevant; PACF example conditions on yesterday",
+      "concern": "Zero linear correlation does not imply independence/predictive irrelevance; PACF removes all intervening lags, not just yesterday.",
+      "evidence": "Key terms block249 itself gives all-shorter-lags definition; docs example is simplified.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "blocks85,89,99 and demo_walk_forward",
+      "source_claim": "No future leakage; ratio feature uses current value",
+      "concern": "Chronological split alone does not validate feature availability. Current target ratio would leak. Precomputed test lag rows include earlier observed test targets, valid rolling one-step but not fixed-origin multi-step evaluation.",
+      "evidence": "Independent test proves second test row includes first test observation; no future mutation affects earlier rows.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "walk_forward_split and blocks149,193",
+      "source_claim": "Splits cover evaluation; equivalent to TimeSeriesSplit",
+      "concern": "Integer floor step leaves remainder samples untested and fixed min_train differs from sklearn allocation; n_splits=0 not guarded.",
+      "evidence": "Independent 14 samples/3 splits/min4 covers4..12 only, omitting13. No sklearn imported.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "check_stationarity; block169",
+      "source_claim": "Half-mean/variance threshold heuristic",
+      "concern": "Strict less-than makes constant series false; exact boundary equality treated nonstationary although prose says exceeds; zero variance denominator floor and small inputs are heuristic.",
+      "evidence": "Independent all-ones20 returns False; source uses mean_shift < 0.5*std and var_ratio <2.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "docs snippets143,149,157,165,173 versus implementation",
+      "source_claim": "Documented building blocks match code",
+      "concern": "fit(series) differs from actual fit(X,y)/fit_series; stationarity snippet returns2 vs actual3; small-sample splitter asserts vs return; ACF snippet lacks actual out-of-range guard.",
+      "evidence": "Read full original docs and352-line module independently; payloads unchanged.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "blocks185,205",
+      "source_claim": "Code demonstrates sklearn/ARIMA and adds rolling mean/std/min/max7/14",
+      "concern": "Actual implementation has only NumPy AR and no integrated rolling-feature pipeline or ARIMA/sklearn demonstration.",
+      "evidence": "Full source import numpy only; demos stationarity/ACF/AR/splits/lag comparison/forecast; no rolling feature creation.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "mape and block201",
+      "source_claim": "MAPE undefined for zero true values",
+      "concern": "Implementation silently excludes zeros; mixed arrays omit potentially large errors, all zeros produce NaN and warnings.",
+      "evidence": "Independent [0,2] vs[100,1] returns50%; allzero targets NaN with warnings.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "blocks117,133,207,225",
+      "source_claim": "Trees handle trends, linear models cannot; differencing never hurts",
+      "concern": "Linear AR can extrapolate deterministic trend; trees lack general extrapolation guarantee; over-differencing may harm noise structure.",
+      "evidence": "Independent SimpleAR(1) predicts12,13,14 after0..11. Source absolute claims preserved.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "blocks219,231,233",
+      "source_claim": "Losing to baseline proves bug; pre/post regime cannot predict; exponentiate log forecasts",
+      "concern": "Claims require qualifications: stochastic performance variation, actual regime relevance; log needs positive values and exponentiating conditional log mean gives median-like result rather than generally unbiased mean.",
+      "evidence": "Source offers no nonpositive handling or bias adjustment. No financial recommendations inferred.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "autocorrelation implementation",
+      "source_claim": "Normalized ACF coefficient",
+      "concern": "n-k covariance/global variance estimator may leave [-1,1] for finite samples; constant gives zeros, out-of-range lag zero-filled.",
+      "evidence": "Direct formula inspected; independent constant and lag0 behavior tested. Not a formal significance test.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    },
+    {
+      "location": "source repository contract",
+      "source_claim": "Runnable lessons require header and tests",
+      "concern": "352-line module lacks AGENTS header and no standard main.py; original code/tests unavailable.",
+      "evidence": "Inspected lesson file inventory; peer tests are external evidence, not original tests.",
+      "translation_treatment": "Preserved in translation; no silent source correction"
+    }
+  ],
+  "runtime": {
+    "author": {
+      "canonical_exit": 0,
+      "scope": "Unmodified seven NumPy demonstrations, original300/365/400/500point scales, least-squares at maximum30lags",
+      "canonical_log_sha256": "b3e11b91cfa60889d92000d7f87053b7f7c5cceaa770271a0c7630237d86e5fe",
+      "finite": {
+        "tests": 21,
+        "results": [
+          {
+            "name": "hand first differences",
+            "pass": true
+          },
+          {
+            "name": "hand second differences",
+            "pass": true
+          },
+          {
+            "name": "orderzero returns independent copy",
+            "pass": true
+          },
+          {
+            "name": "synthetic same seed exact",
+            "pass": true
+          },
+          {
+            "name": "rolling window exact hand means std",
+            "pass": true
+          },
+          {
+            "name": "constant stationary source false-negative",
+            "pass": true
+          },
+          {
+            "name": "lags newest first and target exact",
+            "pass": true
+          },
+          {
+            "name": "source only filters feature nan not target nan",
+            "pass": true
+          },
+          {
+            "name": "too many lags empty result",
+            "pass": true
+          },
+          {
+            "name": "strict chronological fold indices",
+            "pass": true
+          },
+          {
+            "name": "remainder source omitted",
+            "pass": true
+          },
+          {
+            "name": "insufficient training returns no split",
+            "pass": true
+          },
+          {
+            "name": "zero split source unvalidated",
+            "pass": true
+          },
+          {
+            "name": "constant ACF returns zero sentinel",
+            "pass": true
+          },
+          {
+            "name": "canonical excessive lags zero padded",
+            "pass": true
+          },
+          {
+            "name": "metrics hand MAE MSE",
+            "pass": true
+          },
+          {
+            "name": "MAPE drops zero targets",
+            "pass": true
+          },
+          {
+            "name": "allzero MAPE nan rather than valid score",
+            "pass": true
+          },
+          {
+            "name": "linear trend least squares and recursive horizon",
+            "pass": true
+          },
+          {
+            "name": "short history explicitly rejected",
+            "pass": true
+          },
+          {
+            "name": "zero forecast empty",
+            "pass": true
+          }
+        ],
+        "support_count": 70,
+        "all_support_sha_git": true,
+        "source_code_sha256": "082487be1c60133f84a9588c821f1752977ce497353f8576896a48d62376c298",
+        "target_sha256": "9478f4914d259f035319c8bd8266cb6665b062cb6bd05ec60d98a191eb291a78",
+        "replays": [
+          {
+            "returncode": 0,
+            "output_sha256": "9478f4914d259f035319c8bd8266cb6665b062cb6bd05ec60d98a191eb291a78"
+          },
+          {
+            "returncode": 0,
+            "output_sha256": "9478f4914d259f035319c8bd8266cb6665b062cb6bd05ec60d98a191eb291a78"
+          }
+        ],
+        "not_run": [
+          "sklearn/statsmodels/pandas",
+          "outputs prompt",
+          "external datasets/network/GPU",
+          "actual GFM/site/CI"
+        ]
+      },
+      "warning": "All-zero MAPE counterexample emits RuntimeWarning: Mean of empty slice; source NaN behavior is expected and separately reported.",
+      "stderr_sha256": "c82baa0db29dfbee33a6872ce1d2f2c79784f99a7cd5f13d6b4f175a85526f78"
+    },
+    "independent": {
+      "canonical_scale": "original defaults, all seven demos",
+      "exit_code": 0,
+      "forecast_metrics": {
+        "MSE": 54.5676,
+        "MAE": 5.9113,
+        "MAPE": "10.28%"
+      },
+      "peer_exit": 0,
+      "checks": 21,
+      "script_sha256": "a2a8b2652166f8c00935bf269130a6de45e12a3f57d0bbfa9632d36b922c4784",
+      "not_run": [
+        "sklearn",
+        "statsmodels",
+        "ARIMA numerical fitting",
+        "Prophet",
+        "pandas",
+        "external datasets/downloads/installations",
+        "production forecasting"
+      ]
+    }
+  },
+  "actual_GitHub_GFM": {
+    "stage": "S62",
+    "lesson_id": "02-15",
+    "date": "2026-10-03",
+    "commit": "949b4251e8891469370183b05b7ffc75d1a3661f",
+    "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/949b4251e8891469370183b05b7ffc75d1a3661f/i18n/zh/phases/02-ml-fundamentals/15-time-series/docs/zh.md",
+    "target_sha256": "9478f4914d259f035319c8bd8266cb6665b062cb6bd05ec60d98a191eb291a78",
+    "source_sha256": "48ffca9e2410801a507c35ebc6769ba0ecf075a51bb943684c219198a75b9d81",
+    "scope": "Read entire actual rendered DOM; inspected complete body screenshots in consecutive full-resolution crops plus live Mermaid viewport/expanded controls. No source, payload, DOM or remote writes.",
+    "decision": "PASS_ACTUAL_GFM",
+    "full_visual_acceptance": true,
+    "structure": {
+      "headings": 30,
+      "heading_texts": [
+        "时间序列基础",
+        "学习目标",
+        "要解决的问题",
+        "核心概念",
+        "时间序列有何不同",
+        "时间序列的组成",
+        "平稳性",
+        "自相关",
+        "滞后特征：将时间序列转化为监督学习",
+        "滚动前向验证",
+        "直观理解 ARIMA",
+        "不同方法何时适用",
+        "预测步长与策略",
+        "时间序列中的常见错误",
+        "动手实现",
+        "滞后特征生成器",
+        "滚动前向交叉验证",
+        "简单自回归模型",
+        "平稳性检查",
+        "自相关",
+        "实际使用",
+        "sklearn TimeSeriesSplit",
+        "评估指标",
+        "滚动特征",
+        "交付成果",
+        "必须胜过的基线",
+        "实用建议",
+        "练习",
+        "关键术语",
+        "延伸阅读"
+      ],
+      "heading_inventory_exact": true,
+      "tables": [
+        {
+          "cells": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "rows": 4
+        },
+        {
+          "cells": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "rows": 6
+        },
+        {
+          "cells": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "rows": 7
+        },
+        {
+          "cells": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "rows": 12
+        }
+      ],
+      "fences": 14,
+      "all_fence_text_exact_except_renderer_final_newline": true,
+      "strong_nodes": 50,
+      "strong_inventory_complete": true,
+      "em_nodes": 0,
+      "mermaid": 3,
+      "figure": 1
+    },
+    "body_checks": [
+      "Every heading from title through Further Reading present, readable and with nonempty GitHub permalink anchors",
+      "All table rows/cells read in actual rendered DOM and body screenshots; no column collapse or missing cell content",
+      "Bold metadata and all source emphasis rendered as strong nodes; no literal broken delimiters",
+      "All fenced payloads compared against actual DOM pre text in source order; only normal terminal-newline presentation differs",
+      "All code blocks syntax-highlighted/monospace and readable; long lines retain native horizontal scrolling when needed",
+      "Source formulas are ordinary prose/code formulas rather than display-math blocks; diff, lag/metric expressions or activation/loss/optimizer expressions remain readable",
+      "Complete figure payload displayed as native code fallback, not a working course-site interaction"
+    ],
+    "separate_gates": [
+      "Course-site renderer/heading IDs/mobile/interactivity NOT passed by this GitHub inspection",
+      "Hosted CI NOT run or certified",
+      "Book PDF remains separately environment-blocked"
+    ],
+    "content_edits": false,
+    "remote_writes": false,
+    "inventory_sha256": "dc189a27436d7a546c52abe7a50ed94b40234fbf12386e75bf3b63a20ca700b5",
+    "hash_binding": "Observed immutable GitHub URL/commit and complete rendered inventory; local target SHA verified. Coordinator independently fetched all six files at exact949b4251 via GitHub connector and confirmed byte equality. Browser raw download unavailable and not used as hash evidence.",
+    "mermaid_checks": [
+      {
+        "index": 1,
+        "result": "PASS labels",
+        "detail": "Time Series/not-i.i.d.,t1-t4,StandardML/i.i.d.,Sample1-3 all legible. Tall viewer requires scrolling; Sample3 text visible at lower dialog boundary, not intrinsically overlapped."
+      },
+      {
+        "index": 2,
+        "result": "PASS",
+        "detail": "Observed series,Trend,Seasonality,Residual/Noise and all three explanation boxes fully readable."
+      },
+      {
+        "index": 3,
+        "result": "PASS",
+        "detail": "Walk-Forward and Random Split titles plus all Jan-Mar/Apr/May/Jun labels readable; arrows visible."
+      }
+    ],
+    "figure_check": "f3-series-decompose visible in its native code block. No claim of functioning course interaction.",
+    "remaining_s62_inspection_gaps": [],
+    "observation_limits": "Complete saved real DOM/body screenshots plus separate actual viewport/expanded Mermaid inspection. Optional browser raw download failed and the denied route was stopped; raw browser bytes are not claimed. Hash binding additionally relies on coordinator exact immutable remote byte readback. Offscreen blank iframe screenshots alone are not diagram evidence."
+  },
+  "aggregate": {
+    "reviewed_lessons_in_local_snapshot": 86,
+    "original_strict_direct_pass": 84,
+    "exact_existing_adapters": [
+      "S07",
+      "S19"
+    ],
+    "new_exceptions": 0,
+    "original_regression_tests": 33,
+    "adapter_guard_tests": [
+      24,
+      50
+    ],
+    "markdown_two_new_outputs": "86 exact-byte matches to each other and final records",
+    "svg_separate_copies": 9,
+    "repository_audits": "Lesson and certification audits plus README/book counts passed",
+    "book_rendering_regressions": {
+      "tests": 6,
+      "passed": 5,
+      "environment_blocked": 1,
+      "reason": "Missing xelatex.fmt; PDF environment unavailable. No system installation or workaround attempted."
+    },
+    "original_site_parser": {
+      "empty_heading_ids_accepted_four": 62,
+      "duplicate_nonempty_id_groups_accepted_four": 1,
+      "accepted_duplicates": {
+        "S63": [
+          "module"
+        ]
+      },
+      "empty_heading_ids_all_five_observed": 77,
+      "pending_S66_empty_ids": 15,
+      "pending_S66_duplicate_ids": [
+        "sft"
+      ],
+      "result": "BLOCKED_SOURCE_RENDERER",
+      "cause": "Original ASCII-only slugify removes Chinese characters and collapses some mixed-language headings to the same nonempty ID"
+    },
+    "excluded_pending_stages": {
+      "S61/10-05": "Third source3D Mermaid labels remain obscured",
+      "S66/10-06": "Source Mermaid group labels (pre-trained) and (after SFT) obscured by first nodes in both English and Chinese; visual acceptance unpassed"
+    },
+    "note": "Local accepted86 aggregate excludes S61 and S66. Final acceptance count requires final remote/index readback."
+  },
+  "content_remote_verification": {
+    "stage": 62,
+    "commit": "949b4251e8891469370183b05b7ffc75d1a3661f",
+    "tree": "aa184e29207a5b3c55e5786a8ff83c5321e32a0b",
+    "changed_file_count": 6,
+    "files": [
+      {
+        "path": "i18n/zh/.curated/stages/S62-time-series/SCOPE.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S62-time-series/DEPENDENCIES.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/02-15/translation.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/.curated/lessons/02-15/review.json",
+        "match": true
+      },
+      {
+        "path": "i18n/zh/phases/02-ml-fundamentals/15-time-series/docs/zh.md",
+        "match": true
+      }
+    ],
+    "all_bytes_exact": true
+  },
+  "site_parser": {
+    "file": "i18n/zh/phases/02-ml-fundamentals/15-time-series/docs/zh.md",
+    "parser_executed": true,
+    "html_bytes": 33776,
+    "tables": 4,
+    "code_blocks": 10,
+    "figures": 1,
+    "mermaid_sources": 3,
+    "empty_heading_ids": [
+      "时间序列基础",
+      "学习目标",
+      "要解决的问题",
+      "核心概念",
+      "时间序列有何不同",
+      "时间序列的组成",
+      "平稳性",
+      "自相关",
+      "滞后特征：将时间序列转化为监督学习",
+      "滚动前向验证",
+      "不同方法何时适用",
+      "预测步长与策略",
+      "时间序列中的常见错误",
+      "动手实现",
+      "滞后特征生成器",
+      "滚动前向交叉验证",
+      "简单自回归模型",
+      "平稳性检查",
+      "自相关",
+      "实际使用",
+      "评估指标",
+      "滚动特征",
+      "交付成果",
+      "必须胜过的基线",
+      "实用建议",
+      "练习",
+      "关键术语",
+      "延伸阅读"
+    ],
+    "duplicate_heading_ids": [],
+    "browser_verified": false,
+    "result": "BLOCKED_SOURCE_RENDERER",
+    "stage": "S62-time-series",
+    "lesson_id": "02-15",
+    "target_sha256": "9478f4914d259f035319c8bd8266cb6665b062cb6bd05ec60d98a191eb291a78",
+    "empty_heading_id_count": 28,
+    "duplicate_nonempty_id_distinct_count": 0
+  },
+  "final_remote_and_CI": "Final evidence commit byte readback and exact-head CI results belong in PR body and single rollout index to avoid self-reference",
+  "hosted_CI_pass": false,
+  "actual_site_mobile_interactive_pass": false,
+  "user_release_acceptance": false,
+  "merged": false
+}
