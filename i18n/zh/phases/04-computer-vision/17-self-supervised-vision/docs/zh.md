@@ -141,7 +141,7 @@ class TwoViewDataset(torch.utils.data.Dataset):
         return v1, v2
 ```
 
-每次调用 __getitem__ 都会返回同一张图像的两个增强视图，不需要标签。
+每次调用 \_\_getitem\_\_ 都会返回同一张图像的两个增强视图，不需要标签。
 
 ### 步骤 2：InfoNCE 损失
 
