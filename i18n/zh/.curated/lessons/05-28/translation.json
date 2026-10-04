@@ -1,0 +1,3907 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-28",
+  "source_path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "98cc1b6e14345b17708e6fe2fd41cde3f226a7cc",
+  "source_sha256": "32ab66f48dc4dc4adac19a41e368276ba4e7c16ccef8947f2a9ed108d925b289",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/docs/zh.md",
+  "target_sha256": "9748edbcfb70d136f1d0197c22f93f56ce32ab0ea795ef01a02ec93f8547e17f",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "Fresh English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-04",
+    "first_target_write_started_utc": "2026-10-04T18:12:35.349430+00:00",
+    "first_full_target_written_utc": "2026-10-04T18:12:35.349985+00:00"
+  },
+  "assets": [
+    {
+      "source_path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/assets/long-context-eval.svg",
+      "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/assets/long-context-eval.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "source_blob": "d9a2c5bf114c3702fc9695bd25543f5f25ebf9b9",
+      "sha256": "82c8397d98e74d4ddf1c518f010417ff3d0360fd35430fb704042dfe322cd8c8"
+    }
+  ],
+  "segments": [
+    {
+      "segment_id": "05-28:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR"
+      ],
+      "ordinal": 1,
+      "source_sha256": "4ccbf0c31ac63f06326f9cd772b624cce726a7ca49b5c78716638006228a852a",
+      "target": "# 长上下文评估——NIAH、RULER、LongBench、MRCR\n"
+    },
+    {
+      "segment_id": "05-28:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR"
+      ],
+      "ordinal": 2,
+      "source_sha256": "1b076ad58fdfdb76a08f18644db7814361a70bd1ddb8891faec90d53384d0bc7",
+      "target": "> Gemini 3 Pro 宣传其上下文可达 10M tokens（词元）。在 1M tokens 时，8-needle MRCR 的得分降至 26.3%。宣传容量 ≠ 可用容量。长上下文评估能告诉你，产品所依赖的模型实际能处理多大规模的上下文。\n"
+    },
+    {
+      "segment_id": "05-28:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR"
+      ],
+      "ordinal": 3,
+      "source_sha256": "bf53dba5ac06fd27b257b3d531a2b765c6c401aa47a0e6f6429017a2178a3e6c",
+      "target": "**Type:** Learn\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 13（问答），阶段 5 · 23（分块策略）\n**Time:** ~60 分钟\n"
+    },
+    {
+      "segment_id": "05-28:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "05-28:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "a79b9c4053d8348b95425094cd746015e6e7256e1cb05535c8dc1b54fc862a31",
+      "target": "你有一份 200 页的合同。模型声称能处理 1M-token 的上下文。你把合同粘贴进去，问：“终止条款是什么？”模型给出了回答，却是根据封面作答，因为终止条款位于深入文本 120k tokens 的位置，已经超出模型实际能关注到的范围。\n"
+    },
+    {
+      "segment_id": "05-28:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "3babd24a78394964820b0224928b1ab568ec2e3654672ed85e069a3ca1caab08",
+      "target": "这就是 2026 年的上下文容量落差。规格表写着 1M 或 10M，实际可用的却只有其中的 60-70%，而且“可用”的含义取决于任务。\n"
+    },
+    {
+      "segment_id": "05-28:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0013",
+      "kind": "list",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "3b7a8ccc437d1bf912a51f0bd6857cfee574ec9c79e8b81c741b7362a6168b3e",
+      "target": "- **检索（在草堆中找一根针）：** 在不超过宣传上限的长度范围内，前沿模型的表现近乎完美。\n- **多跳 / 聚合：** 对大多数模型而言，超过 ~128k 后表现会急剧下降。\n- **根据分散的事实进行推理：** 最先失效的任务。\n"
+    },
+    {
+      "segment_id": "05-28:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "9ed54b52cb666f86207b72e6ad45d4112d03014197940fc6ac1bc645339d8c9b",
+      "target": "长上下文评估衡量的正是这些维度。本课将介绍各项基准、它们实际测量的内容，以及如何为你的领域构建自定义找针测试。\n"
+    },
+    {
+      "segment_id": "05-28:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "05-28:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "d1bb9cd67d3ef807ae235b22d959e5ceac0a93f60449b2a92dfd0af2a63e0747",
+      "target": "![NIAH 基线、RULER 多任务、LongBench 综合评估](../assets/long-context-eval.svg)\n"
+    },
+    {
+      "segment_id": "05-28:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "59423754fb6ad30121fd13252066779ae5f71388d371adb8f99cf1b16c8555c3",
+      "target": "**大海捞针（Needle-in-a-Haystack，NIAH，2023）。** 在长上下文的指定深度放入一条事实（“魔法词是菠萝”），让模型检索出来。遍历深度 × 长度的组合。这是最早的长上下文基准。如今前沿模型在这项基准上已达到饱和；它是一项必要但不充分的基线。\n"
+    },
+    {
+      "segment_id": "05-28:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "9e70c3497a995a6b71d38627b9f16f3faef1d25a1a0708d76cb28302a5812ede",
+      "target": "**RULER（Nvidia，2024）。** 共有 13 种任务类型，分属 4 类：检索（单项 / 多键 / 多值）、多跳追踪（变量追踪）、聚合（常见词的频率）以及问答（QA）。上下文长度可配置（4k 到 128k+）。它能揭示那些在 NIAH 上已达到饱和、却无法完成多跳任务的模型。在 2024 年发布的版本中，17 个声称支持 32k+ 上下文的模型里，只有一半在 32k 时仍能维持质量。\n"
+    },
+    {
+      "segment_id": "05-28:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "857a71bb4ba04b6860c47d27bbd9e55b413fa6d660ba7ffe0a37f3718f72e190",
+      "target": "**LongBench v2（2024）。** 包含 503 道选择题，上下文长度为 8k-2M 个单词，覆盖六类任务：单文档问答、多文档问答、长上下文学习（in-context learning）、长对话、代码仓库和长篇结构化数据。它是衡量实际长上下文表现的生产应用基准。\n"
+    },
+    {
+      "segment_id": "05-28:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "10262df08f11acf657a9a9d6781b568df19a631b26dec0d6e698aeb74effdd43",
+      "target": "**MRCR（Multi-Round Coreference Resolution，多轮共指消解）。** 对大规模多轮对话进行共指消解。它有 8-needle、24-needle 和 100-needle 变体，分别包含相应数量的“针”，用于揭示模型在注意力退化之前能同时兼顾多少条事实。\n"
+    },
+    {
+      "segment_id": "05-28:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "c452cd826deb7916f66cb06d9ac73618e42f36195436fb3398ce9518a0126ce2",
+      "target": "**NoLiMa。** “非词面匹配的针”。针与查询之间没有字面重叠；检索需要进行一步语义推理。它比 NIAH 更难。\n"
+    },
+    {
+      "segment_id": "05-28:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "96862b312fd7e920edfcfce626f13b7c17fbac21b8fe1529ad44ff2d67c710e4",
+      "target": "**HELMET。** 将多篇文档拼接起来，再提出一个来自其中任意一篇的问题，测试选择性注意力。\n"
+    },
+    {
+      "segment_id": "05-28:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 17,
+      "source_sha256": "c48445014501afdf5fd12cee7dde9446cd540b7886688135f8c56b549f026312",
+      "target": "**BABILong。** 将 bAbI 推理链嵌入无关的“草堆”文本中，测试在草堆中推理的能力，而不只是检索。\n"
+    },
+    {
+      "segment_id": "05-28:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept",
+        "### What to actually report"
+      ],
+      "ordinal": 18,
+      "source_sha256": "026b6fc1ca33ebec4f27e20a207bad224b0c929b2441904cf6524c87c830eab0",
+      "target": "### 实际应该报告什么\n"
+    },
+    {
+      "segment_id": "05-28:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept",
+        "### What to actually report"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0037",
+      "kind": "list",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept",
+        "### What to actually report"
+      ],
+      "ordinal": 19,
+      "source_sha256": "29b067b00b21feb888dc63c00f44f10a74917f231460e4e2d87ab1105e80869e",
+      "target": "- **宣传的上下文窗口。** 规格表上的数字。\n- **有效检索长度。** NIAH 的通过率达到某个阈值（例如 90%）时的长度。\n- **有效推理长度。** 多跳或聚合任务的通过率达到该阈值时的长度。\n- **退化曲线。** 按任务类型分别绘制准确率随上下文长度的变化曲线。\n"
+    },
+    {
+      "segment_id": "05-28:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept",
+        "### What to actually report"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept",
+        "### What to actually report"
+      ],
+      "ordinal": 20,
+      "source_sha256": "19429ea952415baf9963cae4aba791e93063ecd2535e23bbb40cc66e5e7c32e9",
+      "target": "在规格表中列出两个数字：有效检索长度和有效推理长度。通常，有效推理长度为宣传窗口的 25-50%。\n"
+    },
+    {
+      "segment_id": "05-28:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept",
+        "### What to actually report"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept",
+        "### What to actually report"
+      ],
+      "ordinal": 21,
+      "source_sha256": "4ad65e8f67fb98fec4737bd8b20c85b59e8df1eb5c712885e36b3ded706acec9",
+      "target": "```figure\ngx-niah-decay\n```\n"
+    },
+    {
+      "segment_id": "05-28:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## The Concept",
+        "### What to actually report"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It"
+      ],
+      "ordinal": 22,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "05-28:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 1: a custom NIAH for your domain"
+      ],
+      "ordinal": 23,
+      "source_sha256": "b876727b3797c138febf51e5d8be6c84e6939c3e802f24c29e598346efc94863",
+      "target": "### 步骤 1：为你的领域定制 NIAH\n"
+    },
+    {
+      "segment_id": "05-28:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 1: a custom NIAH for your domain"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 1: a custom NIAH for your domain"
+      ],
+      "ordinal": 24,
+      "source_sha256": "c248903013a7f84367e58aaf2aa268fe1784eb55dcf8709446f05519fce92ed6",
+      "target": "参见 `code/main.py`。基本框架如下：\n"
+    },
+    {
+      "segment_id": "05-28:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 1: a custom NIAH for your domain"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 1: a custom NIAH for your domain"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01e5aad42ecc62d4449722bd5df9b03a9296aa711653beae9438eda40582cc72",
+      "target": "```python\ndef build_haystack(filler_text, needle, depth_ratio, total_tokens):\n    if not (0.0 <= depth_ratio <= 1.0):\n        raise ValueError(f\"depth_ratio must be in [0, 1], got {depth_ratio}\")\n    if total_tokens <= 0:\n        raise ValueError(f\"total_tokens must be positive, got {total_tokens}\")\n\n    filler_tokens = tokenize(filler_text)\n    needle_tokens = tokenize(needle)\n    if not filler_tokens:\n        raise ValueError(\"filler_text produced no tokens\")\n\n    # Repeat filler until long enough to fill the haystack body.\n    body_len = max(total_tokens - len(needle_tokens), 0)\n    while len(filler_tokens) < body_len:\n        filler_tokens = filler_tokens + filler_tokens\n    filler_tokens = filler_tokens[:body_len]\n\n    insert_at = min(int(body_len * depth_ratio), body_len)\n    haystack = filler_tokens[:insert_at] + needle_tokens + filler_tokens[insert_at:]\n    return \" \".join(haystack)\n\n\ndef score_niah(model, haystack, question, expected):\n    answer = model.complete(f\"Context: {haystack}\\nQ: {question}\\nA:\", max_tokens=50)\n    return 1 if expected.lower() in answer.lower() else 0\n```\n"
+    },
+    {
+      "segment_id": "05-28:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 1: a custom NIAH for your domain"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 1: a custom NIAH for your domain"
+      ],
+      "ordinal": 26,
+      "source_sha256": "4f2ca4205f9e168a01f66bb86c2a67caff9a7d2b075cca342ee0ec2b5736d61b",
+      "target": "遍历 `depth_ratio` ∈ {0, 0.25, 0.5, 0.75, 1.0} × `total_tokens` ∈ {1k, 4k, 16k, 64k} 的组合，并绘制热力图。这就是目标模型的 NIAH 评估卡。\n"
+    },
+    {
+      "segment_id": "05-28:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 1: a custom NIAH for your domain"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 2: a multi-needle variant"
+      ],
+      "ordinal": 27,
+      "source_sha256": "f8933315576c4bf2a64b7953a5c2201a1f18f879ae0996abf0f6991087443831",
+      "target": "### 步骤 2：多针变体\n"
+    },
+    {
+      "segment_id": "05-28:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 2: a multi-needle variant"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 2: a multi-needle variant"
+      ],
+      "ordinal": 28,
+      "source_sha256": "d5a211c23c243be9d260b9867de2ac6d927dca961f0609ec3d2ae327ecdfcf01",
+      "target": "```python\ndef build_multi_needle(filler, needles, total_tokens):\n    depths = [0.1, 0.4, 0.7]\n    chunks = [filler[:int(total_tokens * 0.1)]]\n    for depth, needle in zip(depths, needles):\n        chunks.append(needle)\n        next_chunk = filler[int(total_tokens * depth): int(total_tokens * (depth + 0.3))]\n        chunks.append(next_chunk)\n    return \" \".join(chunks)\n```\n"
+    },
+    {
+      "segment_id": "05-28:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 2: a multi-needle variant"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 2: a multi-needle variant"
+      ],
+      "ordinal": 29,
+      "source_sha256": "8f544ed1153393fe73257906c36affbb319ddb136d094f8a858b5bedc7479f48",
+      "target": "“三个魔法词分别是什么？”这类问题要求把三条信息全部检索出来。单针测试成功，并不能预测多针测试也会成功。\n"
+    },
+    {
+      "segment_id": "05-28:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 2: a multi-needle variant"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 3: multi-hop variable tracing (RULER-style)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "9107ad17171ffd3f343dd01c5708448940197b66908c0d52ae349ed96e3de5dc",
+      "target": "### 步骤 3：多跳变量追踪（RULER 风格）\n"
+    },
+    {
+      "segment_id": "05-28:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 3: multi-hop variable tracing (RULER-style)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 3: multi-hop variable tracing (RULER-style)"
+      ],
+      "ordinal": 31,
+      "source_sha256": "0de5f0fe58488f92ff812e72084921fb9afc66119d26a1ee294cdc9bbc651692",
+      "target": "```python\nhaystack = \"\"\"X1 = 42. ... (filler) ... X2 = X1 + 10. ... (filler) ... X3 = X2 * 2.\"\"\"\nquestion = \"What is X3?\"\n```\n"
+    },
+    {
+      "segment_id": "05-28:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 3: multi-hop variable tracing (RULER-style)"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 3: multi-hop variable tracing (RULER-style)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "86cde4ace26618117627cd545038f1daa7d876bd1cef3723823dd78564b2cc12",
+      "target": "要得出答案，必须串联三次赋值操作。在 128k 长度下，前沿模型在这里的准确率往往会降至 50-70%。\n"
+    },
+    {
+      "segment_id": "05-28:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 3: multi-hop variable tracing (RULER-style)"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 4: LongBench v2 on your stack"
+      ],
+      "ordinal": 33,
+      "source_sha256": "07f55738dd60179bc7d27228ac7fa3d9c4e6806fa135ec177930951fb7766779",
+      "target": "### 步骤 4：在你的技术栈上使用 LongBench v2\n"
+    },
+    {
+      "segment_id": "05-28:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 4: LongBench v2 on your stack"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 4: LongBench v2 on your stack"
+      ],
+      "ordinal": 34,
+      "source_sha256": "0f9687d1e94786c472a8e33afd0bce3a8761a5c4476845504c5c9321d90432b4",
+      "target": "```python\nfrom datasets import load_dataset\nlongbench = load_dataset(\"THUDM/LongBench-v2\")\n\ndef eval_model_on_longbench(model, subset=\"single-doc-qa\"):\n    tasks = [x for x in longbench[\"test\"] if x[\"task\"] == subset]\n    correct = 0\n    for x in tasks:\n        answer = model.complete(x[\"context\"] + \"\\n\\nQ: \" + x[\"question\"], max_tokens=20)\n        if normalize(answer) == normalize(x[\"answer\"]):\n            correct += 1\n    return correct / len(tasks)\n```\n"
+    },
+    {
+      "segment_id": "05-28:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 4: LongBench v2 on your stack"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 4: LongBench v2 on your stack"
+      ],
+      "ordinal": 35,
+      "source_sha256": "afd6b9e7f0750b1ef4b19139d3492583d656cb798c854b8ea94af4f6c0e5ca46",
+      "target": "分别报告各类别的准确率。汇总分数会掩盖不同任务之间的巨大差异。\n"
+    },
+    {
+      "segment_id": "05-28:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Build It",
+        "### Step 4: LongBench v2 on your stack"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Pitfalls"
+      ],
+      "ordinal": 36,
+      "source_sha256": "08cb057a9b38f546708b3f3b1b53987d4641ac598b82c51378c649e9705d2846",
+      "target": "## 常见陷阱\n"
+    },
+    {
+      "segment_id": "05-28:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Pitfalls"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Pitfalls"
+      ],
+      "ordinal": 37,
+      "source_sha256": "623eaff241084c183550968a6ebe23280089f995899af53f681abfabfa38e1b1",
+      "target": "- **只用 NIAH 评估。** 在 1M tokens 下通过 NIAH，并不能说明多跳任务的表现。务必运行 RULER 或自定义多跳测试。\n- **均匀深度采样。** 许多实现只测试 depth=0.5。应测试 depth=0、0.25、0.5、0.75、1.0；“中间信息丢失”（lost in the middle）效应确实存在。\n- **针与填充文本有词面重叠。** 如果针与填充文本共享关键词，检索就会变得轻而易举。应使用 NoLiMa 风格、没有重叠的针。\n- **忽略延迟。** 1M-token 的提示词（prompt）需要 30-120 秒进行预填充（prefill）。衡量准确率时，也要测量首 token 延迟，即首个输出 token 到达所需的时间。\n- **采用厂商自报的数字。** OpenAI、Google、Anthropic 都会公布自己的分数。务必针对你的实际用例独立复测。\n"
+    },
+    {
+      "segment_id": "05-28:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Pitfalls"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "05-28:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "b5f6d498dc25c78d94f60b46a9aaaab318a7bb444048551be1450bf0d7abfac3",
+      "target": "2026 年的技术栈：\n"
+    },
+    {
+      "segment_id": "05-28:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0079",
+      "kind": "table",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "acf52aa72d96a7415db5e8cb780684039d920d42eb67c8ac7c575bb1256fa106",
+      "target": "| 场景 | 基准 |\n|-----------|-----------|\n| 快速合理性检查 | 在 3 个深度 × 3 种长度下运行自定义 NIAH |\n| 为生产环境选择模型 | 在目标长度下运行 RULER（13 项任务） |\n| 实际问答质量 | LongBench v2 单文档问答子集 |\n| 多跳推理 | BABILong 或自定义变量追踪 |\n| 会话 / 对话 | 在目标长度下运行 MRCR 8-needle |\n| 模型升级回归测试 | 固定的内部 NIAH + RULER 测试框架，对每个新模型运行 |\n"
+    },
+    {
+      "segment_id": "05-28:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "bf6bc2e180cf8c638f17ccc3ddddba48ddbe0c6591fa32166368d6a0cec930d9",
+      "target": "生产应用的经验法则：在预期长度下完成 NIAH + 1 项推理任务测试之前，绝不要相信宣传的上下文窗口。\n"
+    },
+    {
+      "segment_id": "05-28:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Ship It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "05-28:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Ship It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Ship It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "130d0b61c2ac48dd5f74068b4ea3d4e1479933236b005eea9cefb2517fcf3909",
+      "target": "保存为 `outputs/skill-long-context-eval.md`：\n"
+    },
+    {
+      "segment_id": "05-28:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Ship It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "434d6a2b268bbe64a610b084c14051254b914275c5538e0e52a3ceaad883f684",
+      "target": "```markdown\n---\nname: long-context-eval\ndescription: Design a long-context evaluation battery for a given model and use case.\nversion: 1.0.0\nphase: 5\nlesson: 28\ntags: [nlp, long-context, evaluation]\n---\n\nGiven a target model, target context length, and use case, output:\n\n1. Tests. NIAH depth × length grid; RULER multi-hop; custom domain task.\n2. Sampling. Depths 0, 0.25, 0.5, 0.75, 1.0 at each length.\n3. Metrics. Retrieval pass rate; reasoning pass rate; time-to-first-token; cost-per-query.\n4. Cutoff. Effective retrieval length (90% pass) and effective reasoning length (70% pass). Report both.\n5. Regression. Fixed harness, rerun on every model upgrade, surface deltas.\n\nRefuse to trust a context window from the model card alone. Refuse NIAH-only evaluation for any multi-hop workload. Refuse vendor self-reported long-context scores as independent evidence.\n```\n"
+    },
+    {
+      "segment_id": "05-28:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Exercises"
+      ],
+      "ordinal": 45,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "05-28:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Exercises"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0091",
+      "kind": "list",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "e8eba6bde33f77804a09bcd473cf7d2e754d383e150163dd5589515a457cc66e",
+      "target": "1. **简单。** 构建 NIAH 测试，覆盖 3 个深度（0.25、0.5、0.75）× 3 种长度（1k、4k、16k）。在任意模型上运行，并将通过率绘制成 3×3 热力图。\n2. **中等。** 添加含 3 根针的变体。在每种长度下衡量全部 3 根针的检索情况，与相同长度下的单针通过率比较。\n3. **困难。** 构建变量追踪任务（X1 → X2 → X3，包含 3 跳），并将其嵌入 64k 的填充文本中。测量 3 个前沿模型的准确率，分别报告每个模型的有效推理长度。\n"
+    },
+    {
+      "segment_id": "05-28:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Key Terms"
+      ],
+      "ordinal": 47,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "05-28:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Key Terms"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0095",
+      "kind": "table",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Key Terms"
+      ],
+      "ordinal": 48,
+      "source_sha256": "910c6beea5d7fa25f6ab4d56ee6136c3638f01403ac8162edf924d38d77c3509",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| NIAH | 大海捞针 | 在填充文本中埋入一条事实，让模型检索出来。 |\n| RULER | 加强版 NIAH | 包含检索 / 多跳 / 聚合 / 问答四类，共 13 种任务类型。 |\n| 有效上下文 | 真正的容量 | 准确率仍保持在阈值以上时的长度。 |\n| 中间信息丢失 | 深度偏差 | 模型对长输入中间部分的内容关注不足。 |\n| 多针 | 同时处理多条事实 | 埋入多条信息；测试同时分配注意力的能力，而不只是检索。 |\n| MRCR | 多轮共指消解 | 包含 8、24 或 100 根针的共指消解；揭示注意力饱和。 |\n| NoLiMa | 非词面匹配的针 | 针与查询没有字面相同的 tokens；需要推理。 |\n"
+    },
+    {
+      "segment_id": "05-28:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Key Terms"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Further Reading"
+      ],
+      "ordinal": 49,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "05-28:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Further Reading"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-28:b0099",
+      "kind": "list",
+      "heading_path": [
+        "# Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+        "## Further Reading"
+      ],
+      "ordinal": 50,
+      "source_sha256": "a94fd3b033d5924fc2544056d6d93ee5cf16de39337d42df56687a6ab31b5de3",
+      "target": "- [Kamradt（2023）。Needle in a Haystack 分析](https://github.com/gkamradt/LLMTest_NeedleInAHaystack)——最初的 NIAH 仓库。\n- [Hsieh 等（2024）。RULER: What's the Real Context Size of Your Long-Context LMs?](https://arxiv.org/abs/2404.06654)——多任务基准。\n- [Bai 等（2024）。LongBench v2](https://arxiv.org/abs/2412.15204)——真实场景中的长上下文评估。\n- [Modarressi 等（2024）。NoLiMa: Non-lexical needles](https://arxiv.org/abs/2404.06666)——更难的找针任务。\n- [Kuratov 等（2024）。BABILong](https://arxiv.org/abs/2406.10149)——在草堆中推理。\n- [Liu 等（2024）。Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)——研究深度偏差的论文。\n"
+    }
+  ],
+  "stage_id": "S119-long-context-evaluation",
+  "dependencies_path": "i18n/zh/.curated/stages/S119-long-context-evaluation/DEPENDENCIES.json",
+  "dependencies_sha256": "0c351504e547a47b83b5546f0ab4c988d670daa33413a3ee79d1ce5795798c6b",
+  "scope_path": "i18n/zh/.curated/stages/S119-long-context-evaluation/SCOPE.md",
+  "scope_sha256": "a79fd8ed46f7d3211a0ce3cb2a44ba634b9ebbd92d77b3a0d7bf3468def92d73",
+  "stage_glossary_path": "i18n/zh/.curated/stages/S119-long-context-evaluation/TERMINOLOGY.md",
+  "stage_glossary_sha256": "e96e1ba360a6fc59b5dcefefdfdb6953e98fb7533fdf0046c0f6d9b724c2ea3f",
+  "support_pins": [
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "git_blob": "51d583a00afc0ee6cddabe1802c59122d3c9d42f",
+      "bytes": 42839,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "git_blob": "3c3a4dc961984792a3635c473de36ed53a8eada7",
+      "bytes": 10069,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+      "git_blob": "efba509207ced3ac44cdddd8ce8faa2e1560cbbb",
+      "bytes": 3645,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S01-tool-foundations"
+    },
+    {
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e",
+      "git_blob": "fb5ec4fae661faf5fcae3288ed50fda94ded92c7",
+      "bytes": 2988,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S02-terminal-linux"
+    },
+    {
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077",
+      "git_blob": "d6f71417dab16872716008bb34c6e4fefa97a81e",
+      "bytes": 2886,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S03-gpu-docker"
+    },
+    {
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed",
+      "git_blob": "b4433dcf406df32b0cf588c5e5f7b2da00a22ecc",
+      "bytes": 2759,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S04-data-management"
+    },
+    {
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+      "git_blob": "6d67b7168f486b05f27b01af69161a16cea11377",
+      "bytes": 3862,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S05-linear-algebra-basics"
+    },
+    {
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+      "git_blob": "bcf4f580e2895ce944a2cad5ab4ea43424977ecb",
+      "bytes": 2425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S06-matrix-transformations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428",
+      "git_blob": "c3f3c4b17d5f6af0fc49211ae72af6ca44227f73",
+      "bytes": 4184,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S07-calculus-foundations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/check_stage.py",
+      "sha256": "aa88776818af759d419790f9290ef8c6983b05a925f359f65152a5d8edfb7743",
+      "git_blob": "03f7859068381c0543e82e0458f9b7d90eb0e37d",
+      "bytes": 6269,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/test_stage.py",
+      "sha256": "933c5ea0570a1f385b07da5280758f895f14cae82371f123f4543ba213b52459",
+      "git_blob": "882307ac0d131ca71447c5250af98482f55145f8",
+      "bytes": 6020,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca",
+      "git_blob": "c70a717985296f3dc75e552bb92a6f06ab4c0b78",
+      "bytes": 3157,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S08-chain-rule-autodiff"
+    },
+    {
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880",
+      "git_blob": "2d394898b293afc5f35c92aa6357767ee337dba0",
+      "bytes": 4023,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S09-probability-foundations"
+    },
+    {
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec",
+      "git_blob": "36035ee5c71335a756b68f719bf0c183e2908ce2",
+      "bytes": 4494,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S10-bayes-foundations"
+    },
+    {
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf",
+      "git_blob": "3c7e79a3741b61f4198af233b69f24fc33e6f433",
+      "bytes": 3736,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S11-optimization-foundations"
+    },
+    {
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115",
+      "git_blob": "483d7fe5393ff8228f8320e122bff65899afc0d9",
+      "bytes": 3284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S12-information-theory"
+    },
+    {
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364",
+      "git_blob": "9a294d0c7d641f3895ec5d2a3401ea4a96fdcf67",
+      "bytes": 3438,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S13-dimensionality-reduction"
+    },
+    {
+      "commit": "acf8e89bc4596c13307a53a995fe96701221c5b6",
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5",
+      "git_blob": "4fb7a14c1730db6cd5f30d26f51c5fe4d8c0ba02",
+      "bytes": 3312,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S14-tensor-operations"
+    },
+    {
+      "commit": "e906a46fdf8a0ea9ea22c68784b4303e1c10c198",
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4",
+      "git_blob": "1016d7d240bb1b78897be717041500e687fd9401",
+      "bytes": 3048,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S15-numerical-stability"
+    },
+    {
+      "commit": "2610d0dec88725fec4528accc5487f9cf88b4d49",
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a",
+      "git_blob": "8a606b02466143d31e7ca4210b47a7be254394e8",
+      "bytes": 3677,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S16-norms-distances"
+    },
+    {
+      "commit": "7f802943f85ff5621e50eb2307cb712e0fff2b68",
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48",
+      "git_blob": "dc95714026cd8e693e396db3f2448d1179df3943",
+      "bytes": 3928,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S17-statistics-for-ml"
+    },
+    {
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff",
+      "git_blob": "3b91d4c008bf0d06d38298b36ce505ce8a318b6b",
+      "bytes": 3660,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S18-sampling-methods"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/CONTROL-EXTENSION.md",
+      "sha256": "b5c6868a952806f6d3d48027ca28b7b0c661f72fc57687d992180349113f265d",
+      "git_blob": "ff49aedb81db9ae9d05932ff5a3fc5170aca1fbb",
+      "bytes": 7674,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2",
+      "git_blob": "596dc57b24236543cc2ba7b2060d067a6db18f13",
+      "bytes": 2924,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S19-linear-systems"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/check_stage.py",
+      "sha256": "703dd675d345396db8db9624a24fa5375f3bb5ca1ed1c2fa0c99574315ae5515",
+      "git_blob": "947d31c24af08811f69bf67308bb8daca6f02e6a",
+      "bytes": 14765,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/test_stage.py",
+      "sha256": "373409a9da1954eb35a7e2886d16109bde18a08935d19b3f479c1421dad4ecf2",
+      "git_blob": "5c230aca5fecc64538e492ba16a72cdceb3b6df2",
+      "bytes": 20588,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a",
+      "git_blob": "8362723bd43106e34aabf3da2d4e10e5e56cce18",
+      "bytes": 3434,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S20-convex-optimization"
+    },
+    {
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4",
+      "git_blob": "fc3c32a750247da022623c0789363167885fa1dd",
+      "bytes": 3408,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S21-fourier-transform"
+    },
+    {
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "git_blob": "2f1da1190ed66909df4150cded08ab76d3110cb7",
+      "bytes": 3170,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S22-ml-overview"
+    },
+    {
+      "commit": "ccf427ff16970a5cde15eeef5c085530fc50978b",
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844",
+      "git_blob": "fa7abc4253e2a3aea3556aa520a5f0c5d762283a",
+      "bytes": 2553,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S23-decision-trees"
+    },
+    {
+      "commit": "99277ca3ba91fcc3b8f06dffe6c5cdb212b7278b",
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63",
+      "git_blob": "37b8e539615eba55fd962d46e2bd11545535aa7d",
+      "bytes": 2284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S24-knn-distances"
+    },
+    {
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3",
+      "git_blob": "eb71f179dc1b215a2cc4dd6ab30d9879d6b3a0fd",
+      "bytes": 2382,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S25-linear-regression"
+    },
+    {
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd",
+      "git_blob": "6319a758cf71a1bf7b0af996ebfc6d8c46b2b0c7",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S26-support-vector-machines"
+    },
+    {
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8",
+      "git_blob": "eff9c68670ecb23e0213084e1a9fcb8f957c1d63",
+      "bytes": 2088,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S27-perceptron"
+    },
+    {
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1",
+      "git_blob": "92e02c63f3760272c684341d4e3f1a8fe19f3f0f",
+      "bytes": 2326,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S28-logistic-regression"
+    },
+    {
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21",
+      "git_blob": "4f3fea7d28134a6cf4bf453a381ea04fbd8b90bb",
+      "bytes": 2269,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S29-multi-layer-networks"
+    },
+    {
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd",
+      "git_blob": "1d8612f449304097bfdb1f9b2c337f538c27f163",
+      "bytes": 2209,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S30-audio-fundamentals"
+    },
+    {
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1",
+      "git_blob": "d3cdc78dc5230ed8164824dd7b366894fc8af209",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S31-unsupervised-learning"
+    },
+    {
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726",
+      "git_blob": "2c18b360177a935d7e16f1cddfcd17228afc2d4e",
+      "bytes": 2279,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S32-backpropagation"
+    },
+    {
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66",
+      "git_blob": "890baefa8c23198a0728f5db2c41b8da258d1b7b",
+      "bytes": 2354,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S33-building-tokenizer"
+    },
+    {
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6",
+      "git_blob": "7a81537a54bf29a6a510f2ae203747dbef8161ab",
+      "bytes": 2513,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S34-feature-engineering"
+    },
+    {
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4",
+      "git_blob": "cf02f8a51eb91f69853a96dbe0ef228156884483",
+      "bytes": 2335,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S35-activation-functions"
+    },
+    {
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e",
+      "git_blob": "abb5e30bd7c58c60811935ace9a207795d8b7073",
+      "bytes": 2430,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S36-naive-bayes"
+    },
+    {
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de",
+      "git_blob": "1aec35ef2ba3b81cf974bde20b522b3ac22cfdac",
+      "bytes": 4383,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S37-pretraining-data"
+    },
+    {
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340",
+      "git_blob": "4ae770868a791fc68af0b235d3e14d71e585a3c3",
+      "bytes": 3095,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S38-flamingo"
+    },
+    {
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533",
+      "git_blob": "09c852f9b00cb6d496ffa423a744972c6458845a",
+      "bytes": 2483,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S39-model-evaluation"
+    },
+    {
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557",
+      "git_blob": "29da68dbd644a01ff7509185a060189819bdf79e",
+      "bytes": 2503,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S40-loss-functions"
+    },
+    {
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc",
+      "git_blob": "effcbe3cebed938d10a2f87cab92ef063d37835e",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S41-text-processing"
+    },
+    {
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359",
+      "git_blob": "ccf24ce35cd2d227658dd0eaeb0ff5e137b73a45",
+      "bytes": 2022,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S42-bias-variance"
+    },
+    {
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae",
+      "git_blob": "9f4a7b78ba3f0eaaf8f0b53ef92ce848e343ef6c",
+      "bytes": 2575,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S43-optimizers"
+    },
+    {
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba",
+      "git_blob": "2e5267fd7fda2946607d2c4efe76f783b84a70a4",
+      "bytes": 2281,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S44-bag-of-words-tfidf"
+    },
+    {
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243",
+      "git_blob": "d89de19e68a642eb5ba0de7c3a1c86f5d53a183b",
+      "bytes": 3177,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S45-pretraining-mini-gpt"
+    },
+    {
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c",
+      "git_blob": "5c8c335d3d9544f45af084855f43bc901757b532",
+      "bytes": 3037,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S46-pos-tagging-parsing"
+    },
+    {
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3",
+      "git_blob": "08c29105b859aca15c5857d3c7fe5acfaaa16232",
+      "bytes": 2165,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S47-ensemble-methods"
+    },
+    {
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc",
+      "git_blob": "6d018fa789c46c330ec30d076b6b45f3b1944c32",
+      "bytes": 2744,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S48-regularization"
+    },
+    {
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018",
+      "git_blob": "23bae97c69d96369d1c97ec561e987d77cb990bf",
+      "bytes": 2769,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S49-word2vec"
+    },
+    {
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06",
+      "git_blob": "f14bdc002f7f2a2500507be5ae0da7b7865c62c5",
+      "bytes": 3425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S50-ngram-language-models"
+    },
+    {
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795",
+      "git_blob": "af1e6093e2b48ba42e150a3e8356f5456b47faac",
+      "bytes": 2818,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S51-sentiment-analysis"
+    },
+    {
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0",
+      "git_blob": "d25320b87932fa85bb65f03454afbe084c4f8e86",
+      "bytes": 2038,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S52-hyperparameter-tuning"
+    },
+    {
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340",
+      "git_blob": "d3b1c81cecc879fce6da44cc2ae2681792b21cae",
+      "bytes": 2508,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S53-weight-initialization"
+    },
+    {
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99",
+      "git_blob": "4513cb31ec4c8c07f2328692d1e2d07260039124",
+      "bytes": 2488,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S54-glove-fasttext-subword"
+    },
+    {
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201",
+      "git_blob": "eeb728a5d0d43b6c032a7884253f25cb5c8201a0",
+      "bytes": 3187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S55-named-entity-recognition"
+    },
+    {
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5",
+      "git_blob": "88e1bc702c14383d3a8cd5d9c3476f56c1b8f7b7",
+      "bytes": 2583,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S56-topic-modeling"
+    },
+    {
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8",
+      "git_blob": "1d72892c4d18d373d2550282046ae90f24278600",
+      "bytes": 1821,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S57-ml-pipelines"
+    },
+    {
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361",
+      "git_blob": "bf966eca0129457a64967d7ab4557cae652fb82e",
+      "bytes": 2032,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S58-learning-rate-schedules"
+    },
+    {
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2",
+      "git_blob": "039edec92b22f1acc04257bec40fbdcedf14eb72",
+      "bytes": 2287,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S59-information-retrieval-search"
+    },
+    {
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d",
+      "git_blob": "2859645c51d6a2a9d5b2d418a9d616b9a552bf8d",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S60-subword-tokenization"
+    },
+    {
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379",
+      "git_blob": "af1026384a9e718fe6acf4e0d5afd15bca9a49f1",
+      "bytes": 2620,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S62-time-series"
+    },
+    {
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c",
+      "git_blob": "909f8a309d9606bbb755598b26123e29eb2bb60b",
+      "bytes": 2291,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S63-mini-framework"
+    },
+    {
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297",
+      "git_blob": "2bf145d2e719bd7e90bd5e9772500a76c8a78e56",
+      "bytes": 2365,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S64-embedding-models-deep-dive"
+    },
+    {
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac",
+      "git_blob": "7558a06998af49d2a4b07299bc7edb6991932dea",
+      "bytes": 2572,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S65-coreference-resolution"
+    },
+    {
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449",
+      "git_blob": "1b278c7d40d645d1ff0c80c0963b24391e9d5958",
+      "bytes": 2187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S67-anomaly-detection"
+    },
+    {
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198",
+      "git_blob": "6f6c890dd6b18fd6729619b9ac0f4230a0790886",
+      "bytes": 2120,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S68-imbalanced-data"
+    },
+    {
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c",
+      "git_blob": "ba2f5d2833c22d665de3500bfb07895c751a541a",
+      "bytes": 2535,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S69-intro-to-pytorch"
+    },
+    {
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c",
+      "git_blob": "9cbb5f7ee02ef8dbe38f1709ee6fc6398c18cf25",
+      "bytes": 2206,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S70-chunking-strategies-rag"
+    },
+    {
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44",
+      "git_blob": "3c90f176f47d6c37b0ec1b0e4e83cbddceed7f2d",
+      "bytes": 3266,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S71-entity-linking"
+    },
+    {
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef",
+      "git_blob": "a6ee3f7b4afac98072fac33d6592468cf8628227",
+      "bytes": 3109,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S72-intro-to-jax"
+    },
+    {
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505",
+      "git_blob": "bc236d955c7437e2fcdea07d13a68600004caf3f",
+      "bytes": 2445,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S73-debugging-neural-networks"
+    },
+    {
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488",
+      "git_blob": "de8e3a444952b5f13b2b8bfa140836a483186884",
+      "bytes": 3460,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S74-relation-extraction-kg"
+    },
+    {
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347",
+      "git_blob": "6977075d8c93e88c344cc59221888db694d3b5c5",
+      "bytes": 2939,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S75-speaker-recognition-verification"
+    },
+    {
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421",
+      "git_blob": "d8730fc8bf95c6bb26bfd027cd5b7312bb5cef55",
+      "bytes": 3011,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S76-graph-theory"
+    },
+    {
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6",
+      "git_blob": "b565a501009f209b53e4eb15b628f8b67bd7c3af",
+      "bytes": 2684,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S77-image-fundamentals"
+    },
+    {
+      "commit": "56ee752aba7560af2ea4104d9fe07792b849c9e4",
+      "path": "i18n/zh/.curated/stages/S78-stochastic-processes/TERMINOLOGY.md",
+      "sha256": "f211aa1993249e771de3a60e924ea673b60ccd310994c9c6158a1a4225c3ffb4",
+      "git_blob": "6434f650066f589951c5d659ef71493d624801db",
+      "bytes": 3485,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S78-stochastic-processes"
+    },
+    {
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197",
+      "git_blob": "d69faa5f6530df562ce242491170a8c35ddb0ef6",
+      "bytes": 3390,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S80-watermarking-synthid-stable-signature-c2pa"
+    },
+    {
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b",
+      "git_blob": "f86f6161c9e5314188233bd65adf4883c8293236",
+      "bytes": 1566,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S81-outcomes-before-output"
+    },
+    {
+      "commit": "31143020895d0c406c2b36cdb362683c6f40e2e4",
+      "path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+      "sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e",
+      "git_blob": "e0c7e706c636bba3bdb3a7849b87b9c5d1a796cb",
+      "bytes": 5198,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S82-debugging-and-profiling"
+    },
+    {
+      "commit": "682be1701b737db6b85315719d0744fcdb2c0574",
+      "path": "i18n/zh/.curated/stages/S83-convolutions-from-scratch/TERMINOLOGY.md",
+      "sha256": "3305451de8fd1e1af1c3594824045890a233d7c6c2da636b7ae7b5f3f29c2d81",
+      "git_blob": "d2f3c937e0cf2ad3b3766989401cd7642af5d3c2",
+      "bytes": 6444,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S83-convolutions-from-scratch"
+    },
+    {
+      "commit": "07031ded257dd184214a1505880a838328ea74f8",
+      "path": "i18n/zh/.curated/stages/S84-discover-the-real-workflow/TERMINOLOGY.md",
+      "sha256": "95a7f035b18f8988c334cc4bc6c68a136719e8fc223a31c117780c3876a86035",
+      "git_blob": "5b1fe0e376ee3ba83ce34cf631c10df41ad880f1",
+      "bytes": 6930,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S84-discover-the-real-workflow"
+    },
+    {
+      "commit": "1a364d8283c864eccac467bb32a850a0d0779eef",
+      "path": "i18n/zh/.curated/stages/S85-cnns-lenet-to-resnet/TERMINOLOGY.md",
+      "sha256": "d8ca3e0f8e060f61603d46fe6984eb0488a48078490b16fc3a515dd5980ac8d1",
+      "git_blob": "2a310461fe3426a16aed09266558a7a10d14a5d8",
+      "bytes": 7110,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S85-cnns-lenet-to-resnet"
+    },
+    {
+      "commit": "b333554e53ab0b231a086aa9d1b9e381a82dccb2",
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/TERMINOLOGY.md",
+      "sha256": "eae3b3a7ac0bc2fdb9cbf25bc0c88a25ae81dfd45012e2be178bb005fae1bf3b",
+      "git_blob": "c9e4d03bb804934004ee75816f0f74a15c93b5bc",
+      "bytes": 4858,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S86-cnns-rnns-for-text"
+    },
+    {
+      "commit": "b6257ebccdaf34a6e16056026237be0f9e8a2fea",
+      "path": "i18n/zh/.curated/stages/S87-map-assumptions-and-risk/TERMINOLOGY.md",
+      "sha256": "2a3f542fdb608c3158216e964c057d7b07d9e93cd33ca52427a8a8d93a679e10",
+      "git_blob": "40c6fcc35088fe99a43d02bd77bd3d6eaa46038e",
+      "bytes": 4581,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S87-map-assumptions-and-risk"
+    },
+    {
+      "commit": "ac448471d1be529916bc9967b8fee11e9549f5ab",
+      "path": "i18n/zh/.curated/stages/S88-image-classification/TERMINOLOGY.md",
+      "sha256": "dc68c5834e89d04962e2ae5312a8aa5d19e019329a3f50880cbea4b99012348a",
+      "git_blob": "f7bd10e8ac8f7900ed4ed788cfa90690b4a4e6d7",
+      "bytes": 5791,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S88-image-classification"
+    },
+    {
+      "commit": "7e67c26e2a7459319a30645374a69ae551bd70f7",
+      "path": "i18n/zh/.curated/stages/S89-sequence-to-sequence/TERMINOLOGY.md",
+      "sha256": "d0df724e728064ed9ed866909df5e5b8d840763957cec99340c18fbee199f21c",
+      "git_blob": "3fa4565c0f6f70e73edd554c431e3522c2a9909f",
+      "bytes": 3744,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S89-sequence-to-sequence"
+    },
+    {
+      "commit": "f6d305f6b542908bd6c05d6e781869762cab9b35",
+      "path": "i18n/zh/.curated/stages/S90-choose-smallest-testable-slice/TERMINOLOGY.md",
+      "sha256": "a74717692fa335c4fc3d393ab308a95253bb339de9aa1608899d3c515c1aa84c",
+      "git_blob": "32668f36e2a1bddea08868b2b59341b7b5100d74",
+      "bytes": 5174,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S90-choose-smallest-testable-slice"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/check_curated_render.js",
+      "sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43",
+      "git_blob": "9aaa367c468e88d6221d8a955637575c72d0b3ee",
+      "bytes": 2612,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/curated_translation.py",
+      "sha256": "d89de5eec36e10edcc391330d973632e3ceedb33fe679de3503dab52a7f6ece8",
+      "git_blob": "1e12882cbb814a1a4662f6e81a22d04601f3e84b",
+      "bytes": 21566,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/test_curated_translation.py",
+      "sha256": "1e049b41bfe486ed3d01afdcadb0b24de40eef5425e7b2ee704a488dbe6da176",
+      "git_blob": "9bf51015e9afbc29b75a4d8b4ab5d8c30a405b74",
+      "bytes": 16386,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S91-transfer-learning/TERMINOLOGY.md",
+      "commit": "f4edbf1c757109c5b60c6a78089cc9919d6766b6",
+      "sha256": "7f68969fb3ce01f2bca71ec727894c0b07054d4a3a9c9b22e0e17969706a5a1a",
+      "bytes": 5678,
+      "git_blob": "f6f8c20497370c3172ba0518f5fabc35b701d497",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S92-attention-mechanism/TERMINOLOGY.md",
+      "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+      "sha256": "09183629e5165b401db0a902d4818555d3b2bb4740d83662cf0327b09392a691",
+      "bytes": 5173,
+      "git_blob": "ff94ee61bebf1f15396b15f845b5951aa33ed23d",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S93-preserve-judgment-specs/TERMINOLOGY.md",
+      "commit": "ce0e38fc576445592b7705542e01337bda2fb70a",
+      "sha256": "e01d39fa66507f7677e1fab5cbc50d15574db6fa97843289d9109c01fd1994fc",
+      "bytes": 4435,
+      "git_blob": "d5edb301587e152f453a3915aace510478356f47",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S94-object-detection-yolo/TERMINOLOGY.md",
+      "commit": "8c8e7b9ce2c007a7774bd6e326fac9f4f061370a",
+      "sha256": "7aabbf055b993f9e2bdbda9186c901c3b1899b3fae9a662a37c52d8b7e501527",
+      "bytes": 4800,
+      "git_blob": "f7493dc5ec4fa317e96c37bf025d115123759f3b",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S95-machine-translation/TERMINOLOGY.md",
+      "commit": "5dedba8e5d1744cea1cada3960351cddc9d370ba",
+      "sha256": "b76f236ead3e5d881fc1140b4268254d53d88eed397e4551502fb6add6498150",
+      "bytes": 4967,
+      "git_blob": "fb668702d2ec8db2f3939503b87a95315d5f2545",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S96-design-success-metrics/TERMINOLOGY.md",
+      "commit": "3663a4a057c1e6bad8d1ae1e8715037df9ea0b85",
+      "sha256": "82b910f3ba2d4f3d50af3cf839ccc803ebaa03cbc7c20790a6a4f0bde60b07b3",
+      "bytes": 5170,
+      "git_blob": "edb540d2b68ccea9031237d3803c5c4cce26813b",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "sha256": "5eda3951e1e0f874862691337a9f8575be0d4e509d8bf0537a14d0a9ca6b8b57",
+      "git_blob": "96136b0b9b3f40beb1d33e21c837610c7eee5ef5",
+      "bytes": 3713,
+      "mode": "100644",
+      "commit": "bfc72c4478e6f5281dd698097cbc5f1a90937179",
+      "path": "i18n/zh/.curated/stages/S97-semantic-segmentation-unet/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S97-semantic-segmentation-unet",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "8ad2b0ac2966bc7a5f1efe86332354f7351c498c330e5f1b789b10ff1626e617"
+    },
+    {
+      "sha256": "eea7ef983de8d05d41b845948a44e412fefcae84ff97b285efb93cb6420be310",
+      "git_blob": "d1f1272c8b70c08fdbc2bcad5826288295373d82",
+      "bytes": 4384,
+      "mode": "100644",
+      "commit": "b3e360191e81c1e02a946d25233e83980ea0baf7",
+      "path": "i18n/zh/.curated/stages/S98-text-summarization/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S98-text-summarization",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "f5733775d55e587d329195d6586cdb1dc75d260b45401307f50926a2eb6edad4"
+    },
+    {
+      "sha256": "3beb79c503ed2c546084ab81e833a6289d04a996e9f47229d737aad58218e977",
+      "git_blob": "5ef51b98d1535cbfd481ce2fd2f8f80e77305bd9",
+      "bytes": 4369,
+      "mode": "100644",
+      "commit": "b39ad5716e3ccbf911de020e1e561872ac27402e",
+      "path": "i18n/zh/.curated/stages/S99-prototype-pilot-production/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S99-prototype-pilot-production",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "71119ee38e1c72d9da0aa4aba7e73985a1d4853f00c78e88873f22a5ece6cbdc"
+    },
+    {
+      "sha256": "0954343f11f0f0b6ffb64de6a0af05e3cd60c3bbddf0477b71ffb9f3d1f5b07c",
+      "git_blob": "2e11c7a43b0f3b71b6f0e958a27bc3a63010f485",
+      "bytes": 5517,
+      "mode": "100644",
+      "commit": "703a59d07de5da63fcd4ac2542ead6dd403360b4",
+      "path": "i18n/zh/.curated/stages/S100-instance-segmentation-mask-rcnn/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S100-instance-segmentation-mask-rcnn",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "386f932e6574f266302aa30e4f54ae1e342ddbe3e2a45aee5b56de575da1f661"
+    },
+    {
+      "sha256": "eff81027f5f964e9337c5d2c6d3785b2d5d12f27df7120a949d65d9745997f3e",
+      "git_blob": "57688b9c31746136f15698cab7c98ead1cab8b7f",
+      "bytes": 5267,
+      "mode": "100644",
+      "commit": "7aa56b80c3910fb1b6b181a51ad491ae6fce1cf1",
+      "path": "i18n/zh/.curated/stages/S101-question-answering/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S101-question-answering",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "a59920db85ce40bea503eb5319b49cb1cc621c79a7b4ab0df776b367b8fbcd9d"
+    },
+    {
+      "sha256": "5c2c588eabf1f2618333006c7e9781373c2e230275c7de0646255c1131d72f7c",
+      "git_blob": "c6a4e894a5232f59f52c33dbe7533e45b26bb0a7",
+      "bytes": 4309,
+      "mode": "100644",
+      "commit": "ae29b12daedb337abff0f904fee3e60aad85717a",
+      "path": "i18n/zh/.curated/stages/S102-feedback-ratchet/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S102-feedback-ratchet",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "d24a95d19fbb3b69c592f5f6a8ed11c5b2d35ffa4ad2170d819b9c83335ea9c2"
+    },
+    {
+      "sha256": "895d542d9e3b32a63418ed6c5721e5e5d410ae5f0c5ffd42de6a354cd05c48e9",
+      "git_blob": "09d7e7bf34c882b86d510799532330e20e1a4e55",
+      "bytes": 2805,
+      "mode": "100644",
+      "commit": "a7b37c9c037d705a058a245cffd7fb4f002f4942",
+      "path": "i18n/zh/.curated/stages/S103-image-generation-gans/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S103-image-generation-gans",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "b0a61520b6faffbcf4a0a41c7b4130832c2597040b05980973dba271e57c94d5"
+    },
+    {
+      "sha256": "c6897b380c0988603d6fd23fcf666d7f7f5cf99863a09a200d9e93fe5f27bdbe",
+      "git_blob": "f2b4890f75c80f8f596830e7fef26c502086d0d4",
+      "bytes": 1995,
+      "mode": "100644",
+      "commit": "262faaea2769da54827a6a03b9a31e1f7a325184",
+      "path": "i18n/zh/.curated/stages/S104-chatbots-rule-to-neural/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S104-chatbots-rule-to-neural",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "37427ec8b0f7ffdcf4242e66013778f6be6516977b2e16a640590faebc95c516"
+    },
+    {
+      "sha256": "70e594b8697ea421ab04dfbcd295a9c7766dff371c74215077f9d95b5881787d",
+      "git_blob": "3851ffdd5ede50d0b9067b943c12f7f212722ff2",
+      "bytes": 4428,
+      "mode": "100644",
+      "commit": "b6aeb6b08eda8823a0ecb8bc9de0c4e637f14bd9",
+      "path": "i18n/zh/.curated/stages/S105-frame-task-before-code/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S105-frame-task-before-code",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "bf47822e547b5a647a814860216aff1a3ce3e645b8b4c760226a4a4562f04c98"
+    },
+    {
+      "sha256": "63fc8636014d507247e55404f93fcb3f0995aec0d18f39f4efea3c6f68a22f50",
+      "git_blob": "27c1b469c2405536870f15d71fa11d672e40dfbc",
+      "bytes": 4215,
+      "mode": "100644",
+      "commit": "5a86aeb577e780ed267ded5aee7e9e63631fcdda",
+      "path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S106-image-generation-diffusion",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "385f2ff3b5c11163a9a3b1c5d8e3836c42ceb46831e5c5f5df0589448d610aae"
+    },
+    {
+      "sha256": "df359ca64961cd9b77638d39dc4db15cff6457dcf68aee24707419a4315f76c8",
+      "git_blob": "ab5d498f582fb61f9b580b3e4aaa830ac82b1b17",
+      "bytes": 2434,
+      "mode": "100644",
+      "commit": "7744c51e2228d57c14fc7481ebc4c86e71555cba",
+      "path": "i18n/zh/.curated/stages/S107-multilingual-nlp/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S107-multilingual-nlp",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "60b8f6a61da1e6c2ce0e876acd3956a2518c20fa0209c1309950d07b3e8d24e0"
+    },
+    {
+      "sha256": "bbab3c01abe4c791e9c75a37eba7ad43c994c23a2779c7aaa84964ed1b61363e",
+      "git_blob": "92d2a5f21965d78bd3c648626e1bc14f6397f2b1",
+      "bytes": 4043,
+      "mode": "100644",
+      "commit": "b674bad722686ea300e2415b7d4dd8ba788fbccc",
+      "path": "i18n/zh/.curated/stages/S108-plan-from-evidence/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S108-plan-from-evidence",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "b5bc7c1ac1304f200208abe8fe74dbfede175c1afce2c800815d9d18c5a95c34"
+    },
+    {
+      "sha256": "7ed109ca8a17d11abdb98cfc5812d22e548f2b3d7c7f27a551c069512cba2d31",
+      "git_blob": "a44404b7eaaa1c72a7cc7f58b2004a0d153fff1d",
+      "bytes": 4513,
+      "mode": "100644",
+      "commit": "9eee323daf2159da74499f3dfc59191cb05b980f",
+      "path": "i18n/zh/.curated/stages/S109-stable-diffusion/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S109-stable-diffusion",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "d3efb41089822de2b607b08ce673bd1a216df858306b20795f44a01df8e3dbef"
+    },
+    {
+      "sha256": "8651636066978d0c73f8206e82413050a190c37b499960bdff62d201ea1c5469",
+      "git_blob": "28aaba0fd68d082dd95896424393c5eb2edbfa52",
+      "bytes": 4826,
+      "mode": "100644",
+      "commit": "f35545d204f50e5b3e4d648e16dad7c1aab8ec5b",
+      "path": "i18n/zh/.curated/stages/S110-structured-outputs-constrained-decoding/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S110-structured-outputs-constrained-decoding",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "63c3c45e4e35b21ba808c04220f803e81c720bf2296225cc2d3a03b35c0a4b0b"
+    },
+    {
+      "sha256": "2cbc14aefb690bec2419aea1e9aebc119a446fda5d4c88f4624b9e598d8922d5",
+      "git_blob": "c08d4d45acbc32397872348a30d5d560e18a9165",
+      "bytes": 4017,
+      "mode": "100644",
+      "commit": "16c5ca8c98db36d73e0c81cb4cf995867ec84862",
+      "path": "i18n/zh/.curated/stages/S111-delegate-with-isolation/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S111-delegate-with-isolation",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "6abb03b8223cb27528bf1d53647d40e224e49bfa5b5e19d3a817c96dc6596873"
+    },
+    {
+      "sha256": "f1807271b926a8ff484c33b4b15353c235955c885922826e8275e453cc404177",
+      "git_blob": "ffd2a4dc549988e7b1cadc4bd363d657a259bf1d",
+      "bytes": 4157,
+      "mode": "100644",
+      "commit": "4fa49cf0422906c8d73312f3a8a0345cc91ca561",
+      "path": "i18n/zh/.curated/stages/S112-video-understanding/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S112-video-understanding",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "421a609399795517564fcbd0ed7a4918b32bae1fb407230a15f18adc5d5faa72"
+    },
+    {
+      "sha256": "2a72b6ea439d11ca19cfd624230038ad2c02596bce39f046dfb1fb3523e72b5e",
+      "git_blob": "f0f7dea4b6420526453d82bec383cbc2afb9e5c2",
+      "bytes": 4469,
+      "mode": "100644",
+      "commit": "ae833235f2193726a42732e8d36d720dbc56ac72",
+      "path": "i18n/zh/.curated/stages/S113-nli-textual-entailment/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S113-nli-textual-entailment",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "500f645c52b11f7863db946493cbcff2e3e44550f787b85f66aac74e4e373b45"
+    },
+    {
+      "sha256": "2b158dc236addc2dba1726aa7086054905366ab8187dcdc3be7f3d3d4faf2815",
+      "git_blob": "88f9b156c912689cfff0c6a8041140a122c83b1c",
+      "bytes": 3649,
+      "mode": "100644",
+      "commit": "80ec801ae5aa1c46ea5ab7cd3d20ae5b243a977e",
+      "path": "i18n/zh/.curated/stages/S114-turn-feedback-into-system/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S114-turn-feedback-into-system",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "8f10ad9e2b364a0c0df4efe7ea19c2eff6c31ee992b6b90320bd546fbb7361f6"
+    }
+  ],
+  "reference_glossary_pins": [
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "git_blob": "51d583a00afc0ee6cddabe1802c59122d3c9d42f",
+      "bytes": 42839,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "git_blob": "3c3a4dc961984792a3635c473de36ed53a8eada7",
+      "bytes": 10069,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+      "git_blob": "efba509207ced3ac44cdddd8ce8faa2e1560cbbb",
+      "bytes": 3645,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S01-tool-foundations"
+    },
+    {
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e",
+      "git_blob": "fb5ec4fae661faf5fcae3288ed50fda94ded92c7",
+      "bytes": 2988,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S02-terminal-linux"
+    },
+    {
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077",
+      "git_blob": "d6f71417dab16872716008bb34c6e4fefa97a81e",
+      "bytes": 2886,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S03-gpu-docker"
+    },
+    {
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed",
+      "git_blob": "b4433dcf406df32b0cf588c5e5f7b2da00a22ecc",
+      "bytes": 2759,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S04-data-management"
+    },
+    {
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+      "git_blob": "6d67b7168f486b05f27b01af69161a16cea11377",
+      "bytes": 3862,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S05-linear-algebra-basics"
+    },
+    {
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+      "git_blob": "bcf4f580e2895ce944a2cad5ab4ea43424977ecb",
+      "bytes": 2425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S06-matrix-transformations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428",
+      "git_blob": "c3f3c4b17d5f6af0fc49211ae72af6ca44227f73",
+      "bytes": 4184,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S07-calculus-foundations"
+    },
+    {
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca",
+      "git_blob": "c70a717985296f3dc75e552bb92a6f06ab4c0b78",
+      "bytes": 3157,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S08-chain-rule-autodiff"
+    },
+    {
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880",
+      "git_blob": "2d394898b293afc5f35c92aa6357767ee337dba0",
+      "bytes": 4023,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S09-probability-foundations"
+    },
+    {
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec",
+      "git_blob": "36035ee5c71335a756b68f719bf0c183e2908ce2",
+      "bytes": 4494,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S10-bayes-foundations"
+    },
+    {
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf",
+      "git_blob": "3c7e79a3741b61f4198af233b69f24fc33e6f433",
+      "bytes": 3736,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S11-optimization-foundations"
+    },
+    {
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115",
+      "git_blob": "483d7fe5393ff8228f8320e122bff65899afc0d9",
+      "bytes": 3284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S12-information-theory"
+    },
+    {
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364",
+      "git_blob": "9a294d0c7d641f3895ec5d2a3401ea4a96fdcf67",
+      "bytes": 3438,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S13-dimensionality-reduction"
+    },
+    {
+      "commit": "acf8e89bc4596c13307a53a995fe96701221c5b6",
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5",
+      "git_blob": "4fb7a14c1730db6cd5f30d26f51c5fe4d8c0ba02",
+      "bytes": 3312,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S14-tensor-operations"
+    },
+    {
+      "commit": "e906a46fdf8a0ea9ea22c68784b4303e1c10c198",
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4",
+      "git_blob": "1016d7d240bb1b78897be717041500e687fd9401",
+      "bytes": 3048,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S15-numerical-stability"
+    },
+    {
+      "commit": "2610d0dec88725fec4528accc5487f9cf88b4d49",
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a",
+      "git_blob": "8a606b02466143d31e7ca4210b47a7be254394e8",
+      "bytes": 3677,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S16-norms-distances"
+    },
+    {
+      "commit": "7f802943f85ff5621e50eb2307cb712e0fff2b68",
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48",
+      "git_blob": "dc95714026cd8e693e396db3f2448d1179df3943",
+      "bytes": 3928,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S17-statistics-for-ml"
+    },
+    {
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff",
+      "git_blob": "3b91d4c008bf0d06d38298b36ce505ce8a318b6b",
+      "bytes": 3660,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S18-sampling-methods"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2",
+      "git_blob": "596dc57b24236543cc2ba7b2060d067a6db18f13",
+      "bytes": 2924,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S19-linear-systems"
+    },
+    {
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a",
+      "git_blob": "8362723bd43106e34aabf3da2d4e10e5e56cce18",
+      "bytes": 3434,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S20-convex-optimization"
+    },
+    {
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4",
+      "git_blob": "fc3c32a750247da022623c0789363167885fa1dd",
+      "bytes": 3408,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S21-fourier-transform"
+    },
+    {
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "git_blob": "2f1da1190ed66909df4150cded08ab76d3110cb7",
+      "bytes": 3170,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S22-ml-overview"
+    },
+    {
+      "commit": "ccf427ff16970a5cde15eeef5c085530fc50978b",
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844",
+      "git_blob": "fa7abc4253e2a3aea3556aa520a5f0c5d762283a",
+      "bytes": 2553,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S23-decision-trees"
+    },
+    {
+      "commit": "99277ca3ba91fcc3b8f06dffe6c5cdb212b7278b",
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63",
+      "git_blob": "37b8e539615eba55fd962d46e2bd11545535aa7d",
+      "bytes": 2284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S24-knn-distances"
+    },
+    {
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3",
+      "git_blob": "eb71f179dc1b215a2cc4dd6ab30d9879d6b3a0fd",
+      "bytes": 2382,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S25-linear-regression"
+    },
+    {
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd",
+      "git_blob": "6319a758cf71a1bf7b0af996ebfc6d8c46b2b0c7",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S26-support-vector-machines"
+    },
+    {
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8",
+      "git_blob": "eff9c68670ecb23e0213084e1a9fcb8f957c1d63",
+      "bytes": 2088,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S27-perceptron"
+    },
+    {
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1",
+      "git_blob": "92e02c63f3760272c684341d4e3f1a8fe19f3f0f",
+      "bytes": 2326,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S28-logistic-regression"
+    },
+    {
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21",
+      "git_blob": "4f3fea7d28134a6cf4bf453a381ea04fbd8b90bb",
+      "bytes": 2269,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S29-multi-layer-networks"
+    },
+    {
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd",
+      "git_blob": "1d8612f449304097bfdb1f9b2c337f538c27f163",
+      "bytes": 2209,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S30-audio-fundamentals"
+    },
+    {
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1",
+      "git_blob": "d3cdc78dc5230ed8164824dd7b366894fc8af209",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S31-unsupervised-learning"
+    },
+    {
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726",
+      "git_blob": "2c18b360177a935d7e16f1cddfcd17228afc2d4e",
+      "bytes": 2279,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S32-backpropagation"
+    },
+    {
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66",
+      "git_blob": "890baefa8c23198a0728f5db2c41b8da258d1b7b",
+      "bytes": 2354,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S33-building-tokenizer"
+    },
+    {
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6",
+      "git_blob": "7a81537a54bf29a6a510f2ae203747dbef8161ab",
+      "bytes": 2513,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S34-feature-engineering"
+    },
+    {
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4",
+      "git_blob": "cf02f8a51eb91f69853a96dbe0ef228156884483",
+      "bytes": 2335,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S35-activation-functions"
+    },
+    {
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e",
+      "git_blob": "abb5e30bd7c58c60811935ace9a207795d8b7073",
+      "bytes": 2430,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S36-naive-bayes"
+    },
+    {
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de",
+      "git_blob": "1aec35ef2ba3b81cf974bde20b522b3ac22cfdac",
+      "bytes": 4383,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S37-pretraining-data"
+    },
+    {
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340",
+      "git_blob": "4ae770868a791fc68af0b235d3e14d71e585a3c3",
+      "bytes": 3095,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S38-flamingo"
+    },
+    {
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533",
+      "git_blob": "09c852f9b00cb6d496ffa423a744972c6458845a",
+      "bytes": 2483,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S39-model-evaluation"
+    },
+    {
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557",
+      "git_blob": "29da68dbd644a01ff7509185a060189819bdf79e",
+      "bytes": 2503,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S40-loss-functions"
+    },
+    {
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc",
+      "git_blob": "effcbe3cebed938d10a2f87cab92ef063d37835e",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S41-text-processing"
+    },
+    {
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359",
+      "git_blob": "ccf24ce35cd2d227658dd0eaeb0ff5e137b73a45",
+      "bytes": 2022,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S42-bias-variance"
+    },
+    {
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae",
+      "git_blob": "9f4a7b78ba3f0eaaf8f0b53ef92ce848e343ef6c",
+      "bytes": 2575,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S43-optimizers"
+    },
+    {
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba",
+      "git_blob": "2e5267fd7fda2946607d2c4efe76f783b84a70a4",
+      "bytes": 2281,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S44-bag-of-words-tfidf"
+    },
+    {
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243",
+      "git_blob": "d89de19e68a642eb5ba0de7c3a1c86f5d53a183b",
+      "bytes": 3177,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S45-pretraining-mini-gpt"
+    },
+    {
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c",
+      "git_blob": "5c8c335d3d9544f45af084855f43bc901757b532",
+      "bytes": 3037,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S46-pos-tagging-parsing"
+    },
+    {
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3",
+      "git_blob": "08c29105b859aca15c5857d3c7fe5acfaaa16232",
+      "bytes": 2165,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S47-ensemble-methods"
+    },
+    {
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc",
+      "git_blob": "6d018fa789c46c330ec30d076b6b45f3b1944c32",
+      "bytes": 2744,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S48-regularization"
+    },
+    {
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018",
+      "git_blob": "23bae97c69d96369d1c97ec561e987d77cb990bf",
+      "bytes": 2769,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S49-word2vec"
+    },
+    {
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06",
+      "git_blob": "f14bdc002f7f2a2500507be5ae0da7b7865c62c5",
+      "bytes": 3425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S50-ngram-language-models"
+    },
+    {
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795",
+      "git_blob": "af1e6093e2b48ba42e150a3e8356f5456b47faac",
+      "bytes": 2818,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S51-sentiment-analysis"
+    },
+    {
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0",
+      "git_blob": "d25320b87932fa85bb65f03454afbe084c4f8e86",
+      "bytes": 2038,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S52-hyperparameter-tuning"
+    },
+    {
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340",
+      "git_blob": "d3b1c81cecc879fce6da44cc2ae2681792b21cae",
+      "bytes": 2508,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S53-weight-initialization"
+    },
+    {
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99",
+      "git_blob": "4513cb31ec4c8c07f2328692d1e2d07260039124",
+      "bytes": 2488,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S54-glove-fasttext-subword"
+    },
+    {
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201",
+      "git_blob": "eeb728a5d0d43b6c032a7884253f25cb5c8201a0",
+      "bytes": 3187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S55-named-entity-recognition"
+    },
+    {
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5",
+      "git_blob": "88e1bc702c14383d3a8cd5d9c3476f56c1b8f7b7",
+      "bytes": 2583,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S56-topic-modeling"
+    },
+    {
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8",
+      "git_blob": "1d72892c4d18d373d2550282046ae90f24278600",
+      "bytes": 1821,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S57-ml-pipelines"
+    },
+    {
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361",
+      "git_blob": "bf966eca0129457a64967d7ab4557cae652fb82e",
+      "bytes": 2032,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S58-learning-rate-schedules"
+    },
+    {
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2",
+      "git_blob": "039edec92b22f1acc04257bec40fbdcedf14eb72",
+      "bytes": 2287,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S59-information-retrieval-search"
+    },
+    {
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d",
+      "git_blob": "2859645c51d6a2a9d5b2d418a9d616b9a552bf8d",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S60-subword-tokenization"
+    },
+    {
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379",
+      "git_blob": "af1026384a9e718fe6acf4e0d5afd15bca9a49f1",
+      "bytes": 2620,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S62-time-series"
+    },
+    {
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c",
+      "git_blob": "909f8a309d9606bbb755598b26123e29eb2bb60b",
+      "bytes": 2291,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S63-mini-framework"
+    },
+    {
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297",
+      "git_blob": "2bf145d2e719bd7e90bd5e9772500a76c8a78e56",
+      "bytes": 2365,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S64-embedding-models-deep-dive"
+    },
+    {
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac",
+      "git_blob": "7558a06998af49d2a4b07299bc7edb6991932dea",
+      "bytes": 2572,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S65-coreference-resolution"
+    },
+    {
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449",
+      "git_blob": "1b278c7d40d645d1ff0c80c0963b24391e9d5958",
+      "bytes": 2187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S67-anomaly-detection"
+    },
+    {
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198",
+      "git_blob": "6f6c890dd6b18fd6729619b9ac0f4230a0790886",
+      "bytes": 2120,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S68-imbalanced-data"
+    },
+    {
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c",
+      "git_blob": "ba2f5d2833c22d665de3500bfb07895c751a541a",
+      "bytes": 2535,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S69-intro-to-pytorch"
+    },
+    {
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c",
+      "git_blob": "9cbb5f7ee02ef8dbe38f1709ee6fc6398c18cf25",
+      "bytes": 2206,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S70-chunking-strategies-rag"
+    },
+    {
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44",
+      "git_blob": "3c90f176f47d6c37b0ec1b0e4e83cbddceed7f2d",
+      "bytes": 3266,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S71-entity-linking"
+    },
+    {
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef",
+      "git_blob": "a6ee3f7b4afac98072fac33d6592468cf8628227",
+      "bytes": 3109,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S72-intro-to-jax"
+    },
+    {
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505",
+      "git_blob": "bc236d955c7437e2fcdea07d13a68600004caf3f",
+      "bytes": 2445,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S73-debugging-neural-networks"
+    },
+    {
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488",
+      "git_blob": "de8e3a444952b5f13b2b8bfa140836a483186884",
+      "bytes": 3460,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S74-relation-extraction-kg"
+    },
+    {
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347",
+      "git_blob": "6977075d8c93e88c344cc59221888db694d3b5c5",
+      "bytes": 2939,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S75-speaker-recognition-verification"
+    },
+    {
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421",
+      "git_blob": "d8730fc8bf95c6bb26bfd027cd5b7312bb5cef55",
+      "bytes": 3011,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S76-graph-theory"
+    },
+    {
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6",
+      "git_blob": "b565a501009f209b53e4eb15b628f8b67bd7c3af",
+      "bytes": 2684,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S77-image-fundamentals"
+    },
+    {
+      "commit": "56ee752aba7560af2ea4104d9fe07792b849c9e4",
+      "path": "i18n/zh/.curated/stages/S78-stochastic-processes/TERMINOLOGY.md",
+      "sha256": "f211aa1993249e771de3a60e924ea673b60ccd310994c9c6158a1a4225c3ffb4",
+      "git_blob": "6434f650066f589951c5d659ef71493d624801db",
+      "bytes": 3485,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S78-stochastic-processes"
+    },
+    {
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197",
+      "git_blob": "d69faa5f6530df562ce242491170a8c35ddb0ef6",
+      "bytes": 3390,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S80-watermarking-synthid-stable-signature-c2pa"
+    },
+    {
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b",
+      "git_blob": "f86f6161c9e5314188233bd65adf4883c8293236",
+      "bytes": 1566,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S81-outcomes-before-output"
+    },
+    {
+      "commit": "31143020895d0c406c2b36cdb362683c6f40e2e4",
+      "path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+      "sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e",
+      "git_blob": "e0c7e706c636bba3bdb3a7849b87b9c5d1a796cb",
+      "bytes": 5198,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S82-debugging-and-profiling"
+    },
+    {
+      "commit": "682be1701b737db6b85315719d0744fcdb2c0574",
+      "path": "i18n/zh/.curated/stages/S83-convolutions-from-scratch/TERMINOLOGY.md",
+      "sha256": "3305451de8fd1e1af1c3594824045890a233d7c6c2da636b7ae7b5f3f29c2d81",
+      "git_blob": "d2f3c937e0cf2ad3b3766989401cd7642af5d3c2",
+      "bytes": 6444,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S83-convolutions-from-scratch"
+    },
+    {
+      "commit": "07031ded257dd184214a1505880a838328ea74f8",
+      "path": "i18n/zh/.curated/stages/S84-discover-the-real-workflow/TERMINOLOGY.md",
+      "sha256": "95a7f035b18f8988c334cc4bc6c68a136719e8fc223a31c117780c3876a86035",
+      "git_blob": "5b1fe0e376ee3ba83ce34cf631c10df41ad880f1",
+      "bytes": 6930,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S84-discover-the-real-workflow"
+    },
+    {
+      "commit": "1a364d8283c864eccac467bb32a850a0d0779eef",
+      "path": "i18n/zh/.curated/stages/S85-cnns-lenet-to-resnet/TERMINOLOGY.md",
+      "sha256": "d8ca3e0f8e060f61603d46fe6984eb0488a48078490b16fc3a515dd5980ac8d1",
+      "git_blob": "2a310461fe3426a16aed09266558a7a10d14a5d8",
+      "bytes": 7110,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S85-cnns-lenet-to-resnet"
+    },
+    {
+      "commit": "b333554e53ab0b231a086aa9d1b9e381a82dccb2",
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/TERMINOLOGY.md",
+      "sha256": "eae3b3a7ac0bc2fdb9cbf25bc0c88a25ae81dfd45012e2be178bb005fae1bf3b",
+      "git_blob": "c9e4d03bb804934004ee75816f0f74a15c93b5bc",
+      "bytes": 4858,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S86-cnns-rnns-for-text"
+    },
+    {
+      "commit": "b6257ebccdaf34a6e16056026237be0f9e8a2fea",
+      "path": "i18n/zh/.curated/stages/S87-map-assumptions-and-risk/TERMINOLOGY.md",
+      "sha256": "2a3f542fdb608c3158216e964c057d7b07d9e93cd33ca52427a8a8d93a679e10",
+      "git_blob": "40c6fcc35088fe99a43d02bd77bd3d6eaa46038e",
+      "bytes": 4581,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S87-map-assumptions-and-risk"
+    },
+    {
+      "commit": "ac448471d1be529916bc9967b8fee11e9549f5ab",
+      "path": "i18n/zh/.curated/stages/S88-image-classification/TERMINOLOGY.md",
+      "sha256": "dc68c5834e89d04962e2ae5312a8aa5d19e019329a3f50880cbea4b99012348a",
+      "git_blob": "f7bd10e8ac8f7900ed4ed788cfa90690b4a4e6d7",
+      "bytes": 5791,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S88-image-classification"
+    },
+    {
+      "commit": "7e67c26e2a7459319a30645374a69ae551bd70f7",
+      "path": "i18n/zh/.curated/stages/S89-sequence-to-sequence/TERMINOLOGY.md",
+      "sha256": "d0df724e728064ed9ed866909df5e5b8d840763957cec99340c18fbee199f21c",
+      "git_blob": "3fa4565c0f6f70e73edd554c431e3522c2a9909f",
+      "bytes": 3744,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S89-sequence-to-sequence"
+    },
+    {
+      "commit": "f6d305f6b542908bd6c05d6e781869762cab9b35",
+      "path": "i18n/zh/.curated/stages/S90-choose-smallest-testable-slice/TERMINOLOGY.md",
+      "sha256": "a74717692fa335c4fc3d393ab308a95253bb339de9aa1608899d3c515c1aa84c",
+      "git_blob": "32668f36e2a1bddea08868b2b59341b7b5100d74",
+      "bytes": 5174,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S90-choose-smallest-testable-slice"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S91-transfer-learning/TERMINOLOGY.md",
+      "commit": "f4edbf1c757109c5b60c6a78089cc9919d6766b6",
+      "sha256": "7f68969fb3ce01f2bca71ec727894c0b07054d4a3a9c9b22e0e17969706a5a1a",
+      "bytes": 5678,
+      "git_blob": "f6f8c20497370c3172ba0518f5fabc35b701d497",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S92-attention-mechanism/TERMINOLOGY.md",
+      "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+      "sha256": "09183629e5165b401db0a902d4818555d3b2bb4740d83662cf0327b09392a691",
+      "bytes": 5173,
+      "git_blob": "ff94ee61bebf1f15396b15f845b5951aa33ed23d",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S93-preserve-judgment-specs/TERMINOLOGY.md",
+      "commit": "ce0e38fc576445592b7705542e01337bda2fb70a",
+      "sha256": "e01d39fa66507f7677e1fab5cbc50d15574db6fa97843289d9109c01fd1994fc",
+      "bytes": 4435,
+      "git_blob": "d5edb301587e152f453a3915aace510478356f47",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S94-object-detection-yolo/TERMINOLOGY.md",
+      "commit": "8c8e7b9ce2c007a7774bd6e326fac9f4f061370a",
+      "sha256": "7aabbf055b993f9e2bdbda9186c901c3b1899b3fae9a662a37c52d8b7e501527",
+      "bytes": 4800,
+      "git_blob": "f7493dc5ec4fa317e96c37bf025d115123759f3b",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S95-machine-translation/TERMINOLOGY.md",
+      "commit": "5dedba8e5d1744cea1cada3960351cddc9d370ba",
+      "sha256": "b76f236ead3e5d881fc1140b4268254d53d88eed397e4551502fb6add6498150",
+      "bytes": 4967,
+      "git_blob": "fb668702d2ec8db2f3939503b87a95315d5f2545",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S96-design-success-metrics/TERMINOLOGY.md",
+      "commit": "3663a4a057c1e6bad8d1ae1e8715037df9ea0b85",
+      "sha256": "82b910f3ba2d4f3d50af3cf839ccc803ebaa03cbc7c20790a6a4f0bde60b07b3",
+      "bytes": 5170,
+      "git_blob": "edb540d2b68ccea9031237d3803c5c4cce26813b",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "sha256": "5eda3951e1e0f874862691337a9f8575be0d4e509d8bf0537a14d0a9ca6b8b57",
+      "git_blob": "96136b0b9b3f40beb1d33e21c837610c7eee5ef5",
+      "bytes": 3713,
+      "mode": "100644",
+      "commit": "bfc72c4478e6f5281dd698097cbc5f1a90937179",
+      "path": "i18n/zh/.curated/stages/S97-semantic-segmentation-unet/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S97-semantic-segmentation-unet",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "8ad2b0ac2966bc7a5f1efe86332354f7351c498c330e5f1b789b10ff1626e617"
+    },
+    {
+      "sha256": "eea7ef983de8d05d41b845948a44e412fefcae84ff97b285efb93cb6420be310",
+      "git_blob": "d1f1272c8b70c08fdbc2bcad5826288295373d82",
+      "bytes": 4384,
+      "mode": "100644",
+      "commit": "b3e360191e81c1e02a946d25233e83980ea0baf7",
+      "path": "i18n/zh/.curated/stages/S98-text-summarization/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S98-text-summarization",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "f5733775d55e587d329195d6586cdb1dc75d260b45401307f50926a2eb6edad4"
+    },
+    {
+      "sha256": "3beb79c503ed2c546084ab81e833a6289d04a996e9f47229d737aad58218e977",
+      "git_blob": "5ef51b98d1535cbfd481ce2fd2f8f80e77305bd9",
+      "bytes": 4369,
+      "mode": "100644",
+      "commit": "b39ad5716e3ccbf911de020e1e561872ac27402e",
+      "path": "i18n/zh/.curated/stages/S99-prototype-pilot-production/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S99-prototype-pilot-production",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "71119ee38e1c72d9da0aa4aba7e73985a1d4853f00c78e88873f22a5ece6cbdc"
+    },
+    {
+      "sha256": "0954343f11f0f0b6ffb64de6a0af05e3cd60c3bbddf0477b71ffb9f3d1f5b07c",
+      "git_blob": "2e11c7a43b0f3b71b6f0e958a27bc3a63010f485",
+      "bytes": 5517,
+      "mode": "100644",
+      "commit": "703a59d07de5da63fcd4ac2542ead6dd403360b4",
+      "path": "i18n/zh/.curated/stages/S100-instance-segmentation-mask-rcnn/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S100-instance-segmentation-mask-rcnn",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "386f932e6574f266302aa30e4f54ae1e342ddbe3e2a45aee5b56de575da1f661"
+    },
+    {
+      "sha256": "eff81027f5f964e9337c5d2c6d3785b2d5d12f27df7120a949d65d9745997f3e",
+      "git_blob": "57688b9c31746136f15698cab7c98ead1cab8b7f",
+      "bytes": 5267,
+      "mode": "100644",
+      "commit": "7aa56b80c3910fb1b6b181a51ad491ae6fce1cf1",
+      "path": "i18n/zh/.curated/stages/S101-question-answering/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S101-question-answering",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "a59920db85ce40bea503eb5319b49cb1cc621c79a7b4ab0df776b367b8fbcd9d"
+    },
+    {
+      "sha256": "5c2c588eabf1f2618333006c7e9781373c2e230275c7de0646255c1131d72f7c",
+      "git_blob": "c6a4e894a5232f59f52c33dbe7533e45b26bb0a7",
+      "bytes": 4309,
+      "mode": "100644",
+      "commit": "ae29b12daedb337abff0f904fee3e60aad85717a",
+      "path": "i18n/zh/.curated/stages/S102-feedback-ratchet/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S102-feedback-ratchet",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "d24a95d19fbb3b69c592f5f6a8ed11c5b2d35ffa4ad2170d819b9c83335ea9c2"
+    },
+    {
+      "sha256": "895d542d9e3b32a63418ed6c5721e5e5d410ae5f0c5ffd42de6a354cd05c48e9",
+      "git_blob": "09d7e7bf34c882b86d510799532330e20e1a4e55",
+      "bytes": 2805,
+      "mode": "100644",
+      "commit": "a7b37c9c037d705a058a245cffd7fb4f002f4942",
+      "path": "i18n/zh/.curated/stages/S103-image-generation-gans/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S103-image-generation-gans",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "b0a61520b6faffbcf4a0a41c7b4130832c2597040b05980973dba271e57c94d5"
+    },
+    {
+      "sha256": "c6897b380c0988603d6fd23fcf666d7f7f5cf99863a09a200d9e93fe5f27bdbe",
+      "git_blob": "f2b4890f75c80f8f596830e7fef26c502086d0d4",
+      "bytes": 1995,
+      "mode": "100644",
+      "commit": "262faaea2769da54827a6a03b9a31e1f7a325184",
+      "path": "i18n/zh/.curated/stages/S104-chatbots-rule-to-neural/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S104-chatbots-rule-to-neural",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "37427ec8b0f7ffdcf4242e66013778f6be6516977b2e16a640590faebc95c516"
+    },
+    {
+      "sha256": "70e594b8697ea421ab04dfbcd295a9c7766dff371c74215077f9d95b5881787d",
+      "git_blob": "3851ffdd5ede50d0b9067b943c12f7f212722ff2",
+      "bytes": 4428,
+      "mode": "100644",
+      "commit": "b6aeb6b08eda8823a0ecb8bc9de0c4e637f14bd9",
+      "path": "i18n/zh/.curated/stages/S105-frame-task-before-code/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S105-frame-task-before-code",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "bf47822e547b5a647a814860216aff1a3ce3e645b8b4c760226a4a4562f04c98"
+    },
+    {
+      "sha256": "63fc8636014d507247e55404f93fcb3f0995aec0d18f39f4efea3c6f68a22f50",
+      "git_blob": "27c1b469c2405536870f15d71fa11d672e40dfbc",
+      "bytes": 4215,
+      "mode": "100644",
+      "commit": "5a86aeb577e780ed267ded5aee7e9e63631fcdda",
+      "path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S106-image-generation-diffusion",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "385f2ff3b5c11163a9a3b1c5d8e3836c42ceb46831e5c5f5df0589448d610aae"
+    },
+    {
+      "sha256": "df359ca64961cd9b77638d39dc4db15cff6457dcf68aee24707419a4315f76c8",
+      "git_blob": "ab5d498f582fb61f9b580b3e4aaa830ac82b1b17",
+      "bytes": 2434,
+      "mode": "100644",
+      "commit": "7744c51e2228d57c14fc7481ebc4c86e71555cba",
+      "path": "i18n/zh/.curated/stages/S107-multilingual-nlp/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S107-multilingual-nlp",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "60b8f6a61da1e6c2ce0e876acd3956a2518c20fa0209c1309950d07b3e8d24e0"
+    },
+    {
+      "sha256": "bbab3c01abe4c791e9c75a37eba7ad43c994c23a2779c7aaa84964ed1b61363e",
+      "git_blob": "92d2a5f21965d78bd3c648626e1bc14f6397f2b1",
+      "bytes": 4043,
+      "mode": "100644",
+      "commit": "b674bad722686ea300e2415b7d4dd8ba788fbccc",
+      "path": "i18n/zh/.curated/stages/S108-plan-from-evidence/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S108-plan-from-evidence",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "b5bc7c1ac1304f200208abe8fe74dbfede175c1afce2c800815d9d18c5a95c34"
+    },
+    {
+      "sha256": "7ed109ca8a17d11abdb98cfc5812d22e548f2b3d7c7f27a551c069512cba2d31",
+      "git_blob": "a44404b7eaaa1c72a7cc7f58b2004a0d153fff1d",
+      "bytes": 4513,
+      "mode": "100644",
+      "commit": "9eee323daf2159da74499f3dfc59191cb05b980f",
+      "path": "i18n/zh/.curated/stages/S109-stable-diffusion/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S109-stable-diffusion",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "d3efb41089822de2b607b08ce673bd1a216df858306b20795f44a01df8e3dbef"
+    },
+    {
+      "sha256": "8651636066978d0c73f8206e82413050a190c37b499960bdff62d201ea1c5469",
+      "git_blob": "28aaba0fd68d082dd95896424393c5eb2edbfa52",
+      "bytes": 4826,
+      "mode": "100644",
+      "commit": "f35545d204f50e5b3e4d648e16dad7c1aab8ec5b",
+      "path": "i18n/zh/.curated/stages/S110-structured-outputs-constrained-decoding/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S110-structured-outputs-constrained-decoding",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "63c3c45e4e35b21ba808c04220f803e81c720bf2296225cc2d3a03b35c0a4b0b"
+    },
+    {
+      "sha256": "2cbc14aefb690bec2419aea1e9aebc119a446fda5d4c88f4624b9e598d8922d5",
+      "git_blob": "c08d4d45acbc32397872348a30d5d560e18a9165",
+      "bytes": 4017,
+      "mode": "100644",
+      "commit": "16c5ca8c98db36d73e0c81cb4cf995867ec84862",
+      "path": "i18n/zh/.curated/stages/S111-delegate-with-isolation/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S111-delegate-with-isolation",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "6abb03b8223cb27528bf1d53647d40e224e49bfa5b5e19d3a817c96dc6596873"
+    },
+    {
+      "sha256": "f1807271b926a8ff484c33b4b15353c235955c885922826e8275e453cc404177",
+      "git_blob": "ffd2a4dc549988e7b1cadc4bd363d657a259bf1d",
+      "bytes": 4157,
+      "mode": "100644",
+      "commit": "4fa49cf0422906c8d73312f3a8a0345cc91ca561",
+      "path": "i18n/zh/.curated/stages/S112-video-understanding/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S112-video-understanding",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "421a609399795517564fcbd0ed7a4918b32bae1fb407230a15f18adc5d5faa72"
+    },
+    {
+      "sha256": "2a72b6ea439d11ca19cfd624230038ad2c02596bce39f046dfb1fb3523e72b5e",
+      "git_blob": "f0f7dea4b6420526453d82bec383cbc2afb9e5c2",
+      "bytes": 4469,
+      "mode": "100644",
+      "commit": "ae833235f2193726a42732e8d36d720dbc56ac72",
+      "path": "i18n/zh/.curated/stages/S113-nli-textual-entailment/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S113-nli-textual-entailment",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "500f645c52b11f7863db946493cbcff2e3e44550f787b85f66aac74e4e373b45"
+    },
+    {
+      "sha256": "2b158dc236addc2dba1726aa7086054905366ab8187dcdc3be7f3d3d4faf2815",
+      "git_blob": "88f9b156c912689cfff0c6a8041140a122c83b1c",
+      "bytes": 3649,
+      "mode": "100644",
+      "commit": "80ec801ae5aa1c46ea5ab7cd3d20ae5b243a977e",
+      "path": "i18n/zh/.curated/stages/S114-turn-feedback-into-system/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S114-turn-feedback-into-system",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "8f10ad9e2b364a0c0df4efe7ea19c2eff6c31ee992b6b90320bd546fbb7361f6"
+    }
+  ],
+  "own_stage_support_pins": [
+    {
+      "path": "i18n/zh/.curated/stages/S119-long-context-evaluation/DEPENDENCIES.json",
+      "sha256": "0c351504e547a47b83b5546f0ab4c988d670daa33413a3ee79d1ce5795798c6b",
+      "bytes": 172466,
+      "git_blob": "a9e5602440aeed4dfbce54560f49f87ec368f6be",
+      "commit": "318ab3d4bb4380658a1fea1137027bdadae49a64",
+      "mode": "100644"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S119-long-context-evaluation/TERMINOLOGY.md",
+      "sha256": "e96e1ba360a6fc59b5dcefefdfdb6953e98fb7533fdf0046c0f6d9b724c2ea3f",
+      "bytes": 2771,
+      "git_blob": "a23ed03e3ab30dd16e54d9400c1147e79cae7947",
+      "commit": "318ab3d4bb4380658a1fea1137027bdadae49a64",
+      "mode": "100644"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S119-long-context-evaluation/SCOPE.md",
+      "sha256": "a79fd8ed46f7d3211a0ce3cb2a44ba634b9ebbd92d77b3a0d7bf3468def92d73",
+      "bytes": 14149,
+      "git_blob": "133b88735d3e8ebc9c843dfaf8e5ceb566e18afc",
+      "commit": "318ab3d4bb4380658a1fea1137027bdadae49a64",
+      "mode": "100644"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/assets/long-context-eval.svg",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "d9a2c5bf114c3702fc9695bd25543f5f25ebf9b9",
+      "sha256": "82c8397d98e74d4ddf1c518f010417ff3d0360fd35430fb704042dfe322cd8c8",
+      "bytes": 5278,
+      "mode": "100644",
+      "read_scope": "Full fixed-source UTF-8 static reading only; no import or execution"
+    },
+    {
+      "path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/code/main.py",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "3dc5dcd0b6584b6283c0fbeaa19330e0476726fb",
+      "sha256": "e3e12757c7e658e1180ac3b2bc09566f80111691e3a6a595ec107b6ff5d98262",
+      "bytes": 4024,
+      "mode": "100644",
+      "read_scope": "Full fixed-source UTF-8 static reading only; no import or execution"
+    },
+    {
+      "path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/docs/en.md",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "98cc1b6e14345b17708e6fe2fd41cde3f226a7cc",
+      "sha256": "32ab66f48dc4dc4adac19a41e368276ba4e7c16ccef8947f2a9ed108d925b289",
+      "bytes": 10455,
+      "mode": "100644",
+      "read_scope": "Full fixed-source UTF-8 static reading only; no import or execution"
+    },
+    {
+      "path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/notebook/.gitkeep",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644",
+      "read_scope": "Full fixed-source UTF-8 static reading only; no import or execution"
+    },
+    {
+      "path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/outputs/skill-long-context-eval.md",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "5c7899c1988d74f67a2ebfd742c4bedeba9c64f4",
+      "sha256": "478dfe57042bd917727f99ab136fe67167a1001e679b56efd16648115665d906",
+      "bytes": 856,
+      "mode": "100644",
+      "read_scope": "Full fixed-source UTF-8 static reading only; no import or execution"
+    },
+    {
+      "path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/quiz.json",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "9867254f30ecedd91fa5da2a7a8539fb924c65a5",
+      "sha256": "a854573bd253ad7f779d2fe1a1afaf6ccb0a8025cc242f95a78bd4742f6e1dd5",
+      "bytes": 3988,
+      "mode": "100644",
+      "read_scope": "Full fixed-source UTF-8 static reading only; no import or execution"
+    }
+  ],
+  "support_counts": {
+    "common": 121,
+    "reference_terminology": 113,
+    "original_controls": 8,
+    "own": 3,
+    "total": 124
+  },
+  "original_draft_record": {
+    "sha256": "82f40e10cde174cb8fe16bebcb1ede6064a4dfdc3c7bfacbe73e76ad9dd619d2",
+    "bytes": 47625
+  },
+  "author_evidence_scope": "Complete true first draft, two body and record revisions, original chronology with unrecorded times left null, source risks and self-review history retained once in public review; private locators and internal identities only projected.",
+  "language_review_evidence": {
+    "report": {
+      "sha256": "d580d740905ad9054d6ab8234567cbe50c0fcd19f79739e7d8b2aefd360f5279",
+      "bytes": 117490
+    },
+    "reviewed_target_sha256": "9748edbcfb70d136f1d0197c22f93f56ce32ab0ea795ef01a02ec93f8547e17f",
+    "reviewed_original_draft_record_sha256": "82f40e10cde174cb8fe16bebcb1ede6064a4dfdc3c7bfacbe73e76ad9dd619d2",
+    "reviewed_utc": "2026-10-04T18:28:50.254604+00:00",
+    "scope": "Complete fixed-English-to-Chinese comparison and separate full Chinese read, independently bound to the unchanged final author target and original draft record. Added public metadata is assembly, not a second independent inspection.",
+    "source_read_scope": "先静态全文读固定6文件课包及两篇英文先修，再逐块读99项英中对照；随后另次通读204行完整中文。判断完成后才核验作者修订记录和strict缓存。"
+  },
+  "verified_support_publication": {
+    "status": "OWN3_PUBLISHED_AND_INSTALLED_READBACK_PASS",
+    "commit": "318ab3d4bb4380658a1fea1137027bdadae49a64",
+    "tree": "0bfe04efd69b8af0f92dab2b5221779c161cbb56",
+    "readback_verified_utc": "2026-10-04T18:55:20.510475+00:00",
+    "installed_utc": "2026-10-04T18:55:20.508534+00:00",
+    "readback_evidence": {
+      "sha256": "0081f095d240bfb0c50b3f4f5bc9b27aa9de4e9e6ea71b382d554037f2ef592d",
+      "bytes": 8190
+    },
+    "installation_evidence": {
+      "sha256": "49f955c21a8b1eb24d443989c73b5e98af218dabe08684718b7acdb71550b461",
+      "bytes": 3470
+    },
+    "common_inventory_evidence": {
+      "sha256": "015a3ae6b4db3e97dd9856c6fe2f4f74cf88b4095788022ffd5fbb13fa4661d8",
+      "bytes": 69985
+    },
+    "freeze_time_pending_null_preserved": true,
+    "common_metadata_reused_without_reclassification": true,
+    "author_verified_own3_at_first_write": false,
+    "scope": "Installed own3 bytes compared with retained independent support receipt; common121 reused from wave118 public projection without new common-origin audit, remote read or source-wide semantic review."
+  },
+  "common_support_projection": {
+    "original_inventory": {
+      "sha256": "015a3ae6b4db3e97dd9856c6fe2f4f74cf88b4095788022ffd5fbb13fa4661d8",
+      "bytes": 69985
+    },
+    "public_projection_source_path": "i18n/zh/.curated/stages/S119-long-context-evaluation/DEPENDENCIES.json",
+    "public_projection_source_sha256": "0c351504e547a47b83b5546f0ab4c988d670daa33413a3ee79d1ce5795798c6b",
+    "omitted_private_locator_values": [
+      {
+        "index": 103,
+        "path": "i18n/zh/.curated/stages/S97-semantic-segmentation-unet/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "270150b6e2972297945309886fc5d3c90c5816eaee8d7bef27ba6bba3532e15a"
+      },
+      {
+        "index": 103,
+        "path": "i18n/zh/.curated/stages/S97-semantic-segmentation-unet/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "d7cac231213544e11d9fdef15b02dd24fc216468d8a21228458b24f963c519bc"
+      },
+      {
+        "index": 104,
+        "path": "i18n/zh/.curated/stages/S98-text-summarization/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "c2091d51992b1efee010461081f84282d05aefa318e76f371d0ee9579e5473bc"
+      },
+      {
+        "index": 104,
+        "path": "i18n/zh/.curated/stages/S98-text-summarization/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "b9ecdd227d273556ecfc778b1dc2d9fdc616a8563d887389a3a0df6911b001ed"
+      },
+      {
+        "index": 105,
+        "path": "i18n/zh/.curated/stages/S99-prototype-pilot-production/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "75435b677c01f2e0598182ef3a235ebf51dd9b65a36749c03835e89d1f6cd35f"
+      },
+      {
+        "index": 105,
+        "path": "i18n/zh/.curated/stages/S99-prototype-pilot-production/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "9f14fbe0e24be1fceaa745b79bf722fadf86548e5901fc8281c4ec6862653b48"
+      },
+      {
+        "index": 106,
+        "path": "i18n/zh/.curated/stages/S100-instance-segmentation-mask-rcnn/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "60805bd7c173a38ae93ed10e038155a75dda2bcee6654c0d1f6b63c3b09e9536"
+      },
+      {
+        "index": 106,
+        "path": "i18n/zh/.curated/stages/S100-instance-segmentation-mask-rcnn/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "194eaad496c5f55d8bda58baa494880f9c68b26c40d0f39eaa9eebec0f876aaf"
+      },
+      {
+        "index": 107,
+        "path": "i18n/zh/.curated/stages/S101-question-answering/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "d4dfe52d6820995d2aa272fa8eedfc64b0c61c3b2cfda57b0f0e5e4618addd56"
+      },
+      {
+        "index": 107,
+        "path": "i18n/zh/.curated/stages/S101-question-answering/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "52e9a305c02bedbb8c1ece187c15c4a91fe26c9710e2da1ef1516c72a2b8ef44"
+      },
+      {
+        "index": 108,
+        "path": "i18n/zh/.curated/stages/S102-feedback-ratchet/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "767452a5488a7e69b494f7b7329951740cd5e3fdd7526863c2f5433e168f9e35"
+      },
+      {
+        "index": 108,
+        "path": "i18n/zh/.curated/stages/S102-feedback-ratchet/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "59aa7cc636a97b164f27e41c31132e2cca459910ed93b637b50d55706f1c5b8c"
+      },
+      {
+        "index": 109,
+        "path": "i18n/zh/.curated/stages/S103-image-generation-gans/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "95624a6beca384416c61c4376f743c5bf4070cf1f3b2637f75d37fbba99cbd99"
+      },
+      {
+        "index": 109,
+        "path": "i18n/zh/.curated/stages/S103-image-generation-gans/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "78a6ebf3da0f9421eb644dd750254d263aff07b4129154d2aec7ceba3d8d5698"
+      },
+      {
+        "index": 110,
+        "path": "i18n/zh/.curated/stages/S104-chatbots-rule-to-neural/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "53a2c7b9594c50838b5b636b96ee0d3edd966b829ddf139e0d2bb028b4529227"
+      },
+      {
+        "index": 110,
+        "path": "i18n/zh/.curated/stages/S104-chatbots-rule-to-neural/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "93b13ca64103cc14cbfb8f1fc6f77e2c7b5cd7760d469cf59618fb901979eae8"
+      },
+      {
+        "index": 111,
+        "path": "i18n/zh/.curated/stages/S105-frame-task-before-code/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "39e009e52c916eaf8daa4723374d180691c5697f11002f863a774cf2850f7290"
+      },
+      {
+        "index": 111,
+        "path": "i18n/zh/.curated/stages/S105-frame-task-before-code/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "f6aa2146632464bb3e6863bff0e091f1ae8672c9458de95a58dc9ec7327ddfbc"
+      },
+      {
+        "index": 112,
+        "path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "76ba74c5eabe5f8e31092954d770040a0505afa74379168cf4e709b770895d71"
+      },
+      {
+        "index": 112,
+        "path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "0f67ca3f55b49dae21b5de240cc084493a8df281408b4a01ff17e0a974c83413"
+      },
+      {
+        "index": 113,
+        "path": "i18n/zh/.curated/stages/S107-multilingual-nlp/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "e1d873af207769ed1c49cb970aa0027d0a9f41b17519019d610d9a7f992967a2"
+      },
+      {
+        "index": 113,
+        "path": "i18n/zh/.curated/stages/S107-multilingual-nlp/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "da00262e24be3ac7b57e412adc36dfddc14fc36a8bed4d31ca1482d71d863459"
+      },
+      {
+        "index": 114,
+        "path": "i18n/zh/.curated/stages/S108-plan-from-evidence/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "cb5ff93010d7f95434f59d250a0efc9b14f8b2a3c919ca818c3757d6801cd56d"
+      },
+      {
+        "index": 114,
+        "path": "i18n/zh/.curated/stages/S108-plan-from-evidence/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "b6a5b319ff53f6297a80bb3c863b79266b35f87c3dbc85336cd1926b7a0ca13a"
+      },
+      {
+        "index": 115,
+        "path": "i18n/zh/.curated/stages/S109-stable-diffusion/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "307d535a0964e95312a7b1e0a665292f04c8147716eeee6264c22f2c2349decc"
+      },
+      {
+        "index": 115,
+        "path": "i18n/zh/.curated/stages/S109-stable-diffusion/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "d27cdc77b8280af164c663f61ac1a8801c40f90a67f55f671ff90d6066f15701"
+      },
+      {
+        "index": 116,
+        "path": "i18n/zh/.curated/stages/S110-structured-outputs-constrained-decoding/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "c923ef251abc99029a51fab567a205120ff69bdf80126715929362a4d3d0ad45"
+      },
+      {
+        "index": 116,
+        "path": "i18n/zh/.curated/stages/S110-structured-outputs-constrained-decoding/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "204576f7691ccc58ecf803799c1652777de5d718ab2ff3f0314bec43b295d251"
+      },
+      {
+        "index": 117,
+        "path": "i18n/zh/.curated/stages/S111-delegate-with-isolation/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "3cba105a6273cb4ad7975a444e0bf8dc32eeaccfdfc0f178f87ac38dee75dd2d"
+      },
+      {
+        "index": 117,
+        "path": "i18n/zh/.curated/stages/S111-delegate-with-isolation/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "f8c504a6df78cbdb6d132e033d561af76bd01aa8ec27d794d60886db63fbbeb7"
+      },
+      {
+        "index": 118,
+        "path": "i18n/zh/.curated/stages/S112-video-understanding/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "bb750eb6e01d6e611be84e68b427915c2a7c55e1aeb8ee23b5226f424b9d1b31"
+      },
+      {
+        "index": 118,
+        "path": "i18n/zh/.curated/stages/S112-video-understanding/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "156a0c19a6da40b27a62facd402cb429a5af14f5aced8b8fbc88b6f2ea5fca28"
+      },
+      {
+        "index": 119,
+        "path": "i18n/zh/.curated/stages/S113-nli-textual-entailment/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "a1bb0e8761a0f19e3d27edbede5e382e9f3a89167323e5de5bbe4a623c2fdd0b"
+      },
+      {
+        "index": 119,
+        "path": "i18n/zh/.curated/stages/S113-nli-textual-entailment/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "bc687c195292d7ede04d9e707cf2eece36163ad2c88998bc7e0e49d3f5065054"
+      },
+      {
+        "index": 120,
+        "path": "i18n/zh/.curated/stages/S114-turn-feedback-into-system/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "ad7f4b3f5792b880485b92dcb7306a871727597b41ff3e0750dbaf829a75d3c9"
+      },
+      {
+        "index": 120,
+        "path": "i18n/zh/.curated/stages/S114-turn-feedback-into-system/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "97b5709858919a41deb1fd7e07a59c30f309783d6ebc038e087dbb516f7de53c"
+      }
+    ],
+    "identities_order_and_historical_classifications_preserved": true
+  }
+}
