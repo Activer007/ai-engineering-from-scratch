@@ -14,7 +14,7 @@
 | shell | Shell（命令解释器） | 沿S01/S02；argv参数列表不误作Shell字符串 |
 | telemetry | 遥测（telemetry） | 沿S99，供人跨时段审查 |
 | wall-clock duration | 墙钟耗时（wall-clock duration，即实际经过的时间） | 区分语言运行时与耗时；不暗示计时器单调性 |
-| verification gate | 验证门禁（verification gate） | 任务末尾读取记录，非运行器自动成功断言 |
+| verification gate | 验证关卡（verification gate） | 任务末尾读取记录，非运行器自动成功断言；用词沿 S111 工程检查语境（[固定术语表](https://github.com/Activer007/ai-engineering-from-scratch/blob/16c5ca8c98db36d73e0c81cb4cf995867ec84862/i18n/zh/.curated/stages/S111-delegate-with-isolation/TERMINOLOGY.md)） |
 | deterministic truncation / tail truncation | 确定性截断 / 尾部截断 | 头部+尾部保留；保留源“相同记录”断言并另列边界 |
 | redaction | 脱敏（redaction） | 沿补充表；输出脱敏不等于整个record保护 |
 | rotation policy | 轮转策略 | 保留1 MB、.1/.2/.5；源实现限制另列 |
