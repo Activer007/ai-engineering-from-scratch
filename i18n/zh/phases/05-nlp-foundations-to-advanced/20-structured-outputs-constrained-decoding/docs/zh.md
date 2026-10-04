@@ -25,7 +25,7 @@
 
 ![约束解码在每一步屏蔽无效 token](../assets/constrained-decoding.svg)
 
-**约束解码如何工作。** 在每个生成步骤，LLM 都会输出覆盖完整词表（~100k 个 token）的 logits 向量。*logits 处理器（logit processor）*位于模型与采样器之间。它根据当前在目标文法中的位置，计算哪些 token 有效；目标文法可以是 JSON Schema、正则表达式（regex）或上下文无关文法（context-free grammar，CFG）。接着，它将所有无效 token 的 logits 设为负无穷。对剩余 logits 做 softmax 后，概率质量只会分配给有效的后续内容。
+**约束解码如何工作。** 在每个生成步骤，LLM 都会输出覆盖完整词表（~100k 个 token）的 logits 向量。*logits 处理器（logit processor）* 位于模型与采样器之间。它根据当前在目标文法中的位置，计算哪些 token 有效；目标文法可以是 JSON Schema、正则表达式（regex）或上下文无关文法（context-free grammar，CFG）。接着，它将所有无效 token 的 logits 设为负无穷。对剩余 logits 做 softmax 后，概率质量只会分配给有效的后续内容。
 
 2026 年的实现方案：
 
