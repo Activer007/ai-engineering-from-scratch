@@ -51,7 +51,7 @@ flowchart LR
 
 每次边缘端性能分析都应遵循三条规则：
 
-1. 测量前先用 5-10 次虚拟输入的前向传播来**预热（warm up）**模型。冷缓存和 JIT（即时编译）会使最初的测量值不具代表性。
+1. 测量前先用 5-10 次虚拟输入的前向传播来**预热（warm up）** 模型。冷缓存和 JIT（即时编译）会使最初的测量值不具代表性。
 2. 在计时区段前后调用 `torch.cuda.synchronize()`，**同步** GPU 工作负载。否则测到的是计算内核的调度，而不是计算内核的执行。
 3. **固定输入尺寸**，与生产环境的分辨率一致。224x224 的延迟不等于 512x512 的延迟。
 
@@ -249,9 +249,9 @@ def compare_regimes():
 
 ## 练习
 
-1. **（简单）**在 CPU 上，以 224x224 的输入测量 `resnet18`、`mobilenet_v3_small`、`efficientnet_v2_s` 和 `convnext_tiny` 的 p50 延迟。报告对照表，并指出哪种架构的每 ms 准确率最佳。
-2. **（中等）**对 `mobilenet_v3_small` 应用训练后静态量化。在 CIFAR-10 或类似数据集的留出子集上，报告 FP32 与 INT8 的延迟和准确率损失。
-3. **（困难）**将 `convnext_tiny` 导出为 ONNX，使用 `onnxruntime` 的 `CPUExecutionProvider` 运行，并与 PyTorch eager 基线比较延迟。找出 ONNX Runtime 首个运行更快的层，并解释原因。
+1. **（简单）** 在 CPU 上，以 224x224 的输入测量 `resnet18`、`mobilenet_v3_small`、`efficientnet_v2_s` 和 `convnext_tiny` 的 p50 延迟。报告对照表，并指出哪种架构的每 ms 准确率最佳。
+2. **（中等）** 对 `mobilenet_v3_small` 应用训练后静态量化。在 CIFAR-10 或类似数据集的留出子集上，报告 FP32 与 INT8 的延迟和准确率损失。
+3. **（困难）** 将 `convnext_tiny` 导出为 ONNX，使用 `onnxruntime` 的 `CPUExecutionProvider` 运行，并与 PyTorch eager 基线比较延迟。找出 ONNX Runtime 首个运行更快的层，并解释原因。
 
 ## 关键术语
 

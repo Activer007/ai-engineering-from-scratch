@@ -6,7 +6,7 @@
   "source_blob": "8156e6d0f62bb0858833d2b96bf869d059443dcf",
   "source_sha256": "67456ce0e428e1ffa31eacece531fc95a2eec306f375a994f21571109e76642e",
   "target_path": "i18n/zh/phases/04-computer-vision/15-real-time-edge/docs/zh.md",
-  "target_sha256": "cabf2a70175b563d4519dfc9f7ea9965daaa99b234d8bf3c62cd144a84393a08",
+  "target_sha256": "c8a55d9ddcbae102f1403fc1152edc1fc2080fa04af20e25fa2811719b924167",
   "glossary_version": "1.0",
   "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
   "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
@@ -395,7 +395,7 @@
       ],
       "ordinal": 17,
       "source_sha256": "042bc1d13e91e8f480ff8572fabcc27032b7591ec236d4d2344db14d12132221",
-      "target": "1. 测量前先用 5-10 次虚拟输入的前向传播来**预热（warm up）**模型。冷缓存和 JIT（即时编译）会使最初的测量值不具代表性。\n2. 在计时区段前后调用 `torch.cuda.synchronize()`，**同步** GPU 工作负载。否则测到的是计算内核的调度，而不是计算内核的执行。\n3. **固定输入尺寸**，与生产环境的分辨率一致。224x224 的延迟不等于 512x512 的延迟。\n"
+      "target": "1. 测量前先用 5-10 次虚拟输入的前向传播来**预热（warm up）** 模型。冷缓存和 JIT（即时编译）会使最初的测量值不具代表性。\n2. 在计时区段前后调用 `torch.cuda.synchronize()`，**同步** GPU 工作负载。否则测到的是计算内核的调度，而不是计算内核的执行。\n3. **固定输入尺寸**，与生产环境的分辨率一致。224x224 的延迟不等于 512x512 的延迟。\n"
     },
     {
       "segment_id": "04-15:b0034",
@@ -1384,7 +1384,7 @@
       ],
       "ordinal": 59,
       "source_sha256": "a1f66457fe60b0aa2820d35bb8f289bef4d00f848b3e36ae3ffe80b032db1e7b",
-      "target": "1. **（简单）**在 CPU 上，以 224x224 的输入测量 `resnet18`、`mobilenet_v3_small`、`efficientnet_v2_s` 和 `convnext_tiny` 的 p50 延迟。报告对照表，并指出哪种架构的每 ms 准确率最佳。\n2. **（中等）**对 `mobilenet_v3_small` 应用训练后静态量化。在 CIFAR-10 或类似数据集的留出子集上，报告 FP32 与 INT8 的延迟和准确率损失。\n3. **（困难）**将 `convnext_tiny` 导出为 ONNX，使用 `onnxruntime` 的 `CPUExecutionProvider` 运行，并与 PyTorch eager 基线比较延迟。找出 ONNX Runtime 首个运行更快的层，并解释原因。\n"
+      "target": "1. **（简单）** 在 CPU 上，以 224x224 的输入测量 `resnet18`、`mobilenet_v3_small`、`efficientnet_v2_s` 和 `convnext_tiny` 的 p50 延迟。报告对照表，并指出哪种架构的每 ms 准确率最佳。\n2. **（中等）** 对 `mobilenet_v3_small` 应用训练后静态量化。在 CIFAR-10 或类似数据集的留出子集上，报告 FP32 与 INT8 的延迟和准确率损失。\n3. **（困难）** 将 `convnext_tiny` 导出为 ONNX，使用 `onnxruntime` 的 `CPUExecutionProvider` 运行，并与 PyTorch eager 基线比较延迟。找出 ONNX Runtime 首个运行更快的层，并解释原因。\n"
     },
     {
       "segment_id": "04-15:b0118",
@@ -4488,5 +4488,27 @@
       },
       "scope": "Exactly one common terminology identity replacement. Original author record, reviews and original common files retain their old hashes; only public candidate metadata and isolated strict fixture use the current term version. No body terminology change."
     }
+  },
+  "format_revision_01": {
+    "status": "PASS_INDEPENDENT_FORMAT_DELTA_NEW_GFM_PENDING",
+    "parent_commit": "2f26107663e5d90f1e0bdc5e39df5a268bf40e30",
+    "old_target_sha256": "cabf2a70175b563d4519dfc9f7ea9965daaa99b234d8bf3c62cd144a84393a08",
+    "old_record_sha256": "3007985652768997ea3ae78670272a7d1e83548e35c7a605375c407fad2999fa",
+    "old_review_sha256": "b9134074fe6867d6ad66b614ed6b34e3338a53116510adfcc9d743182cd4cad5",
+    "changed_segments": [
+      "04-15:b0033",
+      "04-15:b0117"
+    ],
+    "changed_target_lines": [
+      54,
+      252,
+      253,
+      254
+    ],
+    "scope": "Four ASCII SPACE U+0020 insertions immediately after closing Markdown strong delimiters only; no text/math/code/path/Mermaid or meaning change. Prior author/R01 semantic review bindings retained unchanged.",
+    "prior_GFM_status": "BLOCKED_BODY_EMPHASIS",
+    "prior_GFM_receipt_sha256": "bd4b3c5ec683218623f585af19e220b5b558bae03f2db065977d356efc23258f",
+    "new_GFM": "PENDING",
+    "independent_report_sha256": "e13324fc6e709ff378cbd4accc7185c42917b29b3486d4f9e42cc4ac6607b4a4"
   }
 }
