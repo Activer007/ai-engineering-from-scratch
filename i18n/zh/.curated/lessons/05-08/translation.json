@@ -1,0 +1,2100 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-08",
+  "source_path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "2f2b000f03b91e04e8fa635297d02024232fb832",
+  "source_sha256": "de300997238be53f17d753a27aa36e25db7a9954981e6d15db2ecaa9626ccd58",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/docs/zh.md",
+  "target_sha256": "f48eb5745fed9edb1b7f53955ce3a52f9eb6b29337a2e4bcb0568037bd5f9d31",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "Fresh English-first assistant authored from fixed source after complete source-only reading; deterministic assembly; no prior Chinese lesson or old segments read",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-04",
+    "first_target_write_utc": "2026-10-04T03:44:07Z",
+    "initial_target_materialized_utc": "2026-10-04T03:44:07.581489+00:00",
+    "record_captured_utc": "2026-10-04T03:46:03.801488+00:00",
+    "timing_note": "First-write timestamps record filesystem materialization, not an inferred text-composition duration."
+  },
+  "segments": [
+    {
+      "segment_id": "05-08:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text"
+      ],
+      "ordinal": 1,
+      "source_sha256": "6b374daaacfe1876e1c5c8ad343f684dce40546386bb3868fad312b350b820b8",
+      "target": "# 用于文本处理的 CNN 和 RNN\n"
+    },
+    {
+      "segment_id": "05-08:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# CNNs and RNNs for Text"
+      ],
+      "ordinal": 2,
+      "source_sha256": "abf4b7c29d8bd5c0c10288cd8c97b7c3b938cb1462b4b6882321299da96d8a47",
+      "target": "> 卷积学习连续 n 元片段（n-gram），循环机制保留记忆。两者都已被注意力机制取代，但在硬件受限的场景中仍有用武之地。\n"
+    },
+    {
+      "segment_id": "05-08:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text"
+      ],
+      "ordinal": 3,
+      "source_sha256": "c2f8fc33ee208ec41eab6462a8c7220d811557b6c6fc4c7134a33d7f79ff4eab",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 3 · 11（PyTorch 入门）、阶段 5 · 03（词嵌入）、阶段 4 · 02（从零实现卷积）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "05-08:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "05-08:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "3ed8d9ee901d850dcb829ac90fe1570b1104247ad503b64863a565c9c9b91c26",
+      "target": "TF-IDF（词频-逆文档频率）和 Word2Vec 生成的是忽略词序的扁平向量。基于这些向量的分类器无法区分 `dog bites man` 和 `man bites dog`。有时，关键信息就藏在词序中。\n"
+    },
+    {
+      "segment_id": "05-08:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "53bb5e8e83e9e4ee7e0f96f34b12f0893c03dd7a8573824412acff44a17f552a",
+      "target": "在 Transformer 出现之前，两类架构填补了这一空白。\n"
+    },
+    {
+      "segment_id": "05-08:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "262a5022952e7f69152556d0fde497b2e95ec618bb9d21fae369edc2bfb02588",
+      "target": "**用于文本的卷积神经网络（TextCNN）。** 在词嵌入（word embedding）序列上应用 1D（一维）卷积。宽度为 3 的滤波器（filter）就是一个可学习的三元片段（trigram）检测器：它覆盖三个词，输出一个分数。组合不同宽度（2, 3, 4, 5）的滤波器，就能检测多种尺度的模式。再通过最大池化得到固定大小的表示。结构扁平，可并行，速度快。\n"
+    },
+    {
+      "segment_id": "05-08:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "778fc469cf83e7c0854e5b0a0baec56139ea14b89259d5a0167a7fddd3a15f5e",
+      "target": "**循环神经网络（RNN, LSTM, GRU）。** 每次处理一个 token（词元），同时维护一个隐藏状态（hidden state），把信息传递到后续时刻。它们按顺序计算，能保留记忆，也能处理不同长度的输入。从 2014 到 2017 年，这类网络主导了序列建模，随后注意力机制登场。\n"
+    },
+    {
+      "segment_id": "05-08:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "10e3544ecb5ac0a7422687c09bcc36344c3f34b96c0e5f9fd1ee618737728e00",
+      "target": "本课将实现这两类架构，再指出推动注意力机制出现的局限。\n"
+    },
+    {
+      "segment_id": "05-08:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "05-08:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "9f81e00d9009128f30663225b966b35cd22d79cb7d2ef4a9b2872a10aaff6cb0",
+      "target": "**TextCNN** （Kim, 2014）。先将 token 映射为嵌入。宽度为 `k` 的 1D 卷积让滤波器沿连续 `k` 元片段的嵌入滑动，生成特征图。对特征图做全局最大池化，选出最强的激活值。把多种滤波器宽度对应的最大池化结果拼接起来，再送入分类头。\n"
+    },
+    {
+      "segment_id": "05-08:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "1541a424de8d099584df08b3c0fef565d8d8d1fa90d7fc13d34ad5d6c9990fba",
+      "target": "为什么有效？滤波器就是可学习的 n-gram。最大池化具有位置不变性，因此，无论 \"not good\" 出现在评论开头还是中间，都会触发同一个特征。使用三种滤波器宽度，每种配 100 个滤波器，就能得到 300 个学得的 n-gram 检测器。训练可以并行进行，没有跨时间步的串行依赖。\n"
+    },
+    {
+      "segment_id": "05-08:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "4e6ac8f797a5e1b95e9bff279c9c185c34d1b5a433f7401d7480b9f679e9a50f",
+      "target": "**RNN。** 在每个时间步 `t`，隐藏状态为 `h_t = f(W * x_t + U * h_{t-1} + b)`。不同时间步共享 `W`、`U`、`b`。时刻 `T` 的隐藏状态概括了此前的整个输入前缀。做分类时，对 `h_1 ... h_T` 进行池化（取最大值、取平均值或取最后一个状态）。\n"
+    },
+    {
+      "segment_id": "05-08:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "71e355e0e377244e61bb7e3d7410353b839e58142b2da8284eb2731fc3405d4b",
+      "target": "普通 RNN 存在梯度消失问题。**LSTM** 加入了门，决定遗忘什么、存储什么、输出什么，使梯度在长序列中保持稳定。**GRU** 将 LSTM 简化为两个门，以更少的参数取得相近的表现。\n"
+    },
+    {
+      "segment_id": "05-08:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "c95e5d1b9000e822492c276bb4f260f520f20802d574e896a0dfec2e2cba52dc",
+      "target": "**双向 RNN** 分别让一个 RNN 正向运行、另一个反向运行，再拼接它们的隐藏状态。每个 token 的表示都能利用左侧和右侧的上下文。这对标注任务至关重要。\n"
+    },
+    {
+      "segment_id": "05-08:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0031",
+      "kind": "fence",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "c96dc6cbbf858dcd00b38631439ba840240041221523cbdca23d22cb2b8e7029",
+      "target": "```figure\nrnn-unroll\n```\n"
+    },
+    {
+      "segment_id": "05-08:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## The Concept"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It"
+      ],
+      "ordinal": 17,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "05-08:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 1: TextCNN in PyTorch"
+      ],
+      "ordinal": 18,
+      "source_sha256": "551c9c4b36340bbe2396e1e9fcf726827f164edaca5398f27fd3c504673d9a4c",
+      "target": "### 第 1 步：用 PyTorch 实现 TextCNN\n"
+    },
+    {
+      "segment_id": "05-08:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 1: TextCNN in PyTorch"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 1: TextCNN in PyTorch"
+      ],
+      "ordinal": 19,
+      "source_sha256": "0e32c9a9a65cc5daa0681a7f043bd8c6a68e1180cb28814b176d49829203fbc9",
+      "target": "```python\nimport torch\nimport torch.nn as nn\nimport torch.nn.functional as F\n\n\nclass TextCNN(nn.Module):\n    def __init__(self, vocab_size, embed_dim, n_classes, filter_widths=(2, 3, 4), n_filters=64, dropout=0.3):\n        super().__init__()\n        self.embed = nn.Embedding(vocab_size, embed_dim, padding_idx=0)\n        self.convs = nn.ModuleList([\n            nn.Conv1d(embed_dim, n_filters, kernel_size=k)\n            for k in filter_widths\n        ])\n        self.dropout = nn.Dropout(dropout)\n        self.fc = nn.Linear(n_filters * len(filter_widths), n_classes)\n\n    def forward(self, token_ids):\n        x = self.embed(token_ids).transpose(1, 2)\n        pooled = []\n        for conv in self.convs:\n            c = F.relu(conv(x))\n            p = F.max_pool1d(c, c.size(2)).squeeze(2)\n            pooled.append(p)\n        h = torch.cat(pooled, dim=1)\n        return self.fc(self.dropout(h))\n```\n"
+    },
+    {
+      "segment_id": "05-08:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 1: TextCNN in PyTorch"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 1: TextCNN in PyTorch"
+      ],
+      "ordinal": 20,
+      "source_sha256": "85306d12345ab2d872ff7f5fb668b9b3f30ccb499443f0f364396e2523d04e52",
+      "target": "`transpose(1, 2)` 将 `[batch, seq_len, embed_dim]` 的形状变为 `[batch, embed_dim, seq_len]`，因为 `nn.Conv1d` 把中间的轴视为通道轴。不论输入长度如何，池化输出的大小都是固定的。\n"
+    },
+    {
+      "segment_id": "05-08:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 1: TextCNN in PyTorch"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 2: LSTM classifier"
+      ],
+      "ordinal": 21,
+      "source_sha256": "199ebfc13edc40fa648dd5ca5108f1e6a813b869969afd1c9d7f52d6b41072ad",
+      "target": "### 第 2 步：LSTM 分类器\n"
+    },
+    {
+      "segment_id": "05-08:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 2: LSTM classifier"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 2: LSTM classifier"
+      ],
+      "ordinal": 22,
+      "source_sha256": "48a084bf32624409d2cd66294b6f5983724536b3111f01adfb7374038b7b22bf",
+      "target": "```python\nclass LSTMClassifier(nn.Module):\n    def __init__(self, vocab_size, embed_dim, hidden_dim, n_classes, bidirectional=True, dropout=0.3):\n        super().__init__()\n        self.embed = nn.Embedding(vocab_size, embed_dim, padding_idx=0)\n        self.lstm = nn.LSTM(embed_dim, hidden_dim, batch_first=True, bidirectional=bidirectional)\n        factor = 2 if bidirectional else 1\n        self.dropout = nn.Dropout(dropout)\n        self.fc = nn.Linear(hidden_dim * factor, n_classes)\n\n    def forward(self, token_ids):\n        x = self.embed(token_ids)\n        out, _ = self.lstm(x)\n        pooled = out.max(dim=1).values\n        return self.fc(self.dropout(pooled))\n```\n"
+    },
+    {
+      "segment_id": "05-08:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 2: LSTM classifier"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 2: LSTM classifier"
+      ],
+      "ordinal": 23,
+      "source_sha256": "983ff9f38f8fa17dd301a754624b76fbb88c36630f9a7d33483b0fcb8f8da114",
+      "target": "沿序列做最大池化，而不是末状态池化。用于分类时，最大池化通常优于直接取最后一个隐藏状态，因为长序列末尾的信息往往会主导最后的状态。\n"
+    },
+    {
+      "segment_id": "05-08:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 2: LSTM classifier"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0047",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 3: the vanishing gradient demo (intuition)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "f1b646c1cdf87667460d5b1bf31de4dcce1704bd217912e1e4b0f2612a1d875e",
+      "target": "### 第 3 步：梯度消失演示（建立直觉）\n"
+    },
+    {
+      "segment_id": "05-08:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 3: the vanishing gradient demo (intuition)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 3: the vanishing gradient demo (intuition)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "b999156ec40d4b980cbb86a45e1819bcfad626e31545814cd5bd332c8417c4ed",
+      "target": "没有门控的普通 RNN 无法学习长距离依赖。考虑一个简单任务：预测 token `A` 是否在序列的任意位置出现过。如果 `A` 位于位置 1，而序列长 100 个 token，损失的梯度在反向传播时，就必须连续乘以循环权重 99 次。如果权重小于 1，梯度就会消失；如果大于 1，梯度就会爆炸。\n"
+    },
+    {
+      "segment_id": "05-08:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 3: the vanishing gradient demo (intuition)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0051",
+      "kind": "fence",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 3: the vanishing gradient demo (intuition)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "655c67e448cfca8924661dc66fa2ca9085fe7b51545595b5ded42259861338f1",
+      "target": "```python\ndef vanishing_gradient_sim(seq_len, recurrent_weight=0.9):\n    import math\n    return math.pow(recurrent_weight, seq_len)\n\n\n# At weight=0.9 over 100 steps:\n#   0.9 ^ 100 ≈ 2.7e-5\n# The gradient from step 100 to step 1 is effectively zero.\n```\n"
+    },
+    {
+      "segment_id": "05-08:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 3: the vanishing gradient demo (intuition)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 3: the vanishing gradient demo (intuition)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "0d556e0723271f38e17e72f0c913df5c248f300f92aa48587ff9b55debb396af",
+      "target": "LSTM 通过贯穿网络的 **细胞状态（cell state）** 解决这个问题，这条路径只进行加性相互作用（遗忘门会以乘法缩放它，但梯度仍能沿着这条“高速公路”传播）。GRU 用更少的参数实现了类似的机制。两者都能在 100+ 步的序列上保持训练稳定。\n"
+    },
+    {
+      "segment_id": "05-08:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 3: the vanishing gradient demo (intuition)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 4: why this still was not enough"
+      ],
+      "ordinal": 28,
+      "source_sha256": "56b493564d9d71fc055ea527b7e488ab15627c5383156fbe5530abcf7db517e9",
+      "target": "### 第 4 步：为什么这仍然不够\n"
+    },
+    {
+      "segment_id": "05-08:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 4: why this still was not enough"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 4: why this still was not enough"
+      ],
+      "ordinal": 29,
+      "source_sha256": "54d0d8030a705141dbe8f6e4ebc70b2d2b6f2af6e5f12d61738a3123625389e6",
+      "target": "即使使用 LSTM，仍然存在三个问题。\n"
+    },
+    {
+      "segment_id": "05-08:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 4: why this still was not enough"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0059",
+      "kind": "list",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 4: why this still was not enough"
+      ],
+      "ordinal": 30,
+      "source_sha256": "da471270406fb074b6d118e90767c538a5570bd6972a5730266563ef69fafc35",
+      "target": "1. **串行计算瓶颈。** 在长度为 1000 的序列上训练 RNN，需要执行 1000 个串行的前向传播/反向传播步骤，无法沿时间维度并行。\n2. **编码器-解码器架构中的固定大小上下文向量。** 解码器只能看到编码器最后的隐藏状态，整个输入都压缩在其中。输入较长时，细节会丢失。第 09 课会直接讨论这个问题。\n3. **长距离依赖的准确率上限。** LSTM 的表现优于普通 RNN，但仍难以跨越 200+ 步传递特定信息。\n"
+    },
+    {
+      "segment_id": "05-08:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 4: why this still was not enough"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 4: why this still was not enough"
+      ],
+      "ordinal": 31,
+      "source_sha256": "9a6fd82d3d76afdf92065f50b145f08500712a5fb3b1ac20333bcc4a25959b0f",
+      "target": "注意力机制解决了这三个问题。Transformer 彻底去掉了循环机制。第 10 课将介绍这一转折。\n"
+    },
+    {
+      "segment_id": "05-08:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Build It",
+        "### Step 4: why this still was not enough"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "05-08:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "83ec7f4ea028d4fe65d6907dbd71bb68c7e8c6308c5db1a35176c7336633c1bb",
+      "target": "PyTorch 的 `nn.LSTM`、`nn.GRU` 和 `nn.Conv1d` 都可用于生产环境，训练代码采用常规写法即可。\n"
+    },
+    {
+      "segment_id": "05-08:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "057241d8db7c5cd9e1398cb63d6081d536efd3f7e6c51dcbaa244b83349d12bd",
+      "target": "Hugging Face 提供了可接入输入层的预训练嵌入：\n"
+    },
+    {
+      "segment_id": "05-08:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "9e7eb5fffc9b8103393b549fd612c93625da01a7ad19fdbc0134f34230df5991",
+      "target": "```python\nfrom transformers import AutoModel\n\nencoder = AutoModel.from_pretrained(\"bert-base-uncased\")\nfor param in encoder.parameters():\n    param.requires_grad = False\n\n\nclass BertCNN(nn.Module):\n    def __init__(self, n_classes, filter_widths=(2, 3, 4), n_filters=64):\n        super().__init__()\n        self.encoder = encoder\n        self.convs = nn.ModuleList([nn.Conv1d(768, n_filters, kernel_size=k) for k in filter_widths])\n        self.fc = nn.Linear(n_filters * len(filter_widths), n_classes)\n\n    def forward(self, input_ids, attention_mask):\n        with torch.no_grad():\n            out = self.encoder(input_ids=input_ids, attention_mask=attention_mask).last_hidden_state\n        x = out.transpose(1, 2)\n        pooled = [F.max_pool1d(F.relu(conv(x)), kernel_size=conv(x).size(2)).squeeze(2) for conv in self.convs]\n        return self.fc(torch.cat(pooled, dim=1))\n```\n"
+    },
+    {
+      "segment_id": "05-08:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "3c2dfa27e2ed62c7c3348b5bba0091505c81231cc00b05f9b80c6d4b599d8080",
+      "target": "按约束条件选择适用场景：\n"
+    },
+    {
+      "segment_id": "05-08:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "18d908b4578ba55febb01b28390037c283429514558ba3292e22fb39b3dccd0e",
+      "target": "- **边缘端 / 设备端推理。** 配合 GloVe 嵌入的 TextCNN，其模型体积比 Transformer 小 10-100x。如果部署目标是手机，就用这套组合。\n- **流式 / 在线分类。** RNN 每次处理一个 token；Transformer 则需要完整序列。对于实时到来的文本，LSTM 仍然占优。\n- **用小模型建立基线。** 在新任务上快速迭代，用 CPU 在 5 分钟内训练一个 TextCNN。\n- **数据有限时的序列标注。** 对于只有 1k-10k 个已标注句子的数据集，BiLSTM-CRF（第 06 课）仍是可用于生产环境的命名实体识别（NER）架构。\n"
+    },
+    {
+      "segment_id": "05-08:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "b4983e82cf8dd4a9814f1b8e364a3d3a5842069f8467e54a1f0892d7c8e38481",
+      "target": "其他情况都交给 Transformer。\n"
+    },
+    {
+      "segment_id": "05-08:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "05-08:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Ship It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "a8735b40a2c774062b931195e1b51f96974bd68f3c513a9c3b3e37e8ed85b604",
+      "target": "保存为 `outputs/prompt-text-encoder-picker.md`：\n"
+    },
+    {
+      "segment_id": "05-08:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Ship It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Ship It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "6fd9e4a215447e34797620b817d1964f693fd83702274d5b8423b613d53c7bbd",
+      "target": "```markdown\n---\nname: text-encoder-picker\ndescription: Pick a text encoder architecture for a given constraint set.\nphase: 5\nlesson: 08\n---\n\nGiven constraints (task, data volume, latency budget, deploy target, compute budget), output:\n\n1. Encoder architecture: TextCNN, BiLSTM, BiLSTM-CRF, transformer fine-tune, or \"use a pretrained transformer as a frozen encoder + small head\".\n2. Embedding input: random init, GloVe / fastText frozen, or contextualized transformer embeddings.\n3. Training recipe in 5 lines: optimizer, learning rate, batch size, epochs, regularization.\n4. One monitoring signal. For RNN/CNN models: attention mechanism absence means they miss long-range deps; check per-length accuracy. For transformers: fine-tuning collapse if LR too high; check train loss.\n\nRefuse to recommend fine-tuning a transformer when data is under ~500 labeled examples without showing that a TextCNN / BiLSTM baseline has plateaued. Flag edge deployment as needing architecture-before-everything.\n```\n"
+    },
+    {
+      "segment_id": "05-08:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Ship It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Exercises"
+      ],
+      "ordinal": 42,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "05-08:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Exercises"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0085",
+      "kind": "list",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Exercises"
+      ],
+      "ordinal": 43,
+      "source_sha256": "f4b4131c4b35e2135f5cf9d3f9f8d6241e82f9494c863baff85a5be43f987a06",
+      "target": "1. **简单。** 在一个 3 类的玩具数据集上训练 TextCNN（数据由你自行构造）。验证在平均 F1 上，滤波器宽度（2, 3, 4）的组合优于单一宽度（3）。\n2. **中等。** 为 LSTM 分类器实现最大池化、平均池化和末状态池化。在小数据集上比较它们，记录哪种池化表现最好，并推测原因。\n3. **困难。** 构建一个 BiLSTM-CRF NER 标注器（结合第 06 课和本课）。在 CoNLL-2003 上训练，与第 06 课仅使用 CRF 的基线以及经过微调的 BERT 比较。报告训练时间、内存占用和 F1。\n"
+    },
+    {
+      "segment_id": "05-08:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Exercises"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Key Terms"
+      ],
+      "ordinal": 44,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "05-08:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Key Terms"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0089",
+      "kind": "table",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Key Terms"
+      ],
+      "ordinal": 45,
+      "source_sha256": "1f0462903c6e0b23d1995c9cdda094a6711cf9f1421b5b9af80082637e6d565d",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| TextCNN | 用于文本的 CNN | 在词嵌入上组合多组 1D 卷积，再做全局最大池化。Kim（2014）。 |\n| RNN | 循环网络 | 每个时间步都更新隐藏状态：`h_t = f(W x_t + U h_{t-1})`。 |\n| LSTM | 带门控的 RNN | 加入输入门 / 遗忘门 / 输出门，以及一个细胞状态。能在长序列上稳定训练。 |\n| GRU | 更简单的 LSTM | 使用两个门而非三个门。准确率相近，参数更少。 |\n| 双向 | 两个方向 | 将正向与反向 RNN 的结果拼接起来。每个 token 都能利用两侧的上下文。 |\n| 梯度消失 | 训练信号消失 | 在普通 RNN 中，反复乘以 <1 的权重，会使早期时间步的梯度几乎为零。 |\n"
+    },
+    {
+      "segment_id": "05-08:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Key Terms"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Further Reading"
+      ],
+      "ordinal": 46,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "05-08:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Further Reading"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-08:b0093",
+      "kind": "list",
+      "heading_path": [
+        "# CNNs and RNNs for Text",
+        "## Further Reading"
+      ],
+      "ordinal": 47,
+      "source_sha256": "c1d0140fbfe3300db24c06a2a255975b280a746c14f7dfddc72e732450b76d20",
+      "target": "- [Kim, Y. (2014). Convolutional Neural Networks for Sentence Classification](https://arxiv.org/abs/1408.5882) — TextCNN 论文，共八页，容易读懂。\n- [Hochreiter, S. and Schmidhuber, J. (1997). Long Short-Term Memory](https://www.bioinf.jku.at/publications/older/2604.pdf) — LSTM 论文，讲解出乎意料地清晰。\n- [Olah, C. (2015). Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/) — 这篇文章的图解让所有人都能理解 LSTM。\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "stage_glossary_path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/TERMINOLOGY.md",
+  "stage_glossary_sha256": "eae3b3a7ac0bc2fdb9cbf25bc0c88a25ae81dfd45012e2be178bb005fae1bf3b",
+  "dependency_manifest_path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/DEPENDENCIES.json",
+  "dependency_manifest_sha256": "153e219eecc192ec0da6b155e5176cac36d18a26d11b0118d8c4ec1e3f8beed1",
+  "stage_scope_path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/SCOPE.md",
+  "stage_scope_sha256": "04dabdafab7f0c89532a290e1341574b792ec81db18906cc356b4e9a8bba940e",
+  "reference_glossary_pins": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "acf8e89bc4596c13307a53a995fe96701221c5b6",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "e906a46fdf8a0ea9ea22c68784b4303e1c10c198",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "2610d0dec88725fec4528accc5487f9cf88b4d49",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "7f802943f85ff5621e50eb2307cb712e0fff2b68",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ccf427ff16970a5cde15eeef5c085530fc50978b",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "99277ca3ba91fcc3b8f06dffe6c5cdb212b7278b",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S78-stochastic-processes/TERMINOLOGY.md",
+      "commit": "56ee752aba7560af2ea4104d9fe07792b849c9e4",
+      "sha256": "f211aa1993249e771de3a60e924ea673b60ccd310994c9c6158a1a4225c3ffb4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+      "commit": "31143020895d0c406c2b36cdb362683c6f40e2e4",
+      "sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S83-convolutions-from-scratch/TERMINOLOGY.md",
+      "commit": "682be1701b737db6b85315719d0744fcdb2c0574",
+      "sha256": "3305451de8fd1e1af1c3594824045890a233d7c6c2da636b7ae7b5f3f29c2d81"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S84-discover-the-real-workflow/TERMINOLOGY.md",
+      "commit": "07031ded257dd184214a1505880a838328ea74f8",
+      "sha256": "95a7f035b18f8988c334cc4bc6c68a136719e8fc223a31c117780c3876a86035"
+    }
+  ],
+  "support_dependency_pins": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/check_stage.py",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "aa88776818af759d419790f9290ef8c6983b05a925f359f65152a5d8edfb7743"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/test_stage.py",
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "sha256": "933c5ea0570a1f385b07da5280758f895f14cae82371f123f4543ba213b52459"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "commit": "acf8e89bc4596c13307a53a995fe96701221c5b6",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "commit": "e906a46fdf8a0ea9ea22c68784b4303e1c10c198",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "commit": "2610d0dec88725fec4528accc5487f9cf88b4d49",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "commit": "7f802943f85ff5621e50eb2307cb712e0fff2b68",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/CONTROL-EXTENSION.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "b5c6868a952806f6d3d48027ca28b7b0c661f72fc57687d992180349113f265d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/check_stage.py",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "703dd675d345396db8db9624a24fa5375f3bb5ca1ed1c2fa0c99574315ae5515"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/test_stage.py",
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "sha256": "373409a9da1954eb35a7e2886d16109bde18a08935d19b3f479c1421dad4ecf2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "commit": "ccf427ff16970a5cde15eeef5c085530fc50978b",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "commit": "99277ca3ba91fcc3b8f06dffe6c5cdb212b7278b",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S78-stochastic-processes/TERMINOLOGY.md",
+      "commit": "56ee752aba7560af2ea4104d9fe07792b849c9e4",
+      "sha256": "f211aa1993249e771de3a60e924ea673b60ccd310994c9c6158a1a4225c3ffb4"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+      "commit": "31143020895d0c406c2b36cdb362683c6f40e2e4",
+      "sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S83-convolutions-from-scratch/TERMINOLOGY.md",
+      "commit": "682be1701b737db6b85315719d0744fcdb2c0574",
+      "sha256": "3305451de8fd1e1af1c3594824045890a233d7c6c2da636b7ae7b5f3f29c2d81"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S84-discover-the-real-workflow/TERMINOLOGY.md",
+      "commit": "07031ded257dd184214a1505880a838328ea74f8",
+      "sha256": "95a7f035b18f8988c334cc4bc6c68a136719e8fc223a31c117780c3876a86035"
+    },
+    {
+      "path": "scripts/check_curated_render.js",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43"
+    },
+    {
+      "path": "scripts/curated_translation.py",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d89de5eec36e10edcc391330d973632e3ceedb33fe679de3503dab52a7f6ece8"
+    },
+    {
+      "path": "scripts/test_curated_translation.py",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "1e049b41bfe486ed3d01afdcadb0b24de40eef5425e7b2ee704a488dbe6da176"
+    }
+  ],
+  "stage_support_pins": [
+    {
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/DEPENDENCIES.json",
+      "sha256": "153e219eecc192ec0da6b155e5176cac36d18a26d11b0118d8c4ec1e3f8beed1"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/SCOPE.md",
+      "sha256": "04dabdafab7f0c89532a290e1341574b792ec81db18906cc356b4e9a8bba940e"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/TERMINOLOGY.md",
+      "sha256": "eae3b3a7ac0bc2fdb9cbf25bc0c88a25ae81dfd45012e2be178bb005fae1bf3b"
+    }
+  ],
+  "source_inventory": [
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/assets/cnn-rnn.svg",
+      "sha256": "d6c67bdfac1817bf33063ab76ed5de6d3cf95d6586407d20bda1ea119527d8ca",
+      "git_blob": "1e9aef994ebedd089f80dcc1da83abf1b8cd040b",
+      "bytes": 5270,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/code/main.py",
+      "sha256": "1cb8d83a87ecb9219eddc7faffd751e6d7ad2a99eb5ff01a0aaf2ef6578a6d1d",
+      "git_blob": "58e506edd03a5d3e22d29212accd36a286b397cc",
+      "bytes": 1674,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/docs/en.md",
+      "sha256": "de300997238be53f17d753a27aa36e25db7a9954981e6d15db2ecaa9626ccd58",
+      "git_blob": "2f2b000f03b91e04e8fa635297d02024232fb832",
+      "bytes": 10991,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/notebook/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/outputs/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/outputs/prompt-text-encoder-picker.md",
+      "sha256": "a3b1ee7d6faa95a6736ba9e2add38ae094dd07e377c3bd1076f11b9b781270ee",
+      "git_blob": "4e451cd2b0df57cabcb7ec5324a4598cc2ead008",
+      "bytes": 1045,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/quiz.json",
+      "sha256": "45f56bcc2a262ba70570eac6858b97ce96044dddd871aa66fd17ed8cd5be44b6",
+      "git_blob": "ffa3b19c24306531385ec1c936798df984809293",
+      "bytes": 4186,
+      "mode": "100644"
+    }
+  ],
+  "assets": [],
+  "author_review_note": "Author self-review was completed separately; the independent full technical and Chinese review is bound in adjacent review.json.",
+  "stage_support_commit": "04e3f46b3186f056e33537377e16b5af7e70aed7",
+  "stage_support_commit_verification": "Coordinator-reported immutable remote support commit. Object not available in author local Git store; no fetch performed. Exact three support file SHA256 values independently verified locally.",
+  "equivalent_language_mappings": [
+    {
+      "segment_id": "05-08:b0005",
+      "source": "~75 minutes",
+      "target": "~75 分钟",
+      "meaning": "same approximate duration"
+    },
+    {
+      "segment_id": "05-08:b0011",
+      "source": "Two families",
+      "target": "两类架构",
+      "meaning": "same two architecture families"
+    },
+    {
+      "segment_id": "05-08:b0013",
+      "source": "three words",
+      "target": "三个词",
+      "meaning": "same filter span"
+    },
+    {
+      "segment_id": "05-08:b0015",
+      "source": "one at a time",
+      "target": "每次…一个",
+      "meaning": "same token-by-token processing"
+    },
+    {
+      "segment_id": "05-08:b0023",
+      "source": "Three filter widths",
+      "target": "三种滤波器宽度",
+      "meaning": "same count; 100 per width and 300 total unchanged"
+    },
+    {
+      "segment_id": "05-08:b0027",
+      "source": "two gates",
+      "target": "两个门",
+      "meaning": "same GRU gate count"
+    },
+    {
+      "segment_id": "05-08:b0057",
+      "source": "Three problems",
+      "target": "三个问题",
+      "meaning": "same three limitations"
+    },
+    {
+      "segment_id": "05-08:b0061",
+      "source": "all three",
+      "target": "这三个问题",
+      "meaning": "same referenced limitations"
+    },
+    {
+      "segment_id": "05-08:b0073",
+      "source": "5 minutes",
+      "target": "5 分钟",
+      "meaning": "same stated CPU training time; not benchmarked"
+    },
+    {
+      "segment_id": "05-08:b0089",
+      "source": "Two gates instead of three",
+      "target": "两个门而非三个门",
+      "meaning": "same gate counts"
+    },
+    {
+      "segment_id": "05-08:b0093",
+      "source": "Eight pages",
+      "target": "八页",
+      "meaning": "same paper length"
+    }
+  ]
+}
