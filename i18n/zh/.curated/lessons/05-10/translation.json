@@ -1,0 +1,3316 @@
+{
+  "schema_version": 1,
+  "lesson_id": "05-10",
+  "source_path": "phases/05-nlp-foundations-to-advanced/10-attention-mechanism/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "f05f25084408ea9017a268012811e2a91c20ac8d",
+  "source_sha256": "f31dde76b3cd616e1c7d242a9d36fc4f5dd2c4a8514bd026da2d4b9e652ae49b",
+  "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/10-attention-mechanism/docs/zh.md",
+  "target_sha256": "844ab3c9e6e5ddb2ef7c398650382eda5b358c738e0889ab405a9ca41ea9042f",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "Fresh English-first assistant authored after full reading of all 7 fixed lesson files and fixed prerequisite English; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-04",
+    "first_substantive_receipt": "evidence-sha256:894ba97cfc6d87580bffe767318722ba099040174d7ebb8c31a2b9c20707cddf",
+    "complete_first_draft_receipt": "evidence-sha256:8ae563667afdbaddcdebf830c99e71cdbfc48276430b677ebb5678e44104a2e0",
+    "author_self_audit": "evidence-sha256:18989245a0796e588ca6503cd677dc286848cc1f1621ebb2cd66acc9c6f14eb6"
+  },
+  "segments": [
+    {
+      "segment_id": "05-10:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough"
+      ],
+      "ordinal": 1,
+      "source_sha256": "4165ee94d767a14a817bf8feafb9d12ae862f8e451380e97ff6c84e9efff84f3",
+      "target": "# 注意力机制：关键突破\n"
+    },
+    {
+      "segment_id": "05-10:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough"
+      ],
+      "ordinal": 2,
+      "source_sha256": "0757f4b97e024ed0eb6bd9cece8b41a355bb5de289f3f3252e8ec396a9efcc49",
+      "target": "> 解码器不再费力辨认压缩后的摘要，而是直接查看整个源序列。此后的发展，都是注意力机制加上工程实现。\n"
+    },
+    {
+      "segment_id": "05-10:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough"
+      ],
+      "ordinal": 3,
+      "source_sha256": "84d99276566300ae9e01a17139cf5047839323947df497580f2767dbe9801127",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 5 · 09（序列到序列模型）\n**Time:** ~45 分钟\n"
+    },
+    {
+      "segment_id": "05-10:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "05-10:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "703f11e6e7cf35eb002f7d0070dc962abf3a9672453e6ae10eb34ac3447c15a8",
+      "target": "第 09 课以一次实测的失败收尾：在简单复制任务上训练的 GRU（门控循环单元）编码器—解码器，准确率从序列长度为 5 时的 89%，跌到长度为 80 时接近随机猜测的水平。原因出在结构上，并非训练出了 bug：编码器提取到的全部信息都必须塞进一个固定大小的隐藏状态（hidden state），解码器除此之外看不到任何信息。\n"
+    },
+    {
+      "segment_id": "05-10:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "206c565a59f1089b8e18b0d913ee70ede06dad65f25a690ec11c7d03fdea89c9",
+      "target": "Bahdanau、Cho 和 Bengio 在 2014 年提出了一个三行就能概括的解决办法。不要只把编码器的最终状态交给解码器，而是保留编码器的每个状态。在每个解码步骤，对编码器状态求加权平均，权重回答的是：“解码器此刻需要多大程度地关注编码器的第 `i` 个位置？”这个加权平均就是上下文（context），它会随解码步骤而改变。\n"
+    },
+    {
+      "segment_id": "05-10:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "efeeb944cb77de44dddd2b0745d1ef7b613d4134269abfd52bb8ddcb44e1c7e5",
+      "target": "核心思想就是这样。Transformer 对它进行了扩展。自注意力（self-attention）把它用在单个序列内部，多头注意力（multi-head attention）则让它并行运行。但 2014 年的版本就已经突破了瓶颈；掌握它之后，转向 Transformer 要解决的是工程问题，而非概念问题。\n"
+    },
+    {
+      "segment_id": "05-10:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "05-10:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "3f6726fdd63a2095f8f80f44415a49f5767b9a4a547254d93c4e33c22c991f0c",
+      "target": "![Bahdanau 注意力：解码器查询编码器的所有状态](../assets/attention.svg)\n"
+    },
+    {
+      "segment_id": "05-10:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "50fcd7dff014a3631a522d30a39f7d334796f589635751c6c1a04142b1ff4459",
+      "target": "在每个解码步骤 `t`：\n"
+    },
+    {
+      "segment_id": "05-10:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0021",
+      "kind": "list",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "efdde792145135b2c027cc182c236741fa58281f8e59e8fd5c46d0e75676970c",
+      "target": "1. 将解码器上一步的隐藏状态 `s_{t-1}` 用作**查询（query）**。\n2. 用它与编码器的每个隐藏状态 `h_1, ..., h_T` 计算分数，每个编码器位置得到一个标量。\n3. 对分数应用 softmax，得到总和为 1 的注意力权重 `α_{t,1}, ..., α_{t,T}`。\n4. 上下文向量 `c_t = Σ α_{t,i} * h_i`，即编码器状态的加权平均。\n5. 解码器接收 `c_t` 和上一个输出 token（词元），生成下一个 token。\n"
+    },
+    {
+      "segment_id": "05-10:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "72ca38954df7f158f8ce8b2db11038933e32f9b3b3a7670e50d98b9cee3ce3bb",
+      "target": "关键就在于加权平均。解码器需要把“Je”译成“I”时，会给“Je”对应的编码器状态较高的权重，给其他状态较低的权重。需要生成“not”时，则会给“pas”较高的权重。上下文向量的内容会随每一步改变。\n"
+    },
+    {
+      "segment_id": "05-10:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 13,
+      "source_sha256": "657239cd5c4e1ab8b7779214464634056aff5b49c56c996cf445c5908d70749f",
+      "target": "## 张量形状：人人都会踩的坑\n"
+    },
+    {
+      "segment_id": "05-10:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 14,
+      "source_sha256": "4fcbd58a8dfc2493450ac09676157fb1c7578864c13431746891b07d411482a5",
+      "target": "第一次实现注意力机制，往往就错在这里。请慢慢核对。\n"
+    },
+    {
+      "segment_id": "05-10:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0029",
+      "kind": "table",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "2bf3267f616b6a20d21823b60c4adf125d37fc523a0cecb8e1c242671db9fe59",
+      "target": "| 对象 | 形状 | 说明 |\n|-------|-------|-------|\n| 编码器隐藏状态 `H` | `(T_enc, d_h)` | 若使用 BiLSTM（双向长短期记忆网络），则 `d_h = 2 * d_hidden` |\n| 解码器隐藏状态 `s_{t-1}` | `(d_s,)` | 一个向量 |\n| 注意力分数 `e_{t,i}` | 标量 | 每个编码器位置各有一个 |\n| 注意力权重 `α_{t,i}` | 标量 | 对所有 `i` 的分数应用 softmax 后得到 |\n| 上下文向量 `c_t` | `(d_h,)` | 与一个编码器状态的形状相同 |\n"
+    },
+    {
+      "segment_id": "05-10:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "ae1b8bf991d3453e42ef369d848c8081d245c03e330cbf114fda703d85f602cb",
+      "target": "**Bahdanau（加性注意力，additive attention）分数。** `e_{t,i} = v_α^T * tanh(W_a * s_{t-1} + U_a * h_i)`。\n"
+    },
+    {
+      "segment_id": "05-10:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0033",
+      "kind": "list",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "1d14a5c232db7d1092fee6922e954335406ce7c2fe391d16c786578780d26c44",
+      "target": "- `s_{t-1}` 的形状为 `(d_s,)`，`h_i` 的形状为 `(d_h,)`。\n- `W_a` 的形状为 `(d_attn, d_s)`，`U_a` 的形状为 `(d_attn, d_h)`。\n- tanh 内部两项之和的形状为 `(d_attn,)`。\n- `v_α` 的形状为 `(d_attn,)`。与 `v_α` 做内积后，结果就变成一个标量。**这就是 `v_α` 的作用。** 它并不神秘，只是通过投影，把注意力空间中的向量转换成一个标量分数。\n"
+    },
+    {
+      "segment_id": "05-10:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "fce5083722e9956c1214a6b543096be46076ec5cf5c6340c22a7bd8246afe39b",
+      "target": "**Luong（乘性注意力，multiplicative attention）分数。** 有三种变体：\n"
+    },
+    {
+      "segment_id": "05-10:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0037",
+      "kind": "list",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 19,
+      "source_sha256": "d2337218dca018f87bc9960d7217fc5ecdb98479d08a44795e98e672bd126d8c",
+      "target": "- `dot`：`e_{t,i} = s_t^T * h_i`。要求 `d_s == d_h`，这是硬性约束。如果编码器是双向的，就跳过这一变体。\n- `general`：`e_{t,i} = s_t^T * W * h_i`，其中 `W` 的形状为 `(d_s, d_h)`。它解除了维度必须相等的约束。\n- `concat`：本质上就是 Bahdanau 的形式。由于前两种计算开销更小，这一种很少使用。\n"
+    },
+    {
+      "segment_id": "05-10:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 20,
+      "source_sha256": "4efd4c6a11cb8922710a67bdab538f93ec463bda188575f006e7037adf569061",
+      "target": "**Bahdanau 与 Luong 有一个特别容易混淆的地方。** Bahdanau 使用 `s_{t-1}`，即生成当前词*之前*的解码器状态；Luong 使用 `s_t`，即生成当前词*之后*的状态。混淆二者会让梯度出现细微错误，极难调试。选定一篇论文，就始终遵循它的约定。\n"
+    },
+    {
+      "segment_id": "05-10:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "dcad0c28e9965abb0a82d501deb17e50033961e71523e806f84893b8a3fbf474",
+      "target": "```figure\nattention-heatmap\n```\n"
+    },
+    {
+      "segment_id": "05-10:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Shapes (the thing that bites everyone)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It"
+      ],
+      "ordinal": 22,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "05-10:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 1: additive (Bahdanau) attention"
+      ],
+      "ordinal": 23,
+      "source_sha256": "e0b8b5de90638ae6be0d48d26a87887a92b7f32214c13e3d6c1ed6154f9b055f",
+      "target": "### 第 1 步：加性注意力（Bahdanau）\n"
+    },
+    {
+      "segment_id": "05-10:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 1: additive (Bahdanau) attention"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 1: additive (Bahdanau) attention"
+      ],
+      "ordinal": 24,
+      "source_sha256": "c20de0dce3e2c602195d2c8ab7f9746f14b4bdc87e2fc4518b71685eb2dede19",
+      "target": "```python\nimport numpy as np\n\n\ndef additive_attention(decoder_state, encoder_states, W_a, U_a, v_a):\n    projected_dec = W_a @ decoder_state\n    projected_enc = encoder_states @ U_a.T\n    combined = np.tanh(projected_enc + projected_dec)\n    scores = combined @ v_a\n    weights = softmax(scores)\n    context = weights @ encoder_states\n    return context, weights\n\n\ndef softmax(x):\n    x = x - np.max(x)\n    e = np.exp(x)\n    return e / e.sum()\n```\n"
+    },
+    {
+      "segment_id": "05-10:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 1: additive (Bahdanau) attention"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 1: additive (Bahdanau) attention"
+      ],
+      "ordinal": 25,
+      "source_sha256": "379a1399ecc5806bd583f23b9dabd256f6851eeacf0e633ccfeabbcdf3c0f76b",
+      "target": "对照上表逐项检查形状。`encoder_states` 的形状为 `(T_enc, d_h)`。`projected_enc` 的形状为 `(T_enc, d_attn)`。`projected_dec` 的形状为 `(d_attn,)`，会通过广播（broadcasting）参与运算。`combined` 的形状为 `(T_enc, d_attn)`。`scores` 的形状为 `(T_enc,)`。`weights` 的形状为 `(T_enc,)`。`context` 的形状为 `(d_h,)`。核对无误，就可以使用了。\n"
+    },
+    {
+      "segment_id": "05-10:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 1: additive (Bahdanau) attention"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 2: Luong dot and general"
+      ],
+      "ordinal": 26,
+      "source_sha256": "fcfffd3209c9041dad5bdcaa16fafc63d14884b87bf49a68478a7d2e79240a06",
+      "target": "### 第 2 步：Luong 的 dot 和 general 变体\n"
+    },
+    {
+      "segment_id": "05-10:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 2: Luong dot and general"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 2: Luong dot and general"
+      ],
+      "ordinal": 27,
+      "source_sha256": "9b90b512f58320aa5eaa46c7145bedaccf6b48f0e59ec86e64ffea5ce4778bd3",
+      "target": "```python\ndef dot_attention(decoder_state, encoder_states):\n    scores = encoder_states @ decoder_state\n    weights = softmax(scores)\n    return weights @ encoder_states, weights\n\n\ndef general_attention(decoder_state, encoder_states, W):\n    projected = W.T @ decoder_state\n    scores = encoder_states @ projected\n    weights = softmax(scores)\n    return weights @ encoder_states, weights\n```\n"
+    },
+    {
+      "segment_id": "05-10:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 2: Luong dot and general"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 2: Luong dot and general"
+      ],
+      "ordinal": 28,
+      "source_sha256": "085f2620c5f2092743124880c0c9ec8a368745a14bb0cb40948e2872fee5b0b4",
+      "target": "每种只需三行。这也正是 Luong 的论文受到重视的原因：多数任务上的准确率相当，代码却少得多。\n"
+    },
+    {
+      "segment_id": "05-10:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 2: Luong dot and general"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 29,
+      "source_sha256": "3744415c2fac8b1586c938590fde73d4f461cb007319744206f13ef345b54202",
+      "target": "### 第 3 步：数值算例\n"
+    },
+    {
+      "segment_id": "05-10:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 30,
+      "source_sha256": "992ac064688eed3511ceb0e1c29a1b467c948b17de4ab8dd5b4bb0b1bb9da572",
+      "target": "给定三个编码器状态，大致对应“cat”“sat”“mat”，再给定一个与第一个状态最匹配的解码器状态，注意力分布就会集中在位置 0。如果改变解码器状态，让它与最后一个状态更匹配，注意力就会移到位置 2，上下文向量也随之改变。\n"
+    },
+    {
+      "segment_id": "05-10:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 31,
+      "source_sha256": "18ae64e8d72961aedfa66e1e596b3bd2860650abed5fda5fa3cc2bd92f8a4dcd",
+      "target": "```python\nH = np.array([\n    [1.0, 0.0, 0.2],\n    [0.5, 0.5, 0.1],\n    [0.1, 0.9, 0.3],\n])\n\ns_close_to_cat = np.array([0.9, 0.1, 0.2])\nctx, w = dot_attention(s_close_to_cat, H)\nprint(\"weights:\", w.round(3))\n```\n"
+    },
+    {
+      "segment_id": "05-10:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0063",
+      "kind": "fence",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 32,
+      "source_sha256": "77f4e867ddb7a5097b5c51da1fa14b1f3ce34722e91af5d93c809b1a827a03f2",
+      "target": "```text\nweights: [0.464 0.305 0.231]\n```\n"
+    },
+    {
+      "segment_id": "05-10:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 33,
+      "source_sha256": "0a2411060fcc0832eab9fe42619c06e4f974f41ccef3ca3715b0f149cdf45e1c",
+      "target": "第一行的权重最高。接着，让解码器状态更接近第三个编码器状态，观察权重如何转移。就这么简单：注意力把对齐关系显式地表示出来。\n"
+    },
+    {
+      "segment_id": "05-10:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 3: a worked numerical example"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 34,
+      "source_sha256": "288ca28992054f9c00b2dc7dd29b2664f42fd43f3441c95b08d37c74f5d8f061",
+      "target": "### 第 4 步：为什么它能衔接到 Transformer\n"
+    },
+    {
+      "segment_id": "05-10:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 35,
+      "source_sha256": "1b81e2b8a1eba5c3c5be46026e7b3f52f1ae4ee5feaddebfb2cce3e49cc4ac9a",
+      "target": "把上面的说法换成 Q/K/V 术语：\n"
+    },
+    {
+      "segment_id": "05-10:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0071",
+      "kind": "list",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 36,
+      "source_sha256": "be4aee74bdc1be1bbe776c4fd9e5d1ad06154137a852a7a29f1cc3fa2e58339b",
+      "target": "- **Query（查询）** = 解码器状态 `s_{t-1}`\n- **Key（键）** = 编码器状态，用来与查询计算匹配分数\n- **Value（值）** = 编码器状态，用来加权求和\n"
+    },
+    {
+      "segment_id": "05-10:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 37,
+      "source_sha256": "6c68a1b027fa85fe115c0507dd8330c8ef992b9a033983bc07f6c6cf70978518",
+      "target": "在经典注意力机制中，键和值是同一组编码器状态。自注意力将二者分开：让序列查询自身，同时为 K 和 V 使用各自学习到的投影。多头注意力采用不同的可学习投影，并行完成这些运算。Transformer 把整套处理反复堆叠，并去掉循环神经网络（RNN）。\n"
+    },
+    {
+      "segment_id": "05-10:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 38,
+      "source_sha256": "a12c23cd1318b2a1ee78e97b87110dc26b3c7dfa3139fa7c7a216f308aedb857",
+      "target": "数学原理相同，张量形状也相同。从教学角度看，从 Bahdanau 注意力过渡到缩放点积注意力（scaled dot-product attention），主要是记号上的变化。\n"
+    },
+    {
+      "segment_id": "05-10:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Build It",
+        "### Step 4: why this is the bridge to transformers"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "05-10:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "713c7281a330ce83072bb86cfc7cf759a3795d8a0f5185f863c23b0b3b19d343",
+      "target": "PyTorch 和 TensorFlow 都直接提供了注意力模块。\n"
+    },
+    {
+      "segment_id": "05-10:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "655774531c6bfc959619daae246e20f831f58a671d6d668a0dbe91a4c9d5e7a4",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\nmha = nn.MultiheadAttention(embed_dim=128, num_heads=8, batch_first=True)\nquery = torch.randn(2, 5, 128)\nkey = torch.randn(2, 10, 128)\nvalue = torch.randn(2, 10, 128)\n\noutput, weights = mha(query, key, value)\nprint(output.shape, weights.shape)\n```\n"
+    },
+    {
+      "segment_id": "05-10:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0083",
+      "kind": "fence",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "dcb6921ddbe78a347d743d59f04a7cd6206143f2bd7888a38d13fcd8dd67f943",
+      "target": "```text\ntorch.Size([2, 5, 128]) torch.Size([2, 5, 10])\n```\n"
+    },
+    {
+      "segment_id": "05-10:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "0d03efdd136723413c53d327395a60a0169c6d718a0807956aab75fd816cb578",
+      "target": "这就是一个 Transformer 注意力层。它按批处理查询与键/值：查询序列含 5 个位置，键/值序列含 10 个位置，每个位置都是 128 维，使用 8 个头。`output` 是结合了上下文的新查询表示。`weights` 是可用于可视化的 5x10 对齐矩阵。\n"
+    },
+    {
+      "segment_id": "05-10:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### When classical attention still matters"
+      ],
+      "ordinal": 44,
+      "source_sha256": "bd26ee8e57f12e9a61230abb3c89001c94ab43b391297bbb74008ef7a4a30420",
+      "target": "### 经典注意力机制何时仍然有用\n"
+    },
+    {
+      "segment_id": "05-10:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### When classical attention still matters"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0089",
+      "kind": "list",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### When classical attention still matters"
+      ],
+      "ordinal": 45,
+      "source_sha256": "943d6b5b86c76f23eaa4dd6659ee89d2884f170526ec7fca64241dbd3385fbe1",
+      "target": "- 教学。基于 RNN 的单头、单层版本能把每个概念清楚地呈现出来。\n- 设备容纳不下 Transformer 的端侧序列任务。\n- 阅读 2014-2017 年的论文。不理解 Bahdanau 的约定，就容易读错。\n- 机器翻译（MT）中的细粒度对齐分析。即便在 Transformer 模型中，原始注意力权重也能用于可解释性分析；要读懂它们，首先得知道它们是什么。\n"
+    },
+    {
+      "segment_id": "05-10:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### When classical attention still matters"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### The attention-weight-as-explanation trap"
+      ],
+      "ordinal": 46,
+      "source_sha256": "b9f079850a6c37e090de02b471340b491361646a0f368c307e6f1800d15c002a",
+      "target": "### 把注意力权重当作解释的陷阱\n"
+    },
+    {
+      "segment_id": "05-10:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### The attention-weight-as-explanation trap"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### The attention-weight-as-explanation trap"
+      ],
+      "ordinal": 47,
+      "source_sha256": "416ed6875cfb10d09b2daf2445f2edfd677bc9a7a111bd7ae78cca2aa712de99",
+      "target": "注意力权重看起来很容易解释：各位置的权重总和为一，可以画成图，权重高就表示“关注了这里”。审稿人也很喜欢这样的图。\n"
+    },
+    {
+      "segment_id": "05-10:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### The attention-weight-as-explanation trap"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### The attention-weight-as-explanation trap"
+      ],
+      "ordinal": 48,
+      "source_sha256": "005fbc3c6877e89a79c42cec683455987289d7bfd46dac7c03b06860bc24d656",
+      "target": "但它们并没有看上去那么有解释力。Jain 和 Wallace（2019）指出，在某些任务上，即使打乱注意力分布，或用任意其他分布替换它，模型的预测也可能不变。没有消融实验（ablation）或反事实检验（counterfactual check），就绝不能把注意力权重当作模型推理的证据。\n"
+    },
+    {
+      "segment_id": "05-10:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Use It",
+        "### The attention-weight-as-explanation trap"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Ship It"
+      ],
+      "ordinal": 49,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "05-10:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Ship It"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Ship It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "ec59b0ef6bc76d6479c4bef25a40fe9d70c9ac03027e2f216c818dea1c9cf6da",
+      "target": "保存为 `outputs/prompt-attention-shapes.md`：\n"
+    },
+    {
+      "segment_id": "05-10:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Ship It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0101",
+      "kind": "fence",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Ship It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "5d9381ce392a6727d9aa38143bb8e01443e086b7261345b34beb9d25ae357d71",
+      "target": "```markdown\n---\nname: attention-shapes\ndescription: Debug shape bugs in attention implementations.\nphase: 5\nlesson: 10\n---\n\nGiven a broken attention implementation, you identify the shape mismatch. Output:\n\n1. Which matrix has the wrong shape. Name the tensor.\n2. What its shape should be, derived from (d_s, d_h, d_attn, T_enc, T_dec, batch_size).\n3. One-line fix. Transpose, reshape, or project.\n4. A test to catch regressions. Typically: assert `output.shape == (batch, T_dec, d_h)` and `weights.shape == (batch, T_dec, T_enc)` and `weights.sum(dim=-1) close to 1`.\n\nRefuse to recommend fixes that silently broadcast. Broadcast-hiding bugs surface later as silent accuracy degradation, the worst kind of attention bug.\n\nFor Bahdanau confusion, insist the decoder input is `s_{t-1}` (pre-step state). For Luong, `s_t` (post-step state). For dot-product, flag dimension mismatch between query and key as the most common first-time error.\n```\n"
+    },
+    {
+      "segment_id": "05-10:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Ship It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Exercises"
+      ],
+      "ordinal": 52,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "05-10:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Exercises"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0105",
+      "kind": "list",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Exercises"
+      ],
+      "ordinal": 53,
+      "source_sha256": "7efc130f16253f37a7fcd9ebd6340b5a700c81fe5715954ea079b29d3d3cf5cd",
+      "target": "1. **简单。** 为 `softmax` 实现掩码（masking），让编码器中填充 token 的注意力权重为零。在包含不同长度序列的一个批次上测试。\n2. **中等。** 为 Luong 的 `general` 形式加入多头注意力。将 `d_h` 分成 `n_heads` 组，每个头分别计算注意力，再拼接结果。验证单头情况下的结果与之前的实现一致。\n3. **困难。** 在第 09 课的简单复制任务上，训练一个带 Bahdanau 注意力的 GRU 编码器—解码器。绘制准确率随序列长度变化的曲线，与不带注意力的基线比较。你应该能看到，长度越大，差距越明显，从而验证注意力机制突破了这一瓶颈。\n"
+    },
+    {
+      "segment_id": "05-10:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Exercises"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Key Terms"
+      ],
+      "ordinal": 54,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "05-10:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Key Terms"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0109",
+      "kind": "table",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Key Terms"
+      ],
+      "ordinal": 55,
+      "source_sha256": "67b4aeb4718ff4e76b368284ff558f76496aba233266978919247b18e6537a45",
+      "target": "| 术语 | 通俗说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 注意力（Attention） | 看哪些内容 | 对值序列求加权平均，权重由查询与键的相似度计算得到。 |\n| 查询、键、值（Query, Key, Value） | QKV | 三种投影：Q 发起查询，K 用于匹配，V 是要返回的内容。 |\n| 加性注意力（Additive attention） | Bahdanau | 用前馈计算得到分数：`v^T tanh(W q + U k)`。 |\n| 乘性注意力（Multiplicative attention） | Luong dot / general | 分数为 `q^T k` 或 `q^T W k`。计算开销更小，多数任务上的准确率相当。 |\n| 对齐矩阵（Alignment matrix） | 那张漂亮的图 | 把注意力权重排列为 `(T_dec, T_enc)` 网格，从中观察模型关注了哪些位置。 |\n"
+    },
+    {
+      "segment_id": "05-10:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Key Terms"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Further Reading"
+      ],
+      "ordinal": 56,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "05-10:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Further Reading"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "05-10:b0113",
+      "kind": "list",
+      "heading_path": [
+        "# Attention Mechanism — The Breakthrough",
+        "## Further Reading"
+      ],
+      "ordinal": 57,
+      "source_sha256": "763bf56e368827b5c83ad37077f200ac38c6cd475d72e500f56977125a8cf420",
+      "target": "- [Bahdanau, Cho, Bengio (2014). Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473) —— 提出注意力机制的论文。\n- [Luong, Pham, Manning (2015). Effective Approaches to Attention-based Neural Machine Translation](https://arxiv.org/abs/1508.04025) —— 三种分数计算方式及其比较。\n- [Jain and Wallace (2019). Attention is not Explanation](https://arxiv.org/abs/1902.10186) —— 注意力权重在可解释性方面的局限。\n- [Dive into Deep Learning — Bahdanau Attention](https://d2l.ai/chapter_attention-mechanisms-and-transformers/bahdanau-attention.html) —— 可运行的 PyTorch 实现讲解。\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "assets": [
+    {
+      "source_path": "phases/05-nlp-foundations-to-advanced/10-attention-mechanism/assets/attention.svg",
+      "target_path": "i18n/zh/phases/05-nlp-foundations-to-advanced/10-attention-mechanism/assets/attention.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "abaad9e3a3b47e68928ee037a72d985826805a96610335cf3d2188dc745c306b"
+    }
+  ],
+  "reference_glossary_pins": [
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "git_blob": "51d583a00afc0ee6cddabe1802c59122d3c9d42f",
+      "bytes": 42839,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "git_blob": "3c3a4dc961984792a3635c473de36ed53a8eada7",
+      "bytes": 10069,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+      "git_blob": "efba509207ced3ac44cdddd8ce8faa2e1560cbbb",
+      "bytes": 3645,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S01-tool-foundations"
+    },
+    {
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e",
+      "git_blob": "fb5ec4fae661faf5fcae3288ed50fda94ded92c7",
+      "bytes": 2988,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S02-terminal-linux"
+    },
+    {
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077",
+      "git_blob": "d6f71417dab16872716008bb34c6e4fefa97a81e",
+      "bytes": 2886,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S03-gpu-docker"
+    },
+    {
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed",
+      "git_blob": "b4433dcf406df32b0cf588c5e5f7b2da00a22ecc",
+      "bytes": 2759,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S04-data-management"
+    },
+    {
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+      "git_blob": "6d67b7168f486b05f27b01af69161a16cea11377",
+      "bytes": 3862,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S05-linear-algebra-basics"
+    },
+    {
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+      "git_blob": "bcf4f580e2895ce944a2cad5ab4ea43424977ecb",
+      "bytes": 2425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S06-matrix-transformations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428",
+      "git_blob": "c3f3c4b17d5f6af0fc49211ae72af6ca44227f73",
+      "bytes": 4184,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S07-calculus-foundations"
+    },
+    {
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca",
+      "git_blob": "c70a717985296f3dc75e552bb92a6f06ab4c0b78",
+      "bytes": 3157,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S08-chain-rule-autodiff"
+    },
+    {
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880",
+      "git_blob": "2d394898b293afc5f35c92aa6357767ee337dba0",
+      "bytes": 4023,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S09-probability-foundations"
+    },
+    {
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec",
+      "git_blob": "36035ee5c71335a756b68f719bf0c183e2908ce2",
+      "bytes": 4494,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S10-bayes-foundations"
+    },
+    {
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf",
+      "git_blob": "3c7e79a3741b61f4198af233b69f24fc33e6f433",
+      "bytes": 3736,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S11-optimization-foundations"
+    },
+    {
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115",
+      "git_blob": "483d7fe5393ff8228f8320e122bff65899afc0d9",
+      "bytes": 3284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S12-information-theory"
+    },
+    {
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364",
+      "git_blob": "9a294d0c7d641f3895ec5d2a3401ea4a96fdcf67",
+      "bytes": 3438,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S13-dimensionality-reduction"
+    },
+    {
+      "commit": "acf8e89bc4596c13307a53a995fe96701221c5b6",
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5",
+      "git_blob": "4fb7a14c1730db6cd5f30d26f51c5fe4d8c0ba02",
+      "bytes": 3312,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S14-tensor-operations"
+    },
+    {
+      "commit": "e906a46fdf8a0ea9ea22c68784b4303e1c10c198",
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4",
+      "git_blob": "1016d7d240bb1b78897be717041500e687fd9401",
+      "bytes": 3048,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S15-numerical-stability"
+    },
+    {
+      "commit": "2610d0dec88725fec4528accc5487f9cf88b4d49",
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a",
+      "git_blob": "8a606b02466143d31e7ca4210b47a7be254394e8",
+      "bytes": 3677,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S16-norms-distances"
+    },
+    {
+      "commit": "7f802943f85ff5621e50eb2307cb712e0fff2b68",
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48",
+      "git_blob": "dc95714026cd8e693e396db3f2448d1179df3943",
+      "bytes": 3928,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S17-statistics-for-ml"
+    },
+    {
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff",
+      "git_blob": "3b91d4c008bf0d06d38298b36ce505ce8a318b6b",
+      "bytes": 3660,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S18-sampling-methods"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2",
+      "git_blob": "596dc57b24236543cc2ba7b2060d067a6db18f13",
+      "bytes": 2924,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S19-linear-systems"
+    },
+    {
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a",
+      "git_blob": "8362723bd43106e34aabf3da2d4e10e5e56cce18",
+      "bytes": 3434,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S20-convex-optimization"
+    },
+    {
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4",
+      "git_blob": "fc3c32a750247da022623c0789363167885fa1dd",
+      "bytes": 3408,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S21-fourier-transform"
+    },
+    {
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "git_blob": "2f1da1190ed66909df4150cded08ab76d3110cb7",
+      "bytes": 3170,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S22-ml-overview"
+    },
+    {
+      "commit": "ccf427ff16970a5cde15eeef5c085530fc50978b",
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844",
+      "git_blob": "fa7abc4253e2a3aea3556aa520a5f0c5d762283a",
+      "bytes": 2553,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S23-decision-trees"
+    },
+    {
+      "commit": "99277ca3ba91fcc3b8f06dffe6c5cdb212b7278b",
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63",
+      "git_blob": "37b8e539615eba55fd962d46e2bd11545535aa7d",
+      "bytes": 2284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S24-knn-distances"
+    },
+    {
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3",
+      "git_blob": "eb71f179dc1b215a2cc4dd6ab30d9879d6b3a0fd",
+      "bytes": 2382,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S25-linear-regression"
+    },
+    {
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd",
+      "git_blob": "6319a758cf71a1bf7b0af996ebfc6d8c46b2b0c7",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S26-support-vector-machines"
+    },
+    {
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8",
+      "git_blob": "eff9c68670ecb23e0213084e1a9fcb8f957c1d63",
+      "bytes": 2088,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S27-perceptron"
+    },
+    {
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1",
+      "git_blob": "92e02c63f3760272c684341d4e3f1a8fe19f3f0f",
+      "bytes": 2326,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S28-logistic-regression"
+    },
+    {
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21",
+      "git_blob": "4f3fea7d28134a6cf4bf453a381ea04fbd8b90bb",
+      "bytes": 2269,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S29-multi-layer-networks"
+    },
+    {
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd",
+      "git_blob": "1d8612f449304097bfdb1f9b2c337f538c27f163",
+      "bytes": 2209,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S30-audio-fundamentals"
+    },
+    {
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1",
+      "git_blob": "d3cdc78dc5230ed8164824dd7b366894fc8af209",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S31-unsupervised-learning"
+    },
+    {
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726",
+      "git_blob": "2c18b360177a935d7e16f1cddfcd17228afc2d4e",
+      "bytes": 2279,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S32-backpropagation"
+    },
+    {
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66",
+      "git_blob": "890baefa8c23198a0728f5db2c41b8da258d1b7b",
+      "bytes": 2354,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S33-building-tokenizer"
+    },
+    {
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6",
+      "git_blob": "7a81537a54bf29a6a510f2ae203747dbef8161ab",
+      "bytes": 2513,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S34-feature-engineering"
+    },
+    {
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4",
+      "git_blob": "cf02f8a51eb91f69853a96dbe0ef228156884483",
+      "bytes": 2335,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S35-activation-functions"
+    },
+    {
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e",
+      "git_blob": "abb5e30bd7c58c60811935ace9a207795d8b7073",
+      "bytes": 2430,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S36-naive-bayes"
+    },
+    {
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de",
+      "git_blob": "1aec35ef2ba3b81cf974bde20b522b3ac22cfdac",
+      "bytes": 4383,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S37-pretraining-data"
+    },
+    {
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340",
+      "git_blob": "4ae770868a791fc68af0b235d3e14d71e585a3c3",
+      "bytes": 3095,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S38-flamingo"
+    },
+    {
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533",
+      "git_blob": "09c852f9b00cb6d496ffa423a744972c6458845a",
+      "bytes": 2483,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S39-model-evaluation"
+    },
+    {
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557",
+      "git_blob": "29da68dbd644a01ff7509185a060189819bdf79e",
+      "bytes": 2503,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S40-loss-functions"
+    },
+    {
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc",
+      "git_blob": "effcbe3cebed938d10a2f87cab92ef063d37835e",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S41-text-processing"
+    },
+    {
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359",
+      "git_blob": "ccf24ce35cd2d227658dd0eaeb0ff5e137b73a45",
+      "bytes": 2022,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S42-bias-variance"
+    },
+    {
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae",
+      "git_blob": "9f4a7b78ba3f0eaaf8f0b53ef92ce848e343ef6c",
+      "bytes": 2575,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S43-optimizers"
+    },
+    {
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba",
+      "git_blob": "2e5267fd7fda2946607d2c4efe76f783b84a70a4",
+      "bytes": 2281,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S44-bag-of-words-tfidf"
+    },
+    {
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243",
+      "git_blob": "d89de19e68a642eb5ba0de7c3a1c86f5d53a183b",
+      "bytes": 3177,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S45-pretraining-mini-gpt"
+    },
+    {
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c",
+      "git_blob": "5c8c335d3d9544f45af084855f43bc901757b532",
+      "bytes": 3037,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S46-pos-tagging-parsing"
+    },
+    {
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3",
+      "git_blob": "08c29105b859aca15c5857d3c7fe5acfaaa16232",
+      "bytes": 2165,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S47-ensemble-methods"
+    },
+    {
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc",
+      "git_blob": "6d018fa789c46c330ec30d076b6b45f3b1944c32",
+      "bytes": 2744,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S48-regularization"
+    },
+    {
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018",
+      "git_blob": "23bae97c69d96369d1c97ec561e987d77cb990bf",
+      "bytes": 2769,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S49-word2vec"
+    },
+    {
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06",
+      "git_blob": "f14bdc002f7f2a2500507be5ae0da7b7865c62c5",
+      "bytes": 3425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S50-ngram-language-models"
+    },
+    {
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795",
+      "git_blob": "af1e6093e2b48ba42e150a3e8356f5456b47faac",
+      "bytes": 2818,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S51-sentiment-analysis"
+    },
+    {
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0",
+      "git_blob": "d25320b87932fa85bb65f03454afbe084c4f8e86",
+      "bytes": 2038,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S52-hyperparameter-tuning"
+    },
+    {
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340",
+      "git_blob": "d3b1c81cecc879fce6da44cc2ae2681792b21cae",
+      "bytes": 2508,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S53-weight-initialization"
+    },
+    {
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99",
+      "git_blob": "4513cb31ec4c8c07f2328692d1e2d07260039124",
+      "bytes": 2488,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S54-glove-fasttext-subword"
+    },
+    {
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201",
+      "git_blob": "eeb728a5d0d43b6c032a7884253f25cb5c8201a0",
+      "bytes": 3187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S55-named-entity-recognition"
+    },
+    {
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5",
+      "git_blob": "88e1bc702c14383d3a8cd5d9c3476f56c1b8f7b7",
+      "bytes": 2583,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S56-topic-modeling"
+    },
+    {
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8",
+      "git_blob": "1d72892c4d18d373d2550282046ae90f24278600",
+      "bytes": 1821,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S57-ml-pipelines"
+    },
+    {
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361",
+      "git_blob": "bf966eca0129457a64967d7ab4557cae652fb82e",
+      "bytes": 2032,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S58-learning-rate-schedules"
+    },
+    {
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2",
+      "git_blob": "039edec92b22f1acc04257bec40fbdcedf14eb72",
+      "bytes": 2287,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S59-information-retrieval-search"
+    },
+    {
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d",
+      "git_blob": "2859645c51d6a2a9d5b2d418a9d616b9a552bf8d",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S60-subword-tokenization"
+    },
+    {
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379",
+      "git_blob": "af1026384a9e718fe6acf4e0d5afd15bca9a49f1",
+      "bytes": 2620,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S62-time-series"
+    },
+    {
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c",
+      "git_blob": "909f8a309d9606bbb755598b26123e29eb2bb60b",
+      "bytes": 2291,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S63-mini-framework"
+    },
+    {
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297",
+      "git_blob": "2bf145d2e719bd7e90bd5e9772500a76c8a78e56",
+      "bytes": 2365,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S64-embedding-models-deep-dive"
+    },
+    {
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac",
+      "git_blob": "7558a06998af49d2a4b07299bc7edb6991932dea",
+      "bytes": 2572,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S65-coreference-resolution"
+    },
+    {
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449",
+      "git_blob": "1b278c7d40d645d1ff0c80c0963b24391e9d5958",
+      "bytes": 2187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S67-anomaly-detection"
+    },
+    {
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198",
+      "git_blob": "6f6c890dd6b18fd6729619b9ac0f4230a0790886",
+      "bytes": 2120,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S68-imbalanced-data"
+    },
+    {
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c",
+      "git_blob": "ba2f5d2833c22d665de3500bfb07895c751a541a",
+      "bytes": 2535,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S69-intro-to-pytorch"
+    },
+    {
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c",
+      "git_blob": "9cbb5f7ee02ef8dbe38f1709ee6fc6398c18cf25",
+      "bytes": 2206,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S70-chunking-strategies-rag"
+    },
+    {
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44",
+      "git_blob": "3c90f176f47d6c37b0ec1b0e4e83cbddceed7f2d",
+      "bytes": 3266,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S71-entity-linking"
+    },
+    {
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef",
+      "git_blob": "a6ee3f7b4afac98072fac33d6592468cf8628227",
+      "bytes": 3109,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S72-intro-to-jax"
+    },
+    {
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505",
+      "git_blob": "bc236d955c7437e2fcdea07d13a68600004caf3f",
+      "bytes": 2445,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S73-debugging-neural-networks"
+    },
+    {
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488",
+      "git_blob": "de8e3a444952b5f13b2b8bfa140836a483186884",
+      "bytes": 3460,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S74-relation-extraction-kg"
+    },
+    {
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347",
+      "git_blob": "6977075d8c93e88c344cc59221888db694d3b5c5",
+      "bytes": 2939,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S75-speaker-recognition-verification"
+    },
+    {
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421",
+      "git_blob": "d8730fc8bf95c6bb26bfd027cd5b7312bb5cef55",
+      "bytes": 3011,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S76-graph-theory"
+    },
+    {
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6",
+      "git_blob": "b565a501009f209b53e4eb15b628f8b67bd7c3af",
+      "bytes": 2684,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S77-image-fundamentals"
+    },
+    {
+      "commit": "56ee752aba7560af2ea4104d9fe07792b849c9e4",
+      "path": "i18n/zh/.curated/stages/S78-stochastic-processes/TERMINOLOGY.md",
+      "sha256": "f211aa1993249e771de3a60e924ea673b60ccd310994c9c6158a1a4225c3ffb4",
+      "git_blob": "6434f650066f589951c5d659ef71493d624801db",
+      "bytes": 3485,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S78-stochastic-processes"
+    },
+    {
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197",
+      "git_blob": "d69faa5f6530df562ce242491170a8c35ddb0ef6",
+      "bytes": 3390,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S80-watermarking-synthid-stable-signature-c2pa"
+    },
+    {
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b",
+      "git_blob": "f86f6161c9e5314188233bd65adf4883c8293236",
+      "bytes": 1566,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S81-outcomes-before-output"
+    },
+    {
+      "commit": "31143020895d0c406c2b36cdb362683c6f40e2e4",
+      "path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+      "sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e",
+      "git_blob": "e0c7e706c636bba3bdb3a7849b87b9c5d1a796cb",
+      "bytes": 5198,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S82-debugging-and-profiling"
+    },
+    {
+      "commit": "682be1701b737db6b85315719d0744fcdb2c0574",
+      "path": "i18n/zh/.curated/stages/S83-convolutions-from-scratch/TERMINOLOGY.md",
+      "sha256": "3305451de8fd1e1af1c3594824045890a233d7c6c2da636b7ae7b5f3f29c2d81",
+      "git_blob": "d2f3c937e0cf2ad3b3766989401cd7642af5d3c2",
+      "bytes": 6444,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S83-convolutions-from-scratch"
+    },
+    {
+      "commit": "07031ded257dd184214a1505880a838328ea74f8",
+      "path": "i18n/zh/.curated/stages/S84-discover-the-real-workflow/TERMINOLOGY.md",
+      "sha256": "95a7f035b18f8988c334cc4bc6c68a136719e8fc223a31c117780c3876a86035",
+      "git_blob": "5b1fe0e376ee3ba83ce34cf631c10df41ad880f1",
+      "bytes": 6930,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S84-discover-the-real-workflow"
+    },
+    {
+      "commit": "1a364d8283c864eccac467bb32a850a0d0779eef",
+      "path": "i18n/zh/.curated/stages/S85-cnns-lenet-to-resnet/TERMINOLOGY.md",
+      "sha256": "d8ca3e0f8e060f61603d46fe6984eb0488a48078490b16fc3a515dd5980ac8d1",
+      "git_blob": "2a310461fe3426a16aed09266558a7a10d14a5d8",
+      "bytes": 7110,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S85-cnns-lenet-to-resnet"
+    },
+    {
+      "commit": "b333554e53ab0b231a086aa9d1b9e381a82dccb2",
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/TERMINOLOGY.md",
+      "sha256": "eae3b3a7ac0bc2fdb9cbf25bc0c88a25ae81dfd45012e2be178bb005fae1bf3b",
+      "git_blob": "c9e4d03bb804934004ee75816f0f74a15c93b5bc",
+      "bytes": 4858,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S86-cnns-rnns-for-text"
+    },
+    {
+      "commit": "b6257ebccdaf34a6e16056026237be0f9e8a2fea",
+      "path": "i18n/zh/.curated/stages/S87-map-assumptions-and-risk/TERMINOLOGY.md",
+      "sha256": "2a3f542fdb608c3158216e964c057d7b07d9e93cd33ca52427a8a8d93a679e10",
+      "git_blob": "40c6fcc35088fe99a43d02bd77bd3d6eaa46038e",
+      "bytes": 4581,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S87-map-assumptions-and-risk"
+    },
+    {
+      "commit": "ac448471d1be529916bc9967b8fee11e9549f5ab",
+      "path": "i18n/zh/.curated/stages/S88-image-classification/TERMINOLOGY.md",
+      "sha256": "dc68c5834e89d04962e2ae5312a8aa5d19e019329a3f50880cbea4b99012348a",
+      "git_blob": "f7bd10e8ac8f7900ed4ed788cfa90690b4a4e6d7",
+      "bytes": 5791,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S88-image-classification"
+    },
+    {
+      "commit": "7e67c26e2a7459319a30645374a69ae551bd70f7",
+      "path": "i18n/zh/.curated/stages/S89-sequence-to-sequence/TERMINOLOGY.md",
+      "sha256": "d0df724e728064ed9ed866909df5e5b8d840763957cec99340c18fbee199f21c",
+      "git_blob": "3fa4565c0f6f70e73edd554c431e3522c2a9909f",
+      "bytes": 3744,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S89-sequence-to-sequence"
+    },
+    {
+      "commit": "f6d305f6b542908bd6c05d6e781869762cab9b35",
+      "path": "i18n/zh/.curated/stages/S90-choose-smallest-testable-slice/TERMINOLOGY.md",
+      "sha256": "a74717692fa335c4fc3d393ab308a95253bb339de9aa1608899d3c515c1aa84c",
+      "git_blob": "32668f36e2a1bddea08868b2b59341b7b5100d74",
+      "bytes": 5174,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S90-choose-smallest-testable-slice"
+    }
+  ],
+  "support_pins": [
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "git_blob": "51d583a00afc0ee6cddabe1802c59122d3c9d42f",
+      "bytes": 42839,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "git_blob": "3c3a4dc961984792a3635c473de36ed53a8eada7",
+      "bytes": 10069,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+      "git_blob": "efba509207ced3ac44cdddd8ce8faa2e1560cbbb",
+      "bytes": 3645,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S01-tool-foundations"
+    },
+    {
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e",
+      "git_blob": "fb5ec4fae661faf5fcae3288ed50fda94ded92c7",
+      "bytes": 2988,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S02-terminal-linux"
+    },
+    {
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077",
+      "git_blob": "d6f71417dab16872716008bb34c6e4fefa97a81e",
+      "bytes": 2886,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S03-gpu-docker"
+    },
+    {
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed",
+      "git_blob": "b4433dcf406df32b0cf588c5e5f7b2da00a22ecc",
+      "bytes": 2759,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S04-data-management"
+    },
+    {
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+      "git_blob": "6d67b7168f486b05f27b01af69161a16cea11377",
+      "bytes": 3862,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S05-linear-algebra-basics"
+    },
+    {
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+      "git_blob": "bcf4f580e2895ce944a2cad5ab4ea43424977ecb",
+      "bytes": 2425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S06-matrix-transformations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428",
+      "git_blob": "c3f3c4b17d5f6af0fc49211ae72af6ca44227f73",
+      "bytes": 4184,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S07-calculus-foundations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/check_stage.py",
+      "sha256": "aa88776818af759d419790f9290ef8c6983b05a925f359f65152a5d8edfb7743",
+      "git_blob": "03f7859068381c0543e82e0458f9b7d90eb0e37d",
+      "bytes": 6269,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/test_stage.py",
+      "sha256": "933c5ea0570a1f385b07da5280758f895f14cae82371f123f4543ba213b52459",
+      "git_blob": "882307ac0d131ca71447c5250af98482f55145f8",
+      "bytes": 6020,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca",
+      "git_blob": "c70a717985296f3dc75e552bb92a6f06ab4c0b78",
+      "bytes": 3157,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S08-chain-rule-autodiff"
+    },
+    {
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880",
+      "git_blob": "2d394898b293afc5f35c92aa6357767ee337dba0",
+      "bytes": 4023,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S09-probability-foundations"
+    },
+    {
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec",
+      "git_blob": "36035ee5c71335a756b68f719bf0c183e2908ce2",
+      "bytes": 4494,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S10-bayes-foundations"
+    },
+    {
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf",
+      "git_blob": "3c7e79a3741b61f4198af233b69f24fc33e6f433",
+      "bytes": 3736,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S11-optimization-foundations"
+    },
+    {
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115",
+      "git_blob": "483d7fe5393ff8228f8320e122bff65899afc0d9",
+      "bytes": 3284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S12-information-theory"
+    },
+    {
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364",
+      "git_blob": "9a294d0c7d641f3895ec5d2a3401ea4a96fdcf67",
+      "bytes": 3438,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S13-dimensionality-reduction"
+    },
+    {
+      "commit": "acf8e89bc4596c13307a53a995fe96701221c5b6",
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5",
+      "git_blob": "4fb7a14c1730db6cd5f30d26f51c5fe4d8c0ba02",
+      "bytes": 3312,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S14-tensor-operations"
+    },
+    {
+      "commit": "e906a46fdf8a0ea9ea22c68784b4303e1c10c198",
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4",
+      "git_blob": "1016d7d240bb1b78897be717041500e687fd9401",
+      "bytes": 3048,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S15-numerical-stability"
+    },
+    {
+      "commit": "2610d0dec88725fec4528accc5487f9cf88b4d49",
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a",
+      "git_blob": "8a606b02466143d31e7ca4210b47a7be254394e8",
+      "bytes": 3677,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S16-norms-distances"
+    },
+    {
+      "commit": "7f802943f85ff5621e50eb2307cb712e0fff2b68",
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48",
+      "git_blob": "dc95714026cd8e693e396db3f2448d1179df3943",
+      "bytes": 3928,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S17-statistics-for-ml"
+    },
+    {
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff",
+      "git_blob": "3b91d4c008bf0d06d38298b36ce505ce8a318b6b",
+      "bytes": 3660,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S18-sampling-methods"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/CONTROL-EXTENSION.md",
+      "sha256": "b5c6868a952806f6d3d48027ca28b7b0c661f72fc57687d992180349113f265d",
+      "git_blob": "ff49aedb81db9ae9d05932ff5a3fc5170aca1fbb",
+      "bytes": 7674,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2",
+      "git_blob": "596dc57b24236543cc2ba7b2060d067a6db18f13",
+      "bytes": 2924,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S19-linear-systems"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/check_stage.py",
+      "sha256": "703dd675d345396db8db9624a24fa5375f3bb5ca1ed1c2fa0c99574315ae5515",
+      "git_blob": "947d31c24af08811f69bf67308bb8daca6f02e6a",
+      "bytes": 14765,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/test_stage.py",
+      "sha256": "373409a9da1954eb35a7e2886d16109bde18a08935d19b3f479c1421dad4ecf2",
+      "git_blob": "5c230aca5fecc64538e492ba16a72cdceb3b6df2",
+      "bytes": 20588,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a",
+      "git_blob": "8362723bd43106e34aabf3da2d4e10e5e56cce18",
+      "bytes": 3434,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S20-convex-optimization"
+    },
+    {
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4",
+      "git_blob": "fc3c32a750247da022623c0789363167885fa1dd",
+      "bytes": 3408,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S21-fourier-transform"
+    },
+    {
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "git_blob": "2f1da1190ed66909df4150cded08ab76d3110cb7",
+      "bytes": 3170,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S22-ml-overview"
+    },
+    {
+      "commit": "ccf427ff16970a5cde15eeef5c085530fc50978b",
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844",
+      "git_blob": "fa7abc4253e2a3aea3556aa520a5f0c5d762283a",
+      "bytes": 2553,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S23-decision-trees"
+    },
+    {
+      "commit": "99277ca3ba91fcc3b8f06dffe6c5cdb212b7278b",
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63",
+      "git_blob": "37b8e539615eba55fd962d46e2bd11545535aa7d",
+      "bytes": 2284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S24-knn-distances"
+    },
+    {
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3",
+      "git_blob": "eb71f179dc1b215a2cc4dd6ab30d9879d6b3a0fd",
+      "bytes": 2382,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S25-linear-regression"
+    },
+    {
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd",
+      "git_blob": "6319a758cf71a1bf7b0af996ebfc6d8c46b2b0c7",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S26-support-vector-machines"
+    },
+    {
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8",
+      "git_blob": "eff9c68670ecb23e0213084e1a9fcb8f957c1d63",
+      "bytes": 2088,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S27-perceptron"
+    },
+    {
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1",
+      "git_blob": "92e02c63f3760272c684341d4e3f1a8fe19f3f0f",
+      "bytes": 2326,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S28-logistic-regression"
+    },
+    {
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21",
+      "git_blob": "4f3fea7d28134a6cf4bf453a381ea04fbd8b90bb",
+      "bytes": 2269,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S29-multi-layer-networks"
+    },
+    {
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd",
+      "git_blob": "1d8612f449304097bfdb1f9b2c337f538c27f163",
+      "bytes": 2209,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S30-audio-fundamentals"
+    },
+    {
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1",
+      "git_blob": "d3cdc78dc5230ed8164824dd7b366894fc8af209",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S31-unsupervised-learning"
+    },
+    {
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726",
+      "git_blob": "2c18b360177a935d7e16f1cddfcd17228afc2d4e",
+      "bytes": 2279,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S32-backpropagation"
+    },
+    {
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66",
+      "git_blob": "890baefa8c23198a0728f5db2c41b8da258d1b7b",
+      "bytes": 2354,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S33-building-tokenizer"
+    },
+    {
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6",
+      "git_blob": "7a81537a54bf29a6a510f2ae203747dbef8161ab",
+      "bytes": 2513,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S34-feature-engineering"
+    },
+    {
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4",
+      "git_blob": "cf02f8a51eb91f69853a96dbe0ef228156884483",
+      "bytes": 2335,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S35-activation-functions"
+    },
+    {
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e",
+      "git_blob": "abb5e30bd7c58c60811935ace9a207795d8b7073",
+      "bytes": 2430,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S36-naive-bayes"
+    },
+    {
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de",
+      "git_blob": "1aec35ef2ba3b81cf974bde20b522b3ac22cfdac",
+      "bytes": 4383,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S37-pretraining-data"
+    },
+    {
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340",
+      "git_blob": "4ae770868a791fc68af0b235d3e14d71e585a3c3",
+      "bytes": 3095,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S38-flamingo"
+    },
+    {
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533",
+      "git_blob": "09c852f9b00cb6d496ffa423a744972c6458845a",
+      "bytes": 2483,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S39-model-evaluation"
+    },
+    {
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557",
+      "git_blob": "29da68dbd644a01ff7509185a060189819bdf79e",
+      "bytes": 2503,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S40-loss-functions"
+    },
+    {
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc",
+      "git_blob": "effcbe3cebed938d10a2f87cab92ef063d37835e",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S41-text-processing"
+    },
+    {
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359",
+      "git_blob": "ccf24ce35cd2d227658dd0eaeb0ff5e137b73a45",
+      "bytes": 2022,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S42-bias-variance"
+    },
+    {
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae",
+      "git_blob": "9f4a7b78ba3f0eaaf8f0b53ef92ce848e343ef6c",
+      "bytes": 2575,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S43-optimizers"
+    },
+    {
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba",
+      "git_blob": "2e5267fd7fda2946607d2c4efe76f783b84a70a4",
+      "bytes": 2281,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S44-bag-of-words-tfidf"
+    },
+    {
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243",
+      "git_blob": "d89de19e68a642eb5ba0de7c3a1c86f5d53a183b",
+      "bytes": 3177,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S45-pretraining-mini-gpt"
+    },
+    {
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c",
+      "git_blob": "5c8c335d3d9544f45af084855f43bc901757b532",
+      "bytes": 3037,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S46-pos-tagging-parsing"
+    },
+    {
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3",
+      "git_blob": "08c29105b859aca15c5857d3c7fe5acfaaa16232",
+      "bytes": 2165,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S47-ensemble-methods"
+    },
+    {
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc",
+      "git_blob": "6d018fa789c46c330ec30d076b6b45f3b1944c32",
+      "bytes": 2744,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S48-regularization"
+    },
+    {
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018",
+      "git_blob": "23bae97c69d96369d1c97ec561e987d77cb990bf",
+      "bytes": 2769,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S49-word2vec"
+    },
+    {
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06",
+      "git_blob": "f14bdc002f7f2a2500507be5ae0da7b7865c62c5",
+      "bytes": 3425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S50-ngram-language-models"
+    },
+    {
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795",
+      "git_blob": "af1e6093e2b48ba42e150a3e8356f5456b47faac",
+      "bytes": 2818,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S51-sentiment-analysis"
+    },
+    {
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0",
+      "git_blob": "d25320b87932fa85bb65f03454afbe084c4f8e86",
+      "bytes": 2038,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S52-hyperparameter-tuning"
+    },
+    {
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340",
+      "git_blob": "d3b1c81cecc879fce6da44cc2ae2681792b21cae",
+      "bytes": 2508,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S53-weight-initialization"
+    },
+    {
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99",
+      "git_blob": "4513cb31ec4c8c07f2328692d1e2d07260039124",
+      "bytes": 2488,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S54-glove-fasttext-subword"
+    },
+    {
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201",
+      "git_blob": "eeb728a5d0d43b6c032a7884253f25cb5c8201a0",
+      "bytes": 3187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S55-named-entity-recognition"
+    },
+    {
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5",
+      "git_blob": "88e1bc702c14383d3a8cd5d9c3476f56c1b8f7b7",
+      "bytes": 2583,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S56-topic-modeling"
+    },
+    {
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8",
+      "git_blob": "1d72892c4d18d373d2550282046ae90f24278600",
+      "bytes": 1821,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S57-ml-pipelines"
+    },
+    {
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361",
+      "git_blob": "bf966eca0129457a64967d7ab4557cae652fb82e",
+      "bytes": 2032,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S58-learning-rate-schedules"
+    },
+    {
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2",
+      "git_blob": "039edec92b22f1acc04257bec40fbdcedf14eb72",
+      "bytes": 2287,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S59-information-retrieval-search"
+    },
+    {
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d",
+      "git_blob": "2859645c51d6a2a9d5b2d418a9d616b9a552bf8d",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S60-subword-tokenization"
+    },
+    {
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379",
+      "git_blob": "af1026384a9e718fe6acf4e0d5afd15bca9a49f1",
+      "bytes": 2620,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S62-time-series"
+    },
+    {
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c",
+      "git_blob": "909f8a309d9606bbb755598b26123e29eb2bb60b",
+      "bytes": 2291,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S63-mini-framework"
+    },
+    {
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297",
+      "git_blob": "2bf145d2e719bd7e90bd5e9772500a76c8a78e56",
+      "bytes": 2365,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S64-embedding-models-deep-dive"
+    },
+    {
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac",
+      "git_blob": "7558a06998af49d2a4b07299bc7edb6991932dea",
+      "bytes": 2572,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S65-coreference-resolution"
+    },
+    {
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449",
+      "git_blob": "1b278c7d40d645d1ff0c80c0963b24391e9d5958",
+      "bytes": 2187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S67-anomaly-detection"
+    },
+    {
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198",
+      "git_blob": "6f6c890dd6b18fd6729619b9ac0f4230a0790886",
+      "bytes": 2120,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S68-imbalanced-data"
+    },
+    {
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c",
+      "git_blob": "ba2f5d2833c22d665de3500bfb07895c751a541a",
+      "bytes": 2535,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S69-intro-to-pytorch"
+    },
+    {
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c",
+      "git_blob": "9cbb5f7ee02ef8dbe38f1709ee6fc6398c18cf25",
+      "bytes": 2206,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S70-chunking-strategies-rag"
+    },
+    {
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44",
+      "git_blob": "3c90f176f47d6c37b0ec1b0e4e83cbddceed7f2d",
+      "bytes": 3266,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S71-entity-linking"
+    },
+    {
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef",
+      "git_blob": "a6ee3f7b4afac98072fac33d6592468cf8628227",
+      "bytes": 3109,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S72-intro-to-jax"
+    },
+    {
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505",
+      "git_blob": "bc236d955c7437e2fcdea07d13a68600004caf3f",
+      "bytes": 2445,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S73-debugging-neural-networks"
+    },
+    {
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488",
+      "git_blob": "de8e3a444952b5f13b2b8bfa140836a483186884",
+      "bytes": 3460,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S74-relation-extraction-kg"
+    },
+    {
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347",
+      "git_blob": "6977075d8c93e88c344cc59221888db694d3b5c5",
+      "bytes": 2939,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S75-speaker-recognition-verification"
+    },
+    {
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421",
+      "git_blob": "d8730fc8bf95c6bb26bfd027cd5b7312bb5cef55",
+      "bytes": 3011,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S76-graph-theory"
+    },
+    {
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6",
+      "git_blob": "b565a501009f209b53e4eb15b628f8b67bd7c3af",
+      "bytes": 2684,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S77-image-fundamentals"
+    },
+    {
+      "commit": "56ee752aba7560af2ea4104d9fe07792b849c9e4",
+      "path": "i18n/zh/.curated/stages/S78-stochastic-processes/TERMINOLOGY.md",
+      "sha256": "f211aa1993249e771de3a60e924ea673b60ccd310994c9c6158a1a4225c3ffb4",
+      "git_blob": "6434f650066f589951c5d659ef71493d624801db",
+      "bytes": 3485,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S78-stochastic-processes"
+    },
+    {
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197",
+      "git_blob": "d69faa5f6530df562ce242491170a8c35ddb0ef6",
+      "bytes": 3390,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S80-watermarking-synthid-stable-signature-c2pa"
+    },
+    {
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b",
+      "git_blob": "f86f6161c9e5314188233bd65adf4883c8293236",
+      "bytes": 1566,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S81-outcomes-before-output"
+    },
+    {
+      "commit": "31143020895d0c406c2b36cdb362683c6f40e2e4",
+      "path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+      "sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e",
+      "git_blob": "e0c7e706c636bba3bdb3a7849b87b9c5d1a796cb",
+      "bytes": 5198,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S82-debugging-and-profiling"
+    },
+    {
+      "commit": "682be1701b737db6b85315719d0744fcdb2c0574",
+      "path": "i18n/zh/.curated/stages/S83-convolutions-from-scratch/TERMINOLOGY.md",
+      "sha256": "3305451de8fd1e1af1c3594824045890a233d7c6c2da636b7ae7b5f3f29c2d81",
+      "git_blob": "d2f3c937e0cf2ad3b3766989401cd7642af5d3c2",
+      "bytes": 6444,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S83-convolutions-from-scratch"
+    },
+    {
+      "commit": "07031ded257dd184214a1505880a838328ea74f8",
+      "path": "i18n/zh/.curated/stages/S84-discover-the-real-workflow/TERMINOLOGY.md",
+      "sha256": "95a7f035b18f8988c334cc4bc6c68a136719e8fc223a31c117780c3876a86035",
+      "git_blob": "5b1fe0e376ee3ba83ce34cf631c10df41ad880f1",
+      "bytes": 6930,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S84-discover-the-real-workflow"
+    },
+    {
+      "commit": "1a364d8283c864eccac467bb32a850a0d0779eef",
+      "path": "i18n/zh/.curated/stages/S85-cnns-lenet-to-resnet/TERMINOLOGY.md",
+      "sha256": "d8ca3e0f8e060f61603d46fe6984eb0488a48078490b16fc3a515dd5980ac8d1",
+      "git_blob": "2a310461fe3426a16aed09266558a7a10d14a5d8",
+      "bytes": 7110,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S85-cnns-lenet-to-resnet"
+    },
+    {
+      "commit": "b333554e53ab0b231a086aa9d1b9e381a82dccb2",
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/TERMINOLOGY.md",
+      "sha256": "eae3b3a7ac0bc2fdb9cbf25bc0c88a25ae81dfd45012e2be178bb005fae1bf3b",
+      "git_blob": "c9e4d03bb804934004ee75816f0f74a15c93b5bc",
+      "bytes": 4858,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S86-cnns-rnns-for-text"
+    },
+    {
+      "commit": "b6257ebccdaf34a6e16056026237be0f9e8a2fea",
+      "path": "i18n/zh/.curated/stages/S87-map-assumptions-and-risk/TERMINOLOGY.md",
+      "sha256": "2a3f542fdb608c3158216e964c057d7b07d9e93cd33ca52427a8a8d93a679e10",
+      "git_blob": "40c6fcc35088fe99a43d02bd77bd3d6eaa46038e",
+      "bytes": 4581,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S87-map-assumptions-and-risk"
+    },
+    {
+      "commit": "ac448471d1be529916bc9967b8fee11e9549f5ab",
+      "path": "i18n/zh/.curated/stages/S88-image-classification/TERMINOLOGY.md",
+      "sha256": "dc68c5834e89d04962e2ae5312a8aa5d19e019329a3f50880cbea4b99012348a",
+      "git_blob": "f7bd10e8ac8f7900ed4ed788cfa90690b4a4e6d7",
+      "bytes": 5791,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S88-image-classification"
+    },
+    {
+      "commit": "7e67c26e2a7459319a30645374a69ae551bd70f7",
+      "path": "i18n/zh/.curated/stages/S89-sequence-to-sequence/TERMINOLOGY.md",
+      "sha256": "d0df724e728064ed9ed866909df5e5b8d840763957cec99340c18fbee199f21c",
+      "git_blob": "3fa4565c0f6f70e73edd554c431e3522c2a9909f",
+      "bytes": 3744,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S89-sequence-to-sequence"
+    },
+    {
+      "commit": "f6d305f6b542908bd6c05d6e781869762cab9b35",
+      "path": "i18n/zh/.curated/stages/S90-choose-smallest-testable-slice/TERMINOLOGY.md",
+      "sha256": "a74717692fa335c4fc3d393ab308a95253bb339de9aa1608899d3c515c1aa84c",
+      "git_blob": "32668f36e2a1bddea08868b2b59341b7b5100d74",
+      "bytes": 5174,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S90-choose-smallest-testable-slice"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/check_curated_render.js",
+      "sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43",
+      "git_blob": "9aaa367c468e88d6221d8a955637575c72d0b3ee",
+      "bytes": 2612,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/curated_translation.py",
+      "sha256": "d89de5eec36e10edcc391330d973632e3ceedb33fe679de3503dab52a7f6ece8",
+      "git_blob": "1e12882cbb814a1a4662f6e81a22d04601f3e84b",
+      "bytes": 21566,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/test_curated_translation.py",
+      "sha256": "1e049b41bfe486ed3d01afdcadb0b24de40eef5425e7b2ee704a488dbe6da176",
+      "git_blob": "9bf51015e9afbc29b75a4d8b4ab5d8c30a405b74",
+      "bytes": 16386,
+      "mode": "100644",
+      "role": "immutable_control"
+    }
+  ],
+  "own_stage_support_files": [
+    {
+      "path": "i18n/zh/.curated/stages/S92-attention-mechanism/DEPENDENCIES.json",
+      "sha256": "4dae78a50cc9e9d41458e4d0a9cfdd6a16367e6122cfea72bc4ad29a8c794390",
+      "bytes": 126845,
+      "git_blob": "c6f76af37fceb2122a60f51207bdbb224b48a5f0",
+      "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S92-attention-mechanism/SCOPE.md",
+      "sha256": "5b46df9b0695918c87a27e338e0c83c01d7685e40cc4807b543a828fdcdae5a7",
+      "bytes": 6287,
+      "git_blob": "4842d6dd57bc5a52a2f7869f25570837539884fe",
+      "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S92-attention-mechanism/TERMINOLOGY.md",
+      "sha256": "09183629e5165b401db0a902d4818555d3b2bb4740d83662cf0327b09392a691",
+      "bytes": 5173,
+      "git_blob": "ff94ee61bebf1f15396b15f845b5951aa33ed23d",
+      "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8"
+    }
+  ],
+  "support_binding": {
+    "stage_id": "S92-attention-mechanism",
+    "bound_utc": "2026-10-04T08:58:51.532517+00:00",
+    "support_set_sha256": "bfbd2e2b3449312b0135a02c5273158fb345aa677ab4ea405ff6ebfcc6d5ca6b",
+    "counts": {
+      "reference_terminology": 89,
+      "controls": 8,
+      "common": 97,
+      "own_stage_support": 3,
+      "total_support": 100,
+      "separate_unchanged_svg_assets": 1
+    },
+    "install_receipt": {
+      "path": "evidence-sha256:32c9ec8b547baecc0bc3c4c659d605be1a759ea7fc7e5e1fe8bc70355f9d66bb",
+      "sha256": "32c9ec8b547baecc0bc3c4c659d605be1a759ea7fc7e5e1fe8bc70355f9d66bb"
+    },
+    "author_ready_receipt": {
+      "path": "evidence-sha256:beb10aebbe1f614344d9daedc7ab2c459775a3685e31a32643cfa7653ac26caa",
+      "sha256": "beb10aebbe1f614344d9daedc7ab2c459775a3685e31a32643cfa7653ac26caa"
+    },
+    "own_stage_frozen_publication_snapshot": {
+      "status": "pending",
+      "commit": null
+    },
+    "unchanged_asset_policy": "Existing assets manifest remains separate from 97 common and own3; exact original SVG bytes, not translated prose."
+  },
+  "support_publication": {
+    "status": "publication_verified",
+    "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+    "tree": "38d135e9479dc7caf696f3dd62840e2c29cabe3d",
+    "verification_method": "Revalidated coordinator immutable raw commit/tree and all3 base64 readback receipts against installed exact bytes; no Git fetch or remote call in this author step.",
+    "checked_utc": "2026-10-04T08:58:51.532517+00:00",
+    "coordinator_readback_checked_utc": "2026-10-04T08:54:32.585327+00:00",
+    "readback_receipt": {
+      "path": "evidence-sha256:3b54ef7f068202e86b683415f4359b1fde7760bcd8f5401bccb74fcd7e747cd9",
+      "sha256": "3b54ef7f068202e86b683415f4359b1fde7760bcd8f5401bccb74fcd7e747cd9"
+    },
+    "commit_receipt": {
+      "path": "evidence-sha256:4bb0b1404bf4b7c952d4d80b6d291131fd22350663763c3c3fdf6d42efa075ed",
+      "sha256": "4bb0b1404bf4b7c952d4d80b6d291131fd22350663763c3c3fdf6d42efa075ed"
+    },
+    "tree_receipt": {
+      "path": "evidence-sha256:5fe802d762ab9a24f9fc6e9b1a7d1ba6388e83818f77c2d3d59943a9a991c9ec",
+      "sha256": "5fe802d762ab9a24f9fc6e9b1a7d1ba6388e83818f77c2d3d59943a9a991c9ec"
+    },
+    "own_file_readback_receipts": [
+      {
+        "path": "evidence-sha256:ad684b7311ed537c432e8dee920782dd03a3612112bab36d5cfe02e3d7869672",
+        "sha256": "ad684b7311ed537c432e8dee920782dd03a3612112bab36d5cfe02e3d7869672",
+        "bytes": 175621
+      },
+      {
+        "path": "evidence-sha256:20c47863f610d5c9eee26766e4fcb46c3d33b6fc0372b22120071dc9ab40c0a4",
+        "sha256": "20c47863f610d5c9eee26766e4fcb46c3d33b6fc0372b22120071dc9ab40c0a4",
+        "bytes": 9492
+      },
+      {
+        "path": "evidence-sha256:93bf667c67d14394b1946a4f897bf06724d7b0c9169da3c987facd977aac07af",
+        "sha256": "93bf667c67d14394b1946a4f897bf06724d7b0c9169da3c987facd977aac07af",
+        "bytes": 7976
+      }
+    ]
+  },
+  "support_publication_verified": {
+    "status": "coordinator_immutable_support3_readback_verified_locally",
+    "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+    "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+    "tree": "38d135e9479dc7caf696f3dd62840e2c29cabe3d",
+    "checked_utc": "2026-10-04T08:54:32.585327+00:00",
+    "files": [
+      {
+        "path": "i18n/zh/.curated/stages/S92-attention-mechanism/DEPENDENCIES.json",
+        "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+        "publication_commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+        "git_blob": "c6f76af37fceb2122a60f51207bdbb224b48a5f0",
+        "sha256": "4dae78a50cc9e9d41458e4d0a9cfdd6a16367e6122cfea72bc4ad29a8c794390",
+        "bytes": 126845,
+        "mode": "100644",
+        "immutable_readback_evidence": {
+          "sha256": "ad684b7311ed537c432e8dee920782dd03a3612112bab36d5cfe02e3d7869672",
+          "bytes": 175621
+        }
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S92-attention-mechanism/SCOPE.md",
+        "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+        "publication_commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+        "git_blob": "4842d6dd57bc5a52a2f7869f25570837539884fe",
+        "sha256": "5b46df9b0695918c87a27e338e0c83c01d7685e40cc4807b543a828fdcdae5a7",
+        "bytes": 6287,
+        "mode": "100644",
+        "immutable_readback_evidence": {
+          "sha256": "20c47863f610d5c9eee26766e4fcb46c3d33b6fc0372b22120071dc9ab40c0a4",
+          "bytes": 9492
+        }
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S92-attention-mechanism/TERMINOLOGY.md",
+        "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+        "publication_commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+        "git_blob": "ff94ee61bebf1f15396b15f845b5951aa33ed23d",
+        "sha256": "09183629e5165b401db0a902d4818555d3b2bb4740d83662cf0327b09392a691",
+        "bytes": 5173,
+        "mode": "100644",
+        "immutable_readback_evidence": {
+          "sha256": "93bf667c67d14394b1946a4f897bf06724d7b0c9169da3c987facd977aac07af",
+          "bytes": 7976
+        }
+      }
+    ],
+    "coordinator_receipt": {
+      "sha256": "3b54ef7f068202e86b683415f4359b1fde7760bcd8f5401bccb74fcd7e747cd9",
+      "bytes": 950
+    },
+    "commit_receipt": {
+      "sha256": "4bb0b1404bf4b7c952d4d80b6d291131fd22350663763c3c3fdf6d42efa075ed",
+      "bytes": 599
+    },
+    "tree_receipt": {
+      "sha256": "5fe802d762ab9a24f9fc6e9b1a7d1ba6388e83818f77c2d3d59943a9a991c9ec",
+      "bytes": 151113
+    },
+    "scope": "Retained immutable-ref base64 responses verified against own3 frozen bytes. No new remote operation. Historical prepublication pending/null remains unchanged."
+  }
+}
