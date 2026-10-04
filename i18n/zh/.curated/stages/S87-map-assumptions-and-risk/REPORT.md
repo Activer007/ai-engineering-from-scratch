@@ -1,0 +1,28 @@
+# 绘制假设图，优先厘清风险最高的一项：翻译与验证报告
+
+[自有fork草稿PR #92](https://github.com/Activer007/ai-engineering-from-scratch/pull/92)；[固定中文正文](https://github.com/Activer007/ai-engineering-from-scratch/blob/968b521282952a92699f7eedfa27393d2064c135/i18n/zh/phases/14-agent-engineering/49-map-assumptions-and-risk/docs/zh.md)。
+
+固定英文源：1bafaa88bb4668356791150bec3a6d7df38387eb
+中文SHA256：8bab792723c57c4262eaa1add9900c60c87876d2766d66cd94a3d77284fc6a8c
+正文commit：968b521282952a92699f7eedfa27393d2064c135
+支持commit：39867cb41b27a6d0dcf65b2c861102ffbbf54550
+原review SHA256：e6fc88e0e711ef1106e1fc3b16817d5b95aa782f854d898dd1eb238da30baf71
+本候选review SHA256：24daa1394621934a5c57990d36816c4729abe9bcb0c98f715f6fb60a25c6f38c
+真实GFM报告SHA256：113bba8cffeee46c13582fa7da4ea8d99614940368d3b97bde68e36ea0ab6ff3
+独立像素报告SHA256：7f4db94b82be53626c433f9d74cf91ba0ea895e87d89ebe90b0cd5963f3177ae
+实际单课104回归SHA256：1e081e25de3c6d38c6f167247e5d159327a3009a9c3fa68362aa5a4b822e74e8
+本地封装时间：2026-10-04T05:31:51.202709+00:00
+
+作者和独立审校者均完成67块逐块技术对照与单独中文通读：32个正文/标题/表格块、2个保护围栏、33个分隔块。历史review全部字段保留，仅追加真实GFM与单课回归两字段；91项依赖与83项历史术语绑定保留，target、record、5423份原source和3份support不改。
+
+运行证据保留原真实日期与hash：双方在完整临时课程副本独立运行main、原5项测试及19个构造假设输入的有限特征验证；19个输入不是19项原测试。main仅写入/打印排序JSON，不调用选择器；证据非空只表示tested，并非可信度或真伪判断。range成员测试允许True和整值浮点数，排序与选择器的同分规则不同，输出按__file__定位，实验描述仅为字符串。这些源边界均未静默修复。b0067措辞修订后的实际strict和双重放独立保留，不冒称重新运行课程代码。
+
+首次原33项执行因共享harness缺少.git而产生15个setup errors，失败证据保留；后来作者与独审分别在独立临时harness恢复并真实运行33项，没有改检查器或原fixture。
+
+真实固定commit GitHub GFM与另人独立像素审查覆盖全部34个实质块，独审实际查看16张原JPEG。6张重叠视口覆盖全文；Mermaid默认与展开dialog均有控件遮挡，4次原生zoom out后7节点、6箭头与Supports/Rejects全部可辨，但字很小。zoom1/2上缘裁切，zoom3与pan中间态不作完整状态通过。视口JPEG为1165×747，CSS为1180×757，差异原因未建立；整页截图空白Mermaid和粘性栏穿插只能辅证。逐图hash、覆盖映射与实际日期见VALIDATION；不宣称默认显示或全部交互态通过。外部阅读链接目的地可用性、部署课程站、移动端和交互课程未验收。
+
+实际新回归严格为正式103课加14-49，合计104；原strict直接102课，仅保留S07/S19既有精确例外，未新增。33/24/50控制、两个全新目录各104篇字节相等、13个SVG各两份独立复制及3项仓库审计通过。未包含待办S61/S66/S79或本轮S85/S86，本报告不增加正式计数。
+
+课程站原解析器仍有11个空标题ID；进程exit0不等于站点验收。book实际观察为5/6通过、1失败、0跳过、0预期失败；xelatex.fmt缺失=true，未安装或修复配置，不宣称整本PDF通过。正文head statuses/workflow_runs返回值实际为空；workflow查询仅覆盖PR触发的首分页，不能推断全库无运行。不等于CI通过，也不代表未来finalhead已经检查。
+
+这是仅4文件本地证据候选。最终9文件不可变/当前分支/Git读回、finalhead CI、最终PR正文与正式单课索引仍待协调者闭环。正式计数仍为103，不合并、不发布课程、不向上游提交。
