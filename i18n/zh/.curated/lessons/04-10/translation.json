@@ -1,0 +1,3973 @@
+{
+  "schema_version": 1,
+  "lesson_id": "04-10",
+  "source_path": "phases/04-computer-vision/10-image-generation-diffusion/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "6803d21892319333fc9ac6b5c81044995ac06721",
+  "source_sha256": "596c04cae482ef2dd4aae5b11e7452c9fa9bfe74a44047286ed296a5ea5634cd",
+  "target_path": "i18n/zh/phases/04-computer-vision/10-image-generation-diffusion/docs/zh.md",
+  "target_sha256": "42fdd683bd2fb376bcd005284b749d2890690b256749b3433cab279e014256b0",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-04"
+  },
+  "segments": [
+    {
+      "segment_id": "04-10:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models"
+      ],
+      "ordinal": 1,
+      "source_sha256": "29a95c986312de9cffe9c0dfee5db3c54a0f0b268c7ff06c98fa298ebcb1cd01",
+      "target": "# 图像生成——扩散模型\n"
+    },
+    {
+      "segment_id": "04-10:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Image Generation — Diffusion Models"
+      ],
+      "ordinal": 2,
+      "source_sha256": "0c082df17c10a7e81009ea12196e453d88717cb3b4a3777c22770186966a2a65",
+      "target": "> 扩散模型（diffusion model）学习的是去噪。训练它从带噪图像中去除一点点噪声，再沿反向过程重复一千次，就得到了一个图像生成器。\n"
+    },
+    {
+      "segment_id": "04-10:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models"
+      ],
+      "ordinal": 3,
+      "source_sha256": "3ae76fbb9627688bfcccacc57aea3bf32c1518722124aaace7a78f5b80aab8a6",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 第 4 阶段第 07 课（U-Net）、第 1 阶段第 06 课（概率）、第 3 阶段第 06 课（优化器）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "04-10:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "04-10:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "f1497162fc0d9dd209eec63fb653db2b79f9a02939076781197e8179bb2162b3",
+      "target": "- 推导正向加噪过程（forward noising process）`x_0 -> x_1 -> ... -> x_T`，解释为什么闭式表达式（closed form）`q(x_t | x_0)` 对任意 t 都成立\n- 实现去噪扩散概率模型（DDPM）式的训练目标，回归预测每一步加入的噪声，并实现一个从纯噪声逐步回到图像的采样器（sampler）\n- 构建带有时间条件化（time conditioning）的 U-Net，预测任意时间步的噪声；模型要足够小，能在 CPU 上训练\n- 解释 DDPM 与去噪扩散隐式模型（DDIM）的采样有何区别，以及各自适合什么场景（第 23 课会深入讲解流匹配（flow matching）与整流流（rectified flow））\n"
+    },
+    {
+      "segment_id": "04-10:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "04-10:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "76ad77d56497786ee5e7c899140e978e282df201c33c295d42e832aaf9a64f74",
+      "target": "生成对抗网络（GAN）一次就能完成生成：输入噪声，经过一次前向传播（forward pass），输出图像。它们生成速度快，但难以训练。扩散模型则迭代生成：从纯噪声出发，一小步一小步地去噪，图像逐渐显现。它们生成速度慢，却容易训练。过去五年里，容易训练这一特点占了上风：任何小团队都能训练扩散模型，得到像样的样本；而训练 GAN 是一门需要经历多年失败尝试才能掌握的手艺。\n"
+    },
+    {
+      "segment_id": "04-10:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "a86395f1e2b29410f75126573592232a635432086c1cc2cd272db15ad821f9c5",
+      "target": "除了训练稳定性，扩散模型的迭代结构还使现代图像生成的各项能力成为可能：文本条件化（text conditioning）、图像修复（inpainting）、图像编辑、超分辨率（super-resolution）和可控风格。采样循环的每一步都可以加入新的约束。正是这样的介入点，使 Stable Diffusion、Imagen、DALL-E 3、Midjourney，以及你会用到的所有可控图像模型，都采用了扩散机制。\n"
+    },
+    {
+      "segment_id": "04-10:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "5b4d71f57b691292883cb86d4417eb51068ca3f5fbd8bac60d3786cc90bb3e64",
+      "target": "本课构建最精简的 DDPM：正向加噪、反向去噪和训练循环。下一课（Stable Diffusion）会将它与变分自编码器（VAE）、文本编码器和无分类器引导（classifier-free guidance）组合起来，构成一个生产系统。\n"
+    },
+    {
+      "segment_id": "04-10:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "04-10:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The forward process"
+      ],
+      "ordinal": 11,
+      "source_sha256": "0feb8a108f9c0a420287c6e1939e982c155cafe0f1a43678e3018edf60c3ed10",
+      "target": "### 正向过程\n"
+    },
+    {
+      "segment_id": "04-10:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The forward process"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The forward process"
+      ],
+      "ordinal": 12,
+      "source_sha256": "da6b73f9f2860f93041599587900c1e850bb35b532cf9f6fc67f1a7159a9a8b4",
+      "target": "取一幅图像 `x_0`，加入少量高斯噪声（Gaussian noise），得到 `x_1`；再加入少量噪声，得到 `x_2`。持续进行 T 步，直到 `x_T` 与纯高斯噪声几乎无法区分。\n"
+    },
+    {
+      "segment_id": "04-10:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The forward process"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0025",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The forward process"
+      ],
+      "ordinal": 13,
+      "source_sha256": "64d44f5a3cbc005bb31d7ebad319c4c2095153fd51af5197fadd848c7ea771d5",
+      "target": "```text\nq(x_t | x_{t-1}) = N(x_t; sqrt(1 - beta_t) * x_{t-1},  beta_t * I)\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The forward process"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The forward process"
+      ],
+      "ordinal": 14,
+      "source_sha256": "86e112d093c2478670fb918606cd878caa184029e6b960aaf0b1ca7f20b819f1",
+      "target": "`beta_t` 是一组较小的方差，按调度安排逐步变化，通常在 T=1000 步中从 0.0001 线性增加到 0.02。每一步都会略微衰减信号，并注入新的噪声。\n"
+    },
+    {
+      "segment_id": "04-10:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The forward process"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The closed-form jump"
+      ],
+      "ordinal": 15,
+      "source_sha256": "e5500d081e424cfe5d99022a1152e5b541b957a161b20b15ca64e89602aa5285",
+      "target": "### 用闭式表达式直接跳到指定时间步\n"
+    },
+    {
+      "segment_id": "04-10:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The closed-form jump"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The closed-form jump"
+      ],
+      "ordinal": 16,
+      "source_sha256": "7ea07478f0f398bbe37e8e3a5637933b17d1651283d2346e495a005379e7f88d",
+      "target": "逐步加噪构成一条马尔可夫链（Markov chain），但这些步骤可以在数学上合并：只需一步，就能直接从 `x_0` 抽样得到 `x_t`。\n"
+    },
+    {
+      "segment_id": "04-10:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The closed-form jump"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The closed-form jump"
+      ],
+      "ordinal": 17,
+      "source_sha256": "8c1e6019a79a490cd17785ebfaabdd292d00d61f02ddfa142c23f7cc4c51e846",
+      "target": "```text\nDefine alpha_t = 1 - beta_t\nDefine alpha_bar_t = prod_{s=1..t} alpha_s\n\nThen:\n  q(x_t | x_0) = N(x_t; sqrt(alpha_bar_t) * x_0,  (1 - alpha_bar_t) * I)\n\nEquivalently:\n  x_t = sqrt(alpha_bar_t) * x_0 + sqrt(1 - alpha_bar_t) * epsilon\n  where epsilon ~ N(0, I)\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The closed-form jump"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The closed-form jump"
+      ],
+      "ordinal": 18,
+      "source_sha256": "d27463b4e2f2f63de5646dc75911b50c18612b630c9f449d97413e9d272cf45c",
+      "target": "扩散模型之所以可行，关键就在这一条公式。训练时随机选择一个 `t`，直接从 `x_0` 抽样得到 `x_t`，然后进行一步训练，无须模拟整条马尔可夫链。\n"
+    },
+    {
+      "segment_id": "04-10:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The closed-form jump"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The reverse process"
+      ],
+      "ordinal": 19,
+      "source_sha256": "3be784648334c8584a85fbb404af1d38976784c758ad48d1f4385da841c71298",
+      "target": "### 反向过程\n"
+    },
+    {
+      "segment_id": "04-10:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The reverse process"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The reverse process"
+      ],
+      "ordinal": 20,
+      "source_sha256": "ccff5ca1b6fc2095917137db8823ff507313add6ab8ae8b1e3240c1391b04f48",
+      "target": "正向过程是固定的，神经网络要学习的是反向过程（reverse process）`p(x_{t-1} | x_t)`。扩散模型并不直接预测 `x_{t-1}`，而是预测第 t 步加入的噪声 `epsilon`，再通过数学公式由它推导出 `x_{t-1}`。\n"
+    },
+    {
+      "segment_id": "04-10:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The reverse process"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The reverse process"
+      ],
+      "ordinal": 21,
+      "source_sha256": "1476dce70dcc93b75285fdd172eaefad5706f6bf04d458046c8ff2bf368a026f",
+      "target": "```mermaid\nflowchart LR\n    X0[\"x_0<br/>(clean image)\"] --> Q1[\"q(x_t|x_0)<br/>add noise\"]\n    Q1 --> XT[\"x_t<br/>(noisy)\"]\n    XT --> MODEL[\"model(x_t, t)\"]\n    MODEL --> EPS[\"predicted epsilon\"]\n    EPS --> LOSS[\"MSE against<br/>true epsilon\"]\n\n    XT -.->|sampling| STEP[\"p(x_{t-1}|x_t)\"]\n    STEP -.-> XT1[\"x_{t-1}\"]\n    XT1 -.->|repeat 1000x| X0S[\"x_0 (sampled)\"]\n\n    style X0 fill:#dcfce7,stroke:#16a34a\n    style MODEL fill:#fef3c7,stroke:#d97706\n    style LOSS fill:#fecaca,stroke:#dc2626\n    style X0S fill:#dbeafe,stroke:#2563eb\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The reverse process"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The training loss"
+      ],
+      "ordinal": 22,
+      "source_sha256": "49eb2c38fc40a79eb1501178deea0075e5260e9fa11c2e90d4b44a3b109a9557",
+      "target": "### 训练损失\n"
+    },
+    {
+      "segment_id": "04-10:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The training loss"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The training loss"
+      ],
+      "ordinal": 23,
+      "source_sha256": "7dca367a847b018366b006345b6c3a068dc950dd5ab4acb8042fafc3a8e7f7e5",
+      "target": "每个训练步骤都执行以下操作：\n"
+    },
+    {
+      "segment_id": "04-10:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The training loss"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0047",
+      "kind": "list",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The training loss"
+      ],
+      "ordinal": 24,
+      "source_sha256": "c3f5560d276c044e4fa4d88937e7dff17570ae6da8ab87c0e152b7a435fcab68",
+      "target": "1. 抽取一幅真实图像 `x_0`。\n2. 从 [1, T] 中均匀抽样一个时间步 `t`。\n3. 抽取噪声 `epsilon ~ N(0, I)`。\n4. 计算 `x_t = sqrt(alpha_bar_t) * x_0 + sqrt(1 - alpha_bar_t) * epsilon`。\n5. 用网络预测 `epsilon_theta(x_t, t)`。\n6. 最小化 `|| epsilon - epsilon_theta(x_t, t) ||^2`。\n"
+    },
+    {
+      "segment_id": "04-10:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The training loss"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The training loss"
+      ],
+      "ordinal": 25,
+      "source_sha256": "884c75daee60c4035e0ebbd6e652d2c549cd753c2569f0fe88b0f74054f1bd57",
+      "target": "就这么简单。神经网络学习预测任意时间步的噪声，损失函数采用均方误差（MSE）。没有对抗博弈，没有坍塌，也没有振荡。\n"
+    },
+    {
+      "segment_id": "04-10:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The training loss"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The sampler (DDPM)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "dd9f5679b31e4cf976159795ef7ae7b1881c0c25846ba70f1dd8aab3f97505ff",
+      "target": "### 采样器（DDPM）\n"
+    },
+    {
+      "segment_id": "04-10:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The sampler (DDPM)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The sampler (DDPM)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "e70187f44264340b3c0db2880fa837e5da68cb5c0fe1c1a4cbb02aad027e33c4",
+      "target": "生成时，从 `x_T ~ N(0, I)` 出发，沿反向过程逐步回退。\n"
+    },
+    {
+      "segment_id": "04-10:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The sampler (DDPM)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The sampler (DDPM)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "b78e9d2b355258e142182ba40ae9c869ab3d9afe2231564339f96e7c431e90e2",
+      "target": "```text\nfor t = T, T-1, ..., 1:\n    eps = model(x_t, t)\n    x_{t-1} = (1 / sqrt(alpha_t)) * (x_t - (beta_t / sqrt(1 - alpha_bar_t)) * eps) + sqrt(beta_t) * z\n    where z ~ N(0, I) if t > 1, else 0\nreturn x_0\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The sampler (DDPM)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The sampler (DDPM)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "79387ab4b028668302bce14c3f204e91a96f572c375dd2aa5a6cfe939427ccb1",
+      "target": "关键在于：一般情况下，逆向条件分布并没有已知的闭式表达式，但对于这里特定的高斯正向过程，它却有闭式表达式。那些看起来很复杂的系数，正是由 Bayes 规则（贝叶斯规则）推导得到的。\n"
+    },
+    {
+      "segment_id": "04-10:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### The sampler (DDPM)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Why 1000 steps"
+      ],
+      "ordinal": 30,
+      "source_sha256": "e3feaccf602bb0669319a6ffe7a4447c6f20586e9738d00897f79f34ce9c751a",
+      "target": "### 为什么需要 1000 步\n"
+    },
+    {
+      "segment_id": "04-10:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Why 1000 steps"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Why 1000 steps"
+      ],
+      "ordinal": 31,
+      "source_sha256": "986f6f1bb1e666e5f12f16b38708a89f91192686a640784c1864d06ea0764a17",
+      "target": "正向噪声调度（noise schedule）的设计使每一步加入的噪声量恰好足以让反向步骤近似服从高斯分布。步数太少，反向步骤就会明显偏离高斯分布，网络难以对其准确建模；步数太多，采样成本又会升高，收益却越来越小。T=1000 配合线性调度是 DDPM 的默认设置。\n"
+    },
+    {
+      "segment_id": "04-10:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Why 1000 steps"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### DDIM: 20x faster sampling"
+      ],
+      "ordinal": 32,
+      "source_sha256": "30c2e251e3aac662497646850ffcff10614f0aab5276bbb3457171633f6aa3ff",
+      "target": "### DDIM：采样提速 20 倍\n"
+    },
+    {
+      "segment_id": "04-10:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### DDIM: 20x faster sampling"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### DDIM: 20x faster sampling"
+      ],
+      "ordinal": 33,
+      "source_sha256": "d855be048d61bc03f965953197820205cf5b3090aef6f6d89310f9893ef024f9",
+      "target": "训练保持不变，改变的只有采样。DDIM（Song 等，2020）定义了一个确定性的反向过程，无须重新训练就能跳过一些时间步。DDIM 采样 50 步，便能达到接近 DDPM 采样 1000 步的质量。所有生产系统都使用 DDIM 或更快的变体（DPM-Solver、Euler ancestral）。\n"
+    },
+    {
+      "segment_id": "04-10:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### DDIM: 20x faster sampling"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 34,
+      "source_sha256": "9cef1b7bb636408056a6680af359d8e55fe3d210d0bead23245a04534208d663",
+      "target": "### 时间条件化\n"
+    },
+    {
+      "segment_id": "04-10:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 35,
+      "source_sha256": "f4dff0cfadbbfad9611b13a36cf2cedef06e095a45b2aeb87b62ee49c466be00",
+      "target": "网络 `epsilon_theta(x_t, t)` 需要知道自己正在为哪个时间步去噪。现代扩散模型通过正弦时间嵌入（sinusoidal time embeddings）注入 `t`，思路与 Transformer 中的位置编码（positional encoding）相同；这些嵌入会在 U-Net 的每一层级加到特征图（feature map）上。\n"
+    },
+    {
+      "segment_id": "04-10:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0071",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 36,
+      "source_sha256": "86aa8467e5e9a56ffdc446f72eea760e07a70dda3b322ea9d857fb36e64e7380",
+      "target": "```text\nt_embedding = sinusoidal(t)\nfeature_map += MLP(t_embedding)\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 37,
+      "source_sha256": "d9d82a3bce72c5a097f3f6e68e0bf804a3283b302e882f3b94a5669f9c4f7b5b",
+      "target": "没有时间条件化，网络就必须从图像本身猜测噪声水平。这样也能工作，但样本效率会低得多。\n"
+    },
+    {
+      "segment_id": "04-10:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 38,
+      "source_sha256": "9c1d55901bdc58e5e6a9b206da65640b79d499b0b3bee02c95460b07c9fbc944",
+      "target": "```figure\ncv-diffusion-image\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## The Concept",
+        "### Time conditioning"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "04-10:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 1: Noise schedule"
+      ],
+      "ordinal": 40,
+      "source_sha256": "07f2b6143ad7b784710ecf0cec91e389aa63e6ccc0e7a0a6080c8f57cd0c699e",
+      "target": "### 第 1 步：噪声调度\n"
+    },
+    {
+      "segment_id": "04-10:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 1: Noise schedule"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0081",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 1: Noise schedule"
+      ],
+      "ordinal": 41,
+      "source_sha256": "f6ff1f2d7fafbf258f618584a44141eacee0db6eac8dd741ebe9565ff8ff941c",
+      "target": "```python\nimport torch\n\ndef linear_beta_schedule(T=1000, beta_start=1e-4, beta_end=2e-2):\n    return torch.linspace(beta_start, beta_end, T)\n\n\ndef precompute_schedule(betas):\n    alphas = 1.0 - betas\n    alphas_cumprod = torch.cumprod(alphas, dim=0)\n    return {\n        \"betas\": betas,\n        \"alphas\": alphas,\n        \"alphas_cumprod\": alphas_cumprod,\n        \"sqrt_alphas_cumprod\": torch.sqrt(alphas_cumprod),\n        \"sqrt_one_minus_alphas_cumprod\": torch.sqrt(1.0 - alphas_cumprod),\n        \"sqrt_recip_alphas\": torch.sqrt(1.0 / alphas),\n    }\n\nschedule = precompute_schedule(linear_beta_schedule(T=1000))\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 1: Noise schedule"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 1: Noise schedule"
+      ],
+      "ordinal": 42,
+      "source_sha256": "311fd3a72bb593baf6400503955e88dba4eac1806091bfc7d5912ab0bb30be95",
+      "target": "预计算一次，训练和采样时按索引取出相应的值。\n"
+    },
+    {
+      "segment_id": "04-10:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 1: Noise schedule"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 2: Forward diffusion (q_sample)"
+      ],
+      "ordinal": 43,
+      "source_sha256": "3503671d67b8eb0a91f06f5d87b25701328774b6a2d39a92404e4761a2fb3f8a",
+      "target": "### 第 2 步：正向扩散（q_sample）\n"
+    },
+    {
+      "segment_id": "04-10:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 2: Forward diffusion (q_sample)"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 2: Forward diffusion (q_sample)"
+      ],
+      "ordinal": 44,
+      "source_sha256": "9d281963458e4f25293077baaf361552b00cddaad9279b1c4abe474a2e22d241",
+      "target": "```python\ndef q_sample(x0, t, noise, schedule):\n    sqrt_a = schedule[\"sqrt_alphas_cumprod\"][t].view(-1, 1, 1, 1)\n    sqrt_one_minus_a = schedule[\"sqrt_one_minus_alphas_cumprod\"][t].view(-1, 1, 1, 1)\n    return sqrt_a * x0 + sqrt_one_minus_a * noise\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 2: Forward diffusion (q_sample)"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 2: Forward diffusion (q_sample)"
+      ],
+      "ordinal": 45,
+      "source_sha256": "83b3b3ec94175c69013f12226a964ad125bd194eb5757dfc7dcac5279d33274d",
+      "target": "用一行代码实现闭式表达式。`t` 是一批时间步，批次中的每幅图像各对应一个。\n"
+    },
+    {
+      "segment_id": "04-10:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 2: Forward diffusion (q_sample)"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 3: A tiny time-conditioned U-Net"
+      ],
+      "ordinal": 46,
+      "source_sha256": "1e08d06ca4d6126dd8cef67a5347a142039b37b56179609093de8b8d67b611ee",
+      "target": "### 第 3 步：带有时间条件化的微型 U-Net\n"
+    },
+    {
+      "segment_id": "04-10:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 3: A tiny time-conditioned U-Net"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 3: A tiny time-conditioned U-Net"
+      ],
+      "ordinal": 47,
+      "source_sha256": "3546f47c0e0978277e1e487bc117140ff93b8d81681b6285baed38d67b96dda0",
+      "target": "```python\nimport torch.nn as nn\nimport torch.nn.functional as F\nimport math\n\ndef timestep_embedding(t, dim=64):\n    half = dim // 2\n    freqs = torch.exp(-math.log(10000) * torch.arange(half, device=t.device) / half)\n    args = t[:, None].float() * freqs[None]\n    emb = torch.cat([args.sin(), args.cos()], dim=-1)\n    return emb\n\n\nclass TinyUNet(nn.Module):\n    def __init__(self, img_channels=3, base=32, t_dim=64):\n        super().__init__()\n        self.t_mlp = nn.Sequential(\n            nn.Linear(t_dim, base * 4),\n            nn.SiLU(),\n            nn.Linear(base * 4, base * 4),\n        )\n        self.t_dim = t_dim\n        self.enc1 = nn.Conv2d(img_channels, base, 3, padding=1)\n        self.enc2 = nn.Conv2d(base, base * 2, 4, stride=2, padding=1)\n        self.mid = nn.Conv2d(base * 2, base * 2, 3, padding=1)\n        self.dec1 = nn.ConvTranspose2d(base * 2, base, 4, stride=2, padding=1)\n        self.dec2 = nn.Conv2d(base * 2, img_channels, 3, padding=1)\n        self.time_proj = nn.Linear(base * 4, base * 2)\n\n    def forward(self, x, t):\n        t_emb = timestep_embedding(t, self.t_dim)\n        t_emb = self.t_mlp(t_emb)\n        t_proj = self.time_proj(t_emb)[:, :, None, None]\n\n        h1 = F.silu(self.enc1(x))\n        h2 = F.silu(self.enc2(h1)) + t_proj\n        h3 = F.silu(self.mid(h2))\n        d1 = F.silu(self.dec1(h3))\n        d2 = torch.cat([d1, h1], dim=1)\n        return self.dec2(d2)\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 3: A tiny time-conditioned U-Net"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 3: A tiny time-conditioned U-Net"
+      ],
+      "ordinal": 48,
+      "source_sha256": "73ebef93c7245d9f620f512676d2f322bdd797a676ffa13d5b7b428ddcd16979",
+      "target": "这是一个具有两级结构的 U-Net，在瓶颈层（bottleneck）注入时间条件。处理真实图像时，可以增加网络的深度和宽度。\n"
+    },
+    {
+      "segment_id": "04-10:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 3: A tiny time-conditioned U-Net"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 4: Training loop"
+      ],
+      "ordinal": 49,
+      "source_sha256": "f6988e06f54e73c170e9bc115014a004a37604ef2770c9c4dd2582e088735094",
+      "target": "### 第 4 步：训练循环\n"
+    },
+    {
+      "segment_id": "04-10:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 4: Training loop"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 4: Training loop"
+      ],
+      "ordinal": 50,
+      "source_sha256": "aab5217e12e304a1e2a8117805c6fc0c40d5bf8ca02f99f7cb5e289d9e9bfb62",
+      "target": "```python\ndef train_step(model, x0, schedule, optimizer, device, T=1000):\n    model.train()\n    x0 = x0.to(device)\n    bs = x0.size(0)\n    t = torch.randint(0, T, (bs,), device=device)\n    noise = torch.randn_like(x0)\n    x_t = q_sample(x0, t, noise, schedule)\n    pred = model(x_t, t)\n    loss = F.mse_loss(pred, noise)\n    optimizer.zero_grad()\n    loss.backward()\n    optimizer.step()\n    return loss.item()\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 4: Training loop"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 4: Training loop"
+      ],
+      "ordinal": 51,
+      "source_sha256": "e8c6062cb726ad05c16dc4f7c681ad407e7055642eca493fa5c6dd3fc0701bfd",
+      "target": "这就是完整的训练循环。没有 GAN 式的博弈，没有专门设计的损失，只需调用一次 MSE。\n"
+    },
+    {
+      "segment_id": "04-10:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 4: Training loop"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 5: Sampler (DDPM)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "e7a40e8be8cf096ce6023d3e2124f18b100ae43010f1dd2d4fbb9957a038d12b",
+      "target": "### 第 5 步：采样器（DDPM）\n"
+    },
+    {
+      "segment_id": "04-10:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 5: Sampler (DDPM)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0105",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 5: Sampler (DDPM)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "9e821350055a1158048cc4adebdfd2f239de04307493e42a38946e7e69ea0b44",
+      "target": "```python\n@torch.no_grad()\ndef sample(model, schedule, shape, T=1000, device=\"cpu\"):\n    model.eval()\n    x = torch.randn(shape, device=device)\n    betas = schedule[\"betas\"].to(device)\n    sqrt_one_minus_a = schedule[\"sqrt_one_minus_alphas_cumprod\"].to(device)\n    sqrt_recip_alphas = schedule[\"sqrt_recip_alphas\"].to(device)\n\n    for t in reversed(range(T)):\n        t_batch = torch.full((shape[0],), t, dtype=torch.long, device=device)\n        eps = model(x, t_batch)\n        coef = betas[t] / sqrt_one_minus_a[t]\n        mean = sqrt_recip_alphas[t] * (x - coef * eps)\n        if t > 0:\n            x = mean + torch.sqrt(betas[t]) * torch.randn_like(x)\n        else:\n            x = mean\n    return x\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 5: Sampler (DDPM)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 5: Sampler (DDPM)"
+      ],
+      "ordinal": 54,
+      "source_sha256": "5677968a0e2cfb8fef2b2b5edf365cad3dafe25f1ce105172099b2a972ac2ac4",
+      "target": "生成一批样本需要 1000 次前向传播。实际编程时，你会将它替换为一个采样 50 步的 DDIM 采样器。\n"
+    },
+    {
+      "segment_id": "04-10:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 5: Sampler (DDPM)"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 6: DDIM sampler (deterministic, ~20x faster)"
+      ],
+      "ordinal": 55,
+      "source_sha256": "f77dad481af099488fd54189c14f6859777e47a3884c57a582db495eb088ec5c",
+      "target": "### 第 6 步：DDIM 采样器（确定性，提速约 20 倍）\n"
+    },
+    {
+      "segment_id": "04-10:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 6: DDIM sampler (deterministic, ~20x faster)"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0111",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 6: DDIM sampler (deterministic, ~20x faster)"
+      ],
+      "ordinal": 56,
+      "source_sha256": "4934b1b7f98d364a028e2b5a33d186c0d44aa74ebadc054d079e3a4170abd279",
+      "target": "```python\n@torch.no_grad()\ndef sample_ddim(model, schedule, shape, steps=50, T=1000, device=\"cpu\", eta=0.0):\n    model.eval()\n    x = torch.randn(shape, device=device)\n    alphas_cumprod = schedule[\"alphas_cumprod\"].to(device)\n\n    ts = torch.linspace(T - 1, 0, steps + 1).long()\n    for i in range(steps):\n        t = ts[i]\n        t_prev = ts[i + 1]\n        t_batch = torch.full((shape[0],), t, dtype=torch.long, device=device)\n        eps = model(x, t_batch)\n        a_t = alphas_cumprod[t]\n        a_prev = alphas_cumprod[t_prev] if t_prev >= 0 else torch.tensor(1.0, device=device)\n        x0_pred = (x - torch.sqrt(1 - a_t) * eps) / torch.sqrt(a_t)\n        sigma = eta * torch.sqrt((1 - a_prev) / (1 - a_t) * (1 - a_t / a_prev))\n        dir_xt = torch.sqrt(1 - a_prev - sigma ** 2) * eps\n        noise = sigma * torch.randn_like(x) if eta > 0 else 0\n        x = torch.sqrt(a_prev) * x0_pred + dir_xt + noise\n    return x\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 6: DDIM sampler (deterministic, ~20x faster)"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 6: DDIM sampler (deterministic, ~20x faster)"
+      ],
+      "ordinal": 57,
+      "source_sha256": "cedb4039797b2b3d9e808c254ba08dc78e5da914672139ec394903c179d412ef",
+      "target": "`eta=0` 时完全确定：相同的噪声输入始终产生相同的输出。`eta=1` 则恢复为 DDPM。\n"
+    },
+    {
+      "segment_id": "04-10:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Build It",
+        "### Step 6: DDIM sampler (deterministic, ~20x faster)"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0115",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "04-10:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "f455312899496c2c2f5e211e9e5837994a3ded24f88b5a049d134bcacb890c36",
+      "target": "在生产工作中，使用 `diffusers`：\n"
+    },
+    {
+      "segment_id": "04-10:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0119",
+      "kind": "fence",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "6637c77396de539432ef10f036fe1b35a46a4b0dd581272839a6231cbe46ad2d",
+      "target": "```python\nfrom diffusers import DDPMScheduler, UNet2DModel\n\nunet = UNet2DModel(sample_size=32, in_channels=3, out_channels=3, layers_per_block=2)\nscheduler = DDPMScheduler(num_train_timesteps=1000)\n```\n"
+    },
+    {
+      "segment_id": "04-10:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "d629f45277a3bd37cf1619571a774e1e1f02d1914e050630531d7ebbeacc0c8d",
+      "target": "这个库提供现成的调度器（scheduler，包括 DDPM、DDIM、DPM-Solver、Euler、Heun）、可配置的 U-Net、用于文生图和图生图的管线，以及 LoRA（低秩适配）微调（fine-tuning）辅助工具。\n"
+    },
+    {
+      "segment_id": "04-10:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "2d0e30a72a02a20772fa4db0e1b19be2dff19e7752bb3727c446b574b91451f5",
+      "target": "研究时，`k-diffusion`（Katherine Crowson）提供了最忠实的参考实现和最佳采样变体。\n"
+    },
+    {
+      "segment_id": "04-10:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Ship It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "04-10:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Ship It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0127",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Ship It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "2d7d8a54528e5c57d81432c3291d09eabfa1bdb1c89bfd04e496f10a5214cf37",
+      "target": "本课产出：\n"
+    },
+    {
+      "segment_id": "04-10:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Ship It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0129",
+      "kind": "list",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Ship It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "6c50f5c0fb934d93827a992333d9ff1739eb2d47b5f8dc972cd468099a31ee6c",
+      "target": "- `outputs/prompt-diffusion-sampler-picker.md`：一个提示词（prompt），根据质量目标、延迟预算和条件类型，在 DDPM / DDIM / DPM-Solver / Euler 中选择采样器。\n- `outputs/skill-noise-schedule-designer.md`：一个技能（skill），根据 T 和目标噪声破坏程度，生成线性、余弦或 sigmoid 的 beta 调度，并提供信噪比（signal-to-noise ratio）随时间变化的诊断图。\n"
+    },
+    {
+      "segment_id": "04-10:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Ship It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Exercises"
+      ],
+      "ordinal": 66,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "04-10:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Exercises"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0133",
+      "kind": "list",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Exercises"
+      ],
+      "ordinal": 67,
+      "source_sha256": "ded37843da67884e622fc588766e93ededb20005d305ebcd9f8c74809e5022bc",
+      "target": "1. **（简单）** 可视化正向过程：取一幅图像，绘制 `t in [0, 100, 250, 500, 750, 1000]` 时的 `x_t`。验证 `x_1000` 看起来像纯高斯噪声。\n2. **（中等）** 在合成圆形数据集上训练 TinyUNet，共训练 20 轮（epoch），并采样生成 16 个圆形。比较 DDPM（1000 步）和 DDIM（50 步）的采样：使用相同噪声种子时，它们是否生成相似的图像？\n3. **（困难）** 实现余弦噪声调度（Nichol & Dhariwal，2021）：`alpha_bar_t = cos^2((t/T + s) / (1 + s) * pi / 2)`。分别用线性调度和余弦调度训练同一个模型，展示余弦调度在采样步数较少时能生成更好的样本。\n"
+    },
+    {
+      "segment_id": "04-10:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Exercises"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Key Terms"
+      ],
+      "ordinal": 68,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "04-10:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Key Terms"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0137",
+      "kind": "table",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Key Terms"
+      ],
+      "ordinal": 69,
+      "source_sha256": "c6bad585525c142e20408645d1eb2dd47a1b87bd562924093e28c46a178f0c4a",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 正向过程 | “随时间加噪” | 固定的马尔可夫链，用 T 步对图像逐渐加噪，使其变为高斯噪声 |\n| 反向过程 | “逐步去噪” | 学习得到的分布，用于从噪声逐步回到图像 |\n| Epsilon 预测 | “预测噪声” | 训练目标：`epsilon_theta(x_t, t)` 预测第 t 步加入的噪声 |\n| Beta 调度 | “每步的噪声量” | 由 T 个较小方差组成的序列，决定每步注入多少噪声 |\n| alpha_bar_t | “累计保留因子” | 直到时间 t 为止的 (1 - beta_s) 的乘积；t 越大，剩余信号越少 |\n| DDPM 采样器 | “祖先抽样，随机” | 从各自的条件高斯分布中抽样得到每个 x_{t-1}；共 1000 步 |\n| DDIM 采样器 | “确定性，快速” | 将采样改写为确定性的常微分方程（ODE）；用 20-100 步达到相近质量 |\n| 时间条件化 | “告诉模型是哪个 t” | 将 t 的正弦嵌入注入 U-Net，让它知道噪声水平 |\n"
+    },
+    {
+      "segment_id": "04-10:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Key Terms"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0139",
+      "kind": "heading",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Further Reading"
+      ],
+      "ordinal": 70,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "04-10:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Further Reading"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-10:b0141",
+      "kind": "list",
+      "heading_path": [
+        "# Image Generation — Diffusion Models",
+        "## Further Reading"
+      ],
+      "ordinal": 71,
+      "source_sha256": "49aa95c25e38c8a8e5dbe8b7244da4c50c0689c345e4c9990668213ed77e2b0e",
+      "target": "- [Denoising Diffusion Probabilistic Models (Ho et al., 2020)](https://arxiv.org/abs/2006.11239)：让扩散模型走向实用、并在 FID 指标上击败 GAN 的论文\n- [Improved DDPM (Nichol & Dhariwal, 2021)](https://arxiv.org/abs/2102.09672)：余弦调度与 v 参数化\n- [DDIM (Song, Meng, Ermon, 2020)](https://arxiv.org/abs/2010.02502)：使实时推理成为可能的确定性采样器\n- [Elucidating the Design Space of Diffusion (Karras et al., 2022)](https://arxiv.org/abs/2206.00364)：统一梳理扩散模型的各种设计选择，是当前最佳参考资料\n"
+    }
+  ],
+  "stage_id": "S106-image-generation-diffusion",
+  "assets": [],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "dependencies_path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/DEPENDENCIES.json",
+  "dependencies_sha256": "5c5c9ebe00706d264ac6fa5a76aef1babcf46decda309fbbe23d177ae8787dd8",
+  "scope_path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/SCOPE.md",
+  "scope_sha256": "5cdd568d96f144c035be9db8ddacea2ef26e41c067a75298c0881cbd8f329fc0",
+  "stage_glossary_path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/TERMINOLOGY.md",
+  "stage_glossary_sha256": "63fc8636014d507247e55404f93fcb3f0995aec0d18f39f4efea3c6f68a22f50",
+  "support_pins": [
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "git_blob": "51d583a00afc0ee6cddabe1802c59122d3c9d42f",
+      "bytes": 42839,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "git_blob": "3c3a4dc961984792a3635c473de36ed53a8eada7",
+      "bytes": 10069,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+      "git_blob": "efba509207ced3ac44cdddd8ce8faa2e1560cbbb",
+      "bytes": 3645,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S01-tool-foundations"
+    },
+    {
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e",
+      "git_blob": "fb5ec4fae661faf5fcae3288ed50fda94ded92c7",
+      "bytes": 2988,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S02-terminal-linux"
+    },
+    {
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077",
+      "git_blob": "d6f71417dab16872716008bb34c6e4fefa97a81e",
+      "bytes": 2886,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S03-gpu-docker"
+    },
+    {
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed",
+      "git_blob": "b4433dcf406df32b0cf588c5e5f7b2da00a22ecc",
+      "bytes": 2759,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S04-data-management"
+    },
+    {
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+      "git_blob": "6d67b7168f486b05f27b01af69161a16cea11377",
+      "bytes": 3862,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S05-linear-algebra-basics"
+    },
+    {
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+      "git_blob": "bcf4f580e2895ce944a2cad5ab4ea43424977ecb",
+      "bytes": 2425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S06-matrix-transformations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428",
+      "git_blob": "c3f3c4b17d5f6af0fc49211ae72af6ca44227f73",
+      "bytes": 4184,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S07-calculus-foundations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/check_stage.py",
+      "sha256": "aa88776818af759d419790f9290ef8c6983b05a925f359f65152a5d8edfb7743",
+      "git_blob": "03f7859068381c0543e82e0458f9b7d90eb0e37d",
+      "bytes": 6269,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/test_stage.py",
+      "sha256": "933c5ea0570a1f385b07da5280758f895f14cae82371f123f4543ba213b52459",
+      "git_blob": "882307ac0d131ca71447c5250af98482f55145f8",
+      "bytes": 6020,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca",
+      "git_blob": "c70a717985296f3dc75e552bb92a6f06ab4c0b78",
+      "bytes": 3157,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S08-chain-rule-autodiff"
+    },
+    {
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880",
+      "git_blob": "2d394898b293afc5f35c92aa6357767ee337dba0",
+      "bytes": 4023,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S09-probability-foundations"
+    },
+    {
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec",
+      "git_blob": "36035ee5c71335a756b68f719bf0c183e2908ce2",
+      "bytes": 4494,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S10-bayes-foundations"
+    },
+    {
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf",
+      "git_blob": "3c7e79a3741b61f4198af233b69f24fc33e6f433",
+      "bytes": 3736,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S11-optimization-foundations"
+    },
+    {
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115",
+      "git_blob": "483d7fe5393ff8228f8320e122bff65899afc0d9",
+      "bytes": 3284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S12-information-theory"
+    },
+    {
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364",
+      "git_blob": "9a294d0c7d641f3895ec5d2a3401ea4a96fdcf67",
+      "bytes": 3438,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S13-dimensionality-reduction"
+    },
+    {
+      "commit": "acf8e89bc4596c13307a53a995fe96701221c5b6",
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5",
+      "git_blob": "4fb7a14c1730db6cd5f30d26f51c5fe4d8c0ba02",
+      "bytes": 3312,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S14-tensor-operations"
+    },
+    {
+      "commit": "e906a46fdf8a0ea9ea22c68784b4303e1c10c198",
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4",
+      "git_blob": "1016d7d240bb1b78897be717041500e687fd9401",
+      "bytes": 3048,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S15-numerical-stability"
+    },
+    {
+      "commit": "2610d0dec88725fec4528accc5487f9cf88b4d49",
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a",
+      "git_blob": "8a606b02466143d31e7ca4210b47a7be254394e8",
+      "bytes": 3677,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S16-norms-distances"
+    },
+    {
+      "commit": "7f802943f85ff5621e50eb2307cb712e0fff2b68",
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48",
+      "git_blob": "dc95714026cd8e693e396db3f2448d1179df3943",
+      "bytes": 3928,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S17-statistics-for-ml"
+    },
+    {
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff",
+      "git_blob": "3b91d4c008bf0d06d38298b36ce505ce8a318b6b",
+      "bytes": 3660,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S18-sampling-methods"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/CONTROL-EXTENSION.md",
+      "sha256": "b5c6868a952806f6d3d48027ca28b7b0c661f72fc57687d992180349113f265d",
+      "git_blob": "ff49aedb81db9ae9d05932ff5a3fc5170aca1fbb",
+      "bytes": 7674,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2",
+      "git_blob": "596dc57b24236543cc2ba7b2060d067a6db18f13",
+      "bytes": 2924,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S19-linear-systems"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/check_stage.py",
+      "sha256": "703dd675d345396db8db9624a24fa5375f3bb5ca1ed1c2fa0c99574315ae5515",
+      "git_blob": "947d31c24af08811f69bf67308bb8daca6f02e6a",
+      "bytes": 14765,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/test_stage.py",
+      "sha256": "373409a9da1954eb35a7e2886d16109bde18a08935d19b3f479c1421dad4ecf2",
+      "git_blob": "5c230aca5fecc64538e492ba16a72cdceb3b6df2",
+      "bytes": 20588,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a",
+      "git_blob": "8362723bd43106e34aabf3da2d4e10e5e56cce18",
+      "bytes": 3434,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S20-convex-optimization"
+    },
+    {
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4",
+      "git_blob": "fc3c32a750247da022623c0789363167885fa1dd",
+      "bytes": 3408,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S21-fourier-transform"
+    },
+    {
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "git_blob": "2f1da1190ed66909df4150cded08ab76d3110cb7",
+      "bytes": 3170,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S22-ml-overview"
+    },
+    {
+      "commit": "ccf427ff16970a5cde15eeef5c085530fc50978b",
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844",
+      "git_blob": "fa7abc4253e2a3aea3556aa520a5f0c5d762283a",
+      "bytes": 2553,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S23-decision-trees"
+    },
+    {
+      "commit": "99277ca3ba91fcc3b8f06dffe6c5cdb212b7278b",
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63",
+      "git_blob": "37b8e539615eba55fd962d46e2bd11545535aa7d",
+      "bytes": 2284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S24-knn-distances"
+    },
+    {
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3",
+      "git_blob": "eb71f179dc1b215a2cc4dd6ab30d9879d6b3a0fd",
+      "bytes": 2382,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S25-linear-regression"
+    },
+    {
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd",
+      "git_blob": "6319a758cf71a1bf7b0af996ebfc6d8c46b2b0c7",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S26-support-vector-machines"
+    },
+    {
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8",
+      "git_blob": "eff9c68670ecb23e0213084e1a9fcb8f957c1d63",
+      "bytes": 2088,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S27-perceptron"
+    },
+    {
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1",
+      "git_blob": "92e02c63f3760272c684341d4e3f1a8fe19f3f0f",
+      "bytes": 2326,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S28-logistic-regression"
+    },
+    {
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21",
+      "git_blob": "4f3fea7d28134a6cf4bf453a381ea04fbd8b90bb",
+      "bytes": 2269,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S29-multi-layer-networks"
+    },
+    {
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd",
+      "git_blob": "1d8612f449304097bfdb1f9b2c337f538c27f163",
+      "bytes": 2209,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S30-audio-fundamentals"
+    },
+    {
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1",
+      "git_blob": "d3cdc78dc5230ed8164824dd7b366894fc8af209",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S31-unsupervised-learning"
+    },
+    {
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726",
+      "git_blob": "2c18b360177a935d7e16f1cddfcd17228afc2d4e",
+      "bytes": 2279,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S32-backpropagation"
+    },
+    {
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66",
+      "git_blob": "890baefa8c23198a0728f5db2c41b8da258d1b7b",
+      "bytes": 2354,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S33-building-tokenizer"
+    },
+    {
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6",
+      "git_blob": "7a81537a54bf29a6a510f2ae203747dbef8161ab",
+      "bytes": 2513,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S34-feature-engineering"
+    },
+    {
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4",
+      "git_blob": "cf02f8a51eb91f69853a96dbe0ef228156884483",
+      "bytes": 2335,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S35-activation-functions"
+    },
+    {
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e",
+      "git_blob": "abb5e30bd7c58c60811935ace9a207795d8b7073",
+      "bytes": 2430,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S36-naive-bayes"
+    },
+    {
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de",
+      "git_blob": "1aec35ef2ba3b81cf974bde20b522b3ac22cfdac",
+      "bytes": 4383,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S37-pretraining-data"
+    },
+    {
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340",
+      "git_blob": "4ae770868a791fc68af0b235d3e14d71e585a3c3",
+      "bytes": 3095,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S38-flamingo"
+    },
+    {
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533",
+      "git_blob": "09c852f9b00cb6d496ffa423a744972c6458845a",
+      "bytes": 2483,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S39-model-evaluation"
+    },
+    {
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557",
+      "git_blob": "29da68dbd644a01ff7509185a060189819bdf79e",
+      "bytes": 2503,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S40-loss-functions"
+    },
+    {
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc",
+      "git_blob": "effcbe3cebed938d10a2f87cab92ef063d37835e",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S41-text-processing"
+    },
+    {
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359",
+      "git_blob": "ccf24ce35cd2d227658dd0eaeb0ff5e137b73a45",
+      "bytes": 2022,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S42-bias-variance"
+    },
+    {
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae",
+      "git_blob": "9f4a7b78ba3f0eaaf8f0b53ef92ce848e343ef6c",
+      "bytes": 2575,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S43-optimizers"
+    },
+    {
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba",
+      "git_blob": "2e5267fd7fda2946607d2c4efe76f783b84a70a4",
+      "bytes": 2281,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S44-bag-of-words-tfidf"
+    },
+    {
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243",
+      "git_blob": "d89de19e68a642eb5ba0de7c3a1c86f5d53a183b",
+      "bytes": 3177,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S45-pretraining-mini-gpt"
+    },
+    {
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c",
+      "git_blob": "5c8c335d3d9544f45af084855f43bc901757b532",
+      "bytes": 3037,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S46-pos-tagging-parsing"
+    },
+    {
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3",
+      "git_blob": "08c29105b859aca15c5857d3c7fe5acfaaa16232",
+      "bytes": 2165,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S47-ensemble-methods"
+    },
+    {
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc",
+      "git_blob": "6d018fa789c46c330ec30d076b6b45f3b1944c32",
+      "bytes": 2744,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S48-regularization"
+    },
+    {
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018",
+      "git_blob": "23bae97c69d96369d1c97ec561e987d77cb990bf",
+      "bytes": 2769,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S49-word2vec"
+    },
+    {
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06",
+      "git_blob": "f14bdc002f7f2a2500507be5ae0da7b7865c62c5",
+      "bytes": 3425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S50-ngram-language-models"
+    },
+    {
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795",
+      "git_blob": "af1e6093e2b48ba42e150a3e8356f5456b47faac",
+      "bytes": 2818,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S51-sentiment-analysis"
+    },
+    {
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0",
+      "git_blob": "d25320b87932fa85bb65f03454afbe084c4f8e86",
+      "bytes": 2038,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S52-hyperparameter-tuning"
+    },
+    {
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340",
+      "git_blob": "d3b1c81cecc879fce6da44cc2ae2681792b21cae",
+      "bytes": 2508,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S53-weight-initialization"
+    },
+    {
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99",
+      "git_blob": "4513cb31ec4c8c07f2328692d1e2d07260039124",
+      "bytes": 2488,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S54-glove-fasttext-subword"
+    },
+    {
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201",
+      "git_blob": "eeb728a5d0d43b6c032a7884253f25cb5c8201a0",
+      "bytes": 3187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S55-named-entity-recognition"
+    },
+    {
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5",
+      "git_blob": "88e1bc702c14383d3a8cd5d9c3476f56c1b8f7b7",
+      "bytes": 2583,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S56-topic-modeling"
+    },
+    {
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8",
+      "git_blob": "1d72892c4d18d373d2550282046ae90f24278600",
+      "bytes": 1821,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S57-ml-pipelines"
+    },
+    {
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361",
+      "git_blob": "bf966eca0129457a64967d7ab4557cae652fb82e",
+      "bytes": 2032,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S58-learning-rate-schedules"
+    },
+    {
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2",
+      "git_blob": "039edec92b22f1acc04257bec40fbdcedf14eb72",
+      "bytes": 2287,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S59-information-retrieval-search"
+    },
+    {
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d",
+      "git_blob": "2859645c51d6a2a9d5b2d418a9d616b9a552bf8d",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S60-subword-tokenization"
+    },
+    {
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379",
+      "git_blob": "af1026384a9e718fe6acf4e0d5afd15bca9a49f1",
+      "bytes": 2620,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S62-time-series"
+    },
+    {
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c",
+      "git_blob": "909f8a309d9606bbb755598b26123e29eb2bb60b",
+      "bytes": 2291,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S63-mini-framework"
+    },
+    {
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297",
+      "git_blob": "2bf145d2e719bd7e90bd5e9772500a76c8a78e56",
+      "bytes": 2365,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S64-embedding-models-deep-dive"
+    },
+    {
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac",
+      "git_blob": "7558a06998af49d2a4b07299bc7edb6991932dea",
+      "bytes": 2572,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S65-coreference-resolution"
+    },
+    {
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449",
+      "git_blob": "1b278c7d40d645d1ff0c80c0963b24391e9d5958",
+      "bytes": 2187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S67-anomaly-detection"
+    },
+    {
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198",
+      "git_blob": "6f6c890dd6b18fd6729619b9ac0f4230a0790886",
+      "bytes": 2120,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S68-imbalanced-data"
+    },
+    {
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c",
+      "git_blob": "ba2f5d2833c22d665de3500bfb07895c751a541a",
+      "bytes": 2535,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S69-intro-to-pytorch"
+    },
+    {
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c",
+      "git_blob": "9cbb5f7ee02ef8dbe38f1709ee6fc6398c18cf25",
+      "bytes": 2206,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S70-chunking-strategies-rag"
+    },
+    {
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44",
+      "git_blob": "3c90f176f47d6c37b0ec1b0e4e83cbddceed7f2d",
+      "bytes": 3266,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S71-entity-linking"
+    },
+    {
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef",
+      "git_blob": "a6ee3f7b4afac98072fac33d6592468cf8628227",
+      "bytes": 3109,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S72-intro-to-jax"
+    },
+    {
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505",
+      "git_blob": "bc236d955c7437e2fcdea07d13a68600004caf3f",
+      "bytes": 2445,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S73-debugging-neural-networks"
+    },
+    {
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488",
+      "git_blob": "de8e3a444952b5f13b2b8bfa140836a483186884",
+      "bytes": 3460,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S74-relation-extraction-kg"
+    },
+    {
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347",
+      "git_blob": "6977075d8c93e88c344cc59221888db694d3b5c5",
+      "bytes": 2939,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S75-speaker-recognition-verification"
+    },
+    {
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421",
+      "git_blob": "d8730fc8bf95c6bb26bfd027cd5b7312bb5cef55",
+      "bytes": 3011,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S76-graph-theory"
+    },
+    {
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6",
+      "git_blob": "b565a501009f209b53e4eb15b628f8b67bd7c3af",
+      "bytes": 2684,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S77-image-fundamentals"
+    },
+    {
+      "commit": "56ee752aba7560af2ea4104d9fe07792b849c9e4",
+      "path": "i18n/zh/.curated/stages/S78-stochastic-processes/TERMINOLOGY.md",
+      "sha256": "f211aa1993249e771de3a60e924ea673b60ccd310994c9c6158a1a4225c3ffb4",
+      "git_blob": "6434f650066f589951c5d659ef71493d624801db",
+      "bytes": 3485,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S78-stochastic-processes"
+    },
+    {
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197",
+      "git_blob": "d69faa5f6530df562ce242491170a8c35ddb0ef6",
+      "bytes": 3390,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S80-watermarking-synthid-stable-signature-c2pa"
+    },
+    {
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b",
+      "git_blob": "f86f6161c9e5314188233bd65adf4883c8293236",
+      "bytes": 1566,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S81-outcomes-before-output"
+    },
+    {
+      "commit": "31143020895d0c406c2b36cdb362683c6f40e2e4",
+      "path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+      "sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e",
+      "git_blob": "e0c7e706c636bba3bdb3a7849b87b9c5d1a796cb",
+      "bytes": 5198,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S82-debugging-and-profiling"
+    },
+    {
+      "commit": "682be1701b737db6b85315719d0744fcdb2c0574",
+      "path": "i18n/zh/.curated/stages/S83-convolutions-from-scratch/TERMINOLOGY.md",
+      "sha256": "3305451de8fd1e1af1c3594824045890a233d7c6c2da636b7ae7b5f3f29c2d81",
+      "git_blob": "d2f3c937e0cf2ad3b3766989401cd7642af5d3c2",
+      "bytes": 6444,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S83-convolutions-from-scratch"
+    },
+    {
+      "commit": "07031ded257dd184214a1505880a838328ea74f8",
+      "path": "i18n/zh/.curated/stages/S84-discover-the-real-workflow/TERMINOLOGY.md",
+      "sha256": "95a7f035b18f8988c334cc4bc6c68a136719e8fc223a31c117780c3876a86035",
+      "git_blob": "5b1fe0e376ee3ba83ce34cf631c10df41ad880f1",
+      "bytes": 6930,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S84-discover-the-real-workflow"
+    },
+    {
+      "commit": "1a364d8283c864eccac467bb32a850a0d0779eef",
+      "path": "i18n/zh/.curated/stages/S85-cnns-lenet-to-resnet/TERMINOLOGY.md",
+      "sha256": "d8ca3e0f8e060f61603d46fe6984eb0488a48078490b16fc3a515dd5980ac8d1",
+      "git_blob": "2a310461fe3426a16aed09266558a7a10d14a5d8",
+      "bytes": 7110,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S85-cnns-lenet-to-resnet"
+    },
+    {
+      "commit": "b333554e53ab0b231a086aa9d1b9e381a82dccb2",
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/TERMINOLOGY.md",
+      "sha256": "eae3b3a7ac0bc2fdb9cbf25bc0c88a25ae81dfd45012e2be178bb005fae1bf3b",
+      "git_blob": "c9e4d03bb804934004ee75816f0f74a15c93b5bc",
+      "bytes": 4858,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S86-cnns-rnns-for-text"
+    },
+    {
+      "commit": "b6257ebccdaf34a6e16056026237be0f9e8a2fea",
+      "path": "i18n/zh/.curated/stages/S87-map-assumptions-and-risk/TERMINOLOGY.md",
+      "sha256": "2a3f542fdb608c3158216e964c057d7b07d9e93cd33ca52427a8a8d93a679e10",
+      "git_blob": "40c6fcc35088fe99a43d02bd77bd3d6eaa46038e",
+      "bytes": 4581,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S87-map-assumptions-and-risk"
+    },
+    {
+      "commit": "ac448471d1be529916bc9967b8fee11e9549f5ab",
+      "path": "i18n/zh/.curated/stages/S88-image-classification/TERMINOLOGY.md",
+      "sha256": "dc68c5834e89d04962e2ae5312a8aa5d19e019329a3f50880cbea4b99012348a",
+      "git_blob": "f7bd10e8ac8f7900ed4ed788cfa90690b4a4e6d7",
+      "bytes": 5791,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S88-image-classification"
+    },
+    {
+      "commit": "7e67c26e2a7459319a30645374a69ae551bd70f7",
+      "path": "i18n/zh/.curated/stages/S89-sequence-to-sequence/TERMINOLOGY.md",
+      "sha256": "d0df724e728064ed9ed866909df5e5b8d840763957cec99340c18fbee199f21c",
+      "git_blob": "3fa4565c0f6f70e73edd554c431e3522c2a9909f",
+      "bytes": 3744,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S89-sequence-to-sequence"
+    },
+    {
+      "commit": "f6d305f6b542908bd6c05d6e781869762cab9b35",
+      "path": "i18n/zh/.curated/stages/S90-choose-smallest-testable-slice/TERMINOLOGY.md",
+      "sha256": "a74717692fa335c4fc3d393ab308a95253bb339de9aa1608899d3c515c1aa84c",
+      "git_blob": "32668f36e2a1bddea08868b2b59341b7b5100d74",
+      "bytes": 5174,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S90-choose-smallest-testable-slice"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/check_curated_render.js",
+      "sha256": "8c7cf0cc268fb8aeacddf1d698b5a7913cf5d79489f6ebead8d5a9aee73f9e43",
+      "git_blob": "9aaa367c468e88d6221d8a955637575c72d0b3ee",
+      "bytes": 2612,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/curated_translation.py",
+      "sha256": "d89de5eec36e10edcc391330d973632e3ceedb33fe679de3503dab52a7f6ece8",
+      "git_blob": "1e12882cbb814a1a4662f6e81a22d04601f3e84b",
+      "bytes": 21566,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "scripts/test_curated_translation.py",
+      "sha256": "1e049b41bfe486ed3d01afdcadb0b24de40eef5425e7b2ee704a488dbe6da176",
+      "git_blob": "9bf51015e9afbc29b75a4d8b4ab5d8c30a405b74",
+      "bytes": 16386,
+      "mode": "100644",
+      "role": "immutable_control"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S91-transfer-learning/TERMINOLOGY.md",
+      "commit": "f4edbf1c757109c5b60c6a78089cc9919d6766b6",
+      "sha256": "7f68969fb3ce01f2bca71ec727894c0b07054d4a3a9c9b22e0e17969706a5a1a",
+      "bytes": 5678,
+      "git_blob": "f6f8c20497370c3172ba0518f5fabc35b701d497",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S92-attention-mechanism/TERMINOLOGY.md",
+      "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+      "sha256": "09183629e5165b401db0a902d4818555d3b2bb4740d83662cf0327b09392a691",
+      "bytes": 5173,
+      "git_blob": "ff94ee61bebf1f15396b15f845b5951aa33ed23d",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S93-preserve-judgment-specs/TERMINOLOGY.md",
+      "commit": "ce0e38fc576445592b7705542e01337bda2fb70a",
+      "sha256": "e01d39fa66507f7677e1fab5cbc50d15574db6fa97843289d9109c01fd1994fc",
+      "bytes": 4435,
+      "git_blob": "d5edb301587e152f453a3915aace510478356f47",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S94-object-detection-yolo/TERMINOLOGY.md",
+      "commit": "8c8e7b9ce2c007a7774bd6e326fac9f4f061370a",
+      "sha256": "7aabbf055b993f9e2bdbda9186c901c3b1899b3fae9a662a37c52d8b7e501527",
+      "bytes": 4800,
+      "git_blob": "f7493dc5ec4fa317e96c37bf025d115123759f3b",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S95-machine-translation/TERMINOLOGY.md",
+      "commit": "5dedba8e5d1744cea1cada3960351cddc9d370ba",
+      "sha256": "b76f236ead3e5d881fc1140b4268254d53d88eed397e4551502fb6add6498150",
+      "bytes": 4967,
+      "git_blob": "fb668702d2ec8db2f3939503b87a95315d5f2545",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S96-design-success-metrics/TERMINOLOGY.md",
+      "commit": "3663a4a057c1e6bad8d1ae1e8715037df9ea0b85",
+      "sha256": "82b910f3ba2d4f3d50af3cf839ccc803ebaa03cbc7c20790a6a4f0bde60b07b3",
+      "bytes": 5170,
+      "git_blob": "edb540d2b68ccea9031237d3803c5c4cce26813b",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "sha256": "5eda3951e1e0f874862691337a9f8575be0d4e509d8bf0537a14d0a9ca6b8b57",
+      "git_blob": "96136b0b9b3f40beb1d33e21c837610c7eee5ef5",
+      "bytes": 3713,
+      "mode": "100644",
+      "commit": "bfc72c4478e6f5281dd698097cbc5f1a90937179",
+      "path": "i18n/zh/.curated/stages/S97-semantic-segmentation-unet/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S97-semantic-segmentation-unet",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "8ad2b0ac2966bc7a5f1efe86332354f7351c498c330e5f1b789b10ff1626e617"
+    },
+    {
+      "sha256": "eea7ef983de8d05d41b845948a44e412fefcae84ff97b285efb93cb6420be310",
+      "git_blob": "d1f1272c8b70c08fdbc2bcad5826288295373d82",
+      "bytes": 4384,
+      "mode": "100644",
+      "commit": "b3e360191e81c1e02a946d25233e83980ea0baf7",
+      "path": "i18n/zh/.curated/stages/S98-text-summarization/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S98-text-summarization",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "f5733775d55e587d329195d6586cdb1dc75d260b45401307f50926a2eb6edad4"
+    },
+    {
+      "sha256": "3beb79c503ed2c546084ab81e833a6289d04a996e9f47229d737aad58218e977",
+      "git_blob": "5ef51b98d1535cbfd481ce2fd2f8f80e77305bd9",
+      "bytes": 4369,
+      "mode": "100644",
+      "commit": "b39ad5716e3ccbf911de020e1e561872ac27402e",
+      "path": "i18n/zh/.curated/stages/S99-prototype-pilot-production/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S99-prototype-pilot-production",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "71119ee38e1c72d9da0aa4aba7e73985a1d4853f00c78e88873f22a5ece6cbdc"
+    },
+    {
+      "sha256": "0954343f11f0f0b6ffb64de6a0af05e3cd60c3bbddf0477b71ffb9f3d1f5b07c",
+      "git_blob": "2e11c7a43b0f3b71b6f0e958a27bc3a63010f485",
+      "bytes": 5517,
+      "mode": "100644",
+      "commit": "703a59d07de5da63fcd4ac2542ead6dd403360b4",
+      "path": "i18n/zh/.curated/stages/S100-instance-segmentation-mask-rcnn/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S100-instance-segmentation-mask-rcnn",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "386f932e6574f266302aa30e4f54ae1e342ddbe3e2a45aee5b56de575da1f661"
+    },
+    {
+      "sha256": "eff81027f5f964e9337c5d2c6d3785b2d5d12f27df7120a949d65d9745997f3e",
+      "git_blob": "57688b9c31746136f15698cab7c98ead1cab8b7f",
+      "bytes": 5267,
+      "mode": "100644",
+      "commit": "7aa56b80c3910fb1b6b181a51ad491ae6fce1cf1",
+      "path": "i18n/zh/.curated/stages/S101-question-answering/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S101-question-answering",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "a59920db85ce40bea503eb5319b49cb1cc621c79a7b4ab0df776b367b8fbcd9d"
+    },
+    {
+      "sha256": "5c2c588eabf1f2618333006c7e9781373c2e230275c7de0646255c1131d72f7c",
+      "git_blob": "c6a4e894a5232f59f52c33dbe7533e45b26bb0a7",
+      "bytes": 4309,
+      "mode": "100644",
+      "commit": "ae29b12daedb337abff0f904fee3e60aad85717a",
+      "path": "i18n/zh/.curated/stages/S102-feedback-ratchet/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S102-feedback-ratchet",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "d24a95d19fbb3b69c592f5f6a8ed11c5b2d35ffa4ad2170d819b9c83335ea9c2"
+    }
+  ],
+  "reference_glossary_pins": [
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "git_blob": "51d583a00afc0ee6cddabe1802c59122d3c9d42f",
+      "bytes": 42839,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "git_blob": "3c3a4dc961984792a3635c473de36ed53a8eada7",
+      "bytes": 10069,
+      "mode": "100644",
+      "role": "core_terminology"
+    },
+    {
+      "commit": "7c879f100874a9f1282eac32b8508a5e8d1abdd3",
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+      "git_blob": "efba509207ced3ac44cdddd8ce8faa2e1560cbbb",
+      "bytes": 3645,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S01-tool-foundations"
+    },
+    {
+      "commit": "9de83a4f3950b0593d00173c96581f0067bdf028",
+      "path": "i18n/zh/.curated/stages/S02-terminal-linux/TERMINOLOGY.md",
+      "sha256": "d67dc9c2d2a7fbcb2d28c76e053209f9c48b1c3b5ae0447289ea44fb04a4e84e",
+      "git_blob": "fb5ec4fae661faf5fcae3288ed50fda94ded92c7",
+      "bytes": 2988,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S02-terminal-linux"
+    },
+    {
+      "commit": "89e49279b7dbd34bd61c3d610b5ddcb9ba98761f",
+      "path": "i18n/zh/.curated/stages/S03-gpu-docker/TERMINOLOGY.md",
+      "sha256": "80e88be8e07ab4ee523771ed0b3cc370f5de8ea1125c4ea39dd1694bbb96a077",
+      "git_blob": "d6f71417dab16872716008bb34c6e4fefa97a81e",
+      "bytes": 2886,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S03-gpu-docker"
+    },
+    {
+      "commit": "b1babf25bb46acdc1723932f5c12455583b2f5cd",
+      "path": "i18n/zh/.curated/stages/S04-data-management/TERMINOLOGY.md",
+      "sha256": "3ce4e0a027e3c706c3ebf95c861b994da8caf86342df92eba4507f0a560480ed",
+      "git_blob": "b4433dcf406df32b0cf588c5e5f7b2da00a22ecc",
+      "bytes": 2759,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S04-data-management"
+    },
+    {
+      "commit": "d81178f3e341de17c8492e03adf92ca79c2cdcff",
+      "path": "i18n/zh/.curated/stages/S05-linear-algebra-basics/TERMINOLOGY.md",
+      "sha256": "ba5e6b4341596ed5be9da27b7b965bda2bcb67fe0512f4a5f02f80e5497c8257",
+      "git_blob": "6d67b7168f486b05f27b01af69161a16cea11377",
+      "bytes": 3862,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S05-linear-algebra-basics"
+    },
+    {
+      "commit": "f8c46242ab8c81eb14815b971a84f20117bec12b",
+      "path": "i18n/zh/.curated/stages/S06-matrix-transformations/TERMINOLOGY.md",
+      "sha256": "7bce185852bbea73b8b8e6c6d6798a9bf75a3ab4678e9c5e99a70b335550d5c4",
+      "git_blob": "bcf4f580e2895ce944a2cad5ab4ea43424977ecb",
+      "bytes": 2425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S06-matrix-transformations"
+    },
+    {
+      "commit": "a2b4d9c66b45211794164243c2076dd6502be937",
+      "path": "i18n/zh/.curated/stages/S07-calculus-foundations/TERMINOLOGY.md",
+      "sha256": "8a795b5dc90e113d39ceba5213c4e655e759be76429fd7134044d41491e8f428",
+      "git_blob": "c3f3c4b17d5f6af0fc49211ae72af6ca44227f73",
+      "bytes": 4184,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S07-calculus-foundations"
+    },
+    {
+      "commit": "cf034bc30a463e42ead1b12be23efa2f62d9f348",
+      "path": "i18n/zh/.curated/stages/S08-chain-rule-autodiff/TERMINOLOGY.md",
+      "sha256": "653309851fcb1e01ae21a9d8ffedab3cf5fc501e7a45014c336133669154c7ca",
+      "git_blob": "c70a717985296f3dc75e552bb92a6f06ab4c0b78",
+      "bytes": 3157,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S08-chain-rule-autodiff"
+    },
+    {
+      "commit": "c50b75b631ed51798040328ea9cfbcaa1d9f3fbf",
+      "path": "i18n/zh/.curated/stages/S09-probability-foundations/TERMINOLOGY.md",
+      "sha256": "9bad96cbe23bf94a620da06927a0d0d6616495fe6a55577d09f6dbed78fe5880",
+      "git_blob": "2d394898b293afc5f35c92aa6357767ee337dba0",
+      "bytes": 4023,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S09-probability-foundations"
+    },
+    {
+      "commit": "c40a71e39637472f687acd8a317b6305767b6fb6",
+      "path": "i18n/zh/.curated/stages/S10-bayes-foundations/TERMINOLOGY.md",
+      "sha256": "3e88e82587c5309067664d1e9c658e166f1adc2f0452173496e5b261d7e2e6ec",
+      "git_blob": "36035ee5c71335a756b68f719bf0c183e2908ce2",
+      "bytes": 4494,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S10-bayes-foundations"
+    },
+    {
+      "commit": "65e6233ed5bb6cb9f1c0a0468504906dd8323c9b",
+      "path": "i18n/zh/.curated/stages/S11-optimization-foundations/TERMINOLOGY.md",
+      "sha256": "ee01f50deef1d56ef73329ee62cd9440be17b7b15af1966fd8d7ad18e8a89bdf",
+      "git_blob": "3c7e79a3741b61f4198af233b69f24fc33e6f433",
+      "bytes": 3736,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S11-optimization-foundations"
+    },
+    {
+      "commit": "4be16fbba2d60768857481cf76fef87c0a58a80f",
+      "path": "i18n/zh/.curated/stages/S12-information-theory/TERMINOLOGY.md",
+      "sha256": "60c35be366113a966fb74b1c628d4ee1edee7b25e79f31bc4d61da707b662115",
+      "git_blob": "483d7fe5393ff8228f8320e122bff65899afc0d9",
+      "bytes": 3284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S12-information-theory"
+    },
+    {
+      "commit": "c50c5841fac4e5bb20726feaad3b1188489d8077",
+      "path": "i18n/zh/.curated/stages/S13-dimensionality-reduction/TERMINOLOGY.md",
+      "sha256": "f106e161cdfde0ac963ded0568871f3eb12a29d3d7ec2ec8dad3a9608b177364",
+      "git_blob": "9a294d0c7d641f3895ec5d2a3401ea4a96fdcf67",
+      "bytes": 3438,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S13-dimensionality-reduction"
+    },
+    {
+      "commit": "acf8e89bc4596c13307a53a995fe96701221c5b6",
+      "path": "i18n/zh/.curated/stages/S14-tensor-operations/TERMINOLOGY.md",
+      "sha256": "a58975e3533e7ca82a417c60da7f0db5394594561a483f0a2abf384b791052a5",
+      "git_blob": "4fb7a14c1730db6cd5f30d26f51c5fe4d8c0ba02",
+      "bytes": 3312,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S14-tensor-operations"
+    },
+    {
+      "commit": "e906a46fdf8a0ea9ea22c68784b4303e1c10c198",
+      "path": "i18n/zh/.curated/stages/S15-numerical-stability/TERMINOLOGY.md",
+      "sha256": "c6f6b7e4a3632569f4ccf3b034946953779363013bbd1c16f78feabd84251ae4",
+      "git_blob": "1016d7d240bb1b78897be717041500e687fd9401",
+      "bytes": 3048,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S15-numerical-stability"
+    },
+    {
+      "commit": "2610d0dec88725fec4528accc5487f9cf88b4d49",
+      "path": "i18n/zh/.curated/stages/S16-norms-distances/TERMINOLOGY.md",
+      "sha256": "ac7ca5ba688fe2b4a8227f36428898dd94b6b6fb4da44f4539485a39d4c2021a",
+      "git_blob": "8a606b02466143d31e7ca4210b47a7be254394e8",
+      "bytes": 3677,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S16-norms-distances"
+    },
+    {
+      "commit": "7f802943f85ff5621e50eb2307cb712e0fff2b68",
+      "path": "i18n/zh/.curated/stages/S17-statistics-for-ml/TERMINOLOGY.md",
+      "sha256": "95fcccf0718f8e391483b8dcd322f8ab8175dd2456001d0c9ad752e8c393aa48",
+      "git_blob": "dc95714026cd8e693e396db3f2448d1179df3943",
+      "bytes": 3928,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S17-statistics-for-ml"
+    },
+    {
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff",
+      "git_blob": "3b91d4c008bf0d06d38298b36ce505ce8a318b6b",
+      "bytes": 3660,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S18-sampling-methods"
+    },
+    {
+      "commit": "67da24ff06ab81bdaec522f464b633d8f8253739",
+      "path": "i18n/zh/.curated/stages/S19-linear-systems/TERMINOLOGY.md",
+      "sha256": "72badef43bed69eab05c41d142dc12decb1a74ced4c3644102c02a4e0bb389e2",
+      "git_blob": "596dc57b24236543cc2ba7b2060d067a6db18f13",
+      "bytes": 2924,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S19-linear-systems"
+    },
+    {
+      "commit": "324afa47a52f43cffb7ed5718fd2b02176a77959",
+      "path": "i18n/zh/.curated/stages/S20-convex-optimization/TERMINOLOGY.md",
+      "sha256": "ff0ab50b72dbd788721d59e81ee477fe2c9033d3cf07257a68fb7de5e854409a",
+      "git_blob": "8362723bd43106e34aabf3da2d4e10e5e56cce18",
+      "bytes": 3434,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S20-convex-optimization"
+    },
+    {
+      "commit": "03d91ba2efedd80a71fe06b9668212e029a40edb",
+      "path": "i18n/zh/.curated/stages/S21-fourier-transform/TERMINOLOGY.md",
+      "sha256": "c703b08437a5c47c0a62476239703b488566d892b8a85b3b25ce0b4ae70f0ef4",
+      "git_blob": "fc3c32a750247da022623c0789363167885fa1dd",
+      "bytes": 3408,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S21-fourier-transform"
+    },
+    {
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "git_blob": "2f1da1190ed66909df4150cded08ab76d3110cb7",
+      "bytes": 3170,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S22-ml-overview"
+    },
+    {
+      "commit": "ccf427ff16970a5cde15eeef5c085530fc50978b",
+      "path": "i18n/zh/.curated/stages/S23-decision-trees/TERMINOLOGY.md",
+      "sha256": "4575955c1522cadc80a1deebd56b071b008a5225bb07c706b498753557243844",
+      "git_blob": "fa7abc4253e2a3aea3556aa520a5f0c5d762283a",
+      "bytes": 2553,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S23-decision-trees"
+    },
+    {
+      "commit": "99277ca3ba91fcc3b8f06dffe6c5cdb212b7278b",
+      "path": "i18n/zh/.curated/stages/S24-knn-distances/TERMINOLOGY.md",
+      "sha256": "853639f3f3cfd4bb2020732da62139f62f033e4bcb103d34b39dba3bb7b70a63",
+      "git_blob": "37b8e539615eba55fd962d46e2bd11545535aa7d",
+      "bytes": 2284,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S24-knn-distances"
+    },
+    {
+      "commit": "d045d6906e764fbf9613109061b22fe26b9b3a3e",
+      "path": "i18n/zh/.curated/stages/S25-linear-regression/TERMINOLOGY.md",
+      "sha256": "530e3610b75ada035bd7de6ac5587c7b39057e7594fbfc22faff87c557ccbbc3",
+      "git_blob": "eb71f179dc1b215a2cc4dd6ab30d9879d6b3a0fd",
+      "bytes": 2382,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S25-linear-regression"
+    },
+    {
+      "commit": "303bd2dd4a9e7b84d79b2d5c82f27e19abfa08b2",
+      "path": "i18n/zh/.curated/stages/S26-support-vector-machines/TERMINOLOGY.md",
+      "sha256": "d505656a9dea58095a4911f3c211f35dd082a269ee1287f474c267b5d9c872cd",
+      "git_blob": "6319a758cf71a1bf7b0af996ebfc6d8c46b2b0c7",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S26-support-vector-machines"
+    },
+    {
+      "commit": "e203d26504ee9590a2f47063c9d99b4b21d4737e",
+      "path": "i18n/zh/.curated/stages/S27-perceptron/TERMINOLOGY.md",
+      "sha256": "1ba89819330843767955bf9d380cba9af0f92a8474881817d1dc7ca23ab931b8",
+      "git_blob": "eff9c68670ecb23e0213084e1a9fcb8f957c1d63",
+      "bytes": 2088,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S27-perceptron"
+    },
+    {
+      "commit": "aeccbafc81d4dac0f2740ebdbfa639fcdb73a7d0",
+      "path": "i18n/zh/.curated/stages/S28-logistic-regression/TERMINOLOGY.md",
+      "sha256": "c93cb0647657f22785642f159a9897434b2341e6e94fe8f8e4714fb4189966d1",
+      "git_blob": "92e02c63f3760272c684341d4e3f1a8fe19f3f0f",
+      "bytes": 2326,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S28-logistic-regression"
+    },
+    {
+      "commit": "7614a01e4e7c2db83d5b83527d71f974c6594e8d",
+      "path": "i18n/zh/.curated/stages/S29-multi-layer-networks/TERMINOLOGY.md",
+      "sha256": "9d24d04d18e36a28c9d6603e588cd2fd7d9597e4a65919e910f10eb1a76e0b21",
+      "git_blob": "4f3fea7d28134a6cf4bf453a381ea04fbd8b90bb",
+      "bytes": 2269,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S29-multi-layer-networks"
+    },
+    {
+      "commit": "ddeff1f2114d1990b83b8963fa25fd0cba9f77ba",
+      "path": "i18n/zh/.curated/stages/S30-audio-fundamentals/TERMINOLOGY.md",
+      "sha256": "1ed7d177322e1753e5b339c5766ccb0560eef3312b0dad91b1cf37d50fb45afd",
+      "git_blob": "1d8612f449304097bfdb1f9b2c337f538c27f163",
+      "bytes": 2209,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S30-audio-fundamentals"
+    },
+    {
+      "commit": "53ced71527128822c92c455bd81e80e706fabebf",
+      "path": "i18n/zh/.curated/stages/S31-unsupervised-learning/TERMINOLOGY.md",
+      "sha256": "ba3edee036f83c956f97400dce4df4242eac21675182ff7566b4cbd184a9e1e1",
+      "git_blob": "d3cdc78dc5230ed8164824dd7b366894fc8af209",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S31-unsupervised-learning"
+    },
+    {
+      "commit": "515dcc38ae7354940a9158e636d92f5e6798673e",
+      "path": "i18n/zh/.curated/stages/S32-backpropagation/TERMINOLOGY.md",
+      "sha256": "be415bb08030b7130023cf6cf34f7111f82e2c62e363f60fd1b24fe428a1e726",
+      "git_blob": "2c18b360177a935d7e16f1cddfcd17228afc2d4e",
+      "bytes": 2279,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S32-backpropagation"
+    },
+    {
+      "commit": "257888109a4e123c960c7104c7f5563e58a4bd30",
+      "path": "i18n/zh/.curated/stages/S33-building-tokenizer/TERMINOLOGY.md",
+      "sha256": "a9cde55278cc65d2219713f5931966c3c3783fda41798f6e5675e09c7bf0ab66",
+      "git_blob": "890baefa8c23198a0728f5db2c41b8da258d1b7b",
+      "bytes": 2354,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S33-building-tokenizer"
+    },
+    {
+      "commit": "56502abbae5cc86d8297c79894627a9a364ac619",
+      "path": "i18n/zh/.curated/stages/S34-feature-engineering/TERMINOLOGY.md",
+      "sha256": "cf8f0f246814732568555855b888338e4c490174a3b031014b9baf3e105085a6",
+      "git_blob": "7a81537a54bf29a6a510f2ae203747dbef8161ab",
+      "bytes": 2513,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S34-feature-engineering"
+    },
+    {
+      "commit": "49195f5a0d82d2aa7b7507701d2d5d618f85f012",
+      "path": "i18n/zh/.curated/stages/S35-activation-functions/TERMINOLOGY.md",
+      "sha256": "b26e22fc038c19059f3a86fc87d8f77819aa0f668d7fc6a3696516a5cdfd62f4",
+      "git_blob": "cf02f8a51eb91f69853a96dbe0ef228156884483",
+      "bytes": 2335,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S35-activation-functions"
+    },
+    {
+      "commit": "e3256972ea6cc391d32911b3f53ea6cc4583bc33",
+      "path": "i18n/zh/.curated/stages/S36-naive-bayes/TERMINOLOGY.md",
+      "sha256": "0ddf2d0d7de401418e256aacc85e283960946f9d9307ec31ae1935a6620e8c7e",
+      "git_blob": "abb5e30bd7c58c60811935ace9a207795d8b7073",
+      "bytes": 2430,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S36-naive-bayes"
+    },
+    {
+      "commit": "9d85086309e42e1681f33334ca8f1052b15204e8",
+      "path": "i18n/zh/.curated/stages/S37-pretraining-data/TERMINOLOGY.md",
+      "sha256": "61c645434e1f041e2b9ad74d36d8901d30ea3087f01800bd49d448d28bced0de",
+      "git_blob": "1aec35ef2ba3b81cf974bde20b522b3ac22cfdac",
+      "bytes": 4383,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S37-pretraining-data"
+    },
+    {
+      "commit": "1137c035f2b622df9631eb5392054530162f9787",
+      "path": "i18n/zh/.curated/stages/S38-flamingo/TERMINOLOGY.md",
+      "sha256": "7670ccaf0ddf435c107b6e0de284974608f1c955de22ee265ff6d384845c1340",
+      "git_blob": "4ae770868a791fc68af0b235d3e14d71e585a3c3",
+      "bytes": 3095,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S38-flamingo"
+    },
+    {
+      "commit": "f8c1c63f5ab1ce876ec2e408ccb523773d7c484f",
+      "path": "i18n/zh/.curated/stages/S39-model-evaluation/TERMINOLOGY.md",
+      "sha256": "71a19d9d0fd6c96447d389665bcccdb4d61b9fa567382fd0a52d91df0ec05533",
+      "git_blob": "09c852f9b00cb6d496ffa423a744972c6458845a",
+      "bytes": 2483,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S39-model-evaluation"
+    },
+    {
+      "commit": "7823dc5926bba22eb7bfef4aca1a7690e5b80d2e",
+      "path": "i18n/zh/.curated/stages/S40-loss-functions/TERMINOLOGY.md",
+      "sha256": "1dea2c0e4855a9dd0e67faffde3b1444c68b27f352ac0d1cdc2e848f8562b557",
+      "git_blob": "29da68dbd644a01ff7509185a060189819bdf79e",
+      "bytes": 2503,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S40-loss-functions"
+    },
+    {
+      "commit": "e3768efc157dd1ff5e2fae3ae21121f63ac14790",
+      "path": "i18n/zh/.curated/stages/S41-text-processing/TERMINOLOGY.md",
+      "sha256": "38beafe31d46c8867eba683710ce3e53fa56ef5c9755c23e01802149744bc2bc",
+      "git_blob": "effcbe3cebed938d10a2f87cab92ef063d37835e",
+      "bytes": 2229,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S41-text-processing"
+    },
+    {
+      "commit": "69b251ddb0526b4c343f1b7d8f89724b9eb59560",
+      "path": "i18n/zh/.curated/stages/S42-bias-variance/TERMINOLOGY.md",
+      "sha256": "e3eb405ddc86f9f317cf38a7867ab54b28567fa08a3bde4c190a2390c79ae359",
+      "git_blob": "ccf24ce35cd2d227658dd0eaeb0ff5e137b73a45",
+      "bytes": 2022,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S42-bias-variance"
+    },
+    {
+      "commit": "fc8f69d35f82cdc8999bbc9347cfa8a21f682f32",
+      "path": "i18n/zh/.curated/stages/S43-optimizers/TERMINOLOGY.md",
+      "sha256": "05ca794545a07bbc1435a5f6949b133938dbb1da8f305fcb60b062fbfc5071ae",
+      "git_blob": "9f4a7b78ba3f0eaaf8f0b53ef92ce848e343ef6c",
+      "bytes": 2575,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S43-optimizers"
+    },
+    {
+      "commit": "6027ee9a348e76e733178572281e43646fe813c8",
+      "path": "i18n/zh/.curated/stages/S44-bag-of-words-tfidf/TERMINOLOGY.md",
+      "sha256": "5b4c560409d7a0a15248a81cf072c178244ed5629da5367710642d07549a18ba",
+      "git_blob": "2e5267fd7fda2946607d2c4efe76f783b84a70a4",
+      "bytes": 2281,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S44-bag-of-words-tfidf"
+    },
+    {
+      "commit": "5a55aba5b2ad040f927fd30da7a223fe4528d9d5",
+      "path": "i18n/zh/.curated/stages/S45-pretraining-mini-gpt/TERMINOLOGY.md",
+      "sha256": "bf86c0f6973ba1d4b7391d173525b40b5735d6987232c3223d2d6875cb41b243",
+      "git_blob": "d89de19e68a642eb5ba0de7c3a1c86f5d53a183b",
+      "bytes": 3177,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S45-pretraining-mini-gpt"
+    },
+    {
+      "commit": "6d1de772aabe0c365d533b6a21cbfdd4b842cac4",
+      "path": "i18n/zh/.curated/stages/S46-pos-tagging-parsing/TERMINOLOGY.md",
+      "sha256": "b3bc3c4d093f09dc07f977087892109fa7d29a5fd33d0b9964e486c3577ef05c",
+      "git_blob": "5c8c335d3d9544f45af084855f43bc901757b532",
+      "bytes": 3037,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S46-pos-tagging-parsing"
+    },
+    {
+      "commit": "f8c40c082dd6281dd681340d13e20dcbe8f38a99",
+      "path": "i18n/zh/.curated/stages/S47-ensemble-methods/TERMINOLOGY.md",
+      "sha256": "7ec1814c324276ac7838f3cd55c6392e5423e8a70a19af0a05fc2734b03971e3",
+      "git_blob": "08c29105b859aca15c5857d3c7fe5acfaaa16232",
+      "bytes": 2165,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S47-ensemble-methods"
+    },
+    {
+      "commit": "e098eb5e42b5a273367c0b85a314b7f0cd10c5fe",
+      "path": "i18n/zh/.curated/stages/S48-regularization/TERMINOLOGY.md",
+      "sha256": "295e7cb939c370bf3b2b180a20e6e57452dfed945d8296280e8d474da2b8c9bc",
+      "git_blob": "6d018fa789c46c330ec30d076b6b45f3b1944c32",
+      "bytes": 2744,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S48-regularization"
+    },
+    {
+      "commit": "58d10782051e8aa1a67b70c3f957ce388d5e3a72",
+      "path": "i18n/zh/.curated/stages/S49-word2vec/TERMINOLOGY.md",
+      "sha256": "d108cc0fd038e26119325a86696dd6523514f4b81f86e8aa22ff346498357018",
+      "git_blob": "23bae97c69d96369d1c97ec561e987d77cb990bf",
+      "bytes": 2769,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S49-word2vec"
+    },
+    {
+      "commit": "36f15408c82d3648182986254de3d67cb55f6c0f",
+      "path": "i18n/zh/.curated/stages/S50-ngram-language-models/TERMINOLOGY.md",
+      "sha256": "eba281146515323bfb1f1fdf7dcdc699c44ab299fc8955d7976f7c0d96beef06",
+      "git_blob": "f14bdc002f7f2a2500507be5ae0da7b7865c62c5",
+      "bytes": 3425,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S50-ngram-language-models"
+    },
+    {
+      "commit": "ecad84c0e00b5dddc1989d7e316f2be5a81b89b4",
+      "path": "i18n/zh/.curated/stages/S51-sentiment-analysis/TERMINOLOGY.md",
+      "sha256": "45b5a0fd4227bd60cce6ec968e5df77f343f1c087e531931c9fe865ad4cfc795",
+      "git_blob": "af1e6093e2b48ba42e150a3e8356f5456b47faac",
+      "bytes": 2818,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S51-sentiment-analysis"
+    },
+    {
+      "commit": "4d28413bdb301feddae2eb5798bf666b9903f9ef",
+      "path": "i18n/zh/.curated/stages/S52-hyperparameter-tuning/TERMINOLOGY.md",
+      "sha256": "06ad02777be1d574b9b5b6c0bfc2d7ad194a6aee07e817a856807ccfbaf5a6e0",
+      "git_blob": "d25320b87932fa85bb65f03454afbe084c4f8e86",
+      "bytes": 2038,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S52-hyperparameter-tuning"
+    },
+    {
+      "commit": "ff01bb704089bf910a18422a9843baac3a4ed7d2",
+      "path": "i18n/zh/.curated/stages/S53-weight-initialization/TERMINOLOGY.md",
+      "sha256": "a9f4499504ebbc0e106f9285f56353366ff3af0afa64a30a7623795c108dc340",
+      "git_blob": "d3b1c81cecc879fce6da44cc2ae2681792b21cae",
+      "bytes": 2508,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S53-weight-initialization"
+    },
+    {
+      "commit": "fd2116fb48ad63aebdbd89ab846acad93481aad8",
+      "path": "i18n/zh/.curated/stages/S54-glove-fasttext-subword/TERMINOLOGY.md",
+      "sha256": "19bd06c1b16aa3c2cf45689ad27f805645589058ccd11e04868e49d71a59fb99",
+      "git_blob": "4513cb31ec4c8c07f2328692d1e2d07260039124",
+      "bytes": 2488,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S54-glove-fasttext-subword"
+    },
+    {
+      "commit": "96506aba3507854f4632092a1c25c92c74276386",
+      "path": "i18n/zh/.curated/stages/S55-named-entity-recognition/TERMINOLOGY.md",
+      "sha256": "7caa18bba72f5511ff45ba137e1f35794eee49204ce73c13e9f65ba0dd3b2201",
+      "git_blob": "eeb728a5d0d43b6c032a7884253f25cb5c8201a0",
+      "bytes": 3187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S55-named-entity-recognition"
+    },
+    {
+      "commit": "e406f4b1370c45ffa5735b2b9f4fc4291814a8a9",
+      "path": "i18n/zh/.curated/stages/S56-topic-modeling/TERMINOLOGY.md",
+      "sha256": "b7089fcbaf4449e9ea7931868a1ed08630446d9f9d2494c74c6979e35accd6a5",
+      "git_blob": "88e1bc702c14383d3a8cd5d9c3476f56c1b8f7b7",
+      "bytes": 2583,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S56-topic-modeling"
+    },
+    {
+      "commit": "84a73be2d202923e008c9cf848dcf01657842b32",
+      "path": "i18n/zh/.curated/stages/S57-ml-pipelines/TERMINOLOGY.md",
+      "sha256": "05df20c51607f96aec1d9d92024a991b53d5f7919f42179248c67716211597c8",
+      "git_blob": "1d72892c4d18d373d2550282046ae90f24278600",
+      "bytes": 1821,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S57-ml-pipelines"
+    },
+    {
+      "commit": "03f6afe67cdef1ad33664b70f84a1be493a107d3",
+      "path": "i18n/zh/.curated/stages/S58-learning-rate-schedules/TERMINOLOGY.md",
+      "sha256": "d4bf06ffd28c6677e7cb895a6d8fbe8b157f015e8c4f6ac578f6b66f940d4361",
+      "git_blob": "bf966eca0129457a64967d7ab4557cae652fb82e",
+      "bytes": 2032,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S58-learning-rate-schedules"
+    },
+    {
+      "commit": "8c8ac3c9051bf2af3546f052306dba73e301fc6f",
+      "path": "i18n/zh/.curated/stages/S59-information-retrieval-search/TERMINOLOGY.md",
+      "sha256": "0a14bc463cea181df3ad377600b10f42b0e8d53d2de68639e6e9cca5c29fc6e2",
+      "git_blob": "039edec92b22f1acc04257bec40fbdcedf14eb72",
+      "bytes": 2287,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S59-information-retrieval-search"
+    },
+    {
+      "commit": "0a9e66d1faa17ac7b09dd7dd4cfed1e788a7a0cd",
+      "path": "i18n/zh/.curated/stages/S60-subword-tokenization/TERMINOLOGY.md",
+      "sha256": "7720dd740b17e9c2d8e7a9431d7a4fbdd393c4d7812dc7b4b8c9e3ccaa5cd50d",
+      "git_blob": "2859645c51d6a2a9d5b2d418a9d616b9a552bf8d",
+      "bytes": 2140,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S60-subword-tokenization"
+    },
+    {
+      "commit": "bb0a535a1d6551ebc0de6f10a1cf54b4637e4440",
+      "path": "i18n/zh/.curated/stages/S62-time-series/TERMINOLOGY.md",
+      "sha256": "a4a4bbda3c9c0c6e89610be8fce8da8b6452de5b3a526ad77ab719f887e5a379",
+      "git_blob": "af1026384a9e718fe6acf4e0d5afd15bca9a49f1",
+      "bytes": 2620,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S62-time-series"
+    },
+    {
+      "commit": "9d53225b14187d7a2b353e5d74d0d764c3c2204a",
+      "path": "i18n/zh/.curated/stages/S63-mini-framework/TERMINOLOGY.md",
+      "sha256": "304304f770934f46292392bbf51d2a90f3efd37f15712113c67ebf490a2f725c",
+      "git_blob": "909f8a309d9606bbb755598b26123e29eb2bb60b",
+      "bytes": 2291,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S63-mini-framework"
+    },
+    {
+      "commit": "7ba1e11678d514bb7ad15750d81f35c3412740b1",
+      "path": "i18n/zh/.curated/stages/S64-embedding-models-deep-dive/TERMINOLOGY.md",
+      "sha256": "f361dd59f26c83f723b233a6200dc5eedefc001da1b3551f729fcaf2ddc63297",
+      "git_blob": "2bf145d2e719bd7e90bd5e9772500a76c8a78e56",
+      "bytes": 2365,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S64-embedding-models-deep-dive"
+    },
+    {
+      "commit": "5f47d8dc7e7744b877723f8d6310e191935d0479",
+      "path": "i18n/zh/.curated/stages/S65-coreference-resolution/TERMINOLOGY.md",
+      "sha256": "1000cef3094f890b5f1e844550b4ab9d0f77d73667926f762283b5f56d29d2ac",
+      "git_blob": "7558a06998af49d2a4b07299bc7edb6991932dea",
+      "bytes": 2572,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S65-coreference-resolution"
+    },
+    {
+      "commit": "2414f7e6fab5486a88755ced06dc3d11238bb388",
+      "path": "i18n/zh/.curated/stages/S67-anomaly-detection/TERMINOLOGY.md",
+      "sha256": "f9395a6d04293a93e59895eb6624f65e22fc00fcf608290102f98ef999cc5449",
+      "git_blob": "1b278c7d40d645d1ff0c80c0963b24391e9d5958",
+      "bytes": 2187,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S67-anomaly-detection"
+    },
+    {
+      "commit": "72731d7e16cbd62a575dc3248f48adb21de1ac16",
+      "path": "i18n/zh/.curated/stages/S68-imbalanced-data/TERMINOLOGY.md",
+      "sha256": "614d334f99500796ca2281aa7c53ddd39f6b4186f2a9a1728fe01a1b3b0c4198",
+      "git_blob": "6f6c890dd6b18fd6729619b9ac0f4230a0790886",
+      "bytes": 2120,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S68-imbalanced-data"
+    },
+    {
+      "commit": "c5a7764b15ef7c20f13b3a390d55c66d1ac4f6e4",
+      "path": "i18n/zh/.curated/stages/S69-intro-to-pytorch/TERMINOLOGY.md",
+      "sha256": "6a83b3f382f2338dead346b62a83aaed97a03dad7044591b8ccf90fd4161164c",
+      "git_blob": "ba2f5d2833c22d665de3500bfb07895c751a541a",
+      "bytes": 2535,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S69-intro-to-pytorch"
+    },
+    {
+      "commit": "72c8c85d8980249cf12c7f18c48ab74aa2146889",
+      "path": "i18n/zh/.curated/stages/S70-chunking-strategies-rag/TERMINOLOGY.md",
+      "sha256": "69394692ccb2508c49a8c5c3b945b1264ca2e3099fa200997a53d361006ffd0c",
+      "git_blob": "9cbb5f7ee02ef8dbe38f1709ee6fc6398c18cf25",
+      "bytes": 2206,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S70-chunking-strategies-rag"
+    },
+    {
+      "commit": "f288fdbb754d92932a39d4afbac387568d1228b0",
+      "path": "i18n/zh/.curated/stages/S71-entity-linking/TERMINOLOGY.md",
+      "sha256": "2cbd6befd5199086c6f5cb2f9cf831da9a1805851535c655239803e4590ebd44",
+      "git_blob": "3c90f176f47d6c37b0ec1b0e4e83cbddceed7f2d",
+      "bytes": 3266,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S71-entity-linking"
+    },
+    {
+      "commit": "60d2668fa7ae7bc1f626fec02ec06ab9dd97c2b6",
+      "path": "i18n/zh/.curated/stages/S72-intro-to-jax/TERMINOLOGY.md",
+      "sha256": "3efd1fdbef309d6262e5167759f9dc0c09bbf329e0e8ce9da268607170fe6aef",
+      "git_blob": "a6ee3f7b4afac98072fac33d6592468cf8628227",
+      "bytes": 3109,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S72-intro-to-jax"
+    },
+    {
+      "commit": "11930d68f414b8120154f042c194b6a7b77d5509",
+      "path": "i18n/zh/.curated/stages/S73-debugging-neural-networks/TERMINOLOGY.md",
+      "sha256": "e7b44814743645cac5f39fbd5f3157e4e715d2bcddb871c775327a27d05a5505",
+      "git_blob": "bc236d955c7437e2fcdea07d13a68600004caf3f",
+      "bytes": 2445,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S73-debugging-neural-networks"
+    },
+    {
+      "commit": "d60830f7a868943484f869141921272fd9d749dc",
+      "path": "i18n/zh/.curated/stages/S74-relation-extraction-kg/TERMINOLOGY.md",
+      "sha256": "fb458026969e58bebf2f98d41d8cb2b2a72f2460ee6def5779355f7710609488",
+      "git_blob": "de8e3a444952b5f13b2b8bfa140836a483186884",
+      "bytes": 3460,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S74-relation-extraction-kg"
+    },
+    {
+      "commit": "db1dddb4a67ce81aa1c5c38ff8318635253d719d",
+      "path": "i18n/zh/.curated/stages/S75-speaker-recognition-verification/TERMINOLOGY.md",
+      "sha256": "654312cdbd70a431e378f5fa211d1476352b1e70fdd98000274537a67a145347",
+      "git_blob": "6977075d8c93e88c344cc59221888db694d3b5c5",
+      "bytes": 2939,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S75-speaker-recognition-verification"
+    },
+    {
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421",
+      "git_blob": "d8730fc8bf95c6bb26bfd027cd5b7312bb5cef55",
+      "bytes": 3011,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S76-graph-theory"
+    },
+    {
+      "commit": "a5971af0e90e5e1bbaa465eebec988d038f095e1",
+      "path": "i18n/zh/.curated/stages/S77-image-fundamentals/TERMINOLOGY.md",
+      "sha256": "c9a45b5293234cea7c8d23999a383f33fa2ad41faec47ac28735d8c4752887c6",
+      "git_blob": "b565a501009f209b53e4eb15b628f8b67bd7c3af",
+      "bytes": 2684,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S77-image-fundamentals"
+    },
+    {
+      "commit": "56ee752aba7560af2ea4104d9fe07792b849c9e4",
+      "path": "i18n/zh/.curated/stages/S78-stochastic-processes/TERMINOLOGY.md",
+      "sha256": "f211aa1993249e771de3a60e924ea673b60ccd310994c9c6158a1a4225c3ffb4",
+      "git_blob": "6434f650066f589951c5d659ef71493d624801db",
+      "bytes": 3485,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S78-stochastic-processes"
+    },
+    {
+      "commit": "6d5838a9a2927b53623e6ab45cf4dba243429072",
+      "path": "i18n/zh/.curated/stages/S80-watermarking-synthid-stable-signature-c2pa/TERMINOLOGY.md",
+      "sha256": "87590e294497d4083a2033bb8afcb220d5e92d5240111bc6b696743a6fe94197",
+      "git_blob": "d69faa5f6530df562ce242491170a8c35ddb0ef6",
+      "bytes": 3390,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S80-watermarking-synthid-stable-signature-c2pa"
+    },
+    {
+      "commit": "9ad22431117b759f4f96a02dd216afd05cd50487",
+      "path": "i18n/zh/.curated/stages/S81-outcomes-before-output/TERMINOLOGY.md",
+      "sha256": "a75ada403321164cdb5ad10bdbcd625e908808de0a0e8fe9694b0deed4c76b0b",
+      "git_blob": "f86f6161c9e5314188233bd65adf4883c8293236",
+      "bytes": 1566,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S81-outcomes-before-output"
+    },
+    {
+      "commit": "31143020895d0c406c2b36cdb362683c6f40e2e4",
+      "path": "i18n/zh/.curated/stages/S82-debugging-and-profiling/TERMINOLOGY.md",
+      "sha256": "53e869114e701448139b138f57432367a2c209f8810c389127e5284f8632206e",
+      "git_blob": "e0c7e706c636bba3bdb3a7849b87b9c5d1a796cb",
+      "bytes": 5198,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S82-debugging-and-profiling"
+    },
+    {
+      "commit": "682be1701b737db6b85315719d0744fcdb2c0574",
+      "path": "i18n/zh/.curated/stages/S83-convolutions-from-scratch/TERMINOLOGY.md",
+      "sha256": "3305451de8fd1e1af1c3594824045890a233d7c6c2da636b7ae7b5f3f29c2d81",
+      "git_blob": "d2f3c937e0cf2ad3b3766989401cd7642af5d3c2",
+      "bytes": 6444,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S83-convolutions-from-scratch"
+    },
+    {
+      "commit": "07031ded257dd184214a1505880a838328ea74f8",
+      "path": "i18n/zh/.curated/stages/S84-discover-the-real-workflow/TERMINOLOGY.md",
+      "sha256": "95a7f035b18f8988c334cc4bc6c68a136719e8fc223a31c117780c3876a86035",
+      "git_blob": "5b1fe0e376ee3ba83ce34cf631c10df41ad880f1",
+      "bytes": 6930,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S84-discover-the-real-workflow"
+    },
+    {
+      "commit": "1a364d8283c864eccac467bb32a850a0d0779eef",
+      "path": "i18n/zh/.curated/stages/S85-cnns-lenet-to-resnet/TERMINOLOGY.md",
+      "sha256": "d8ca3e0f8e060f61603d46fe6984eb0488a48078490b16fc3a515dd5980ac8d1",
+      "git_blob": "2a310461fe3426a16aed09266558a7a10d14a5d8",
+      "bytes": 7110,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S85-cnns-lenet-to-resnet"
+    },
+    {
+      "commit": "b333554e53ab0b231a086aa9d1b9e381a82dccb2",
+      "path": "i18n/zh/.curated/stages/S86-cnns-rnns-for-text/TERMINOLOGY.md",
+      "sha256": "eae3b3a7ac0bc2fdb9cbf25bc0c88a25ae81dfd45012e2be178bb005fae1bf3b",
+      "git_blob": "c9e4d03bb804934004ee75816f0f74a15c93b5bc",
+      "bytes": 4858,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S86-cnns-rnns-for-text"
+    },
+    {
+      "commit": "b6257ebccdaf34a6e16056026237be0f9e8a2fea",
+      "path": "i18n/zh/.curated/stages/S87-map-assumptions-and-risk/TERMINOLOGY.md",
+      "sha256": "2a3f542fdb608c3158216e964c057d7b07d9e93cd33ca52427a8a8d93a679e10",
+      "git_blob": "40c6fcc35088fe99a43d02bd77bd3d6eaa46038e",
+      "bytes": 4581,
+      "mode": "100644",
+      "role": "accepted_stage_terminology",
+      "stage_id": "S87-map-assumptions-and-risk"
+    },
+    {
+      "commit": "ac448471d1be529916bc9967b8fee11e9549f5ab",
+      "path": "i18n/zh/.curated/stages/S88-image-classification/TERMINOLOGY.md",
+      "sha256": "dc68c5834e89d04962e2ae5312a8aa5d19e019329a3f50880cbea4b99012348a",
+      "git_blob": "f7bd10e8ac8f7900ed4ed788cfa90690b4a4e6d7",
+      "bytes": 5791,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S88-image-classification"
+    },
+    {
+      "commit": "7e67c26e2a7459319a30645374a69ae551bd70f7",
+      "path": "i18n/zh/.curated/stages/S89-sequence-to-sequence/TERMINOLOGY.md",
+      "sha256": "d0df724e728064ed9ed866909df5e5b8d840763957cec99340c18fbee199f21c",
+      "git_blob": "3fa4565c0f6f70e73edd554c431e3522c2a9909f",
+      "bytes": 3744,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S89-sequence-to-sequence"
+    },
+    {
+      "commit": "f6d305f6b542908bd6c05d6e781869762cab9b35",
+      "path": "i18n/zh/.curated/stages/S90-choose-smallest-testable-slice/TERMINOLOGY.md",
+      "sha256": "a74717692fa335c4fc3d393ab308a95253bb339de9aa1608899d3c515c1aa84c",
+      "git_blob": "32668f36e2a1bddea08868b2b59341b7b5100d74",
+      "bytes": 5174,
+      "mode": "100644",
+      "role": "active_reviewed_stage_terminology",
+      "stage_id": "S90-choose-smallest-testable-slice"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S91-transfer-learning/TERMINOLOGY.md",
+      "commit": "f4edbf1c757109c5b60c6a78089cc9919d6766b6",
+      "sha256": "7f68969fb3ce01f2bca71ec727894c0b07054d4a3a9c9b22e0e17969706a5a1a",
+      "bytes": 5678,
+      "git_blob": "f6f8c20497370c3172ba0518f5fabc35b701d497",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S92-attention-mechanism/TERMINOLOGY.md",
+      "commit": "98a1e9536d5e3032cc2ebbfcb8f54eb8085b8bd8",
+      "sha256": "09183629e5165b401db0a902d4818555d3b2bb4740d83662cf0327b09392a691",
+      "bytes": 5173,
+      "git_blob": "ff94ee61bebf1f15396b15f845b5951aa33ed23d",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S93-preserve-judgment-specs/TERMINOLOGY.md",
+      "commit": "ce0e38fc576445592b7705542e01337bda2fb70a",
+      "sha256": "e01d39fa66507f7677e1fab5cbc50d15574db6fa97843289d9109c01fd1994fc",
+      "bytes": 4435,
+      "git_blob": "d5edb301587e152f453a3915aace510478356f47",
+      "mode": "100644",
+      "classification": "reviewed-active-stage-terminology"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S94-object-detection-yolo/TERMINOLOGY.md",
+      "commit": "8c8e7b9ce2c007a7774bd6e326fac9f4f061370a",
+      "sha256": "7aabbf055b993f9e2bdbda9186c901c3b1899b3fae9a662a37c52d8b7e501527",
+      "bytes": 4800,
+      "git_blob": "f7493dc5ec4fa317e96c37bf025d115123759f3b",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S95-machine-translation/TERMINOLOGY.md",
+      "commit": "5dedba8e5d1744cea1cada3960351cddc9d370ba",
+      "sha256": "b76f236ead3e5d881fc1140b4268254d53d88eed397e4551502fb6add6498150",
+      "bytes": 4967,
+      "git_blob": "fb668702d2ec8db2f3939503b87a95315d5f2545",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S96-design-success-metrics/TERMINOLOGY.md",
+      "commit": "3663a4a057c1e6bad8d1ae1e8715037df9ea0b85",
+      "sha256": "82b910f3ba2d4f3d50af3cf839ccc803ebaa03cbc7c20790a6a4f0bde60b07b3",
+      "bytes": 5170,
+      "git_blob": "edb540d2b68ccea9031237d3803c5c4cce26813b",
+      "mode": "100644",
+      "classification": "reviewed-stage-terminology-reference-not-formal-lesson-acceptance"
+    },
+    {
+      "sha256": "5eda3951e1e0f874862691337a9f8575be0d4e509d8bf0537a14d0a9ca6b8b57",
+      "git_blob": "96136b0b9b3f40beb1d33e21c837610c7eee5ef5",
+      "bytes": 3713,
+      "mode": "100644",
+      "commit": "bfc72c4478e6f5281dd698097cbc5f1a90937179",
+      "path": "i18n/zh/.curated/stages/S97-semantic-segmentation-unet/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S97-semantic-segmentation-unet",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "8ad2b0ac2966bc7a5f1efe86332354f7351c498c330e5f1b789b10ff1626e617"
+    },
+    {
+      "sha256": "eea7ef983de8d05d41b845948a44e412fefcae84ff97b285efb93cb6420be310",
+      "git_blob": "d1f1272c8b70c08fdbc2bcad5826288295373d82",
+      "bytes": 4384,
+      "mode": "100644",
+      "commit": "b3e360191e81c1e02a946d25233e83980ea0baf7",
+      "path": "i18n/zh/.curated/stages/S98-text-summarization/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S98-text-summarization",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "f5733775d55e587d329195d6586cdb1dc75d260b45401307f50926a2eb6edad4"
+    },
+    {
+      "sha256": "3beb79c503ed2c546084ab81e833a6289d04a996e9f47229d737aad58218e977",
+      "git_blob": "5ef51b98d1535cbfd481ce2fd2f8f80e77305bd9",
+      "bytes": 4369,
+      "mode": "100644",
+      "commit": "b39ad5716e3ccbf911de020e1e561872ac27402e",
+      "path": "i18n/zh/.curated/stages/S99-prototype-pilot-production/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S99-prototype-pilot-production",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "71119ee38e1c72d9da0aa4aba7e73985a1d4853f00c78e88873f22a5ece6cbdc"
+    },
+    {
+      "sha256": "0954343f11f0f0b6ffb64de6a0af05e3cd60c3bbddf0477b71ffb9f3d1f5b07c",
+      "git_blob": "2e11c7a43b0f3b71b6f0e958a27bc3a63010f485",
+      "bytes": 5517,
+      "mode": "100644",
+      "commit": "703a59d07de5da63fcd4ac2542ead6dd403360b4",
+      "path": "i18n/zh/.curated/stages/S100-instance-segmentation-mask-rcnn/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S100-instance-segmentation-mask-rcnn",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "386f932e6574f266302aa30e4f54ae1e342ddbe3e2a45aee5b56de575da1f661"
+    },
+    {
+      "sha256": "eff81027f5f964e9337c5d2c6d3785b2d5d12f27df7120a949d65d9745997f3e",
+      "git_blob": "57688b9c31746136f15698cab7c98ead1cab8b7f",
+      "bytes": 5267,
+      "mode": "100644",
+      "commit": "7aa56b80c3910fb1b6b181a51ad491ae6fce1cf1",
+      "path": "i18n/zh/.curated/stages/S101-question-answering/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S101-question-answering",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "a59920db85ce40bea503eb5319b49cb1cc621c79a7b4ab0df776b367b8fbcd9d"
+    },
+    {
+      "sha256": "5c2c588eabf1f2618333006c7e9781373c2e230275c7de0646255c1131d72f7c",
+      "git_blob": "c6a4e894a5232f59f52c33dbe7533e45b26bb0a7",
+      "bytes": 4309,
+      "mode": "100644",
+      "commit": "ae29b12daedb337abff0f904fee3e60aad85717a",
+      "path": "i18n/zh/.curated/stages/S102-feedback-ratchet/TERMINOLOGY.md",
+      "role": "reference_stage_terminology",
+      "stage_id": "S102-feedback-ratchet",
+      "support_only_not_course_completion": true,
+      "publication_receipt_sha256": "d24a95d19fbb3b69c592f5f6a8ed11c5b2d35ffa4ad2170d819b9c83335ea9c2"
+    }
+  ],
+  "own_stage_support_pins": [
+    {
+      "path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/DEPENDENCIES.json",
+      "sha256": "5c5c9ebe00706d264ac6fa5a76aef1babcf46decda309fbbe23d177ae8787dd8",
+      "bytes": 147367,
+      "git_blob": "c1c6e79099d71966d3ae60f07a9d01b0e7e88068",
+      "commit": "5a86aeb577e780ed267ded5aee7e9e63631fcdda",
+      "mode": "100644"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/TERMINOLOGY.md",
+      "sha256": "63fc8636014d507247e55404f93fcb3f0995aec0d18f39f4efea3c6f68a22f50",
+      "bytes": 4215,
+      "git_blob": "27c1b469c2405536870f15d71fa11d672e40dfbc",
+      "commit": "5a86aeb577e780ed267ded5aee7e9e63631fcdda",
+      "mode": "100644"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/SCOPE.md",
+      "sha256": "5cdd568d96f144c035be9db8ddacea2ef26e41c067a75298c0881cbd8f329fc0",
+      "bytes": 7463,
+      "git_blob": "38bcc7af64496696c0cf7644f22398a8a0f3595e",
+      "commit": "5a86aeb577e780ed267ded5aee7e9e63631fcdda",
+      "mode": "100644"
+    }
+  ],
+  "source_files": [
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/04-computer-vision/10-image-generation-diffusion/code/main.py",
+      "sha256": "0ccd9af6e426019c18048c29f05c9523ed1ee79e65f2dd5baa04d6d39c06098c",
+      "git_blob": "0909ac1666591b140c4cf12835a43d4b2f52cb5b",
+      "bytes": 6130,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/04-computer-vision/10-image-generation-diffusion/docs/en.md",
+      "sha256": "596c04cae482ef2dd4aae5b11e7452c9fa9bfe74a44047286ed296a5ea5634cd",
+      "git_blob": "6803d21892319333fc9ac6b5c81044995ac06721",
+      "bytes": 14579,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/04-computer-vision/10-image-generation-diffusion/outputs/prompt-diffusion-sampler-picker.md",
+      "sha256": "7226110817487cbd4cf2b522349cc6c4a243d84d113a2c3c4c6ae0e90a2e9716",
+      "git_blob": "aa218a7cb86fba486455872ac7d59fdda4fad544",
+      "bytes": 3111,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/04-computer-vision/10-image-generation-diffusion/outputs/skill-noise-schedule-designer.md",
+      "sha256": "dff2e4fca0e961ae7a46335e7a561bb753b2196cab1e63c29313157b82edea29",
+      "git_blob": "9006b5b2453ec0feeb8095f63950f59c7b34f1ad",
+      "bytes": 2807,
+      "mode": "100644"
+    },
+    {
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "path": "phases/04-computer-vision/10-image-generation-diffusion/quiz.json",
+      "sha256": "77bec8d337e65db68dfed85f0e82b6462cdd1416e35e36fbbf1a03d443b95c41",
+      "git_blob": "5fa67b076714d593c1141dad41a4b22c7788faf8",
+      "bytes": 4072,
+      "mode": "100644"
+    }
+  ],
+  "support_counts": {
+    "common": 109,
+    "reference_terminology": 101,
+    "original_controls": 8,
+    "own": 3,
+    "total": 112
+  },
+  "original_draft_record": {
+    "sha256": "876af9175b305ae3bc77450d60ac95ae5dd157a66bc27b81df43bfb6c9b3eb55",
+    "bytes": 64507
+  },
+  "author_evidence_scope": "Historical author reports retain their original exact body and draft-record hashes and pending states. Current support and independent language statuses are recorded separately.",
+  "language_review_evidence": {
+    "report": {
+      "sha256": "bdcb96c134b9bdf81248d61ff3b86a1c68b389e1a96e7b84564edba62486b2ae",
+      "bytes": 27060
+    },
+    "reviewed_target_sha256": "42fdd683bd2fb376bcd005284b749d2890690b256749b3433cab279e014256b0",
+    "reviewed_original_draft_record_sha256": "876af9175b305ae3bc77450d60ac95ae5dd157a66bc27b81df43bfb6c9b3eb55",
+    "reviewed_date_utc": "2026-10-04",
+    "reviewed_utc": "2026-10-04T14:28:36.499914+00:00",
+    "scope": "Independent complete bilingual comparison and separate complete Chinese read-through. Public metadata assembly is not a new independent language review."
+  },
+  "verified_support_publication": {
+    "status": "OWN3_PUBLISHED_AND_INSTALLED_READBACK_PASS",
+    "commit": "5a86aeb577e780ed267ded5aee7e9e63631fcdda",
+    "tree": "e9726097eb2c7f99bacd2e0b5a9e3fe4d6085f51",
+    "readback_verified_utc": "2026-10-04T15:05:11.637836+00:00",
+    "installed_utc": "2026-10-04T15:05:11.637836+00:00",
+    "readback_evidence": {
+      "sha256": "385f2ff3b5c11163a9a3b1c5d8e3836c42ceb46831e5c5f5df0589448d610aae",
+      "bytes": 3702
+    },
+    "installation_evidence": {
+      "sha256": "d79075d831bbcb240904cf72280d4cd69d5ac8ce226237672036778c7a97b7c7",
+      "bytes": 2039
+    },
+    "common_inventory_evidence": {
+      "sha256": "aef5293c38284a7c281852d115973b8e1eb24c4b2a4787226bf578714b723e13",
+      "bytes": 53896
+    },
+    "freeze_time_pending_null_preserved": true,
+    "common_metadata_reused_without_reclassification": true,
+    "author_verified_own3_at_first_write": false,
+    "scope": "Retained independent receipt and installed own3 bytes verified locally. Common109 identities and historical classifications reused from wave106 public support projection; no new common-origin re-audit or remote read."
+  },
+  "common_support_projection": {
+    "original_inventory": {
+      "sha256": "aef5293c38284a7c281852d115973b8e1eb24c4b2a4787226bf578714b723e13",
+      "bytes": 53896
+    },
+    "public_projection_source_path": "i18n/zh/.curated/stages/S106-image-generation-diffusion/DEPENDENCIES.json",
+    "public_projection_source_sha256": "5c5c9ebe00706d264ac6fa5a76aef1babcf46decda309fbbe23d177ae8787dd8",
+    "omitted_private_locator_values": [
+      {
+        "index": 103,
+        "path": "i18n/zh/.curated/stages/S97-semantic-segmentation-unet/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "270150b6e2972297945309886fc5d3c90c5816eaee8d7bef27ba6bba3532e15a"
+      },
+      {
+        "index": 103,
+        "path": "i18n/zh/.curated/stages/S97-semantic-segmentation-unet/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "d7cac231213544e11d9fdef15b02dd24fc216468d8a21228458b24f963c519bc"
+      },
+      {
+        "index": 104,
+        "path": "i18n/zh/.curated/stages/S98-text-summarization/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "c2091d51992b1efee010461081f84282d05aefa318e76f371d0ee9579e5473bc"
+      },
+      {
+        "index": 104,
+        "path": "i18n/zh/.curated/stages/S98-text-summarization/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "b9ecdd227d273556ecfc778b1dc2d9fdc616a8563d887389a3a0df6911b001ed"
+      },
+      {
+        "index": 105,
+        "path": "i18n/zh/.curated/stages/S99-prototype-pilot-production/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "75435b677c01f2e0598182ef3a235ebf51dd9b65a36749c03835e89d1f6cd35f"
+      },
+      {
+        "index": 105,
+        "path": "i18n/zh/.curated/stages/S99-prototype-pilot-production/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "9f14fbe0e24be1fceaa745b79bf722fadf86548e5901fc8281c4ec6862653b48"
+      },
+      {
+        "index": 106,
+        "path": "i18n/zh/.curated/stages/S100-instance-segmentation-mask-rcnn/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "60805bd7c173a38ae93ed10e038155a75dda2bcee6654c0d1f6b63c3b09e9536"
+      },
+      {
+        "index": 106,
+        "path": "i18n/zh/.curated/stages/S100-instance-segmentation-mask-rcnn/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "194eaad496c5f55d8bda58baa494880f9c68b26c40d0f39eaa9eebec0f876aaf"
+      },
+      {
+        "index": 107,
+        "path": "i18n/zh/.curated/stages/S101-question-answering/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "d4dfe52d6820995d2aa272fa8eedfc64b0c61c3b2cfda57b0f0e5e4618addd56"
+      },
+      {
+        "index": 107,
+        "path": "i18n/zh/.curated/stages/S101-question-answering/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "52e9a305c02bedbb8c1ece187c15c4a91fe26c9710e2da1ef1516c72a2b8ef44"
+      },
+      {
+        "index": 108,
+        "path": "i18n/zh/.curated/stages/S102-feedback-ratchet/TERMINOLOGY.md",
+        "field": "publication_receipt",
+        "omitted_value_sha256": "767452a5488a7e69b494f7b7329951740cd5e3fdd7526863c2f5433e168f9e35"
+      },
+      {
+        "index": 108,
+        "path": "i18n/zh/.curated/stages/S102-feedback-ratchet/TERMINOLOGY.md",
+        "field": "local_cached_candidate",
+        "omitted_value_sha256": "59aa7cc636a97b164f27e41c31132e2cca459910ed93b637b50d55706f1c5b8c"
+      }
+    ],
+    "identities_order_and_historical_classifications_preserved": true
+  }
+}
