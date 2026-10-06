@@ -1,0 +1,1745 @@
+{
+  "schema_version": 1,
+  "lesson_id": "04-28",
+  "source_path": "phases/04-computer-vision/28-world-models-video-diffusion/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "8a18bee3fea5276bb8195d8d3fa1280be2db323c",
+  "source_sha256": "2b64fd3dbecb74fbc2cf8c017468033e16d103409dce31b25b62100838991acd",
+  "target_path": "i18n/zh/phases/04-computer-vision/28-world-models-video-diffusion/docs/zh.md",
+  "target_sha256": "5142d1c2b929d883edabdf68d953a04b0b9ce783edf169ccdf048f733e0eadb9",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01"
+  },
+  "segments": [
+    {
+      "segment_id": "04-28:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion"
+      ],
+      "ordinal": 1,
+      "source_sha256": "9ffc532a340ef312c567dd97c774ca284dddb0276a39022e03c3718b863b91fd",
+      "target": "# 世界模型与视频扩散\n"
+    },
+    {
+      "segment_id": "04-28:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# World Models & Video Diffusion"
+      ],
+      "ordinal": 2,
+      "source_sha256": "f30214013b516452306414e2f52e39e5fe178cbfd7d2fa4f3bcd5473adaf93fb",
+      "target": "> 能预测场景接下来几秒变化的视频模型，就是一个世界模拟器（world simulator）。让这种预测以动作为条件，就得到了一个学得的游戏引擎（learned game engine）。\n"
+    },
+    {
+      "segment_id": "04-28:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion"
+      ],
+      "ordinal": 3,
+      "source_sha256": "a9eee837cce5a0e726f16e3c3b78df73dadf7e191b5b8c7c90d6833b0720e66b",
+      "target": "**Type:** Learn + Build\n**Languages:** Python\n**Prerequisites:** 阶段 4 第 10 课（扩散）、阶段 4 第 12 课（视频理解）、阶段 4 第 23 课（DiT + 整流流）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "04-28:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "04-28:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "a127f1bcf99142f4623fe46794f6e115ba44482486c3d147f827b09ae98ee92b",
+      "target": "- 解释纯视频生成模型（Sora 2）与以动作为条件的（action-conditioned）世界模型（world model，如 Genie 3、DreamerV3）之间的区别\n- 描述视频扩散 Transformer（Video DiT）：时空块（spatio-temporal patch）、3D 位置编码（position encoding），以及在 (T, H, W) token（词元，此处对应时空块）之间进行的联合式注意力（joint attention）\n- 梳理世界模型如何接入机器人系统：视觉语言模型（VLM）规划 → 视频模型模拟 → 逆动力学（inverse dynamics）输出动作\n- 根据给定用途（创意视频、交互式仿真、自动驾驶数据合成），在 Sora 2、Genie 3、Runway GWM-1 Worlds、Wan-Video 和 HunyuanVideo 之间做出选择\n"
+    },
+    {
+      "segment_id": "04-28:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "04-28:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "25942b4f574839bd725020e7cbc46c896d116d778b1361b4fc1016f59c1fd526",
+      "target": "视频生成与世界建模在 2026 年走向融合。一个能生成连贯的一分钟视频的模型，在某种意义上已经学会了世界如何运动：物体恒存性（object permanence）、重力、因果关系、风格。如果让这种预测以动作为条件（向左走、打开门），视频模型就成了一个可学习的模拟器，可以取代游戏引擎、驾驶模拟器或机器人环境。\n"
+    },
+    {
+      "segment_id": "04-28:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "d9ad5d8893085461a8cec97e8d80d38de6060f9f2efb083d1c90a8a19e8aec47",
+      "target": "这些用途很具体。Genie 3 能从单张图像生成可供交互游玩的环境。Runway GWM-1 Worlds 能合成可无限探索的场景。Sora 2 能生成长达一分钟的视频，配有同步音频，并对物理规律进行建模。NVIDIA Cosmos-Drive、Wayve Gaia-2 和 Tesla DrivingWorld 能生成逼真的驾驶视频，作为自动驾驶车辆的训练数据。世界模型范式正在悄然接管机器人领域从仿真到现实的迁移（sim-to-real）。\n"
+    },
+    {
+      "segment_id": "04-28:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "1ed6ecf217747c8c2f74f9a2feb3f766b59baaaefd1c97dd121cf89d6340ca0e",
+      "target": "本课是阶段 4 的“全局概览”课。它把图像生成、视频理解和智能体推理（agentic reasoning）连接起来，呈现主流研究正在迈向的架构模式。\n"
+    },
+    {
+      "segment_id": "04-28:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "04-28:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Three families of world-modelling"
+      ],
+      "ordinal": 11,
+      "source_sha256": "a934865fd07ba3b9553e8e859c151ba2fb01af79b188457d2a6d9012c30fd437",
+      "target": "### 世界建模的三类方法\n"
+    },
+    {
+      "segment_id": "04-28:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Three families of world-modelling"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Three families of world-modelling"
+      ],
+      "ordinal": 12,
+      "source_sha256": "21152c93648c5bf552091de488e64ae183f118951e86b8ff71bf39deaa6a39eb",
+      "target": "```mermaid\nflowchart LR\n    subgraph GEN[\"Pure video generation\"]\n        G1[\"Text / image prompt\"] --> G2[\"Video DiT\"] --> G3[\"Video frames\"]\n    end\n    subgraph ACTION[\"Action-conditioned world model\"]\n        A1[\"Past frames + action\"] --> A2[\"Latent-action video DiT\"] --> A3[\"Next frames\"]\n        A3 --> A1\n    end\n    subgraph RL[\"World models for RL (DreamerV3)\"]\n        R1[\"State + action\"] --> R2[\"Latent transition model\"] --> R3[\"Next latent + reward\"]\n        R3 --> R1\n    end\n\n    style GEN fill:#dbeafe,stroke:#2563eb\n    style ACTION fill:#fef3c7,stroke:#d97706\n    style RL fill:#dcfce7,stroke:#16a34a\n```\n"
+    },
+    {
+      "segment_id": "04-28:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Three families of world-modelling"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0025",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Three families of world-modelling"
+      ],
+      "ordinal": 13,
+      "source_sha256": "c9f69b483a1afe2d1ee63a138dd941610d6b6ae56d4b8e69c6690ee1e0a3b0e9",
+      "target": "- **Sora 2** 是以提示词（prompt）为条件的纯视频生成模型。它没有动作接口（action interface）。你无法在模拟轨迹（rollout）生成过程中“操控”它。\n- **Genie 3**、**GWM-1 Worlds**、**Mirage / Magica** 是以动作为条件的世界模型。它们从观察到的视频中推断潜在动作（latent action），再让未来帧（frame）的预测以动作为条件。这类模型可以交互：你按下按键或移动相机，场景就会做出响应。\n- **DreamerV3** 以及经典的强化学习（RL）世界模型家族，在潜在空间（latent space）中进行预测，明确以动作为条件，并利用奖励信号训练。它们对视觉的侧重较少，更适合样本高效的强化学习（sample-efficient RL）。\n"
+    },
+    {
+      "segment_id": "04-28:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Three families of world-modelling"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 14,
+      "source_sha256": "4b1f6ca77b8a0ac936150e8f09e7cbc39de49d1ec14763fae73eb9b2bd918ce3",
+      "target": "### Video DiT 架构\n"
+    },
+    {
+      "segment_id": "04-28:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0029",
+      "kind": "fence",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 15,
+      "source_sha256": "aaa81e64abeb6e0cab9a340845d871cbc3e9d15fcf9debeea2e216d8e75aeecc",
+      "target": "```text\nVideo latent:          (C, T, H, W)\nPatchify (spatial):    grid of P_h x P_w patches per frame\nPatchify (temporal):   group P_t frames into a temporal patch\nResulting tokens:      (T / P_t) * (H / P_h) * (W / P_w) tokens\n```\n"
+    },
+    {
+      "segment_id": "04-28:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 16,
+      "source_sha256": "3fb02829bf00280dbe284063f5fb1dda4626036e93a53efe6ad5033af87f50af",
+      "target": "位置编码是 3D 的：每个 (t, h, w) 坐标都有一个旋转式嵌入或学得的嵌入（embedding）。注意力可以采用以下形式：\n"
+    },
+    {
+      "segment_id": "04-28:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0033",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 17,
+      "source_sha256": "66fae6ac6995f8589b046d7246e869f8e88a1863d69839200eff63bc2d314ca0",
+      "target": "- **全联合式**：所有 token 都关注所有 token。对于 N 个 token，复杂度为 O(N^2)。长视频难以承受这种开销。\n- **分离式注意力（divided attention）**：交替进行时间注意力（temporal attention，同一空间位置跨时间：`(H*W) * T^2`）和空间注意力（spatial attention，同一时间步跨空间：`T * (H*W)^2`）。TimeSformer 和大多数视频 DiT 都采用这种形式。\n- **窗口注意力（window attention）**：在 (t, h, w) 中使用局部窗口。Video Swin 采用这种形式。\n"
+    },
+    {
+      "segment_id": "04-28:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 18,
+      "source_sha256": "54e2a9920c6525b6580446421eca55bbaa9d3817a77350eb5d4041a2b2708306",
+      "target": "2026 年的每个视频扩散模型都采用这三种模式之一，再结合通过自适应层归一化（AdaLN）施加条件的机制（第 23 课）和整流流（rectified flow）。\n"
+    },
+    {
+      "segment_id": "04-28:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Video DiT architecture"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Conditioning on actions: latent action models"
+      ],
+      "ordinal": 19,
+      "source_sha256": "5b5f0ee7286d73b8571ac3c8d1543cdb2fc9920bdf420f19c0e9d574ca503f93",
+      "target": "### 以动作为条件：潜在动作模型\n"
+    },
+    {
+      "segment_id": "04-28:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Conditioning on actions: latent action models"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Conditioning on actions: latent action models"
+      ],
+      "ordinal": 20,
+      "source_sha256": "3af7cf3974ed9538105a0776a2e3451ddbd6536f46767777256069c35f0268e5",
+      "target": "Genie 通过以判别方式预测一对连续帧之间的动作，为每一帧学习一个 **潜在动作**。随后，模型的解码器（decoder）以推断出的潜在动作为条件，而不是以明确的键盘按键为条件。在推理时，用户可以指定一个潜在动作（也可以从新的先验（prior）中抽样得到一个），模型便会生成与该动作一致的下一帧。\n"
+    },
+    {
+      "segment_id": "04-28:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Conditioning on actions: latent action models"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Conditioning on actions: latent action models"
+      ],
+      "ordinal": 21,
+      "source_sha256": "b2b7900d225d7786c95b6d13469ca6e7698c22d4ecd00b2409784a31ff63965a",
+      "target": "Sora 完全跳过了动作接口。它的解码器根据过去的时空 token 预测接下来的时空 token。提示词为起始生成设定条件；生成过程中没有任何操控输入。\n"
+    },
+    {
+      "segment_id": "04-28:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Conditioning on actions: latent action models"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Physical plausibility"
+      ],
+      "ordinal": 22,
+      "source_sha256": "c6c5c808acfd52e5057f7bda75a35e1cd250109cf533ab0b731ee776f97cf2d4",
+      "target": "### 物理合理性\n"
+    },
+    {
+      "segment_id": "04-28:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Physical plausibility"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Physical plausibility"
+      ],
+      "ordinal": 23,
+      "source_sha256": "4033edb39222c0e7816bc0bb650ac7b18815d20d24cd76c7ab01f15f384f2ffb",
+      "target": "Sora 2 在 2026 年发布时，明确宣传了 **物理合理性（physical plausibility）**：重量、平衡、物体恒存性、因果关系。团队通过人工评定的合理性分数来衡量这些表现；与 Sora 1 相比，模型在物体掉落、角色碰撞，以及有意呈现的失败（例如跳跃落空）等场景上都有明显改善。\n"
+    },
+    {
+      "segment_id": "04-28:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Physical plausibility"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Physical plausibility"
+      ],
+      "ordinal": 24,
+      "source_sha256": "02ab9a497869c7b6d7fbeaab2b24c1517a624130ca84269c84ae056286b20cf0",
+      "target": "物理合理性不足仍然是最主要的失效问题。2024-2025 年那些人吃意大利面或用玻璃杯喝水的视频，暴露出模型缺乏持续存在的物体表示（persistent object representation）。2026 年的模型（Sora 2、Runway Gen-5、HunyuanVideo）减少了这些问题，但并未消除它们。\n"
+    },
+    {
+      "segment_id": "04-28:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Physical plausibility"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Autonomous driving world models"
+      ],
+      "ordinal": 25,
+      "source_sha256": "d0f5b82f526968e85456278c256b389f659ee313081baf3b48b1a2dee51627b2",
+      "target": "### 自动驾驶世界模型\n"
+    },
+    {
+      "segment_id": "04-28:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Autonomous driving world models"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Autonomous driving world models"
+      ],
+      "ordinal": 26,
+      "source_sha256": "cee3741af57e510e4748e2555a62b39a8113609c2e08b1352984cb2e1735be9d",
+      "target": "驾驶世界模型以运动轨迹（trajectory）、边界框（bounding box）或导航地图为条件，生成逼真的道路场景。用途包括：\n"
+    },
+    {
+      "segment_id": "04-28:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Autonomous driving world models"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0053",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Autonomous driving world models"
+      ],
+      "ordinal": 27,
+      "source_sha256": "d06230ecde14ebbeb1bb98875d9d79c5097530e5fd48d2b253a41d098602c8f2",
+      "target": "- **Cosmos-Drive-Dreams**（NVIDIA）：生成数分钟的驾驶视频，用于 RL 训练。\n- **Gaia-2**（Wayve）：以运动轨迹为条件合成场景，用于策略（policy）评估。\n- **DrivingWorld**（Tesla）：模拟各种天气、时段和交通状况。\n- **Vista**（ByteDance）：合成能做出反应的驾驶场景。\n"
+    },
+    {
+      "segment_id": "04-28:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Autonomous driving world models"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Autonomous driving world models"
+      ],
+      "ordinal": 28,
+      "source_sha256": "bf25ef2e8a7135e307099a97976edd0ab47a31ab3c01f40fc8310dd33e9f9470",
+      "target": "它们替代了针对边缘情况开展的高成本真实世界数据收集。这些情况包括行人夜间违规横穿马路、结冰的交叉路口、不常见的车辆类型；否则，要收集这些数据就需要行驶数百万英里。\n"
+    },
+    {
+      "segment_id": "04-28:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Autonomous driving world models"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Robotics stack: VLM + video model + inverse dynamics"
+      ],
+      "ordinal": 29,
+      "source_sha256": "216d42a24440a903784772133d3c52060657d4baa9aab3689dfe16a7aff8b69f",
+      "target": "### 机器人技术栈：VLM + 视频模型 + 逆动力学\n"
+    },
+    {
+      "segment_id": "04-28:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Robotics stack: VLM + video model + inverse dynamics"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Robotics stack: VLM + video model + inverse dynamics"
+      ],
+      "ordinal": 30,
+      "source_sha256": "3ac7eb60cd98ec2f34ae0e5e007b1183e961c4a763d6383516b37a960e36f2e0",
+      "target": "正在兴起的、由三个组件构成的机器人循环：\n"
+    },
+    {
+      "segment_id": "04-28:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Robotics stack: VLM + video model + inverse dynamics"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0061",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Robotics stack: VLM + video model + inverse dynamics"
+      ],
+      "ordinal": 31,
+      "source_sha256": "417b31e106e94c40b86bdbbc8eb297e7409f6ef33d4728f95e242551a364e1fb",
+      "target": "1. **VLM** 解析目标（“拿起红色杯子”），规划高层动作序列（high-level action sequence）。\n2. **视频生成模型** 模拟执行每个动作时会呈现的情景，即预测 N 帧之后的观察结果（observation）。\n3. **逆动力学模型** 提取能产生这些观察结果的具体电机控制指令。\n"
+    },
+    {
+      "segment_id": "04-28:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Robotics stack: VLM + video model + inverse dynamics"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Robotics stack: VLM + video model + inverse dynamics"
+      ],
+      "ordinal": 32,
+      "source_sha256": "2bc6c451d75a4da039bea71b09743b06a4957d2d7cfe210648643f2ec4cb5f61",
+      "target": "这取代了奖励塑形（reward shaping）和需要大量样本的 RL。世界模型负责想象；逆动力学则在驱动执行（actuation）环节闭合循环。Genie Envisioner 是其中一种实现；许多研究团队都在向这一结构靠拢。\n"
+    },
+    {
+      "segment_id": "04-28:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Robotics stack: VLM + video model + inverse dynamics"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Evaluation"
+      ],
+      "ordinal": 33,
+      "source_sha256": "acf5b00c739da4201f92a363db10f800483a53ac222fe4eb543ff1688826b799",
+      "target": "### 评估\n"
+    },
+    {
+      "segment_id": "04-28:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Evaluation"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0067",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Evaluation"
+      ],
+      "ordinal": 34,
+      "source_sha256": "a71d16dd92da815bbbe5794c201ecbd6dda6cc9c1e3baa40f039c23569d2e8d5",
+      "target": "- **视觉质量**：FVD（Fréchet Video Distance，Fréchet 视频距离）、用户研究。\n- **提示词对齐（prompt alignment）**：逐帧 CLIPScore、VQA（视觉问答）式评估。\n- **物理合理性**：在一组基准测试上进行人工评分（Sora 2 的内部基准、VBench）。\n- **可控性（controllability）**（针对交互式世界模型）：动作 → 观察结果的一致性；能否回到先前的状态？\n"
+    },
+    {
+      "segment_id": "04-28:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Evaluation"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 35,
+      "source_sha256": "1bc34ec3f724d59611b93d0c159f9c017d58f4baead36b54050796c56ae2045a",
+      "target": "### 2026 年的模型概览\n"
+    },
+    {
+      "segment_id": "04-28:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0071",
+      "kind": "table",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 36,
+      "source_sha256": "fcd64cd0638be7f7cabb226ba4ed661bf1bbfd790ecb3081239e8254f52c0f7f",
+      "target": "| 模型 | 用途 | 参数 | 输出 | 许可 |\n|-------|-----|------------|--------|---------|\n| Sora 2 | 文生视频（text-to-video）、音频 | — | 1-min 1080p + 音频 | 仅通过 API（应用程序编程接口）提供 |\n| Runway Gen-5 | 文生/图生视频（text/image-to-video） | — | 10s 片段（clip） | API |\n| Runway GWM-1 Worlds | 交互式世界 | — | 无限的 3D 模拟轨迹 | API |\n| Genie 3 | 从图像生成交互式世界 | 11B+ | 可供交互游玩的帧 | 研究预览 |\n| Wan-Video 2.1 | 开放的文生视频模型 | 14B | 高质量片段 | 非商业许可 |\n| HunyuanVideo | 开放的文生视频模型 | 13B | 10s 片段 | 宽松许可 |\n| Cosmos / Cosmos-Drive | 自动驾驶仿真 | 7-14B | 驾驶场景 | NVIDIA 开放 |\n| Magica / Mirage 2 | AI 原生游戏引擎 | — | 可修改的世界 | 产品 |\n"
+    },
+    {
+      "segment_id": "04-28:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 37,
+      "source_sha256": "d44987e5cacf51db785e07678c6553cf873bfe8110d561ef16e51d64435c7c90",
+      "target": "```figure\nv4-world-rollout\n```\n"
+    },
+    {
+      "segment_id": "04-28:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "04-28:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 1: 3D patchify for video"
+      ],
+      "ordinal": 39,
+      "source_sha256": "6b388261108f55ee7e05b865ee99ba73097a2bb4876975b2030cdbe3f0442df4",
+      "target": "### 步骤 1：对视频进行 3D 分块\n"
+    },
+    {
+      "segment_id": "04-28:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 1: 3D patchify for video"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 1: 3D patchify for video"
+      ],
+      "ordinal": 40,
+      "source_sha256": "55941083934ca8aa8d98b0fbf3ee6ba7d0a8c9bd9bd837004cb12ca95854e770",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\n\nclass VideoPatch3D(nn.Module):\n    def __init__(self, in_channels=4, dim=64, patch_t=2, patch_h=2, patch_w=2):\n        super().__init__()\n        self.proj = nn.Conv3d(\n            in_channels, dim,\n            kernel_size=(patch_t, patch_h, patch_w),\n            stride=(patch_t, patch_h, patch_w),\n        )\n        self.patch_t = patch_t\n        self.patch_h = patch_h\n        self.patch_w = patch_w\n\n    def forward(self, x):\n        # x: (N, C, T, H, W)\n        x = self.proj(x)\n        n, c, t, h, w = x.shape\n        tokens = x.reshape(n, c, t * h * w).transpose(1, 2)\n        return tokens, (t, h, w)\n```\n"
+    },
+    {
+      "segment_id": "04-28:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 1: 3D patchify for video"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 1: 3D patchify for video"
+      ],
+      "ordinal": 41,
+      "source_sha256": "823583d3d955805f89bdcc694ce41032bbf24fd67412ddea8e3b3474df19358d",
+      "target": "步幅（stride）等于卷积核（kernel）尺寸的 3D 卷积（convolution）充当时空分块器（spatio-temporal patchifier），进行分块（patchify）。得到的 token 网格（grid）为 `(T, H, W) -> (T/2, H/2, W/2)`。\n"
+    },
+    {
+      "segment_id": "04-28:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 1: 3D patchify for video"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 2: 3D rotary position encoding"
+      ],
+      "ordinal": 42,
+      "source_sha256": "2c660a337770018abadcb1393b0164ae79ea8be634ee7b88abf67dbab64a05b7",
+      "target": "### 步骤 2：3D 旋转位置编码\n"
+    },
+    {
+      "segment_id": "04-28:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 2: 3D rotary position encoding"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 2: 3D rotary position encoding"
+      ],
+      "ordinal": 43,
+      "source_sha256": "04d2829ac4e98a8ef3d03ad87db65458829f78b524943e44cb284815461a5cb9",
+      "target": "沿 `t`、`h`、`w` 轴分别应用旋转位置嵌入（Rotary Position Embeddings，RoPE）：\n"
+    },
+    {
+      "segment_id": "04-28:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 2: 3D rotary position encoding"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 2: 3D rotary position encoding"
+      ],
+      "ordinal": 44,
+      "source_sha256": "ca5eaf444212fc17b396163820ba2229ae161d61fb629904fbe3f5b4bab06a3d",
+      "target": "```python\ndef rope_3d(tokens, t_dim, h_dim, w_dim, grid):\n    \"\"\"\n    tokens: (N, T*H*W, D)\n    grid: (T, H, W) sizes\n    t_dim + h_dim + w_dim == D\n    \"\"\"\n    T, H, W = grid\n    n, seq, d = tokens.shape\n    if t_dim + h_dim + w_dim != d:\n        raise ValueError(f\"t_dim+h_dim+w_dim ({t_dim}+{h_dim}+{w_dim}) must equal D={d}\")\n    assert seq == T * H * W\n    t_idx = torch.arange(T, device=tokens.device).repeat_interleave(H * W)\n    h_idx = torch.arange(H, device=tokens.device).repeat_interleave(W).repeat(T)\n    w_idx = torch.arange(W, device=tokens.device).repeat(T * H)\n    # Simplified: just scale channels by frequencies. Real RoPE rotates pairs.\n    freqs_t = torch.exp(-torch.log(torch.tensor(10000.0)) * torch.arange(t_dim // 2, device=tokens.device) / (t_dim // 2))\n    freqs_h = torch.exp(-torch.log(torch.tensor(10000.0)) * torch.arange(h_dim // 2, device=tokens.device) / (h_dim // 2))\n    freqs_w = torch.exp(-torch.log(torch.tensor(10000.0)) * torch.arange(w_dim // 2, device=tokens.device) / (w_dim // 2))\n    emb_t = torch.cat([torch.sin(t_idx[:, None] * freqs_t), torch.cos(t_idx[:, None] * freqs_t)], dim=-1)\n    emb_h = torch.cat([torch.sin(h_idx[:, None] * freqs_h), torch.cos(h_idx[:, None] * freqs_h)], dim=-1)\n    emb_w = torch.cat([torch.sin(w_idx[:, None] * freqs_w), torch.cos(w_idx[:, None] * freqs_w)], dim=-1)\n    return tokens + torch.cat([emb_t, emb_h, emb_w], dim=-1)\n```\n"
+    },
+    {
+      "segment_id": "04-28:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 2: 3D rotary position encoding"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 2: 3D rotary position encoding"
+      ],
+      "ordinal": 45,
+      "source_sha256": "891a5575ed4c8f43e9168a301a244c97fab7c80fc55a6c14c1edfe2be1ebeffb",
+      "target": "这是简化的相加形式。真正的 RoPE 会按频率旋转成对的通道；包含的位置信息相同。\n"
+    },
+    {
+      "segment_id": "04-28:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 2: 3D rotary position encoding"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 3: Divided attention block"
+      ],
+      "ordinal": 46,
+      "source_sha256": "b40195feffa3fac17114bd5e84a57c3c16b561eb59424dad4d3e6cc0cd73b9ee",
+      "target": "### 步骤 3：分离式注意力块\n"
+    },
+    {
+      "segment_id": "04-28:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 3: Divided attention block"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 3: Divided attention block"
+      ],
+      "ordinal": 47,
+      "source_sha256": "a4850b8fab0de09c275ed041a79f0a9ef981072443652e815d2a24ffadc38b56",
+      "target": "```python\nclass DividedAttentionBlock(nn.Module):\n    def __init__(self, dim=64, heads=2):\n        super().__init__()\n        self.time_attn = nn.MultiheadAttention(dim, heads, batch_first=True)\n        self.space_attn = nn.MultiheadAttention(dim, heads, batch_first=True)\n        self.ln1 = nn.LayerNorm(dim)\n        self.ln2 = nn.LayerNorm(dim)\n        self.ln3 = nn.LayerNorm(dim)\n        self.mlp = nn.Sequential(nn.Linear(dim, 4 * dim), nn.GELU(), nn.Linear(4 * dim, dim))\n\n    def forward(self, x, grid):\n        T, H, W = grid\n        n, seq, d = x.shape\n        # time attention: same (h, w), across t\n        xt = x.view(n, T, H * W, d).permute(0, 2, 1, 3).reshape(n * H * W, T, d)\n        a, _ = self.time_attn(self.ln1(xt), self.ln1(xt), self.ln1(xt), need_weights=False)\n        xt = (xt + a).reshape(n, H * W, T, d).permute(0, 2, 1, 3).reshape(n, seq, d)\n        # space attention: same t, across (h, w)\n        xs = xt.view(n, T, H * W, d).reshape(n * T, H * W, d)\n        a, _ = self.space_attn(self.ln2(xs), self.ln2(xs), self.ln2(xs), need_weights=False)\n        xs = (xs + a).reshape(n, T, H * W, d).reshape(n, seq, d)\n        xs = xs + self.mlp(self.ln3(xs))\n        return xs\n```\n"
+    },
+    {
+      "segment_id": "04-28:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 3: Divided attention block"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 3: Divided attention block"
+      ],
+      "ordinal": 48,
+      "source_sha256": "c0a7e419efef7fbd17ddee67f81e6a69a8ce74eacd106765eea608fba023d5f8",
+      "target": "时间注意力针对每个空间位置跨时间计算，空间注意力则在每一帧内跨位置计算。用两次 O(T^2 + (HW)^2) 运算代替一次 O((THW)^2) 运算。这是 TimeSformer 和每个现代视频 DiT 的核心。\n"
+    },
+    {
+      "segment_id": "04-28:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 3: Divided attention block"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 4: Compose a tiny video DiT"
+      ],
+      "ordinal": 49,
+      "source_sha256": "719a07511a00e0055b96b289679ce8c8c538310353b70b259e0c051f6999d6db",
+      "target": "### 步骤 4：组合一个微型视频 DiT\n"
+    },
+    {
+      "segment_id": "04-28:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 4: Compose a tiny video DiT"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0099",
+      "kind": "fence",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 4: Compose a tiny video DiT"
+      ],
+      "ordinal": 50,
+      "source_sha256": "bd4062cf2195d6012ef3899957b34e380a077438ddde08316741acf74bd0c993",
+      "target": "```python\nclass TinyVideoDiT(nn.Module):\n    def __init__(self, in_channels=4, dim=64, depth=2, heads=2):\n        super().__init__()\n        self.patch = VideoPatch3D(in_channels=in_channels, dim=dim, patch_t=2, patch_h=2, patch_w=2)\n        self.blocks = nn.ModuleList([DividedAttentionBlock(dim, heads) for _ in range(depth)])\n        self.out = nn.Linear(dim, in_channels * 2 * 2 * 2)\n\n    def forward(self, x):\n        tokens, grid = self.patch(x)\n        for blk in self.blocks:\n            tokens = blk(tokens, grid)\n        return self.out(tokens), grid\n```\n"
+    },
+    {
+      "segment_id": "04-28:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 4: Compose a tiny video DiT"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 4: Compose a tiny video DiT"
+      ],
+      "ordinal": 51,
+      "source_sha256": "06531bb9f228eedb5acd3652e8b111c758b118c8474328fbb67e29b4cb41078f",
+      "target": "这不是一个可用的视频生成器，而是一个结构演示，用来展示各个部分的形状能够正确衔接。\n"
+    },
+    {
+      "segment_id": "04-28:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 4: Compose a tiny video DiT"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 5: Check shapes"
+      ],
+      "ordinal": 52,
+      "source_sha256": "8e2eb36b82eec5c1202c66db1c795a9fa0335d6d383a9e1fc8e41008820c454a",
+      "target": "### 步骤 5：检查形状\n"
+    },
+    {
+      "segment_id": "04-28:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 5: Check shapes"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0105",
+      "kind": "fence",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 5: Check shapes"
+      ],
+      "ordinal": 53,
+      "source_sha256": "dc23e0ac23c50d7d1a7adc200386ad8f8c0416593d9c844aa4f470e02e3b9f94",
+      "target": "```python\nvid = torch.randn(1, 4, 8, 16, 16)  # (N, C, T, H, W)\nmodel = TinyVideoDiT()\nout, grid = model(vid)\nprint(f\"input  {tuple(vid.shape)}\")\nprint(f\"tokens grid {grid}\")\nprint(f\"output {tuple(out.shape)}\")\n```\n"
+    },
+    {
+      "segment_id": "04-28:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 5: Check shapes"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 5: Check shapes"
+      ],
+      "ordinal": 54,
+      "source_sha256": "ce093e5b8bf2244221480a41f2f48c5d838659889fa55b08bbeb63aa13fd4442",
+      "target": "分块后，预期得到 `grid = (4, 8, 8)` 和 `out = (1, 256, 32)`；随后网络输出头（head）将每个 token 投影为时空块，为将时空块重组为视频（unpatchify）做好准备。\n"
+    },
+    {
+      "segment_id": "04-28:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Build It",
+        "### Step 5: Check shapes"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "04-28:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "5499840fc3031fc2c7132ee28164b220c817deba257d281030e5375989c0a599",
+      "target": "2026 年的生产环境接入方式：\n"
+    },
+    {
+      "segment_id": "04-28:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0113",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "06a96b39917f3eb35b4010000f5a92deadd490497a03a68ee69dbfb769133139",
+      "target": "- **Sora 2 API**（OpenAI）：文生视频、同步音频。高端定价。\n- **Runway Gen-5 / GWM-1**（Runway）：图生视频、交互式世界。\n- **Wan-Video 2.1 / HunyuanVideo**：开源，自行托管（self-hosting）。\n- **Cosmos / Cosmos-Drive**（NVIDIA）：用于驾驶仿真的开放权重。\n- **Genie 3**：研究预览，需申请访问权限。\n"
+    },
+    {
+      "segment_id": "04-28:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "765c6b76663be31e8aaeab6d2fcb6dd53132c760742d92813100d0cca0b27d4b",
+      "target": "要构建交互式世界模型演示，可以先使用 Wan-Video 来获得生成质量，再叠加潜在动作适配器（latent-action adapter）来提供交互性。对于自动驾驶仿真，Cosmos-Drive 是 2026 年的开放参考实现。\n"
+    },
+    {
+      "segment_id": "04-28:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "32e9c2fe14a80ff4056a03e60ce1aa2367750a0d53fc09089424c3dade92fc0e",
+      "target": "在机器人领域，实际采用的技术栈如下：\n"
+    },
+    {
+      "segment_id": "04-28:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0119",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "5169ea4d1586d352846da50958f7471a4041c39c9f6434929569c68a3d3ba56a",
+      "target": "1. 语言描述的目标 -> VLM (Qwen3-VL) -> 高层计划（high-level plan）。\n2. 计划 -> 潜在动作视频模型 -> 想象模拟轨迹（imagined rollout）。\n3. 模拟轨迹 -> 逆动力学模型 -> 低层动作。\n4. 执行动作 -> 将观察结果反馈到步骤 1。\n"
+    },
+    {
+      "segment_id": "04-28:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0121",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Ship It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "04-28:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Ship It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Ship It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "2d7d8a54528e5c57d81432c3291d09eabfa1bdb1c89bfd04e496f10a5214cf37",
+      "target": "本课产出：\n"
+    },
+    {
+      "segment_id": "04-28:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Ship It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0125",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Ship It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "3b5123f6901fd648c31f64a40ed303cb25278a7447325b74575c4fc3bb53242f",
+      "target": "- `outputs/prompt-video-model-picker.md`：根据任务、许可和延迟，在 Sora 2 / Runway / Wan / HunyuanVideo / Cosmos 之间进行选择。\n- `outputs/skill-physical-plausibility-checks.md`：一个技能，定义了自动检查项（物体恒存性、重力、连续性），用于在交付任何生成视频前进行检查。\n"
+    },
+    {
+      "segment_id": "04-28:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Ship It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0127",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Exercises"
+      ],
+      "ordinal": 64,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "04-28:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Exercises"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0129",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Exercises"
+      ],
+      "ordinal": 65,
+      "source_sha256": "2f8bd6824efdfcabe1d29bd38567016e7720fffcf9dcf7ba60e154ed6ac5d280",
+      "target": "1. **（简单）** 计算一个 5 秒、360p 视频在 patch-t=2、patch-h=8、patch-w=8 时的 token 数量。分析这种规模下注意力所需的内存。\n2. **（中等）** 将上面的分离式注意力块替换为全联合式注意力块（attention block），测量形状和参数数量。解释为什么真正的视频模型需要分离式注意力。\n3. **（困难）** 构建一个最小的潜在动作视频模型：使用由 (frame_t, action_t, frame_{t+1}) 三元组组成的数据集（任意简单的 2D 游戏），训练一个以动作嵌入为条件的微型视频 DiT，并展示不同动作会产生不同的下一帧。\n"
+    },
+    {
+      "segment_id": "04-28:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Exercises"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Key Terms"
+      ],
+      "ordinal": 66,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "04-28:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Key Terms"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0133",
+      "kind": "table",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Key Terms"
+      ],
+      "ordinal": 67,
+      "source_sha256": "cbefbf0d96d18028bc90c74efb4e0e626ec73326d82aa7ad9fad1508c010b2c3",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 世界模型 | “学得的模拟器（learned simulator）” | 给定状态和动作，预测未来观察结果的模型 |\n| Video DiT | “时空 Transformer” | 采用 3D 分块和分离式注意力的扩散 Transformer |\n| 潜在动作 | “推断出的控制” | 从帧对中推断出的离散或连续的动作潜在表示，用于为下一帧生成提供条件 |\n| 分离式注意力 | “先时间，后空间” | 每个块执行两次注意力运算，先跨时间，再跨空间，使 O(N^2) 的开销保持可控 |\n| 物体恒存性 | “事物持续存在” | 视频模型必须学会的场景属性；在食物、玻璃器皿上常出现典型失效 |\n| FVD | “Fréchet Video Distance” | 相当于视频版的 FID（Fréchet Inception Distance，Fréchet Inception 距离）；主要的视觉质量指标 |\n| 逆动力学模型 | “从观察结果到动作” | 给定（状态、下一状态），输出连接两者的动作，闭合机器人循环 |\n| Cosmos-Drive | “NVIDIA 驾驶仿真” | 用于 RL 和评估的开放权重自动驾驶世界模型 |\n"
+    },
+    {
+      "segment_id": "04-28:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Key Terms"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Further Reading"
+      ],
+      "ordinal": 68,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "04-28:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Further Reading"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-28:b0137",
+      "kind": "list",
+      "heading_path": [
+        "# World Models & Video Diffusion",
+        "## Further Reading"
+      ],
+      "ordinal": 69,
+      "source_sha256": "dace550adf5cb5f8431d10030682f7ef2897a24faf2e72dd53d7de0e47f8c094",
+      "target": "- [Sora 技术报告（OpenAI）](https://openai.com/index/video-generation-models-as-world-simulators/)\n- [Genie: Generative Interactive Environments (Bruce et al., 2024)](https://arxiv.org/abs/2402.15391)：潜在动作世界模型\n- [TimeSformer (Bertasius et al., 2021)](https://arxiv.org/abs/2102.05095)：视频 Transformer 的分离式注意力\n- [DreamerV3 (Hafner et al., 2023)](https://arxiv.org/abs/2301.04104)：用于 RL 的世界模型\n- [Cosmos-Drive-Dreams (NVIDIA, 2025)](https://research.nvidia.com/labs/toronto-ai/cosmos-drive-dreams/)：驾驶世界模型\n- [Top 10 Video Generation Models 2026 (DataCamp)](https://www.datacamp.com/blog/top-video-generation-models)\n- [From Video Generation to World Model：综述仓库](https://github.com/ziqihuangg/Awesome-From-Video-Generation-to-World-Model/)\n"
+    }
+  ],
+  "support": {
+    "commit": "f26d151583535df689862dcafbed9c40338a3286",
+    "tree": "5a3f09b861bb56790f9daed04fd656cb5892a706",
+    "dependencies_path": "i18n/zh/.curated/stages/S159-world-models-video-diffusion/DEPENDENCIES.json",
+    "dependencies_sha256": "dcca4ef4f6d41fa11b30d67cf1c55ab1537c63fb34db2446d42c85c650e58260",
+    "common_set_sha256": "9e3da64b335de21fb20e4d56a7cb2036797fb79d9d4449991b50e8d3b9c1faeb",
+    "common_files": 161,
+    "terminology_files": 153,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 164,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S159-world-models-video-diffusion/DEPENDENCIES.json",
+        "commit": "f26d151583535df689862dcafbed9c40338a3286",
+        "git_blob": "430129e25a87fb711222c95cfae74ebe3a5255ef",
+        "sha256": "dcca4ef4f6d41fa11b30d67cf1c55ab1537c63fb34db2446d42c85c650e58260",
+        "bytes": 312256,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S159-world-models-video-diffusion/SCOPE.md",
+        "commit": "f26d151583535df689862dcafbed9c40338a3286",
+        "git_blob": "6b92c02197dbdb25d2b2cccffa6ea49889ed45e0",
+        "sha256": "1bafebdd400679eb37719317e903fb6cf933790d72294763bea0f251b1a9af36",
+        "bytes": 10001,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S159-world-models-video-diffusion/TERMINOLOGY.md",
+        "commit": "f26d151583535df689862dcafbed9c40338a3286",
+        "git_blob": "b25b668702731c24e140546f42fb73a7e0ef596b",
+        "sha256": "87c6a50faea07dc60d7dc1245e50bd7615df8d6437d6488dbd77610c939803ad",
+        "bytes": 6235,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "04a8b675a714d78e9483e7b9fb568d7080a85f79ea7b400960eba69bee0835bc",
+    "installation_completed_utc": "2026-10-06T23:26:24.280311+00:00",
+    "frozen_pending_null_fields_preserved": true,
+    "aggregate_all164_installation_gate_sha256": "c6f09df6614d9b3e8cbf7dbe3904eec4b3426b606f07acb77bf073b4a9600990"
+  },
+  "authoring_history": {
+    "final_author_handoff_sha256": "8330496fd9bdb3469c5bd8c1ac45f963b73b1b5bc16504d5fa2f2a6c3cfb57c0",
+    "original_author_evidence_files_preserved": 66,
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false,
+    "capture_invocations": 1,
+    "raw_capture_hardcoded_date": "2026-10-01",
+    "actual_authoring_date_utc": "2026-10-06",
+    "capture_date_caveat": "The unchanged original capture helper hardcodes 2026-10-01. Raw provenance is retained literally; actual UTC capture is recorded separately. No recapture.",
+    "chronology": {
+      "support_installed_utc": "2026-10-06T23:26:24.280311+00:00",
+      "calibration_pass_utc": "2026-10-06T23:36:42.521960+00:00",
+      "parent_go_utc": "2026-10-06T23:37:02.361780+00:00",
+      "first_target_write_started_utc": "2026-10-06T23:38:50.483816+00:00",
+      "first_target_write_completed_utc": "2026-10-06T23:38:50.484455+00:00",
+      "capture_started_utc": "2026-10-06T23:39:06.079333+00:00",
+      "capture_completed_utc": "2026-10-06T23:39:06.166895+00:00",
+      "first_write_timing_evidence": "Author receipts retained; reviewers did not witness the first write live."
+    },
+    "original_raw_capture_sha256": "99f3c4b64cc715760ae1243b0389fd82205a2937304a1a7033e2098bb79ab278",
+    "first_target_sha256": "dd32a4d7943139ff7a407a6c24110aaed98dadd3546ee93a8be19a37d8103a45",
+    "independent_terminology_calibration_sha256": "8c802f1076529ac0e8a286c5b0d4524bc9a4860ead9ba072f5d8bda972ff1621",
+    "pre_capture_revision_count": 0,
+    "post_capture_author_prose_revision_count": 1,
+    "author_selfcheck_changed_blocks_before_independent_reviews": [
+      "04-28:b0035",
+      "04-28:b0047",
+      "04-28:b0055",
+      "04-28:b0059",
+      "04-28:b0071",
+      "04-28:b0089",
+      "04-28:b0095",
+      "04-28:b0137"
+    ],
+    "author_prose_revision_receipt_sha256": "494c701a29a46861dcd5a03bc6df343fb467263248834e6e4e37b64488fcf978",
+    "post_independent_review_author_revisions": [],
+    "reviewed_draft_record_sha256": "b36c78dff78a609fcd68736738239754f9f68345c997abad612c8a7e361adf94",
+    "retained_failures": [
+      {
+        "type": "initial_scoped_git_index_ignored_path_failure",
+        "evidence_sha256": "268637d72edba9902cbed298b5b8fc610874acdfe3c2ef512141c667d92523d2",
+        "recovery": "Existing ignored translations path added only with scoped git add -f in isolated index; source/shared ignore configuration unchanged."
+      },
+      {
+        "type": "source_metadata_quoted_path_failure",
+        "evidence_sha256": "eaf4d42169e0248369f202b131d0cd39939f08d847c13940ad9d7a0021a35d02",
+        "recovery": "Read-only source metadata query disabled quotepath for that command; no source/support change."
+      },
+      {
+        "type": "initial_preprose_terminology_calibration_corrections",
+        "evidence_sha256": "02c1f425ebaf84968424f878ceec08fb7540f8c163fd91bb1120d16eda2cea16",
+        "recovery": "R02 independent calibration PASS preceded first body write."
+      }
+    ]
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/04-28/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T23:44:47.521559+00:00",
+        "report_sha256": "c5bad3fd3f656cd3f0aa8c97665d1199a2bec8808e57232b55f0f9a783641015",
+        "result": "PASS_LANGUAGE_ONLY",
+        "reviewed_target_sha256": "5142d1c2b929d883edabdf68d953a04b0b9ce783edf169ccdf048f733e0eadb9",
+        "reviewed_draft_record_sha256": "b36c78dff78a609fcd68736738239754f9f68345c997abad612c8a7e361adf94",
+        "blocks": 137,
+        "translatable_blocks": 61,
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T23:44:52.549471+00:00",
+        "report_sha256": "b746e7d037432201abed433b28d26c32a8784831538e85faf149f9c30c9a8ead",
+        "result": "PASS_FULL_INITIAL_CHINESE_READING",
+        "reviewed_target_sha256": "5142d1c2b929d883edabdf68d953a04b0b9ce783edf169ccdf048f733e0eadb9",
+        "reviewed_draft_record_sha256": "b36c78dff78a609fcd68736738239754f9f68345c997abad612c8a7e361adf94",
+        "blocks": 137,
+        "translatable_blocks": 61,
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
