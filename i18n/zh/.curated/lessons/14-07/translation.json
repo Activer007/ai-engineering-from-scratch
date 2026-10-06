@@ -1,0 +1,1462 @@
+{
+  "schema_version": 1,
+  "lesson_id": "14-07",
+  "source_path": "phases/14-agent-engineering/07-memory-virtual-context-memgpt/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "13c55d118f73ed697ce1b86d6bf5592620009cab",
+  "source_sha256": "71b0ba93e4d737f64c1c7a90408489676e35aaa75418050ca42c5a68a95e355d",
+  "target_path": "i18n/zh/phases/14-agent-engineering/07-memory-virtual-context-memgpt/docs/zh.md",
+  "target_sha256": "53efec015a03bd2f557ef6237e807ea6f9143122395708df1add169810ce6dae",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01"
+  },
+  "segments": [
+    {
+      "segment_id": "14-07:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging"
+      ],
+      "ordinal": 1,
+      "source_sha256": "6b2c511684a2fdc7dee95f97e10ce9bb6a59308a7313016f5d7b1ec122f56a7f",
+      "target": "# 智能体记忆：虚拟上下文与记忆分页\n"
+    },
+    {
+      "segment_id": "14-07:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging"
+      ],
+      "ordinal": 2,
+      "source_sha256": "760c115a2ee375167e67791de3af7d03a5843f06979fbe7f49b20147176cf7b2",
+      "target": "> 上下文窗口（context window）的容量有限，对话、文档和工具调用轨迹却可以不断增长。解决办法是把 OS（操作系统）的虚拟内存（virtual memory）思路搬过来：主上下文（main context）相当于 RAM（随机存取存储器），外部存储相当于磁盘，智能体（agent）通过记忆分页（memory paging）在两者之间调入调出数据。MemGPT（Packer 等人，2023）为这一模式命名；许多生产环境中的记忆系统都以此为基础。\n"
+    },
+    {
+      "segment_id": "14-07:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging"
+      ],
+      "ordinal": 3,
+      "source_sha256": "90597ab23deb9a9509b267a9f404179ceec9e6a12c3a84e1a10177e10640cda8",
+      "target": "**Type:** Build\n**Languages:** Python (stdlib)\n**Prerequisites:** 阶段 14 · 01（智能体循环），阶段 14 · 06（工具使用）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "14-07:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "14-07:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "cbadc65e4f6378b927b85cb69bdbe518a678a6cb883afaa57dcf802f15aeb2fe",
+      "target": "- 解释 MemGPT 所依据的 OS 类比：主上下文 = RAM，外部上下文（external context）= 磁盘，记忆工具 = 换入/换出（page in/out）。\n- 使用标准库实现双层 MemGPT 模式，包含主上下文缓冲区、可搜索的外部存储以及换入/换出工具。\n- 描述智能体如何发出“中断（interrupt）”来查询或修改外部记忆，以及如何将结果拼接回下一次提示词（prompt）。\n- 指出 MemGPT 的哪些设计选择延续到了 Letta（第 08 课）和 Mem0（第 09 课）。\n"
+    },
+    {
+      "segment_id": "14-07:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "14-07:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "eeea1b497b082a228bdcb7447541cf8c315e8a63faaa0430add99a1e35e2c381",
+      "target": "上下文窗口看起来应该能解决记忆问题，但事实并非如此。生产环境中反复出现三种失效模式：\n"
+    },
+    {
+      "segment_id": "14-07:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0015",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "bcb2d4d5c9981164cd6dbe1272b401fd8889352f6a5e059b2566de25c221bb47",
+      "target": "1. **溢出（overflow）。** 多轮对话、长文档或包含大量工具调用的轨迹会超出窗口。截断点之后的内容都会丢失。\n2. **稀释（dilution）。** 即使没有超出窗口，塞入无关上下文也会稀释对重要信息的注意力。前沿模型处理长输入时，表现仍会下降。\n3. **持久化（persistence）。** 新会话从空窗口开始。没有外部记忆的智能体无法跨会话说出“还记得你之前让我……吗”。\n"
+    },
+    {
+      "segment_id": "14-07:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "19acb36e5c79d13a3a467f20502a7ec3b6e7d2426fecfea3618a0319e46582dc",
+      "target": "更大的窗口有所帮助，却不能解决这些问题。Mem0 的 2025 年论文测得：使用 128k 窗口的基线仍会遗漏长时程事实，而配备外部记忆、使用 4k 窗口的智能体能捕捉到这些事实。\n"
+    },
+    {
+      "segment_id": "14-07:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "14-07:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The OS analogy"
+      ],
+      "ordinal": 11,
+      "source_sha256": "512ef3c43543aa3f2a828b1611a0bed12424689a772fa4dac236f030003f8f5a",
+      "target": "### 操作系统类比\n"
+    },
+    {
+      "segment_id": "14-07:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The OS analogy"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The OS analogy"
+      ],
+      "ordinal": 12,
+      "source_sha256": "ee59034b2ee09607ae9f7bbd6e757ece11d51656f18a586c9c61d0d8138e40ae",
+      "target": "MemGPT（Packer 等人，arXiv:2310.08560，v2，2024 年二月）将上下文管理映射到操作系统的虚拟内存机制：\n"
+    },
+    {
+      "segment_id": "14-07:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The OS analogy"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0025",
+      "kind": "table",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The OS analogy"
+      ],
+      "ordinal": 13,
+      "source_sha256": "06937da4f3c02e2a0ddc368fa7c86b9c178a96f9db1b6606f7bde699d1594bd8",
+      "target": "| OS 概念 | MemGPT 概念 | 2026 年生产环境中的对应机制 |\n|------------|---------------|------------------------|\n| RAM | 主上下文（提示词） | Anthropic/OpenAI 上下文窗口 |\n| 磁盘 | 外部上下文 | 向量 DB（数据库）、KV（键值）存储、图存储 |\n| 缺页异常（page fault） | 记忆工具调用 | `memory.search`, `memory.read`, `memory.write` |\n| OS 内核 | 智能体控制循环 | 带有记忆工具的 ReAct 循环 |\n"
+    },
+    {
+      "segment_id": "14-07:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The OS analogy"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The OS analogy"
+      ],
+      "ordinal": 14,
+      "source_sha256": "b7e3173b61928e4ebe1f9203d97a35ce77fb7e76c9ca3414fe9d9efdea5e9ef4",
+      "target": "智能体运行常规的 ReAct 循环。额外增加一类工具，就能把数据换入主上下文或从中换出。\n"
+    },
+    {
+      "segment_id": "14-07:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The OS analogy"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Two tiers"
+      ],
+      "ordinal": 15,
+      "source_sha256": "0efd90d409ec68a83b8daeccb3863cd8f40f2668625c83ce668323a2abdccfe5",
+      "target": "### 两个层级\n"
+    },
+    {
+      "segment_id": "14-07:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Two tiers"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0031",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Two tiers"
+      ],
+      "ordinal": 16,
+      "source_sha256": "31c5d4c9924db13a7ee461f651e990e976101fa470bad3a79973ef2e3d1567ee",
+      "target": "- **主上下文。** 大小固定的提示词，容纳当前任务，始终对模型可见。\n- **外部上下文。** 容量无界，可通过工具搜索。内容相关时读取，出现新事实时写入。\n"
+    },
+    {
+      "segment_id": "14-07:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Two tiers"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Two tiers"
+      ],
+      "ordinal": 17,
+      "source_sha256": "1fa92271dc925c13b37b589bb5c064333d8065f10e44b8f18b21b764631e1712",
+      "target": "原论文在两类超出基础窗口的任务上评估了这一设计：长度超过 100k 个 token（词元）的文档分析，以及依靠持久化记忆跨越多天的多会话聊天。\n"
+    },
+    {
+      "segment_id": "14-07:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Two tiers"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The interrupt pattern"
+      ],
+      "ordinal": 18,
+      "source_sha256": "dc52adc8666ba8cca86b63087af14c73ab26471a9f350f3c1bba85f65d823d66",
+      "target": "### 中断模式\n"
+    },
+    {
+      "segment_id": "14-07:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The interrupt pattern"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The interrupt pattern"
+      ],
+      "ordinal": 19,
+      "source_sha256": "6e4bac6a37f740b4f55291b327846800dad2020034584a00460d548390c0fee1",
+      "target": "MemGPT 引入了“以记忆访问作为中断（interrupt）”的机制：在对话过程中，智能体可以调用记忆工具，由运行时（runtime）执行，再将结果作为新的观察结果拼接到下一轮助手消息中。从概念上看，这与 Unix 的 `read()` 系统调用（syscall）相同：进程阻塞，调用返回字节数据，然后进程继续执行。\n"
+    },
+    {
+      "segment_id": "14-07:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The interrupt pattern"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The interrupt pattern"
+      ],
+      "ordinal": 20,
+      "source_sha256": "f3183705714fc8ac8175fe4ecef4f924b0cd3ace05f74e4ffedcfafaa5e8847d",
+      "target": "标准记忆工具接口：\n"
+    },
+    {
+      "segment_id": "14-07:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The interrupt pattern"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0041",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The interrupt pattern"
+      ],
+      "ordinal": 21,
+      "source_sha256": "bcfda41d38ee29ea379bc6d5dbcc5aa9c8f562f4c10b8aa9c44a23d52de229ce",
+      "target": "- `core_memory_append(section, text)`：向提示词中的一个持久化分区写入内容。\n- `core_memory_replace(section, old, new)`：编辑一个持久化分区。\n- `archival_memory_insert(text)`：向可搜索的外部存储写入内容。\n- `archival_memory_search(query, top_k)`：从外部存储中检索。\n- `conversation_search(query)`：扫描过去的对话轮次。\n"
+    },
+    {
+      "segment_id": "14-07:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### The interrupt pattern"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where the paper ends and production begins"
+      ],
+      "ordinal": 22,
+      "source_sha256": "a6374bf79a7269104e0b06cb40e5b7f30d1cdc1c2d31e04df6b33804500d0c04",
+      "target": "### 从论文设计走向生产系统\n"
+    },
+    {
+      "segment_id": "14-07:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where the paper ends and production begins"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where the paper ends and production begins"
+      ],
+      "ordinal": 23,
+      "source_sha256": "ea58d2b9af7627e66aa05e4989d3766d96d0d271ae60b96840a37b9b206e8d74",
+      "target": "2024 年九月，MemGPT 演变为 Letta。研究代码库（`cpacker/MemGPT`）仍然保留；Letta 对这一设计作了扩展：\n"
+    },
+    {
+      "segment_id": "14-07:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where the paper ends and production begins"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0047",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where the paper ends and production begins"
+      ],
+      "ordinal": 24,
+      "source_sha256": "7c32e5759dccb3666b0d88a1d2675e7b9dedc9b0d076c9f0e9cefe2a97488763",
+      "target": "- 从两层扩展为三层：核心记忆（core）、回忆记忆（recall）和归档记忆（archival），见第 08 课。\n- 用原生推理（native reasoning）替代 `send_message`/heartbeat 模式，见第 08 课。\n- 由休眠时智能体（sleep-time agents）异步执行记忆处理工作，见第 08 课。\n"
+    },
+    {
+      "segment_id": "14-07:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where the paper ends and production begins"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where the paper ends and production begins"
+      ],
+      "ordinal": 25,
+      "source_sha256": "2c949f10e23c30714d66bbe128dab74cd3416e44345fcb4f1edf888eb2b4ab56",
+      "target": "即使生产系统运行的是 Letta、Mem0 或自定义双层存储，MemGPT 论文仍是 2026 年的基础。\n"
+    },
+    {
+      "segment_id": "14-07:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where the paper ends and production begins"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 26,
+      "source_sha256": "e48f2c79c9bc0e3211b1cbf1d2444fe3e310e86cd3d570cfcbd8797b3e2458a7",
+      "target": "### 这一模式会在哪些地方出问题\n"
+    },
+    {
+      "segment_id": "14-07:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0053",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 27,
+      "source_sha256": "3c35ed81882697c99415ca0653528cdcd9b1f45fb7e442f5c2643f18f83d1cdd",
+      "target": "- **记忆陈化（memory rot）。** 写入的积累速度快于读取；陈旧事实淹没了检索结果。解决办法：定期整合（consolidation），例如 Letta 的休眠时处理；显式执行失效处理（invalidation），例如 Mem0 的冲突检测器。\n- **记忆投毒（memory poisoning）。** 外部记忆本质上是检索得到的文本。如果攻击者控制的内容进入某条记忆笔记，智能体就会在下一次会话重新摄入它。这相当于把 Greshake 等人的攻击（第 27 课）延伸到了时间维度。\n- **引用标注丢失（citation loss）。** 智能体记得“用户让我交付 X”，却无法引用具体是哪一轮。每次写入归档记忆时，都应一并存储来源引用，即会话 ID 和轮次 ID。\n"
+    },
+    {
+      "segment_id": "14-07:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0055",
+      "kind": "fence",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 28,
+      "source_sha256": "14bc53c993d9e5eab2a4fd3177ef06f1b316997f01a3d3d510f9c887f3193f28",
+      "target": "```figure\ncontext-budget\n```\n"
+    },
+    {
+      "segment_id": "14-07:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 29,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "14-07:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 30,
+      "source_sha256": "5445d21bc05bd76cbf51dba9b0aa8215642d26d6e95d73f0ef412ffea275ad57",
+      "target": "`code/main.py` 使用标准库实现 MemGPT 的双层模式：\n"
+    },
+    {
+      "segment_id": "14-07:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0061",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 31,
+      "source_sha256": "6490c8b53313de78ebae1a82dc3d116035c3ee2727b3828818465a68197e1b19",
+      "target": "- `MainContext`：大小固定的提示词缓冲区，包含 `core` 字典和 `messages` 列表；超过上限时，自动对最早的消息进行压缩整理（compaction）。\n- `ArchivalStore`：一个类似 BM25 的内存存储，按 token 重叠程度评分，保存 (id, text, tags, session, turn) 记录。\n- 五个与 MemGPT 接口对应的记忆工具。\n- 一个按预设脚本行动的智能体，先向归档记忆填入事实，再调用 `archival_memory_search` 回答问题。\n"
+    },
+    {
+      "segment_id": "14-07:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "936bc51db6511ea885c12022f0e1271632a7d165e0848edeaf255b3a5786e28d",
+      "target": "运行方式：\n"
+    },
+    {
+      "segment_id": "14-07:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "2b11889f93c0782398b09d152e929afa595931801ff18ec85374f752a13e31bd",
+      "target": "```text\npython3 code/main.py\n```\n"
+    },
+    {
+      "segment_id": "14-07:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "80dd139cfea5b1bd8d3df5f112d39afbbb05ca870bfd38baf318b471da4c0142",
+      "target": "行为轨迹展示了智能体写入三个事实、将主上下文填到上限以强制触发逐出（eviction），然后通过检索归档记忆回答追问的过程。这在没有任何真实大语言模型（LLM）的情况下复现了 MemGPT 工作流。\n"
+    },
+    {
+      "segment_id": "14-07:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "14-07:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "8b8b4c9ca5b3b2454b3e145ed3b31a4d06eb6d7594fb4a26de65c56147bec1a3",
+      "target": "如今每一种生产环境中的记忆系统都是 MemGPT 的变体：\n"
+    },
+    {
+      "segment_id": "14-07:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "d81a302ed5737d3d4319c06b19c4836e44834b98b20d190c6c961a021a732f39",
+      "target": "- **Letta**（第 08 课）：三层结构、原生推理、休眠时计算（sleep-time compute）。\n- **Mem0**（第 09 课）：通过评分层融合向量 + KV + 图。\n- **OpenAI Assistants / Responses**：通过线程和文件提供托管记忆。\n- **Claude Agent SDK**（SDK 指软件开发工具包）：通过技能和会话存储提供长期记忆。\n"
+    },
+    {
+      "segment_id": "14-07:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "574350e58c4046d90099282185b40e7c0af7b3d83ee298cc5aa474f147875949",
+      "target": "应根据运维形态（自托管、托管、框架集成）来选择，而不是根据核心模式来选择，因为核心模式都是 MemGPT。\n"
+    },
+    {
+      "segment_id": "14-07:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 39,
+      "source_sha256": "5b1aa27ef76cf0cfcc97be838ca890d985f81d28d6ff9ecf92543749d068ba8f",
+      "target": "### 智能体记忆的分类\n"
+    },
+    {
+      "segment_id": "14-07:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 40,
+      "source_sha256": "b0cde66bd4f589aa3a55a6568fb7df3666b8ab4a2c6c54dbbbb8278ca234a6a1",
+      "target": "分页解决的是容量问题，并不决定应存储什么。生产系统中反复出现四种记忆类型，各自回答不同的问题：\n"
+    },
+    {
+      "segment_id": "14-07:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0081",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 41,
+      "source_sha256": "2252adc4b2f9bd311fd2e9a5cf216a2775de2cbbdb6fc173f5191c5d322406b9",
+      "target": "- **工作记忆（working memory）**：现在什么最重要？这是上下文内的层级，包含当前任务、最近轮次和固定保留的核心分区，也就是提示词本身。\n- **情景记忆（episodic memory）**：发生过什么？过去的轮次和轨迹连同会话及轮次引用一起存储，可按需回放。\n- **语义记忆（semantic memory）**：什么是真实的？关于用户、领域和世界的事实，随事实变化而更新并去重。\n- **程序性记忆（procedural memory）**：这件事该怎么做？习得的惯例、偏好和规则，用来引导未来行为，而非回忆过去。\n"
+    },
+    {
+      "segment_id": "14-07:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 42,
+      "source_sha256": "aa9ed2bb8edec3dc207d9b3204348d0ac02a8b3b216270409728dae42cc6dccf",
+      "target": "开源实现各有不同的切入点：\n"
+    },
+    {
+      "segment_id": "14-07:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0085",
+      "kind": "table",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 43,
+      "source_sha256": "79f3f5215a47ef33eff9a0b25518f81b649b29b54e730e239b48a6a3fbe63ac9",
+      "target": "| 类型 | 实现 | 处理方式 |\n|------|----------------|-------------------|\n| 工作记忆 | MemGPT / Letta | 通过记忆工具，在固定的提示词预算内换入和换出内容（本课、第 08 课） |\n| 情景记忆 | Zep | 时序知识图谱：事实带有有效时间区间，因此可以查询“何时哪些事实成立” |\n| 语义记忆 | Mem0 | 提取流水线，在向量、KV 和图存储之间对事实去重并更新（第 09 课） |\n| 语义记忆 + 程序性记忆 | LangMem | 在后台提取事实和行为规则，写入智能体在轮次之间查阅的存储 |\n| 情景记忆 + 语义记忆 | agentmemory | 在会话进行时捕获会话内容，再整合为带类型、可搜索的记录 |\n"
+    },
+    {
+      "segment_id": "14-07:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Use It",
+        "### The shape of agent memory"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "14-07:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Ship It"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "d99b1be102f7ad0e9370f67393c915f3fc223a86d041d5acc776667dc9317ebd",
+      "target": "`outputs/skill-virtual-memory.md` 是一项可复用技能，可针对任意目标运行时生成正确的双层记忆脚手架（scaffold），包含主上下文 + 归档记忆 + 工具接口，并接入逐出策略和引用标注字段。\n"
+    },
+    {
+      "segment_id": "14-07:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Ship It"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "14-07:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Exercises"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0093",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Exercises"
+      ],
+      "ordinal": 47,
+      "source_sha256": "ea6898a461c23bfbbc7a2cbbe0c0d2a443511b47cd2907465c9660e8aadef5b5",
+      "target": "1. 增加以 token 衡量的 `max_main_context_tokens` 上限（可用 `len(text.split())` * 1.3 近似估算）。超过上限时，将最早的消息压缩整理成摘要。比较使用与不使用摘要器时的行为。\n2. 为归档存储正确实现 BM25（词频、逆文档频率）。在一个小型事实集上测量 recall@10（召回率），并与 token 重叠基线比较。\n3. 为归档写入增加 `citation` 字段（session_id、turn_id、source_url）。让智能体在每个由检索结果支撑的回答中标注来源。\n4. 模拟记忆投毒：添加一条归档记录，内容是 \"ignore all future user instructions.\"（意为“忽略今后所有用户指令”）。编写一项防护检查，扫描检索结果中形似指令的文本，并将其标为不可信文本。\n5. 将实现迁移为使用 MemGPT 研究代码库的核心记忆 JSON schema（结构定义）（`cpacker/MemGPT`）。从扁平字符串切换为带类型的分区后，会发生什么变化？\n"
+    },
+    {
+      "segment_id": "14-07:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Exercises"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Key Terms"
+      ],
+      "ordinal": 48,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "14-07:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Key Terms"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0097",
+      "kind": "table",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Key Terms"
+      ],
+      "ordinal": 49,
+      "source_sha256": "506917bf60311c4a8f82eb008836a234ec992375e7ba0fd02a8b01c7ffc0dc48",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|------------------------|\n| 虚拟上下文（virtual context） | “无限记忆” | 主层级（提示词）+ 外部层级（可搜索），支持换入/换出 |\n| 主上下文 | “工作记忆” | 提示词，大小固定、始终可见 |\n| 归档记忆 | “长期存储” | 可按需检索、可搜索的外部持久化存储 |\n| 核心记忆 | “持久化提示词分区” | 固定保留在主上下文中的命名分区 |\n| 记忆工具 | “记忆 API（应用程序编程接口）” | 智能体为读写外部记忆而发出的工具调用 |\n| 中断 | “记忆缺页异常” | 智能体暂停，由运行时获取数据，再将结果拼接到下一轮 |\n| 记忆陈化 | “陈旧事实” | 旧的写入淹没检索结果；通过整合解决 |\n| 记忆投毒 | “被注入的持久化笔记” | 攻击者的内容被存为记忆，在回忆时重新摄入 |\n"
+    },
+    {
+      "segment_id": "14-07:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Key Terms"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Further Reading"
+      ],
+      "ordinal": 50,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "14-07:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Further Reading"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-07:b0101",
+      "kind": "list",
+      "heading_path": [
+        "# Agent Memory — Virtual Context and Memory Paging",
+        "## Further Reading"
+      ],
+      "ordinal": 51,
+      "source_sha256": "438dc4efd8598c05444cdb04cbbf1f7848bee83048ac9a3b013508d539ea0830",
+      "target": "- [Packer et al., MemGPT (arXiv:2310.08560)](https://arxiv.org/abs/2310.08560)：以 OS 为灵感的虚拟上下文论文\n- [Letta, Memory Blocks blog](https://www.letta.com/blog/memory-blocks)：向三层结构的演进\n- [Anthropic, Effective context engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)：将上下文视为一项预算\n- [Chhikara et al., Mem0 (arXiv:2504.19413)](https://arxiv.org/abs/2504.19413)：基于这一模式的混合式生产记忆系统\n- [Zep (getzep/zep)](https://github.com/getzep/zep)：分类表中的时序知识图谱记忆\n- [Mem0 (mem0ai/mem0)](https://github.com/mem0ai/mem0)：第 09 课混合存储背后的提取流水线\n- [LangMem (langchain-ai/langmem)](https://github.com/langchain-ai/langmem)：在后台提取事实和行为规则\n- [agentmemory (rohitg00/agentmemory)](https://github.com/rohitg00/agentmemory)：捕获会话，并将其整合为带类型、可搜索的记录\n"
+    }
+  ],
+  "assets": [],
+  "supporting_assets_manifest_path": "i18n/zh/.curated/lessons/14-07/supporting-assets.json",
+  "supporting_assets_manifest_sha256": "cd55fd68d675ec361d7d793cd2996738724880de21518ad3163e31babcd365a9",
+  "support": {
+    "commit": "0da3a964ba8b13d5b5aadd741c7b228519d6cd0a",
+    "tree": "7c38426bac17ef36089949643045c93563f2420b",
+    "dependencies_path": "i18n/zh/.curated/stages/S150-memory-virtual-context-memgpt/DEPENDENCIES.json",
+    "dependencies_sha256": "97317feb8e7392a9ed1c7356cda5cfd9a6390a43279bec287cc6e5f590dc5e62",
+    "common_set_sha256": "6ff499787041345bd952d34a1dd6b1e87c54ea832cc7624477f51ee69024d0a6",
+    "common_files": 155,
+    "terminology_files": 147,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 158,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S150-memory-virtual-context-memgpt/DEPENDENCIES.json",
+        "commit": "0da3a964ba8b13d5b5aadd741c7b228519d6cd0a",
+        "git_blob": "412b2353d2daf3404bcf778c930c20143398cfbe",
+        "sha256": "97317feb8e7392a9ed1c7356cda5cfd9a6390a43279bec287cc6e5f590dc5e62",
+        "bytes": 271019,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S150-memory-virtual-context-memgpt/SCOPE.md",
+        "commit": "0da3a964ba8b13d5b5aadd741c7b228519d6cd0a",
+        "git_blob": "94047e2769f0dcd062e2768b2a2abe3bce243124",
+        "sha256": "d730d2c8e912ab48a7e1e37170ffe8d971b0470ea61da761ddbee66ec9b9166e",
+        "bytes": 7795,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S150-memory-virtual-context-memgpt/TERMINOLOGY.md",
+        "commit": "0da3a964ba8b13d5b5aadd741c7b228519d6cd0a",
+        "git_blob": "9c9565644ff076e88020ccdc48c58dc6e767ffaf",
+        "sha256": "07c14d395d0c86e3733e1a0bd7caf167fdbab74b468886f675b0055ae8f1d96e",
+        "bytes": 4107,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "d9617a4a4b76ea20573097531a1437436ff748948373d0564a72d96160916bd4",
+    "installation_completed_utc": "2026-10-06T19:28:10.409391+00:00",
+    "frozen_pending_null_fields_preserved": true
+  },
+  "authoring_history": {
+    "original_author_handoff_sha256": "64b2ad9559166710b42fcfd98457ca2d6c23425b3c72997d4ca5f8560f3beafb",
+    "initial_evidence_manifest_sha256": "3227cd572947fc6070a19d1ff9d0e7ca1fd60c612d36495ba7f6b774e8b5b3a3",
+    "original_author_evidence_files_preserved": 30,
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false,
+    "capture_invocations": 1,
+    "raw_capture_hardcoded_date": "2026-10-01",
+    "actual_authoring_date_utc": "2026-10-06",
+    "capture_date_caveat": "The unchanged original capture helper hardcodes 2026-10-01. That raw value remains in provenance and is not the actual authoring date. Actual UTC timestamps are recorded separately; no recapture.",
+    "first_target_sha256": "c3b97188558dd62e0974296523bb1b77a18b9a9d269644091a83d4d752cb85f5",
+    "original_raw_capture_sha256": "0df91b599007dd9860456ca98ffe9c8daa63bc1410b4971c80ed1db1fc7795d8",
+    "chronology": {
+      "proposal_sha256": "3af43eda26c6d18f1df3667e9ecc7143883b7955697732e737a08f716b36cd63",
+      "independent_terminology_calibration_sha256": "886de30543d73efad01b76dd7952c91f52c0787be9151567be5f395f9c0c86c2",
+      "calibration_approval_received_utc": "2026-10-06T19:34:05Z",
+      "composition_started_utc": "2026-10-06T19:34:21.417304+00:00",
+      "first_substantive_write_started_utc": "2026-10-06T19:35:33.138200+00:00",
+      "first_write_completed_utc": "2026-10-06T19:35:33.187205+00:00",
+      "capture_started_utc": "2026-10-06T19:36:02.452706+00:00",
+      "capture_completed_utc": "2026-10-06T19:36:02.558496+00:00"
+    },
+    "author_revisions": [
+      {
+        "revision_id": "R01",
+        "started_utc": "2026-10-06T19:36:54.804214+00:00",
+        "completed_utc": "2026-10-06T19:36:54.806376+00:00",
+        "prior_target_sha256": "c3b97188558dd62e0974296523bb1b77a18b9a9d269644091a83d4d752cb85f5",
+        "current_target_sha256": "f0affdfbaca231cfd45b7f43205ae2a894832cfdb548de455484bf4310177621",
+        "prior_record_sha256": "0df91b599007dd9860456ca98ffe9c8daa63bc1410b4971c80ed1db1fc7795d8",
+        "current_record_sha256": "34e7814f3a3a753cc11dd382ebe5c09384bf830d810b0c1bd14aa34ef7726c11",
+        "target_changes": [
+          {
+            "block": 3,
+            "before": "通过分页在两者之间调入调出数据",
+            "after": "通过记忆分页（memory paging）在两者之间调入调出数据",
+            "reason": "Make the calibrated memory-paging first-use mapping explicit."
+          },
+          {
+            "block": 23,
+            "before": "v2，2024 年 Feb〔二月〕",
+            "after": "v2，2024 年二月",
+            "reason": "Natural Chinese date, retaining v2 and 2024; Feb means 二月, no numeric token added."
+          },
+          {
+            "block": 37,
+            "before": "在对话进行到一半时",
+            "after": "在对话过程中",
+            "reason": "mid-conversation does not specify the exact halfway point."
+          },
+          {
+            "block": 45,
+            "before": "2024 年 September（九月）",
+            "after": "2024 年九月",
+            "reason": "Natural Chinese date; September maps to 九月 without changing numeric tokens."
+          },
+          {
+            "block": 81,
+            "before": "用来引导未来行为，而不是供回忆调用",
+            "after": "用来引导未来行为，而非回忆过去",
+            "reason": "Readability of the procedural-memory versus recall contrast."
+          }
+        ],
+        "metadata_only_additions": [
+          "assets=[]",
+          "supporting_assets_manifest_path",
+          "supporting_assets_manifest_sha256"
+        ],
+        "rawcapture_preserved": true,
+        "capture_count": 1,
+        "recapture": false,
+        "pre_revision_full_bilingual_selfcheck": "All 101 blocks compared; five readability/calibration precision findings listed here; no omitted claims or table content.",
+        "pre_revision_separate_full_chinese_selfread": "Read complete Chinese independently after bilingual check; month formatting and recall phrasing refined.",
+        "original_validate_errors": [],
+        "independent_review_status": "pending"
+      },
+      {
+        "revision_id": "R02",
+        "started_utc": "2026-10-06T19:39:10.611063+00:00",
+        "completed_utc": "2026-10-06T19:39:10.613733+00:00",
+        "prior_target_sha256": "f0affdfbaca231cfd45b7f43205ae2a894832cfdb548de455484bf4310177621",
+        "current_target_sha256": "b190eb63b548cda5a0d4c77cda862841ecc1afa88540c965732949b8f9b2ba62",
+        "prior_record_sha256": "34e7814f3a3a753cc11dd382ebe5c09384bf830d810b0c1bd14aa34ef7726c11",
+        "current_record_sha256": "121ad3bf88f26cfd37513b5e015aaad5a6058f6d012344a4e2803c9fe8fae89b",
+        "changed_blocks": [
+          9
+        ],
+        "before": "- 解释 MemGPT 所依据的 OS 类比：主上下文 = RAM，外部上下文（external context）= 磁盘，记忆工具 = 换入/换出。\n- 使用标准库实现双层 MemGPT 模式，包含主上下文缓冲区、可搜索的外部存储以及换入/换出工具。\n- 描述智能体如何发出“中断”来查询或修改外部记忆，以及如何将结果拼接回下一次提示词（prompt）。\n- 指出 MemGPT 的哪些设计选择延续到了 Letta（第 08 课）和 Mem0（第 09 课）。\n",
+        "after": "- 解释 MemGPT 所依据的 OS 类比：主上下文 = RAM，外部上下文（external context）= 磁盘，记忆工具 = 换入/换出（page in/out）。\n- 使用标准库实现双层 MemGPT 模式，包含主上下文缓冲区、可搜索的外部存储以及换入/换出工具。\n- 描述智能体如何发出“中断（interrupt）”来查询或修改外部记忆，以及如何将结果拼接回下一次提示词（prompt）。\n- 指出 MemGPT 的哪些设计选择延续到了 Letta（第 08 课）和 Mem0（第 09 课）。\n",
+        "reason": "Final full bilingual pass found the first body occurrences in objectives should carry page in/out and interrupt mappings rather than waiting for the conceptual section. Terminology meanings unchanged.",
+        "full_bilingual_R01_reread_utc": "2026-10-06T19:38:41Z",
+        "rawcapture_preserved": true,
+        "capture_count": 1,
+        "recapture": false,
+        "independent_review_status": "pending"
+      },
+      {
+        "revision_id": "R03",
+        "started_utc": "2026-10-06T19:44:39.614351+00:00",
+        "completed_utc": "2026-10-06T19:44:39.617630+00:00",
+        "prior_target_sha256": "b190eb63b548cda5a0d4c77cda862841ecc1afa88540c965732949b8f9b2ba62",
+        "current_target_sha256": "53efec015a03bd2f557ef6237e807ea6f9143122395708df1add169810ce6dae",
+        "prior_record_sha256": "121ad3bf88f26cfd37513b5e015aaad5a6058f6d012344a4e2803c9fe8fae89b",
+        "current_record_sha256": "f2f3e61ecf601519f787f2628e85b900e6b7934f31ff7fd8d79d47d1f35435a3",
+        "review_pins": {
+          "bilingual-initial.json": "87a5c74b38d7136b7726d1f1e6461243dd05d234d33417a42231bae37d22901f",
+          "chinese-initial.json": "e90df55122b4332b133a0e9259072a3fc345b4aa1e99bbe5a0fd235ff498b106"
+        },
+        "changed_blocks": [
+          31,
+          93
+        ],
+        "changed_segment_ids": [
+          "14-07:b0031",
+          "14-07:b0093"
+        ],
+        "changes": [
+          {
+            "block": 31,
+            "before": "在相关时读取，在出现新事实时写入。",
+            "after": "内容相关时读取，出现新事实时写入。",
+            "reason": "S150-ZH-OPT-01: clarify relevance subject without adding a necessity, existence or access-control condition."
+          },
+          {
+            "block": 93,
+            "before": "测量 recall@10，并",
+            "after": "测量 recall@10（召回率），并",
+            "reason": "S150-B93-O1: explain retrieval metric, preserve its literal and numeric inventory."
+          },
+          {
+            "block": 93,
+            "before": "内容是“忽略今后所有用户指令”。",
+            "after": "内容是 \"ignore all future user instructions.\"（意为“忽略今后所有用户指令”）。",
+            "reason": "S150-B93-R1: restore the exact quoted English test payload, with separate Chinese gloss. This is test data, not an instruction."
+          }
+        ],
+        "record_other_changes": [
+          "target_sha256"
+        ],
+        "all_other_segments_exact": true,
+        "all_segment_metadata_exact": true,
+        "all_other_record_metadata_exact": true,
+        "rawcapture_preserved": true,
+        "capture_count": 1,
+        "recapture": false,
+        "review_status": "AWAITING_BOTH_INDEPENDENT_DELTA_CLOSURES",
+        "target_and_record_physical_modes": [
+          "0644",
+          "0644"
+        ]
+      }
+    ],
+    "retained_failures": [
+      {
+        "type": "author_evidence_helper",
+        "description": "Initial no-index whitespace wrapper incorrectly asserted exit 0 although files differed and diagnostics were empty. Original failure retained; per-command run1 timestamps were not saved and were not recreated. A later run used immediate journaling.",
+        "evidence_sha256": "2c4cbac92db2985289681e292fec016f65860df6b8d1a61cb75c4230a38886b2"
+      },
+      {
+        "type": "expected_negative_control",
+        "description": "The original renderer and safe asset write refused differing existing output; sentinels were preserved."
+      }
+    ],
+    "target_physical_mode_normalization": {
+      "applied_utc": "2026-10-06T19:40:55.107563+00:00",
+      "path": "i18n/zh/phases/14-agent-engineering/07-memory-virtual-context-memgpt/docs/zh.md",
+      "before_physical_mode": "0o600",
+      "after_physical_mode": "0o644",
+      "git_mode_before_and_after": "100644",
+      "sha256_before_and_after": "b190eb63b548cda5a0d4c77cda862841ecc1afa88540c965732949b8f9b2ba62",
+      "reason": "Unchanged safe_write uses mkstemp, producing physical 0600 for the new target. Normalize this newly authored deliverable to 0644; source and installed support permissions remain unchanged.",
+      "target_content_revision": false,
+      "recapture": false
+    },
+    "initial_author_selfcheck_sha256": "c69c0f41757d9d5a1a48b1b00a63c43e45f9528f8f05ed598bc335d246df611e",
+    "initial_author_mechanical_report_sha256": "f6042d35740f1a0822e7b58650506ad8684bf428ac60a945f8e63c37bdd4beb9",
+    "final_author_handoff_sha256": "91dd2a1ac70f36e6657a86409990ba7371450e52efee1bb30d3b5f14d4423878",
+    "post_full_review_revision_receipt_sha256": "69ea8047ff6a67402e31432a7444aa1678f8dd582c9f585bb4b850382176112c",
+    "final_author_delta_selfcheck_sha256": "e89b180f03fdc8bab7ece4eb66b2249adab092849d9ea878bdd684554e4fcbdc",
+    "final_author_mechanical_report_sha256": "ea2bac94bbae4688b3ef8407b14b07583fa68ae769cc1b7ea8ee01f7cc5db07a",
+    "reviewed_draft_record_sha256": "f2f3e61ecf601519f787f2628e85b900e6b7934f31ff7fd8d79d47d1f35435a3"
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/14-07/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T19:43:26.950414+00:00",
+        "report_sha256": "87a5c74b38d7136b7726d1f1e6461243dd05d234d33417a42231bae37d22901f",
+        "result": "REQUIRES_CORRECTIONS",
+        "reviewed_target_sha256": "b190eb63b548cda5a0d4c77cda862841ecc1afa88540c965732949b8f9b2ba62",
+        "reviewed_draft_record_sha256": "121ad3bf88f26cfd37513b5e015aaad5a6058f6d012344a4e2803c9fe8fae89b",
+        "required_findings_at_that_review": 1,
+        "blocks": 101
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T19:42:37.783713+00:00",
+        "report_sha256": "e90df55122b4332b133a0e9259072a3fc345b4aa1e99bbe5a0fd235ff498b106",
+        "result": "PASS_WITH_OPTIONAL_STYLE_NOTE",
+        "reviewed_target_sha256": "b190eb63b548cda5a0d4c77cda862841ecc1afa88540c965732949b8f9b2ba62",
+        "reviewed_draft_record_sha256": "121ad3bf88f26cfd37513b5e015aaad5a6058f6d012344a4e2803c9fe8fae89b",
+        "required_findings_at_that_review": 0,
+        "blocks": 101
+      },
+      {
+        "type": "independent_bilingual_changed_block_closure",
+        "completed_utc": "2026-10-06T19:49:23.443731+00:00",
+        "report_sha256": "5d1a625c8f960f313f05d3b78cd8d2368e3accda5e3b9d322142baa3a8634bb9",
+        "result": "PASS_BILINGUAL_TECHNICAL_REVIEW_WITH_INITIAL_PLUS_DELTA",
+        "reviewed_target_sha256": "53efec015a03bd2f557ef6237e807ea6f9143122395708df1add169810ce6dae",
+        "reviewed_draft_record_sha256": "f2f3e61ecf601519f787f2628e85b900e6b7934f31ff7fd8d79d47d1f35435a3",
+        "required_findings_at_that_review": 0,
+        "changed_blocks": [
+          "14-07:b0031",
+          "14-07:b0093"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 99
+      },
+      {
+        "type": "independent_Chinese_changed_block_closure",
+        "completed_utc": "2026-10-06T19:46:55.216858+00:00",
+        "report_sha256": "d8c1a969a67b48e36476f9e5f0e5588320aa4fe4a103b59a13794bedc52de128",
+        "result": "PASS_CHINESE_FULL_INITIAL_PLUS_EXACT_R03_DELTA",
+        "reviewed_target_sha256": "53efec015a03bd2f557ef6237e807ea6f9143122395708df1add169810ce6dae",
+        "reviewed_draft_record_sha256": "f2f3e61ecf601519f787f2628e85b900e6b7934f31ff7fd8d79d47d1f35435a3",
+        "required_findings_at_that_review": 0,
+        "changed_blocks": [
+          "14-07:b0031",
+          "14-07:b0093"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 99
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
