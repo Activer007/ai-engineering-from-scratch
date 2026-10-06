@@ -1,0 +1,1326 @@
+{
+  "schema_version": 1,
+  "lesson_id": "14-04",
+  "source_path": "phases/14-agent-engineering/04-tree-of-thoughts-lats/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "18abf7b2b5a0c79061d1a459a7d118ce847c7ad8",
+  "source_sha256": "c0d4e1af4425b9cc2a97b944e4b538fb2bcef90e4469acab0d547c69e317e92f",
+  "target_path": "i18n/zh/phases/14-agent-engineering/04-tree-of-thoughts-lats/docs/zh.md",
+  "target_sha256": "3eff8d994483a49ccb2d589aaa62c169f63a2b7d5b2aab545afeaacee868bd50",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-06",
+    "capture_date_correction": {
+      "corrected_utc": "2026-10-06T07:00:27.615235+00:00",
+      "original_hardcoded_run_date": "2026-10-01",
+      "actual_capture_output_mtime_utc": "2026-10-06T06:59:09.448157+00:00",
+      "capture_receipt_sha256": "0a65fcf95291d8222cff1e3824d1655ef1baa016bef60c6cfe69a3780082a5f9",
+      "raw_capture_sha256": "049a15978d50ba899ded870d514607aa71e8ad7e240677518c0286c5bddffe89",
+      "explanation": "Unchanged original capture script hardcodes 2026-10-01. Raw record retained unchanged. Current provenance corrected to actual UTC capture date, without recapture."
+    }
+  },
+  "segments": [
+    {
+      "segment_id": "14-04:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search"
+      ],
+      "ordinal": 1,
+      "source_sha256": "9f24c00401a1bb66817edbbf7c9e6b064af209547329a1f54a602b35118c651a",
+      "target": "# 思维树与 LATS：审慎搜索\n"
+    },
+    {
+      "segment_id": "14-04:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search"
+      ],
+      "ordinal": 2,
+      "source_sha256": "f88a2937614df05512760e9c4de87a0c19bb807dab8259d528e62fc84289642b",
+      "target": "> 单条思维链（chain-of-thought，CoT）轨迹没有回溯的余地。思维树（Tree of Thoughts，ToT；Yao 等，2023）将推理变成一棵树，并在每个节点上进行自我评估（self-evaluation）。语言智能体树搜索（Language Agent Tree Search，LATS；Zhou 等，2024）在蒙特卡洛树搜索（Monte Carlo Tree Search，MCTS）框架下统一了 ToT、ReAct 和 Reflexion。在 24 点游戏中，准确率从 4%（CoT）升至 74%（ToT）；LATS 在 HumanEval 上达到 92.7% 的 pass@1。\n"
+    },
+    {
+      "segment_id": "14-04:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search"
+      ],
+      "ordinal": 3,
+      "source_sha256": "0d4ac0500fc85c5416810f991aa51c960947364be41b86dfcbc9287c2786009a",
+      "target": "**Type:** Build\n**Languages:** Python (stdlib)\n**Prerequisites:** 阶段 14 · 01（智能体循环），阶段 14 · 03（Reflexion）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "14-04:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "14-04:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "bd7eae1bb4abe2b0c2ca11066736f09d8b3ffaf157994f96e9f709d885a03a0f",
+      "target": "- 将推理表述为搜索：节点是“思考步骤（thoughts）”，边是“扩展（expansions）”，价值表示“有多大希望”。\n- 仅用标准库实现一个 ToT 风格的广度优先搜索（BFS）树搜索，并使用自我评估评分。\n- 将其扩展为一个简化的 LATS MCTS 循环，包含选择（select）/ 扩展（expand）/ 模拟（simulate）/ 回传（backpropagate）。\n- 判断何时值得为搜索付出成倍的 token（词元）开销（24 点游戏、代码生成），何时单条轨迹就已足够（简单问答）。\n"
+    },
+    {
+      "segment_id": "14-04:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "14-04:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "ba9db7599b75debfcb2b4b10c59333734aaec15e5e74afda90eae61c851dd693",
+      "target": "思维链沿着一条线性路径前进。如果第一步出错，后续每一步都会建立在错误的前提上。在 24 点游戏中（用四个数字和 + − × ÷ 运算凑出 24），GPT-4 的 CoT 准确率只有 4%。模型早早选错了子表达式，随后便无法挽回。\n"
+    },
+    {
+      "segment_id": "14-04:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "9711097a2b2d76aa643ee5a5eaefdfd7cf654abb5761431ef5cab4e880760660",
+      "target": "推理需要能够提出多个候选项、评估它们、选择有希望的候选项，并在遇到死路时回溯。这就是搜索。思维树和 LATS 是两种典型的形式化方案。\n"
+    },
+    {
+      "segment_id": "14-04:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "14-04:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### Tree of Thoughts (Yao et al., NeurIPS 2023)"
+      ],
+      "ordinal": 10,
+      "source_sha256": "95e0b506a1305bb52091197c304863091341b53c5ec7805eea81943d62c22d1d",
+      "target": "### 思维树（Yao 等，NeurIPS 2023）\n"
+    },
+    {
+      "segment_id": "14-04:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### Tree of Thoughts (Yao et al., NeurIPS 2023)"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### Tree of Thoughts (Yao et al., NeurIPS 2023)"
+      ],
+      "ordinal": 11,
+      "source_sha256": "3d91785967f93e4869f81be6b3dc9a733b473b8e5d40fca3c3fbded3188ef7ee",
+      "target": "每个节点都是一个连贯的中间步骤（“一次思考”）。每个节点都可以扩展出 K 个子思考步骤。大语言模型（LLM）通过评分提示词（prompt）对每个节点进行自我评估。搜索以 BFS、深度优先搜索（DFS）或束搜索（beam search）的方式探索这棵树。\n"
+    },
+    {
+      "segment_id": "14-04:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### Tree of Thoughts (Yao et al., NeurIPS 2023)"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### Tree of Thoughts (Yao et al., NeurIPS 2023)"
+      ],
+      "ordinal": 12,
+      "source_sha256": "922d8314056bf1e27c2cf395f2e71ee1e2327d62693507c6e0a1af02b6a29d22",
+      "target": "```text\n                     (root: \"find 24 from 4 6 4 1\")\n                    /               |            \\\n           (\"6 - 4 = 2\")    (\"4 + 1 = 5\")    (\"4 * 6 = 24\")  <- Score: HIGH\n              /   \\              |                  |\n          ...    ...          ...                finish\n```\n"
+    },
+    {
+      "segment_id": "14-04:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### Tree of Thoughts (Yao et al., NeurIPS 2023)"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### Tree of Thoughts (Yao et al., NeurIPS 2023)"
+      ],
+      "ordinal": 13,
+      "source_sha256": "abb73df7d8ba554f5f96d9b418faf6d71571a751737c0aaae11272e51cd4ae9f",
+      "target": "自我评估是关键支柱。论文展示了三种方式：`sure / likely / impossible` 分类、`1..10` 数值评分，以及在候选项之间投票。三种方式在 24 点游戏中都明显优于 CoT（4% -> 74%，使用 GPT-4）。\n"
+    },
+    {
+      "segment_id": "14-04:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### Tree of Thoughts (Yao et al., NeurIPS 2023)"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### LATS (Zhou et al., ICML 2024)"
+      ],
+      "ordinal": 14,
+      "source_sha256": "d8841613002839104004f039865a590328f732b56bde801a527a225edc234f86",
+      "target": "### LATS（Zhou 等，ICML 2024）\n"
+    },
+    {
+      "segment_id": "14-04:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### LATS (Zhou et al., ICML 2024)"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### LATS (Zhou et al., ICML 2024)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "f7b5abeb993fffd60b4fdd73e505eca274243e7b1e6d37fffb35e278cea5ec34",
+      "target": "LATS 在 MCTS 框架下统一了 ToT、ReAct 和 Reflexion。LLM 扮演三种角色：\n"
+    },
+    {
+      "segment_id": "14-04:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### LATS (Zhou et al., ICML 2024)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0031",
+      "kind": "list",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### LATS (Zhou et al., ICML 2024)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "7f5f4c0b5722c1765d5da0c9d37693988287962bc365dd32e28e38f18d77b3f8",
+      "target": "- **策略（Policy）**：提出下一步行动的候选项（ReAct 风格）。\n- **价值函数（Value function）**：为尚未完成的轨迹评分（ToT 风格的自我评估）。\n- **自我反思器（Self-reflector）**：失败时写下自然语言反思（reflection，Reflexion 风格），并用它重新引导后续的模拟轨迹（rollouts）。\n"
+    },
+    {
+      "segment_id": "14-04:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### LATS (Zhou et al., ICML 2024)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### LATS (Zhou et al., ICML 2024)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "5863142f64a1fe86cef7a9022c078c5f369a56ff19ad9f1baee23c259d451f10",
+      "target": "环境反馈（观察结果）也会融入价值函数，使搜索以真实的工具结果为依据，而不只是依赖模型的判断。论文发表时的结果：HumanEval pass@1 为 92.7%，使用 GPT-4（当时最先进的水平，即 SOTA）；WebShop 平均得分为 75.9，使用 GPT-3.5，接近基于梯度的微调（fine-tuning）水平。\n"
+    },
+    {
+      "segment_id": "14-04:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### LATS (Zhou et al., ICML 2024)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### MCTS, minimally"
+      ],
+      "ordinal": 18,
+      "source_sha256": "1e4ec7be34070d75a0cf4c33744f9febfa2a21b820302dcaef991f5f1376c349",
+      "target": "### MCTS 极简介绍\n"
+    },
+    {
+      "segment_id": "14-04:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### MCTS, minimally"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### MCTS, minimally"
+      ],
+      "ordinal": 19,
+      "source_sha256": "d67b83fdd25d5398f5af22b620cf797c0fcabc96599ff3781b8d1bc55429a3bd",
+      "target": "每次迭代包含四个阶段：\n"
+    },
+    {
+      "segment_id": "14-04:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### MCTS, minimally"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0039",
+      "kind": "list",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### MCTS, minimally"
+      ],
+      "ordinal": 20,
+      "source_sha256": "f062220cb375c60038c71b0a6dc9675c259c0eeea546948d12810d7d7bc021bc",
+      "target": "1. **选择（Select）**：使用树搜索置信上限（UCT，upper confidence bound for trees）从根节点走到叶节点。\n2. **扩展（Expand）**：通过策略生成 K 个子节点。\n3. **模拟（Simulate）**：从一个子节点出发，按策略模拟推进，再用价值函数（或环境奖励）为叶节点评分。\n4. **回传（Backpropagate）**：沿路径向上更新访问次数和价值估计。\n"
+    },
+    {
+      "segment_id": "14-04:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### MCTS, minimally"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### MCTS, minimally"
+      ],
+      "ordinal": 21,
+      "source_sha256": "ca1d8ec3694495bc441337e67f80df9ff55b534f61cd06172326af6a23390c3d",
+      "target": "UCT 公式：`Q(s, a) + c * sqrt(ln N(s) / N(s, a))`。第一项是利用（exploitation）；第二项是探索（exploration）。根据具体任务调整 `c`。\n"
+    },
+    {
+      "segment_id": "14-04:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### MCTS, minimally"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### The cost reality"
+      ],
+      "ordinal": 22,
+      "source_sha256": "c4fd68eda56c82e04434efdda1e16b212a544ea84b017b10dee677507cb7e8b0",
+      "target": "### 成本的现实\n"
+    },
+    {
+      "segment_id": "14-04:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### The cost reality"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### The cost reality"
+      ],
+      "ordinal": 23,
+      "source_sha256": "ce34c0e09a2e3ce7b75d5ddea95eb0dfe5255801fd87f77ad076cbffe8908284",
+      "target": "搜索会使 token 用量激增。在 24 点游戏中，ToT 的 token 用量是 CoT 的 100–1000x（倍）。LATS 也类似。搜索并非没有代价；应将搜索留给以下任务：\n"
+    },
+    {
+      "segment_id": "14-04:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### The cost reality"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0047",
+      "kind": "list",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### The cost reality"
+      ],
+      "ordinal": 24,
+      "source_sha256": "674fe9dd8c507d74682b2b90bf805cf86335df220d6d200a722dd7af15adca1d",
+      "target": "- 已明确证明单条轨迹不足以完成的任务（24 点游戏、复杂代码）。\n- 正确性比实际耗时更重要的任务。\n- 拥有低成本、可靠价值函数的任务（代码的单元测试、数学问题的明确目标）。\n"
+    },
+    {
+      "segment_id": "14-04:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### The cost reality"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### The cost reality"
+      ],
+      "ordinal": 25,
+      "source_sha256": "abb0650283c5d62315372206971cfdf2f9b45c22edd275205cce0c05b5b68468",
+      "target": "如果任务只有一个正确答案，而评估器又有噪声，搜索往往会让情况更糟：它会找到一个“得分很高”的错误答案。\n"
+    },
+    {
+      "segment_id": "14-04:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### The cost reality"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 26,
+      "source_sha256": "57e1d3257df786cc60fb8c2c8973b7d6fedefcaf984999403a7c394cd98c2625",
+      "target": "### 2026 年的定位\n"
+    },
+    {
+      "segment_id": "14-04:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 27,
+      "source_sha256": "b312844fcc5062706066467e990e11ed11cd8158ea0b4db422c0dcc4c06c53ee",
+      "target": "多数生产环境中的智能体（agent）并不运行 LATS。它们运行 ReAct，并以工具结果为依据进行核验（CRITIC，第 05 课）。搜索主要出现在以下专门场景：\n"
+    },
+    {
+      "segment_id": "14-04:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0055",
+      "kind": "list",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 28,
+      "source_sha256": "4f03b09bb089a67264c3532e301e593ac597f4e43111977c4c668236200bf748",
+      "target": "- 运行测试并将测试结果用作价值函数的编程智能体（HumanEval 风格）。\n- 探索多条查询路径的深度研究智能体。\n- LangGraph 子图内侧重规划的工作流。\n"
+    },
+    {
+      "segment_id": "14-04:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 29,
+      "source_sha256": "f53c8e3d011c23aaeb85b2b9e000896fe50001fa6b3db70bd04b210189ebcd3e",
+      "target": "AlphaEvolve（第 11 课）是 2025 年的极致案例：对代码进行演化搜索（evolutionary search），使用可机器核验的适应度（machine-checkable fitness），取得前沿突破（4x4 矩阵乘法迎来 56 年来的首次改进）。\n"
+    },
+    {
+      "segment_id": "14-04:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0059",
+      "kind": "fence",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 30,
+      "source_sha256": "c2f889be74088f973cd7994b6344a4370887018250acca3f5d4db304cb62fcab",
+      "target": "```figure\ntree-of-thoughts\n```\n"
+    },
+    {
+      "segment_id": "14-04:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## The Concept",
+        "### 2026 positioning"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 31,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "14-04:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "af5f20217861f8d9f142cd8513cfb0d9c533101884490d56c616d03dfa1f4fa9",
+      "target": "`code/main.py` 实现了：\n"
+    },
+    {
+      "segment_id": "14-04:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0065",
+      "kind": "list",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "20fd38c3019107568abfe2a9d9e868633f9f92e713cb1991adf89cf619a9971b",
+      "target": "- 在一个简化的“选择算术运算”任务上运行的微型 ToT BFS。\n- 在同一任务上运行的简化 LATS MCTS 循环（Select / Expand / Simulate / Backpropagate），使用 UCT 进行选择。\n- 一个将符号计算评分（symbolic score）与自我评估评分结合起来的价值函数。\n"
+    },
+    {
+      "segment_id": "14-04:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "936bc51db6511ea885c12022f0e1271632a7d165e0848edeaf255b3a5786e28d",
+      "target": "运行：\n"
+    },
+    {
+      "segment_id": "14-04:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "2b11889f93c0782398b09d152e929afa595931801ff18ec85374f752a13e31bd",
+      "target": "```text\npython3 code/main.py\n```\n"
+    },
+    {
+      "segment_id": "14-04:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "ff07d0d88168dd64fa582a043afeaf8c839568be089f94928c194959e3b7d248",
+      "target": "运行轨迹展示了两者的对比：ToT 使用 BFS，为每个节点扩展出三个候选项；LATS 则通过 MCTS 收敛到最佳模拟轨迹。程序会打印两者的 token 数量。\n"
+    },
+    {
+      "segment_id": "14-04:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Build It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "14-04:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "03eb9fa28e8f7f1c53ab804adc3a35fd3cbf70c580a52a5b44963ed0af9e3ca7",
+      "target": "LangGraph 以子图模式提供 ToT 风格的探索；LangChain 团队关于 LATS 的博客文章（2024 年五月）是参考教程。LlamaIndex 提供了一个 `TreeOfThoughts` 智能体。对 2026 年的大多数生产智能体来说，这种模式只有在满足 `if task_complexity > threshold: use_search()` 这一条件时才会启用；参见第 05 课的评估器—优化器模式。\n"
+    },
+    {
+      "segment_id": "14-04:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Use It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "14-04:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Ship It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "7c2bbf46c805f1f10040b560c822cd74c885ec8da47c41e2fc493716b47d6422",
+      "target": "`outputs/skill-search-policy.md` 根据任务形态、预算和评估器保真度（evaluator fidelity），在沿单条轨迹运行的 ReAct、ToT、LATS 和演化搜索之间进行选择。\n"
+    },
+    {
+      "segment_id": "14-04:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Ship It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Exercises"
+      ],
+      "ordinal": 41,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "14-04:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Exercises"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0083",
+      "kind": "list",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Exercises"
+      ],
+      "ordinal": 42,
+      "source_sha256": "e39ed82333652fb0d408dde929f8cd3f3497770a9fbf61d7efe8e01c51be6541",
+      "target": "1. 分别以 UCT c=0.1 和 c=2.0 运行简化的 LATS。运行轨迹有什么变化？\n2. 将价值函数替换为噪声更大的评分器（加入随机扰动）。MCTS 还能找到最佳叶节点吗？它能容忍的最低信噪比（signal-to-noise）是多少？\n3. 实现束搜索版 ToT（每层保留 top-k），并与 BFS 比较。在 token 预算紧张时，哪一种更好？\n4. 阅读 LATS 第 5.1 节。复现 HumanEval 的轨迹数量：需要多少条模拟轨迹才能达到报告中的 pass@1？\n5. 阅读 LATS 论文中关于“何时 LATS 帮助较小”的讨论。用一段话写出根据任务形态选择搜索策略的决策规则。\n"
+    },
+    {
+      "segment_id": "14-04:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Exercises"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0085",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Key Terms"
+      ],
+      "ordinal": 43,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "14-04:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Key Terms"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0087",
+      "kind": "table",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Key Terms"
+      ],
+      "ordinal": 44,
+      "source_sha256": "f954dae1fd54d6ded039fc2125e02df7bfc2c37d97a8ea672c9fb158e5f562e4",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|------------------------|\n| 思维树（Tree of Thoughts） | “带分支的 CoT” | Yao 等提出的思考节点树，对节点进行自我评估 |\n| LATS | “用于 LLM 的 MCTS” | Zhou 等提出，在 MCTS 框架下统一 ToT + ReAct + Reflexion |\n| UCT | “置信上限” | 用于选择的公式，平衡利用（Q）与探索（ln N / n） |\n| 价值函数 | “这个状态有多好” | 通过提示词让 LLM 给出的评分，或环境奖励；用于回传 |\n| 策略 | “行动提议者” | ReAct 风格的生成器；输出下一步思考/行动的候选项 |\n| 模拟轨迹（Rollout） | “模拟出的轨迹” | 按策略从一个节点走到叶节点，再用价值函数评分 |\n| 回传（Backpropagate） | “更新祖先节点” | 将叶节点的奖励沿路径向上传递，更新访问次数和 Q |\n| 搜索成本 | “token 用量爆炸” | token 用量达到 CoT 的 100-1000x（倍，24 点游戏）；采用前先做好预算 |\n"
+    },
+    {
+      "segment_id": "14-04:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Key Terms"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Further Reading"
+      ],
+      "ordinal": 45,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "14-04:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Further Reading"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-04:b0091",
+      "kind": "list",
+      "heading_path": [
+        "# Tree of Thoughts and LATS: Deliberate Search",
+        "## Further Reading"
+      ],
+      "ordinal": 46,
+      "source_sha256": "be721cf8b04af509032b53fc31f12ed4dcf255669b100e031a2a4ff51e91ae1d",
+      "target": "- [Yao et al., Tree of Thoughts (arXiv:2305.10601)](https://arxiv.org/abs/2305.10601)：奠基论文\n- [Zhou et al., LATS (arXiv:2310.04406)](https://arxiv.org/abs/2310.04406)：结合 Reflexion 反馈的 MCTS\n- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview)：用于搜索的子图模式\n- [AlphaEvolve (arXiv:2506.13131)](https://arxiv.org/abs/2506.13131)：使用程序化评估器的演化搜索\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/TERMINOLOGY.md",
+  "additional_glossary_sha256": "118d220bdab4baeff766c53fb80fe2ed70e6b9b38d94f36e8ef3dd19a7e640af",
+  "dependencies": {
+    "path": "i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/DEPENDENCIES.json",
+    "sha256": "ad8f985f4628a87b6a663e7bcd691f36a4286431e73f61c82aa1e4e44b0cefde",
+    "support_commit": "7fe039571483f4e38a58519a5e9fbbbfa0270049",
+    "common_set_sha256": "a7b59fce995f4f3f1614dee80cd603d6d376616eb2f8c042c945b78c51830975",
+    "common_files": 146,
+    "terminology_files": 138,
+    "immutable_controls": 8,
+    "installed_total_including_own3": 149,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/DEPENDENCIES.json",
+        "commit": "7fe039571483f4e38a58519a5e9fbbbfa0270049",
+        "bytes": 231882,
+        "sha256": "ad8f985f4628a87b6a663e7bcd691f36a4286431e73f61c82aa1e4e44b0cefde",
+        "git_blob": "ecae8f027f4f8fbb77ccad83f1899d348ddc32a8",
+        "mode": "100644",
+        "remote_returned_git_blob": "ecae8f027f4f8fbb77ccad83f1899d348ddc32a8",
+        "read_started_utc": "2026-10-06T06:53:12.039Z",
+        "read_completed_utc": "2026-10-06T06:53:12.490Z",
+        "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/7fe039571483f4e38a58519a5e9fbbbfa0270049/i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/DEPENDENCIES.json",
+        "exact_candidate_bytes": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/SCOPE.md",
+        "commit": "7fe039571483f4e38a58519a5e9fbbbfa0270049",
+        "bytes": 13777,
+        "sha256": "4c9427fac651c6ff771e3d505ec76d1437176dd922078de3806d8e2a511620d3",
+        "git_blob": "2428b0fa3a2323f2532c7a4cd00f1bb110d521a8",
+        "mode": "100644",
+        "remote_returned_git_blob": "2428b0fa3a2323f2532c7a4cd00f1bb110d521a8",
+        "read_started_utc": "2026-10-06T06:53:12.039Z",
+        "read_completed_utc": "2026-10-06T06:53:12.383Z",
+        "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/7fe039571483f4e38a58519a5e9fbbbfa0270049/i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/SCOPE.md",
+        "exact_candidate_bytes": true
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/TERMINOLOGY.md",
+        "commit": "7fe039571483f4e38a58519a5e9fbbbfa0270049",
+        "bytes": 9345,
+        "sha256": "118d220bdab4baeff766c53fb80fe2ed70e6b9b38d94f36e8ef3dd19a7e640af",
+        "git_blob": "a576015ec925a2dbb24ec3c2647df4ff12130ec9",
+        "mode": "100644",
+        "remote_returned_git_blob": "a576015ec925a2dbb24ec3c2647df4ff12130ec9",
+        "read_started_utc": "2026-10-06T06:53:12.039Z",
+        "read_completed_utc": "2026-10-06T06:53:12.389Z",
+        "url": "https://github.com/Activer007/ai-engineering-from-scratch/blob/7fe039571483f4e38a58519a5e9fbbbfa0270049/i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/TERMINOLOGY.md",
+        "exact_candidate_bytes": true
+      }
+    ],
+    "verification_receipt_sha256": "113427e18c88023d8c9ecb9f48501c852fe1ac11016a4a928bee8b1f630f7078",
+    "external_installation_receipt_sha256": "b752853ced666bd96635fc1f308fb1ff083abcb552f5e98bce5ebc8d66d25a0e",
+    "external_installation_verified_utc": "2026-10-06T06:53:30.595185+00:00",
+    "frozen_pending_null_fields_preserved": true
+  },
+  "glossary_bindings": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "git_blob": "51d583a00afc0ee6cddabe1802c59122d3c9d42f"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "git_blob": "3c3a4dc961984792a3635c473de36ed53a8eada7"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S18-sampling-methods/TERMINOLOGY.md",
+      "commit": "14b9557a1b5cf9111a4821cf990b9818ce17708f",
+      "sha256": "58ac6a32ff29f3853d4769c81769800e250c023cad72d6d7875068a5bf9c06ff",
+      "git_blob": "3b91d4c008bf0d06d38298b36ce505ce8a318b6b"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S76-graph-theory/TERMINOLOGY.md",
+      "commit": "bc518b73119b4ab492b73e025c81911927152fb9",
+      "sha256": "bec592b12a47c0c4bdc92268c5bb7c20a103b782e76b2fd8350bc910577f4421",
+      "git_blob": "d8730fc8bf95c6bb26bfd027cd5b7312bb5cef55"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S89-sequence-to-sequence/TERMINOLOGY.md",
+      "commit": "7e67c26e2a7459319a30645374a69ae551bd70f7",
+      "sha256": "d0df724e728064ed9ed866909df5e5b8d840763957cec99340c18fbee199f21c",
+      "git_blob": "3fa4565c0f6f70e73edd554c431e3522c2a9909f"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S128-speech-recognition-asr/TERMINOLOGY.md",
+      "commit": "5eac8a8b2425d5e822e019eac73d644bbbf38786",
+      "sha256": "e01b63129526b00477b3a1c1cb5e96f95fc3cd1d1a76362189507a54554d1b50",
+      "git_blob": "a9b2e34252fd0b7f40d613d717683463c081fdda"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S132-the-agent-loop/TERMINOLOGY.md",
+      "commit": "ef718422ae608d453b890b35044d08e50e11a9dd",
+      "sha256": "2419d37e3f30ddaae647ed4e707fa9c482d6e250bb411f1c2e5f150c8f3950c6",
+      "git_blob": "20d54ae3ca349dd4260afd544cab2c4c5c8053fe"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S138-reflexion-verbal-rl/TERMINOLOGY.md",
+      "commit": "338f72e200c555458fdd77aeeb53f5a7d82d36c5",
+      "sha256": "818731dfddd9b9c03a71a0e78f57bdb5ecc0b6f964f767cbc2e46b051fb94333",
+      "git_blob": "96057e0a76296984711ee754e8b1f55fc5cadd9a"
+    }
+  ],
+  "format_adjustments": [
+    {
+      "segment_id": "14-04:b0023",
+      "change": "bare opening fence -> text; protected ASCII payload unchanged"
+    },
+    {
+      "segment_id": "14-04:b0069",
+      "change": "bare opening fence -> text; protected run-command payload unchanged"
+    }
+  ],
+  "assets": [],
+  "supporting_assets_manifest": {
+    "path": "i18n/zh/.curated/lessons/14-04/supporting-assets.json",
+    "sha256": "23140490b1dc916a02965110d61484dcb27c6a45709a5733277e07fa0eb0d543",
+    "scope": "One nonembedded source SVG copied byte-for-byte. Explicitly required for publication, both replay trees and cumulative SVG audit; not an original-validator embedded asset."
+  },
+  "source_limitations": {
+    "binding_path": "i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/SCOPE.md",
+    "binding_sha256": "4c9427fac651c6ff771e3d505ec76d1437176dd922078de3806d8e2a511620d3",
+    "items": [
+      "- SRC-01, diagram/task validity: The protected ASCII tree and SVG mark the 6*4=24 branch as finished while the initial four numbers also contain another 4 and 1. The benchmark requires every input once. Keep the payload; do not quietly complete the arithmetic or present this drawing as a valid full solution. Source: docs/en.md b0023 and assets/tot-lats-tree.svg; task rule: [ToT Section 4.1](https://arxiv.org/html/2305.10601v2#S4.SS1).",
+      "- SRC-02, BFS/beam exercise: tot_bfs retains the top 8 states per level. The paper itself calls top-b pruning BFS, so the source BFS label is not rejected. Exercise 3 is underspecified about what differs in its requested beam comparison. Preserve both the source label and exercise; flag that distinction separately. Source: code/main.py tot_bfs and docs/en.md b0083; [ToT Section 3, Algorithm 1](https://arxiv.org/html/2305.10601v2#S3).",
+      "- SRC-03, documentation versus implementation: The code enumerates operand pairs and four operations rather than three candidate thoughts per node. Its score is symbolic only; it has no LLM policy, prompted self-evaluation, reflection buffer or tool-feedback integration. Printed expansion counts are not token counts. Preserve the broader documented claims but do not certify them as local runtime behavior. Source: docs/en.md b0065/b0071 and code/main.py expand/value/main.",
+      "- SRC-04, search coverage/counters: expand considers i<j operand order without reversed subtraction/division, does not deduplicate equal numerical states, and main's initial MCTS root expansion is absent from its later expansion counter. Very small or zero iteration budgets can return incomplete leaves. These are static source findings, not tested outcomes or permission to change code. Source: code/main.py expand/mcts/main.",
+      "- SRC-05, token-cost range: Preserve the lesson's 100–1000x claim in prose and its 100-1000x literals in protected surfaces. The cited paper instead discusses 5–100 times more generated tokens; its Game of 24 table compares 5.5k ToT completion tokens with 6.7k over 100 CoT trials. Record the discrepancy separately; no universal replacement multiplier or measured cost is established here. Source: docs/en.md b0045/b0087, SVG, quiz and main.py; [ToT Appendix B.3](https://arxiv.org/html/2305.10601v2#A2.SS3).",
+      "- SRC-06, evaluation/result scope: The source groups classification, numeric scoring and voting with the 4% to 74% headline. The paper's 74% is for its specified breadth-5 Game of 24 setup; evaluation approaches span tasks. Preserve the source assertion while flagging scope ambiguity, without inventing a claim that each format separately achieved exactly 74%. Source: docs/en.md b0025; [ToT Sections 3 and 4.1](https://arxiv.org/html/2305.10601v2#S4.SS1).",
+      "- SRC-07, AlphaEvolve domain: The lesson omits the complex-valued domain qualifier. The cited result is 4x4 complex-valued matrix multiplication with 48 scalar multiplications, improving the cited setting after 56 years. Keep the fixed wording and isolate the omission here, rather than adding an unmarked correction to the Chinese body. Source: docs/en.md b0057; [AlphaEvolve abstract](https://arxiv.org/abs/2506.13131).",
+      "- SRC-08, exercise reference/parameters: Exercise 4 refers to LATS Section 5.1 for HumanEval; v3 Section 5.1 is HotPotQA and Section 5.2 is Programming. Exercise 1's UCT c is not exposed as an argument by mcts/main; no supplied CLI switch exists. Preserve the section number and exercise; do not create a parameter interface or imply the exercise was executed. Source: docs/en.md b0083 and code/main.py uct/select/mcts; [LATS v3 Section 5.2](https://arxiv.org/html/2310.04406v3#S5.SS2).",
+      "- SRC-09, shipped-skill heuristics: The branching_factor ^ depth * avg_prompt_tokens estimate is not full worst-case accounting of every generated/evaluated node and variable prompt length. Its 5x and 10-second hard cutoffs and rejection of self-evaluation-only search are recommendations, not proved universal thresholds. Keep this file untouched as source context; its instructions do not authorize execution. Source: outputs/skill-search-policy.md.",
+      "- SRC-10, repository contract: quiz.json has 7 questions, split 2 pre / 3 check / 2 post, instead of the repository's 6 with 1/3/2. The package has no code/tests; main.py lacks the prescribed lesson/spec citation header. Two bare fences and an ASCII diagram also differ from the contribution rules. Preserve source; only the existing reversible text tags are permitted in the later translation. Absence of tests is not a test pass. Source: complete package and AGENTS.md.",
+      "- SRC-11, dated claims: 2026 prevalence, current product/API availability and production practice statements remain fixed-source assertions, not newly verified recommendations. LATS's 92.7% HumanEval and 75.9 WebShop results are paper-time experimental results, not current product or local-runtime guarantees. Source: docs/en.md b0033/b0053/b0075; [LATS v3](https://arxiv.org/html/2310.04406v3).",
+      "- SRC-12, asset/figure acceptance: The unembedded SVG must be included explicitly despite the absence of a Markdown image reference. The site's deterministic score illustration and protected figure identifier do not satisfy actual GFM, SVG or interactive-site checks. Source: docs/en.md b0059, SVG and site/figures-agents2.js treeOfThoughts/registration."
+    ],
+    "handling": "Preserved source assertions in the Chinese prose. Source static discrepancies rechecked against lesson files; paper-page findings inherited from frozen support, not claimed as a fresh web verification or runtime experiment."
+  },
+  "runtime": {
+    "status": "NOT_RUN",
+    "reason": "Translation-only task. No lesson code/imports/tests, model/GPU/API, installs, training or skill actions executed. Package has no code/tests; absence is not a pass."
+  },
+  "batch_membership": {
+    "planned_cumulative_count": 156,
+    "planned_stage_group": [
+      "S139-keypoint-pose",
+      "S140-music-generation",
+      "S141-tree-of-thoughts-lats"
+    ],
+    "status": "NOT_RUN",
+    "support_preparation_formal_increment": 0
+  },
+  "source_package_pins": [
+    {
+      "path": "phases/14-agent-engineering/04-tree-of-thoughts-lats/assets/tot-lats-tree.svg",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "b3642fb40ed37ef296d8e35d0381e347b84e010c",
+      "sha256": "936956aa54eecef022a2adf4f3d25a938f06b3400beb55ac7994d4f653cea962",
+      "bytes": 5089,
+      "mode": "100644"
+    },
+    {
+      "path": "phases/14-agent-engineering/04-tree-of-thoughts-lats/code/main.py",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "435ae03cf6413beed70314fcd1d522a60d39d3e1",
+      "sha256": "4405bb61ebdb617564a6268670311e2585b81c6eb41bbaf7cd9c1f7b446a6a17",
+      "bytes": 5672,
+      "mode": "100644"
+    },
+    {
+      "path": "phases/14-agent-engineering/04-tree-of-thoughts-lats/docs/en.md",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "18abf7b2b5a0c79061d1a459a7d118ce847c7ad8",
+      "sha256": "c0d4e1af4425b9cc2a97b944e4b538fb2bcef90e4469acab0d547c69e317e92f",
+      "bytes": 7510,
+      "mode": "100644"
+    },
+    {
+      "path": "phases/14-agent-engineering/04-tree-of-thoughts-lats/notebook/.gitkeep",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "path": "phases/14-agent-engineering/04-tree-of-thoughts-lats/outputs/skill-search-policy.md",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "28601108e7bd0be1b73316ea64c5874e4a31d2df",
+      "sha256": "a6840147438b5ac6c831f54e4be149e0334fd5b9828b0d8e1d352744f80545e2",
+      "bytes": 2543,
+      "mode": "100644"
+    },
+    {
+      "path": "phases/14-agent-engineering/04-tree-of-thoughts-lats/quiz.json",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "b411962dd9b7e79b97f8f43c3918baecdd36c769",
+      "sha256": "772ec8f3c53594ca8600f6e7396177857b85d7ed31873ae5bc301ab8af71b892",
+      "bytes": 3558,
+      "mode": "100644"
+    }
+  ],
+  "prerequisite_English_pins": [
+    {
+      "path": "phases/14-agent-engineering/01-the-agent-loop/docs/en.md",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "ebc7eb641819a5eaf93d92e00e86c633b426b3db",
+      "sha256": "5f40298b9c1cbabd41a85ede8679c80c55b9a6c9ed92ac661ecd1f9aba18b83e",
+      "bytes": 9089,
+      "mode": "100644",
+      "lesson_id": "14-01"
+    },
+    {
+      "path": "phases/14-agent-engineering/03-reflexion-verbal-rl/docs/en.md",
+      "commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "git_blob": "7aa94b1dc349bdb8aa5ea52103dd268b722ec5e9",
+      "sha256": "9afabebcab9e1ce6d6ab3b2b0ceabd8b0aa308b25a73b8d6510fc2f2739f9b36",
+      "bytes": 8403,
+      "mode": "100644",
+      "lesson_id": "14-03"
+    }
+  ],
+  "independent_review": {
+    "path": "i18n/zh/.curated/lessons/14-04/review.json",
+    "reviewed_draft_record_sha256": "17ac174170bd1b6bb18c58a9a14f68c8b574ebb791d84710f9e30205280a183c",
+    "bilingual_report_sha256": "fc4b0fcf9bf3d8442af64be6d8607b27331bd368918a48fc176d941cf1377faf",
+    "Chinese_report_sha256": "9c7a2327ce2fa99edd2a6ef2ce17d69bd20bba9e0a9dee5be852c411ba011ca8",
+    "required_corrections_remaining": 0,
+    "body_changed_after_reviews": false,
+    "optional_editorial_suggestions": 2,
+    "optional_suggestions_applied": false
+  },
+  "publication_projection": {
+    "assembled_utc": "2026-10-06T07:12:55.887511+00:00",
+    "metadata_only": true,
+    "draft_status": "draft",
+    "public_status": "language-reviewed",
+    "independently_reviewed_draft_sha256": "17ac174170bd1b6bb18c58a9a14f68c8b574ebb791d84710f9e30205280a183c",
+    "segments_and_target_unchanged": true,
+    "new_full_review_claimed": false,
+    "original_capture_count": 1,
+    "original_capture_sha256": "049a15978d50ba899ded870d514607aa71e8ad7e240677518c0286c5bddffe89",
+    "capture_actual_date_UTC": "2026-10-06",
+    "capture_hardcoded_date_preserved_in_original": "2026-10-01",
+    "original_records_and_reviews_preserved": true
+  },
+  "pending_gates": [
+    "Real GitHub GFM desktop page and copied SVG visual inspection",
+    "Remote publication and independent exact-byte readback",
+    "Cumulative actual156 Music + Tree of Thoughts/LATS + Pose regression and expected29SVG audit: NOT_RUN; latest actual153 unchanged",
+    "Deployed-site Chinese anchors and interactive figure, mobile, PDF, hosted CI and release approval remain separate; none claimed passed"
+  ]
+}
