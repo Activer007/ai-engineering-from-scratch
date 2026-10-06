@@ -1,0 +1,1868 @@
+{
+  "schema_version": 1,
+  "lesson_id": "04-25",
+  "source_path": "phases/04-computer-vision/25-vision-language-models/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "7779b8d1e4d8196b3f34ee02a8aaa5873db7e619",
+  "source_sha256": "8998f05f5d863f11139112ef6d845dce76cd3efc7756d6ea040ccb3bad018578",
+  "target_path": "i18n/zh/phases/04-computer-vision/25-vision-language-models/docs/zh.md",
+  "target_sha256": "53a99eb7b134ce0ed8612d75272894ab028711966d916a718665fd683b923771",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01"
+  },
+  "segments": [
+    {
+      "segment_id": "04-25:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern"
+      ],
+      "ordinal": 1,
+      "source_sha256": "a9245b3073f5029f91c011026cd91b3577fc7d1cd243ed18e8104f9a15940300",
+      "target": "# 视觉语言模型：ViT-MLP-LLM 模式\n"
+    },
+    {
+      "segment_id": "04-25:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern"
+      ],
+      "ordinal": 2,
+      "source_sha256": "199987d5237aac4ca048f1a5b16b2c30547aea0e44e767917744bd9fcf5137e8",
+      "target": "> 视觉编码器（vision encoder）将图像转换为 token（词元）。多层感知机（MLP）投影器（projector）将这些 token 映射到大语言模型（LLM）的嵌入空间（embedding space）。其余工作由语言模型完成。2026 年所有生产环境中的视觉语言模型（VLM）都采用这种 ViT-MLP-LLM 模式。\n"
+    },
+    {
+      "segment_id": "04-25:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern"
+      ],
+      "ordinal": 3,
+      "source_sha256": "0845e301b01e3086232e8471e2aec2cc2dba05bedbb79a941294183ba8d1b59e",
+      "target": "**Type:** Learn + Use\n**Languages:** Python\n**Prerequisites:** 阶段 4 第 14 课（ViT），阶段 4 第 18 课（CLIP），阶段 7 第 02 课（自注意力）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "04-25:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "04-25:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "6f978c5892bf1deb198516971f06c405aca1b2a060b2721d23c000ba22cc210b",
+      "target": "- 说明 ViT-MLP-LLM 架构，并解释三个组件各自的作用\n- 从参数量、上下文长度和基准测试表现三个方面比较 Qwen3-VL、InternVL3.5、LLaVA-Next 和 GLM-4.6V\n- 解释 DeepStack：为什么多层次的 ViT 特征比仅取最后一层特征更能促进视觉与语言的对齐\n- 用跨模态错误率（Cross-Modal Error Rate，CMER）衡量生产环境中 VLM 的幻觉（hallucination），并据此采取行动\n"
+    },
+    {
+      "segment_id": "04-25:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "04-25:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "029dc36c1d49621fd6576791aa28e44bd3b1bcebf8f0d32e92360873268d3ea6",
+      "target": "CLIP（阶段 4 第 18 课）为图像和文本提供了共享嵌入空间，足以支持零样本分类（zero-shot classification）和检索。它无法回答“这张图像中有多少辆红色汽车？”，因为 CLIP 不生成文本，只对相似度打分。\n"
+    },
+    {
+      "segment_id": "04-25:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "9a44490becbce80475114b34aca7d376d5258a7018c57c6c39ab656b271da858",
+      "target": "视觉语言模型（Vision-Language Models，VLMs），如 Qwen3-VL、InternVL3.5、LLaVA-Next 和 GLM-4.6V，将 CLIP 系列的图像编码器接到完整的语言模型上。模型接收一张图像和一个问题，然后生成答案。在 2026 年，开源 VLM 在多模态基准测试（MMMU、MMBench、DocVQA、ChartQA、MathVista、OSWorld）上已能媲美或超越 GPT-5 和 Gemini-2.5-Pro。\n"
+    },
+    {
+      "segment_id": "04-25:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "48537f2a1e6bd22b14461f2121c1c8b9c97ea3115dd119e83b4389946e509028",
+      "target": "这三个组件，即视觉 Transformer（ViT）、投影器和 LLM，构成了标准组合。模型之间的区别在于选用哪一种 ViT、投影器和 LLM，以及训练数据和对齐方案。一旦理解了这种模式，更换任何组件都只是按部就班的操作。\n"
+    },
+    {
+      "segment_id": "04-25:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "04-25:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The ViT-MLP-LLM architecture"
+      ],
+      "ordinal": 11,
+      "source_sha256": "acaa1ee79e94cd3ed26c811c87a79da4f9e9ebad5d85e2bb3ccc8a5c3edf26bd",
+      "target": "### ViT-MLP-LLM 架构\n"
+    },
+    {
+      "segment_id": "04-25:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The ViT-MLP-LLM architecture"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The ViT-MLP-LLM architecture"
+      ],
+      "ordinal": 12,
+      "source_sha256": "5d4b7afb3aeb916fa512547373e6b8ab445da0fd394e5d3fec2c1b7cfb6c24df",
+      "target": "```mermaid\nflowchart LR\n    IMG[\"Image<br/>(H x W x 3)\"] --> ViT[\"Vision encoder<br/>(ViT, CLIP-L,<br/>SigLIP, DINOv3)\"]\n    ViT --> FEATS[\"Image tokens<br/>(N, d_vit)\"]\n    FEATS --> PROJ[\"Projector<br/>(2-4 layer MLP<br/>or Q-former)\"]\n    PROJ --> VTOK[\"Image tokens<br/>in LLM space<br/>(N, d_llm)\"]\n    TXT[\"Text prompt\"] --> TOK[\"LLM tokenizer\"]\n    TOK --> TTOK[\"Text tokens<br/>(M, d_llm)\"]\n    VTOK --> CONCAT[\"Interleave<br/>or concat\"]\n    TTOK --> CONCAT\n    CONCAT --> LLM[\"Decoder LLM<br/>(Qwen3, LLaMA, etc.)\"]\n    LLM --> OUT[\"Text answer\"]\n\n    style ViT fill:#dbeafe,stroke:#2563eb\n    style PROJ fill:#fef3c7,stroke:#d97706\n    style LLM fill:#dcfce7,stroke:#16a34a\n```\n"
+    },
+    {
+      "segment_id": "04-25:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The ViT-MLP-LLM architecture"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0025",
+      "kind": "list",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The ViT-MLP-LLM architecture"
+      ],
+      "ordinal": 13,
+      "source_sha256": "bd4caaac9d919ee2ecb79002258a0817431ed097b133e3cbd7d36b4b354789fd",
+      "target": "1. **视觉编码器**：预训练的 ViT（CLIP-L/14、SigLIP、DINOv3，或经过微调（fine-tuning）的变体），负责生成图像块 token。\n2. **投影器**：一个小型模块（2-4 层 MLP，或 Q-former 桥接模块），将视觉 token 映射到 LLM 的嵌入维度。大部分微调都发生在这里。\n3. **LLM**：仅解码器语言模型（decoder-only language model，如 Qwen3、Llama、Mistral、GLM、InternLM）。它依次读取视觉 + 文本 token，并生成文本。\n"
+    },
+    {
+      "segment_id": "04-25:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The ViT-MLP-LLM architecture"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The ViT-MLP-LLM architecture"
+      ],
+      "ordinal": 14,
+      "source_sha256": "f89e45566267c3c2e10151bbd71bc4ce05836549a38c05f24b2cf719402d352b",
+      "target": "原则上，这三个组件都可以训练。实际中，训练投影器时，视觉编码器和 LLM 的大部分参数保持冻结，以较低成本获得数个 billion（十亿）参数所提供的信号。\n"
+    },
+    {
+      "segment_id": "04-25:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The ViT-MLP-LLM architecture"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### DeepStack"
+      ],
+      "ordinal": 15,
+      "source_sha256": "da7979406fca006c95313beb7f1b973b37fbac080a30a8c297ff485baa27b94a",
+      "target": "### DeepStack\n"
+    },
+    {
+      "segment_id": "04-25:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### DeepStack"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### DeepStack"
+      ],
+      "ordinal": 16,
+      "source_sha256": "626d4115b2c13b8716a299877b2ce65dec52f627c9783407128ab3aa6aae343c",
+      "target": "常规投影只使用 ViT 的最后一层。DeepStack（Qwen3-VL）从 ViT 的多个深度抽取特征，并将其堆叠。较深层携带高层语义，较浅层携带细粒度的空间和纹理信息。将两者都送入 LLM，可以弥合“图像里有什么”（语义）与“具体在哪里”（空间定位，spatial grounding）之间的鸿沟。\n"
+    },
+    {
+      "segment_id": "04-25:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### DeepStack"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Three training stages"
+      ],
+      "ordinal": 17,
+      "source_sha256": "9800c0dfcc4a0693889efb0178425e820f49780a9c16b998dac09729456c8950",
+      "target": "### 三个训练阶段\n"
+    },
+    {
+      "segment_id": "04-25:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Three training stages"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Three training stages"
+      ],
+      "ordinal": 18,
+      "source_sha256": "e15531861dd21b751b2d9e7bc102ee42b684dd2cd57040f33e8b148291e443df",
+      "target": "现代 VLM 分阶段训练：\n"
+    },
+    {
+      "segment_id": "04-25:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Three training stages"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0037",
+      "kind": "list",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Three training stages"
+      ],
+      "ordinal": 19,
+      "source_sha256": "67a8c0e8622f72f528482b028223245b769fb4bee9b3851509762c2d4127f6d0",
+      "target": "1. **对齐（alignment）**：冻结 ViT 和 LLM，用（图像，图像描述）对，只训练投影器，让它学会将视觉空间映射到语言空间。\n2. **预训练（pre-training）**：解冻全部参数，用大规模交错图文数据（500M+ 对，M 表示百万）训练，建立模型的视觉知识。\n3. **指令微调（instruction tuning）**：用经过精心整理的（图像，问题，答案）三元组进行微调，教会模型对话行为和任务格式。这一步把“具备视觉感知能力的语言模型”变成了可用的助手。\n"
+    },
+    {
+      "segment_id": "04-25:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Three training stages"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Three training stages"
+      ],
+      "ordinal": 20,
+      "source_sha256": "bd88fe93fb5c339790a80fcd1e749e77bc7c764f422aea96ad410be1edea52c3",
+      "target": "大多数 LoRA（低秩适配）微调使用一个小型标注数据集，针对阶段 3 进行。\n"
+    },
+    {
+      "segment_id": "04-25:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Three training stages"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Model family comparison (early 2026)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "72868e565d5fb1dc13cf36b9e2b9f5a0ff15cf4dd4195e6fa507a95c2fea1c9b",
+      "target": "### 模型家族对比（2026 年初）\n"
+    },
+    {
+      "segment_id": "04-25:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Model family comparison (early 2026)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0043",
+      "kind": "table",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Model family comparison (early 2026)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "f178ee94f8a190ee52b8a32ac686738f1f7ecb328a50e5eaa044a29797da9207",
+      "target": "| 模型 | 参数量 | 视觉编码器 | LLM | 上下文 | 优势 |\n|-------|--------|----------------|-----|---------|-----------|\n| Qwen3-VL-235B-A22B (MoE，混合专家模型) | 235B（22B 激活参数；B 表示十亿） | 定制 ViT + DeepStack | Qwen3 | 256K（K 表示千） | 通用 SOTA（当前最优水平），GUI（图形用户界面）智能体 |\n| Qwen3-VL-30B-A3B (MoE) | 30B（3B 激活参数） | 定制 ViT + DeepStack | Qwen3 | 256K | 规模更小的 MoE 替代方案 |\n| Qwen3-VL-8B (dense，稠密) | 8B | 定制 ViT | Qwen3 | 128K | 生产环境中稠密模型的默认选择 |\n| InternVL3.5-38B | 38B | InternViT-6B | Qwen3 + GPT-OSS | 128K | MMBench / MMVet 表现强劲 |\n| InternVL3.5-241B-A28B | 241B（28B 激活参数） | InternViT-6B | Qwen3 | 128K | 可与 GPT-4o 竞争 |\n| LLaVA-Next 72B | 72B | SigLIP | Llama-3 | 32K | 开放，易于微调 |\n| GLM-4.6V | ~70B | 定制 | GLM | 64K | 开源，OCR（光学字符识别）能力强 |\n| MiniCPM-V-2.6 | 8B | SigLIP | MiniCPM | 32K | 适合边缘设备 |\n"
+    },
+    {
+      "segment_id": "04-25:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Model family comparison (early 2026)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Visual agents"
+      ],
+      "ordinal": 23,
+      "source_sha256": "3be32bb7cab6e7f1656f25b8466de770c5f105e54bf654fb6942648ffdc894ae",
+      "target": "### 视觉智能体\n"
+    },
+    {
+      "segment_id": "04-25:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Visual agents"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Visual agents"
+      ],
+      "ordinal": 24,
+      "source_sha256": "71548a69552fb30c0d3719e55bfcd900663a17ec3b99fcc735f2c3a070871470",
+      "target": "Qwen3-VL-235B 在 OSWorld 上取得了全球顶尖表现。OSWorld 是一项面向操作 GUI（桌面、移动端、网页）的 **视觉智能体（visual agent）** 的基准测试。模型查看截图、理解界面，并输出动作（点击、输入、滚动）。配合工具，它可以闭环完成常见桌面任务。2026 年大多数“AI PC”演示背后运行的就是这种机制。\n"
+    },
+    {
+      "segment_id": "04-25:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Visual agents"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Agentic capabilities + RoPE variants"
+      ],
+      "ordinal": 25,
+      "source_sha256": "b1db725298bf686a713743a9d5286c8d0b73635ebeae0df6d68918a294b39412",
+      "target": "### 智能体能力 + RoPE 变体\n"
+    },
+    {
+      "segment_id": "04-25:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Agentic capabilities + RoPE variants"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Agentic capabilities + RoPE variants"
+      ],
+      "ordinal": 26,
+      "source_sha256": "19cdf9787f38118006ad41b88e1a869fb66e7b56ddf81c6973f42042a624b97f",
+      "target": "VLM 需要知道视频中的一帧出现在 **什么时刻**。Qwen3-VL 从 T-RoPE（时间旋转位置嵌入，temporal rotary position embeddings）演进到 **基于文本的时间对齐（text-based time alignment）**，也就是将显式表示时间戳的文本 token 与视频帧交错排列。模型看到“`<timestamp 00:32>` 帧，提示词（prompt）”，就能推理时间关系。\n"
+    },
+    {
+      "segment_id": "04-25:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Agentic capabilities + RoPE variants"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 27,
+      "source_sha256": "de3f3f8d9fbe9997c89086f330d3e5a27b267ac1292f70575bcecbdbc8c85272",
+      "target": "### 对齐问题\n"
+    },
+    {
+      "segment_id": "04-25:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 28,
+      "source_sha256": "a85f382875dfded6f482d5440023c5cb6d0d5235e211decc99ed516e7fe3e4e5",
+      "target": "某个爬取数据集中，12% 的图文对包含未完全以图像内容为依据的描述。用这些数据训练的 VLM 会悄然学会产生幻觉：捏造物体、读错数字、虚构关系。这是生产环境中最主要的失败模式。\n"
+    },
+    {
+      "segment_id": "04-25:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 29,
+      "source_sha256": "dc8e55af84af746bb31e3d4357d2ce52640fbb0d0d3ac3eb9c0ad892307817a5",
+      "target": "Skywork.ai 提出了 **跨模态错误率（CMER）** 来跟踪这一问题：\n"
+    },
+    {
+      "segment_id": "04-25:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0059",
+      "kind": "fence",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 30,
+      "source_sha256": "e9463417c8a48cedf263993d252f8d4065f1a510efa0e730e925c71615b6bc6f",
+      "target": "```text\nCMER = fraction of outputs where the text confidence is high but the image-text similarity (via a CLIP-family checker) is low\n```\n"
+    },
+    {
+      "segment_id": "04-25:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 31,
+      "source_sha256": "9de75cf31a36ded48de05b8ebd76f86c5719b5801f7be8f79a825966f00b3fe0",
+      "target": "CMER 较高，意味着模型正在自信地说出缺乏图像依据的内容。在他们的部署中，监测 CMER 并将其作为生产环境的关键绩效指标（KPI），使幻觉率降低了 ~35%。诀窍不是“修好模型”，而是“将高 CMER 的输出交给人工审核”。\n"
+    },
+    {
+      "segment_id": "04-25:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### The alignment problem"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Fine-tuning with LoRA / QLoRA"
+      ],
+      "ordinal": 32,
+      "source_sha256": "52b69af5f8a300ad38c8ac81d8e2ccf0c7b14f4989edb365d01b45a2ded62ce6",
+      "target": "### 使用 LoRA / QLoRA 进行微调\n"
+    },
+    {
+      "segment_id": "04-25:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Fine-tuning with LoRA / QLoRA"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Fine-tuning with LoRA / QLoRA"
+      ],
+      "ordinal": 33,
+      "source_sha256": "afe6c3500d3ff614bb5d3016a47b807c2fda7c1c49fd98ae9c0a1427b8e9961e",
+      "target": "对大多数团队而言，全量微调一个 70B 的 VLM 并不现实。在注意力 + 投影器层上应用 LoRA（秩（rank）为 16-64），或使用基座权重为 4-bit 的 QLoRA（结合量化的低秩适配），单张 A100 / H100 就能承载这样的微调任务。成本：5,000-50,000 个样本、$100-$5,000 的计算费用，以及 2-10 小时的训练时间。\n"
+    },
+    {
+      "segment_id": "04-25:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Fine-tuning with LoRA / QLoRA"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Spatial reasoning is still weak"
+      ],
+      "ordinal": 34,
+      "source_sha256": "f2d29f95546b4dbee5478790b0f25054304726d6ca7e770ec663af239995f1b7",
+      "target": "### 空间推理仍然薄弱\n"
+    },
+    {
+      "segment_id": "04-25:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Spatial reasoning is still weak"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Spatial reasoning is still weak"
+      ],
+      "ordinal": 35,
+      "source_sha256": "75f7875202fd4aaf4008f2c40399830f5c7c18438b5486d4f172e7ec3c7e661d",
+      "target": "当前 VLM 在空间推理基准测试（上下、左右、计数、距离）中的得分为 50-60%。如果你的应用场景依赖于判断“哪个物体在另一个物体上方”，就要进行充分验证，因为通用 VLM 的表现低于人类。对于纯空间任务，比 VLM 更好的替代方案包括专门的关键点 / 姿态估计器、深度估计模型，或对边界框几何信息进行后处理的检测模型。\n"
+    },
+    {
+      "segment_id": "04-25:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Spatial reasoning is still weak"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0071",
+      "kind": "fence",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Spatial reasoning is still weak"
+      ],
+      "ordinal": 36,
+      "source_sha256": "bfa9d4ad8fd576a8b3d6207ce224cd1fc3f72bc542c2294e55c17503f9bfd8aa",
+      "target": "```figure\nv4-vlm-projector\n```\n"
+    },
+    {
+      "segment_id": "04-25:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## The Concept",
+        "### Spatial reasoning is still weak"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "04-25:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 1: The projector"
+      ],
+      "ordinal": 38,
+      "source_sha256": "600522ccbead77482d76b31ef4bdc25a21c6fc52334e07e7ce2ea037b506a7de",
+      "target": "### 步骤 1：投影器\n"
+    },
+    {
+      "segment_id": "04-25:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 1: The projector"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 1: The projector"
+      ],
+      "ordinal": 39,
+      "source_sha256": "a8e080b04cd80873e58a3316cdd0f06c8b8aefdb1c37a934328ac58cf6fa726e",
+      "target": "这是你最常训练的部分：一个带 GELU 的 2-4 层 MLP。\n"
+    },
+    {
+      "segment_id": "04-25:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 1: The projector"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 1: The projector"
+      ],
+      "ordinal": 40,
+      "source_sha256": "8c76dec298b577cd0ae8bc5a9cd423d5ff2c86d228f0f05735acc1df5a046258",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\n\nclass Projector(nn.Module):\n    def __init__(self, vit_dim=768, llm_dim=4096, hidden=4096):\n        super().__init__()\n        self.net = nn.Sequential(\n            nn.Linear(vit_dim, hidden),\n            nn.GELU(),\n            nn.Linear(hidden, llm_dim),\n        )\n\n    def forward(self, x):\n        return self.net(x)\n```\n"
+    },
+    {
+      "segment_id": "04-25:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 1: The projector"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 1: The projector"
+      ],
+      "ordinal": 41,
+      "source_sha256": "03f519cc582fe8ad4148e1c0477d6596e8bc973ba66f63cee71083de8f71e608",
+      "target": "输入是形状为 `(N_patches, d_vit)` 的 token 张量，输出为 `(N_patches, d_llm)`。LLM 会把输出的每一行都视为一个普通 token。\n"
+    },
+    {
+      "segment_id": "04-25:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 1: The projector"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 2: Assemble ViT-MLP-LLM end-to-end"
+      ],
+      "ordinal": 42,
+      "source_sha256": "8ac43f7239dd2fb56bf79e2752ca8bf1f902a0945bc9c4eed9a8eba6af15eb0f",
+      "target": "### 步骤 2：端到端组装 ViT-MLP-LLM\n"
+    },
+    {
+      "segment_id": "04-25:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 2: Assemble ViT-MLP-LLM end-to-end"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 2: Assemble ViT-MLP-LLM end-to-end"
+      ],
+      "ordinal": 43,
+      "source_sha256": "c3cd7dc39b42a14b711a9ea83fb2eb38311347b11d830d5473efcfaa909cabad",
+      "target": "下面是最小 VLM 的前向传播骨架。实际代码使用 `transformers`，这里只展示概念结构。\n"
+    },
+    {
+      "segment_id": "04-25:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 2: Assemble ViT-MLP-LLM end-to-end"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0087",
+      "kind": "fence",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 2: Assemble ViT-MLP-LLM end-to-end"
+      ],
+      "ordinal": 44,
+      "source_sha256": "c6323afd1d55350a88e26f877f3ef298e36eb34e71c752fba747f6adb70c9871",
+      "target": "```python\nclass MinimalVLM(nn.Module):\n    def __init__(self, vit, projector, llm, image_token_id):\n        super().__init__()\n        self.vit = vit\n        self.projector = projector\n        self.llm = llm\n        self.image_token_id = image_token_id  # placeholder token in text prompt\n\n    def forward(self, image, input_ids, attention_mask):\n        # 1. vision features\n        vision_tokens = self.vit(image)                     # (B, N_patches, d_vit)\n        vision_embeds = self.projector(vision_tokens)       # (B, N_patches, d_llm)\n\n        # 2. text embeddings\n        text_embeds = self.llm.get_input_embeddings()(input_ids)  # (B, M, d_llm)\n\n        # 3. replace image placeholder tokens with vision embeds\n        merged = self._merge(text_embeds, vision_embeds, input_ids)\n\n        # 4. run LLM\n        return self.llm(inputs_embeds=merged, attention_mask=attention_mask)\n\n    def _merge(self, text_embeds, vision_embeds, input_ids):\n        out = text_embeds.clone()\n        expected = vision_embeds.size(1)\n        for b in range(input_ids.size(0)):\n            positions = (input_ids[b] == self.image_token_id).nonzero(as_tuple=True)[0]\n            if len(positions) != expected:\n                raise ValueError(\n                    f\"batch item {b} has {len(positions)} image tokens but vision_embeds has {expected} patches.\"\n                    \" Every sample in the batch must be pre-padded to the same number of image placeholder tokens.\")\n            out[b, positions] = vision_embeds[b]\n        return out\n```\n"
+    },
+    {
+      "segment_id": "04-25:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 2: Assemble ViT-MLP-LLM end-to-end"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0089",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 2: Assemble ViT-MLP-LLM end-to-end"
+      ],
+      "ordinal": 45,
+      "source_sha256": "f1008ff923f04b9afc47d4e875ac04e726377ea701fe6bb572cd03acb68c2a46",
+      "target": "文本中的 `<image>` 占位 token 会被真正的图像嵌入替换，这与 LLaVA、Qwen-VL 和 InternVL 使用的模式相同。\n"
+    },
+    {
+      "segment_id": "04-25:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 2: Assemble ViT-MLP-LLM end-to-end"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 3: CMER computation"
+      ],
+      "ordinal": 46,
+      "source_sha256": "d29e4207e1d3764b82809b0c5db482cf9bb7dbb97b5c50d801577781c39dee15",
+      "target": "### 步骤 3：计算 CMER\n"
+    },
+    {
+      "segment_id": "04-25:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 3: CMER computation"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0093",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 3: CMER computation"
+      ],
+      "ordinal": 47,
+      "source_sha256": "554cf768cbb7553ecf81a208e7d538891f03a34135c64d200b340c2da736f63d",
+      "target": "一项轻量级的运行时检查。\n"
+    },
+    {
+      "segment_id": "04-25:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 3: CMER computation"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0095",
+      "kind": "fence",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 3: CMER computation"
+      ],
+      "ordinal": 48,
+      "source_sha256": "0a037ffa9b77c9280fa746b09cab32294617f0afedb873f4ec8fef5ba24c6367",
+      "target": "```python\nimport torch.nn.functional as F\n\n\ndef cross_modal_error_rate(image_emb, text_emb, text_confidence, sim_threshold=0.25, conf_threshold=0.8):\n    \"\"\"\n    image_emb, text_emb: embeddings of image and generated text (normalised internally)\n    text_confidence:     mean per-token probability in [0, 1]\n    Returns:             fraction of high-confidence outputs with low image-text alignment\n    \"\"\"\n    image_emb = F.normalize(image_emb, dim=-1)\n    text_emb = F.normalize(text_emb, dim=-1)\n    sim = (image_emb * text_emb).sum(dim=-1)        # cosine similarity\n    high_conf_low_sim = (text_confidence > conf_threshold) & (sim < sim_threshold)\n    return high_conf_low_sim.float().mean().item()\n```\n"
+    },
+    {
+      "segment_id": "04-25:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 3: CMER computation"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0097",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 3: CMER computation"
+      ],
+      "ordinal": 49,
+      "source_sha256": "cdcc41a3b9c4193c372a4bf3a38e617574cdf3a023efe804df1b21f024f5ec71",
+      "target": "将 CMER 视为生产环境的 KPI，按端点（endpoint）、提示词类型和客户分别监测。CMER 上升说明模型开始在某种输入分布上产生幻觉。\n"
+    },
+    {
+      "segment_id": "04-25:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 3: CMER computation"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 4: Toy VLM classifier (runnable)"
+      ],
+      "ordinal": 50,
+      "source_sha256": "2bd5e61a5249bc13ac09c5f4c29cdc527af35492a2fb14504b10d67b3a0ef8aa",
+      "target": "### 步骤 4：玩具 VLM 分类器（可运行）\n"
+    },
+    {
+      "segment_id": "04-25:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 4: Toy VLM classifier (runnable)"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 4: Toy VLM classifier (runnable)"
+      ],
+      "ordinal": 51,
+      "source_sha256": "3a45de6c42b32e5d26124aa4090bb13b3d7a3743786880f0aa6c977ea631b3dc",
+      "target": "演示投影器可以被训练：输入模拟的“ViT 特征”，由一个微型的 LLM 风格 token 来预测类别。\n"
+    },
+    {
+      "segment_id": "04-25:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 4: Toy VLM classifier (runnable)"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 4: Toy VLM classifier (runnable)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "5058452711a58b09788717b48963b2ebf2b6e48199b86c863bd9bc15f0cad196",
+      "target": "```python\nclass ToyVLM(nn.Module):\n    def __init__(self, vit_dim=32, llm_dim=64, num_classes=5):\n        super().__init__()\n        self.projector = Projector(vit_dim, llm_dim, hidden=64)\n        self.head = nn.Linear(llm_dim, num_classes)\n\n    def forward(self, vision_tokens):\n        projected = self.projector(vision_tokens)\n        pooled = projected.mean(dim=1)\n        return self.head(pooled)\n```\n"
+    },
+    {
+      "segment_id": "04-25:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 4: Toy VLM classifier (runnable)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 4: Toy VLM classifier (runnable)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "c1ac65830625d9773fb25f2b3ff8620c7b49688e897d5b50ffbabe25ddc64a60",
+      "target": "用合成的（特征，类别）对，不到 200 步就能拟合这个模型，足以表明投影器模式有效。\n"
+    },
+    {
+      "segment_id": "04-25:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Build It",
+        "### Step 4: Toy VLM classifier (runnable)"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "04-25:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "a50181b9486aaff18882c1264ccf25c0a9fb5350126c847e4651d0738f13f3a8",
+      "target": "2026 年，生产团队使用 VLM 有三种方式：\n"
+    },
+    {
+      "segment_id": "04-25:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0111",
+      "kind": "list",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "bc4b505fdf6f107adbea8f64224ba519c59093844d5cba3314456795491dc572",
+      "target": "- **托管 API（应用程序编程接口）**：OpenAI Vision、Anthropic Claude Vision、Google Gemini Vision。无需自建基础设施，但存在供应商风险。\n- **开源模型自行托管**：通过 `transformers` 和 `vllm` 使用 Qwen3-VL 或 InternVL3.5。可完全掌控，但前期投入更大。\n- **领域微调**：加载 Qwen2.5-VL-7B 或 LLaVA-1.6-7B，用 5k-50k（k 表示千）个定制样本进行 LoRA 微调，再通过 `vllm` 或 `TGI` 提供服务。\n"
+    },
+    {
+      "segment_id": "04-25:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0113",
+      "kind": "fence",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "85b146c5eca72be0b87ff2451f247e25f71860ca67d503bd53b22b0e09b8eb10",
+      "target": "```python\nfrom transformers import AutoProcessor, AutoModelForVision2Seq\nimport torch\nfrom PIL import Image\n\nmodel_id = \"Qwen/Qwen3-VL-8B-Instruct\"\nprocessor = AutoProcessor.from_pretrained(model_id)\nmodel = AutoModelForVision2Seq.from_pretrained(model_id, torch_dtype=torch.bfloat16, device_map=\"auto\")\n\nmessages = [{\n    \"role\": \"user\",\n    \"content\": [\n        {\"type\": \"image\", \"image\": Image.open(\"plot.png\")},\n        {\"type\": \"text\", \"text\": \"What does this chart show?\"},\n    ],\n}]\ninputs = processor.apply_chat_template(messages, add_generation_prompt=True, tokenize=True, return_dict=True, return_tensors=\"pt\").to(\"cuda\")\ngenerated = model.generate(**inputs, max_new_tokens=256)\nanswer = processor.decode(generated[0][inputs[\"input_ids\"].shape[1]:], skip_special_tokens=True)\n```\n"
+    },
+    {
+      "segment_id": "04-25:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "49b396233b2e053d26b2afcc9488abc8bc52422d24e0564dd963562126bc634e",
+      "target": "`apply_chat_template` 隐藏了 `<image>` 占位符的分词细节，合并操作由模型在内部处理。\n"
+    },
+    {
+      "segment_id": "04-25:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Ship It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "04-25:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Ship It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Ship It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "2d7d8a54528e5c57d81432c3291d09eabfa1bdb1c89bfd04e496f10a5214cf37",
+      "target": "本课产出：\n"
+    },
+    {
+      "segment_id": "04-25:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Ship It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0121",
+      "kind": "list",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Ship It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "96c2fe3382dc064dbeac7df521c478c2bae9bc4cf425d2d7016a8c254a59e5b7",
+      "target": "- `outputs/prompt-vlm-selector.md`：根据准确率、延迟、上下文长度和预算，在 Qwen3-VL / InternVL3.5 / LLaVA-Next / API 之间做出选择。\n- `outputs/skill-cmer-monitor.md`：生成代码，为生产环境中的 VLM 端点接入跨模态错误率监测、按端点划分的仪表盘和告警阈值。\n"
+    },
+    {
+      "segment_id": "04-25:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Ship It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0123",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Exercises"
+      ],
+      "ordinal": 62,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "04-25:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Exercises"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0125",
+      "kind": "list",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Exercises"
+      ],
+      "ordinal": 63,
+      "source_sha256": "47dc5bced5517cc3466682127610b0965b72b97ce67ef60c902a30224e07652d",
+      "target": "1. **（简单）** 选择任意开放的 VLM，对五张图像分别运行三种提示词（“what is this?”、“count the objects”、“describe the scene”）。人工将每个回答评为正确 / 部分正确 / 产生幻觉，计算一个初步的、类似 CMER 的比率。\n2. **（中等）** 使用目标领域中带图像描述的 500 张图像，以 LoRA（秩为 16）微调 Qwen2.5-VL-3B 或 LLaVA-1.6-7B。比较零样本与微调后的 MMBench 风格准确率。\n3. **（困难）** 将 VLM 的默认 SigLIP/CLIP 图像编码器替换为 DINOv3，仅重新训练投影器（冻结 LLM + 冻结 DINOv3）。衡量稠密预测任务（计数、空间推理）的表现是否提高。\n"
+    },
+    {
+      "segment_id": "04-25:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Exercises"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0127",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Key Terms"
+      ],
+      "ordinal": 64,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "04-25:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Key Terms"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0129",
+      "kind": "table",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Key Terms"
+      ],
+      "ordinal": 65,
+      "source_sha256": "99f0153ed5bc756e420333d250970273609e775fc30ec5bdebee27b6094b4c1b",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| ViT-MLP-LLM | “VLM 模式” | 视觉编码器 + 投影器 + 语言模型；2026 年的每一种 VLM 都如此 |\n| 投影器（Projector） | “桥梁” | 将视觉 token 映射到 LLM 嵌入空间的 2-4 层 MLP（或 Q-former） |\n| DeepStack | “Qwen3-VL 的特征技巧” | 堆叠多层次的 ViT 特征，而不只使用最后一层 |\n| 图像 token（Image token） | “<image> 占位符” | 文本流中的特殊 token，会被投影后的视觉嵌入替换 |\n| CMER | “幻觉 KPI” | 跨模态错误率；文本置信度高而图文相似度低时，该指标较高 |\n| 视觉智能体（Visual agent） | “会点击的 VLM” | 通过工具调用来操作 GUI（OSWorld、移动端、网页）的 VLM |\n| Q-former | “固定数量 token 的桥梁” | BLIP-2 风格的投影器，生成固定数量的视觉查询 token |\n| 对齐 / 预训练 / 指令微调 | “三个阶段” | 标准的 VLM 训练流程 |\n"
+    },
+    {
+      "segment_id": "04-25:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Key Terms"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Further Reading"
+      ],
+      "ordinal": 66,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "04-25:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Further Reading"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-25:b0133",
+      "kind": "list",
+      "heading_path": [
+        "# Vision-Language Models — The ViT-MLP-LLM Pattern",
+        "## Further Reading"
+      ],
+      "ordinal": 67,
+      "source_sha256": "29ff0c19e3e3a1414d5e2b015e4b5e25896c6f987311c23b90a02afac1c78a62",
+      "target": "- [Qwen3-VL 技术报告（arXiv 2511.21631）](https://arxiv.org/abs/2511.21631)\n- [InternVL3.5：推动开源多模态模型发展（arXiv 2508.18265）](https://arxiv.org/html/2508.18265v1)\n- [LLaVA-Next 系列](https://llava-vl.github.io/blog/2024-05-10-llava-next-stronger-llms/)\n- [BentoML：2026 年最佳开源 VLM](https://www.bentoml.com/blog/multimodal-ai-a-guide-to-open-source-vision-language-models)\n- [MMMU：多学科多模态理解基准测试](https://mmmu-benchmark.github.io/)\n- [制造业中的 VLM（Robotics Tomorrow，2026 年三月）](https://www.roboticstomorrow.com/story/2026/03/when-machines-learn-to-see-like-experts-the-rise-of-vision-language-models-in-manufacturing/26335/)\n"
+    }
+  ],
+  "support": {
+    "commit": "33816e922c905fff5d3fcb2be7d0b13336cf3ad4",
+    "tree": "99383ded4192c53e5393eefbf7b0496f18275d4e",
+    "dependencies_path": "i18n/zh/.curated/stages/S151-vision-language-models/DEPENDENCIES.json",
+    "dependencies_sha256": "195a5a14b4ef1adcb020828df2218fadfb3a22835db8fb13978054476d87cc60",
+    "common_set_sha256": "6ff499787041345bd952d34a1dd6b1e87c54ea832cc7624477f51ee69024d0a6",
+    "common_files": 155,
+    "terminology_files": 147,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 158,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S151-vision-language-models/DEPENDENCIES.json",
+        "commit": "33816e922c905fff5d3fcb2be7d0b13336cf3ad4",
+        "git_blob": "36b7802aae506a3b0a5f94c7125bf806fbb2349f",
+        "sha256": "195a5a14b4ef1adcb020828df2218fadfb3a22835db8fb13978054476d87cc60",
+        "bytes": 273719,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S151-vision-language-models/SCOPE.md",
+        "commit": "33816e922c905fff5d3fcb2be7d0b13336cf3ad4",
+        "git_blob": "b2c29fbd87eec7d7c0bd1848fa5e4896cb7cde0f",
+        "sha256": "91fa17768819450e09978e6de3893f8095860b1db8ab48b828407786bf88c4af",
+        "bytes": 12746,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S151-vision-language-models/TERMINOLOGY.md",
+        "commit": "33816e922c905fff5d3fcb2be7d0b13336cf3ad4",
+        "git_blob": "d0d46b990043258c30d0e047fcaab659a6821416",
+        "sha256": "bcd886c2da1fa9b318ff929a866bdb2bd5405be41565ef8d899a0e4368c705ac",
+        "bytes": 9537,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "e0ebb40f2def08e89dcb7423d7326ea6e059c008fb752bd84afa027272f0a368",
+    "installation_completed_utc": "2026-10-06T19:30:24.073990+00:00",
+    "frozen_pending_null_fields_preserved": true
+  },
+  "authoring_history": {
+    "original_author_handoff_sha256": "429bc086b9bdb4222bc1a9699e533dd2ee8ffdb4b7d373ca4f1aa922f483e7b4",
+    "initial_evidence_manifest_sha256": "64d0dbc7b2cfa50daee23ee93b7715d4d010543a6aafab1b8665fef0cdb4508e",
+    "original_author_evidence_files_preserved": 58,
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false,
+    "capture_invocations": 1,
+    "raw_capture_hardcoded_date": "2026-10-01",
+    "actual_authoring_date_utc": "2026-10-06",
+    "capture_date_caveat": "The unchanged original capture helper hardcodes 2026-10-01. That raw value remains in provenance and is not the actual authoring date. Actual UTC timestamps are recorded separately; no recapture.",
+    "first_target_sha256": "bcea55eb850381165be6c7dda19f65e92dfa97f7a17050293411042644e80e35",
+    "original_raw_capture_sha256": "934e021ed5a81c1c8f9befe4cbcb4dfe20b8f8047cd064fbb828d22869cd8a6b",
+    "chronology": {
+      "go_received_utc": "2026-10-06T19:35:57.513656+00:00",
+      "proposal_sha256": "546527cae994dfe0cd11357abdf52989948f6424309f9837e73dae77f22c08cd",
+      "independent_calibration_sha256": "242f41ee1345e33a2a8fa9534f1d191071f58edc17bd7817b3a6becc6b313c19",
+      "composition_started_utc": "2026-10-06T19:35:57.513671+00:00",
+      "first_substantive_Chinese_write_utc": "2026-10-06T19:37:44.296299+00:00",
+      "first_target_write_utc": "2026-10-06T19:37:44.392447+00:00",
+      "first_target_write_completed_utc": "2026-10-06T19:37:44.393559+00:00",
+      "capture_started_utc": "2026-10-06T19:38:09.555913+00:00",
+      "capture_completed_utc": "2026-10-06T19:38:09.687764+00:00"
+    },
+    "author_revisions": [
+      {
+        "revision": "R01",
+        "started_utc": "2026-10-06T19:39:46.205594+00:00",
+        "completed_utc": "2026-10-06T19:39:46.214113+00:00",
+        "reason": "Author full bilingual selfcheck corrections, before separate Chinese-only read",
+        "before_target_sha256": "bcea55eb850381165be6c7dda19f65e92dfa97f7a17050293411042644e80e35",
+        "after_target_sha256": "655e05976948deaecdcddb4a3b3146bd654950e2dd207b191669947bb6a0e411",
+        "before_record_sha256": "934e021ed5a81c1c8f9befe4cbcb4dfe20b8f8047cd064fbb828d22869cd8a6b",
+        "after_record_sha256": "a5fc76bb01078b53220bc51e41855b401b51b2d65a5612f56fb4b89c79c1bca4",
+        "changes": [
+          {
+            "segment_id": "04-25:b0043",
+            "before_sha256": "25ad00489710c7b3a4c0c46b79386be6ae35c048e4f95ef3ce21a9edb741bef2",
+            "after_sha256": "c8c12922187b83e81c240abd15ebd76de268385f16bc2787ced23d341f02777c",
+            "changes": [
+              [
+                "22B 激活；",
+                "22B 激活参数；"
+              ],
+              [
+                "3B 激活）",
+                "3B 激活参数）"
+              ],
+              [
+                "28B 激活）",
+                "28B 激活参数）"
+              ]
+            ]
+          },
+          {
+            "segment_id": "04-25:b0047",
+            "before_sha256": "bb082a14d3eb4df3497cae9fe3edbf9e2b49228abb701a001ce1e22fa859e38b",
+            "after_sha256": "411b3e8030eb428415158d035b6d7fb8cc2e59f87228fd42ca2a859067d68376",
+            "changes": [
+              [
+                "的**视觉智能体（visual agent）**的",
+                "的 **视觉智能体（visual agent）** 的"
+              ]
+            ]
+          },
+          {
+            "segment_id": "04-25:b0051",
+            "before_sha256": "6a10e2004b61e54a7e73db62d5c3c386369d04e24c92219123f6f2c90bdbfbb2",
+            "after_sha256": "149c6ed5d2c11f94f07c45e653e801613920cfd057c648774f43a1d927e6cc8f",
+            "changes": [
+              [
+                "视频中的一帧位于**什么时间**",
+                "视频中的一帧出现在 **什么时刻**"
+              ],
+              [
+                "演进到**基于文本的时间对齐（text-based time alignment）**",
+                "演进到 **基于文本的时间对齐（text-based time alignment）**"
+              ]
+            ]
+          },
+          {
+            "segment_id": "04-25:b0057",
+            "before_sha256": "2bb86dbd43a95b815bc0c524188501e2b53e1251783cf938a67019e9e78614aa",
+            "after_sha256": "ef7fc46c8270e82574583b289faba3b2a51ef6b9a60e231d4757baf0c386caba",
+            "changes": [
+              [
+                "提出了**跨模态错误率（CMER）**来",
+                "提出了 **跨模态错误率（CMER）** 来"
+              ]
+            ]
+          },
+          {
+            "segment_id": "04-25:b0065",
+            "before_sha256": "0fe43c58ac632a4a30c8df183099a6c82296ba48155e22744360eecfc6087977",
+            "after_sha256": "9345e8bf257a0a4f8af7ad2dacb3c3281207434563d7baa07241c743e1946f98",
+            "changes": [
+              [
+                "LoRA（秩为 16-64）",
+                "LoRA（秩（rank）为 16-64）"
+              ],
+              [
+                "就能在单张 A100 / H100 上完成",
+                "单张 A100 / H100 就能承载这样的微调任务"
+              ]
+            ]
+          },
+          {
+            "segment_id": "04-25:b0125",
+            "before_sha256": "2d285fe3bd68e0020b05bed74bc50b121713f61196495fc766d8aa49a579311f",
+            "after_sha256": "79576e575223eb0d0d458b6d32983345f1be3c749241ab095a3d00c022cf0cce",
+            "changes": [
+              [
+                "计算一个初步的类 CMER 比率",
+                "计算一个初步的、类似 CMER 的比率"
+              ]
+            ]
+          },
+          {
+            "segment_id": "04-25:b0133",
+            "before_sha256": "8e4610220c4c393b523a500687e68c522b6c433ea57181df606978677ea6dd81",
+            "after_sha256": "68017a8f2388c4c3f1b3f06d6502485b6489bda14a78be9f31d6c8acc671764a",
+            "changes": [
+              [
+                "2026 年 March〔三月〕",
+                "2026 年三月"
+              ]
+            ]
+          }
+        ],
+        "status": "APPLIED",
+        "source_control_support_changed": false,
+        "capture_count": 1
+      },
+      {
+        "revision": "R02",
+        "started_utc": "2026-10-06T19:49:28.774975+00:00",
+        "write_started_utc": "2026-10-06T19:49:28.813316+00:00",
+        "write_completed_utc": "2026-10-06T19:49:28.816248+00:00",
+        "action": "One exact two-block revision requested after both sealed initial independent reviews",
+        "initial_reviews": {
+          "reviews/bilingual-initial.json": "02e1184da1473cccbed9d473f26d6f3aeb512c72288433adf13d1fd638d4d025",
+          "reviews/chinese-initial.json": "9edaeaf4c35d4f476e43006fe482010f42fc73b2abb472494e9cb7567cf136b0"
+        },
+        "before_target_sha256": "655e05976948deaecdcddb4a3b3146bd654950e2dd207b191669947bb6a0e411",
+        "after_target_sha256": "53a99eb7b134ce0ed8612d75272894ab028711966d916a718665fd683b923771",
+        "before_record_sha256": "a5fc76bb01078b53220bc51e41855b401b51b2d65a5612f56fb4b89c79c1bca4",
+        "after_record_sha256": "006b1de215260bc65dcee691441e6d77535c678901974391326aa3e3837a577c",
+        "changed_blocks": [
+          37,
+          69
+        ],
+        "changes": [
+          {
+            "segment_id": "04-25:b0037",
+            "source": "1. **Alignment** — freeze ViT and LLM. Train only the projector on image-caption pairs. Teaches the projector to map vision space into language space.\n2. **Pre-training** — unfreeze everything. Train on large-scale interleaved image-text data (500M+ pairs). Builds the model's visual knowledge.\n3. **Instruction tuning** — fine-tune on curated (image, question, answer) triples. Teaches conversational behaviour and task formats. This is what turns a \"vision-aware LM\" into a usable assistant.\n",
+            "before": "1. **对齐（alignment）**：冻结 ViT 和 LLM，只用（图像，图像描述）对训练投影器，让它学会将视觉空间映射到语言空间。\n2. **预训练（pre-training）**：解冻全部参数，用大规模交错图文数据（500M+ 对，M 表示百万）训练，建立模型的视觉知识。\n3. **指令微调（instruction tuning）**：用经过精心整理的（图像，问题，答案）三元组进行微调，教会模型对话行为和任务格式。这一步把“具备视觉感知能力的语言模型”变成了可用的助手。\n",
+            "after": "1. **对齐（alignment）**：冻结 ViT 和 LLM，用（图像，图像描述）对，只训练投影器，让它学会将视觉空间映射到语言空间。\n2. **预训练（pre-training）**：解冻全部参数，用大规模交错图文数据（500M+ 对，M 表示百万）训练，建立模型的视觉知识。\n3. **指令微调（instruction tuning）**：用经过精心整理的（图像，问题，答案）三元组进行微调，教会模型对话行为和任务格式。这一步把“具备视觉感知能力的语言模型”变成了可用的助手。\n",
+            "before_sha256": "bde8dad62a6a22abd7ec47f24e74b1d57413b93008f319e1a821e210489bf1bb",
+            "after_sha256": "11563c4e4a8c657480222ef758bdfc0d875c2e954cd6cc413890da064874f8b3",
+            "source_sha256": "67a8c0e8622f72f528482b028223245b769fb4bee9b3851509762c2d4127f6d0",
+            "reason": "Restrict only the trainable projector, not the data."
+          },
+          {
+            "segment_id": "04-25:b0069",
+            "source": "Current VLMs score 50-60% on spatial reasoning benchmarks (above-below, left-right, counting, distance). If your use case depends on \"which object is on top of which,\" validate heavily — generic VLM performance is below human. Better-than-VLM alternatives for pure spatial tasks: a specialised keypoint / pose estimator, a depth model, or a detection model with box geometry post-processed.\n",
+            "before": "当前 VLM 在空间推理基准测试（上下、左右、计数、距离）中的得分为 50-60%。如果你的应用场景依赖于判断“哪个物体在另一个物体上方”，就要进行充分验证，因为通用 VLM 的表现低于人类。对于纯空间任务，比 VLM 更好的替代方案包括专门的关键点 / 姿态估计器、深度模型，或对边界框几何信息进行后处理的检测模型。\n",
+            "after": "当前 VLM 在空间推理基准测试（上下、左右、计数、距离）中的得分为 50-60%。如果你的应用场景依赖于判断“哪个物体在另一个物体上方”，就要进行充分验证，因为通用 VLM 的表现低于人类。对于纯空间任务，比 VLM 更好的替代方案包括专门的关键点 / 姿态估计器、深度估计模型，或对边界框几何信息进行后处理的检测模型。\n",
+            "before_sha256": "1f1754d07acc2275067d164e63c1accbf4cc6f9e8eedde42f7ab0ffb423fe79c",
+            "after_sha256": "4c903c513b63c258dfbc4b08bfc6d3b4d1a42e2422b67ba9deca839f001468ba",
+            "source_sha256": "75f7875202fd4aaf4008f2c40399830f5c7c18438b5486d4f172e7ec3c7e661d",
+            "reason": "Disambiguate physical scene-depth estimation from deep neural models."
+          }
+        ],
+        "unchanged_blocks": 131,
+        "block_0101_unchanged": true,
+        "capture_count": 1,
+        "recaptured": false,
+        "historical_handoff_selfcheck_and_reviews_unchanged": true,
+        "independent_closure": null
+      }
+    ],
+    "retained_failures": [
+      {
+        "type": "preparation",
+        "description": "Quoted café path in initial git ls-tree parser; corrected to -rz, no source or target change."
+      },
+      {
+        "type": "author_evidence_helper",
+        "description": "No-index diff exit1 was initially asserted as 0 despite empty diagnostics. Failure and first logs preserved; helper-only handling fixed and rerun."
+      },
+      {
+        "type": "expected_negative_control",
+        "description": "Original render refused a different existing replay. Exit1 and sentinel hash retained."
+      }
+    ],
+    "initial_author_selfcheck_sha256": "e5add10301983004453ff64d7aba521dfb05086c47aaf961094d49679b1074b0",
+    "initial_author_mechanical_report_sha256": "843566b1f460e5b3db6e9b7dc348d91fd5678e9cf5afe415e79db64e479ede8a",
+    "final_author_handoff_sha256": "9dd45589c714d6e0b4a8b7d6257a0538d7ea4deacc559e148722f0458540b428",
+    "post_full_review_revision_receipt_sha256": "4963b5f8308fca50b0a5410cf2b19d92bf094a8a5103c23532fa7d40fbc591d9",
+    "final_author_mechanical_report_sha256": "fd6c9bdb93e3abb45e3e77b9562c61af65b0fba5c166466931dfd151c176ebb8",
+    "reviewed_draft_record_sha256": "006b1de215260bc65dcee691441e6d77535c678901974391326aa3e3837a577c"
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/04-25/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T19:47:56.512925+00:00",
+        "report_sha256": "02e1184da1473cccbed9d473f26d6f3aeb512c72288433adf13d1fd638d4d025",
+        "result": "REQUIRES_CORRECTIONS",
+        "reviewed_target_sha256": "655e05976948deaecdcddb4a3b3146bd654950e2dd207b191669947bb6a0e411",
+        "reviewed_draft_record_sha256": "a5fc76bb01078b53220bc51e41855b401b51b2d65a5612f56fb4b89c79c1bca4",
+        "required_findings_at_that_review": 2,
+        "blocks": 133
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T19:45:56.538598+00:00",
+        "report_sha256": "9edaeaf4c35d4f476e43006fe482010f42fc73b2abb472494e9cb7567cf136b0",
+        "result": "REQUIRES_NARROW_DISAMBIGUATION",
+        "reviewed_target_sha256": "655e05976948deaecdcddb4a3b3146bd654950e2dd207b191669947bb6a0e411",
+        "reviewed_draft_record_sha256": "a5fc76bb01078b53220bc51e41855b401b51b2d65a5612f56fb4b89c79c1bca4",
+        "required_findings_at_that_review": 1,
+        "blocks": 133
+      },
+      {
+        "type": "independent_bilingual_changed_block_closure",
+        "completed_utc": "2026-10-06T19:50:48.963211+00:00",
+        "report_sha256": "368e5a36e319c8aa5756e0af54b753b318f935affde58ab17647ff69d3ad890d",
+        "result": "PASS_BILINGUAL_TECHNICAL_REVIEW_WITH_INITIAL_PLUS_DELTA",
+        "reviewed_target_sha256": "53a99eb7b134ce0ed8612d75272894ab028711966d916a718665fd683b923771",
+        "reviewed_draft_record_sha256": "006b1de215260bc65dcee691441e6d77535c678901974391326aa3e3837a577c",
+        "required_findings_at_that_review": 0,
+        "changed_blocks": [
+          "04-25:b0037",
+          "04-25:b0069"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 131
+      },
+      {
+        "type": "independent_Chinese_changed_block_closure",
+        "completed_utc": "2026-10-06T19:50:54.639511+00:00",
+        "report_sha256": "571b692848579cdba3bef553651541ebf4e01c42819d2148aca0e260efda59b4",
+        "result": "PASS_CHINESE_FULL_INITIAL_PLUS_EXACT_R02_DELTA",
+        "reviewed_target_sha256": "53a99eb7b134ce0ed8612d75272894ab028711966d916a718665fd683b923771",
+        "reviewed_draft_record_sha256": "006b1de215260bc65dcee691441e6d77535c678901974391326aa3e3837a577c",
+        "required_findings_at_that_review": 0,
+        "changed_blocks": [
+          "04-25:b0037",
+          "04-25:b0069"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 131
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
