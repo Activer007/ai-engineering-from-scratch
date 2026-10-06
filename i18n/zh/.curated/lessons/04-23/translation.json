@@ -1,0 +1,1691 @@
+{
+  "schema_version": 1,
+  "lesson_id": "04-23",
+  "source_path": "phases/04-computer-vision/23-diffusion-transformers-rectified-flow/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "226e7759563590322d64674057e129a03b88984a",
+  "source_sha256": "422060f3286899edcccdb97e17eda8c8f426a18c38116cbe0ef210ebda4aa606",
+  "target_path": "i18n/zh/phases/04-computer-vision/23-diffusion-transformers-rectified-flow/docs/zh.md",
+  "target_sha256": "51077b2d0595382d4e1849edb23cfdd16bc001bcd1ec49ede4ad8970d9c020d8",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-06",
+    "capture_observed_utc": "2026-10-06T16:29:33.178574+00:00",
+    "capture_timestamp_note": "Original unchanged control hardcodes 2026-10-01; raw capture retained separately. Actual capture occurred after target completion 2026-10-06T16:28:50.698826+00:00 and by observed tool completion 2026-10-06T16:28:51+00:00. This field records preservation/correction observation, not exact capture time."
+  },
+  "segments": [
+    {
+      "segment_id": "04-23:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow"
+      ],
+      "ordinal": 1,
+      "source_sha256": "7598db44c57f13782d2c0991edc4b34cf1a71ef5398d85e75f08e617f625bb9a",
+      "target": "# 扩散 Transformer 与整流流\n"
+    },
+    {
+      "segment_id": "04-23:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow"
+      ],
+      "ordinal": 2,
+      "source_sha256": "3aa24a065ccb637eca816cc7c1b367172d99546a53f655e53d01f737c4150b2e",
+      "target": "> U-Net 并不是扩散模型的秘诀。把它换成 Transformer，把噪声调度换成直线流，就有了 SD3、FLUX，以及 2026 年的每一种文生图模型。\n"
+    },
+    {
+      "segment_id": "04-23:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow"
+      ],
+      "ordinal": 3,
+      "source_sha256": "2c4e8189626db494a4c228ac819fc3465ad3d65728a79056f78147862c5ca8b1",
+      "target": "**Type:** Learn + Build\n**Languages:** Python\n**Prerequisites:** 阶段 4 第 10 课（扩散 DDPM）、阶段 4 第 14 课（ViT）、阶段 7 第 02 课（自注意力）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "04-23:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "04-23:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "dab395b0e1315ddc046df6e3d4af8c62cccf19b1553eacf9ce5f8673fb656966",
+      "target": "- 梳理从 U-Net 去噪扩散概率模型（DDPM，第 10 课）到扩散 Transformer（Diffusion Transformer，DiT）、多模态 DiT（MMDiT，SD3），再到单流 + 双流 DiT（FLUX）的演变\n- 解释整流流（rectified flow）：为什么噪声与数据之间的直线轨迹能让模型用 20 步采样，而不需要 1000 步\n- 实现一个微型 DiT 块和一个整流流训练循环，两者都少于 100 行\n- 根据架构、参数量和许可，区分模型变体（SD3、FLUX.1-dev、FLUX.1-schnell、Z-Image、Qwen-Image）\n"
+    },
+    {
+      "segment_id": "04-23:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "04-23:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "ab7f823419d871ec5b1516b44b88cb4ccdfd868ff601ecd8024a276410e5fd9f",
+      "target": "第 10 课构建了一个使用 U-Net 去噪器的去噪扩散概率模型（DDPM）。这套方案在 2020-2023 年占据主导地位：U-Net + beta 调度 + 噪声预测损失。Stable Diffusion 1.5 和 2.1，以及 DALL-E 2 都由此而来。\n"
+    },
+    {
+      "segment_id": "04-23:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "4f569b7f973c89150165ee69159f41c73c93b648a6b32771255f97d0cda00ae9",
+      "target": "2026 年所有最先进的文生图模型都已超越这套方案。Stable Diffusion 3、FLUX、SD4、Z-Image、Qwen-Image、Hunyuan-Image 都不使用 U-Net，而是使用扩散 Transformer（DiT）。SD3 和 FLUX 还用整流流替代 DDPM 噪声调度，将从噪声到数据的路径拉直，并通过一致性或蒸馏变体实现 1-4 步推理。\n"
+    },
+    {
+      "segment_id": "04-23:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "428d35796dc1614eb5d84ee3f941dfbba0e270a3da41f6f3012322d9c24950f1",
+      "target": "这一转变之所以重要，是因为它让基于扩散的图像生成变得可控，能准确遵循提示词（prompt），速度也达到了生产应用要求，其中 SD3/SD4 解决了文字渲染问题。理解 DiT + 整流流，就理解了 2026 年的图像生成技术栈。\n"
+    },
+    {
+      "segment_id": "04-23:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "04-23:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### From U-Net to transformer"
+      ],
+      "ordinal": 11,
+      "source_sha256": "3ecc984588c5e2b57dc587474ee11de10a96e9bbe67f55d3169fa43231f43059",
+      "target": "### 从 U-Net 到 Transformer\n"
+    },
+    {
+      "segment_id": "04-23:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### From U-Net to transformer"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### From U-Net to transformer"
+      ],
+      "ordinal": 12,
+      "source_sha256": "7d2aed3b5f8bc1bbd853507b81803361d92530464a35034cfb78facdfa6f6aab",
+      "target": "```mermaid\nflowchart LR\n    subgraph UNET[\"DDPM U-Net (2020)\"]\n        U1[\"Conv encoder\"] --> U2[\"Conv bottleneck\"] --> U3[\"Conv decoder\"]\n    end\n    subgraph DIT[\"DiT (2023)\"]\n        D1[\"Patch embed\"] --> D2[\"Transformer blocks\"] --> D3[\"Unpatchify\"]\n    end\n    subgraph MMDIT[\"MMDiT (SD3, 2024)\"]\n        M1[\"Text stream\"] --> M3[\"Joint attention<br/>(separate weights per modality)\"]\n        M2[\"Image stream\"] --> M3\n    end\n    subgraph FLUX[\"FLUX (2024)\"]\n        F1[\"Double-stream blocks<br/>(text + image separate)\"] --> F2[\"Single-stream blocks<br/>(concat + shared weights)\"]\n    end\n\n    style UNET fill:#e5e7eb,stroke:#6b7280\n    style DIT fill:#dbeafe,stroke:#2563eb\n    style MMDIT fill:#fef3c7,stroke:#d97706\n    style FLUX fill:#dcfce7,stroke:#16a34a\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### From U-Net to transformer"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0025",
+      "kind": "list",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### From U-Net to transformer"
+      ],
+      "ordinal": 13,
+      "source_sha256": "67b733421274109c16602860131bbbff927bc012048e07efe73a705053f2b237",
+      "target": "- **DiT**（Peebles & Xie，2023）：用类似视觉 Transformer（ViT）的模型替换 U-Net，处理潜在表示的图像块。通过自适应层归一化（adaptive layer norm，AdaLN）注入条件。\n- **MMDiT**（SD3，Esser 等，2024）：文本 token（词元）和图像 token 分属两条流，使用各自的权重，共享联合注意力。\n- **FLUX**（Black Forest Labs，2024）：前 N 个块像 SD3 一样采用双流，后续块则将两条流拼接并共享权重（单流），以提高较深层中的效率。\n- **Z-Image**（2025）：参数量为 6B 的高效单流 DiT，挑战了“不惜一切代价扩大规模”的思路。\n"
+    },
+    {
+      "segment_id": "04-23:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### From U-Net to transformer"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 14,
+      "source_sha256": "007822d46b4d092f39707372876e735f5997fa730d4580300bc5c4fa2054780d",
+      "target": "### 一段话理解整流流\n"
+    },
+    {
+      "segment_id": "04-23:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 15,
+      "source_sha256": "b575468e5b1348a7a05715474118209da9ea8596893d03ba55de33082ddeaed1",
+      "target": "DDPM 将正向过程定义为一个含噪声的随机微分方程（SDE），其中 `x_t` 受到的噪声污染越来越严重。学习得到的反向过程是另一个 SDE，通过 1000 个小步求解。\n"
+    },
+    {
+      "segment_id": "04-23:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 16,
+      "source_sha256": "74bb279f259bb6a1ba043029be0d035fbc33eff98d18ecca1176aee90555ceee",
+      "target": "整流流在干净数据与纯噪声之间定义了**直线** 插值：\n"
+    },
+    {
+      "segment_id": "04-23:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 17,
+      "source_sha256": "522bf2b11a7b160ad70e5880d554e00339974b22228f6abf97a145a758538c98",
+      "target": "```text\nx_t = (1 - t) * x_0 + t * epsilon,     t in [0, 1]\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 18,
+      "source_sha256": "45e7e5e8ca7939ce0a0b954a47d5ef3d62366c3d03561bec61350e3ca5192ec0",
+      "target": "训练一个网络来预测速度 `v_theta(x_t, t) = epsilon - x_0`，即沿直线路径从干净数据指向噪声的正向速度（`dx_t/dt`）。采样时，反向积分这个速度，从噪声逐步走向数据。得到的常微分方程（ODE）轨迹更接近直线，因此采样所需的积分步数少得多。\n"
+    },
+    {
+      "segment_id": "04-23:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 19,
+      "source_sha256": "344471e9b541f9704664a3bd6ff0436f65e3958d04cc2382404d143fa04b5218",
+      "target": "SD3 将其称为**整流流匹配（Rectified Flow Matching）**。FLUX、Z-Image 和 2026 年的大多数模型都使用同一个目标。典型推理只需 20-30 个 Euler 步（确定性），而在旧 DDPM 体系中，去噪扩散隐式模型（DDIM）采样则需要 50+ 步。蒸馏 / turbo / schnell / 潜在一致性模型（LCM）变体将步数进一步降至 1-4 步。\n"
+    },
+    {
+      "segment_id": "04-23:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Rectified flow in one paragraph"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### AdaLN conditioning"
+      ],
+      "ordinal": 20,
+      "source_sha256": "66f56585572ab96a29b865c99db2d6fd516abd1de73e1dfe24a078cfb1348ee5",
+      "target": "### AdaLN 条件化\n"
+    },
+    {
+      "segment_id": "04-23:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### AdaLN conditioning"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### AdaLN conditioning"
+      ],
+      "ordinal": 21,
+      "source_sha256": "230d16defc1e745788f28ad726ac7b9d949d3d36dc6df47a29c4b1a345524e41",
+      "target": "DiT 通过**自适应层归一化** 以时间步和类别/文本为条件：从条件向量预测 `scale`（缩放量）和 `shift`（偏移量），并在 LayerNorm 之后应用它们。这比 U-Net 中的 FiLM 式调制简洁得多，也是所有现代 DiT 的默认做法。\n"
+    },
+    {
+      "segment_id": "04-23:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### AdaLN conditioning"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### AdaLN conditioning"
+      ],
+      "ordinal": 22,
+      "source_sha256": "55e421df9adbbc3dd509ca4197a0c497faaa1444d961a9b82649f42c9458d4e5",
+      "target": "```text\ncond -> MLP -> (scale, shift, gate)\nnorm(x) * (1 + scale) + shift, then residual add * gate\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### AdaLN conditioning"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Text encoders in SD3 and FLUX"
+      ],
+      "ordinal": 23,
+      "source_sha256": "d72914f638262bde7ec198ef5e71f1d37b94594e7f385e433dc677c8357c7c3e",
+      "target": "### SD3 和 FLUX 中的文本编码器\n"
+    },
+    {
+      "segment_id": "04-23:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Text encoders in SD3 and FLUX"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0047",
+      "kind": "list",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Text encoders in SD3 and FLUX"
+      ],
+      "ordinal": 24,
+      "source_sha256": "88e5b0fc91c3121b285d3545a783a4696c9ad02a83d86f2bc6da7e8f7b8d28e2",
+      "target": "- **SD3** 使用三个文本编码器：两个 CLIP 模型 + T5-XXL。将嵌入（embedding）拼接后，作为文本条件输入图像流。\n- **FLUX** 使用一个 CLIP-L + T5-XXL。\n- **Qwen-Image / Z-Image** 变体使用自行开发、与各自基座大语言模型（LLM）对齐的文本编码器。\n"
+    },
+    {
+      "segment_id": "04-23:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Text encoders in SD3 and FLUX"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Text encoders in SD3 and FLUX"
+      ],
+      "ordinal": 25,
+      "source_sha256": "ce106c3567f65204bd2a3458ef830a3a42e17e5f0136043591d939b783e1e2f8",
+      "target": "SD3/FLUX 对提示词的推理能力远胜于 SD1.5，文本编码器是其中一个重要原因。仅 T5-XXL 就有 4.7B 个参数。\n"
+    },
+    {
+      "segment_id": "04-23:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Text encoders in SD3 and FLUX"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Classifier-free guidance still holds"
+      ],
+      "ordinal": 26,
+      "source_sha256": "a12cdcfe35eae5b70e4a1d67038db7f0b0b33fcbdd8d377ceae18dffa761325c",
+      "target": "### 无分类器引导仍然适用\n"
+    },
+    {
+      "segment_id": "04-23:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Classifier-free guidance still holds"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Classifier-free guidance still holds"
+      ],
+      "ordinal": 27,
+      "source_sha256": "d42669ddb3d37a53423178edc4e445847b33f77e8d8a0a648cb3c4f7767e1768",
+      "target": "整流流改变的是采样器，而不是条件输入方式。无分类器引导（classifier-free guidance，CFG）在整流流中的工作方式完全相同：训练时以 10% 的概率丢弃文本，推理时混合有条件与无条件预测。2026 年的大多数模型使用 3.5-5 的引导强度（guidance scale），低于 SD1.5 的 7.5，因为整流流模型默认就能更紧密地遵循提示词。\n"
+    },
+    {
+      "segment_id": "04-23:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Classifier-free guidance still holds"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Consistency, Turbo, Schnell, LCM"
+      ],
+      "ordinal": 28,
+      "source_sha256": "0823d23fd9e3c7aa7b6519e8a99e348ebcd8561f02d042e7ea7e533815d9b766",
+      "target": "### Consistency、Turbo、Schnell、LCM\n"
+    },
+    {
+      "segment_id": "04-23:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Consistency, Turbo, Schnell, LCM"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Consistency, Turbo, Schnell, LCM"
+      ],
+      "ordinal": 29,
+      "source_sha256": "4cdac542f106bd42f59b292d612f2f370acda2d09b51edad88d158335974ee8a",
+      "target": "四种名称，同一种思路：把缓慢的多步模型蒸馏成快速的少步模型。\n"
+    },
+    {
+      "segment_id": "04-23:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Consistency, Turbo, Schnell, LCM"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0059",
+      "kind": "list",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Consistency, Turbo, Schnell, LCM"
+      ],
+      "ordinal": 30,
+      "source_sha256": "4bc126af6c332aff6daad75c3c81dc30bfddf2f167732ed2d2a20a7ad0e12831",
+      "target": "- **LCM（Latent Consistency Model，潜在一致性模型）**：训练一个学生模型，从任意中间状态 `x_t` 一步预测最终的 `x_0`。\n- **SDXL Turbo / FLUX schnell**：使用对抗扩散蒸馏训练的 1-4 步模型。\n- **SD Turbo**：将 OpenAI 风格的一致性模型（Consistency Models）适配到潜在扩散。\n"
+    },
+    {
+      "segment_id": "04-23:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Consistency, Turbo, Schnell, LCM"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Consistency, Turbo, Schnell, LCM"
+      ],
+      "ordinal": 31,
+      "source_sha256": "732b295f855b5d9e216e02e6aeb73b71260244404ea12fc56382a445b1e71e51",
+      "target": "任何新模型用于生产服务时，都会同时提供“完整质量”的模型检查点和“turbo / schnell”变体。Schnell 在德语中意为“快”，这是 Black Forest Labs 的命名惯例；它只需 1-4 步，适合实时管线。\n"
+    },
+    {
+      "segment_id": "04-23:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Consistency, Turbo, Schnell, LCM"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0063",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 32,
+      "source_sha256": "1bc34ec3f724d59611b93d0c159f9c017d58f4baead36b54050796c56ae2045a",
+      "target": "### 2026 年的模型概览\n"
+    },
+    {
+      "segment_id": "04-23:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0065",
+      "kind": "table",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 33,
+      "source_sha256": "b0a1c665f78466155baf8c8cdf151dc79d61d985abf19802300ae04e3031a0b2",
+      "target": "| 模型 | 规模 | 架构 | 许可 |\n|-------|------|--------------|---------|\n| Stable Diffusion 3 Medium | 2B | MMDiT | SAI Community |\n| Stable Diffusion 3.5 Large | 8B | MMDiT | SAI Community |\n| FLUX.1-dev | 12B | 双流 + 单流 DiT | 非商业许可 |\n| FLUX.1-schnell | 12B | 同上，经过蒸馏 | Apache 2.0 |\n| FLUX.2 | — | 迭代改进的 FLUX.1 | 混合许可 |\n| Z-Image | 6B | S3-DiT（Scalable Single-Stream，可扩展单流） | 宽松许可 |\n| Qwen-Image | ~20B | DiT + Qwen 文本塔 | Apache 2.0 |\n| Hunyuan-Image-3.0 | ~80B | DiT | 研究用途许可 |\n| SD4 Turbo | 3B | DiT + 蒸馏 | SAI Commercial |\n"
+    },
+    {
+      "segment_id": "04-23:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 34,
+      "source_sha256": "fee0ce920640ab1e40bbd1305239017c0ad644170338e113bc9bdda8a4625932",
+      "target": "FLUX.1-schnell 是 2026 年开源模型的默认选择。Z-Image 在效率上领先。FLUX.2 和 SD4 则是当前质量最高的选择。\n"
+    },
+    {
+      "segment_id": "04-23:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Model landscape in 2026"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Why this phase shift matters"
+      ],
+      "ordinal": 35,
+      "source_sha256": "6ccda2ade9c258e774702ec3848449ed783ab266314750c067d22eed6fbb8f01",
+      "target": "### 为什么这次转变很重要\n"
+    },
+    {
+      "segment_id": "04-23:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Why this phase shift matters"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Why this phase shift matters"
+      ],
+      "ordinal": 36,
+      "source_sha256": "e2179cdf4acacc488edd46898d37c4482f069b06e5071583c9c11d5e94ac312e",
+      "target": "DDPM + U-Net 行之有效。DiT + 整流流则**效果更好、速度更快，规模扩展也更顺畅**。这次转变类似于自然语言处理（NLP）从循环神经网络（RNN）转向 Transformer：两种架构解决的是同一个问题，但 Transformer 成功扩展了规模，如今占据主导地位。2026 年每篇关于图像、视频或 3D 生成的论文都采用 DiT 式去噪器，通常还采用整流流目标。U-Net DDPM 现在主要用于教学（第 10 课）。\n"
+    },
+    {
+      "segment_id": "04-23:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Why this phase shift matters"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0073",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Why this phase shift matters"
+      ],
+      "ordinal": 37,
+      "source_sha256": "ea872a2d6feba971f24d578121b612f4ff16b56b0c6302a2679f46532bc266ae",
+      "target": "```figure\ncv3-rectified-flow\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## The Concept",
+        "### Why this phase shift matters"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "04-23:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0077",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 1: A DiT block with AdaLN"
+      ],
+      "ordinal": 39,
+      "source_sha256": "8f32ef145a546b200b554aa41ac21e25797b56a47db6c99d73097a2540ddf435",
+      "target": "### 步骤 1：带 AdaLN 的 DiT 块\n"
+    },
+    {
+      "segment_id": "04-23:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 1: A DiT block with AdaLN"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 1: A DiT block with AdaLN"
+      ],
+      "ordinal": 40,
+      "source_sha256": "410982cab8adc47f2b0ba9b76766f8e10a095905dffce47d2987264e1b1cc4c7",
+      "target": "```python\nimport torch\nimport torch.nn as nn\n\n\nclass AdaLNZero(nn.Module):\n    \"\"\"\n    Adaptive LayerNorm with a gate. Predicts (scale, shift, gate) from the conditioning.\n    Init such that the whole block starts as identity (\"zero init\").\n    \"\"\"\n\n    def __init__(self, dim, cond_dim):\n        super().__init__()\n        self.norm = nn.LayerNorm(dim, elementwise_affine=False)\n        self.mlp = nn.Linear(cond_dim, dim * 3)\n        nn.init.zeros_(self.mlp.weight)\n        nn.init.zeros_(self.mlp.bias)\n\n    def forward(self, x, cond):\n        scale, shift, gate = self.mlp(cond).chunk(3, dim=-1)\n        h = self.norm(x) * (1 + scale.unsqueeze(1)) + shift.unsqueeze(1)\n        return h, gate.unsqueeze(1)\n\n\nclass DiTBlock(nn.Module):\n    def __init__(self, dim=192, heads=3, mlp_ratio=4, cond_dim=192):\n        super().__init__()\n        self.adaln1 = AdaLNZero(dim, cond_dim)\n        self.attn = nn.MultiheadAttention(dim, heads, batch_first=True)\n        self.adaln2 = AdaLNZero(dim, cond_dim)\n        self.mlp = nn.Sequential(\n            nn.Linear(dim, dim * mlp_ratio),\n            nn.GELU(),\n            nn.Linear(dim * mlp_ratio, dim),\n        )\n\n    def forward(self, x, cond):\n        h, gate1 = self.adaln1(x, cond)\n        a, _ = self.attn(h, h, h, need_weights=False)\n        x = x + gate1 * a\n        h, gate2 = self.adaln2(x, cond)\n        x = x + gate2 * self.mlp(h)\n        return x\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 1: A DiT block with AdaLN"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 1: A DiT block with AdaLN"
+      ],
+      "ordinal": 41,
+      "source_sha256": "f71d55ec904f667ba39afeab91ff3ae723882b76717105c484af16966c50abdd",
+      "target": "`AdaLNZero` 的多层感知机（MLP）权重初始化为零，因此它一开始是恒等映射。训练会让这个块逐渐偏离恒等映射，显著提升深层 Transformer 扩散模型的稳定性。\n"
+    },
+    {
+      "segment_id": "04-23:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 1: A DiT block with AdaLN"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 2: A tiny DiT"
+      ],
+      "ordinal": 42,
+      "source_sha256": "aa2f69d204bc14d21ca8354f2c0859bd9470bfe5d9b6da44ec4c8d3158cd343d",
+      "target": "### 步骤 2：微型 DiT\n"
+    },
+    {
+      "segment_id": "04-23:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 2: A tiny DiT"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 2: A tiny DiT"
+      ],
+      "ordinal": 43,
+      "source_sha256": "70ebdd8ce0b5397d029b27cb75bb806f9bea4dc9959cdd7536a44538e3eb9cb9",
+      "target": "```python\ndef timestep_embedding(t, dim):\n    import math\n    half = dim // 2\n    freqs = torch.exp(-math.log(10000) * torch.arange(half, device=t.device) / half)\n    args = t[:, None].float() * freqs[None]\n    return torch.cat([args.sin(), args.cos()], dim=-1)\n\n\nclass TinyDiT(nn.Module):\n    def __init__(self, image_size=16, patch_size=2, in_channels=3, dim=96, depth=4, heads=3):\n        super().__init__()\n        self.patch_size = patch_size\n        self.num_patches = (image_size // patch_size) ** 2\n        self.patch = nn.Conv2d(in_channels, dim, kernel_size=patch_size, stride=patch_size)\n        self.pos = nn.Parameter(torch.zeros(1, self.num_patches, dim))\n        self.time_mlp = nn.Sequential(\n            nn.Linear(dim, dim * 2),\n            nn.SiLU(),\n            nn.Linear(dim * 2, dim),\n        )\n        self.blocks = nn.ModuleList([DiTBlock(dim, heads, cond_dim=dim) for _ in range(depth)])\n        self.norm_out = nn.LayerNorm(dim, elementwise_affine=False)\n        self.head = nn.Linear(dim, patch_size * patch_size * in_channels)\n\n    def forward(self, x, t):\n        n = x.size(0)\n        x = self.patch(x)\n        x = x.flatten(2).transpose(1, 2) + self.pos\n        t_emb = self.time_mlp(timestep_embedding(t, self.pos.size(-1)))\n        for blk in self.blocks:\n            x = blk(x, t_emb)\n        x = self.norm_out(x)\n        x = self.head(x)\n        return self._unpatchify(x, n)\n\n    def _unpatchify(self, x, n):\n        p = self.patch_size\n        h = w = int(self.num_patches ** 0.5)\n        x = x.view(n, h, w, p, p, -1).permute(0, 5, 1, 3, 2, 4).reshape(n, -1, h * p, w * p)\n        return x\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 2: A tiny DiT"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 3: Rectified flow training"
+      ],
+      "ordinal": 44,
+      "source_sha256": "59ef157ee26103d2c44b3b9b064c7be937cdf8ffc677bbcb05e358ad8aff6301",
+      "target": "### 步骤 3：整流流训练\n"
+    },
+    {
+      "segment_id": "04-23:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 3: Rectified flow training"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0089",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 3: Rectified flow training"
+      ],
+      "ordinal": 45,
+      "source_sha256": "c1b54c806c2a537c5fc6a4616831d34f82917bcc5e45942257890259c2f2b701",
+      "target": "```python\nimport torch.nn.functional as F\n\ndef rectified_flow_train_step(model, x0, optimizer, device):\n    model.train()\n    x0 = x0.to(device)\n    n = x0.size(0)\n    t = torch.rand(n, device=device)\n    epsilon = torch.randn_like(x0)\n    x_t = (1 - t[:, None, None, None]) * x0 + t[:, None, None, None] * epsilon\n\n    target_velocity = epsilon - x0\n    pred_velocity = model(x_t, t)\n\n    loss = F.mse_loss(pred_velocity, target_velocity)\n    optimizer.zero_grad()\n    loss.backward()\n    optimizer.step()\n    return loss.item()\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 3: Rectified flow training"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 3: Rectified flow training"
+      ],
+      "ordinal": 46,
+      "source_sha256": "99030ba152ebd432ddefc8a0297907d1a96c6a30b3e22f410c5d3bb6685646cf",
+      "target": "与 DDPM 的噪声预测损失（第 10 课）相比，两者结构相同，目标不同。我们预测的不再是噪声 `epsilon`，而是**速度** `epsilon - x_0`，它沿直线插值从数据指向噪声。\n"
+    },
+    {
+      "segment_id": "04-23:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 3: Rectified flow training"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 4: Euler sampler"
+      ],
+      "ordinal": 47,
+      "source_sha256": "61669b762c1de4a53577d3e676a4c7c31f04fd24bfc8ec8d5d2c83a05f899c0d",
+      "target": "### 步骤 4：Euler 采样器\n"
+    },
+    {
+      "segment_id": "04-23:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 4: Euler sampler"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 4: Euler sampler"
+      ],
+      "ordinal": 48,
+      "source_sha256": "7978e3a9d616f9d1faa60f2dc842e9280c37c6bd93564f529e177ec3b397a9ce",
+      "target": "整流流是一个 ODE。Euler 方法最简单，而且对于训练充分的整流流模型，当步数达到 20+ 时，其精度几乎与高阶求解器相当。\n"
+    },
+    {
+      "segment_id": "04-23:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 4: Euler sampler"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0097",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 4: Euler sampler"
+      ],
+      "ordinal": 49,
+      "source_sha256": "69e8c0c29be7c609aa0887b3274c1d41e362c59dd4311930013924324b6404dc",
+      "target": "```python\n@torch.no_grad()\ndef rectified_flow_sample(model, shape, steps=20, device=\"cpu\"):\n    model.eval()\n    x = torch.randn(shape, device=device)\n    dt = 1.0 / steps\n    t = torch.ones(shape[0], device=device)\n    for _ in range(steps):\n        v = model(x, t)\n        x = x - dt * v\n        t = t - dt\n    return x\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 4: Euler sampler"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 4: Euler sampler"
+      ],
+      "ordinal": 50,
+      "source_sha256": "5b2837e9ca6ac5b1b07d9ff1df88c956b5074ebb3511cb22a09450d46ea40877",
+      "target": "20 步。对于训练好的模型，这样生成的样本可媲美 1000 步 DDPM 的结果。\n"
+    },
+    {
+      "segment_id": "04-23:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 4: Euler sampler"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0101",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 5: End-to-end smoke test"
+      ],
+      "ordinal": 51,
+      "source_sha256": "17d629b288b680ac7617c0161a9efc12691dee10c64801052468aa849103089f",
+      "target": "### 步骤 5：端到端冒烟测试\n"
+    },
+    {
+      "segment_id": "04-23:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 5: End-to-end smoke test"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0103",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 5: End-to-end smoke test"
+      ],
+      "ordinal": 52,
+      "source_sha256": "0a863a55b951b7216eb18990942cf89a448446449bf57f4505668a2feacfb3ab",
+      "target": "```python\nimport numpy as np\n\ndef synthetic_blobs(num=200, size=16, seed=0):\n    rng = np.random.default_rng(seed)\n    out = np.zeros((num, 3, size, size), dtype=np.float32)\n    yy, xx = np.meshgrid(np.arange(size), np.arange(size), indexing=\"ij\")\n    for i in range(num):\n        cx, cy = rng.uniform(4, size - 4, size=2)\n        r = rng.uniform(2, 4)\n        mask = (xx - cx) ** 2 + (yy - cy) ** 2 < r ** 2\n        colour = rng.uniform(-1, 1, size=3)\n        for c in range(3):\n            out[i, c][mask] = colour[c]\n    return torch.from_numpy(out)\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 5: End-to-end smoke test"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 5: End-to-end smoke test"
+      ],
+      "ordinal": 53,
+      "source_sha256": "5487e07cd59f7dc6599d61c203dc47368fa71f703f5ded61e5481953d3be47e1",
+      "target": "在这份数据上使用整流流训练一个 `TinyDiT`。经过 500 步后，采样输出应该看起来像淡淡的色块。\n"
+    },
+    {
+      "segment_id": "04-23:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Build It",
+        "### Step 5: End-to-end smoke test"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "04-23:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "a7e9c6cb98b4640f9f40793bd02e75e80a2e20d653861ed3cba3889a4e17b02b",
+      "target": "要使用 FLUX / SD3 / Z-Image 进行实际图像生成，`diffusers` 为这些模型都提供了统一的 API（应用程序编程接口）：\n"
+    },
+    {
+      "segment_id": "04-23:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0111",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "ee2741a9a9a55408c4c110263db7441b59c97bd172cab29bea2e4592b9eb5c01",
+      "target": "```python\nfrom diffusers import FluxPipeline, StableDiffusion3Pipeline\nimport torch\n\npipe = FluxPipeline.from_pretrained(\n    \"black-forest-labs/FLUX.1-schnell\",\n    torch_dtype=torch.bfloat16,\n).to(\"cuda\")\n\nout = pipe(\n    prompt=\"a golden retriever surfing a tsunami, hyperrealistic, studio lighting\",\n    guidance_scale=0.0,           # schnell was trained without CFG\n    num_inference_steps=4,\n    max_sequence_length=256,\n).images[0]\nout.save(\"surf.png\")\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0113",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "a7563cfe7a70bc17aaa77ff6a2fe3f13fba8304ea8ea9252e52e5e2cbc0a64ba",
+      "target": "三行代码。`FLUX.1-schnell` 四步生成。把模型 ID 换成 `black-forest-labs/FLUX.1-dev`，就能在启用 CFG、使用 20-30 步的情况下获得更高质量。\n"
+    },
+    {
+      "segment_id": "04-23:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "b560cc63e882d53050515decefe9a20fa6aaf705fc43f1156eca08896d34139a",
+      "target": "对于 SD3：\n"
+    },
+    {
+      "segment_id": "04-23:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0117",
+      "kind": "fence",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "6a089536a3042ff9eecc41c51da40ecfc0e3f9a37acd3b83202b9729ab0b3751",
+      "target": "```python\npipe = StableDiffusion3Pipeline.from_pretrained(\n    \"stabilityai/stable-diffusion-3.5-large\",\n    torch_dtype=torch.bfloat16,\n).to(\"cuda\")\nout = pipe(prompt, guidance_scale=3.5, num_inference_steps=28).images[0]\n```\n"
+    },
+    {
+      "segment_id": "04-23:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Use It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0119",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Ship It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "04-23:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Ship It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0121",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Ship It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "2d7d8a54528e5c57d81432c3291d09eabfa1bdb1c89bfd04e496f10a5214cf37",
+      "target": "本课产出：\n"
+    },
+    {
+      "segment_id": "04-23:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Ship It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0123",
+      "kind": "list",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Ship It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "4a2262e3dabf0b7acf40dcb1ffb217c1a52c467bfeb9caaf577e3eccf4ec14f5",
+      "target": "- `outputs/prompt-dit-model-picker.md`：根据质量、延迟和许可约束，在 SD3、FLUX.1-dev、FLUX.1-schnell、Z-Image、SD4 Turbo 之间进行选择。\n- `outputs/skill-rectified-flow-trainer.md`：编写完整的整流流训练循环，使用 AdaLN DiT 和 Euler 采样。\n"
+    },
+    {
+      "segment_id": "04-23:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Ship It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Exercises"
+      ],
+      "ordinal": 63,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "04-23:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Exercises"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0127",
+      "kind": "list",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Exercises"
+      ],
+      "ordinal": 64,
+      "source_sha256": "9957685a7dc43e40db6e268579cefd4591b0078e4c8a075cd45cf5db907ae1fa",
+      "target": "1. **（简单）** 在合成色块数据集上训练上述 TinyDiT 500 步。比较使用 10、20 和 50 个 Euler 步生成的样本。\n2. **（中等）** 将可学习的类别嵌入拼接到时间嵌入上，以添加文本条件化（按颜色分为 10 个色块“类别”）。分别以类别 0、5 和 9 为条件采样，并验证颜色是否匹配。\n3. **（困难）** 使用相同的数据、相同的训练步数，训练规模相同的整流流版和 DDPM 版网络。计算两者生成样本之间的 Fréchet 距离，作为 FID（Fréchet Inception 距离，Fréchet Inception Distance）的代理指标，并报告哪个收敛更快。\n"
+    },
+    {
+      "segment_id": "04-23:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Exercises"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0129",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Key Terms"
+      ],
+      "ordinal": 65,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "04-23:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Key Terms"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0131",
+      "kind": "table",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Key Terms"
+      ],
+      "ordinal": 66,
+      "source_sha256": "4eebf13739e9121e198e41fc59e5e7e83cb1d1300bddc3e87ea4e523ac250e20",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| DiT | “扩散 Transformer” | 取代 U-Net 充当扩散去噪器的 Transformer；处理分成图像块的潜在表示 |\n| AdaLN | “自适应层归一化” | 在 LayerNorm 后应用学习得到的缩放量、偏移量和门控量，实现时间步/文本条件化；是所有现代 DiT 的标准做法 |\n| MMDiT | “多模态 DiT（SD3）” | 文本 token 与图像 token 各有一条使用独立权重的流，两条流共享联合自注意力 |\n| 单流 / 双流 | “FLUX 技巧” | 前 N 个块采用双流（每种模态有独立权重），后续块采用单流（拼接 + 共享权重），以提高效率 |\n| 整流流 | “沿直线从噪声到数据” | 在数据与噪声之间线性插值；网络预测速度；推理所需的 ODE 步数更少 |\n| 速度目标 | “epsilon - x_0” | 整流流中的回归目标；从干净数据指向噪声 |\n| CFG 引导 | “无分类器引导” | 混合有条件与无条件预测；整流流模型仍在使用 |\n| Schnell / turbo / LCM | “1-4 步蒸馏” | 从完整质量模型蒸馏出的少步变体；可在生产环境中实时运行 |\n"
+    },
+    {
+      "segment_id": "04-23:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Key Terms"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0133",
+      "kind": "heading",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Further Reading"
+      ],
+      "ordinal": 67,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "04-23:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Further Reading"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-23:b0135",
+      "kind": "list",
+      "heading_path": [
+        "# Diffusion Transformers & Rectified Flow",
+        "## Further Reading"
+      ],
+      "ordinal": 68,
+      "source_sha256": "953ee5abe35c60eed3034c4eab5f7228e91bc95a37f4d2cf14322e14489a3239",
+      "target": "- [Scalable Diffusion Models with Transformers (Peebles & Xie, 2023)](https://arxiv.org/abs/2212.09748)：DiT 论文\n- [Scaling Rectified Flow Transformers (Esser et al., SD3 paper)](https://arxiv.org/abs/2403.03206)：大规模 MMDiT 和整流流\n- [FLUX.1 model card and technical report (Black Forest Labs)](https://huggingface.co/black-forest-labs/FLUX.1-dev)：双流 + 单流的细节\n- [Z-Image: Efficient Image Generation Foundation Model (2025)](https://arxiv.org/html/2511.22699v1)：参数量为 6B 的单流 DiT\n- [Elucidating the Design Space of Diffusion (Karras et al., 2022)](https://arxiv.org/abs/2206.00364)：扩散模型各项设计权衡的参考文献\n- [Latent Consistency Models (Luo et al., 2023)](https://arxiv.org/abs/2310.04378)：LCM-LoRA 如何实现 4 步推理\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S145-diffusion-transformers-rectified-flow/TERMINOLOGY.md",
+  "additional_glossary_sha256": "1e2b6b8a281003e01d6e4fb53843a648e01a721d7538b4aea4bc70508449c215",
+  "assets": [],
+  "support": {
+    "commit": "f48555a93b33ece4c5f5cdcb5906a1a74c991c4d",
+    "tree": "734e146742c47fc137a9b005948e6d4a0c1cf772",
+    "dependencies_path": "i18n/zh/.curated/stages/S145-diffusion-transformers-rectified-flow/DEPENDENCIES.json",
+    "dependencies_sha256": "8e112e13f0ab25b818f725d60f9dffdfde9cfe4fe2ac765eb9853d4e4614fca4",
+    "common_set_sha256": "fca197eed922125d52d3360ea93dee99b9993e992ab262c07c5573394b4c855b",
+    "common_files": 149,
+    "terminology_files": 141,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 152,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S145-diffusion-transformers-rectified-flow/DEPENDENCIES.json",
+        "commit": "f48555a93b33ece4c5f5cdcb5906a1a74c991c4d",
+        "git_blob": "68e3ac24125f63fe363ba5540469d531999e3a24",
+        "sha256": "8e112e13f0ab25b818f725d60f9dffdfde9cfe4fe2ac765eb9853d4e4614fca4",
+        "bytes": 252269,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S145-diffusion-transformers-rectified-flow/SCOPE.md",
+        "commit": "f48555a93b33ece4c5f5cdcb5906a1a74c991c4d",
+        "git_blob": "9f7ffab28dde3dc3b90830ece5ea770276601d4d",
+        "sha256": "83f4c189262aedb6972b63221b78b32b47826055b0f067a2660e677ae427269f",
+        "bytes": 11181,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S145-diffusion-transformers-rectified-flow/TERMINOLOGY.md",
+        "commit": "f48555a93b33ece4c5f5cdcb5906a1a74c991c4d",
+        "git_blob": "72207ad5a9f5560abd9748ed487485ce8e635ccb",
+        "sha256": "1e2b6b8a281003e01d6e4fb53843a648e01a721d7538b4aea4bc70508449c215",
+        "bytes": 6645,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "d365daadc3d40539340831746129eb144f1e3bc6400b070f9bd6b4b1f5a0ad42",
+    "installation_completed_utc": "2026-10-06T16:20:52.203653+00:00",
+    "frozen_pending_null_fields_preserved": true
+  },
+  "authoring_history": {
+    "proposal_utc": "2026-10-06T16:23:59.666550+00:00",
+    "proposal_sha256": "5691ff4a5c3b587154946344b75c7f274520fdea291e8c587a902fadb3cf16ee",
+    "calibration_utc": "2026-10-06T16:24:28.665891+00:00",
+    "calibration_sha256": "56c3d1f8c98108496eb0f5a44dece6966341575674869b61484ff3647fd9548a",
+    "composition_started_utc": "2026-10-06T16:24:49.151232+00:00",
+    "first_write_receipt_sha256": "d7c5baf3474dac67cbd13930ccbccb96749ae62dac927036f582d1e78b21ee37",
+    "capture_receipt_sha256": "4562175e38c8d7109ae31f005f3ef1a7c4ec346df96558399d8adbb5c046632c",
+    "original_capture_sha256": "066a5281a8e3101d1a87871eb54f814c679b928d676186f4862a582a1e75ef04",
+    "capture_invocations": 1,
+    "original_capture_hardcoded_date": "2026-10-01",
+    "actual_authoring_date": "2026-10-06",
+    "reviewed_draft_record_sha256": "c0eec472ca24d201e3294fad43286a0c116aff0bdadd52ed793028bbd0291aea",
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false,
+    "first_substantive_write_started_utc": "2026-10-06T16:28:45.834612674Z",
+    "first_write_started_utc": "2026-10-06T16:28:50.698046+00:00",
+    "first_write_completed_utc": "2026-10-06T16:28:50.698826+00:00",
+    "capture_actual_window_utc": [
+      "2026-10-06T16:28:50.698826+00:00",
+      "2026-10-06T16:28:51+00:00"
+    ],
+    "capture_preservation_observed_utc": "2026-10-06T16:29:33.178574+00:00",
+    "chronology_note": "Proposal followed source/package/prerequisite and relevant frozen terminology reads; calibration preceded composition. Capture time is bounded by observed completion, not the later preservation timestamp. The capture ran once; its hardcoded date is corrected without recapture."
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/04-23/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T16:38:17.340788+00:00",
+        "report_sha256": "65f8b8a50965d64053157355b8545c50306f93ba2b1fd94e424c1faf32bed17b",
+        "result": "PASS",
+        "reviewed_target_sha256": "51077b2d0595382d4e1849edb23cfdd16bc001bcd1ec49ede4ad8970d9c020d8",
+        "reviewed_draft_record_sha256": "c0eec472ca24d201e3294fad43286a0c116aff0bdadd52ed793028bbd0291aea",
+        "blocks": 135,
+        "required_findings": 0
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T16:37:25.132951+00:00",
+        "report_sha256": "8d72c959794cfb34ea3f6eccb88e5e053d08e2bc7912be2f95f31aa1b9b6bbad",
+        "result": "PASS",
+        "reviewed_target_sha256": "51077b2d0595382d4e1849edb23cfdd16bc001bcd1ec49ede4ad8970d9c020d8",
+        "reviewed_draft_record_sha256": "c0eec472ca24d201e3294fad43286a0c116aff0bdadd52ed793028bbd0291aea",
+        "blocks": 135,
+        "required_findings": 0
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
