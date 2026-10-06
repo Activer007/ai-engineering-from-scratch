@@ -1,0 +1,1589 @@
+{
+  "schema_version": 1,
+  "lesson_id": "04-27",
+  "source_path": "phases/04-computer-vision/27-multi-object-tracking/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "bc6530301ed8db6012ddea7578a77eb19d604fea",
+  "source_sha256": "c94305127796ce8683c9625ebc1897373e86de8c1da82580815f656988c09e7c",
+  "target_path": "i18n/zh/phases/04-computer-vision/27-multi-object-tracking/docs/zh.md",
+  "target_sha256": "1ebc17c412b9b17768af2345a819a1754b2736791b0bc88a5fd5f7e29bde59d7",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01"
+  },
+  "segments": [
+    {
+      "segment_id": "04-27:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory"
+      ],
+      "ordinal": 1,
+      "source_sha256": "9f90bdcc0686a0e17e613d465b10b8472e3ed18a6b764ddccfc254547b37347f",
+      "target": "# 多目标跟踪（multi-object tracking）与视频记忆\n"
+    },
+    {
+      "segment_id": "04-27:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory"
+      ],
+      "ordinal": 2,
+      "source_sha256": "90618f843ecf44ebedbf5327295008f032baf20a682509f867336682fd847a4c",
+      "target": "> 跟踪就是检测加关联（association）。对每一帧进行检测，再按 ID（身份标识符）将当前帧的检测结果与上一帧的轨迹（track）匹配。\n"
+    },
+    {
+      "segment_id": "04-27:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory"
+      ],
+      "ordinal": 3,
+      "source_sha256": "c82dba56527d659c194e04754aa229c63431f5f6c1979a4bddceb7f92025aef5",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 4 第 06 课（YOLO 目标检测）、阶段 4 第 08 课（Mask R-CNN）、阶段 4 第 24 课（SAM 3）\n**Time:** ~60 分钟\n"
+    },
+    {
+      "segment_id": "04-27:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "04-27:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "99b0a1d956cbb404e1c8099520c2a6404906de36d826af32ddf10401179399c0",
+      "target": "- 区分基于检测的跟踪（tracking-by-detection）与基于查询的跟踪（query-based tracking），并说出各算法家族的名称（SORT、DeepSORT、ByteTrack、BoT-SORT、SAM 2 记忆跟踪器、SAM 3.1 Object Multiplex）\n- 从零实现交并比（IoU）计算与匈牙利算法（Hungarian algorithm）指派，用于经典的基于检测的跟踪\n- 解释 SAM 2 的记忆库（memory bank），以及它为什么比基于 IoU 的关联更擅长处理遮挡（occlusion）\n- 读懂三种跟踪指标：MOTA 关注检测错误与 ID 切换（ID switch），IDF1 关注身份一致性，HOTA 关注检测与关联；并针对具体用途选择最重要的指标\n"
+    },
+    {
+      "segment_id": "04-27:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "04-27:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "bffb7fbabfb6d024a2b0f26fdc1f989a36f436a26f57fd7dc757aabbecdd2cc6",
+      "target": "检测器告诉你目标在单帧中的位置。跟踪器则告诉你：第 `t` 帧中的哪个检测结果，与第 `t-1` 帧中的某个检测结果属于同一目标。没有这种能力，就无法统计越过一条线的目标数量、在球被遮挡时继续跟踪它，或判断“汽车 #4 已连续 8 秒位于这条车道内”。\n"
+    },
+    {
+      "segment_id": "04-27:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "efd4b068624dfcd5a11d642e5873a6a280ac63b7f0b7f79426a7004340be1ea2",
+      "target": "所有面向视频的产品都离不开跟踪：体育分析、视频监控、自动驾驶、医学视频分析、野生动物监测、文字标志计数（wordmark counting）。它们共享一组核心组件：逐帧检测器；运动模型，例如卡尔曼滤波器（Kalman filter）或更复杂的模型；关联步骤，即根据 IoU / 余弦 / 学习得到的特征使用匈牙利算法；以及轨迹生命周期，包括新建、更新和终止。\n"
+    },
+    {
+      "segment_id": "04-27:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "29b193c9e676964397c4177780dbd6afc665cb6c32f0ed687d3b464ef93305d2",
+      "target": "2026 年带来了两种新模式：**SAM 2 基于记忆的跟踪**（使用特征记忆，而非基于运动模型的关联）和 **SAM 3.1 Object Multiplex**（同一概念下的多个实例共用一份记忆）。本课先介绍经典技术栈，再讲基于记忆的方法。\n"
+    },
+    {
+      "segment_id": "04-27:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "04-27:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Tracking-by-detection"
+      ],
+      "ordinal": 11,
+      "source_sha256": "039dd7e1795d4c9125f9786ef2424ab660e2e1990ee5aea9b1ee1d9c9c2d45b9",
+      "target": "### 基于检测的跟踪\n"
+    },
+    {
+      "segment_id": "04-27:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Tracking-by-detection"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Tracking-by-detection"
+      ],
+      "ordinal": 12,
+      "source_sha256": "976caef8c6439602f5616b5d5c17fb9bf7baad97b64d3758de14116584e670b2",
+      "target": "```mermaid\nflowchart LR\n    F1[\"Frame t\"] --> DET[\"Detector\"] --> D1[\"Detections at t\"]\n    PREV[\"Tracks up to t-1\"] --> PREDICT[\"Motion predict<br/>(Kalman)\"]\n    PREDICT --> PRED[\"Predicted tracks at t\"]\n    D1 --> ASSOC[\"Hungarian assignment<br/>(IoU / cosine / motion)\"]\n    PRED --> ASSOC\n    ASSOC --> UPDATE[\"Update matched tracks\"]\n    ASSOC --> NEW[\"Birth new tracks\"]\n    ASSOC --> DEAD[\"Age unmatched tracks; delete after N\"]\n    UPDATE --> NEXT[\"Tracks at t\"]\n    NEW --> NEXT\n    DEAD --> NEXT\n\n    style DET fill:#dbeafe,stroke:#2563eb\n    style ASSOC fill:#fef3c7,stroke:#d97706\n    style NEXT fill:#dcfce7,stroke:#16a34a\n```\n"
+    },
+    {
+      "segment_id": "04-27:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Tracking-by-detection"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Tracking-by-detection"
+      ],
+      "ordinal": 13,
+      "source_sha256": "691832ef42be28acc2e034c1847ad81a2133246c6b602dbe9a438413b6636ca2",
+      "target": "你在 2026 年遇到的每一种跟踪器，都是这套循环的变体。区别如下：\n"
+    },
+    {
+      "segment_id": "04-27:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Tracking-by-detection"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0027",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Tracking-by-detection"
+      ],
+      "ordinal": 14,
+      "source_sha256": "118cabf2c6069505d2f3e4a7873b1865dbd96eb050e9737868c685eb26a2d146",
+      "target": "- **SORT**（2016）：卡尔曼滤波器 + 基于 IoU 的匈牙利指派。简单、快速，不使用外观模型。\n- **DeepSORT**（2017）：SORT + 每条轨迹各自的外观特征（appearance feature），该特征由卷积神经网络（CNN）提取，表示为重识别（ReID）嵌入（embedding）。更擅长处理目标交叉。\n- **ByteTrack**（2021）：在第二阶段关联低置信度检测结果；无需外观特征，却在 MOT17 上表现领先。\n- **BoT-SORT**（2022）：Byte + 相机运动补偿 + ReID。\n- **StrongSORT / OC-SORT**：ByteTrack 的衍生算法，改进了运动和外观建模。\n"
+    },
+    {
+      "segment_id": "04-27:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Tracking-by-detection"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Kalman filter in one paragraph"
+      ],
+      "ordinal": 15,
+      "source_sha256": "7160c0eb60c0ee2519f2c90c2967d98522adbfc869ea3e5ad7a0f15c4e9ed09d",
+      "target": "### 用一段话理解卡尔曼滤波器\n"
+    },
+    {
+      "segment_id": "04-27:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Kalman filter in one paragraph"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Kalman filter in one paragraph"
+      ],
+      "ordinal": 16,
+      "source_sha256": "02e646a19faaa8da8384a275a6931ebcd10f662943656a61245b2ca551974d9c",
+      "target": "卡尔曼滤波器为每条轨迹维护状态 `(x, y, w, h, dx, dy, dw, dh)` 及其协方差（covariance）。每一帧先用匀速模型（constant-velocity model）**预测**状态，再用匹配的检测结果**更新**状态。预测的不确定性越高，更新时就越信任检测结果。这样既能得到平滑的运动轨迹，也能在短暂遮挡（1-5 帧）期间延续轨迹。\n"
+    },
+    {
+      "segment_id": "04-27:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Kalman filter in one paragraph"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Kalman filter in one paragraph"
+      ],
+      "ordinal": 17,
+      "source_sha256": "62cfc29c3fe50d2d13d501621563340503b7384c13a324c76ace731683f9f81d",
+      "target": "每一种经典跟踪器都在运动预测步骤中使用卡尔曼滤波器。\n"
+    },
+    {
+      "segment_id": "04-27:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Kalman filter in one paragraph"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0035",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### The Hungarian algorithm"
+      ],
+      "ordinal": 18,
+      "source_sha256": "5e16559a6b47a2522e14375b95006c9d71ba811f54115295980fbcc41a6008b7",
+      "target": "### 匈牙利算法\n"
+    },
+    {
+      "segment_id": "04-27:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### The Hungarian algorithm"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0037",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### The Hungarian algorithm"
+      ],
+      "ordinal": 19,
+      "source_sha256": "77e393b04d214a1f78608fc70111b26883d3635cde5012e64280affd7f7d51ce",
+      "target": "给定一个 `M x N` 代价矩阵（cost matrix，轨迹 x 检测结果），找出使总代价最小的一对一指派。代价通常是 `1 - IoU(track_bbox, detection_bbox)`，或外观特征余弦相似度的负值。运行时间复杂度为 O((M+N)^3)；当 M、N 不超过 ~1000 时，通过 Python 中的 `scipy.optimize.linear_sum_assignment` 仍然足够快。\n"
+    },
+    {
+      "segment_id": "04-27:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### The Hungarian algorithm"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### ByteTrack's key idea"
+      ],
+      "ordinal": 20,
+      "source_sha256": "1ac13397ce267e3783504a686f0fa73f0bcbab631465b2dc6cc273a8eb32faae",
+      "target": "### ByteTrack 的关键想法\n"
+    },
+    {
+      "segment_id": "04-27:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### ByteTrack's key idea"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### ByteTrack's key idea"
+      ],
+      "ordinal": 21,
+      "source_sha256": "c86503bd5c24e571c6b08c6125988a40dd593b32837c3997acd5c0032d1c9c85",
+      "target": "标准跟踪器会丢弃低置信度检测结果（< 0.5）。ByteTrack 将它们保留为**第二阶段候选项**：先将轨迹与高置信度检测结果匹配，再让未匹配的轨迹尝试用稍宽松的 IoU 阈值匹配低置信度检测结果。这样可以恢复短暂遮挡期间的跟踪，并修复人群附近的 ID 切换问题。\n"
+    },
+    {
+      "segment_id": "04-27:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### ByteTrack's key idea"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 22,
+      "source_sha256": "e1630b33a0a95464fd8dc578ec11ae9b07f7cba238f5148cf05e0c0201c69123",
+      "target": "### SAM 2 基于记忆的跟踪\n"
+    },
+    {
+      "segment_id": "04-27:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 23,
+      "source_sha256": "9db8a5984030ba0c211be8c8c7ef3915c517b49145d7f62074dc69f9526ad301",
+      "target": "SAM 2 通过维护一个存储各实例时空特征的**记忆库**来处理视频。在某一帧上给出提示（prompt，例如点击、边界框或文本）后，它会将该实例编码到记忆中。处理后续帧时，通过交叉注意力（cross-attention）让记忆与新帧特征交互，解码器再生成同一实例在新帧中的掩码（mask）。\n"
+    },
+    {
+      "segment_id": "04-27:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 24,
+      "source_sha256": "d3c07f53d823c2270e52e96ce3e21cc9f14cc67da6031ed1eef6e12af3c1e188",
+      "target": "不用卡尔曼滤波器，也不用匈牙利指派。关联隐含在记忆注意力操作中。\n"
+    },
+    {
+      "segment_id": "04-27:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 25,
+      "source_sha256": "a5c76b83a53f077dd7a63a3a7030919442625a987a3074936c401e611406a6b7",
+      "target": "优点：\n- 对大范围遮挡具有鲁棒性（记忆跨越许多帧，保留实例身份）。\n- 结合 SAM 3 的文本提示词后，支持开放词表（open-vocabulary）。\n- 无需单独的运动模型即可工作。\n"
+    },
+    {
+      "segment_id": "04-27:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 26,
+      "source_sha256": "c5b3e2f44ab693fb79f74c45ae563a7f0fbb102d553ebe87a76fbffffbb27fb5",
+      "target": "缺点：\n- 跟踪大量目标时，比 ByteTrack 慢。\n- 记忆库不断增长，限制了上下文窗口。\n"
+    },
+    {
+      "segment_id": "04-27:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 2 memory-based tracking"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 27,
+      "source_sha256": "14d5e2531ae022fc0e55af3c06c4929e101a708dbb358b8baad9bb81646b0e91",
+      "target": "### SAM 3.1 Object Multiplex\n"
+    },
+    {
+      "segment_id": "04-27:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 28,
+      "source_sha256": "40e2ce8e08d4282604afa66c0698f15ef59b1a20b24e34cfc78ad36a0ea0bb81",
+      "target": "此前的 SAM 2 / SAM 3 跟踪为每个实例维护独立的记忆库。50 个目标就需要 50 个记忆库。Object Multiplex（2026 年三月）将它们合并为一份共享记忆，并为**每个实例设置各自的查询 token（词元）**。开销随实例数量以次线性方式增长。\n"
+    },
+    {
+      "segment_id": "04-27:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0057",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 29,
+      "source_sha256": "fa246ba01e54672087ce4214a22682e8abed15889f4f6815b0696c281bd573d6",
+      "target": "Multiplex 是 2026 年人群跟踪的新默认选择，适用于演唱会人群、仓库工作人员和交通路口。\n"
+    },
+    {
+      "segment_id": "04-27:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Three metrics to know"
+      ],
+      "ordinal": 30,
+      "source_sha256": "8c22f5b5b5455247a2885fa36c35b9bb019381647442f0f16f3c65d5c8384a5f",
+      "target": "### 需要掌握的三种指标\n"
+    },
+    {
+      "segment_id": "04-27:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Three metrics to know"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0061",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Three metrics to know"
+      ],
+      "ordinal": 31,
+      "source_sha256": "48a12a9c1db6158e478b426fa459a1b3550e6b840a1449d2de2f2a34d16477d9",
+      "target": "- **多目标跟踪准确率 MOTA（Multi-Object Tracking Accuracy）**：1 - (FN + FP + ID switches) / GT。其中 FN 是漏检数，FP 是误检数，GT 是逐帧统计的真实目标总数。按错误类型加权；用单一指标混合衡量检测和关联失败。\n- **身份 F1 分数（IDF1）**：身份精确率（ID precision）与召回率（recall）的调和平均值。专门关注每条真实轨迹（ground-truth track）在时间上保持其 ID 的程度。在对 ID 切换敏感的任务中，它比 MOTA 更合适。\n- **高阶跟踪准确率 HOTA（Higher Order Tracking Accuracy）**：分解为检测准确率（DetA）与关联准确率（AssA）。自 2020 年以来的社区标准，也是最全面的指标。\n"
+    },
+    {
+      "segment_id": "04-27:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Three metrics to know"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Three metrics to know"
+      ],
+      "ordinal": 32,
+      "source_sha256": "6879f3053da0f08701a1c5e5beb26cae17f7314b7523e7210b596dcb2361de4f",
+      "target": "视频监控关注“谁是谁”，应报告 IDF1。体育分析关注传球计数，应报告 HOTA。一般学术比较也应报告 HOTA。\n"
+    },
+    {
+      "segment_id": "04-27:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Three metrics to know"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Three metrics to know"
+      ],
+      "ordinal": 33,
+      "source_sha256": "b28f13074e55a7e9d5589a0dc8fa0bea5243456496fac31139cb30b72bff45f1",
+      "target": "```figure\ncv3-track-assoc\n```\n"
+    },
+    {
+      "segment_id": "04-27:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## The Concept",
+        "### Three metrics to know"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "04-27:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0069",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 1: IoU-based cost matrix"
+      ],
+      "ordinal": 35,
+      "source_sha256": "ca1b700657b93ff176572be9c9bd5e42f65af20b6c7cdb52e12f2b6a1db4f1be",
+      "target": "### 第 1 步：基于 IoU 的代价矩阵\n"
+    },
+    {
+      "segment_id": "04-27:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 1: IoU-based cost matrix"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0071",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 1: IoU-based cost matrix"
+      ],
+      "ordinal": 36,
+      "source_sha256": "e9bafc435e614ce585f7cf5265f790fdfd1950297f18d9472034de92df6e7b08",
+      "target": "```python\nimport numpy as np\n\n\ndef bbox_iou(a, b):\n    \"\"\"\n    a, b: (N, 4) arrays of [x1, y1, x2, y2].\n    Returns (N_a, N_b) IoU matrix.\n    \"\"\"\n    ax1, ay1, ax2, ay2 = a[:, 0], a[:, 1], a[:, 2], a[:, 3]\n    bx1, by1, bx2, by2 = b[:, 0], b[:, 1], b[:, 2], b[:, 3]\n    inter_x1 = np.maximum(ax1[:, None], bx1[None, :])\n    inter_y1 = np.maximum(ay1[:, None], by1[None, :])\n    inter_x2 = np.minimum(ax2[:, None], bx2[None, :])\n    inter_y2 = np.minimum(ay2[:, None], by2[None, :])\n    inter = np.clip(inter_x2 - inter_x1, 0, None) * np.clip(inter_y2 - inter_y1, 0, None)\n    area_a = (ax2 - ax1) * (ay2 - ay1)\n    area_b = (bx2 - bx1) * (by2 - by1)\n    union = area_a[:, None] + area_b[None, :] - inter\n    return inter / np.clip(union, 1e-8, None)\n```\n"
+    },
+    {
+      "segment_id": "04-27:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 1: IoU-based cost matrix"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 2: Minimal SORT-style tracker"
+      ],
+      "ordinal": 37,
+      "source_sha256": "b64f1e35addb7cdd54a66d6be5db356911591e785f227e9a7683514e44784511",
+      "target": "### 第 2 步：最简 SORT 风格跟踪器\n"
+    },
+    {
+      "segment_id": "04-27:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 2: Minimal SORT-style tracker"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 2: Minimal SORT-style tracker"
+      ],
+      "ordinal": 38,
+      "source_sha256": "a5397767dd4dd403eeb0fa5802cb01bc8e08e5d909391a913b459899c75982b2",
+      "target": "为简洁起见，这里省略固定匀速卡尔曼模型，只使用简单的 IoU 关联；在生产环境中，卡尔曼预测必不可少。`sort` Python 包提供了完整版本。\n"
+    },
+    {
+      "segment_id": "04-27:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 2: Minimal SORT-style tracker"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0077",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 2: Minimal SORT-style tracker"
+      ],
+      "ordinal": 39,
+      "source_sha256": "6b93f536e5384b12415f1615cebd1b978fb220265d69b425d1e255f8687a6d63",
+      "target": "```python\nfrom scipy.optimize import linear_sum_assignment\n\n\nclass Track:\n    def __init__(self, tid, bbox, frame):\n        self.id = tid\n        self.bbox = bbox\n        self.last_frame = frame\n        self.hits = 1\n\n    def update(self, bbox, frame):\n        self.bbox = bbox\n        self.last_frame = frame\n        self.hits += 1\n\n\nclass SimpleTracker:\n    def __init__(self, iou_threshold=0.3, max_age=5):\n        self.tracks = []\n        self.next_id = 1\n        self.iou_threshold = iou_threshold\n        self.max_age = max_age\n\n    def step(self, detections, frame):\n        if not self.tracks:\n            for d in detections:\n                self.tracks.append(Track(self.next_id, d, frame))\n                self.next_id += 1\n            return [(t.id, t.bbox) for t in self.tracks]\n\n        track_boxes = np.array([t.bbox for t in self.tracks])\n        det_boxes = np.array(detections) if len(detections) else np.empty((0, 4))\n\n        iou = bbox_iou(track_boxes, det_boxes) if len(det_boxes) else np.zeros((len(track_boxes), 0))\n        cost = 1 - iou\n        cost[iou < self.iou_threshold] = 1e6\n\n        matched_track = set()\n        matched_det = set()\n        if cost.size > 0:\n            row, col = linear_sum_assignment(cost)\n            for r, c in zip(row, col):\n                if cost[r, c] < 1.0:\n                    self.tracks[r].update(det_boxes[c], frame)\n                    matched_track.add(r); matched_det.add(c)\n\n        for i, d in enumerate(det_boxes):\n            if i not in matched_det:\n                self.tracks.append(Track(self.next_id, d, frame))\n                self.next_id += 1\n\n        self.tracks = [t for t in self.tracks if frame - t.last_frame <= self.max_age]\n        return [(t.id, t.bbox) for t in self.tracks]\n```\n"
+    },
+    {
+      "segment_id": "04-27:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 2: Minimal SORT-style tracker"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 2: Minimal SORT-style tracker"
+      ],
+      "ordinal": 40,
+      "source_sha256": "77608af508b80d9fbe66595cc0909ce12c5a47b1ae8fa4e121fab63edc0510d2",
+      "target": "60 行代码，接收逐帧检测结果，返回每一帧的轨迹 ID。实际系统还会加入卡尔曼预测、ByteTrack 的第二阶段重新匹配，以及外观特征。\n"
+    },
+    {
+      "segment_id": "04-27:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 2: Minimal SORT-style tracker"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 3: Synthetic trajectory test"
+      ],
+      "ordinal": 41,
+      "source_sha256": "34e726dcf520d784735737cb462b0b85221bf9ccad9f76c561782454add19a29",
+      "target": "### 第 3 步：合成运动轨迹测试\n"
+    },
+    {
+      "segment_id": "04-27:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 3: Synthetic trajectory test"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0083",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 3: Synthetic trajectory test"
+      ],
+      "ordinal": 42,
+      "source_sha256": "16534b1bd0cb2fd48eeb3d7496e31a73d07059f6812623813173ee6b3eb7d49e",
+      "target": "```python\ndef synthetic_frames(num_frames=20, num_objects=3, H=240, W=320, seed=0):\n    rng = np.random.default_rng(seed)\n    starts = rng.uniform(20, 200, size=(num_objects, 2))\n    velocities = rng.uniform(-5, 5, size=(num_objects, 2))\n    frames = []\n    for f in range(num_frames):\n        dets = []\n        for i in range(num_objects):\n            cx, cy = starts[i] + f * velocities[i]\n            dets.append([cx - 10, cy - 10, cx + 10, cy + 10])\n        frames.append(dets)\n    return frames\n\n\ntracker = SimpleTracker()\nfor f, dets in enumerate(synthetic_frames()):\n    tracks = tracker.step(dets, f)\n```\n"
+    },
+    {
+      "segment_id": "04-27:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 3: Synthetic trajectory test"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 3: Synthetic trajectory test"
+      ],
+      "ordinal": 43,
+      "source_sha256": "cbed286f62c44eebc2a8cb4231993dfa4d687f8d82a306ea459d63ab2c9f4fa3",
+      "target": "三个沿直线运动的目标，应该在全部 20 帧中保持各自的 ID 不变。\n"
+    },
+    {
+      "segment_id": "04-27:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 3: Synthetic trajectory test"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 4: ID-switch metric"
+      ],
+      "ordinal": 44,
+      "source_sha256": "c25f128e29371c81a868f11c27a442a50ac7de07e8ef7aa344e9490dc44beca0",
+      "target": "### 第 4 步：ID 切换指标\n"
+    },
+    {
+      "segment_id": "04-27:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 4: ID-switch metric"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0089",
+      "kind": "fence",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 4: ID-switch metric"
+      ],
+      "ordinal": 45,
+      "source_sha256": "4798c8d4af196629e238ef45d0f0565b24d577d5a6082cad81abac8a99e31d71",
+      "target": "```python\ndef count_id_switches(tracks_per_frame, gt_per_frame):\n    \"\"\"\n    tracks_per_frame:  list of list of (track_id, bbox)\n    gt_per_frame:      list of list of (gt_id, bbox)\n    Returns number of ID switches.\n    \"\"\"\n    prev_assignment = {}\n    switches = 0\n    for tracks, gts in zip(tracks_per_frame, gt_per_frame):\n        if not tracks or not gts:\n            continue\n        t_boxes = np.array([b for _, b in tracks])\n        g_boxes = np.array([b for _, b in gts])\n        iou = bbox_iou(g_boxes, t_boxes)\n        for g_idx, (gt_id, _) in enumerate(gts):\n            j = iou[g_idx].argmax()\n            if iou[g_idx, j] > 0.5:\n                t_id = tracks[j][0]\n                if gt_id in prev_assignment and prev_assignment[gt_id] != t_id:\n                    switches += 1\n                prev_assignment[gt_id] = t_id\n    return switches\n```\n"
+    },
+    {
+      "segment_id": "04-27:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 4: ID-switch metric"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 4: ID-switch metric"
+      ],
+      "ordinal": 46,
+      "source_sha256": "9284f93aa63afc058cb030ee271cfd5e39bd1f91843a6bb1a40a929d00df5168",
+      "target": "这是一个与 IDF1 相关的简化指标：统计真实目标所分配到的预测轨迹 ID 改变了多少次。真正的 MOTA / IDF1 / HOTA 工具由 `py-motmetrics` 和 `TrackEval` 提供。\n"
+    },
+    {
+      "segment_id": "04-27:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Build It",
+        "### Step 4: ID-switch metric"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0093",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "04-27:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 48,
+      "source_sha256": "dcea7a13508a060acd37d2b56702d2775114c6e239e288d843f7995c6eb4d313",
+      "target": "2026 年的生产级跟踪器：\n"
+    },
+    {
+      "segment_id": "04-27:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 49,
+      "source_sha256": "82313c13438991edb6bd0fc6a7fea0de06239c75891616c5666bb9887c09ff62",
+      "target": "- `ultralytics`：内置 YOLOv8 + ByteTrack / BoT-SORT。`results = model.track(source, tracker=\"bytetrack.yaml\")`。默认选择。\n- `supervision`（Roboflow）：ByteTrack 封装及标注工具。\n- SAM 2 / SAM 3.1：通过 `processor.track()` 进行基于记忆的跟踪。\n- 自定义技术栈：检测器（YOLOv8 / RT-DETR）+ `sort-tracker` / `OC-SORT` / `StrongSORT`。\n"
+    },
+    {
+      "segment_id": "04-27:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "d807a87fb411034d4bc1e1fa85dd6e50cfadec27fd9be2fb19d7fa8b11e48e88",
+      "target": "选择建议：\n"
+    },
+    {
+      "segment_id": "04-27:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0101",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "c712b87fdf28ab17e8c4c50b50e53960c9a43f101949b11dccb0fce02afba282",
+      "target": "- 以 30+ fps 跟踪行人 / 汽车 / 箱子：**搭配 ultralytics 的 ByteTrack**。\n- 人群中同一类别的众多实例：**SAM 3.1 Object Multiplex**。\n- 遮挡严重，但外观可辨识：**DeepSORT / StrongSORT**（ReID 特征）。\n- 体育运动 / 复杂交互：**BoT-SORT** 或学习式跟踪器（MOTRv3）。\n"
+    },
+    {
+      "segment_id": "04-27:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Use It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Ship It"
+      ],
+      "ordinal": 52,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "04-27:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Ship It"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0105",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Ship It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "2d7d8a54528e5c57d81432c3291d09eabfa1bdb1c89bfd04e496f10a5214cf37",
+      "target": "本课产出：\n"
+    },
+    {
+      "segment_id": "04-27:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Ship It"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0107",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Ship It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "af1d9b99bad862e871f3c2627ace407a1afbad123f46743514d73abb0ddad919",
+      "target": "- `outputs/prompt-tracker-picker.md`：根据场景类型、遮挡模式和延迟预算，选择 SORT / ByteTrack / BoT-SORT / SAM 2 / SAM 3.1。\n- `outputs/skill-mot-evaluator.md`：编写完整的评测框架，对照真实轨迹评测 MOTA / IDF1 / HOTA。\n"
+    },
+    {
+      "segment_id": "04-27:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Ship It"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0109",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Exercises"
+      ],
+      "ordinal": 55,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "04-27:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Exercises"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0111",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Exercises"
+      ],
+      "ordinal": 56,
+      "source_sha256": "bfb200ecdd35d4bb5205485faa4c6a14f286c00a6bcae82723b855e17b988c79",
+      "target": "1. **（简单）** 用 3、10 和 30 个目标运行上面的合成跟踪器。分别报告 ID 切换次数，找出简单的纯 IoU 关联从何处开始失效。\n2. **（中等）** 在关联之前加入匀速卡尔曼预测步骤。展示短暂遮挡（2-3 帧）不再导致 ID 切换。\n3. **（困难）** 通过 `transformers` 集成 SAM 2 的记忆跟踪器，作为另一种跟踪器后端。在一段 30 秒的人群视频上分别运行 SimpleTracker 和 SAM 2，手动为 5 名显眼的人物标注真实 ID，然后比较 ID 切换次数。\n"
+    },
+    {
+      "segment_id": "04-27:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Exercises"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Key Terms"
+      ],
+      "ordinal": 57,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "04-27:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Key Terms"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0115",
+      "kind": "table",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Key Terms"
+      ],
+      "ordinal": 58,
+      "source_sha256": "f844ee05f03a770b7cc9819f9d46d73aa52d43e63d01ea8e67e7133b40bf4a34",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 基于检测的跟踪 | “先检测，再关联” | 逐帧检测器 + 根据 IoU / 外观进行匈牙利指派 |\n| 卡尔曼滤波器 | “运动预测” | 用线性动力学 + 协方差实现平滑的轨迹预测与遮挡处理 |\n| 匈牙利算法 | “最优指派” | 求解最小代价二分图匹配问题；`scipy.optimize.linear_sum_assignment` |\n| ByteTrack | “低置信度第二遍匹配” | 将未匹配的轨迹与低置信度检测结果重新匹配，以恢复短暂遮挡期间的跟踪 |\n| DeepSORT | “SORT + 外观” | 加入 ReID 特征用于跨帧匹配；更有利于保持 ID |\n| 记忆库 | “SAM 2 的诀窍” | 跨帧存储各实例的时空特征；用交叉注意力替代显式关联 |\n| Object Multiplex | “SAM 3.1 共享记忆” | 一份共享记忆配合每个实例各自的查询，快速跟踪大量目标 |\n| HOTA | “现代跟踪指标” | 分解为检测准确率和关联准确率；社区标准 |\n"
+    },
+    {
+      "segment_id": "04-27:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Key Terms"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0117",
+      "kind": "heading",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Further Reading"
+      ],
+      "ordinal": 59,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "04-27:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Further Reading"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-27:b0119",
+      "kind": "list",
+      "heading_path": [
+        "# Multi-Object Tracking & Video Memory",
+        "## Further Reading"
+      ],
+      "ordinal": 60,
+      "source_sha256": "7ceb5641b4173af6a51c2c40746b6fb0d6f24cce2035ed6c38e06211b6511b68",
+      "target": "- [SORT（Bewley 等，2016）](https://arxiv.org/abs/1602.00763)：介绍最简基于检测的跟踪方法的论文\n- [DeepSORT（Wojke 等，2017）](https://arxiv.org/abs/1703.07402)：加入外观特征\n- [ByteTrack（Zhang 等，2022）](https://arxiv.org/abs/2110.06864)：低置信度第二遍匹配\n- [BoT-SORT（Aharon 等，2022）](https://arxiv.org/abs/2206.14651)：相机运动补偿\n- [HOTA（Luiten 等，2020）](https://arxiv.org/abs/2009.07736)：分解式跟踪指标\n- [SAM 2 视频分割（Meta，2024）](https://ai.meta.com/sam2/)：基于记忆的跟踪器\n- [SAM 3.1 Object Multiplex（Meta，2026 年三月）](https://ai.meta.com/blog/segment-anything-model-3/)\n"
+    }
+  ],
+  "support": {
+    "commit": "3349db4d0568a0fce8ab8321324697d89bd8e852",
+    "tree": "04ea7d3d11a82e641972c2ad33b2e7197dc04a9f",
+    "dependencies_path": "i18n/zh/.curated/stages/S156-multi-object-tracking/DEPENDENCIES.json",
+    "dependencies_sha256": "ba68fad3d1ce19e05c6136e7bf227e17c5a2377675e6cd8b5fe9194b977863df",
+    "common_set_sha256": "a4ed394c03650b70a6e48172186d37c5bc255dc887753c058be7a73bc5a78875",
+    "common_files": 158,
+    "terminology_files": 150,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 161,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S156-multi-object-tracking/DEPENDENCIES.json",
+        "commit": "3349db4d0568a0fce8ab8321324697d89bd8e852",
+        "git_blob": "085bef86519c5b83c0ed31d04b72edab27378b91",
+        "sha256": "ba68fad3d1ce19e05c6136e7bf227e17c5a2377675e6cd8b5fe9194b977863df",
+        "bytes": 282747,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S156-multi-object-tracking/SCOPE.md",
+        "commit": "3349db4d0568a0fce8ab8321324697d89bd8e852",
+        "git_blob": "59b3ad1feb3acb4fe782fec99cf4d7e244d96abd",
+        "sha256": "620b5d9f2122c6fe84b75904cf75a939bb2b747fccec2cbb448adba23405910d",
+        "bytes": 10940,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S156-multi-object-tracking/TERMINOLOGY.md",
+        "commit": "3349db4d0568a0fce8ab8321324697d89bd8e852",
+        "git_blob": "0a8a4deeb21a93c40d123b3e6fd8a831a97ff373",
+        "sha256": "66757d8971c7287ef616c662a0cc9570b574eaf8da98c03b0689680d874e7063",
+        "bytes": 4806,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "fd38fd4be2656f3f2ca0b635a5a98890f17a1e8decfa7a84aa16a8545a2a999f",
+    "installation_completed_utc": "2026-10-06T21:39:03.442899+00:00",
+    "frozen_pending_null_fields_preserved": true,
+    "aggregate_all161_installation_gate_sha256": "2fd7976a569a73b6e1bf26d8191ba18440387cd5e11b5dbfa1158cbe301c4736"
+  },
+  "authoring_history": {
+    "original_author_handoff_sha256": "2724cd7054f25c3d6eebd941383157fd4f0a2d6ec77aeb380a1ec8158c1a7a87",
+    "final_author_handoff_sha256": "5b0fc9f538d449260e0c569cebe5624415319a80a361228548af2dbbd80c6a69",
+    "original_author_evidence_files_preserved": 45,
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false,
+    "capture_invocations": 1,
+    "raw_capture_hardcoded_date": "2026-10-01",
+    "actual_authoring_date_utc": "2026-10-06",
+    "capture_date_caveat": "The unchanged original capture helper hardcodes 2026-10-01. That raw value remains in provenance and is not the actual authoring date. Actual UTC timestamps are recorded separately; no recapture.",
+    "chronology": {
+      "support_installed_utc": "2026-10-06T21:39:03.442899+00:00",
+      "author_started_utc": "2026-10-06T21:40:03Z",
+      "composition_started_utc": "2026-10-06T21:49:33Z",
+      "first_prose_artifact_write_completed_utc": "2026-10-06T21:50:59.017209+00:00",
+      "first_target_write_completed_utc": "2026-10-06T21:50:59.088971+00:00",
+      "first_write_timestamp_semantics": "Completion timestamps from preserved initial artifact/target mtime, checked against clock.curr_time/date-u. Exact syscall start is unavailable; not invented.",
+      "capture_started_utc": "2026-10-06T21:51:50.103887+00:00",
+      "capture_completed_utc": "2026-10-06T21:51:50.193532+00:00",
+      "capture_invocations": 1,
+      "raw_capture_run_date": "2026-10-01",
+      "actual_capture_date": "2026-10-06",
+      "author_bilingual_review_and_corrections_completed_utc": "2026-10-06T21:52:50.757532+00:00",
+      "author_separate_Chinese_read_and_corrections_completed_utc": "2026-10-06T21:53:24.025387+00:00",
+      "selfreview_time_note": "Selfreview reports full_read_completed/full_pair_read_completed record when complete untruncated readouts returned; actual review/correction windows close at the later revision_completed timestamps above. No model token or elapsed-human-reading estimates.",
+      "local_checks_completed_utc": "2026-10-06T21:54:55.855973+00:00",
+      "prose_go_utc": "2026-10-06T21:48:15.211065+00:00"
+    },
+    "original_raw_capture_sha256": "9a4a28007bb49af5c46f272d894b30e94e58e6fd6a144c15096c4d4eabbf1600",
+    "first_target_sha256": "c91dd10cd298263d16ee9cd7c2e04f1b899a01cde883dbe4ab09ca2c84a74d4a",
+    "independent_terminology_calibration_sha256": "ec2ff9848151e667b754a876534100c3080b6a3f3a31ae340df99b7933363c89",
+    "initial_author_bilingual_selfcheck_sha256": "fad44c56a24136178b75c47e876d84ff894943be16ece897ef2f4fc9a6eb09af",
+    "initial_author_Chinese_selfread_sha256": "a9e9b33a5723d9197aa34799a8d78f72d0c10e0d52c9cc12964f43e2ffad1569",
+    "initial_author_mechanical_report_sha256": "1bc279f3b1527f0372cc256fd946e8dbb197d35352f4a5fd0420815a9bdc0733",
+    "reviewed_draft_record_sha256": "00c75352a4e6b3227b9070f23642492f7aecffc65d9f2f85b2fd18e72b23ea7b",
+    "initial_reviewed_draft_record_sha256": "8344e89842571611f152175a39f0f800cb34f4982cc4e607e073594381e13c4d",
+    "initial_review_target_sha256": "89724e083c9564b73f6b5331349f1bb5aca644abc9338fe108406d9522850432",
+    "post_independent_review_author_revisions": [
+      {
+        "revision": "R01",
+        "status": "FAILED_ORIGINAL_NUMERIC_STRICT",
+        "author_handoff_sha256": "e049de6d7201a798ca8058c284bd570b85dff1fface1f020d981506d552be447",
+        "strict_conflict_sha256": "eb87e96d01a914b2de4210cb62cfc40748415dc8a788e93c8d3771d202c2e04a",
+        "target_sha256": "f0ee7b8b819a1648508e53a708544ee9970c9f4cfe89c6cb5f10d6bc7adcbd0f",
+        "draft_record_sha256": "748591283b34fe3f7afcc51ee806ddd8251aa51c97fe8c75e862519452adc7ad",
+        "changed_blocks": [
+          "04-27:b0061"
+        ],
+        "reason": "The originally requested added F1 duplicated a numeric token. Original strict rejected it; failure and requested draft remain preserved. No new exception."
+      },
+      {
+        "revision": "R02",
+        "status": "EXACT_REVISION_CLOSED_BY_BOTH_INDEPENDENT_REVIEWERS",
+        "author_handoff_sha256": "5b0fc9f538d449260e0c569cebe5624415319a80a361228548af2dbbd80c6a69",
+        "changed_block_proof_sha256": "7c1679a6cb0a89b8f8804406d35c0eb284335381b94c70a45d9c5cd49bfeaff3",
+        "revision_receipt_sha256": "5a47b5260d5ac78c4610ae3cae8976d6d1b72ef48189a6d9df60d14f8f78d065",
+        "local_author_checks_sha256": "44b990d2e7b8c892dc756829e80ec79a0060f68fa961f1236b6c8536632113e4",
+        "started_utc": "2026-10-06T22:03:31.418316+00:00",
+        "completed_utc": "2026-10-06T22:03:31.421657+00:00",
+        "target_sha256": "1ebc17c412b9b17768af2345a819a1754b2736791b0bc88a5fd5f7e29bde59d7",
+        "draft_record_sha256": "00c75352a4e6b3227b9070f23642492f7aecffc65d9f2f85b2fd18e72b23ea7b",
+        "changed_blocks": [
+          "04-27:b0061"
+        ],
+        "unchanged_blocks": 118,
+        "resolution": "Translate source ID F1 directly as 身份 F1 分数 while retaining acronym IDF1. Original numeric inventory remains equal."
+      }
+    ],
+    "resolution_note_sha256s": [
+      "5f966bd66dc4a759af8f61ca9d8b21ebf3d6e63b6011880143e16a06547288b5",
+      "b46906af8ef405a0c76bbfe82505fa65050fb33e7dadf7b350b1a59d7745a0b7"
+    ],
+    "retained_failures": [
+      {
+        "type": "initial_author_check_wrapper",
+        "evidence_sha256": "b2c6967dd2698bfcd1cc8f44a944345c4381e05768b1d4ed1218f072ab3b7062",
+        "description": "Initial wrapper incorrectly required no-index whitespace exit 0; actual added-file difference exit 1 with no diagnostics was retained. Original controls and completed replays were not changed."
+      },
+      {
+        "type": "R01_original_numeric_strict_failure",
+        "evidence_sha256": "eb87e96d01a914b2de4210cb62cfc40748415dc8a788e93c8d3771d202c2e04a",
+        "status": "FAILED_PRESERVED"
+      }
+    ]
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/04-27/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T21:58:24.271518+00:00",
+        "report_sha256": "fedf530ba2e58ce959a405ba25a4293b3d8dd061968a0aaaca05c9cacfb37a26",
+        "result": "PASS_COMPLETE_BILINGUAL_REVIEW",
+        "reviewed_target_sha256": "89724e083c9564b73f6b5331349f1bb5aca644abc9338fe108406d9522850432",
+        "reviewed_draft_record_sha256": "8344e89842571611f152175a39f0f800cb34f4982cc4e607e073594381e13c4d",
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true,
+        "blocks": 119
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T21:58:16.425828+00:00",
+        "report_sha256": "fbfdadd1136d6502cf63ebd53ecd0be887b8b3b0466a3a774821a38e9a05a208",
+        "result": "CHANGES_REQUIRED_ONE_S2_TERMINOLOGY_FINDING",
+        "reviewed_target_sha256": "89724e083c9564b73f6b5331349f1bb5aca644abc9338fe108406d9522850432",
+        "reviewed_draft_record_sha256": "8344e89842571611f152175a39f0f800cb34f4982cc4e607e073594381e13c4d",
+        "required_findings_at_that_review": 1,
+        "separate_from_author": true,
+        "blocks": 119
+      },
+      {
+        "type": "independent_bilingual_changed_block_closure",
+        "completed_utc": "2026-10-06T22:06:17.240917+00:00",
+        "report_sha256": "038b273c5ae7ba5e13ac1afe98a2d0e69774f6c0d3f435183d91709dc8edead2",
+        "result": "PASS_BILINGUAL_R02_EXACT_HASH_CLOSURE",
+        "reviewed_target_sha256": "1ebc17c412b9b17768af2345a819a1754b2736791b0bc88a5fd5f7e29bde59d7",
+        "reviewed_draft_record_sha256": "00c75352a4e6b3227b9070f23642492f7aecffc65d9f2f85b2fd18e72b23ea7b",
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true,
+        "changed_blocks": [
+          "04-27:b0061"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 118,
+        "initial_reports_not_rebound": true
+      },
+      {
+        "type": "independent_Chinese_changed_block_closure",
+        "completed_utc": "2026-10-06T22:06:39.774717+00:00",
+        "report_sha256": "03834c10d210e962d524a3c5bccbd489e5a4ce3f2d692888fc548b0aec82ca39",
+        "result": "PASS_ALL_REQUIRED_CHINESE_FINDINGS_CLOSED",
+        "reviewed_target_sha256": "1ebc17c412b9b17768af2345a819a1754b2736791b0bc88a5fd5f7e29bde59d7",
+        "reviewed_draft_record_sha256": "00c75352a4e6b3227b9070f23642492f7aecffc65d9f2f85b2fd18e72b23ea7b",
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true,
+        "changed_blocks": [
+          "04-27:b0061"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 118,
+        "initial_reports_not_rebound": true
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
