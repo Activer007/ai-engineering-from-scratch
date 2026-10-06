@@ -1,0 +1,1291 @@
+{
+  "schema_version": 1,
+  "lesson_id": "14-06",
+  "source_path": "phases/14-agent-engineering/06-tool-use-and-function-calling/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "1f1e36a20f62f97635e2926ccc8439ec2f42dc6c",
+  "source_sha256": "73cf8bf653c6148817147fd98b4fc780d9794ca3e9651605f6c8e3f242a14992",
+  "target_path": "i18n/zh/phases/14-agent-engineering/06-tool-use-and-function-calling/docs/zh.md",
+  "target_sha256": "0dd3c28009fcef65faee490c9f8fcf547de8eca76f8335256c104a717d2ec791",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-06",
+    "original_capture_run_date": "2026-10-01",
+    "original_capture_date_note": "The unchanged original capture control hardcodes 2026-10-01. Original one-time output is preserved separately; run_date above records actual current authoring UTC date without recapture.",
+    "original_capture_sha256": "ac6830fa3f7c6edf2d18b07c9a5772681bae4fbab8ae10d8dff59acd79d24449"
+  },
+  "segments": [
+    {
+      "segment_id": "14-06:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling"
+      ],
+      "ordinal": 1,
+      "source_sha256": "c9f6318e3ec840eb90529e85f108546e2b8295d2a147f8f5796cd0e34bcb3ae3",
+      "target": "# 工具使用与函数调用\n"
+    },
+    {
+      "segment_id": "14-06:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Tool Use and Function Calling"
+      ],
+      "ordinal": 2,
+      "source_sha256": "844d0094167a6d19e6a383877892b43747bf84c8a81b4582071c89072dea5be8",
+      "target": "> Toolformer（Schick 等，2023）开创了自监督工具调用标注。Berkeley 函数调用排行榜（Berkeley Function Calling Leaderboard，BFCL）V4（Patil 等，2025）确立了 2026 年的标准：评分权重为 40% 智能体类（agentic）、30% 多轮类（multi-turn）、10% Live（真实用户提示词类）、10% Non-Live（合成测试用例类）、10% 幻觉类（hallucination）。单轮问题已经解决。记忆、动态决策和长时程工具调用链则尚未解决。\n"
+    },
+    {
+      "segment_id": "14-06:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling"
+      ],
+      "ordinal": 3,
+      "source_sha256": "8aeefd870e61afed6fdaff39d1c740c60d95ad5219c7e4ce7bd49f5d4e815248",
+      "target": "**Type:** Build\n**Languages:** Python (stdlib)\n**Prerequisites:** 阶段 14 · 01（智能体循环），阶段 13 · 01（函数调用深入解析）\n**Time:** ~60 分钟\n"
+    },
+    {
+      "segment_id": "14-06:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "14-06:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "2794c50b8b5049af8f67f406c278824f25e98e7ff8e3b421187c0c0d7c31fd94",
+      "target": "- 解释 Toolformer 的自监督训练信号：只有执行工具后能降低下一 token（词元）预测损失，才保留工具调用标注。\n- 列出 BFCL V4 的五类评测及各自衡量的内容。\n- 用标准库实现一个工具注册表（tool registry），支持 schema（结构定义）校验、参数类型转换和执行沙箱隔离（sandboxing）。\n- 分析 2026 年三个尚未解决的问题：长时程工具调用链、动态决策和记忆。\n"
+    },
+    {
+      "segment_id": "14-06:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "14-06:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "d6a1d32e3c35ebb1a4f985c776919c42017915694286946b6fdacaedbedefe78",
+      "target": "早期的工具使用关注：模型能否预测出正确的函数调用（function calling）？现代工具使用关注：模型能否在具备记忆、只能观测到部分环境信息的情况下，连续衔接工具执行 40 步，从工具故障中恢复，同时不臆造并不存在的工具？\n"
+    },
+    {
+      "segment_id": "14-06:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "e41a3bcf78bb60b709362a964cbc9b34ef1507781d9828714c7f7922c5512d1b",
+      "target": "Toolformer 奠定了基线：模型可以通过自监督学习何时调用工具。BFCL V4 定义了 2026 年的评测目标。生产环境中的智能体（agent）所要应对的，正是两者之间的差距。\n"
+    },
+    {
+      "segment_id": "14-06:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0017",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "14-06:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Toolformer (Schick et al., NeurIPS 2023)"
+      ],
+      "ordinal": 10,
+      "source_sha256": "5c7516f01a54340ffe1eb1d245137689b99299b7c3ba76382419781d363dc9f3",
+      "target": "### Toolformer（Schick 等，NeurIPS 2023）\n"
+    },
+    {
+      "segment_id": "14-06:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Toolformer (Schick et al., NeurIPS 2023)"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Toolformer (Schick et al., NeurIPS 2023)"
+      ],
+      "ordinal": 11,
+      "source_sha256": "7a290951607d6b457497972faf4a40613c41149a160053dc83b5c8f699f362c7",
+      "target": "思路：让模型在自己的预训练语料库中标注候选 API（应用程序编程接口）调用。逐一执行这些候选调用。只有在加入工具结果后，下一 token 的预测损失降低，才保留该标注。随后在筛选后的语料库上进行微调（fine-tuning）。\n"
+    },
+    {
+      "segment_id": "14-06:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Toolformer (Schick et al., NeurIPS 2023)"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Toolformer (Schick et al., NeurIPS 2023)"
+      ],
+      "ordinal": 12,
+      "source_sha256": "11caeb6915e280963936c1c1c99c8e7a292a533e8e132a2603a45c03a4e6f0fc",
+      "target": "涵盖的工具：计算器、问答（QA）系统、搜索引擎、翻译器和日历。自监督信号只关心工具是否有助于预测文本，不使用人工标签。\n"
+    },
+    {
+      "segment_id": "14-06:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Toolformer (Schick et al., NeurIPS 2023)"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Toolformer (Schick et al., NeurIPS 2023)"
+      ],
+      "ordinal": 13,
+      "source_sha256": "4e2ed1935ab2fdf453cd4aa77bee0252e86240533d195e8ad4ffee466a608d56",
+      "target": "关于规模的结果：工具使用能力会随着规模增大而涌现。工具调用标注会损害较小模型的表现，却能让较大模型受益。这就是为什么 2026 年的前沿模型内置了较强的工具使用能力，而大多数 7B 模型需要专门进行工具使用微调才能可靠工作。\n"
+    },
+    {
+      "segment_id": "14-06:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Toolformer (Schick et al., NeurIPS 2023)"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 14,
+      "source_sha256": "0771a8c94102e8a3407ad46b36eed8a90388b7755cb3f09e5f5d6664f28cc43d",
+      "target": "### Berkeley Function Calling Leaderboard V4（Patil 等，ICML 2025）\n"
+    },
+    {
+      "segment_id": "14-06:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "c2a23e49f61f55947ef12f041436d975233bfc1cb66c513e686c2b04bb5f5ccd",
+      "target": "BFCL 是 2026 年事实上的评测标准。V4 的评分权重构成如下：\n"
+    },
+    {
+      "segment_id": "14-06:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0031",
+      "kind": "list",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "e9997b80ee8d72f798f02bf1720da6d78f4c69f8b675c0eadd362190127d20e0",
+      "target": "- **智能体类（Agentic，40%）** — 完整的智能体轨迹：记忆、多轮交互、动态决策。\n- **多轮类（Multi-Turn，30%）** — 包含工具调用链的交互式对话。\n- **Live（10%）** — 用户提交的真实提示词（prompt），其分布更难应对。\n- **Non-Live（10%）** — 合成测试用例。\n- **幻觉类（Hallucination，10%）** — 检测何时不应调用任何工具。\n"
+    },
+    {
+      "segment_id": "14-06:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "1a977ab3b90a09cf2b745d1191c9fd6ee0c0506396bb5e3bb6cb230780390076",
+      "target": "V3 引入了基于状态的评测：执行一串工具调用后，检查 API 的实际状态（例如“文件是否已创建？”），而不是匹配工具调用的抽象语法树（AST）。V4 新增了网页搜索、记忆和格式敏感性类别。\n"
+    },
+    {
+      "segment_id": "14-06:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "c7131a590db93647f48640baa257d2cb1a469ca9de5567f830fd4484da79f595",
+      "target": "2026 年的关键发现：单轮函数调用已接近解决。失败集中在记忆（跨轮次携带上下文）、动态决策（根据先前结果选择工具）、长时程调用链（经过 20+ 步后发生漂移）和幻觉检测（没有合适工具时拒绝调用）上。\n"
+    },
+    {
+      "segment_id": "14-06:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Tool schema"
+      ],
+      "ordinal": 19,
+      "source_sha256": "e8f61f101e2a1fafd1f08f1bfcefc6abd5e9be3ed97f0a8aa9d9994ba811e15d",
+      "target": "### 工具 schema\n"
+    },
+    {
+      "segment_id": "14-06:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Tool schema"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Tool schema"
+      ],
+      "ordinal": 20,
+      "source_sha256": "5395235f312dd280d29feaef2b5dd1474650537b8909686cd1d7327bb8edfbd9",
+      "target": "每家提供商都有自己的 schema。它们在细节上不同，但具有相同的基本形态：\n"
+    },
+    {
+      "segment_id": "14-06:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Tool schema"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Tool schema"
+      ],
+      "ordinal": 21,
+      "source_sha256": "1a9cf4e23c6ba49158a8355b6217d900ae18f77363a0ae717dfa36b9c1ad727a",
+      "target": "```text\nname: string\ndescription: string (what it does, when to use it)\ninput_schema: JSON Schema (properties, required, types, enums)\n```\n"
+    },
+    {
+      "segment_id": "14-06:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Tool schema"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Tool schema"
+      ],
+      "ordinal": 22,
+      "source_sha256": "962e60ea2c5551173c1a6d9c3c0248fc3b345a40ef053f519f628ddeae2d4b34",
+      "target": "Anthropic 直接使用 `input_schema`。OpenAI 使用 `function.parameters`。两者都接受 JSON Schema。描述起着关键作用：模型会阅读描述来选择正确的工具。糟糕的工具描述是选错工具这一类失败的首要（#1）根因。\n"
+    },
+    {
+      "segment_id": "14-06:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Tool schema"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Argument validation"
+      ],
+      "ordinal": 23,
+      "source_sha256": "9e2ea00979d7e564479761e12dda44b4cf4105138da29e11c9350a03060c2e52",
+      "target": "### 实参校验\n"
+    },
+    {
+      "segment_id": "14-06:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Argument validation"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Argument validation"
+      ],
+      "ordinal": 24,
+      "source_sha256": "681e3e295869ac77adfbaa9459e0746c6c9bfb26f6b94fe6ae3de3b9e4ac5779",
+      "target": "不要信任任何工具调用。需要校验：\n"
+    },
+    {
+      "segment_id": "14-06:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Argument validation"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0049",
+      "kind": "list",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Argument validation"
+      ],
+      "ordinal": 25,
+      "source_sha256": "c751c2794416ae419e4469ad074efe84b1cf3a0a082511162f97c6b302f1133a",
+      "target": "1. **类型强制转换。** schema 要求 int 时，模型可能返回字符串 \"5\"。含义明确时进行转换；有歧义时则拒绝。\n2. **枚举值校验。** 如果 schema 声明 `status in {\"open\", \"closed\"}`，模型却输出 `\"in_progress\"`，就拒绝该调用，并返回说明原因的错误。\n3. **必填字段。** 缺少必填字段 -> 立即向模型返回错误观察结果，而不是让程序崩溃。\n4. **格式校验。** 日期、电子邮件地址、URL：使用相应的解析器校验，而不是正则表达式。\n"
+    },
+    {
+      "segment_id": "14-06:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Argument validation"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Argument validation"
+      ],
+      "ordinal": 26,
+      "source_sha256": "48877694842a855db3ae1fbefdacdb9f31ae5d3e245ac4bafe1d7013dd6bafb3",
+      "target": "每次校验失败都应返回结构化观察结果，让模型能够以正确的结构重试。\n"
+    },
+    {
+      "segment_id": "14-06:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Argument validation"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Parallel tool calls"
+      ],
+      "ordinal": 27,
+      "source_sha256": "3040884b2bb2df86b273b8e75ce3a4612c1e5c315538e15fb0b034e269e93ac9",
+      "target": "### 并行工具调用\n"
+    },
+    {
+      "segment_id": "14-06:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Parallel tool calls"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Parallel tool calls"
+      ],
+      "ordinal": 28,
+      "source_sha256": "6a44bb57f6f365fbbd29eedf5f368328cba4108dd27c624363c53583ba5e61f6",
+      "target": "现代提供商支持在一个助手轮次中发出并行工具调用。循环过程如下：\n"
+    },
+    {
+      "segment_id": "14-06:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Parallel tool calls"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0057",
+      "kind": "list",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Parallel tool calls"
+      ],
+      "ordinal": 29,
+      "source_sha256": "ab3bb0b4314d93cb365a528f0ae7f5ec30b278968dbb7eb51e2c8e7855a14c55",
+      "target": "1. 模型发出 3 个工具调用，各自带有不同的 `tool_use_id`。\n2. 运行时（runtime）执行这些调用；如果它们相互独立，就并行执行。\n3. 每个结果都以 `tool_result` 块的形式返回，并通过 `tool_use_id` 关联到对应调用。\n"
+    },
+    {
+      "segment_id": "14-06:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Parallel tool calls"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Parallel tool calls"
+      ],
+      "ordinal": 30,
+      "source_sha256": "efb41445eec414dc823a9baafe2d1eaf75d16821f1cc137566347aac07f2d906",
+      "target": "工程规则：关联 ID（correlation ID）至关重要。把它们弄反，就会将工具调用与错误的结果配对。\n"
+    },
+    {
+      "segment_id": "14-06:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Parallel tool calls"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Sandboxing"
+      ],
+      "ordinal": 31,
+      "source_sha256": "8f910a1d522f4a37a02ff36fecc89312d985b56a69c594b0b22e19e037532ce2",
+      "target": "### 沙箱隔离\n"
+    },
+    {
+      "segment_id": "14-06:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Sandboxing"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Sandboxing"
+      ],
+      "ordinal": 32,
+      "source_sha256": "8bcfd38a41e9ce346a68bdaf9298b223d2c3420dee037d5ee0c91c7076fc91ff",
+      "target": "工具执行是沙箱边界。详见第 09 课。简而言之，每个工具都应指定读写访问范围、网络访问、超时限制和内存上限。通用的 `run_shell(cmd)` 是危险信号；用途明确的 `git_status()` 更安全。\n"
+    },
+    {
+      "segment_id": "14-06:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Sandboxing"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Sandboxing"
+      ],
+      "ordinal": 33,
+      "source_sha256": "f73b86a37257de8cba59bf37ad82c07116797b5cb36f6f046d12a0930f48fad8",
+      "target": "```figure\ntool-routing\n```\n"
+    },
+    {
+      "segment_id": "14-06:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## The Concept",
+        "### Sandboxing"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "14-06:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "05016cacb6e24c71bbb9c27b70063341836ce80ca9b0051722b156896107cb46",
+      "target": "`code/main.py` 实现了一个具备生产系统形态的工具注册表：\n"
+    },
+    {
+      "segment_id": "14-06:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0071",
+      "kind": "list",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "8a87fa3db9cdffc916e5186385edd238c4e6f1d1dfe87328a209f9a1327acced",
+      "target": "- JSON Schema 子集校验器，仅使用标准库。\n- 工具注册信息包含描述、输入 schema、超时限制和执行器。\n- 参数类型转换与枚举值校验。\n- 带有关联 ID 的并行工具分派。\n- 以结构化字符串形式返回的错误观察结果。\n"
+    },
+    {
+      "segment_id": "14-06:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "936bc51db6511ea885c12022f0e1271632a7d165e0848edeaf255b3a5786e28d",
+      "target": "运行：\n"
+    },
+    {
+      "segment_id": "14-06:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "2b11889f93c0782398b09d152e929afa595931801ff18ec85374f752a13e31bd",
+      "target": "```text\npython3 code/main.py\n```\n"
+    },
+    {
+      "segment_id": "14-06:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "3091ca9bfc5c4d5c9f5d5d53488f65857f73c8a987538e986455cecdca9943c7",
+      "target": "行为轨迹（trace）展示了一个微型智能体在一个轮次内调用三个工具，其中一次调用被故意构造成不合法的形式，因此遭到拒绝，并返回说明原因的错误，让模型可以据此采取行动。\n"
+    },
+    {
+      "segment_id": "14-06:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Build It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "14-06:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Use It"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0081",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "22f473810075b0f48ca2e7be7e4507ecd1388716f75af59df2408de47e1fdf06",
+      "target": "每家提供商都有自己的工具 schema：Anthropic、OpenAI、Gemini、Bedrock。如果需要支持多家提供商，就使用转换层，例如 OpenAI Agents SDK（SDK 指软件开发工具包）、Vercel AI SDK 或 LangChain 工具适配器。BFCL 是参考基准测试；如果工具使用是产品的核心能力，就在交付前用它评测你的智能体。\n"
+    },
+    {
+      "segment_id": "14-06:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Use It"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Ship It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "14-06:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Ship It"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0085",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Ship It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "8e990b6b89e2a25caea0c7f55b41d7de3b303d3f36b094e1841f553e868d4ab3",
+      "target": "`outputs/skill-tool-registry.md` 可为给定的任务领域生成工具目录、schema 和注册表。其中包含描述质量检查：每个工具的描述是否告诉了模型何时应该使用它？\n"
+    },
+    {
+      "segment_id": "14-06:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Ship It"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Exercises"
+      ],
+      "ordinal": 44,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "14-06:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Exercises"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0089",
+      "kind": "list",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Exercises"
+      ],
+      "ordinal": 45,
+      "source_sha256": "8bbd842e0763a4a00d37f7892962ef491768a1e37c2e450b92b10aa3579ac5a1",
+      "target": "1. 添加一个空操作（\"no-op\"）工具，让模型能够明确拒绝使用其他任何工具。在类似 BFCL 的幻觉测试中进行衡量。\n2. 实现参数类型转换，处理以字符串表示的整数和浮点数。转换从什么时候开始会掩盖真正的缺陷？\n3. 为每个工具添加超时限制，并添加熔断器（circuit breaker）：连续失败 3 次后，在接下来的 60s 内拒绝使用该工具。这会怎样改变模型从故障中恢复的方式？\n4. 阅读 BFCL V4 的说明。选择一个类别（例如“多轮”），让你的智能体处理 10 条示例提示词，并报告通过率。\n5. 将标准库校验器移植到 Pydantic 或 Zod。Pydantic/Zod 捕获了哪些简化实现漏掉的问题？\n"
+    },
+    {
+      "segment_id": "14-06:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Exercises"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Key Terms"
+      ],
+      "ordinal": 46,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "14-06:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Key Terms"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0093",
+      "kind": "table",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Key Terms"
+      ],
+      "ordinal": 47,
+      "source_sha256": "1ed8e4b38db8f8c740da166fec19b80ce12947d8796002138f271198986730a8",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|------------------------|\n| 函数调用 | “工具使用” | 带有 schema 校验的结构化输出工具调用 |\n| Toolformer | “自监督工具调用标注” | Schick 2023：保留那些结果能降低下一 token 预测损失的工具调用 |\n| BFCL | “Berkeley Function Calling Leaderboard” | 2026 年的基准测试：评分权重为 40% 智能体类、30% 多轮类、10% Live、10% Non-Live、10% 幻觉类 |\n| 工具 schema | “提供给模型的函数签名” | name、description，以及实参的 JSON Schema |\n| tool_use_id | “关联 ID” | 将工具调用与其结果关联起来；对并行分派至关重要 |\n| 幻觉检测 | “知道何时不应调用” | V4 类别：没有合适工具时拒绝调用 |\n| 参数类型转换 | “字符串转整数修复” | 针对可预见的 schema 不匹配进行有限修复；有歧义时拒绝 |\n| 沙箱隔离 | “工具执行边界” | 每个工具的读写访问范围、网络、超时限制、内存上限 |\n"
+    },
+    {
+      "segment_id": "14-06:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Key Terms"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Further Reading"
+      ],
+      "ordinal": 48,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "14-06:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Further Reading"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-06:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Tool Use and Function Calling",
+        "## Further Reading"
+      ],
+      "ordinal": 49,
+      "source_sha256": "189fa2af1742f97c6623ea554d640bd7d7c7d05c46c3c1b536e8ab3a892a4d68",
+      "target": "- [Schick et al., Toolformer (arXiv:2302.04761)](https://arxiv.org/abs/2302.04761) — 自监督工具调用标注\n- [Berkeley Function Calling Leaderboard (V4)](https://gorilla.cs.berkeley.edu/leaderboard.html) — 2026 年的评测基准\n- [Anthropic, Tool use documentation](https://platform.claude.com/docs/en/agent-sdk/overview) — Claude Agent SDK 中用于生产环境的工具 schema\n- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) — 函数工具类型与 Guardrails（安全护栏）\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S147-tool-use-function-calling/TERMINOLOGY.md",
+  "additional_glossary_sha256": "7e1b6200211cc399398aaf0f03749c11199bb367da610148b526598f8a599047",
+  "assets": [],
+  "supporting_assets_manifest_path": "i18n/zh/.curated/lessons/14-06/supporting-assets.json",
+  "supporting_assets_manifest_sha256": "a3f40581737566eba9f7ab3e4c7d7a5239d4fc3fca4ad23f00caf791259b39d6",
+  "authoring_chronology": {
+    "source_read_completed_utc": "2026-10-06T17:59:42Z",
+    "terminology_proposal_utc": "2026-10-06T17:59:42Z",
+    "terminology_proposal_write_upper_bound_utc": "2026-10-06T17:59:57.585618Z",
+    "terminology_calibration_completed_utc": "2026-10-06T18:01:21.138972+00:00",
+    "composition_started_utc": "2026-10-06T18:02:01.813969+00:00",
+    "first_substantive_write_utc": "2026-10-06T18:03:01.598902+00:00",
+    "first_write_completed_utc": "2026-10-06T18:03:01.599015+00:00",
+    "capture_started_utc": "2026-10-06T18:03:13.139775+00:00",
+    "capture_completed_utc": "2026-10-06T18:03:13.220455+00:00",
+    "bilingual_selfcheck_completed_utc": "2026-10-06T18:04:08.029497+00:00",
+    "Chinese_selfread_completed_utc": "2026-10-06T18:04:52.547631+00:00"
+  },
+  "author_selfcheck": {
+    "independent": false,
+    "status": "complete",
+    "bilingual_full_text": true,
+    "Chinese_full_text": true,
+    "actual_revision_count": 6,
+    "unresolved_translation_defects": [],
+    "source_caveats_path": "i18n/zh/.curated/stages/S147-tool-use-function-calling/SCOPE.md",
+    "source_caveat_ids": [
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R06",
+      "R07",
+      "R08",
+      "R09",
+      "R10",
+      "R11",
+      "R12",
+      "R13",
+      "R14",
+      "R15"
+    ]
+  },
+  "open_release_gates": [
+    "Real GitHub GFM rendering",
+    "Final remote exact-byte readback",
+    "Assigned cumulative regression (actual162 pending; membership coordinator-owned)",
+    "Website, mobile, PDF, CI and publication acceptance remain separate"
+  ],
+  "support": {
+    "commit": "e5cc9c90636ccb477c5c4d73132a84122b916716",
+    "tree": "90b97fffdb1e734307e6d1f1883651b47c0607ee",
+    "dependencies_path": "i18n/zh/.curated/stages/S147-tool-use-function-calling/DEPENDENCIES.json",
+    "dependencies_sha256": "3d5b2ca9ffeb12178de4a650c10d090543e2756e64e0e7a73442352c00decbb2",
+    "common_set_sha256": "adb98cb4c54c97f8485605d3d90e10fbe80209705ffcae1545170c1c10c39beb",
+    "common_files": 152,
+    "terminology_files": 144,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 155,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S147-tool-use-function-calling/DEPENDENCIES.json",
+        "commit": "e5cc9c90636ccb477c5c4d73132a84122b916716",
+        "git_blob": "203c83b8a9dc1d1dab9ce2971b92335771877d1f",
+        "sha256": "3d5b2ca9ffeb12178de4a650c10d090543e2756e64e0e7a73442352c00decbb2",
+        "bytes": 267862,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S147-tool-use-function-calling/SCOPE.md",
+        "commit": "e5cc9c90636ccb477c5c4d73132a84122b916716",
+        "git_blob": "c6c8eb085a70029e2e3bf49f807bbbd166c3d478",
+        "sha256": "8d77b0874df723073edaa3e7614a910eae14dc315e8810b3e6775ae170b60c69",
+        "bytes": 21057,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S147-tool-use-function-calling/TERMINOLOGY.md",
+        "commit": "e5cc9c90636ccb477c5c4d73132a84122b916716",
+        "git_blob": "ef585b8a948bcf667417ee3c2b29d68681be2f24",
+        "sha256": "7e1b6200211cc399398aaf0f03749c11199bb367da610148b526598f8a599047",
+        "bytes": 11509,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "19c72f71d272fb6a5f66f2d542341c38a1c166d7ce7e331f7fa84165fe48a12e",
+    "installation_completed_utc": "2026-10-06T17:57:02.668934+00:00",
+    "frozen_pending_null_fields_preserved": true
+  },
+  "authoring_history": {
+    "original_author_handoff_sha256": "c5dbbdb9fd8f5d89914fce94d4a0839293237f2953c7a65b637d898935b65521",
+    "post_full_review_revision_receipt_sha256": "affd99f400525b493caa9bd9346732e39670a056e92c0e4f6d4dfe67a611d3bb",
+    "reviewed_draft_record_sha256": "70ec11c864f31363670b4de9870016bff1d202da4c310b3e007b258062862545",
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/14-06/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T18:08:07.668287+00:00",
+        "report_sha256": "f41f56bf5b1297bb6caca5b58bb16bd3fd314013ab3c45a7cd841136031c2fcb",
+        "result": "PASS",
+        "reviewed_target_sha256": "53ad4b6b25a8d9afe80a9de95d6c4afa1782a30b9ddd00503d98105661b1ed12",
+        "reviewed_draft_record_sha256": "3c8ea293d4f35833fdb37897a48f0c521a39d03e07ecfadbc44c96183133532e",
+        "blocks": 97,
+        "required_findings": 0
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T18:08:42.722407+00:00",
+        "report_sha256": "e7e185bab07d1fda9722b17697bfab2d83b5672819f99fc331420bfcf41874da",
+        "result": "PASS_WITH_OPTIONAL_POLISH",
+        "reviewed_target_sha256": "53ad4b6b25a8d9afe80a9de95d6c4afa1782a30b9ddd00503d98105661b1ed12",
+        "reviewed_draft_record_sha256": "3c8ea293d4f35833fdb37897a48f0c521a39d03e07ecfadbc44c96183133532e",
+        "blocks": 97,
+        "required_findings": 0
+      },
+      {
+        "type": "independent_bilingual_changed_block_closure",
+        "completed_utc": "2026-10-06T18:13:04.718337+00:00",
+        "report_sha256": "9dfed782d96bf3a779f02f4e5716da1411448552b60271e572fd1755d1c534bf",
+        "result": "PASS",
+        "reviewed_target_sha256": "0dd3c28009fcef65faee490c9f8fcf547de8eca76f8335256c104a717d2ec791",
+        "reviewed_draft_record_sha256": "70ec11c864f31363670b4de9870016bff1d202da4c310b3e007b258062862545",
+        "changed_blocks": [
+          "14-06:b0089"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 96
+      },
+      {
+        "type": "independent_Chinese_changed_block_closure",
+        "completed_utc": "2026-10-06T18:13:13.816498+00:00",
+        "report_sha256": "923b4bbef921d161da89ab5e7a7e7ecc88581ba318f9001a1b479163e6c9ab18",
+        "result": "PASS",
+        "reviewed_target_sha256": "0dd3c28009fcef65faee490c9f8fcf547de8eca76f8335256c104a717d2ec791",
+        "reviewed_draft_record_sha256": "70ec11c864f31363670b4de9870016bff1d202da4c310b3e007b258062862545",
+        "changed_blocks": [
+          "14-06:b0089"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 96
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
