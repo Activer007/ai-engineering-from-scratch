@@ -6,7 +6,7 @@
   "source_blob": "541fcfeac0e4f0bd6ad0085572bcd251aea7cd30",
   "source_sha256": "4fc76820d2dc2bafeda60c77018b05b52b4ee1febbdbe2a32b2ac76bcd4f3feb",
   "target_path": "i18n/zh/phases/06-speech-and-audio/13-neural-audio-codecs/docs/zh.md",
-  "target_sha256": "eeac1ad957ebe9c9cb1c0fb4c5cc59437dc05a65211c93f8347e3686558893ad",
+  "target_sha256": "4d404f68da87796671716454570f0c29b7bbcaaa3e59cc19d28f37f2b194d00f",
   "glossary_version": "1.0",
   "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
   "status": "language-reviewed",
@@ -178,7 +178,7 @@
       ],
       "ordinal": 8,
       "source_sha256": "edc5a7397dafad2e5ad75fcdb8a31f56d8be123eea5a66ba60c2b5b018aaf69a",
-      "target": "2024-2026 年的关键认识是：**尝试从文本生成语音时，纯重建型编解码器会给出含混不清的语音。**对编解码器 token 建模的 LLM 必须在同一码本中同时学习语言结构和声学结构，这种方式难以扩展。将二者分开，让语义码本 0 承载语义、声学码本 1-N 承载声学信息，才使 Moshi 和 Sesame CSM 得以奏效。\n"
+      "target": "2024-2026 年的关键认识是：**尝试从文本生成语音时，纯重建型编解码器会给出含混不清的语音。** 对编解码器 token 建模的 LLM 必须在同一码本中同时学习语言结构和声学结构，这种方式难以扩展。将二者分开，让语义码本 0 承载语义、声学码本 1-N 承载声学信息，才使 Moshi 和 Sesame CSM 得以奏效。\n"
     },
     {
       "segment_id": "06-13:b0016",
@@ -341,7 +341,7 @@
       ],
       "ordinal": 15,
       "source_sha256": "bc71a0667c2d3f1a3a209c75b993e69aab46bb3c3da4bd644e119f55b41e65c6",
-      "target": "**EnCodec（Meta，2022）。**基线方案。它直接对波形进行编码和解码，以 RVQ 作为瓶颈。采样率为 24 kHz，最多可用 32 个码本，默认在 1.5 kbps 下使用 4 个码本。采用 `1D conv + transformer + 1D conv` 架构。MusicGen 使用了它。\n"
+      "target": "**EnCodec（Meta，2022）。** 基线方案。它直接对波形进行编码和解码，以 RVQ 作为瓶颈。采样率为 24 kHz，最多可用 32 个码本，默认在 1.5 kbps 下使用 4 个码本。采用 `1D conv + transformer + 1D conv` 架构。MusicGen 使用了它。\n"
     },
     {
       "segment_id": "06-13:b0030",
@@ -365,7 +365,7 @@
       ],
       "ordinal": 16,
       "source_sha256": "cc267f9749fe5bd1cfda2c0fe0b53f279306c31179137305c362d8f03f6a83a5",
-      "target": "**DAC（Descript，2023）。**在 RVQ 中使用 L2 归一化的码本、周期性激活函数和改进的损失函数。在所有开放编解码器中，它的重建保真度最高；使用 12 个码本时，有时难以与原始语音区分。支持 44.1 kHz 全频带音频。\n"
+      "target": "**DAC（Descript，2023）。** 在 RVQ 中使用 L2 归一化的码本、周期性激活函数和改进的损失函数。在所有开放编解码器中，它的重建保真度最高；使用 12 个码本时，有时难以与原始语音区分。支持 44.1 kHz 全频带音频。\n"
     },
     {
       "segment_id": "06-13:b0032",
@@ -389,7 +389,7 @@
       ],
       "ordinal": 17,
       "source_sha256": "6c02f4bcc1703b04b89f0d33fbf1ed1232bd529d6cb07bdb1e2c985d440c4363",
-      "target": "**SNAC（Hubert Siuzdak，2024）。**采用多尺度 RVQ，粗粒度码本的帧率低于细粒度码本。它实际上以分层方式对音频建模：以 ~12 Hz 表示粗略“轮廓”，再以 50 Hz 表示细节。Orpheus-3B 使用了它，因为这种分层结构很适合基于语言模型（LM）的生成。\n"
+      "target": "**SNAC（Hubert Siuzdak，2024）。** 采用多尺度 RVQ，粗粒度码本的帧率低于细粒度码本。它实际上以分层方式对音频建模：以 ~12 Hz 表示粗略“轮廓”，再以 50 Hz 表示细节。Orpheus-3B 使用了它，因为这种分层结构很适合基于语言模型（LM）的生成。\n"
     },
     {
       "segment_id": "06-13:b0034",
@@ -413,7 +413,7 @@
       ],
       "ordinal": 18,
       "source_sha256": "7811c60944cdeef9607e9219160bc7cf4b5abad9a40777e2c7b7e7bbff38c9ee",
-      "target": "**Mimi（Kyutai，2024）。**改变 2026 年格局的方案。帧率低至 12.5 Hz，使用 8 个码本，比特率为 4.4 kbps。码本 0 **通过 WavLM 蒸馏得到**，训练目标是预测 WavLM 的语音内容特征。码本 1-7 表示声学残差。这种分离方式支撑了 Moshi（第 15 课）和 Sesame CSM。\n"
+      "target": "**Mimi（Kyutai，2024）。** 改变 2026 年格局的方案。帧率低至 12.5 Hz，使用 8 个码本，比特率为 4.4 kbps。码本 0 **通过 WavLM 蒸馏得到**，训练目标是预测 WavLM 的语音内容特征。码本 1-7 表示声学残差。这种分离方式支撑了 Moshi（第 15 课）和 Sesame CSM。\n"
     },
     {
       "segment_id": "06-13:b0036",
@@ -581,7 +581,7 @@
       ],
       "ordinal": 25,
       "source_sha256": "47bc96aea629fbab72296a92bf0cb274f019e5224aafc06499607543d8d62cf6",
-      "target": "- **语义 token（Mimi 中的码本 0）。**编码说了什么，即音素、词和内容。通过辅助预测损失从 WavLM 蒸馏得到。\n- **声学 token（码本 1-7）。**编码音色、说话人身份、韵律、背景噪声和细微信息。\n"
+      "target": "- **语义 token（Mimi 中的码本 0）。** 编码说了什么，即音素、词和内容。通过辅助预测损失从 WavLM 蒸馏得到。\n- **声学 token（码本 1-7）。** 编码音色、说话人身份、韵律、背景噪声和细微信息。\n"
     },
     {
       "segment_id": "06-13:b0050",
@@ -1144,7 +1144,7 @@
       ],
       "ordinal": 49,
       "source_sha256": "16a3a0800e911cc4eea27ff96b41d6b24810043b6f379a9c3834f722444ef332",
-      "target": "- **码本过多。**增加码本会线性提高保真度，也会线性增加 LM 的序列长度。用到 8-12 个就停。\n- **帧率不匹配。**先在 12.5 Hz 的 Mimi 上训练 LM，再在 50 Hz 的 EnCodec 上微调（fine-tuning），会在没有明显报错的情况下失败。\n- **认为所有码本都一样。**在 Mimi 中，码本 0 承载内容；丢失它会摧毁可懂度。丢失码本 7 则几乎察觉不到。\n- **只用重建质量作为指标。**一个编解码器的重建效果可能很好，但如果语义结构不好，它可能完全不适合基于 LM 的生成。\n"
+      "target": "- **码本过多。** 增加码本会线性提高保真度，也会线性增加 LM 的序列长度。用到 8-12 个就停。\n- **帧率不匹配。** 先在 12.5 Hz 的 Mimi 上训练 LM，再在 50 Hz 的 EnCodec 上微调（fine-tuning），会在没有明显报错的情况下失败。\n- **认为所有码本都一样。** 在 Mimi 中，码本 0 承载内容；丢失它会摧毁可懂度。丢失码本 7 则几乎察觉不到。\n- **只用重建质量作为指标。** 一个编解码器的重建效果可能很好，但如果语义结构不好，它可能完全不适合基于 LM 的生成。\n"
     },
     {
       "segment_id": "06-13:b0098",
@@ -1232,7 +1232,7 @@
       ],
       "ordinal": 53,
       "source_sha256": "d3cafc3e05273abb6867b977de1a7be25cd5e5b009d3ac4d1c8430f1565aa278",
-      "target": "1. **简单。**运行 `code/main.py`。它实现了一个玩具版的标量 + 残差量化器，并衡量增加码本时的重建误差。\n2. **中等。**安装 `encodec`，在一段留出的语音片段上比较 1、4、8、32 个码本的效果。绘制 PESQ 或均方误差（MSE）随比特率变化的曲线。\n3. **困难。**加载 Mimi，编码一个音频片段。将码本 0 替换为随机整数，再解码。然后以同样方式替换码本 7。比较这两种破坏方式：破坏码本 0 应当会摧毁可懂度，而破坏码本 7 应当几乎不产生变化。\n"
+      "target": "1. **简单。** 运行 `code/main.py`。它实现了一个玩具版的标量 + 残差量化器，并衡量增加码本时的重建误差。\n2. **中等。** 安装 `encodec`，在一段留出的语音片段上比较 1、4、8、32 个码本的效果。绘制 PESQ 或均方误差（MSE）随比特率变化的曲线。\n3. **困难。** 加载 Mimi，编码一个音频片段。将码本 0 替换为随机整数，再解码。然后以同样方式替换码本 7。比较这两种破坏方式：破坏码本 0 应当会摧毁可懂度，而破坏码本 7 应当几乎不产生变化。\n"
     },
     {
       "segment_id": "06-13:b0106",
@@ -1695,6 +1695,48 @@
           "06-13:b0055"
         ],
         "unchanged_blocks_inheriting_initial_full_review": 112
+      },
+      {
+        "type": "independent_bilingual_format_delta_closure",
+        "completed_utc": "2026-10-06T20:11:46.320383+00:00",
+        "report_sha256": "3f19b599ce1ab75a441006a064c1c8eb3673439e36251506770a02d34babf5be",
+        "result": "PASS_BILINGUAL_FORMAT_DELTA_ONLY",
+        "reviewed_target_sha256": "4d404f68da87796671716454570f0c29b7bbcaaa3e59cc19d28f37f2b194d00f",
+        "reviewed_draft_record_sha256": "85168456cd7d248030ec0e15da02b452a600a16caed90b87c488aafea153d7e0",
+        "changed_blocks": [
+          "06-13:b0015",
+          "06-13:b0029",
+          "06-13:b0031",
+          "06-13:b0033",
+          "06-13:b0035",
+          "06-13:b0049",
+          "06-13:b0097",
+          "06-13:b0105"
+        ],
+        "unchanged_blocks_inheriting_prior_complete_and_semantic_reviews": 105,
+        "required_findings_at_that_review": 0,
+        "actual_GFM_verified": false
+      },
+      {
+        "type": "independent_Chinese_format_delta_closure",
+        "completed_utc": "2026-10-06T20:14:07.270974+00:00",
+        "report_sha256": "582e1c960b91d4a546ccd89413f5157f63ef86f4c0e40d2ecc8a95cd53bd49b9",
+        "result": "PASS_CHINESE_FORMAT_ONLY_DELTA",
+        "reviewed_target_sha256": "4d404f68da87796671716454570f0c29b7bbcaaa3e59cc19d28f37f2b194d00f",
+        "reviewed_draft_record_sha256": "85168456cd7d248030ec0e15da02b452a600a16caed90b87c488aafea153d7e0",
+        "changed_blocks": [
+          "06-13:b0015",
+          "06-13:b0029",
+          "06-13:b0031",
+          "06-13:b0033",
+          "06-13:b0035",
+          "06-13:b0049",
+          "06-13:b0097",
+          "06-13:b0105"
+        ],
+        "unchanged_blocks_inheriting_prior_complete_and_semantic_reviews": 105,
+        "required_findings_at_that_review": 0,
+        "actual_GFM_verified": false
       }
     ],
     "remaining_findings": {
@@ -1702,6 +1744,211 @@
       "S1": 0,
       "S2": 0
     },
-    "target_and_segments_unchanged_after_final_review_closure": true
+    "target_and_segments_unchanged_after_final_review_closure": true,
+    "reviewed_target_sha256": "4d404f68da87796671716454570f0c29b7bbcaaa3e59cc19d28f37f2b194d00f",
+    "reviewed_draft_record_sha256": "85168456cd7d248030ec0e15da02b452a600a16caed90b87c488aafea153d7e0",
+    "scope_note": "Initial complete bilingual and separate Chinese reviews, prior exact semantic closures, and both exact format-only closures jointly cover the current target. Original reports retain their original hashes and outcomes. Actual new GitHub GFM remains pending."
+  },
+  "format_delta_review_status": "PASS_INDEPENDENT_FORMAT_DELTA_CLOSURES",
+  "format_repair_revisions": [
+    {
+      "revision": 4,
+      "kind": "format-only_GFM_CJK_bold_closing_boundary",
+      "started_utc": "2026-10-06T20:05:23.531419+00:00",
+      "before_target_sha256": "eeac1ad957ebe9c9cb1c0fb4c5cc59437dc05a65211c93f8347e3686558893ad",
+      "after_target_sha256": "4d404f68da87796671716454570f0c29b7bbcaaa3e59cc19d28f37f2b194d00f",
+      "before_record_sha256": "6026c0bc01ef7035a8953b6d7281ae85650b6354dce59f35e30b5f68cdb10b42",
+      "before_public_review_sha256": "a87f28e609ffe2a8f230f7227c06133dada8736c94dbd1c274484db19ac3a98f",
+      "changed_blocks": [
+        15,
+        29,
+        31,
+        33,
+        35,
+        49,
+        97,
+        105
+      ],
+      "changed_lines": [
+        19,
+        33,
+        35,
+        37,
+        39,
+        60,
+        61,
+        155,
+        156,
+        157,
+        158,
+        166,
+        167,
+        168
+      ],
+      "inserted_ASCII_spaces": 14,
+      "byte_delta": 14,
+      "all_other_bytes_exact": true,
+      "source_words_punctuation_code_math_tables_SVG_changed": false,
+      "finding_id": "S152-GFM-BOLD-01",
+      "failed_GFM_receipt_sha256": "3fe00c562003a05942d0b8d49f5f4cc534a35a869e12127a00d5332eb7181692",
+      "snapshot_manifest_sha256": "5c2cf8777100399e420ec4c2b383410e8dfe8f8d2e38d4c71e8a90faf0e4e9f4",
+      "capture_repeated": false,
+      "independent_delta_reviews": "pending",
+      "new_remote_readback_and_actual_GFM": "pending"
+    }
+  ],
+  "format_review": {
+    "status": "PASS_INDEPENDENT_LANGUAGE_FORMAT_CLOSURES",
+    "reviewed_repair_draft_sha256": "85168456cd7d248030ec0e15da02b452a600a16caed90b87c488aafea153d7e0",
+    "prior_published_target_sha256": "eeac1ad957ebe9c9cb1c0fb4c5cc59437dc05a65211c93f8347e3686558893ad",
+    "prior_published_record_sha256": "6026c0bc01ef7035a8953b6d7281ae85650b6354dce59f35e30b5f68cdb10b42",
+    "prior_public_review_sha256": "a87f28e609ffe2a8f230f7227c06133dada8736c94dbd1c274484db19ac3a98f",
+    "author_handoff_sha256": "a650df225be49fe0e29bbc99573b1e4dca4243bbc09c02e2d73fc705b3212e3c",
+    "changed_blocks": [
+      "06-13:b0015",
+      "06-13:b0029",
+      "06-13:b0031",
+      "06-13:b0033",
+      "06-13:b0035",
+      "06-13:b0049",
+      "06-13:b0097",
+      "06-13:b0105"
+    ],
+    "inserted_byte_hex": "20",
+    "inserted_bytes": 14,
+    "reverse_identity_to_prior_target": true,
+    "independent_reviews": [
+      {
+        "type": "independent_bilingual_format_delta_closure",
+        "completed_utc": "2026-10-06T20:11:46.320383+00:00",
+        "report_sha256": "3f19b599ce1ab75a441006a064c1c8eb3673439e36251506770a02d34babf5be",
+        "result": "PASS_BILINGUAL_FORMAT_DELTA_ONLY",
+        "reviewed_target_sha256": "4d404f68da87796671716454570f0c29b7bbcaaa3e59cc19d28f37f2b194d00f",
+        "reviewed_draft_record_sha256": "85168456cd7d248030ec0e15da02b452a600a16caed90b87c488aafea153d7e0",
+        "changed_blocks": [
+          "06-13:b0015",
+          "06-13:b0029",
+          "06-13:b0031",
+          "06-13:b0033",
+          "06-13:b0035",
+          "06-13:b0049",
+          "06-13:b0097",
+          "06-13:b0105"
+        ],
+        "unchanged_blocks_inheriting_prior_complete_and_semantic_reviews": 105,
+        "required_findings_at_that_review": 0,
+        "actual_GFM_verified": false
+      },
+      {
+        "type": "independent_Chinese_format_delta_closure",
+        "completed_utc": "2026-10-06T20:14:07.270974+00:00",
+        "report_sha256": "582e1c960b91d4a546ccd89413f5157f63ef86f4c0e40d2ecc8a95cd53bd49b9",
+        "result": "PASS_CHINESE_FORMAT_ONLY_DELTA",
+        "reviewed_target_sha256": "4d404f68da87796671716454570f0c29b7bbcaaa3e59cc19d28f37f2b194d00f",
+        "reviewed_draft_record_sha256": "85168456cd7d248030ec0e15da02b452a600a16caed90b87c488aafea153d7e0",
+        "changed_blocks": [
+          "06-13:b0015",
+          "06-13:b0029",
+          "06-13:b0031",
+          "06-13:b0033",
+          "06-13:b0035",
+          "06-13:b0049",
+          "06-13:b0097",
+          "06-13:b0105"
+        ],
+        "unchanged_blocks_inheriting_prior_complete_and_semantic_reviews": 105,
+        "required_findings_at_that_review": 0,
+        "actual_GFM_verified": false
+      }
+    ],
+    "reviewed_draft_language_review": {
+      "status": "PENDING_FORMAT_DELTA_REVIEW",
+      "review_path": "i18n/zh/.curated/lessons/06-13/review.json",
+      "independent_reviews": [
+        {
+          "type": "independent_full_bilingual_fidelity",
+          "completed_utc": "2026-10-06T19:45:16.607953+00:00",
+          "report_sha256": "b09320731e2572effbb4b69a3e0203d3198a69101964f996aec7ae82a0842630",
+          "result": "PASS_BILINGUAL_TECHNICAL_REVIEW",
+          "reviewed_target_sha256": "00ca2bcc8367fca245e61cae594e51c45193fdb05fc9c5b78e38fb034b23d01c",
+          "reviewed_draft_record_sha256": "a359aba608962f3acbb16b7d27a50255e94516260a191aadc098a407fd0a525c",
+          "required_findings_at_that_review": 0,
+          "blocks": 113
+        },
+        {
+          "type": "independent_separate_full_Chinese_read",
+          "completed_utc": "2026-10-06T19:43:53.549637+00:00",
+          "report_sha256": "dc97cba0e3e24fbbad5f814ed146cbf8058d0f5e1f75790296d78312bc5e1dbe",
+          "result": "REQUIRES_NARROW_FIRST_USE_REVISION",
+          "reviewed_target_sha256": "00ca2bcc8367fca245e61cae594e51c45193fdb05fc9c5b78e38fb034b23d01c",
+          "reviewed_draft_record_sha256": "a359aba608962f3acbb16b7d27a50255e94516260a191aadc098a407fd0a525c",
+          "required_findings_at_that_review": 1,
+          "blocks": 113
+        },
+        {
+          "type": "independent_bilingual_changed_block_closure",
+          "completed_utc": "2026-10-06T19:50:07.659283+00:00",
+          "report_sha256": "716bd8e092530b93bde4e63787dc76ef6682e7f907be05df4da343135eed27bc",
+          "result": "PASS_BILINGUAL_TECHNICAL_REVIEW_WITH_INITIAL_PLUS_DELTA",
+          "reviewed_target_sha256": "eeac1ad957ebe9c9cb1c0fb4c5cc59437dc05a65211c93f8347e3686558893ad",
+          "reviewed_draft_record_sha256": "38dbb95378a467b58b263c1c4a1411a8ce7742f88cb465b3e2350b7da30d2e9c",
+          "required_findings_at_that_review": 0,
+          "changed_blocks": [
+            "06-13:b0055"
+          ],
+          "unchanged_blocks_inheriting_initial_full_review": 112
+        },
+        {
+          "type": "independent_Chinese_changed_block_closure",
+          "completed_utc": "2026-10-06T19:49:30.485504+00:00",
+          "report_sha256": "b789d0f78e6f69381df02c3cbd1e8dc9478cf872f969385abcde30f057169e7d",
+          "result": "PASS_CHINESE_FULL_INITIAL_PLUS_EXACT_R03_DELTA",
+          "reviewed_target_sha256": "eeac1ad957ebe9c9cb1c0fb4c5cc59437dc05a65211c93f8347e3686558893ad",
+          "reviewed_draft_record_sha256": "38dbb95378a467b58b263c1c4a1411a8ce7742f88cb465b3e2350b7da30d2e9c",
+          "required_findings_at_that_review": 0,
+          "changed_blocks": [
+            "06-13:b0055"
+          ],
+          "unchanged_blocks_inheriting_initial_full_review": 112
+        }
+      ],
+      "remaining_findings": {
+        "S0": 0,
+        "S1": 0,
+        "S2": 0
+      },
+      "target_and_segments_unchanged_after_final_review_closure": false,
+      "prior_target_status": "PASS",
+      "prior_reviewed_target_sha256": "eeac1ad957ebe9c9cb1c0fb4c5cc59437dc05a65211c93f8347e3686558893ad",
+      "applies_to_current_target": false,
+      "scope_note": "All preserved independent reports and remaining-findings counts describe the prior reviewed target eeac1ad957ebe9c9cb1c0fb4c5cc59437dc05a65211c93f8347e3686558893ad. The current target differs only by the separately recorded 14 ASCII spaces and awaits both independent formatting-delta closures. Public review.json is preserved unchanged and is not approval of these new bytes."
+    },
+    "prior_authoring_history_unchanged": true,
+    "GFM": {
+      "initial_status": "FAILED_GITHUB_GFM_DESKTOP_BROKEN_BOLD",
+      "initial_failed_commit": "0d7d1b18ecb80d1c7696f260a4e35d6b963e2f84",
+      "initial_failed_receipt_sha256": "3fe00c562003a05942d0b8d49f5f4cc534a35a869e12127a00d5332eb7181692",
+      "prior_receipt_preserved": true,
+      "current_target_sha256": "4d404f68da87796671716454570f0c29b7bbcaaa3e59cc19d28f37f2b194d00f",
+      "current_GFM_status": "RECHECK_PENDING",
+      "diagnostic_does_not_prove_rendering": true,
+      "required_visible_check": "Check all repaired bold spans in actual full GitHub GFM."
+    },
+    "publication_chain": {
+      "fixed_source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "support_commit": "33c883f942b5614714f666a1dbf9dab298da765f",
+      "initial_content_commit": "0d7d1b18ecb80d1c7696f260a4e35d6b963e2f84",
+      "initial_content_tree": "7a425b9aaad18b993b0226ed27c449f97c2e18e4",
+      "repair_parent_commit": "0d7d1b18ecb80d1c7696f260a4e35d6b963e2f84",
+      "repair_base_tree": "7a425b9aaad18b993b0226ed27c449f97c2e18e4",
+      "repair_commit": null,
+      "repair_publication": "PENDING",
+      "initial_remote_byte_readback": {
+        "status": "PASS_FOR_INITIAL_COMMIT_ONLY",
+        "commit": "0d7d1b18ecb80d1c7696f260a4e35d6b963e2f84",
+        "receipt_sha256": "569aaaaf4c0786e34030b269fe29efc66287770c9d2a3b326ad349cb8637902f"
+      },
+      "repair_remote_byte_readback": "PENDING"
+    }
   }
 }
