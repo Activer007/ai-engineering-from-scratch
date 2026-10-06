@@ -1,0 +1,57 @@
+# S142 Gaussian Splatting: scope candidate
+
+Status: local candidate only; not published, independently read back, installed, authored, captured or accepted.
+
+## Eligibility
+
+Eligible to enter the next parallel preparation lane. Fixed source explicitly requires 04-13 (3D Vision/NeRF) and 01-12 (Tensor Operations); 04-10 Diffusion is optional. All three English documents were fully read. All are already recorded as reviewed drafts in formal index 153, although that acceptance is not a prerequisite for English-first authoring. 04-21 is not a direct prerequisite. No formal 04-22 row exists in either index 153-regression or the supplied candidate index 154. This is bounded index duplicate checking, not a fresh remote open-PR search or a complete global DAG.
+
+## Frozen coverage and load
+
+- All 5 files in the selected lesson directory were read in full: English body, main.py, quiz and 2 output artifacts.
+- Required English prerequisites 2/2 fully read; optional English prerequisite 1/1 fully read. Prerequisite programs were not read or executed.
+- Source body SHA256: 0ede4133b98620602cbe40bc4ff92f43246dbe70e7575466b38207c470c0d55a.
+- 155 total blocks form one disjoint partition: 77 separators, 25 headings, 31 paragraphs, 8 lists, 1 blockquote, 1 table, 12 fences, 0 display_math.
+- 78 nonempty blocks = 66 translatable nonempty blocks + 12 protected fences. The 66 explicitly excludes all fences, blank separators and display-math. Each list/table/metadata paragraph is one scanner block, not one row/item/field.
+- 12 fences = 5 python + 1 bash + 1 mermaid + 1 figure + 4 unlabelled. Mathematical expressions inside ordinary fences count only as fences.
+- Approximately 1,520 prose units using the original immutable scanner, excluding fences/display math/inline code, followed by regex \b\S+\b. This is a scheduling estimate, not tokens or a linguistic word count. BLOCK-STRUCTURE.json retains byte/line ranges and hashes for every block.
+
+## Figure and asset coverage
+
+No lesson-local embedded or nonembedded asset file exists beyond the five enumerated files. cv3-gaussian-splat is registered by pinned site/figures-cv3.js; the build source and loader were inspected for the bounded registration/dispatch paths. The ignored generated site/figure-manifest.js is absent from the immutable tree and was not relied upon. The provider’s eight animated ellipses illustrate the idea; they are not measured training or mathematical rendering evidence. Actual GFM, website, mobile and fallback-asset acceptance remain pending.
+
+## Source issues versus translation risks
+
+RISKS-AND-TERMS.json records 17 separately located source issues. Highest-signal risks are the 240 MB arithmetic, projection dimensions/evaluation point, front/back compositing mismatch, non-learnable argsort-only depth, SH convention/interchange, standards timeline, USDZ compression claim and unverified export compatibility. The docs intentionally abbreviate SH at degree 2; main.py does provide all 16 degree 0..3 terms. No missing-full-SH claim should be made.
+
+The source is still translatable under the unchanged workflow: preserve its technical meaning and protected payload, record defects separately, and never present a reviewed translation as executable or factual source validation. No parse/content-loss blocker was found. Any requested technical correction requires its separate source-change decision; this task has made none.
+
+## Terminology and next gate
+
+Seven existing frozen terminology files were byte-checked: core 2, S09, S14, S40, S106 and S115. S106/S115 retain their original support pin role/header; index 153 separately establishes current accepted-stage status. These are targeted term references, not a complete common-support manifest. New term proposals and contextual boundaries are in GLOSSARY-PROPOSAL.md and RISKS-AND-TERMS.json.
+
+The independent prepublication terminology calibration subsequently byte-verified and searched all 138 terminology files in candidate common146. It identified the inherited S07 first-use form Jacobian 矩阵（雅可比矩阵）, S13/S16/S17 covariance terminology and the existing 剪枝 vocabulary in S23/S24/S52/S121. Those refinements are incorporated in the own terminology candidate; other short proposals showed no contextual conflict. This is support calibration, not a future author calibration receipt. Common146 remains candidate-only until formal154 is independently verified. The coordinator must freeze exact common support and own3, publish only through the single-writer process, independently read back and install exact own3 bytes, then assign a fresh author. This planner did incidentally see the unrelated Chinese quality sample included in required docs/i18n.md during an initial unfiltered read. It did not read old Chinese lesson/cache/segments or use that sample as translation memory. The sample is excluded from frozen-source. A future author must not inherit this planner context.
+
+All authoring, capture, bilingual/Chinese review, GFM, remote-readback and batch statuses remain pending or not_started; formal increment 0. Existing fork-only draft, no merge/upstream, no CI enable and static-only limits remain.
+
+## Located source-risk summary
+
+- GS01 (docs/en.md:41): At four bytes per float, 60 × 5,000,000 × 4 = 1,200,000,000 bytes (1,200 MB decimal, about 1.118 GiB), not 240 MB. 240 MB corresponds to one million such Gaussians. The base listed 3+4+3+1+48 totals 59 before miscellaneous fields. The comparison with NeRF weights is also unsupported by this calculation.
+- GS02 (docs/en.md:13; docs/en.md:31-41): Learning objectives call out six attribute groups including an optional feature. The attribute block lists five groups; the optional feature dimension is not supplied.
+- GS03 (docs/en.md:62-72; docs/en.md:270-274): The covariance formula is shown as 2x2 while W is described as rotation plus translation and J is evaluated at screen-space mu-prime. Later prose says J at mu. A dimensionally precise treatment uses a camera-space 3D mean and the linear camera transform for covariance, with a local perspective approximation.
+- GS04 (docs/en.md:76-86; docs/en.md:160-198; docs/en.md:355; code/main.py:32-42): Text/table call the rule back-to-front, but T_i over j<i and the ascending-depth loop are front-to-back accumulation under the usual near-small-depth convention. Compositing is order-dependent.
+- GS05 (docs/en.md:90; docs/en.md:160-198; code/main.py:32-34; code/main.py:55): The depth parameter influences output only via argsort indices. This does not provide a differentiable numeric path that learns its order; ordering is piecewise constant away from swaps. Tile assignment and visibility/order choices are discrete. The phrase every step/fully differentiable overstates the computation graph. This is static analysis, not a measured gradient run.
+- GS06 (docs/en.md:280-311; code/main.py:84-110): The docs function named eval_sh_degree_3 explicitly omits degree-3 terms and uses coefficients 0..8. main.py does contain all 16 basis terms, so it is not a missing full implementation. Both lesson surfaces have positive yz/xz degree-2 terms, unlike the cited INRIA convention. An internally consistent alternate basis is possible; external coefficient interchange is not established.
+- GS07 (docs/en.md:202-264; code/main.py:45-81; code/main.py:113-137): Docs use class default 128, initial scale 2.0, colour factor 0.5, a black 64x64 target, 64 splats, 200 steps,lr 0.05. main.py uses default 64,scale 3.0,factor 0.3,a white 48x48 target, 48 splats, 300 steps,lr 0.08. Their circle/square coordinates and colours differ; docs use += while main uses an out-of-place sum.
+- GS08 (docs/en.md:23; docs/en.md:268-276; code/main.py:1-141): The checked-in program implements a dense 2D splat rasterizer/training demo and SH evaluation. It has no 3D projection, SfM, clone/split/prune, tile CUDA kernel, capture/export workflow, or dedicated tests directory. It evaluates Gaussian density at every pixel without an explicit finite-footprint mask.
+- GS09 (docs/en.md:21; docs/en.md:331; quiz.json:6-8; quiz.json:34-36): The lesson mentions a February 2026 RC, while its quiz says ratification in February. The official February 3 announcement was an RC; current specification status observed October 6 is ratified. These facts concern different dates.
+- GS10 (docs/en.md:332; quiz.json:36; outputs/skill-3dgs-export-router.md:32-37): The quiz places the OpenUSD 26.03 schema addition in April 2026. The official alliance release announcement introducing it is dated March 23. A schema and reference renderer do not themselves establish native visionOS 2.x or every listed engine support.
+- GS11 (outputs/skill-3dgs-export-router.md:41-46; docs/en.md:329-332; docs/en.md:347): The export router says USD is compressed by USDZ packaging; the USDZ specification requires uncompressed ZIP packaging. Statements such as any viewer, smallest, and SH3 loss characteristics of .splat lack version/codec-specific evidence here. Nerfstudio’s retrieved export recipe documents PLY, not the lesson’s complete glTF conversion route.
+- GS12 (docs/en.md:317; docs/en.md:365): The lesson labels gsplat as Meta and Meta/nerfstudio. Nerfstudio’s official documentation describes gsplat as its in-house backend.
+- GS13 (docs/en.md:15; docs/en.md:347; outputs/prompt-3dgs-capture-planner.md:19-41): Docs suggest 20-50 or 20 photos. The capture artifact recommends 60-500+ depending on scene. This is differing guidance, not a proved minimum or guaranteed reconstruction threshold. The artifact also prescribes 70% overlap and subpixel mean reprojection error without a cited derivation.
+- GS14 (docs/en.md:12; docs/en.md:19-23; docs/en.md:41; docs/en.md:58; docs/en.md:86; docs/en.md:104; docs/en.md:119-121; docs/en.md:325): Claims about production default, most new research, exact 147fps, minutes on RTX 4090, film use and guaranteed matching quality are not validated in this task. Sharing a compositing expression does not by itself guarantee equal quality. The original project provides scoped experimental results.
+- GS15 (quiz.json:1-39; docs/en.md:104; code/main.py:1-141): Quiz contains 5 questions (2 pre, 0 check, 3 post), lacks top-level lesson/title, and differs from AGENTS’s 6-question contract. No code/tests directory exists. The phrase SD Gaussian Splatting appears in the source.
+- GS16 (docs/en.md:123-125; site/figures-cv3.js:193-222; site/figures-cv3.js:333-343; site/build.js:576-642; .gitignore:80): The figure ID is canonically registered. Its provider draws eight flat SVG ellipses with animated opacities and a sweeping depth-sort line; it is an illustrative widget, not a mathematical renderer or training result. There is no lesson-local asset. The generated figure-manifest is absent from the pinned tree and is not an immutable input.
+- GS17 (docs/en.md:31-37; docs/en.md:64-70; docs/en.md:78-84; docs/en.md:108-115): The body contains 4 unlabelled fences, plus 5 python, 1 bash, 1 mermaid, 1 figure. One 3-column key-terms table has 8 data rows, with no unescaped-pipe anomaly observed in the source. No display-math block occurs; math-like expressions inside fences remain fences.
+
+These are source findings and bounded verification limits, not translation defects or permission to repair source meaning. Existing protected payloads stay intact. Code AST parsing is syntax-only; it is not execution. No model, training, GPU, API, download, installation or lesson program ran.
