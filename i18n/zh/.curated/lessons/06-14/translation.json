@@ -1,0 +1,1210 @@
+{
+  "schema_version": 1,
+  "lesson_id": "06-14",
+  "source_path": "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "121a1c1ecdc69b4f312407cf4b89f647e6017c22",
+  "source_sha256": "ba520338d01743a41fd7f4343a64af318241ce7e72e752afe8a98773e5f876fb",
+  "target_path": "i18n/zh/phases/06-speech-and-audio/14-voice-activity-detection-turn-taking/docs/zh.md",
+  "target_sha256": "1aa1ca91e80651c446e8707b96bc9c84f6eb2a5bfabf5f8c55d741b2feb74b6b",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01",
+    "actual_authoring_date_utc": "2026-10-06",
+    "raw_capture_run_date_note": "The immutable capture script hardcodes run_date=2026-10-01; retained exactly. Actual one-time capture occurred on2026-10-06; see author evidence."
+  },
+  "segments": [
+    {
+      "segment_id": "06-14:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick"
+      ],
+      "ordinal": 1,
+      "source_sha256": "3236e3a611f0487b29f8275f79ea0a27b16d55b839ea3c3cddb550d4862768d8",
+      "target": "# 语音活动检测与话轮交替：Silero、Cobra 和强制输出技巧\n"
+    },
+    {
+      "segment_id": "06-14:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick"
+      ],
+      "ordinal": 2,
+      "source_sha256": "f6817bb82df02e8f796de88f8d17c1af2b5ea4ffff3866c1a10fd06f43a95534",
+      "target": "> 每个语音智能体（voice agent）的成败都取决于两个判断：用户现在是否正在说话，以及用户是否已经说完？语音活动检测（Voice Activity Detection，VAD）回答前一个问题。话轮检测（turn detection，由 VAD + 静音延续等待时长（silence hangover）+ 语义端点模型（semantic endpoint model）组成）回答后一个问题。任何一个判断出错，你的助手就会要么打断用户，要么说个不停。\n"
+    },
+    {
+      "segment_id": "06-14:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick"
+      ],
+      "ordinal": 3,
+      "source_sha256": "e79890b9945877cb8e659fdae325e341151781768d838553173be1ce661f6a6d",
+      "target": "**Type:** Build\n**Languages:** Python\n**Prerequisites:** 阶段 6 · 11（实时音频）、阶段 6 · 12（语音助手）\n**Time:** ~45 分钟\n"
+    },
+    {
+      "segment_id": "06-14:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "06-14:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "9ed8612527a252948ba7a89e84f0ae766e9fdaec19e2e36d2037209ef9f96b89",
+      "target": "语音智能体对每个 20 ms 的音频块（chunk）都要作出三个不同的判断：\n"
+    },
+    {
+      "segment_id": "06-14:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0011",
+      "kind": "list",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "d8b0f00ff7e9c55c8bd04573fc98a7d1000fab11e4503f34d3b32b4bd09218ed",
+      "target": "1. **这一帧（frame）是语音吗？** — VAD，逐帧进行二分类判断。\n2. **用户开始一段新的话语（utterance）了吗？** — 起始检测（onset detection）。\n3. **用户说完了吗？** — 端点检测（end-pointing），即判断话轮结束（turn-end）。\n"
+    },
+    {
+      "segment_id": "06-14:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "375fd3dd01bad1549761b3ad2c0579a849ec266f34711f3a330d71d3b57c5895",
+      "target": "最简单的做法是使用能量阈值（energy threshold），但只要遇到噪声就会失效，无论是车流声、键盘声还是人群嘈杂声。2026 年的答案是：Silero VAD（开放的深度学习模型）+ 话轮检测模型（语义端点检测，semantic endpointing）+ 根据 VAD 校准的静音延续等待时长。\n"
+    },
+    {
+      "segment_id": "06-14:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "06-14:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "5ffe7cefe9cf456e46536b8ce6c198eeac9e13cd072911ea4236cb27f18aab6f",
+      "target": "![VAD 级联：能量 → Silero → 话轮检测器 → 强制输出技巧](../assets/vad-turn-taking.svg)\n"
+    },
+    {
+      "segment_id": "06-14:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The three-tier VAD cascade"
+      ],
+      "ordinal": 10,
+      "source_sha256": "2cb80b27cbfcaabb02d4b3e70b8014e6f535d30873bb12d7f772622716d920ac",
+      "target": "### 三级 VAD 级联（cascade）\n"
+    },
+    {
+      "segment_id": "06-14:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The three-tier VAD cascade"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The three-tier VAD cascade"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c0ede00d148505c324e768d319fd0ac457b0227a20bc419964fa1ab7546c390b",
+      "target": "**第 1 级：能量门控（energy gate）。** 成本最低。以 -40 dBFS（满刻度分贝）为阈值对 RMS（均方根）进行判断。它能过滤明显的静音，但任何超过阈值的噪声都会触发它。\n"
+    },
+    {
+      "segment_id": "06-14:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The three-tier VAD cascade"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0023",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The three-tier VAD cascade"
+      ],
+      "ordinal": 12,
+      "source_sha256": "65822dcc06a01566d8570fa118d5140a8b8a8c6e556cd636ba84a047af547274",
+      "target": "**第 2 级：Silero VAD**（2020-2026，MIT）。参数量为 1M（百万）。使用 6000+ 种语言训练。在单个 CPU（中央处理器）线程上，处理每个 30 ms 音频块耗时 ~1 ms。在假阳性率（FPR）为 5% 时，真阳性率（TPR）为 87.7%。这是开源方案的默认选择。\n"
+    },
+    {
+      "segment_id": "06-14:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The three-tier VAD cascade"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The three-tier VAD cascade"
+      ],
+      "ordinal": 13,
+      "source_sha256": "489fa645dae0bc588adcf891637a34faaff0e3da0566371fde41c0085159b5f3",
+      "target": "**第 3 级：语义话轮检测器。** 使用 LiveKit 的话轮检测模型（2024-2026），或你自己的小型分类器。它区分“说到一半停顿”和“已经说完”，利用语言上下文（语调 + 最近说过的词），而非仅依据静音。\n"
+    },
+    {
+      "segment_id": "06-14:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The three-tier VAD cascade"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### Key parameters and their defaults"
+      ],
+      "ordinal": 14,
+      "source_sha256": "bd5ec4a8f4313136415900930846e1d687c9a22191dfa08a549b30e8eb047b22",
+      "target": "### 关键参数及其默认值\n"
+    },
+    {
+      "segment_id": "06-14:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### Key parameters and their defaults"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0029",
+      "kind": "list",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### Key parameters and their defaults"
+      ],
+      "ordinal": 15,
+      "source_sha256": "098ee09cf757ab3216ab92b89dcc052f58cadcb1247aa54444d30dc8c0070d8c",
+      "target": "- **阈值（threshold）。** Silero 输出一个概率；概率 &gt; 0.5 时判为语音（默认），或采用 &gt; 0.3（更灵敏）。阈值越低，首词截断（first-word clip）越少，但假阳性（false positive）越多。\n- **最短语音时长（minimum speech duration）。** 拒绝短于 250 ms 的语音，这些通常是咳嗽声或椅子发出的噪声。\n- **静音延续等待时长（端点检测）。** VAD 返回 0 后，等待 500-800 ms，再判定话轮结束。太短 → 打断用户。太长 → 感觉反应迟钝。\n- **预留音频缓冲区（pre-roll buffer）。** 保留 VAD 触发之前 300-500 ms 的音频，防止“嘿”被截掉。\n"
+    },
+    {
+      "segment_id": "06-14:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### Key parameters and their defaults"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0031",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The flush trick (Kyutai 2025)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "2779ba19cf72e2cd54ad8ae34db5a6dedcfeb155d9198cd10aadb4171ddff1fa",
+      "target": "### 强制输出技巧（Kyutai 2025）\n"
+    },
+    {
+      "segment_id": "06-14:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The flush trick (Kyutai 2025)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The flush trick (Kyutai 2025)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "fc65b6cdc6444a35afb787617dc2d76bc2b8d3ef481cc028d309ca305e1dfc29",
+      "target": "流式语音转文本（streaming STT）模型存在前瞻延迟（look-ahead delay）：Kyutai STT-1B 为 500 ms，STT-2.6B 为 2.5 s。通常，语音结束后还要等这么久才能拿到转写文本（transcript）。强制输出技巧（flush trick）的做法是：当 VAD 触发语音结束事件时，**向 STT 发送强制输出信号（flush signal）**，让它立即输出。STT 的处理速度为实时速度的 ~4×，因此处理完 500 ms 的缓冲音频只需 ~125 ms。\n"
+    },
+    {
+      "segment_id": "06-14:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The flush trick (Kyutai 2025)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The flush trick (Kyutai 2025)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "966a2501d0ef4eaea4029ac7f9c567c703ae95b4513ac46d991f28eb379a3a93",
+      "target": "端到端：125 ms 的 VAD + 强制输出 STT = 适合对话的延迟。\n"
+    },
+    {
+      "segment_id": "06-14:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### The flush trick (Kyutai 2025)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### 2026 VAD comparison"
+      ],
+      "ordinal": 19,
+      "source_sha256": "f6144657f4bbc913d10e6471ca9e129c618cf5bb7ebbf06b65821db210b76a7a",
+      "target": "### 2026 年 VAD 对比\n"
+    },
+    {
+      "segment_id": "06-14:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### 2026 VAD comparison"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0039",
+      "kind": "table",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### 2026 VAD comparison"
+      ],
+      "ordinal": 20,
+      "source_sha256": "7847c37eb184a15abcbbb3d814171789c9183b0648f9567892e7e461d4d047e3",
+      "target": "| VAD | TPR @ 5% FPR | 延迟 | 许可 |\n|-----|--------------|---------|---------|\n| WebRTC VAD（Google，2013） | 50.0% | 30 ms | BSD |\n| Silero VAD（2020-2026） | 87.7% | ~1 ms | MIT |\n| Cobra VAD（Picovoice） | 98.9% | ~1 ms | 商业许可 |\n| pyannote segmentation | 95% | ~10 ms | MIT-ish |\n"
+    },
+    {
+      "segment_id": "06-14:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### 2026 VAD comparison"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### 2026 VAD comparison"
+      ],
+      "ordinal": 21,
+      "source_sha256": "212f774656569f590e149ad8c5c8154f35e88cf30969070044edd8d77ad39ca1",
+      "target": "Silero 是合适的默认选择。Cobra 是合规性 / 准确率方面的升级选项。仅基于能量的 VAD 不应出现在 2026 年的生产环境中。\n"
+    },
+    {
+      "segment_id": "06-14:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### 2026 VAD comparison"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0043",
+      "kind": "fence",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### 2026 VAD comparison"
+      ],
+      "ordinal": 22,
+      "source_sha256": "1d125bba9411a1b34992086d20228f9ef78489288da95fc3c55966803243b0e9",
+      "target": "```figure\nsp-vad-cascade\n```\n"
+    },
+    {
+      "segment_id": "06-14:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## The Concept",
+        "### 2026 VAD comparison"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It"
+      ],
+      "ordinal": 23,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "06-14:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0047",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 1: the energy gate"
+      ],
+      "ordinal": 24,
+      "source_sha256": "803fe44a20f84cfcdbff1151709b6ebc0dddd1665ca5f390caf06b0d50f4cd47",
+      "target": "### 步骤 1：能量门控\n"
+    },
+    {
+      "segment_id": "06-14:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 1: the energy gate"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0049",
+      "kind": "fence",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 1: the energy gate"
+      ],
+      "ordinal": 25,
+      "source_sha256": "33c25fbdb5d3da3c24338fa793c34c729a37d58ed5689245719cc2300bcb8ac1",
+      "target": "```python\ndef energy_vad(chunk, threshold_dbfs=-40.0):\n    rms = (sum(x * x for x in chunk) / len(chunk)) ** 0.5\n    dbfs = 20.0 * math.log10(max(rms, 1e-10))\n    return dbfs > threshold_dbfs\n```\n"
+    },
+    {
+      "segment_id": "06-14:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 1: the energy gate"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 2: Silero VAD in Python"
+      ],
+      "ordinal": 26,
+      "source_sha256": "3c867b244f96d4eb142e168c2f1a823c93cc6c36edc44d7e6de11e7d186b1041",
+      "target": "### 步骤 2：在 Python 中使用 Silero VAD\n"
+    },
+    {
+      "segment_id": "06-14:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 2: Silero VAD in Python"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0053",
+      "kind": "fence",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 2: Silero VAD in Python"
+      ],
+      "ordinal": 27,
+      "source_sha256": "36999702dae6ccd4a67f9f5822fbd7de9257c3a50a1746b3f54d6f6f0e0ba76f",
+      "target": "```python\nfrom silero_vad import load_silero_vad, get_speech_timestamps\n\nvad = load_silero_vad()\naudio = torch.tensor(waveform_16k, dtype=torch.float32)\nsegments = get_speech_timestamps(\n    audio, vad, sampling_rate=16000,\n    threshold=0.5,\n    min_speech_duration_ms=250,\n    min_silence_duration_ms=500,\n    speech_pad_ms=300,\n)\nfor s in segments:\n    print(f\"{s['start']/16000:.2f}s - {s['end']/16000:.2f}s\")\n```\n"
+    },
+    {
+      "segment_id": "06-14:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 2: Silero VAD in Python"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0055",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 3: turn-end state machine"
+      ],
+      "ordinal": 28,
+      "source_sha256": "26c51c8dbb5379c4e5dde9b7f64c949298b55444a52b9e34723eed52b79015c9",
+      "target": "### 步骤 3：话轮结束状态机（state machine）\n"
+    },
+    {
+      "segment_id": "06-14:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 3: turn-end state machine"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0057",
+      "kind": "fence",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 3: turn-end state machine"
+      ],
+      "ordinal": 29,
+      "source_sha256": "194ec07891a9f60c3b9802924c47e358b34aa3d51b4bc68a9d0cd4ab0d05557a",
+      "target": "```python\nclass TurnDetector:\n    def __init__(self, silence_hangover_ms=500, min_speech_ms=250):\n        self.state = \"idle\"\n        self.speech_ms = 0\n        self.silence_ms = 0\n        self.silence_hangover_ms = silence_hangover_ms\n        self.min_speech_ms = min_speech_ms\n\n    def update(self, is_speech, chunk_ms=20):\n        if is_speech:\n            self.speech_ms += chunk_ms\n            self.silence_ms = 0\n            if self.state == \"idle\" and self.speech_ms >= self.min_speech_ms:\n                self.state = \"speaking\"\n                return \"START\"\n        else:\n            self.silence_ms += chunk_ms\n            if self.state == \"speaking\" and self.silence_ms >= self.silence_hangover_ms:\n                self.state = \"idle\"\n                self.speech_ms = 0\n                return \"END\"\n        return None\n```\n"
+    },
+    {
+      "segment_id": "06-14:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 3: turn-end state machine"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 4: the flush trick skeleton"
+      ],
+      "ordinal": 30,
+      "source_sha256": "b74c308b04e202fea33ddbaa5d2207a93d0fb73f6f42741a59849c15541e78e4",
+      "target": "### 步骤 4：强制输出技巧的代码骨架\n"
+    },
+    {
+      "segment_id": "06-14:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 4: the flush trick skeleton"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0061",
+      "kind": "fence",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 4: the flush trick skeleton"
+      ],
+      "ordinal": 31,
+      "source_sha256": "fc788a9742f3e3a10cc951efde429ade68549f57399c223f73fe86ef4a74df8e",
+      "target": "```python\ndef flush_on_end(stt_client, audio_buffer):\n    stt_client.send_audio(audio_buffer)\n    stt_client.send_flush()\n    return stt_client.recv_transcript(timeout_ms=150)\n```\n"
+    },
+    {
+      "segment_id": "06-14:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 4: the flush trick skeleton"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 4: the flush trick skeleton"
+      ],
+      "ordinal": 32,
+      "source_sha256": "86da3a7aebc1d314533d05e7cb622ba16fc20f5940728ce0fe90fe86c2bfc034",
+      "target": "要使这个方法奏效，STT（Kyutai、Deepgram、AssemblyAI）必须支持强制输出。Whisper 的流式处理不支持这种方式，因为它基于块处理，总要等待音频块。\n"
+    },
+    {
+      "segment_id": "06-14:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Build It",
+        "### Step 4: the flush trick skeleton"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Use It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "06-14:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Use It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0067",
+      "kind": "table",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "14cb9903c936fd530f6d5f00affab249c6fddfb29bb4f8f6e398a27325471df9",
+      "target": "| 场景 | VAD 选择 |\n|-----------|-----------|\n| 开放、快速、通用 | Silero VAD |\n| 商业呼叫中心 | Cobra VAD |\n| 设备端（手机） | Silero VAD ONNX（开放神经网络交换格式） |\n| 研究 / 说话人分离（diarization） | pyannote segmentation |\n| 零依赖回退方案（fallback） | WebRTC VAD（旧方案） |\n| 需要高质量的话轮结束判断 | 分层组合 Silero + LiveKit turn-detector |\n"
+    },
+    {
+      "segment_id": "06-14:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Use It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "5680a3444df3f0a0fa148d18295b42c980de84761ae9a13e9410600b3d2cf38a",
+      "target": "经验法则：除非实在别无选择，否则绝不要交付仅基于能量的 VAD。\n"
+    },
+    {
+      "segment_id": "06-14:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Use It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Pitfalls"
+      ],
+      "ordinal": 36,
+      "source_sha256": "08cb057a9b38f546708b3f3b1b53987d4641ac598b82c51378c649e9705d2846",
+      "target": "## 常见陷阱\n"
+    },
+    {
+      "segment_id": "06-14:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Pitfalls"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Pitfalls"
+      ],
+      "ordinal": 37,
+      "source_sha256": "8d8e7b388a97fde31dc753495714280efc8418f944469b79df0a0586c47e397b",
+      "target": "- **固定阈值。** 安静时有效，嘈杂时失效。要么在设备端校准，要么改用 Silero。\n- **静音延续等待时长太短。** 智能体会在用户说到一半时打断。对于对话语音，500-800 ms 是理想范围。\n- **等待时长太长。** 感觉反应迟钝。请面向目标用户进行 A/B 测试。\n- **没有预留音频缓冲区。** 用户音频开头的 200-300 ms 会丢失。始终用滚动缓冲区（rolling buffer）保留触发前的音频。\n- **忽略语义端点检测。** “嗯，让我想想……”中会有长停顿。用户讨厌思路还没说完就被打断。请使用 LiveKit 的话轮检测器或类似方案。\n"
+    },
+    {
+      "segment_id": "06-14:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Pitfalls"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Ship It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "06-14:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Ship It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "dbbc35308692f3bde799431875195d9fdf532c8973ee7e2cb8c7e2a0ae0648fb",
+      "target": "保存为 `outputs/skill-vad-tuner.md`。针对一个工作负载（workload），选择 VAD 模型、阈值、静音延续等待时长、预留音频和话轮检测策略。\n"
+    },
+    {
+      "segment_id": "06-14:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Exercises"
+      ],
+      "ordinal": 40,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "06-14:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Exercises"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0081",
+      "kind": "list",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Exercises"
+      ],
+      "ordinal": 41,
+      "source_sha256": "6057f462c53e7a80b14325a0f9641bba51bf9894d975d88e0f2c2c2127c99d2e",
+      "target": "1. **简单。** 运行 `code/main.py`。它模拟一个语音 + 静音 + 语音 + 咳嗽声序列，并测试三级 VAD。\n2. **中等。** 安装 `silero-vad`，处理一段 5 分钟的录音，调整阈值，让首词截断和误触发（false trigger）都尽可能少。报告精确率（precision）/ 召回率（recall）。\n3. **困难。** 构建一个小型话轮检测器：Silero VAD + 一个 3 层多层感知机（MLP），输入为最近 10 个词的嵌入（embedding，使用 sentence-transformers）。在人工标注的话轮结束数据集上训练。让 F1 分数（精确率与召回率的调和平均）比仅使用 Silero 高 10%。\n"
+    },
+    {
+      "segment_id": "06-14:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Exercises"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Key Terms"
+      ],
+      "ordinal": 42,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "06-14:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Key Terms"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0085",
+      "kind": "table",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Key Terms"
+      ],
+      "ordinal": 43,
+      "source_sha256": "6b82bd0cc13781585efb2351f4347015bf27d56efb72b05ecea4ab2a9f930bcc",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| VAD | 语音检测器 | 逐帧二分类：这是语音吗？ |\n| 话轮检测 | 端点检测 | VAD + 静音延续等待时长 + 语义端点。 |\n| 静音延续等待时长 | 说完之后等一等 | 判定话轮结束前的等待时间；500-800 ms。 |\n| 预留音频 | 语音前缓冲区 | 保留 VAD 触发之前 300-500 ms 的音频。 |\n| 强制输出技巧 | Kyutai 的巧妙办法 | VAD → 强制输出 STT → 延迟由 500 ms 降为 125 ms。 |\n| 语义端点 | “对方是有意停下来的吗？” | 关注词语、而不只是静音的机器学习（ML）分类器。 |\n| TPR @ FPR 5% | 受试者工作特征曲线（ROC）上的工作点 | 标准 VAD 基准；Silero 为 87.7%，WebRTC 为 50%。 |\n"
+    },
+    {
+      "segment_id": "06-14:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Key Terms"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Further Reading"
+      ],
+      "ordinal": 44,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "06-14:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Further Reading"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-14:b0089",
+      "kind": "list",
+      "heading_path": [
+        "# Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+        "## Further Reading"
+      ],
+      "ordinal": 45,
+      "source_sha256": "e5c7a83557ebda3c50a2dc1304a3e032dc98a5e5dcf606fbd0e10bb9563c8ca5",
+      "target": "- [Silero VAD](https://github.com/snakers4/silero-vad) — 开放 VAD 的参考实现。\n- [Picovoice Cobra VAD](https://picovoice.ai/products/voice/voice-activity-detection/) — 准确率领先的商业方案。\n- [Kyutai — Unmute + flush trick](https://kyutai.org/stt) — 将延迟降至低于 200 ms 的工程技巧。\n- [LiveKit — turn detection](https://docs.livekit.io/agents/logic/turns/) — 生产环境中的语义端点检测。\n- [WebRTC VAD](https://webrtc.googlesource.com/src/) — 旧有基线。\n- [pyannote segmentation](https://github.com/pyannote/pyannote-audio) — 达到说话人分离要求的分段方案。\n"
+    }
+  ],
+  "assets": [
+    {
+      "source_path": "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking/assets/vad-turn-taking.svg",
+      "target_path": "i18n/zh/phases/06-speech-and-audio/14-voice-activity-detection-turn-taking/assets/vad-turn-taking.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "925f02f4005e4d1342f8cee842e26474f029cc2a99b26e89f6a20347687d1c88"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "author_evidence": {
+    "proposal_sha256": "85b13cf3005c3e55990c0465fa2c17f0808589630c73c347902a51f9e658fbb1",
+    "independent_terminology_calibration_sha256": "14ec1ce8054a966dee7d083bd12cb3db60d4d9322a6ace0239d1a4cc794e063d",
+    "support_receipt_sha256": "92a69c8873fc92d4574b287339a631bc4e09330bf33ad9111c783a2497af683b",
+    "parent_prose_go_utc": "2026-10-06T21:44:30.390581+00:00",
+    "composition_started_utc": "2026-10-06T21:44:44.305480+00:00",
+    "first_substantive_write_utc": "2026-10-06T21:45:50.190431+00:00",
+    "first_write_completed_utc": "2026-10-06T21:45:50.261626+00:00",
+    "capture_started_utc": "2026-10-06T21:46:21.158945+00:00",
+    "capture_completed_utc": "2026-10-06T21:46:21.236708+00:00",
+    "capture_count": 1,
+    "raw_capture_record_sha256": "15f031bd598e6284e8acbe439150f974aa9bb5ea8b6db8e9aa8cd5d113246cf9",
+    "initial_target_sha256": "5ff19220ec172c89e960f500169969510ae6c92823947abcc74cd12646c2130f",
+    "independent_bilingual_review": null,
+    "independent_Chinese_selfread": null,
+    "actual_GFM": null,
+    "remote_readback": null,
+    "course_execution": "NOT_RUN",
+    "revisions": [
+      {
+        "revision": "r01",
+        "changed_segments": [
+          "06-14:b0023",
+          "06-14:b0033",
+          "06-14:b0063",
+          "06-14:b0073",
+          "06-14:b0089"
+        ],
+        "kind": "five selfcheck wording fixes plus required asset/addendum/actualUTC metadata",
+        "completed_utc": "2026-10-06T21:47:15.767558+00:00"
+      }
+    ]
+  },
+  "support": {
+    "commit": "def9eff646ad25ebac534e3395e372112d933271",
+    "tree": "3c15963432955163f7fe5072e73feb019537c00b",
+    "dependencies_path": "i18n/zh/.curated/stages/S153-voice-activity-detection-turn-taking/DEPENDENCIES.json",
+    "dependencies_sha256": "2aedbba6bd8a1a9a99dc2710c161e1cb1bd415f15e9c87753bf66d0e5963db11",
+    "common_set_sha256": "a4ed394c03650b70a6e48172186d37c5bc255dc887753c058be7a73bc5a78875",
+    "common_files": 158,
+    "terminology_files": 150,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 161,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S153-voice-activity-detection-turn-taking/DEPENDENCIES.json",
+        "commit": "def9eff646ad25ebac534e3395e372112d933271",
+        "git_blob": "9b177271adeb467ab1e9fc2ef1a542cc9bc24f3c",
+        "sha256": "2aedbba6bd8a1a9a99dc2710c161e1cb1bd415f15e9c87753bf66d0e5963db11",
+        "bytes": 291489,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S153-voice-activity-detection-turn-taking/SCOPE.md",
+        "commit": "def9eff646ad25ebac534e3395e372112d933271",
+        "git_blob": "824a9febfa065ddef247210d170653cfc1ccbbe0",
+        "sha256": "168b9e4bbd1f67921e96ed04fa665cae635aaafde6a4cca1558fac20c5da6a4b",
+        "bytes": 14238,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S153-voice-activity-detection-turn-taking/TERMINOLOGY.md",
+        "commit": "def9eff646ad25ebac534e3395e372112d933271",
+        "git_blob": "b1c0a54f55c8ecbb927dca937bfb7e4bde1e9388",
+        "sha256": "b3519f7bb2b2524dce760861a353711b40aa7d543918d3a8e6530ba5895dff6c",
+        "bytes": 13250,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "92a69c8873fc92d4574b287339a631bc4e09330bf33ad9111c783a2497af683b",
+    "installation_completed_utc": "2026-10-06T21:36:06.653559+00:00",
+    "frozen_pending_null_fields_preserved": true,
+    "aggregate_all161_installation_gate_sha256": "2fd7976a569a73b6e1bf26d8191ba18440387cd5e11b5dbfa1158cbe301c4736"
+  },
+  "authoring_history": {
+    "original_author_handoff_sha256": "9b85bafb1a5752b34e6dad97aa8eeced2251b5b03814f6cba3628d5306d704da",
+    "final_author_handoff_sha256": "9b85bafb1a5752b34e6dad97aa8eeced2251b5b03814f6cba3628d5306d704da",
+    "original_author_evidence_files_preserved": 32,
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false,
+    "capture_invocations": 1,
+    "raw_capture_hardcoded_date": "2026-10-01",
+    "actual_authoring_date_utc": "2026-10-06",
+    "capture_date_caveat": "The unchanged original capture helper hardcodes 2026-10-01. That raw value remains in provenance and is not the actual authoring date. Actual UTC timestamps are recorded separately; no recapture.",
+    "chronology": {
+      "support_installed_utc": "2026-10-06T21:36:06.653559+00:00",
+      "proposal_completed_utc": "2026-10-06T21:41:43.730740+00:00",
+      "proposal_revision_completed_utc": "2026-10-06T21:43:08.648626+00:00",
+      "independent_calibration_completed_utc": "2026-10-06T21:43:59.806118+00:00",
+      "parent_prose_go_utc": "2026-10-06T21:44:30.390581+00:00",
+      "composition_started_utc": "2026-10-06T21:44:44.305480+00:00",
+      "first_substantive_write_utc": "2026-10-06T21:45:50.190431+00:00",
+      "first_write_completed_utc": "2026-10-06T21:45:50.261626+00:00",
+      "capture_started_utc": "2026-10-06T21:46:21.158945+00:00",
+      "capture_completed_utc": "2026-10-06T21:46:21.236708+00:00",
+      "capture_count": 1,
+      "raw_run_date_retained": "2026-10-01",
+      "actual_authoring_date_utc": "2026-10-06"
+    },
+    "original_raw_capture_sha256": "15f031bd598e6284e8acbe439150f974aa9bb5ea8b6db8e9aa8cd5d113246cf9",
+    "first_target_sha256": "5ff19220ec172c89e960f500169969510ae6c92823947abcc74cd12646c2130f",
+    "independent_terminology_calibration_sha256": "14ec1ce8054a966dee7d083bd12cb3db60d4d9322a6ace0239d1a4cc794e063d",
+    "author_selfcheck_revision_receipt_sha256": "43f32e01fc61818a21490726e6b6023d7d94906103cabe57fa5983a159b61f83",
+    "author_selfcheck_changed_blocks_before_independent_reviews": [
+      "06-14:b0023",
+      "06-14:b0033",
+      "06-14:b0063",
+      "06-14:b0073",
+      "06-14:b0089"
+    ],
+    "retained_failures": [
+      "Initial identity diagnostic assumed Git0644=archivephysical0644; real frozen archive mode0664. Corrected read-only comparator to pinned archive modes; no file/mode edits.",
+      "Initial raw capture strict returned missing SVG manifest. Raw capture and error preserved; current record has exact manifest/copy and original strict passes.",
+      "Intentional original replay to differing isolated sentinel refused and preserved sentinel; expected negative check.",
+      "Initial handoff metadata assembly command at2026-10-06T21:49:39Z had a Python SyntaxError (dict keyword colon rather than equals). Parsing stopped before writes or execution. Corrected in this helper; lesson/record untouched."
+    ],
+    "initial_author_selfcheck_sha256": "bba61d08dc3dd808721eb7a8180649e2569b54926c7e19b0e4da17f4562d9d3a",
+    "initial_author_mechanical_report_sha256": "d23a58ba56149daf21ae4b3d65c5a02ef214cdf890ecf6630bfa643e8d450141",
+    "reviewed_draft_record_sha256": "a23e9efc06705471772df2261b3d146fd4e29810ffa1eae25a44812ecf80a08d",
+    "post_independent_review_author_revisions": []
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/06-14/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T21:52:16.004514+00:00",
+        "report_sha256": "08ba94e4499a8bfdb3f0ea36fd56b929be3be5e023b239a1930282bb71651669",
+        "result": "PASS_COMPLETE_BILINGUAL_REVIEW",
+        "reviewed_target_sha256": "1aa1ca91e80651c446e8707b96bc9c84f6eb2a5bfabf5f8c55d741b2feb74b6b",
+        "reviewed_draft_record_sha256": "a23e9efc06705471772df2261b3d146fd4e29810ffa1eae25a44812ecf80a08d",
+        "blocks": 89,
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T21:52:03.409962+00:00",
+        "report_sha256": "ad24f50bf304949f69b9c6f92a8d127bd45b9c3a79ccee31328574a0d46119d4",
+        "result": "PASS_CHINESE_ONLY_NO_REQUIRED_FINDINGS",
+        "reviewed_target_sha256": "1aa1ca91e80651c446e8707b96bc9c84f6eb2a5bfabf5f8c55d741b2feb74b6b",
+        "reviewed_draft_record_sha256": "a23e9efc06705471772df2261b3d146fd4e29810ffa1eae25a44812ecf80a08d",
+        "blocks": 89,
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
