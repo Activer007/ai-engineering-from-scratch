@@ -1,0 +1,1235 @@
+{
+  "schema_version": 1,
+  "lesson_id": "14-08",
+  "source_path": "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "64e3268d0a35b8acb42a01d73a2b23ea453db741",
+  "source_sha256": "c9d406091f226f33e6b8336bd887d12e7a8cdbe769b257a6c6bda4988eff6f3b",
+  "target_path": "i18n/zh/phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/docs/zh.md",
+  "target_sha256": "c2189938b6387faf5d0b446db73206626c8264ff8243e33ae7e77f99bdc7924a",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01"
+  },
+  "segments": [
+    {
+      "segment_id": "14-08:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute"
+      ],
+      "ordinal": 1,
+      "source_sha256": "908faac25ad42433cc2e0cf8c0ab6826a3245918b4068caa58ad930405f17511",
+      "target": "# 记忆块与休眠时计算\n"
+    },
+    {
+      "segment_id": "14-08:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute"
+      ],
+      "ordinal": 2,
+      "source_sha256": "f253a9064169aa8c7d24c55f1cd7a053d7769ceb0effe443f053046185272428",
+      "target": "> 将记忆按功能划分为独立的记忆块（memory block），让模型能够直接编辑；再由休眠时智能体（sleep-time agent）在主智能体（primary agent）空闲时异步（asynchronously）整合（consolidation）记忆。智能体（agent）借助这两个思路，让记忆的范围超越单次对话。\n"
+    },
+    {
+      "segment_id": "14-08:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute"
+      ],
+      "ordinal": 3,
+      "source_sha256": "e37f0d469e7e29ac4cac746e602494a617c2fd74cfc593d95fd0b8e8a663451f",
+      "target": "**Type:** Build\n**Languages:** Python (stdlib)\n**Prerequisites:** 阶段 14 · 07（MemGPT）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "14-08:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "14-08:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "fb58733d0339705ce9f895cf4d7d59a8c3c3f481a649007fdb50c409cd6037ef",
+      "target": "- 列出 Letta 使用的三个记忆层级：核心记忆（core）、回忆记忆（recall）和归档记忆（archival），并说明各自的作用。\n- 解释记忆块模式：用户信息块（Human block）、角色设定块（Persona block）以及用户自定义的块，都是具有类型的一等对象（first-class typed objects）。\n- 说明什么是休眠时计算（sleep-time compute）、为什么它不在关键路径（critical path）上，以及为什么它能采用比主智能体更强的模型。\n- 实现一个由脚本驱动的双智能体循环：主智能体负责响应，休眠时智能体在轮次之间整合记忆块。\n"
+    },
+    {
+      "segment_id": "14-08:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "14-08:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "0718bb79b104750ab2c1541f26b5fccaef36d7f384a6fdd1c828e87dd8349fc0",
+      "target": "MemGPT（第 07 课）解决了虚拟内存（virtual memory）的控制流问题。在生产环境中，随之出现了三个问题：\n"
+    },
+    {
+      "segment_id": "14-08:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0015",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "bd80ff8cbd49fe91e394c2cfce88e73f5229244028d2af3c4fa394323e8a3edf",
+      "target": "1. **延迟。** 每次记忆操作都处在关键路径上。如果智能体要在用户等待时裁剪、生成摘要或协调不一致的信息，尾延迟（tail latency）就会大幅攀升。\n2. **记忆陈化（memory rot）。** 写入不断累积，与新信息相矛盾的事实仍然留存。检索结果被过时内容淹没。\n3. **结构丢失。** 扁平的归档存储无法表达这样的关系：“用户信息块始终在提示词（prompt）中；角色设定块始终在提示词中；任务块（Task block）则按会话切换。”\n"
+    },
+    {
+      "segment_id": "14-08:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "3d1fe98eb5031dc1e848c3387fe669207cc5f7bf5ff497d5d4b8ecf5b69290b4",
+      "target": "Letta（letta.com）是原 MemGPT 项目在 2024 年采用的平台名称，论文提出的模式仍沿用 MemGPT 这一名称；2026 年的 Letta V1 重写则是之后另一个独立的步骤。记忆块让结构变得明确，休眠时计算则将整合工作移出关键路径。\n"
+    },
+    {
+      "segment_id": "14-08:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "14-08:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Three tiers"
+      ],
+      "ordinal": 11,
+      "source_sha256": "0b2662cb6c396f04c0c248a0f64650850641ac86dd4e18009be9fa4f4b2b9b23",
+      "target": "### 三个层级\n"
+    },
+    {
+      "segment_id": "14-08:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Three tiers"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0023",
+      "kind": "table",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Three tiers"
+      ],
+      "ordinal": 12,
+      "source_sha256": "e8f8e5c0c26fd79aae7f98fd8b628050076695e7f4f7fefc1de715da4268f81b",
+      "target": "| 层级 | 范围 | 存放位置 | 写入方 |\n|------|-------|----------------|------------|\n| 核心记忆 | 始终可见 | 主提示词内部 | 智能体的工具调用（tool call）+ 休眠时重写 |\n| 回忆记忆 | 对话历史 | 可检索 | 自动记录每个轮次 |\n| 归档记忆 | 任意事实 | 向量 + KV（键值）+ 图 | 智能体的工具调用 + 休眠时摄入 |\n"
+    },
+    {
+      "segment_id": "14-08:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Three tiers"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Three tiers"
+      ],
+      "ordinal": 13,
+      "source_sha256": "70b6470693d04872955401fb0722aa3494a955a90e7aac5b29c8e334d5f49ece",
+      "target": "核心记忆就是 MemGPT 中的核心记忆。回忆记忆是对话缓冲区连同其中已被逐出的尾部内容。归档记忆是外部存储。这种划分解决了 MemGPT 两层结构中职责混杂的问题。\n"
+    },
+    {
+      "segment_id": "14-08:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Three tiers"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 14,
+      "source_sha256": "0e392f15a9502f07f24c1679c3f0ed27fefc8c930c0878d1b6f82dd2dfb04d7e",
+      "target": "### 记忆块\n"
+    },
+    {
+      "segment_id": "14-08:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 15,
+      "source_sha256": "d3bd3bcb235963bd36b26ce2fb0717f57e9ab9322acb6245a211bf37f5edc2d1",
+      "target": "记忆块是核心层中具有类型、经过持久化（persistent）保存且可编辑的分区。最初的 MemGPT 论文定义了两种：\n"
+    },
+    {
+      "segment_id": "14-08:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0031",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 16,
+      "source_sha256": "4b3bc4ac00f6dff563006b03f87f08ae55e278b690a1274dcf31faf0e857ef5e",
+      "target": "- **用户信息块**：关于用户的事实，如姓名、角色、偏好和目标。\n- **角色设定块**：智能体的自我认知，如身份、语气和约束。\n"
+    },
+    {
+      "segment_id": "14-08:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0033",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 17,
+      "source_sha256": "0cffd4e2e34a6186b2a4b703c42aed680c4b7d4f79538f732b4e958e742da8b1",
+      "target": "Letta 将其推广到任意用户自定义的块：用 `Task` 任务块保存当前目标，用 `Project` 项目块保存代码库相关事实，用 `Safety` 安全约束块保存硬性约束。每个块都有 `id`、`label`、`value`、`limit`（字符数上限，character cap）和 `description`（让模型知道何时该编辑它）。\n"
+    },
+    {
+      "segment_id": "14-08:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 18,
+      "source_sha256": "221686acfabd2d094cdf8b6d9ae14f299fdc6f53076d0e434d4fcbf5176baac6",
+      "target": "可以通过工具接口编辑这些块：\n"
+    },
+    {
+      "segment_id": "14-08:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0037",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 19,
+      "source_sha256": "c069f671c8e48a6f6857488fe2f7e707defaabf03520767cb61b1eb63243099f",
+      "target": "- `block_append(label, text)`\n- `block_replace(label, old, new)`\n- `block_read(label)`\n- `block_summarize(label)`：精简一个接近上限的块。\n"
+    },
+    {
+      "segment_id": "14-08:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Memory blocks"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0039",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 20,
+      "source_sha256": "a8563f6ea269d5cd3bd2207bb1e7959b8c453bae2d708323c056d9575fdc9a77",
+      "target": "### 休眠时计算\n"
+    },
+    {
+      "segment_id": "14-08:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 21,
+      "source_sha256": "d1cbe919073e1804b8f8f83e93a2daf3fed8ca50c4ae739f7dcd35335738680a",
+      "target": "这是 Letta 在 2025 年新增的机制：在后台运行另一个智能体，让它处在关键路径之外。休眠时智能体处理对话记录和代码库上下文，将 `learned_context`（习得上下文，learned context）写入共享块，并整合归档记录或对其进行失效处理（invalidation）。\n"
+    },
+    {
+      "segment_id": "14-08:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 22,
+      "source_sha256": "fc7c98c6c9633bd25d9f61680a810ebc97a893836acb76481295d3930aa6722f",
+      "target": "由此带来以下特点：\n"
+    },
+    {
+      "segment_id": "14-08:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0045",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 23,
+      "source_sha256": "a0560f027cf5331b32f7f9678e838a3e03ece6d2e1634947748aaa0808edaffb",
+      "target": "- **不增加延迟。** 主智能体的响应无需等待记忆操作。\n- **可以采用更强的模型。** 休眠时智能体可以使用更昂贵、更慢的模型，因为它不受延迟约束。\n- **自然形成的整合时段。** 趁用户没有等待时，去重（deduplication）、生成摘要，并将与新信息相矛盾的事实标记为失效。\n"
+    },
+    {
+      "segment_id": "14-08:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 24,
+      "source_sha256": "96a46d361f099603782473adc936543fd3a1ada858ec053806a485ecc33c0c91",
+      "target": "这种模式与人的工作方式相似：先完成任务，再睡上一觉，让长期记忆在夜间逐渐沉淀。\n"
+    },
+    {
+      "segment_id": "14-08:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Sleep-time compute"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Native reasoning"
+      ],
+      "ordinal": 25,
+      "source_sha256": "5f4f21a049717ba98296d21710719a0d66056209b5ba5bc037b791f7acc5218e",
+      "target": "### 原生推理\n"
+    },
+    {
+      "segment_id": "14-08:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Native reasoning"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Native reasoning"
+      ],
+      "ordinal": 26,
+      "source_sha256": "0ea734d6f37ddfb118ac194d4812584af14b4d4415c25935a5ded26ec6f67510",
+      "target": "Letta V1（`letta_v1_agent`，2026）弃用了 `send_message`/心跳机制（heartbeat）和行内的 `Thought:` token（词元），转而采用原生推理（native reasoning）。OpenAI 的 Responses API（API 指应用程序编程接口）与 Anthropic 支持扩展思考（extended thinking）的 Messages API 会通过单独的通道输出推理，并在轮次之间传递（生产环境中跨提供商传递时采用加密形式）。控制循环仍然是 ReAct（推理与行动）。思考轨迹（thought trace）由结构来表达，不再依靠提示词中的格式。\n"
+    },
+    {
+      "segment_id": "14-08:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Native reasoning"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 27,
+      "source_sha256": "e48f2c79c9bc0e3211b1cbf1d2444fe3e310e86cd3d570cfcbd8797b3e2458a7",
+      "target": "### 这种模式容易在哪些地方出问题\n"
+    },
+    {
+      "segment_id": "14-08:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0055",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 28,
+      "source_sha256": "5bad79fbace2554d551a1e65ddb1011abe890be82fcaae819dc7faa36e189ebb",
+      "target": "- **记忆块膨胀（block bloat）。** 不停地调用 `block_append` 很快就会触及上限。在那次会导致超限的写入之前，接入记忆块摘要生成器。\n- **静默漂移（silent drift）。** 休眠时智能体重写了一个块，主智能体却始终没有察觉。对记忆块进行版本管理，并在轨迹中展示差异（diff）。\n- **整合过程投毒（poisoned consolidation）。** 休眠时智能体把攻击者能够触及的内容处理后写入核心记忆。第 27 课的内容同样适用于休眠时的这一攻击面。\n"
+    },
+    {
+      "segment_id": "14-08:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0057",
+      "kind": "fence",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 29,
+      "source_sha256": "9fe2b9a6173b3eb807f545f665ef3c396bf8410d4c2bc8a12ba4206088ce55ad",
+      "target": "```figure\nmemory-blocks\n```\n"
+    },
+    {
+      "segment_id": "14-08:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## The Concept",
+        "### Where this pattern goes wrong"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 30,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "14-08:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0061",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 31,
+      "source_sha256": "af5f20217861f8d9f142cd8513cfb0d9c533101884490d56c616d03dfa1f4fa9",
+      "target": "`code/main.py` 实现了：\n"
+    },
+    {
+      "segment_id": "14-08:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0063",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "5dc9b0094f84d3e4fb502c7969ed7c5ad27ac3a3e2fb7e615660ecf5c3a217e7",
+      "target": "- `Block`：id、label、value、limit、description。\n- `BlockStore`：CRUD（创建、读取、更新、删除）以及 `near_limit(label)` 辅助方法。\n- 两个由脚本驱动的智能体：`PrimaryAgent` 处理一个轮次，`SleepTimeAgent` 在轮次之间整合记忆。\n- 一条展示三轮对话的轨迹，其中包含记忆块写入；随后的一轮休眠时处理会为一个块生成摘要，并将一条过时事实标记为失效。\n"
+    },
+    {
+      "segment_id": "14-08:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "936bc51db6511ea885c12022f0e1271632a7d165e0848edeaf255b3a5786e28d",
+      "target": "运行方式：\n"
+    },
+    {
+      "segment_id": "14-08:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "2b11889f93c0782398b09d152e929afa595931801ff18ec85374f752a13e31bd",
+      "target": "```text\npython3 code/main.py\n```\n"
+    },
+    {
+      "segment_id": "14-08:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "251d3f3534971aa4b16d8b2045833c4c9c4aab51e6debeb2ed0cbb7a114027ee",
+      "target": "对话记录展示了这种分工：主智能体的轮次响应迅速，并写入原始信息；休眠时的一轮处理则负责压缩整理（compaction）和清理。\n"
+    },
+    {
+      "segment_id": "14-08:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Build It"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "14-08:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Use It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0073",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "1b17ed42aaa20271bbe565f8164bbc7b1c2d39055babbda60186d0cdf60e6551",
+      "target": "- **Letta**（letta.com）提供参考实现，可自行托管，也可使用托管云服务。\n- **Claude Agent SDK skills** 可以作为以记忆块形式组织的知识来使用。SDK 指软件开发工具包；这里的技能（skill）是一个有名称和版本、可检索的指令块，由智能体按需加载。\n- **自行构建**适合希望掌控存储后端的团队。采用 Letta API 的接口约定，以便日后迁移。\n"
+    },
+    {
+      "segment_id": "14-08:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Use It"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0075",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Ship It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "14-08:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Ship It"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "4b0bfd62cb4aeb098395b188256d837a4929b5d305c67665beaf0cecbc4b0110",
+      "target": "`outputs/skill-memory-blocks.md` 可为任意运行时（runtime）生成一个仿照 Letta 结构、带有休眠时钩子的记忆块系统，其中包括安全规则和引用标注接入。\n"
+    },
+    {
+      "segment_id": "14-08:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Ship It"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0079",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Exercises"
+      ],
+      "ordinal": 40,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "14-08:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Exercises"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0081",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Exercises"
+      ],
+      "ordinal": 41,
+      "source_sha256": "8b1ec1568ebf3427eb3c0b071e8bff706e07183aed6d111729064c816a319549",
+      "target": "1. 添加一个 `block_summarize` 工具，在 `near_limit` 返回 true 时，用模型生成的摘要替换块的值。哪个触发阈值能同时尽量减少摘要调用和记忆块溢出？\n2. 实现休眠时对归档记忆的去重：如果两条记录的文本中 token 重叠比例 >90%，就将它们合并为一条。只在休眠时的那轮处理中执行，绝不放到关键路径上。\n3. 对记忆块进行版本管理。每次写入都记录旧值和差异。提供 `block_history(label)`，让运维人员能排查“智能体为什么忘记了 X”。\n4. 将休眠时智能体视为不可信写入方（untrusted writer）。当它们修改角色设定块或安全约束块时，必须先由另一个智能体审查，才能提交。\n5. 将示例移植为使用 Letta API（`letta_v1_agent`）。记忆块的 schema（结构定义）会发生什么变化？原生推理又会如何改变轨迹的结构？\n"
+    },
+    {
+      "segment_id": "14-08:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Exercises"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0083",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Key Terms"
+      ],
+      "ordinal": 42,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "14-08:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Key Terms"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0085",
+      "kind": "table",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Key Terms"
+      ],
+      "ordinal": 43,
+      "source_sha256": "a5cfca665a27926139de8ce2a9906151fbe724452d682ac0eabdb4ca8ed3bc0b",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|------------------------|\n| 记忆块 | “可编辑的提示词分区” | 核心记忆中具有类型、经过持久化保存、可由大语言模型（LLM）编辑的片段 |\n| 用户信息块 | “用户记忆” | 固定保留在核心记忆中的用户事实 |\n| 角色设定块 | “智能体身份” | 固定保留在核心记忆中的自我认知、语气和约束 |\n| 休眠时计算 | “异步记忆工作” | 另一个智能体在关键路径之外进行整合 |\n| 核心记忆 / 回忆记忆 / 归档记忆 | “层级” | 三层记忆划分：始终可见 / 对话 / 外部 |\n| 记忆块上限 | “容量上限” | 每个块的字符数限制，会迫使系统生成摘要 |\n| 原生推理 | “思考通道” | 提供商层面的推理输出，而非提示词层面的 `Thought:` |\n| 习得上下文 | “休眠时的输出” | 休眠时智能体写入共享块的事实 |\n"
+    },
+    {
+      "segment_id": "14-08:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Key Terms"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0087",
+      "kind": "heading",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Further Reading"
+      ],
+      "ordinal": 44,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "14-08:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Further Reading"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "14-08:b0089",
+      "kind": "list",
+      "heading_path": [
+        "# Memory Blocks and Sleep-Time Compute",
+        "## Further Reading"
+      ],
+      "ordinal": 45,
+      "source_sha256": "369104ad8210f066f6bfe11e309e12082244c6d24a16564dca07153cc552732a",
+      "target": "- [Letta 的 Memory Blocks 博客文章](https://www.letta.com/blog/memory-blocks)：记忆块模式\n- [Letta 的 Sleep-time Compute 博客文章](https://www.letta.com/blog/sleep-time-compute)：异步整合\n- [Letta 的 Rearchitecting the Agent Loop](https://www.letta.com/blog/letta-v1-agent)：采用原生推理的重写\n- [Packer 等人的 MemGPT（arXiv:2310.08560）](https://arxiv.org/abs/2310.08560)：这一模式的起源\n"
+    }
+  ],
+  "assets": [],
+  "non_embedded_assets": [
+    {
+      "source_path": "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/assets/sleep-time-compute.svg",
+      "target_path": "i18n/zh/phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/assets/sleep-time-compute.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "9ab8641b90628b5f107982f8a6891be420a31ef03357b5b47be2610aeae11f1d",
+      "bytes": 5480,
+      "embedded_in_lesson_markdown": false,
+      "disposition": "Companion SVG copied byte-for-byte. No body image link invented; figure memory-blocks is a separate site widget."
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S154-memory-blocks-sleep-time-compute/TERMINOLOGY.md",
+  "additional_glossary_sha256": "5be01a638da8d8014b0daecd52fc4d2a99680ffefce3e5040d1ac71477fb4286",
+  "authoring_chronology": {
+    "lesson_id": "14-08",
+    "composition_started_utc": "2026-10-06T21:47:08.460524+00:00",
+    "parent_go_utc": "2026-10-06T21:46:52.395742+00:00",
+    "calibration_sha256": "a3cae2d910b03fe53daa0515746765df0d38994ed2174ba83538b57ace53de93",
+    "proposal_sha256": "2a084b89ecd54f90c64f9b4dbcd904d855f55467c99e452f9809920e1a54aa55",
+    "body_absent_at_start": true,
+    "capture_count": 1,
+    "first_substantive_write_utc": "2026-10-06T21:48:13.864207+00:00",
+    "first_write_completed_utc": "2026-10-06T21:48:13.864672+00:00",
+    "first_write_completeness": "complete134line lesson, all source sections, tables, two fences; no staged partial Chinese lesson",
+    "normalization": [
+      {
+        "source_block": 67,
+        "change": "bare fence opening to text only",
+        "payload": "python3 code/main.py",
+        "payload_sha256": "ac902b9818603cd2b1bea87269543c3462add61bb1f2d64686c20e7fa12288fb",
+        "approved_existing_rule": true
+      }
+    ],
+    "capture_started_utc": "2026-10-06T21:48:30.122416+00:00",
+    "capture_completed_utc": "2026-10-06T21:48:30.208013+00:00",
+    "actual_authoring_date": "2026-10-06",
+    "original_run_date_preserved": "2026-10-01",
+    "author_selfchecks_completed_utc": "2026-10-06T21:50:11.841101+00:00",
+    "record_absent_before_first_write": true,
+    "first_target_sha256": "7ce08d50d70ae748e4384cacd9fb325ca6785a0e95ad38fe38e3960d01b3e219",
+    "first_target_bytes": 9471
+  },
+  "terminology_calibration": {
+    "proposal_sha256": "2a084b89ecd54f90c64f9b4dbcd904d855f55467c99e452f9809920e1a54aa55",
+    "independent_calibration_sha256": "a3cae2d910b03fe53daa0515746765df0d38994ed2174ba83538b57ace53de93",
+    "completed_utc": "2026-10-06T21:46:26.239099+00:00",
+    "parent_go_utc": "2026-10-06T21:46:52.395742+00:00"
+  },
+  "author_selfreviews": {
+    "bilingual_sha256": "2b194df50fcbd15ea95547d2a549e9a982fb2d7dfbcd9396419c05948e4984fa",
+    "separate_Chinese_read_sha256": "0806a9e29fad111e0601657e00911249b824231ae5d475667bf0de14665c9556",
+    "independent_review": false,
+    "remaining_author_translation_findings": []
+  },
+  "support": {
+    "commit": "cbe6cefc9ba83e31dc39152275ee2359511f9268",
+    "tree": "8bc62b97587576743eabffedb40208bb7ffab9bc",
+    "dependencies_path": "i18n/zh/.curated/stages/S154-memory-blocks-sleep-time-compute/DEPENDENCIES.json",
+    "dependencies_sha256": "5f49c7f95d0464f27a68505d10ec0056925d9474c49925088197aab9318f4b8a",
+    "common_set_sha256": "a4ed394c03650b70a6e48172186d37c5bc255dc887753c058be7a73bc5a78875",
+    "common_files": 158,
+    "terminology_files": 150,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 161,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S154-memory-blocks-sleep-time-compute/DEPENDENCIES.json",
+        "commit": "cbe6cefc9ba83e31dc39152275ee2359511f9268",
+        "git_blob": "6917c04d54af7a8b3ba7704e54540c339f8e8e4a",
+        "sha256": "5f49c7f95d0464f27a68505d10ec0056925d9474c49925088197aab9318f4b8a",
+        "bytes": 285162,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S154-memory-blocks-sleep-time-compute/SCOPE.md",
+        "commit": "cbe6cefc9ba83e31dc39152275ee2359511f9268",
+        "git_blob": "ba5f9f76e304c46b56dd2f2d20ac27b08254f235",
+        "sha256": "ff59b7003ea5a498f14b303a53daaa9381d325a91ff3e3c932578496542027e6",
+        "bytes": 11597,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S154-memory-blocks-sleep-time-compute/TERMINOLOGY.md",
+        "commit": "cbe6cefc9ba83e31dc39152275ee2359511f9268",
+        "git_blob": "b01fd924963bc84208dea0c3f816ec3ecb0bce0e",
+        "sha256": "5be01a638da8d8014b0daecd52fc4d2a99680ffefce3e5040d1ac71477fb4286",
+        "bytes": 6242,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "79836f1fc039bc26bcc78f4557dea6a8c903b451657a627b810eaa86fb627cb9",
+    "installation_completed_utc": "2026-10-06T21:37:07.214078+00:00",
+    "frozen_pending_null_fields_preserved": true,
+    "aggregate_all161_installation_gate_sha256": "2fd7976a569a73b6e1bf26d8191ba18440387cd5e11b5dbfa1158cbe301c4736"
+  },
+  "authoring_history": {
+    "original_author_handoff_sha256": "44ae4c6b5cc1b02bc7ce0cb0ec806622733a60f57456366719af50b52f6b94ca",
+    "final_author_handoff_sha256": "44ae4c6b5cc1b02bc7ce0cb0ec806622733a60f57456366719af50b52f6b94ca",
+    "original_author_evidence_files_preserved": 41,
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false,
+    "capture_invocations": 1,
+    "raw_capture_hardcoded_date": "2026-10-01",
+    "actual_authoring_date_utc": "2026-10-06",
+    "capture_date_caveat": "The unchanged original capture helper hardcodes 2026-10-01. That raw value remains in provenance and is not the actual authoring date. Actual UTC timestamps are recorded separately; no recapture.",
+    "chronology": {
+      "support_installed_utc": "2026-10-06T21:37:07.214078+00:00",
+      "proposal_utc": "2026-10-06T21:42:10.520325+00:00",
+      "proposal_revision1_utc": "2026-10-06T21:45:14.845653+00:00",
+      "calibration_pass_utc": "2026-10-06T21:46:26.239099+00:00",
+      "parent_go_utc": "2026-10-06T21:46:52.395742+00:00",
+      "composition_started_utc": "2026-10-06T21:47:08.460524+00:00",
+      "first_substantive_write_utc": "2026-10-06T21:48:13.864207+00:00",
+      "first_write_completed_utc": "2026-10-06T21:48:13.864672+00:00",
+      "capture_utc": "2026-10-06T21:48:30.208013+00:00",
+      "actual_author_date": "2026-10-06",
+      "hardcoded_original_capture_date": "2026-10-01",
+      "raw_date_not_rewritten": true
+    },
+    "one_capture_actual_UTC": {
+      "started_utc": "2026-10-06T21:48:30.122416+00:00",
+      "completed_utc": "2026-10-06T21:48:30.208013+00:00",
+      "capture_count": 1,
+      "raw_provenance_run_date": "2026-10-01",
+      "actual_utc_date": "2026-10-06"
+    },
+    "original_raw_capture_sha256": "90374c83b8443a70e6232bd8557ee7888df69cdf1d89bae1a26d56c7cd1d037e",
+    "first_target_sha256": "7ce08d50d70ae748e4384cacd9fb325ca6785a0e95ad38fe38e3960d01b3e219",
+    "independent_terminology_calibration_sha256": "a3cae2d910b03fe53daa0515746765df0d38994ed2174ba83538b57ace53de93",
+    "author_selfcheck_changed_blocks_before_independent_reviews": [
+      "14-08:b0013",
+      "14-08:b0015",
+      "14-08:b0025",
+      "14-08:b0029",
+      "14-08:b0041",
+      "14-08:b0045",
+      "14-08:b0055",
+      "14-08:b0069",
+      "14-08:b0073",
+      "14-08:b0085"
+    ],
+    "retained_failures": [
+      {
+        "type": "expected_original_different_output_refusal",
+        "description": "Original renderer refused the differing isolated target; sentinel and actual failure trace are retained."
+      },
+      {
+        "type": "no_index_whitespace_exit",
+        "description": "no-index signals differing content; no whitespace errors emitted"
+      }
+    ],
+    "initial_author_bilingual_selfcheck_sha256": "2b194df50fcbd15ea95547d2a549e9a982fb2d7dfbcd9396419c05948e4984fa",
+    "initial_author_Chinese_selfread_sha256": "0806a9e29fad111e0601657e00911249b824231ae5d475667bf0de14665c9556",
+    "initial_author_mechanical_report_sha256": "2c7c75a9e1f2a1a68bc06388aa602a1452e65d582b4f1867ee50e4b8ed2ae3a0",
+    "preserved_record_metadata_revision_sha256s": [
+      "6f97c8cda3b994e2eb362a985718ab595d0ba483d113287f7d6317bc7d4a2e17",
+      "e8379b8cc2fc391a1d91610d2857a5772d2226ddf79c59f75f8db7e2bd24247c"
+    ],
+    "reviewed_draft_record_sha256": "d0ee1452a426c1f2cf79b7b6416b8705b2fb6b3513bdc8c5566f786adcf70ddc",
+    "post_independent_review_author_revisions": []
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/14-08/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T21:55:09.401435+00:00",
+        "report_sha256": "422a43e17e95b67ae82cab0b36c7cb4e8b15aeb1258f082f8cf2a607440c2edb",
+        "result": "PASS_COMPLETE_BILINGUAL_REVIEW",
+        "reviewed_target_sha256": "c2189938b6387faf5d0b446db73206626c8264ff8243e33ae7e77f99bdc7924a",
+        "reviewed_draft_record_sha256": "d0ee1452a426c1f2cf79b7b6416b8705b2fb6b3513bdc8c5566f786adcf70ddc",
+        "blocks": 89,
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T21:55:01.211626+00:00",
+        "report_sha256": "863d7badb486791efa8a1e7aff295a4bb7af7c2c3d77d0cfb6660ff696f8ed2b",
+        "result": "PASS_CHINESE_ONLY_NO_REQUIRED_FINDINGS",
+        "reviewed_target_sha256": "c2189938b6387faf5d0b446db73206626c8264ff8243e33ae7e77f99bdc7924a",
+        "reviewed_draft_record_sha256": "d0ee1452a426c1f2cf79b7b6416b8705b2fb6b3513bdc8c5566f786adcf70ddc",
+        "blocks": 89,
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  },
+  "supporting_assets_manifest_path": "i18n/zh/.curated/lessons/14-08/supporting-assets.json",
+  "supporting_assets_manifest_sha256": "2231d94e1b527f62f24031fdedbcbc2ba854a30d8017d8d07014b93d056809eb"
+}
