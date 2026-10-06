@@ -1,0 +1,1996 @@
+{
+  "schema_version": 1,
+  "lesson_id": "04-24",
+  "source_path": "phases/04-computer-vision/24-sam3-open-vocab-segmentation/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "357c72837176273755348be861422ab36ed7c0fa",
+  "source_sha256": "56e317c037a7b9fb92c05d8738f795c30b11e5cc3e082127984a1ca25a2bd040",
+  "target_path": "i18n/zh/phases/04-computer-vision/24-sam3-open-vocab-segmentation/docs/zh.md",
+  "target_sha256": "a45fa1250e09d4d4e5145f62459af518e7362fd1bd211a0db5a5acc98bf1edc1",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-06",
+    "actual_capture": {
+      "capture_started_utc": "2026-10-06T18:05:41.538876+00:00",
+      "capture_completed_utc": "2026-10-06T18:05:41.717064+00:00",
+      "command": [
+        "python3",
+        "scripts/curated_translation.py",
+        "capture",
+        "--lesson",
+        "phases/04-computer-vision/24-sam3-open-vocab-segmentation"
+      ],
+      "returncode": 0,
+      "stdout": "i18n/zh/.curated/lessons/04-24/translation.json\n",
+      "stderr": "",
+      "capture_calls": 1,
+      "original_raw_capture_sha256": "7b27a56966ab0c1b9251aa3628b66e07e351d6ff332e9cc507d21640a269b60e",
+      "raw_run_date": "2026-10-01",
+      "raw_date_is_hardcoded_not_actual_capture_date": true,
+      "first_target_differs_from_capture_due_to_documented_R01": true
+    },
+    "original_raw_run_date": "2026-10-01",
+    "original_raw_date_note": "Immutable original control hardcodes this date; raw capture preserved unchanged outside author tree. Current date corrected honestly; no recapture.",
+    "first_write": {
+      "first_target_write_started_utc": "2026-10-06T18:05:07.828717+00:00",
+      "first_target_write_completed_utc": "2026-10-06T18:05:07.828863+00:00",
+      "prose_drafting_started_shell_utc": "2026-10-06T18:05:07.763628123Z",
+      "target_path": "i18n/zh/phases/04-computer-vision/24-sam3-open-vocab-segmentation/docs/zh.md",
+      "target_sha256": "5e7c1a962913fb3d645b183655dc9982a63cbcb5146d28131ff5070eecc34767",
+      "bytes": 15220,
+      "snapshot": "first-complete-target.zh.md",
+      "capture_not_yet_run": true,
+      "no_prior_target_existed": true
+    },
+    "source_read_scope": "Five-file English package, six full direct-prerequisite docs/main files, nine repository/context files at their pinned coverage; all20 verified at fixed commit. No transitive DAG or runtime claims.",
+    "excluded_legacy_material": "No prior Chinese lesson bodies/records/reviews/caches/original33 fixtures opened or reused. Fixed docs/i18n.md embeds unrelated Chinese quality sample, seen only as required source guidance and not used."
+  },
+  "segments": [
+    {
+      "segment_id": "04-24:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation"
+      ],
+      "ordinal": 1,
+      "source_sha256": "13db2e8ae4bc47b3f587feda8c404c389268e8e1ea70b02d94db92278f6f137f",
+      "target": "# SAM 3 与开放词表分割\n"
+    },
+    {
+      "segment_id": "04-24:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation"
+      ],
+      "ordinal": 2,
+      "source_sha256": "33e00c2c8a43297dcf294063f0a91bb2a031fe5cca6cea1b77c433e72ee81691",
+      "target": "> 给模型一条文本提示词（text prompt）和一张图像，就能得到每个匹配目标（object）的掩码（mask）。SAM 3 把这个过程变成了一次前向传播（forward pass）。\n"
+    },
+    {
+      "segment_id": "04-24:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation"
+      ],
+      "ordinal": 3,
+      "source_sha256": "67da14f75fa89cef35448f357b997848c6f8fe15922d38219ff2ce43ee0da041",
+      "target": "**Type:** Use + Build\n**Languages:** Python\n**Prerequisites:** 阶段 4 第 07 课（U-Net）、阶段 4 第 08 课（Mask R-CNN）、阶段 4 第 18 课（CLIP）\n**Time:** ~60 分钟\n"
+    },
+    {
+      "segment_id": "04-24:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "04-24:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "4d417a014fe12a52e8e16599d80ff84e12aa10ccded817d2b074dd47315e1e14",
+      "target": "- 区分 SAM（仅支持视觉提示，即 visual prompt）、Grounded SAM / SAM 2（检测器 detector + SAM），以及 SAM 3（通过可提示概念分割，即 Promptable Concept Segmentation，原生支持文本提示词）\n- 解释 SAM 3 的架构：共享主干网络（shared backbone）+ 图像检测器 + 基于记忆的视频跟踪器（memory-based video tracker）+ 存在性预测头（presence head）+ 解耦的检测器—跟踪器（decoupled detector-tracker）设计\n- 使用 Hugging Face `transformers` 中的 SAM 3 集成，实现由文本提示词驱动的检测、分割和视频跟踪\n- 根据延迟、概念复杂度和部署目标，在 SAM 3、Grounded SAM 2、YOLO-World 与 SAM-MI 之间做出选择\n"
+    },
+    {
+      "segment_id": "04-24:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "04-24:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "471d44820e359e891a1a9ae4dd0cbc35657f73ff43fa74af3441b8e9ea4b18fc",
+      "target": "2023 年的 SAM 是一个仅支持视觉提示的模型：点击一个点或画一个框，它就会返回一个掩码。对于“give me all the oranges in this photo”（找出这张照片里的所有橙子）这样的需求，你需要先用检测器（Grounding DINO）生成边界框（bounding box），再用 SAM 逐个分割。Grounded SAM 将这一过程组成了管线（pipeline），但它仍是两个冻结的模型（frozen models）的级联（cascade），不可避免地会产生误差累积。\n"
+    },
+    {
+      "segment_id": "04-24:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "e98d1614774ee8f1e41c1b511b3c902e39d0f2d69c56e0375d658fbd156e5df7",
+      "target": "SAM 3（Meta，2025 年十一月，ICLR 2026）将这条级联合并为一个模型。它接受一个简短的名词短语（noun phrase）或图像示例（image exemplar）作为提示词，并在一次前向传播中返回所有匹配的掩码和实例 ID（instance ID）。这就是 **可提示概念分割（Promptable Concept Segmentation，PCS）**。结合 2026 年三月的 Object Multiplex 更新（SAM 3.1），它能在视频中高效跟踪同一概念的多个实例。\n"
+    },
+    {
+      "segment_id": "04-24:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "4d12e86e446eba097863249bfdf00957db3fbf313a9ad9caf32e92df6630bd38",
+      "target": "本课关注的是这一变化带来的结构性转变。2D 分割、检测和文本—图像对应定位（text-image grounding）已经合为一个模型。生产应用中的问题也从“我该把哪些管线串联起来”，变成了“哪个可提示模型能端到端地处理我的用例”。\n"
+    },
+    {
+      "segment_id": "04-24:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "04-24:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### The three generations"
+      ],
+      "ordinal": 11,
+      "source_sha256": "1a2f066bc32376455a3717e122d38ff592b14235d5ea5f43332720f78667e1f2",
+      "target": "### 三代模型\n"
+    },
+    {
+      "segment_id": "04-24:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### The three generations"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### The three generations"
+      ],
+      "ordinal": 12,
+      "source_sha256": "6536915cb9217b9617c6eba9eb6a5eb44b4aac0ec762ce5498741280aab92ad4",
+      "target": "```mermaid\nflowchart LR\n    subgraph SAM1[\"SAM (2023)\"]\n        A1[\"Image + point/box prompt\"] --> A2[\"ViT encoder\"] --> A3[\"Mask decoder\"]\n        A3 --> A4[\"Mask for that prompt\"]\n    end\n    subgraph GSAM2[\"Grounded SAM 2 (2024)\"]\n        B1[\"Text\"] --> B2[\"Grounding DINO\"] --> B3[\"Boxes\"] --> B4[\"SAM 2\"] --> B5[\"Masks + tracking\"]\n        B6[\"Image\"] --> B2\n        B6 --> B4\n    end\n    subgraph SAM3[\"SAM 3 (2025)\"]\n        C1[\"Text OR image exemplar\"] --> C2[\"Shared backbone\"]\n        C3[\"Image\"] --> C2\n        C2 --> C4[\"Image detector + memory tracker<br/>+ presence head\"]\n        C4 --> C5[\"All matching masks<br/>+ instance IDs\"]\n    end\n\n    style SAM1 fill:#e5e7eb,stroke:#6b7280\n    style GSAM2 fill:#fef3c7,stroke:#d97706\n    style SAM3 fill:#dcfce7,stroke:#16a34a\n```\n"
+    },
+    {
+      "segment_id": "04-24:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### The three generations"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0025",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Promptable Concept Segmentation"
+      ],
+      "ordinal": 13,
+      "source_sha256": "ee24e8e9b73961f7dc530b8752b20607e5daefb9378519b6ee7d1c54ef700d09",
+      "target": "### 可提示概念分割\n"
+    },
+    {
+      "segment_id": "04-24:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Promptable Concept Segmentation"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0027",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Promptable Concept Segmentation"
+      ],
+      "ordinal": 14,
+      "source_sha256": "6ba3b34da4425992faf8a1f847eb1188248fad721a9a97bb35d1ac49059d1346",
+      "target": "“概念提示词”（concept prompt）是一个简短的名词短语（`\"yellow school bus\"`、`\"striped red umbrella\"`、`\"hand holding a mug\"`）或图像示例。模型会为图像中每个符合该概念的实例返回分割掩码，并为每个匹配实例提供唯一的实例 ID。\n"
+    },
+    {
+      "segment_id": "04-24:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Promptable Concept Segmentation"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Promptable Concept Segmentation"
+      ],
+      "ordinal": 15,
+      "source_sha256": "5fe01a58d86a9b352727759ce130640911daa4c5137d6f2fa0371bbda3f7ad8f",
+      "target": "这与经典的视觉提示 SAM 有三点不同：\n"
+    },
+    {
+      "segment_id": "04-24:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Promptable Concept Segmentation"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0031",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Promptable Concept Segmentation"
+      ],
+      "ordinal": 16,
+      "source_sha256": "6c0e085a3664898c92146311b1ed9c365dafa4818c9ee357d27e6a4a1331ed37",
+      "target": "1. 不需要逐实例提供提示：一条文本提示词即可返回所有匹配结果。\n2. 开放词表（open-vocabulary）：概念可以是任何能用自然语言描述的事物。\n3. 一次返回多个实例，而不是每条提示只返回一个掩码。\n"
+    },
+    {
+      "segment_id": "04-24:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Promptable Concept Segmentation"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Key architectural pieces"
+      ],
+      "ordinal": 17,
+      "source_sha256": "b77cd1db47098f641059b4755c1344bdd3275f56cc634d8500452ef667b95e99",
+      "target": "### 关键架构组件\n"
+    },
+    {
+      "segment_id": "04-24:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Key architectural pieces"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0035",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Key architectural pieces"
+      ],
+      "ordinal": 18,
+      "source_sha256": "940d229fa2bbfec2e9a6d4e9219660828b4f0a3636f222d88d8a01a5192a00f0",
+      "target": "- **共享主干网络**：单个视觉 Transformer（ViT）处理图像。检测头（detection head）和基于记忆的跟踪器都从中读取特征。\n- **存在性预测头**：预测图像中究竟有没有这个概念。将“这里有它吗？”与“它在哪里？”解耦，减少对未出现概念的误报（false positive）。\n- **解耦的检测器—跟踪器**：图像级检测和视频级跟踪使用各自独立的预测头，因此互不干扰。\n- **记忆库（memory bank）**：跨帧存储每个实例的特征，用于视频跟踪（与 SAM 2 使用的机制相同）。\n"
+    },
+    {
+      "segment_id": "04-24:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Key architectural pieces"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Training at scale"
+      ],
+      "ordinal": 19,
+      "source_sha256": "c32c7c7c62d5373bd0631b6feb118417af24e086241d597b21a79fae004bda5e",
+      "target": "### 大规模训练\n"
+    },
+    {
+      "segment_id": "04-24:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Training at scale"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Training at scale"
+      ],
+      "ordinal": 20,
+      "source_sha256": "5cecdc14cdcbb2d45a5ce5071a4618bab45a204708adf17a1a174a2dc47cd3b7",
+      "target": "SAM 3 使用 **4 million（即四百万）个不同概念** 进行训练。这些概念由数据引擎生成，该引擎结合 AI 与人工审查，迭代地进行标注和纠正。新的 **SA-CO 基准测试（benchmark）** 包含 270K 个不同概念，规模是以往基准测试的 50x。SAM 3 在 SA-CO 上达到人类表现的 75-80%，在图像 + 视频 PCS 上的表现是现有系统的两倍。\n"
+    },
+    {
+      "segment_id": "04-24:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Training at scale"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0041",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 21,
+      "source_sha256": "14d5e2531ae022fc0e55af3c06c4929e101a708dbb358b8baad9bb81646b0e91",
+      "target": "### SAM 3.1 Object Multiplex\n"
+    },
+    {
+      "segment_id": "04-24:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0043",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 22,
+      "source_sha256": "be1d0f5cb85b2fe093bc8f56a66853f2aa3b8cab9427d363fb6699fe640113cf",
+      "target": "2026 年三月更新：**Object Multiplex** 引入了一种共享记忆（shared memory）机制，可以同时联合跟踪同一概念的多个实例。此前，跟踪 N 个实例意味着需要 N 个独立的记忆库。Multiplex 将它们合为一个共享记忆，并为每个实例设置各自的查询。结果是：在不牺牲准确率的情况下，大幅加快多目标跟踪。\n"
+    },
+    {
+      "segment_id": "04-24:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM 3.1 Object Multiplex"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0045",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Where Grounded SAM still matters in 2026"
+      ],
+      "ordinal": 23,
+      "source_sha256": "42ced5488aa562d9a0770d76e0a68d359cf2560a348f3088e5b5c99fc87afc07",
+      "target": "### 2026 年 Grounded SAM 仍然重要的场景\n"
+    },
+    {
+      "segment_id": "04-24:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Where Grounded SAM still matters in 2026"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0047",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Where Grounded SAM still matters in 2026"
+      ],
+      "ordinal": 24,
+      "source_sha256": "1ecdd1d6fb0bb798d78d236728c9ada137ec3e5545013c4a2f0bc5f04a254ba2",
+      "target": "- 需要换用某个特定的开放词表检测器（DINO-X、Florence-2）时。\n- SAM 3 的许可（在 HF 上受访问限制）构成障碍时。\n- 对检测器阈值的控制需求超出 SAM 3 提供的范围时。\n- 针对检测器组件开展研究或消融实验（ablation）时。\n"
+    },
+    {
+      "segment_id": "04-24:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Where Grounded SAM still matters in 2026"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Where Grounded SAM still matters in 2026"
+      ],
+      "ordinal": 25,
+      "source_sha256": "9b68fb7f18c2665ba67f32169209388f351812e3bc93695acab996aa58397581",
+      "target": "模块化管线仍有用武之地。对于大多数生产任务，SAM 3 是更简单的选择。\n"
+    },
+    {
+      "segment_id": "04-24:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Where Grounded SAM still matters in 2026"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### YOLO-World vs SAM 3"
+      ],
+      "ordinal": 26,
+      "source_sha256": "cb8c629a4800cc025840f7b73e0264e5db8e6db86a00023ac4be4647f572f927",
+      "target": "### YOLO-World 与 SAM 3\n"
+    },
+    {
+      "segment_id": "04-24:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### YOLO-World vs SAM 3"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0053",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### YOLO-World vs SAM 3"
+      ],
+      "ordinal": 27,
+      "source_sha256": "6f584a32ca7602ac3377838274bbac7bdd242c1e92e1009da953a6627ed23a88",
+      "target": "- **YOLO-World**：仅提供开放词表检测（无掩码）。支持实时运行。最适合需要以高 fps 输出边界框的场景。\n- **SAM 3**：完整的分割 + 跟踪。速度较慢，但输出更丰富。\n"
+    },
+    {
+      "segment_id": "04-24:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### YOLO-World vs SAM 3"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0055",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### YOLO-World vs SAM 3"
+      ],
+      "ordinal": 28,
+      "source_sha256": "d1ac206ecbd051505c7629f993d2261041946c9617bb1eec721db94baa1e3e96",
+      "target": "生产应用中的分工：快速、仅做检测的管线（机器人导航、快速仪表盘）使用 YOLO-World；凡是需要掩码或跟踪的任务，都使用 SAM 3。\n"
+    },
+    {
+      "segment_id": "04-24:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### YOLO-World vs SAM 3"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0057",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM-MI efficiency"
+      ],
+      "ordinal": 29,
+      "source_sha256": "37b39a0153f0d747a1de5dd9446b2496977db5c05f0cfa5056d63129742859db",
+      "target": "### SAM-MI 的效率\n"
+    },
+    {
+      "segment_id": "04-24:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM-MI efficiency"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM-MI efficiency"
+      ],
+      "ordinal": 30,
+      "source_sha256": "801521a4c66156e41ba2e81f6af1e50ff0e7ac81b3ef7bc50e6865fde931c3f5",
+      "target": "SAM-MI（2025-2026）针对 SAM 的解码器瓶颈提出了以下核心思路：\n"
+    },
+    {
+      "segment_id": "04-24:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM-MI efficiency"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0061",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM-MI efficiency"
+      ],
+      "ordinal": 31,
+      "source_sha256": "43ea18541b13ca9e238ecc7a58d7025039b188cc011f7af2fb707fdfb6d51f3d",
+      "target": "- **稀疏点提示（sparse point prompting）**：用少量精心选择的点代替密集提示，将解码器调用次数减少 96%。\n- **浅层掩码聚合（shallow mask aggregation）**：将粗略的掩码预测合并成一个边界更清晰的掩码。\n- **解耦掩码注入（decoupled mask injection）**：解码器接收预先计算的掩码特征，而不必重新运行。\n"
+    },
+    {
+      "segment_id": "04-24:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM-MI efficiency"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM-MI efficiency"
+      ],
+      "ordinal": 32,
+      "source_sha256": "ea093bdbbd87182e540f96ab992140121d0f65b424ed5b696012a79f8bb8c197",
+      "target": "结果：在开放词表基准测试上，相比 Grounded-SAM 获得 ~1.6× 的加速。\n"
+    },
+    {
+      "segment_id": "04-24:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### SAM-MI efficiency"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0065",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Output format for the three models"
+      ],
+      "ordinal": 33,
+      "source_sha256": "fd9a676c4c5595198dfa0c2793c4d95f51bae34f920d6e69c465088d11bca75e",
+      "target": "### 三种模型的输出格式\n"
+    },
+    {
+      "segment_id": "04-24:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Output format for the three models"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0067",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Output format for the three models"
+      ],
+      "ordinal": 34,
+      "source_sha256": "1f3fae40df83338023088053fad6b2386071c2a19ed19694cb332ff5b76642f3",
+      "target": "它们都返回相同的总体结构（边界框 + 标签 + 分数 + 掩码 + ID），这很有帮助：管线的下游无需根据运行的是哪个模型来设置分支。\n"
+    },
+    {
+      "segment_id": "04-24:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Output format for the three models"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Output format for the three models"
+      ],
+      "ordinal": 35,
+      "source_sha256": "25af1cf303f464a3c0e0d71ba3567bd99984434dfe1e6e13cabe760e465fc7b7",
+      "target": "```figure\ncv3-open-vocab\n```\n"
+    },
+    {
+      "segment_id": "04-24:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## The Concept",
+        "### Output format for the three models"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "04-24:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 1: Prompt construction"
+      ],
+      "ordinal": 37,
+      "source_sha256": "1a976e3dd7f124e67f06fe0b078f9bd8cf471a690b9fb83690f875de7afd7471",
+      "target": "### 步骤 1：构造提示词\n"
+    },
+    {
+      "segment_id": "04-24:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 1: Prompt construction"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 1: Prompt construction"
+      ],
+      "ordinal": 38,
+      "source_sha256": "5fc3822a627e57ed7deb943302d76b1b2c022f241902e7f2cc02c962c0147c4f",
+      "target": "编写一个辅助函数，将用户的句子转换成 SAM 3 概念提示词列表。这里就是“用户输入的内容”与“模型接收的内容”相接的边界。\n"
+    },
+    {
+      "segment_id": "04-24:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 1: Prompt construction"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0077",
+      "kind": "fence",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 1: Prompt construction"
+      ],
+      "ordinal": 39,
+      "source_sha256": "b197e5ea396fdf4f727cb55091316a28e66be610422a0e74c684086797d13d9c",
+      "target": "```python\ndef split_concepts(sentence):\n    \"\"\"\n    Heuristic splitter for multi-concept prompts.\n    Returns list of short noun phrases.\n    \"\"\"\n    for sep in [\",\", \";\", \"and\", \"or\", \"&\"]:\n        if sep in sentence:\n            parts = [p.strip() for p in sentence.replace(\"and \", \",\").split(\",\")]\n            return [p for p in parts if p]\n    return [sentence.strip()]\n\nprint(split_concepts(\"cats, dogs and balloons\"))\n```\n"
+    },
+    {
+      "segment_id": "04-24:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 1: Prompt construction"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 1: Prompt construction"
+      ],
+      "ordinal": 40,
+      "source_sha256": "f29d1473c55f7b640af62e744c2fc447d47533049e0d17f0289c57743c786b25",
+      "target": "SAM 3 每次前向传播接受一个概念；对于多概念查询，应循环调用或进行批处理（batching）。\n"
+    },
+    {
+      "segment_id": "04-24:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 1: Prompt construction"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 2: Post-processing helpers"
+      ],
+      "ordinal": 41,
+      "source_sha256": "49e9e6fa0ad6144df4fc71766af4b65affa0aa3bb4aea5f0a2ba9106ce75dd8f",
+      "target": "### 步骤 2：后处理辅助函数\n"
+    },
+    {
+      "segment_id": "04-24:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 2: Post-processing helpers"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 2: Post-processing helpers"
+      ],
+      "ordinal": 42,
+      "source_sha256": "6e1f172d8af09f69ac02575317add9bebd8852ee641c99ead7bde5260d50fb80",
+      "target": "将 SAM 3 的原始输出整理成清晰的检测结果列表，使其符合我们在阶段 4 第 16 课中定义的管线数据契约（data contract）。\n"
+    },
+    {
+      "segment_id": "04-24:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 2: Post-processing helpers"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 2: Post-processing helpers"
+      ],
+      "ordinal": 43,
+      "source_sha256": "6dc5f1da862e8ce282c1c6d269ab8f4fce0e1a3d1d8cb6451f0283b262711d5c",
+      "target": "```python\nfrom dataclasses import dataclass\nfrom typing import List\n\n@dataclass\nclass ConceptDetection:\n    concept: str\n    instance_id: int\n    box: tuple          # (x1, y1, x2, y2)\n    score: float\n    mask_rle: str       # run-length encoded\n\n\ndef rle_encode(binary_mask):\n    flat = binary_mask.flatten().astype(\"uint8\")\n    runs = []\n    prev, count = flat[0], 0\n    for v in flat:\n        if v == prev:\n            count += 1\n        else:\n            runs.append((int(prev), count))\n            prev, count = v, 1\n    runs.append((int(prev), count))\n    return \";\".join(f\"{v}x{c}\" for v, c in runs)\n```\n"
+    },
+    {
+      "segment_id": "04-24:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 2: Post-processing helpers"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 2: Post-processing helpers"
+      ],
+      "ordinal": 44,
+      "source_sha256": "98a87955fa7eb74067c2f3c6ee01525ee85a5238d2e5843b3bfff5b25aa92952",
+      "target": "游程编码（run-length encoding，RLE）让响应载荷即使包含大量高分辨率掩码也能保持较小体积。相同格式适用于 SAM 2、SAM 3 和 Grounded SAM 2。\n"
+    },
+    {
+      "segment_id": "04-24:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 2: Post-processing helpers"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 3: A unified open-vocab segmentation interface"
+      ],
+      "ordinal": 45,
+      "source_sha256": "19d01726a48ed5c30fe3949fe070abf0cd11fc2dea75e509b6b8b87388a13847",
+      "target": "### 步骤 3：统一的开放词表分割接口\n"
+    },
+    {
+      "segment_id": "04-24:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 3: A unified open-vocab segmentation interface"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0091",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 3: A unified open-vocab segmentation interface"
+      ],
+      "ordinal": 46,
+      "source_sha256": "944113c7dde3b1ec02eebcf9102cc8c6452c076f9c6ee35193a0eb6d57aeb520",
+      "target": "无论后端（backend）使用 SAM 3、Grounded SAM 2 还是 YOLO-World + SAM 2，都将它封装成统一的方法接口。这样，后端变化时，下游代码无需改变。\n"
+    },
+    {
+      "segment_id": "04-24:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 3: A unified open-vocab segmentation interface"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 3: A unified open-vocab segmentation interface"
+      ],
+      "ordinal": 47,
+      "source_sha256": "31c1ebb74e2bae855564e5b9c124cbdaad8d06c523eafa8bd14c783b879a89d4",
+      "target": "```python\nfrom abc import ABC, abstractmethod\nimport numpy as np\n\nclass OpenVocabSeg(ABC):\n    @abstractmethod\n    def detect(self, image: np.ndarray, concept: str) -> List[ConceptDetection]:\n        ...\n\n\nclass StubOpenVocabSeg(OpenVocabSeg):\n    \"\"\"\n    Deterministic stub used for pipeline testing when real models are not loaded.\n    \"\"\"\n    def detect(self, image, concept):\n        h, w = image.shape[:2]\n        return [\n            ConceptDetection(\n                concept=concept,\n                instance_id=0,\n                box=(w * 0.2, h * 0.3, w * 0.5, h * 0.8),\n                score=0.89,\n                mask_rle=\"0x100;1x50;0x200\",\n            ),\n            ConceptDetection(\n                concept=concept,\n                instance_id=1,\n                box=(w * 0.55, h * 0.25, w * 0.85, h * 0.75),\n                score=0.74,\n                mask_rle=\"0x80;1x40;0x220\",\n            ),\n        ]\n```\n"
+    },
+    {
+      "segment_id": "04-24:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 3: A unified open-vocab segmentation interface"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 3: A unified open-vocab segmentation interface"
+      ],
+      "ordinal": 48,
+      "source_sha256": "fa5d7a4cc27e9c925e6f61d0f0682f7a055964f06500a9b31e601f89f034b3fa",
+      "target": "实际实现时，`SAM3OpenVocabSeg` 子类会封装 `transformers.Sam3Model` 和 `Sam3Processor`。\n"
+    },
+    {
+      "segment_id": "04-24:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 3: A unified open-vocab segmentation interface"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0097",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 4: Hugging Face SAM 3 usage (reference)"
+      ],
+      "ordinal": 49,
+      "source_sha256": "840fcec442d7425815ed000231e04d6bfa555fbd1d54b8719b9e667133b78781",
+      "target": "### 步骤 4：Hugging Face SAM 3 用法（参考）\n"
+    },
+    {
+      "segment_id": "04-24:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 4: Hugging Face SAM 3 usage (reference)"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0099",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 4: Hugging Face SAM 3 usage (reference)"
+      ],
+      "ordinal": 50,
+      "source_sha256": "28938c43a4d5f178829fe288aea879b5515f1de1cb6d18b9a0cd2ace2341aa83",
+      "target": "使用实际模型时，`transformers` 集成的用法如下：\n"
+    },
+    {
+      "segment_id": "04-24:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 4: Hugging Face SAM 3 usage (reference)"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0101",
+      "kind": "fence",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 4: Hugging Face SAM 3 usage (reference)"
+      ],
+      "ordinal": 51,
+      "source_sha256": "98898848f3b7d95e2f124703456efebf7dd90948d3a30ff4f2e4330d79a1608b",
+      "target": "```python\nfrom transformers import Sam3Processor, Sam3Model\nimport torch\n\nprocessor = Sam3Processor.from_pretrained(\"facebook/sam3\")\nmodel = Sam3Model.from_pretrained(\"facebook/sam3\").eval()\n\ninputs = processor(images=pil_image, return_tensors=\"pt\")\ninputs = processor.set_text_prompt(inputs, \"yellow school bus\")\n\nwith torch.no_grad():\n    outputs = model(**inputs)\n\nmasks = processor.post_process_masks(\n    outputs.masks, inputs.original_sizes, inputs.reshaped_input_sizes\n)\nboxes = outputs.boxes\nscores = outputs.scores\n```\n"
+    },
+    {
+      "segment_id": "04-24:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 4: Hugging Face SAM 3 usage (reference)"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 4: Hugging Face SAM 3 usage (reference)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "11954beb42240b557029f08b825f1877ab86cf072afe63948f297a36e14a7213",
+      "target": "一条提示词，一次调用就返回所有匹配结果。\n"
+    },
+    {
+      "segment_id": "04-24:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 4: Hugging Face SAM 3 usage (reference)"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0105",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 5: Measure what Grounded SAM 2 gave you for free"
+      ],
+      "ordinal": 53,
+      "source_sha256": "5923eade236d79812c3f2d6defaa0e6216e88bf15ba8ec3fafc46b67bd703664",
+      "target": "### 步骤 5：衡量 Grounded SAM 2 原本自带的优势\n"
+    },
+    {
+      "segment_id": "04-24:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 5: Measure what Grounded SAM 2 gave you for free"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0107",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 5: Measure what Grounded SAM 2 gave you for free"
+      ],
+      "ordinal": 54,
+      "source_sha256": "7ff35b22ea5232a60895991e8eb97f496ba148e3c97abd2ee68aed70ace70818",
+      "target": "客观地做一次基准测试：在真实管线中用 SAM 3 替换 Grounded SAM 2，会发生什么？\n"
+    },
+    {
+      "segment_id": "04-24:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 5: Measure what Grounded SAM 2 gave you for free"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0109",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 5: Measure what Grounded SAM 2 gave you for free"
+      ],
+      "ordinal": 55,
+      "source_sha256": "9e158c5b1b5065e34d2b6d65f559956e7265f829db9b3a795fddbb50ca34400e",
+      "target": "- 延迟：SAM 3 省去一次前向传播（不再有独立检测器），但模型本身更重；通常总体延迟不变，或速度略有提升。\n- 准确率：对于罕见或组合式概念（compositional concept，例如“striped red umbrella”，即条纹红伞），SAM 3 明显更好。对于由单个词表示的常见概念，两者表现相近。\n- 灵活性：Grounded SAM 2 允许替换检测器（DINO-X、Florence-2、Grounding DINO 1.5）；SAM 3 则是一体式模型。\n"
+    },
+    {
+      "segment_id": "04-24:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 5: Measure what Grounded SAM 2 gave you for free"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0111",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 5: Measure what Grounded SAM 2 gave you for free"
+      ],
+      "ordinal": 56,
+      "source_sha256": "d2cb91845020b4d8467db08d4e198ebb92340e569f8f3d3b668ff9c31c10125d",
+      "target": "结论：SAM 3 是 2026 年开放词表分割的默认选择。需要检测器灵活性或不同许可条款时，Grounded SAM 2 仍然是合适的选择。\n"
+    },
+    {
+      "segment_id": "04-24:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Build It",
+        "### Step 5: Measure what Grounded SAM 2 gave you for free"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "04-24:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0115",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "aa7985fe4da7cb66da3f7f1fb5747a18a4e53e795edc8d28bb0493e0931bf229",
+      "target": "生产部署模式：\n"
+    },
+    {
+      "segment_id": "04-24:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0117",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "6dffe92824ba59c2223bf37aa93d2962b91628e46ca4ce5a88a475570e25349d",
+      "target": "- **实时标注**：SAM 3 + CVAT 的“将标签作为文本提示词”功能。标注人员选择标签名，SAM 3 为每个匹配实例进行预标注，再由标注人员审查和纠正。\n- **视频分析**：使用 SAM 3.1 Object Multiplex 进行多目标跟踪，将视频帧送入基于记忆的跟踪器。\n- **机器人**：SAM 3 用于开放词表操控（“pick up the red cup”，即拿起红色杯子），作为规划原语运行。\n- **医学影像**：针对医学概念微调（fine-tuning）SAM 3；需要在 HF 上申请访问。\n"
+    },
+    {
+      "segment_id": "04-24:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0119",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "1a43cb90d877fe34df229eaf22de88d1e9242108b8807bb680b9b3e2b1dc6754",
+      "target": "Ultralytics 在其 Python 包中封装了 SAM 3：\n"
+    },
+    {
+      "segment_id": "04-24:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0121",
+      "kind": "fence",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "bbd8cdd4ce7c414f850a5ed7a1473022a00024be8b535f5dd258b3a37c315ca4",
+      "target": "```python\nfrom ultralytics import SAM\n\nmodel = SAM(\"sam3.pt\")\nresults = model(image_path, prompts=\"yellow school bus\")\n```\n"
+    },
+    {
+      "segment_id": "04-24:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0123",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "e48956661e0fbb388c21b4297ef5392e7afeac51f5afd857e26139311d9b4318",
+      "target": "接口与 YOLO 和 SAM 2 相同。\n"
+    },
+    {
+      "segment_id": "04-24:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0125",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Ship It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "04-24:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Ship It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0127",
+      "kind": "paragraph",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Ship It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "2d7d8a54528e5c57d81432c3291d09eabfa1bdb1c89bfd04e496f10a5214cf37",
+      "target": "本课产出：\n"
+    },
+    {
+      "segment_id": "04-24:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Ship It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0129",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Ship It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "2618b46b4b95e0243d4a35bb6a348839c419618ac6688553489afc26e1a451dc",
+      "target": "- `outputs/prompt-open-vocab-stack-picker.md`：一份提示词，根据延迟、概念复杂度和许可情况，在 SAM 3 / Grounded SAM 2 / YOLO-World / SAM-MI 之间做出选择。\n- `outputs/skill-concept-prompt-designer.md`：一项技能，将用户话语转换成格式良好的 SAM 3 概念提示词（拆分、消歧、回退）。\n"
+    },
+    {
+      "segment_id": "04-24:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Ship It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Exercises"
+      ],
+      "ordinal": 66,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "04-24:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Exercises"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0133",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Exercises"
+      ],
+      "ordinal": 67,
+      "source_sha256": "4005ec9d897d08b34b24ea7172928101c2648097aca08f33a50ccdf048f50ee4",
+      "target": "1. **（简单）** 自选概念提示词，在 10 张图像上运行 SAM 3。与 SAM 2 + Grounding DINO 1.5 在同一组图像上的结果进行比较，报告每个模型遗漏了哪些概念。\n2. **（中等）** 在 SAM 3 之上构建“点击纳入 / 点击排除”UI：文本提示词返回候选实例，用户通过点击决定保留哪些实例作为正例。将最终的概念集合输出为 JSON。\n3. **（困难）** 在自定义概念集合（例如 5 类电子元器件）上微调 SAM 3，每类使用 20 张已标注图像。在同一测试集上与零样本（zero-shot）SAM 3 进行比较，衡量掩码交并比（IoU）的提升。\n"
+    },
+    {
+      "segment_id": "04-24:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Exercises"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Key Terms"
+      ],
+      "ordinal": 68,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "04-24:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Key Terms"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0137",
+      "kind": "table",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Key Terms"
+      ],
+      "ordinal": 69,
+      "source_sha256": "9ec711afb7d02eb9852fce7bdc75be80412e9e53588bac2fecbc99a1f932193c",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 开放词表分割（open-vocabulary segmentation） | “按文本分割” | 为自然语言描述的目标生成掩码，而不是依赖固定的标签集合 |\n| PCS | “可提示概念分割” | SAM 3 的核心任务：给定名词短语或图像示例，分割所有匹配实例 |\n| 概念提示词 | “文本输入” | 简短的名词短语或图像示例，而不是完整句子 |\n| 存在性预测头 | “这里有它吗？” | SAM 3 中在定位之前判断图像中是否存在该概念的模块 |\n| SA-CO | “SAM 3 基准测试” | 包含 270K 个概念的开放词表分割基准测试，规模是以往开放词表基准测试的 50x |\n| Object Multiplex | “SAM 3.1 更新” | 基于共享记忆的多目标跟踪，快速联合跟踪多个实例 |\n| Grounded SAM 2 | “模块化管线” | 检测器 + SAM 2 的级联；需要替换检测器时仍有价值 |\n| SAM-MI | “高效 SAM 变体” | 通过掩码注入（Mask Injection），相比 Grounded-SAM 获得 1.6x 的加速 |\n"
+    },
+    {
+      "segment_id": "04-24:b0138",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Key Terms"
+      ],
+      "ordinal": 69,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0139",
+      "kind": "heading",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Further Reading"
+      ],
+      "ordinal": 70,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "04-24:b0140",
+      "kind": "separator",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Further Reading"
+      ],
+      "ordinal": 70,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "04-24:b0141",
+      "kind": "list",
+      "heading_path": [
+        "# SAM 3 & Open-Vocabulary Segmentation",
+        "## Further Reading"
+      ],
+      "ordinal": 71,
+      "source_sha256": "92af42c6a25aedc5ef56eabc5c4eb6abf652485f5e1644a42246e0d0c48cd7c7",
+      "target": "- [SAM 3: Segment Anything with Concepts（arXiv 2511.16719）](https://arxiv.org/abs/2511.16719)\n- [SAM 3.1 Object Multiplex（Meta AI，2026 年三月）](https://ai.meta.com/blog/segment-anything-model-3/)\n- [Hugging Face 上的 SAM 3 模型页面](https://huggingface.co/facebook/sam3)\n- [Grounded SAM 2 教程（PyImageSearch）](https://pyimagesearch.com/2026/01/19/grounded-sam-2-from-open-set-detection-to-segmentation-and-tracking/)\n- [Ultralytics SAM 3 文档](https://docs.ultralytics.com/models/sam-3/)\n- [SAM3-I: Instruction-aware SAM（arXiv 2512.04585）](https://arxiv.org/abs/2512.04585)\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S148-sam3-open-vocab-segmentation/TERMINOLOGY.md",
+  "additional_glossary_sha256": "5fcef9427d574c857bdf6228f0c37b35d5c4cb9c2e12689efe7cb7bbade4d380",
+  "assets": [],
+  "author_input_support": {
+    "support_commit": "b601b54106612b3cbc174734982e891c210052f0",
+    "support_installation_receipt_sha256": "452e9d4d315211a83acf453285811e5957708907c62316018890f1cc6092d9d6",
+    "installed_support_files": 155,
+    "common_terms": 144,
+    "immutable_controls": 8,
+    "own_support_files": 3,
+    "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+    "protected_present_source_files": 5411
+  },
+  "open_release_gates": [
+    "Actual GitHub GFM page/diagram/table/code/long-line inspection",
+    "Final changed-file remote exact-byte readback",
+    "Own later cumulative cohort after actual162; no inherited actual159/162 pass",
+    "Website/mobile/PDF/CI/runtime remain unverified; no merge/deployment authorized"
+  ],
+  "author_revisions": [
+    {
+      "id": "R01-pre-capture",
+      "started_utc": "2026-10-06T18:05:41.468284+00:00",
+      "completed_utc": "2026-10-06T18:05:41.469325+00:00",
+      "old_target_sha256": "5e7c1a962913fb3d645b183655dc9982a63cbcb5146d28131ff5070eecc34767",
+      "new_target_sha256": "7227ade9e0c4edf7c557335fdbb9796f3dced3e10f1cfd46edbe8e00bffd610a",
+      "changes": [
+        {
+          "blocks": [
+            15,
+            43,
+            141
+          ],
+          "reason": "Initial original strict validation exposed added Arabic month numerals for English Nov/March. Use 十一月/三月 to preserve original numeric-token multiset while translating dates faithfully."
+        },
+        {
+          "blocks": [
+            9
+          ],
+          "reason": "Clarify parenthetic detector gloss without changing detector + SAM relationship."
+        }
+      ],
+      "first_complete_target_preserved": true,
+      "capture_calls_before_revision": 0
+    },
+    {
+      "id": "R02-author-bilingual-selfcheck",
+      "started_utc": "2026-10-06T18:07:13.204023+00:00",
+      "completed_utc": "2026-10-06T18:07:13.207731+00:00",
+      "old_target_sha256": "7227ade9e0c4edf7c557335fdbb9796f3dced3e10f1cfd46edbe8e00bffd610a",
+      "new_target_sha256": "dde0066066c727c4ed85d825d685b792c099f86c47e6fd204c98825730702ee6",
+      "changes": [
+        {
+          "blocks": [
+            9
+          ],
+          "reason": "Remove awkward nested parentheses around detector first-use gloss."
+        },
+        {
+          "blocks": [
+            91
+          ],
+          "reason": "Place backend alternatives next to backend, not after the method interface."
+        },
+        {
+          "blocks": [
+            95
+          ],
+          "reason": "Make source would-wrap implementation intent explicit without implying the subclass is shipped."
+        },
+        {
+          "blocks": [
+            107
+          ],
+          "reason": "Natural Chinese for honest benchmark."
+        },
+        {
+          "blocks": [
+            109
+          ],
+          "reason": "Render single-word concept as a concept expressed by one word, avoiding lexical-concept ambiguity."
+        }
+      ],
+      "record_metadata_correction": "Current run_date corrected to 2026-10-06 while raw one-time capture and hardcoded date remain immutable."
+    },
+    {
+      "id": "R03-optional-independent-review-polish",
+      "started_utc": "2026-10-06T18:15:25.460976+00:00",
+      "target_write_completed_utc": "2026-10-06T18:15:25.465810+00:00",
+      "old_target_sha256": "dde0066066c727c4ed85d825d685b792c099f86c47e6fd204c98825730702ee6",
+      "new_target_sha256": "a45fa1250e09d4d4e5145f62459af518e7362fd1bd211a0db5a5acc98bf1edc1",
+      "old_record_sha256": "02956825514ac6993e30d26980360a41cbae6254f91476be423ac955f00e7849",
+      "changed_blocks": [
+        39,
+        73,
+        81,
+        89,
+        97,
+        105
+      ],
+      "unchanged_blocks": 135,
+      "exact_block_diff": [
+        {
+          "segment_id": "04-24:b0039",
+          "kind": "paragraph",
+          "before": "SAM 3 使用 **4 million（百万）个不同概念** 进行训练。这些概念由数据引擎生成，该引擎结合 AI 与人工审查，迭代地进行标注和纠正。新的 **SA-CO 基准测试（benchmark）** 包含 270K 个不同概念，规模是以往基准测试的 50x。SAM 3 在 SA-CO 上达到人类表现的 75-80%，在图像 + 视频 PCS 上的表现是现有系统的两倍。\n",
+          "after": "SAM 3 使用 **4 million（即四百万）个不同概念** 进行训练。这些概念由数据引擎生成，该引擎结合 AI 与人工审查，迭代地进行标注和纠正。新的 **SA-CO 基准测试（benchmark）** 包含 270K 个不同概念，规模是以往基准测试的 50x。SAM 3 在 SA-CO 上达到人类表现的 75-80%，在图像 + 视频 PCS 上的表现是现有系统的两倍。\n",
+          "before_sha256": "4ba37309097e531258b2ea0ba70c1b68fef911f71ba2d71c7a3023bf422e3646",
+          "after_sha256": "a9670c695b1445165c07997fa89cf0c0bdb739dcd9763825a0ba7ffcc549da07"
+        },
+        {
+          "segment_id": "04-24:b0073",
+          "kind": "heading",
+          "before": "### Step 1：构造提示词\n",
+          "after": "### 步骤 1：构造提示词\n",
+          "before_sha256": "de62b4dade6157b42777648642f496777c7a8eb59015ebe741960045c5602cd7",
+          "after_sha256": "daf0b10a79d47265a2e48c406588ad7c980fff3ac3a1e6fd9ceed9c259709dfa"
+        },
+        {
+          "segment_id": "04-24:b0081",
+          "kind": "heading",
+          "before": "### Step 2：后处理辅助函数\n",
+          "after": "### 步骤 2：后处理辅助函数\n",
+          "before_sha256": "6442eefa2aadc75af03b981a4108469d4e3d02de2b2aff9ad96a626017b4d4ca",
+          "after_sha256": "bcb3f732b98e9e0c0d9bae05fdead57a6814b163fc8d379db7704ebcae369a2a"
+        },
+        {
+          "segment_id": "04-24:b0089",
+          "kind": "heading",
+          "before": "### Step 3：统一的开放词表分割接口\n",
+          "after": "### 步骤 3：统一的开放词表分割接口\n",
+          "before_sha256": "3f4d27ca4119fca1d4bad97653deebef9983792d556d4a5c3f05490a31e26de5",
+          "after_sha256": "89dffc84a868fc87957e7176f38c74d76a6b7ba8aa47be25f6dab1f52bdb4f96"
+        },
+        {
+          "segment_id": "04-24:b0097",
+          "kind": "heading",
+          "before": "### Step 4：Hugging Face SAM 3 用法（参考）\n",
+          "after": "### 步骤 4：Hugging Face SAM 3 用法（参考）\n",
+          "before_sha256": "9005f9e9c7d5f7d4a7b1b70836ee6ebfe02d26bdf9cb63d1d3ef7abceb2fc8d7",
+          "after_sha256": "7482df7cd16ca750b66ddaa9cd05cb06dd83f1cd81edc35c1c1b69fdf4bfdff4"
+        },
+        {
+          "segment_id": "04-24:b0105",
+          "kind": "heading",
+          "before": "### Step 5：衡量 Grounded SAM 2 原本自带的优势\n",
+          "after": "### 步骤 5：衡量 Grounded SAM 2 原本自带的优势\n",
+          "before_sha256": "58de3545f68c93bed5fc7e0d802693314c077d7cd89bac52ceb4f63e4073ae7e",
+          "after_sha256": "ea4561ad9365890f6d643d777dccbcfad8f21a6ed7a4604a3454d2039f53ff2e"
+        }
+      ],
+      "basis": "Coordinator requested adoption of S148-O01 and S148-ZH-O01, both optional; initial independent reports remain unchanged.",
+      "scope": "Only b0039 numeric-unit gloss and generic Step labels in five H3 headings. Arabic numeric tokens, all remaining135 blocks and every source/support/fence/code/asset preserved.",
+      "original_helper_sha256": "d89de5eec36e10edcc391330d973632e3ceedb33fe679de3503dab52a7f6ece8",
+      "rebind_method": "Update existing segment targets via original blocks; reassemble via original assemble; guarded target write via original safe_write; original validate/check_record/check/render. No capture or recapture."
+    }
+  ],
+  "author_selfchecks": {
+    "bilingual": {
+      "kind": "author-only",
+      "completed_utc": "2026-10-06T18:07:13.212008+00:00",
+      "target_sha256": "dde0066066c727c4ed85d825d685b792c099f86c47e6fd204c98825730702ee6",
+      "unresolved_translation_findings": []
+    },
+    "chinese_selfread": {
+      "kind": "author-only",
+      "completed_utc": "2026-10-06T18:08:21.921348+00:00",
+      "target_sha256": "dde0066066c727c4ed85d825d685b792c099f86c47e6fd204c98825730702ee6",
+      "findings": []
+    },
+    "independent_review": "pending",
+    "R03_incremental": {
+      "completed_utc": "2026-10-06T18:15:25.466724+00:00",
+      "target_sha256": "a45fa1250e09d4d4e5145f62459af518e7362fd1bd211a0db5a5acc98bf1edc1",
+      "changed_blocks": [
+        39,
+        73,
+        81,
+        89,
+        97,
+        105
+      ],
+      "unchanged_blocks_verified": 135,
+      "findings": [],
+      "scope": "Author rechecked the six exact changes and verified literal equality of the other135 blocks. Prior full checks retain their original hashes.",
+      "independent_incremental_closures": "pending"
+    }
+  },
+  "support": {
+    "commit": "b601b54106612b3cbc174734982e891c210052f0",
+    "tree": "6199c2afea9a793ceb18eb95ac3cf8d0608fbee9",
+    "dependencies_path": "i18n/zh/.curated/stages/S148-sam3-open-vocab-segmentation/DEPENDENCIES.json",
+    "dependencies_sha256": "3e2624eccc633dc8304fc34bf4fc9b1a88a22dacde49e52cd9d4e0c476d7a866",
+    "common_set_sha256": "adb98cb4c54c97f8485605d3d90e10fbe80209705ffcae1545170c1c10c39beb",
+    "common_files": 152,
+    "terminology_files": 144,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 155,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S148-sam3-open-vocab-segmentation/DEPENDENCIES.json",
+        "commit": "b601b54106612b3cbc174734982e891c210052f0",
+        "git_blob": "4bed3161a23e12605c6138b5b9bb977089b3f0ff",
+        "sha256": "3e2624eccc633dc8304fc34bf4fc9b1a88a22dacde49e52cd9d4e0c476d7a866",
+        "bytes": 263372,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S148-sam3-open-vocab-segmentation/SCOPE.md",
+        "commit": "b601b54106612b3cbc174734982e891c210052f0",
+        "git_blob": "8fa5bfb274f9b2fabc4de26f5fc18fba20811b1a",
+        "sha256": "4b34a871916b7960767a92556a22958e6823fb11f025cb3e6452df50302451e6",
+        "bytes": 26619,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S148-sam3-open-vocab-segmentation/TERMINOLOGY.md",
+        "commit": "b601b54106612b3cbc174734982e891c210052f0",
+        "git_blob": "8d00f80284af6ef8c05a688cd0931953ec8d763e",
+        "sha256": "5fcef9427d574c857bdf6228f0c37b35d5c4cb9c2e12689efe7cb7bbade4d380",
+        "bytes": 9648,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "452e9d4d315211a83acf453285811e5957708907c62316018890f1cc6092d9d6",
+    "installation_completed_utc": "2026-10-06T17:59:06.649803+00:00",
+    "frozen_pending_null_fields_preserved": true
+  },
+  "authoring_history": {
+    "original_author_handoff_sha256": "decfb377df0892ddaa6d945a2b41c5ee0ce16068c0c4a70aabfa1d905b5eb949",
+    "post_full_review_revision_receipt_sha256": "221d2ed6e9c47c741372d3635697c5935efb700a4203bfb264de454ad98ee44d",
+    "reviewed_draft_record_sha256": "d533997d7cc0b0082518083d082fb3b0e908ad93026c8fa0a1da0f9c0c686c35",
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/04-24/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T18:11:59.875568+00:00",
+        "report_sha256": "ecc70c7ab964754b8e924084b175ee1e13fb7e74129c11b3e632980dbe647807",
+        "result": "PASS",
+        "reviewed_target_sha256": "dde0066066c727c4ed85d825d685b792c099f86c47e6fd204c98825730702ee6",
+        "reviewed_draft_record_sha256": "02956825514ac6993e30d26980360a41cbae6254f91476be423ac955f00e7849",
+        "blocks": 141,
+        "required_findings": 0
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T18:12:48.268755+00:00",
+        "report_sha256": "7bbb4dae6aea58f2c819ba8b8db600cea1e7fd9fc4707986556a1bd35388941c",
+        "result": "PASS_WITH_OPTIONAL_POLISH",
+        "reviewed_target_sha256": "dde0066066c727c4ed85d825d685b792c099f86c47e6fd204c98825730702ee6",
+        "reviewed_draft_record_sha256": "02956825514ac6993e30d26980360a41cbae6254f91476be423ac955f00e7849",
+        "blocks": 141,
+        "required_findings": 0
+      },
+      {
+        "type": "independent_bilingual_changed_block_closure",
+        "completed_utc": "2026-10-06T18:17:21.215836+00:00",
+        "report_sha256": "112461f65b5b7aa6dd9454b89c640530c3581e61732b92bb33205f726ddda6db",
+        "result": "PASS",
+        "reviewed_target_sha256": "a45fa1250e09d4d4e5145f62459af518e7362fd1bd211a0db5a5acc98bf1edc1",
+        "reviewed_draft_record_sha256": "d533997d7cc0b0082518083d082fb3b0e908ad93026c8fa0a1da0f9c0c686c35",
+        "changed_blocks": [
+          "04-24:b0039",
+          "04-24:b0073",
+          "04-24:b0081",
+          "04-24:b0089",
+          "04-24:b0097",
+          "04-24:b0105"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 135
+      },
+      {
+        "type": "independent_Chinese_changed_block_closure",
+        "completed_utc": "2026-10-06T18:17:24.691592+00:00",
+        "report_sha256": "8e195f0c4a2f7a17bbf4b36adbc17335af80a6272faaf5fbc3defc739f53ec5c",
+        "result": "PASS",
+        "reviewed_target_sha256": "a45fa1250e09d4d4e5145f62459af518e7362fd1bd211a0db5a5acc98bf1edc1",
+        "reviewed_draft_record_sha256": "d533997d7cc0b0082518083d082fb3b0e908ad93026c8fa0a1da0f9c0c686c35",
+        "changed_blocks": [
+          "04-24:b0039",
+          "04-24:b0073",
+          "04-24:b0081",
+          "04-24:b0089",
+          "04-24:b0097",
+          "04-24:b0105"
+        ],
+        "unchanged_blocks_inheriting_initial_full_review": 135
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
