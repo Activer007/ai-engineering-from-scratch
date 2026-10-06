@@ -27,7 +27,7 @@ Meta 的 **MusicGen**（2023，MIT）及其许多衍生模型：以文本 / 旋�
 
 ### 对 mel（梅尔频率尺度）频谱图或潜在表示进行扩散
 
-**Stable Audio（2023）**和 **Stable Audio Open（2024）**：对压缩后的音频进行潜在扩散（latent diffusion）。擅长生成循环片段（loop）、声音设计素材和氛围音效纹理。不太擅长生成结构完整的整首歌曲。
+**Stable Audio（2023）** 和 **Stable Audio Open（2024）**：对压缩后的音频进行潜在扩散（latent diffusion）。擅长生成循环片段（loop）、声音设计素材和氛围音效纹理。不太擅长生成结构完整的整首歌曲。
 
 **AudioLDM / AudioLDM2**：通过类似 T2I 的潜在扩散实现文本转音频，并将其推广到音乐、音效和语音。
 
