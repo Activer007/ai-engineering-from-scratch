@@ -1,0 +1,1558 @@
+{
+  "schema_version": 1,
+  "lesson_id": "06-15",
+  "source_path": "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "30b4c5c2fe0d9c35d5af044d0f9fd0f5270f42a4",
+  "source_sha256": "e21cb5cde8e5c2f46a027328b5d1eee69ad8231661d78f8b6509803a6dde3802",
+  "target_path": "i18n/zh/phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki/docs/zh.md",
+  "target_sha256": "1073a2ee7e8777c5e83a5ff961b1ecac58c70c8d01ceeb05c4087033152b2108",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-01"
+  },
+  "segments": [
+    {
+      "segment_id": "06-15:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue"
+      ],
+      "ordinal": 1,
+      "source_sha256": "65bb3306056b292c23862cfa24e0df52ecfd25d9e60b2f8f5996661b627ab350",
+      "target": "# 流式语音到语音：Moshi、Hibiki 与全双工对话\n"
+    },
+    {
+      "segment_id": "06-15:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue"
+      ],
+      "ordinal": 2,
+      "source_sha256": "df35237ca4e710d57929ba80a2a63de72412700cc6ba439d929054bacc3a80f2",
+      "target": "> 2024-2026 年重新定义了语音 AI。Moshi 用单个模型实现同时聆听和说话，延迟（latency）为 200 ms。Hibiki 逐个音频块（chunk）进行语音到语音（speech-to-speech）翻译。两者都放弃了自动语音识别（ASR）→ 大语言模型（LLM）→ 文本转语音（TTS）管线（pipeline），改用基于 Mimi 编解码器（codec）token（词元）的统一全双工（full-duplex）架构。这就是新的参考设计。\n"
+    },
+    {
+      "segment_id": "06-15:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue"
+      ],
+      "ordinal": 3,
+      "source_sha256": "ed6d2866ea9e5717d29a24c24efaed80466e337242a076acb66046330b6ed476",
+      "target": "**Type:** Learn\n**Languages:** Python\n**Prerequisites:** 阶段 6 · 13（神经音频编解码器，Neural Audio Codecs）、阶段 6 · 11（实时音频）、阶段 7 · 05（完整 Transformer）\n**Time:** ~75 分钟\n"
+    },
+    {
+      "segment_id": "06-15:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "06-15:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Problem"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0009",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "695a3e5632b9e22ec6e15f71e357cec8428b222b666c4bfde8ffd1cc111c8684",
+      "target": "基于第 11 + 12 课构建的每个语音智能体（voice agent），都有约 300-500 ms 的固有延迟下限（latency floor）：语音活动检测（VAD）触发后，语音转文本（STT）进行处理，LLM 推理，TTS 生成。每个阶段都有自身的最低延迟。你可以调优，也可以并行化，但管线的结构决定了优化的极限。\n"
+    },
+    {
+      "segment_id": "06-15:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Problem"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0011",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "9a83ae6fbbcccf55b9b54b9b7ffc2f5a83af7dec7b87f6628e3967a059ec8b4d",
+      "target": "Moshi（Kyutai，2024-2026）提出了另一个问题：如果根本没有管线呢？如果一个模型能持续接收音频并直接输出音频，而文本只是中间的“内在独白”（inner monologue），不再是一个必经阶段呢？\n"
+    },
+    {
+      "segment_id": "06-15:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "117c1b81ba6cc75c491b09c7f1865266f4a6cda0c98ee3339a85914c9fadc1e0",
+      "target": "答案就是 **全双工语音到语音**。理论延迟为 160 ms（80 ms 的 Mimi 帧（frame）+ 80 ms 的声学延迟（acoustic delay））。在单张 L4 GPU 上，实际延迟为 200 ms。这只有顶尖管线式语音智能体延迟的一半。\n"
+    },
+    {
+      "segment_id": "06-15:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0015",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "06-15:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0017",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "f3a929e53a9763f6b286c3b623175db1cf0c95c775cb83904df6ebd96bc4a229",
+      "target": "![Moshi 架构：两路并行的 Mimi 流 + 内在独白文本](../assets/moshi-hibiki.svg)\n"
+    },
+    {
+      "segment_id": "06-15:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0019",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 10,
+      "source_sha256": "a6f90f7d3dd500428ae072134ffd4d33943876c7e66ebc3b096460c402431fd8",
+      "target": "### Moshi 架构\n"
+    },
+    {
+      "segment_id": "06-15:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0021",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 11,
+      "source_sha256": "bdaa34538ea4db5cb576587bad75ade524d57d2067a77d243a90f8d6bbcd84a2",
+      "target": "**输入。** 两路 Mimi 编解码器流（stream），均为 12.5 Hz × 8 个码本（codebook）：\n"
+    },
+    {
+      "segment_id": "06-15:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0023",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 12,
+      "source_sha256": "03a14201b6304dbc4e6cc3a0cd9a6effb25bb15bf943044dc2481b440edc9c2a",
+      "target": "- 流 1：用户音频流（audio stream，经 Mimi 编码，持续到达）\n- 流 2：Moshi 自身的音频（由 Moshi 生成）\n"
+    },
+    {
+      "segment_id": "06-15:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0025",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 13,
+      "source_sha256": "482c267b5e9072e59348ece15a32ed30177d49d58e2f8f03b7432b9ece615c46",
+      "target": "**Transformer。** 一个参数量为 7B 的时序 Transformer（Temporal Transformer）处理这两路流，以及一路文本“内在独白”流（text stream）。每个 80 ms 的时间步中，它会：\n"
+    },
+    {
+      "segment_id": "06-15:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0027",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 14,
+      "source_sha256": "e1217b63b5e0b61a7611f5e838c774eaebd14b833b5d863e655a8b40b902ee0c",
+      "target": "1. 接收最新的用户 Mimi token（8 个码本）。\n2. 接收刚生成的最新 Moshi Mimi token（8 个码本）。\n3. 生成下一个 Moshi 文本 token（内在独白）。\n4. 生成接下来的 Moshi Mimi token（通过一个小型深度 Transformer（Depth Transformer）生成 8 个码本的 token）。\n"
+    },
+    {
+      "segment_id": "06-15:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0029",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 15,
+      "source_sha256": "c6757446178124fd913f65566584bf054ceac4017f00975229d1787d3c8f4f1c",
+      "target": "用户音频、Moshi 音频、Moshi 文本这三路流并行运行。Moshi 可以边说边听；可以在用户打断时停止自己正在说的话；也可以给出附和回应（back-channeling，如“mhm”），同时不打断自己的主要话语（utterance）。\n"
+    },
+    {
+      "segment_id": "06-15:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 16,
+      "source_sha256": "4fb3e8371fda3eba67906be87beff64fbcb14a6732659464c4ae4f37ab7cdc2d",
+      "target": "**深度 Transformer。** 在同一帧内，8 个码本不是并行预测的，因为它们之间存在码本间依赖（inter-codebook dependencies）。一个小型的 2 层“深度 Transformer”会在 80 ms 内依次预测这些码本。这是自回归编解码器语言模型（AR codec LMs）的标准分解方式（factorization），VALL-E 和 VibeVoice 也采用了这种方式。\n"
+    },
+    {
+      "segment_id": "06-15:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The Moshi architecture"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0033",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Why inner-monologue text helps"
+      ],
+      "ordinal": 17,
+      "source_sha256": "18c08b875e4585268426186d9434383152fabb0d47588982ee6d75322c6201f9",
+      "target": "### 为什么内在独白文本有帮助\n"
+    },
+    {
+      "segment_id": "06-15:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Why inner-monologue text helps"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Why inner-monologue text helps"
+      ],
+      "ordinal": 18,
+      "source_sha256": "c184211323abb485e63342940f999395851c9090cd442628a16a77e5af30c564",
+      "target": "没有显式文本时，模型必须在声学流（acoustic stream）中隐式地对语言建模。Moshi 的思路是：强制模型在输出音频的同时输出文本 token。文本流本质上就是 Moshi 所说内容的转写文本（transcript）。这样既能提升语义连贯性（semantic coherence），又能让语言模型输出头（language model head）更容易替换，还能顺带得到转写文本。\n"
+    },
+    {
+      "segment_id": "06-15:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Why inner-monologue text helps"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0037",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Hibiki: streaming speech-to-speech translation"
+      ],
+      "ordinal": 19,
+      "source_sha256": "bcc78c7e6ab10586bcea1ed4f49451908420606be57886dcf524eea3cac2740c",
+      "target": "### Hibiki：流式语音到语音翻译\n"
+    },
+    {
+      "segment_id": "06-15:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Hibiki: streaming speech-to-speech translation"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Hibiki: streaming speech-to-speech translation"
+      ],
+      "ordinal": 20,
+      "source_sha256": "68e9bb2733b11be11e7c9c470ba1b6e7aaff0d0be7cc8dfad7c29dcd8dab5c38",
+      "target": "架构相同，使用翻译配对数据进行训练。源语言音频持续输入，目标语言音频持续输出。Hibiki-Zero（Feb 2026）不再需要词级对齐（word-level alignment）的训练数据，而是使用句级（sentence-level）数据 + GRPO 强化学习（reinforcement learning）来优化延迟。\n"
+    },
+    {
+      "segment_id": "06-15:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Hibiki: streaming speech-to-speech translation"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0041",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Hibiki: streaming speech-to-speech translation"
+      ],
+      "ordinal": 21,
+      "source_sha256": "a9b0e80451f631583bf861f5ad41271b5b6c50dc0e1d90b0cc19bfd62e5fe983",
+      "target": "最初支持四个语言对（language pair）；使用 ≈1000 小时的数据即可适配一种新语言。\n"
+    },
+    {
+      "segment_id": "06-15:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Hibiki: streaming speech-to-speech translation"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The broader Kyutai stack (2026)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "8eed0fd2322a6ceab1580c37343f8f74bbc0f9230920c69a63de937009b3ad6c",
+      "target": "### 更完整的 Kyutai 技术栈（2026）\n"
+    },
+    {
+      "segment_id": "06-15:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The broader Kyutai stack (2026)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0045",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The broader Kyutai stack (2026)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "6123b216171f8f15ce1b252856ff9d6438286030427040f50bf9165cc6dbe111",
+      "target": "- **Moshi**：全双工对话（优先支持法语，对英语的支持也很好）\n- **Hibiki / Hibiki-Zero**：同声语音翻译（simultaneous speech translation）\n- **Kyutai STT**：流式自动语音识别（streaming ASR），前瞻（look-ahead）为 500 ms 或 2.5 s\n- **Kyutai Pocket TTS**：参数量为 100M、可在 CPU 上运行的 TTS（Jan 2026）\n- **Unmute**：在公共服务器上将这些组件组合起来的完整管线\n"
+    },
+    {
+      "segment_id": "06-15:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The broader Kyutai stack (2026)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0047",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The broader Kyutai stack (2026)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "f4da3cfb92c2a2a5497cff9df0d426f730d78a17082e77ea97a9b69e521e7fb8",
+      "target": "在 L40S GPU 上的吞吐量（throughput）：以 3× 实时速度处理 64 个并发会话（concurrent sessions）。\n"
+    },
+    {
+      "segment_id": "06-15:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### The broader Kyutai stack (2026)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0049",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Sesame CSM — the cousin"
+      ],
+      "ordinal": 25,
+      "source_sha256": "70db171cd0daf21aed86f3345ffe69da5bdec94c39fe633dddcc2ab305d9454d",
+      "target": "### Sesame CSM：采用相近思路的模型\n"
+    },
+    {
+      "segment_id": "06-15:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Sesame CSM — the cousin"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0051",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Sesame CSM — the cousin"
+      ],
+      "ordinal": 26,
+      "source_sha256": "3ac46996dcc2cfa158d213a18a3a800247b155ee8df452d63b8234c0be0b97ba",
+      "target": "Sesame CSM（2025）采用了类似思路：Llama-3 主干网络（backbone）搭配 Mimi 编解码器输出头（codec head）。不过，CSM 是单向（single-directional）的：接收上下文 + 文本，生成语音，并非全双工。它是市面上“声音临场感”（voice presence）最好的 TTS，但这与 Moshi 的全双工能力并不完全相同。\n"
+    },
+    {
+      "segment_id": "06-15:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### Sesame CSM — the cousin"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0053",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### 2026 performance numbers"
+      ],
+      "ordinal": 27,
+      "source_sha256": "5017c91a9018c681ca952b6411c68c0d5fc2518531668338fe23a433f4704092",
+      "target": "### 2026 年的性能数据\n"
+    },
+    {
+      "segment_id": "06-15:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### 2026 performance numbers"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0055",
+      "kind": "table",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### 2026 performance numbers"
+      ],
+      "ordinal": 28,
+      "source_sha256": "6aca786f712c69d711fb12ef5cb9652cf0e4945a64cea6e744074c3e596a01fe",
+      "target": "| 模型 | 延迟 | 使用场景 | 许可证 |\n|-------|---------|----------|---------|\n| Moshi | 200 ms（L4） | 英语 / 法语全双工对话 | CC-BY 4.0 |\n| Hibiki | 12.5 Hz 帧率（frame rate） | 法语 ↔ 英语流式翻译 | CC-BY 4.0 |\n| Hibiki-Zero | 同上 | 5 个语言对，无需对齐数据 | CC-BY 4.0 |\n| Sesame CSM-1B | 200 ms 首段音频延迟（TTFA） | 以上下文为条件的（context-conditioned）TTS | Apache-2.0 |\n| GPT-4o Realtime | ~300 ms | 闭源，OpenAI API（应用程序编程接口） | 商业许可 |\n| Gemini 2.5 Live | ~350 ms | 闭源，Google API | 商业许可 |\n"
+    },
+    {
+      "segment_id": "06-15:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### 2026 performance numbers"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0057",
+      "kind": "fence",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### 2026 performance numbers"
+      ],
+      "ordinal": 29,
+      "source_sha256": "1b7f095665e20cc52f76346f72cc4543385ef400e747e2fe7487b89005bcfd20",
+      "target": "```figure\nsp-fullduplex\n```\n"
+    },
+    {
+      "segment_id": "06-15:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## The Concept",
+        "### 2026 performance numbers"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0059",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It"
+      ],
+      "ordinal": 30,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "06-15:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 1: the interface"
+      ],
+      "ordinal": 31,
+      "source_sha256": "75e92b60d09517525c802ebd0a6212bfd993c4980da64e4fddc8298fa8656f12",
+      "target": "### 步骤 1：接口\n"
+    },
+    {
+      "segment_id": "06-15:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 1: the interface"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 1: the interface"
+      ],
+      "ordinal": 32,
+      "source_sha256": "e2f9be0246364cfb174009fa3db2f5b698fcb13b647c2414130fb36b942e67ed",
+      "target": "Moshi 提供一个 WebSocket 服务器，接收经 Mimi 编码的 80 ms 音频块，并返回经 Mimi 编码的 80 ms 音频块。两个方向都在持续传输。\n"
+    },
+    {
+      "segment_id": "06-15:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 1: the interface"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0065",
+      "kind": "fence",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 1: the interface"
+      ],
+      "ordinal": 33,
+      "source_sha256": "5b88e8dff93b7e10bd9b0dd11aee39bb4db4c3e14a19a475eab12f8358d36fee",
+      "target": "```python\nimport asyncio\nimport websockets\nfrom moshi.client_utils import encode_audio_mimi, decode_audio_mimi\n\nasync def moshi_chat():\n    async with websockets.connect(\"ws://localhost:8998/api/chat\") as ws:\n        mic_task = asyncio.create_task(stream_mic_to(ws))\n        spk_task = asyncio.create_task(stream_from_to_speaker(ws))\n        await asyncio.gather(mic_task, spk_task)\n```\n"
+    },
+    {
+      "segment_id": "06-15:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 1: the interface"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0067",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 2: the full-duplex loop"
+      ],
+      "ordinal": 34,
+      "source_sha256": "6e4ca80d56a65fb4b585c695ee1ea763a10d2d6dcc72ed88c746cab9f14270af",
+      "target": "### 步骤 2：全双工循环\n"
+    },
+    {
+      "segment_id": "06-15:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 2: the full-duplex loop"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0069",
+      "kind": "fence",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 2: the full-duplex loop"
+      ],
+      "ordinal": 35,
+      "source_sha256": "a36665864eb6d0e8f3e23471221ef11255f43659791a7a82ef5511706212cc66",
+      "target": "```python\nasync def stream_mic_to(ws):\n    async for chunk_80ms in mic_stream_at_12_5_hz():\n        mimi_tokens = encode_audio_mimi(chunk_80ms)\n        await ws.send(serialize(mimi_tokens))\n\nasync def stream_from_to_speaker(ws):\n    async for msg in ws:\n        mimi_tokens, text_token = deserialize(msg)\n        audio = decode_audio_mimi(mimi_tokens)\n        await play(audio)\n```\n"
+    },
+    {
+      "segment_id": "06-15:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 2: the full-duplex loop"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0071",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 2: the full-duplex loop"
+      ],
+      "ordinal": 36,
+      "source_sha256": "b1d67a7e151630f9f304d89ce12d4c86d65d4b6ae8ad96812996bf3d94f7fbe9",
+      "target": "两个方向同时运行。通常用 Python asyncio 或 Rust futures 来实现传输层（transport）。\n"
+    },
+    {
+      "segment_id": "06-15:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 2: the full-duplex loop"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0073",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 3: the training objective (conceptual)"
+      ],
+      "ordinal": 37,
+      "source_sha256": "a3470feda5ce65dad64909ca1c771ac8f37accc24266f0579d9b53bea368536c",
+      "target": "### 步骤 3：训练目标（training objective，概念说明）\n"
+    },
+    {
+      "segment_id": "06-15:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 3: the training objective (conceptual)"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0075",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 3: the training objective (conceptual)"
+      ],
+      "ordinal": 38,
+      "source_sha256": "b66b16bd3fe724abed0993b256c6f9e2a65e5101f24a662625bdef8c82be9f44",
+      "target": "对于每个 80 ms 的帧 `t`：\n"
+    },
+    {
+      "segment_id": "06-15:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 3: the training objective (conceptual)"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0077",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 3: the training objective (conceptual)"
+      ],
+      "ordinal": 39,
+      "source_sha256": "499aa0d75f1d6d62a3527b3e828e25e03fc4e5d98affb53699ea54e8b79f706e",
+      "target": "- 输入：`user_mimi[0..t]`、`moshi_mimi[0..t-1]`、`moshi_text[0..t-1]`\n- 预测：先预测 `moshi_text[t]`，再预测 `moshi_mimi[t, codebook_0..7]`\n"
+    },
+    {
+      "segment_id": "06-15:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 3: the training objective (conceptual)"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0079",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 3: the training objective (conceptual)"
+      ],
+      "ordinal": 40,
+      "source_sha256": "9af3344b61966083f696dfac6c4f9a68a736448e0d8e243bf0c5e1c94b30c6e0",
+      "target": "先预测文本（内在独白），再预测音频；音频在深度 Transformer 内按码本顺序预测。\n"
+    },
+    {
+      "segment_id": "06-15:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 3: the training objective (conceptual)"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 41,
+      "source_sha256": "733f7fa789fddf165f45d115026ffb37acbc70e3bee9b43f2334e7f5d7439825",
+      "target": "### 步骤 4：Moshi 的优势与不足\n"
+    },
+    {
+      "segment_id": "06-15:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 42,
+      "source_sha256": "ad54fc0b2733eecbc9224d9d66d332bb4d7bb7ac3652f8fe854839d83a3248e9",
+      "target": "Moshi 的优势：\n"
+    },
+    {
+      "segment_id": "06-15:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0085",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 43,
+      "source_sha256": "1f8034dcbda1b994617761f780a67107b42fbd4db4705dcd24c45f580829ad26",
+      "target": "- 在便宜的硬件上，端到端（end-to-end）延迟低于 250 ms。\n- 自然的附和与打断（interruption）。\n- 无需编写管线衔接代码（glue code）。\n"
+    },
+    {
+      "segment_id": "06-15:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 44,
+      "source_sha256": "4107590ee936af4eb2ae4b57ab48434474deed0b0d11dbc861788ea5eb32146c",
+      "target": "Moshi 不占优势的方面：\n"
+    },
+    {
+      "segment_id": "06-15:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0089",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 45,
+      "source_sha256": "5deeb9629059a512d643fd4dd35e6b01a13b7e899bc59697fc711ee09cabe915",
+      "target": "- 工具调用（tool calling）：它没有为此接受训练，需要单独的 LLM 路径。\n- 较长的推理过程：Moshi 是一个约 8B 参数的对话模型，不是 Claude/GPT-4。\n- 小众主题上的事实准确性。\n- 大多数生产环境中的企业使用场景：到了 2026 年，这些场景仍然使用管线。\n"
+    },
+    {
+      "segment_id": "06-15:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Build It",
+        "### Step 4: where Moshi wins and where it doesn't"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Use It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "06-15:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Use It"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0093",
+      "kind": "table",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Use It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "a742467f1f28796f12e6c7bd83a89faad0163ed34d4614deaf4fabd3719820a5",
+      "target": "| 场景 | 选择 |\n|-----------|------|\n| 追求最低延迟的语音伙伴 | Moshi |\n| 实时翻译通话 | Hibiki |\n| 语音演示 / 研究 | Moshi、CSM |\n| 带工具的企业智能体 | 管线（第 12 课），而非 Moshi |\n| 基于上下文、使用定制声音的 TTS | Sesame CSM |\n| 任意语言的语音到语音 | GPT-4o Realtime 或 Gemini 2.5 Live（商业产品） |\n"
+    },
+    {
+      "segment_id": "06-15:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Use It"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0095",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Pitfalls"
+      ],
+      "ordinal": 48,
+      "source_sha256": "08cb057a9b38f546708b3f3b1b53987d4641ac598b82c51378c649e9705d2846",
+      "target": "## 常见陷阱\n"
+    },
+    {
+      "segment_id": "06-15:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Pitfalls"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0097",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Pitfalls"
+      ],
+      "ordinal": 49,
+      "source_sha256": "cc70f18c4059b137a834e631b939dfb210efd8b7c08407b352bc222135bb7aae",
+      "target": "- **工具调用能力有限。** Moshi 是对话模型，不是智能体框架。需要工具时，要结合管线。\n- **特定声音条件化（specific-voice conditioning）。** Moshi 使用单一的、经过训练的角色设定（persona）；声音克隆（voice cloning）需要单独进行一次训练。\n- **语言覆盖范围。** 法语 + 英语表现出色，其他语言的支持有限。Hibiki-Zero 有所帮助，但仍需要训练数据。\n- **资源成本。** 一个完整的 Moshi 会话会占用一个 GPU 资源槽位（GPU slot），并不属于低成本的多租户共享部署方式（shared-tenant deploy pattern）。\n"
+    },
+    {
+      "segment_id": "06-15:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Pitfalls"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Ship It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "2e53c210ee0411154b5a29feaf9c4655aca2bd8cff7d43758faf2952fe8be5c6",
+      "target": "## 交付成果\n"
+    },
+    {
+      "segment_id": "06-15:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Ship It"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0101",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Ship It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "838aa4e4b0c441fc3039759b88cbde9c3c8328c8763569af5e62f68b9f5b5bcd",
+      "target": "保存为 `outputs/skill-duplex-pipeline.md`。针对某个语音智能体工作负载，在管线架构与全双工架构之间作出选择，并说明理由。\n"
+    },
+    {
+      "segment_id": "06-15:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Ship It"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0103",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Exercises"
+      ],
+      "ordinal": 52,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "06-15:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Exercises"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0105",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Exercises"
+      ],
+      "ordinal": 53,
+      "source_sha256": "398d4231dbb5b3e1e02b8e26861444357a9c39d7f6c502043dc29952cf44b83b",
+      "target": "1. **简单。** 运行 `code/main.py`。它用符号化的方式模拟双流 + 内在独白架构。\n2. **中等。** 从 HuggingFace 拉取 Moshi，运行服务器并测试一次对话。测量从用户说话结束到 Moshi 开始回应之间的实际耗时（wall-clock latency）。\n3. **困难。** 使用你在第 12 课构建的管线式智能体，在 20 条相同的测试话语上比较它与 Moshi 的 P50（中位数）延迟。写明在什么情况下，管线在架构上仍然更有优势。\n"
+    },
+    {
+      "segment_id": "06-15:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Exercises"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0107",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Key Terms"
+      ],
+      "ordinal": 54,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "06-15:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Key Terms"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0109",
+      "kind": "table",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Key Terms"
+      ],
+      "ordinal": 55,
+      "source_sha256": "851a0a3b806c391f1c2999dee156d11062295fee41cacecba2cb35fd4fdbe972",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|-----------------|-----------------------|\n| 全双工 | 边听边说 | 同一个模型上的两路音频流同时处于活动状态。 |\n| 内在独白 | 模型的文本流 | Moshi 在输出音频的同时输出文本 token。 |\n| 深度 Transformer | 码本间预测器 | 在一个 80 ms 帧内预测 8 个码本的小型 Transformer。 |\n| Mimi | Kyutai 的编解码器 | 12.5 Hz × 8 个码本；语义（semantic）+ 声学（acoustic）；为 Moshi 提供支持。 |\n| 流式语音到语音（streaming speech-to-speech，S2S） | 实时音频 → 音频 | 逐块翻译或对话，不设管线阶段。 |\n| 附和回应 | “Mhm”式回应 | Moshi 可以发出简短的回应，同时不中断自己的话轮（turn）。 |\n"
+    },
+    {
+      "segment_id": "06-15:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Key Terms"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0111",
+      "kind": "heading",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Further Reading"
+      ],
+      "ordinal": 56,
+      "source_sha256": "612543459953fc308c2b73903dce21297e801f27c30b70a94604ca59e48c17c5",
+      "target": "## 延伸阅读\n"
+    },
+    {
+      "segment_id": "06-15:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Further Reading"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "06-15:b0113",
+      "kind": "list",
+      "heading_path": [
+        "# Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+        "## Further Reading"
+      ],
+      "ordinal": 57,
+      "source_sha256": "3a0b0690d59626ba995db032dd807bfff68cbba91f94583120852135b69437a9",
+      "target": "- [Défossez 等（2024）。Moshi：语音-文本基础模型](https://arxiv.org/html/2410.00037v2)：论文。\n- [Kyutai Labs（2026）。Hibiki-Zero](https://arxiv.org/abs/2602.12345)：无需对齐数据的流式翻译。\n- [Sesame（2025）。跨越声音的恐怖谷](https://www.sesame.com/research/crossing_the_uncanny_valley_of_voice)：CSM 规范。\n- [Kyutai：Moshi 仓库](https://github.com/kyutai-labs/moshi)：安装与服务器。\n- [OpenAI：Realtime API](https://platform.openai.com/docs/guides/realtime)：闭源商业同类产品。\n- [Kyutai：Delayed Streams Modeling](https://github.com/kyutai-labs/delayed-streams-modeling)：底层的 STT/TTS 框架。\n"
+    }
+  ],
+  "assets": [
+    {
+      "source_path": "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki/assets/moshi-hibiki.svg",
+      "target_path": "i18n/zh/phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki/assets/moshi-hibiki.svg",
+      "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+      "sha256": "5453cfe7a8fee5a4af8b667212d4cf835d4bfab67fcfb12cca3d1592b18e18d1"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+  "additional_glossary_sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+  "terminology_dependencies": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960",
+      "commit": "f9b5e9cbe4012f54483794f920c0d87b06a7573d",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S146-real-time-audio-processing/TERMINOLOGY.md",
+      "sha256": "c726acf77dd962024207416e92347b1389f4d6daa5d39d5b1bbe600067474426",
+      "commit": "f8a333a06a2409833904284c2e0ddf1385fbc999",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S152-neural-audio-codecs/TERMINOLOGY.md",
+      "sha256": "1285bdabb5421d2fb400e397b0b034d25bd4b2fd6a7a70f61dbf154ff35f33f2",
+      "commit": "193fd5188459cd7e47865693876c045b7405aa8e",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S153-voice-activity-detection-turn-taking/TERMINOLOGY.md",
+      "sha256": "b3519f7bb2b2524dce760861a353711b40aa7d543918d3a8e6530ba5895dff6c",
+      "commit": "2bee68f7430ba228fb8f17e50706c40de44beca9",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S22-ml-overview/TERMINOLOGY.md",
+      "sha256": "1e0f22ee24e89ab2878cfe7c8d6a02d07f8939603a14afcdcd28729d628c218e",
+      "commit": "d32c5ff5838fc83ebe5dfc8f5f359601163dda74",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S147-tool-use-function-calling/TERMINOLOGY.md",
+      "sha256": "7e1b6200211cc399398aaf0f03749c11199bb367da610148b526598f8a599047",
+      "commit": "1fd94a66ce5ae2a4ababbb1f205c2f9814817a5c",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S109-stable-diffusion/TERMINOLOGY.md",
+      "sha256": "7ed109ca8a17d11abdb98cfc5812d22e548f2b3d7c7f27a551c069512cba2d31",
+      "commit": "9eee323daf2159da74499f3dfc59191cb05b980f",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S157-streaming-speech-to-speech-moshi-hibiki/TERMINOLOGY.md",
+      "sha256": "8044393aa4e3e3f11532ced5b9bf5a894ef4158180acae1765bd058c860203e3",
+      "commit": "db1d32829998375c0889fddcd19b2766494ec24f",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S141-tree-of-thoughts-lats/TERMINOLOGY.md",
+      "sha256": "118d220bdab4baeff766c53fb80fe2ed70e6b9b38d94f36e8ef3dd19a7e640af",
+      "commit": "869e20ef0bf5d686f06d36829f7efa1182904ac0",
+      "frozen": true
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S104-chatbots-rule-to-neural/TERMINOLOGY.md",
+      "sha256": "c6897b380c0988603d6fd23fcf666d7f7f5cf99863a09a200d9e93fe5f27bdbe",
+      "commit": "262faaea2769da54827a6a03b9a31e1f7a325184",
+      "frozen": true
+    }
+  ],
+  "authoring_evidence": {
+    "actual_first_composition_started_utc": "2026-10-06T23:33:34.375716+00:00",
+    "actual_first_write": {
+      "target_path": "i18n/zh/phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki/docs/zh.md",
+      "file_first_write_started_utc": "2026-10-06T23:34:47.988063+00:00",
+      "file_first_write_completed_utc": "2026-10-06T23:34:47.988352+00:00",
+      "initial_body_sha256": "12c56166b97ad8554724738cd7c5e2129ad43536a74ba1b927f073da4dc22054",
+      "initial_body_bytes": 11162,
+      "initial_body_lines": 184,
+      "preserved_initial_path": "author-evidence/initial-zh.md",
+      "translated_line_count": 97,
+      "source_line_count": 184,
+      "record_absent": true,
+      "protected_fences_copied_from_fixed_source": true,
+      "date_spellings": "Source Feb2026 and Jan2026 spellings retained as dates; numeric magnitudes7B/100M/8B unchanged."
+    },
+    "actual_capture_utc": "2026-10-06T23:35:17.157919+00:00",
+    "capture_count": 1,
+    "raw_capture_sha256": "9e13cff8cb7603ba05143caaa4b352095be7c5d4392d8a1d1997b45cb3a1f266",
+    "proposal_sha256": "a60a4ce707c954b39abfff9f3e1c4589155b03d6525dc68898b252b4f749b449",
+    "independent_pre_prose_calibration_sha256": "52d2108535f784ef0155962ed6d835feabb863a4587003c283971e616700afee",
+    "independent_language_review": "pending; author selfchecks do not change draft status"
+  },
+  "support": {
+    "commit": "db1d32829998375c0889fddcd19b2766494ec24f",
+    "tree": "19d1ebd36da50244b6ae36d48d48635abab9d861",
+    "dependencies_path": "i18n/zh/.curated/stages/S157-streaming-speech-to-speech-moshi-hibiki/DEPENDENCIES.json",
+    "dependencies_sha256": "877c929e52f5612db71744cd86a80f6a38c178943a33d41ffab30bd4c1a8c8b8",
+    "common_set_sha256": "9e3da64b335de21fb20e4d56a7cb2036797fb79d9d4449991b50e8d3b9c1faeb",
+    "common_files": 161,
+    "terminology_files": 153,
+    "immutable_controls": 8,
+    "own_files": 3,
+    "installed_total": 164,
+    "own3": [
+      {
+        "path": "i18n/zh/.curated/stages/S157-streaming-speech-to-speech-moshi-hibiki/DEPENDENCIES.json",
+        "commit": "db1d32829998375c0889fddcd19b2766494ec24f",
+        "git_blob": "fe7012260e2d3bcdd57179186e83227a4b4f3587",
+        "sha256": "877c929e52f5612db71744cd86a80f6a38c178943a33d41ffab30bd4c1a8c8b8",
+        "bytes": 309153,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S157-streaming-speech-to-speech-moshi-hibiki/SCOPE.md",
+        "commit": "db1d32829998375c0889fddcd19b2766494ec24f",
+        "git_blob": "2817820b459260148b8fda7fba93cbebbb9c6d70",
+        "sha256": "9c6829bac391377fc09da0e7cd3008029427de82ef402cb231575048f3e3de6e",
+        "bytes": 9338,
+        "mode": "100644"
+      },
+      {
+        "path": "i18n/zh/.curated/stages/S157-streaming-speech-to-speech-moshi-hibiki/TERMINOLOGY.md",
+        "commit": "db1d32829998375c0889fddcd19b2766494ec24f",
+        "git_blob": "880632c7d40e750cc82350aadb39e5ebac917b15",
+        "sha256": "8044393aa4e3e3f11532ced5b9bf5a894ef4158180acae1765bd058c860203e3",
+        "bytes": 4698,
+        "mode": "100644"
+      }
+    ],
+    "readback_installation_receipt_sha256": "48f4e29367b7318100fbc54203d551dc86a15d0ce077c26273d75c059853e0fe",
+    "installation_completed_utc": "2026-10-06T23:23:22.565693+00:00",
+    "frozen_pending_null_fields_preserved": true,
+    "aggregate_all164_installation_gate_sha256": "c6f09df6614d9b3e8cbf7dbe3904eec4b3426b606f07acb77bf073b4a9600990"
+  },
+  "authoring_history": {
+    "final_author_handoff_sha256": "c25b763ed8f8d4f38aea7adc0ecf89cff857a9276b07e19afc07c1c4c0564ffc",
+    "original_author_evidence_files_preserved": 82,
+    "original_review_reports_preserved": true,
+    "selfchecks_are_independent_acceptance": false,
+    "capture_invocations": 1,
+    "raw_capture_hardcoded_date": "2026-10-01",
+    "actual_authoring_date_utc": "2026-10-06",
+    "capture_date_caveat": "The unchanged original capture helper hardcodes 2026-10-01. Raw provenance is retained literally; actual UTC capture is recorded separately. No recapture.",
+    "chronology": {
+      "support_installed_utc": "2026-10-06T23:23:22.565693+00:00",
+      "calibration_pass_utc": "2026-10-06T23:32:55.788667+00:00",
+      "parent_go_utc": "2026-10-06T23:33:16.894871+00:00",
+      "composition_started_utc": "2026-10-06T23:33:34.375716+00:00",
+      "first_target_write_started_utc": "2026-10-06T23:34:47.988063+00:00",
+      "first_target_write_completed_utc": "2026-10-06T23:34:47.988352+00:00",
+      "capture_started_utc": "2026-10-06T23:35:17.068406+00:00",
+      "capture_completed_utc": "2026-10-06T23:35:17.157919+00:00",
+      "first_write_timing_evidence": "Author receipts retained; reviewers did not witness the first write live."
+    },
+    "original_raw_capture_sha256": "9e13cff8cb7603ba05143caaa4b352095be7c5d4392d8a1d1997b45cb3a1f266",
+    "first_target_sha256": "12c56166b97ad8554724738cd7c5e2129ad43536a74ba1b927f073da4dc22054",
+    "independent_terminology_calibration_sha256": "52d2108535f784ef0155962ed6d835feabb863a4587003c283971e616700afee",
+    "pre_capture_revision_count": 0,
+    "post_capture_author_prose_revision_count": 1,
+    "author_selfcheck_changed_blocks_before_independent_reviews": [
+      "06-15:b0039",
+      "06-15:b0089"
+    ],
+    "author_prose_revision_receipt_sha256": "cf856a08fa802cf34e5e51fdaa5c2ed1e313e3c021ff39d2c9e1c82bd4dafeba",
+    "record_asset_binding_revision_sha256": "bd0b8d8a947666b71dc9fd9c72e3962d05162bcf987712974f7b409cbba0dc8b",
+    "post_independent_review_author_revisions": [],
+    "reviewed_draft_record_sha256": "a0f6501af44a4de012cb136ac7979021129b869711a062ca75897c7ee77efca5",
+    "historical_pending_author_field_retained": "Original authoring_evidence.independent_language_review describes the author draft at handoff; current independent acceptance is bound separately in language_review.",
+    "retained_failures": [
+      {
+        "type": "initial_scoped_git_index_ignored_path_failure",
+        "evidence_sha256": "9dc8a5cac5a74e8a44a02f88647473479181d433d4207aa4ae42e43243855b24",
+        "recovery": "Existing ignored translations path added only with scoped git add -f in isolated index; source/shared ignore configuration unchanged."
+      },
+      {
+        "type": "initial_preprose_terminology_calibration_corrections",
+        "evidence_sha256": "3a7b308815518b6688fb723d18938f2aac3a1fafb5793baf7d1b9b1a790039c5",
+        "recovery": "R02 independent calibration PASS preceded composition and first body write."
+      }
+    ]
+  },
+  "language_review": {
+    "status": "PASS",
+    "review_path": "i18n/zh/.curated/lessons/06-15/review.json",
+    "independent_reviews": [
+      {
+        "type": "independent_full_bilingual_fidelity",
+        "completed_utc": "2026-10-06T23:41:18.601877+00:00",
+        "report_sha256": "13c644aaa4e90fb4c160da1e20e684e1b64db7ddfde20b5b7e5d98698a03fc4b",
+        "result": "PASS_LANGUAGE_ONLY",
+        "reviewed_target_sha256": "1073a2ee7e8777c5e83a5ff961b1ecac58c70c8d01ceeb05c4087033152b2108",
+        "reviewed_draft_record_sha256": "a0f6501af44a4de012cb136ac7979021129b869711a062ca75897c7ee77efca5",
+        "blocks": 113,
+        "translatable_blocks": 54,
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true
+      },
+      {
+        "type": "independent_separate_full_Chinese_read",
+        "completed_utc": "2026-10-06T23:41:19.633505+00:00",
+        "report_sha256": "7b09b7d2aeca8eb6fbe76765fe6b776aa05baa7a23db5b96f9192de21d18483c",
+        "result": "PASS_FULL_INITIAL_CHINESE_READING",
+        "reviewed_target_sha256": "1073a2ee7e8777c5e83a5ff961b1ecac58c70c8d01ceeb05c4087033152b2108",
+        "reviewed_draft_record_sha256": "a0f6501af44a4de012cb136ac7979021129b869711a062ca75897c7ee77efca5",
+        "blocks": 113,
+        "translatable_blocks": 54,
+        "required_findings_at_that_review": 0,
+        "separate_from_author": true
+      }
+    ],
+    "remaining_findings": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0
+    },
+    "target_and_segments_unchanged_after_final_review_closure": true
+  }
+}
