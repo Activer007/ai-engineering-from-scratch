@@ -1,0 +1,1616 @@
+{
+  "schema_version": 1,
+  "lesson_id": "00-06",
+  "source_path": "phases/00-setup-and-tooling/06-python-environments/docs/en.md",
+  "source_commit": "1bafaa88bb4668356791150bec3a6d7df38387eb",
+  "source_blob": "16aec2037d5cf9359d0c028836ee32e4a418742b",
+  "source_sha256": "eafe05c7f0cc6d66440c773d6e4e38b39c5fb099be6e031512c144a59e0c2ed9",
+  "target_path": "i18n/zh/phases/00-setup-and-tooling/06-python-environments/docs/zh.md",
+  "target_sha256": "e392c6b681570cd0f5415d4c49bbf850dad5a9bbc93b7b8caa7d5bc2b019fd99",
+  "glossary_version": "1.0",
+  "glossary_sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6",
+  "status": "language-reviewed",
+  "provenance": {
+    "method": "English-first assistant authored; deterministic offline assembly",
+    "provider": "OpenAI assistant runtime",
+    "model": "not exposed by runtime",
+    "sampling_parameters": "not exposed by runtime",
+    "api_calls": 0,
+    "external_api_cost": 0,
+    "token_usage": "not exposed; no estimate invented",
+    "run_date": "2026-10-02"
+  },
+  "segments": [
+    {
+      "segment_id": "00-06:b0001",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments"
+      ],
+      "ordinal": 1,
+      "source_sha256": "74cdfe2588d614b1274af5b27da7118d0608bdd17cbac4ace704bb93fa39e0e0",
+      "target": "# Python 环境\n"
+    },
+    {
+      "segment_id": "00-06:b0002",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments"
+      ],
+      "ordinal": 1,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0003",
+      "kind": "blockquote",
+      "heading_path": [
+        "# Python Environments"
+      ],
+      "ordinal": 2,
+      "source_sha256": "996153255e11bbace3bdec6146f3648092461b70ad525cb9f954f2609e6f37a3",
+      "target": "> 依赖地狱（dependency hell）确实存在。虚拟环境（virtual environment）就是解决之道。\n"
+    },
+    {
+      "segment_id": "00-06:b0004",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments"
+      ],
+      "ordinal": 2,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0005",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments"
+      ],
+      "ordinal": 3,
+      "source_sha256": "4c35d4be8c060bfd0efd98682e6b16b569ba42529eaa62d6e4119d0cd8322721",
+      "target": "**Type:** Build\n**Languages:** Shell\n**Prerequisites:** 第 0 阶段，第 01 课\n**Time:** ~30 分钟\n"
+    },
+    {
+      "segment_id": "00-06:b0006",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments"
+      ],
+      "ordinal": 3,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0007",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "584e52d24f2b17886a76212978741fa03ba6bc6aa292a0331b41402490b42267",
+      "target": "## 学习目标\n"
+    },
+    {
+      "segment_id": "00-06:b0008",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Learning Objectives"
+      ],
+      "ordinal": 4,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0009",
+      "kind": "list",
+      "heading_path": [
+        "# Python Environments",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "d7c4e48a7009af3701a7f05c6f81b9e7f9c60a4ca49b6e7cd634ff092d73c188",
+      "target": "- 使用 `uv`、`venv` 或 `conda` 创建相互隔离的虚拟环境\n- 编写包含可选依赖项（dependency）分组的 `pyproject.toml`，并生成锁文件（lockfile），确保环境可复现\n- 诊断并解决常见问题：全局安装、混用 pip/conda、CUDA 版本不匹配\n- 采用按课程阶段划分环境的策略，处理项目之间的依赖项冲突\n"
+    },
+    {
+      "segment_id": "00-06:b0010",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Learning Objectives"
+      ],
+      "ordinal": 5,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0011",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "f88026ff32dd8f43def76262b9b1e99e1082ea528c571c9922238a9fa88f4fe5",
+      "target": "## 要解决的问题\n"
+    },
+    {
+      "segment_id": "00-06:b0012",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 6,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0013",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "2b9aca9612874459aeada9ad9da5800922edfafb98912fba4c8670804155311d",
+      "target": "你为一个微调（fine-tuning）项目安装了 PyTorch 2.4。到了下一周，另一个项目却需要 PyTorch 2.1，因为它所用的 CUDA 构建版本已被锁定。你执行全局升级，第一个项目就无法正常运行；你再降级，第二个项目又出了问题。\n"
+    },
+    {
+      "segment_id": "00-06:b0014",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 7,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0015",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "eccf73ef9c84cd0b9973fefe5ffc7a5a23bdfc242a4740c36bdf98ba1539f25e",
+      "target": "这就是依赖地狱。它在 AI/ML 工作中屡见不鲜，原因如下：\n"
+    },
+    {
+      "segment_id": "00-06:b0016",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 8,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0017",
+      "kind": "list",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "de13281050e8c20de02a158128bda6948b3491c8abb009f01e35657a2ebbedda",
+      "target": "- PyTorch、JAX 和 TensorFlow 各自附带自己的 CUDA 绑定\n- 模型库会锁定特定的框架版本\n- 全局执行 `pip install` 会覆盖原先安装的内容\n- CUDA 11.8 构建版本无法与 CUDA 12.x 驱动程序配合使用，反过来也一样\n"
+    },
+    {
+      "segment_id": "00-06:b0018",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 9,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0019",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "3af8baf66b979c58a07580d8d6e039e53903fd66bd6f941ecececc397325ed90",
+      "target": "解决办法是：为每个项目建立独立、隔离的环境，让各个项目使用各自的包。\n"
+    },
+    {
+      "segment_id": "00-06:b0020",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## The Problem"
+      ],
+      "ordinal": 10,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0021",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "c7b44801605d0b8c776d3915355cff883fdbf9e3ecb29219ac88ef4edd08ab1b",
+      "target": "## 核心概念\n"
+    },
+    {
+      "segment_id": "00-06:b0022",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## The Concept"
+      ],
+      "ordinal": 11,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0023",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "5a393814aa6567084a93a2b594e2157182c5c5fca2d741ee62959d59866a56ab",
+      "target": "```mermaid\ngraph TD\n    subgraph without[\"Without virtual environments\"]\n        SP[System Python] --> T24[\"torch 2.4.0 (CUDA 12.4)\\nProject A needs this\"]\n        SP --> T21[\"torch 2.1.0 (CUDA 11.8)\\nProject B needs this\"]\n        SP --> CONFLICT[\"CONFLICT: only one\\ntorch version can exist\"]\n    end\n\n    subgraph with[\"With virtual environments\"]\n        PA[\"Project A (.venv/)\"] --> PA1[\"torch 2.4.0 (CUDA 12.4)\"]\n        PA --> PA2[\"transformers 4.44\"]\n        PB[\"Project B (.venv/)\"] --> PB1[\"torch 2.1.0 (CUDA 11.8)\"]\n        PB --> PB2[\"diffusers 0.28\"]\n    end\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0024",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## The Concept"
+      ],
+      "ordinal": 12,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0025",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "d57116225d27b5ace702d92f00f6bd1e9dba3198de05d02ec053c912dccae0bc",
+      "target": "```figure\ns0-env-isolation\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0026",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## The Concept"
+      ],
+      "ordinal": 13,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0027",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It"
+      ],
+      "ordinal": 14,
+      "source_sha256": "6c9f31a1dd61e788af4b32a1c50d7ec1011e03885d2b419a5c8e58944b51b882",
+      "target": "## 动手实现\n"
+    },
+    {
+      "segment_id": "00-06:b0028",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It"
+      ],
+      "ordinal": 14,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0029",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "f6045138df41ac1922ea220b1977e9d6d108fb5ace54f90a1f6aadc9af2093e0",
+      "target": "### 方案 1：uv venv（推荐）\n"
+    },
+    {
+      "segment_id": "00-06:b0030",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 15,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0031",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "e63f7999745c9140360011edadeceb2c33889ec708251db78c02b2b65214d017",
+      "target": "`uv` 是速度最快的 Python 包管理器（package manager），比 pip 快 10-100x。它将虚拟环境、Python 版本和依赖解析整合在同一个工具中。\n"
+    },
+    {
+      "segment_id": "00-06:b0032",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 16,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0033",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "0d2aa2584f823fdf279f3153a9bdcbe3816ca04743c1be2274da251bfd09d1c4",
+      "target": "```bash\ncurl -LsSf https://astral.sh/uv/install.sh | sh\n\nuv python install 3.12\n\ncd your-project\nuv venv\nsource .venv/bin/activate\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0034",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 17,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0035",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "b05bcd45a17f1b1be6f9ca35d4fd61bf91f93315c61bc79b1804240306e4916b",
+      "target": "安装包：\n"
+    },
+    {
+      "segment_id": "00-06:b0036",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 18,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0037",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 19,
+      "source_sha256": "a0e3ede22ce9bc1ee1f0981a3067532694de4a294c27c872487497229ee79832",
+      "target": "```bash\nuv pip install torch numpy\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0038",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 19,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0039",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 20,
+      "source_sha256": "d6260e448d204d008e9fdfd5acc002deb30fa102f1487f3e67e538039166db01",
+      "target": "一步创建带有 `pyproject.toml` 的项目：\n"
+    },
+    {
+      "segment_id": "00-06:b0040",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 20,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0041",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "89bf5b32849b7301b255fdf934bca430f7bbd15da5e9943063d1087b38472067",
+      "target": "```bash\nuv init my-ai-project\ncd my-ai-project\nuv add torch numpy matplotlib\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0042",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 1: uv venv (Recommended)"
+      ],
+      "ordinal": 21,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0043",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 2: venv (Built-in)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "ebd649d56ec09dddb1c253bf1ecca907dd20b91bf78250cdddd502b5ac866705",
+      "target": "### 方案 2：venv（内置）\n"
+    },
+    {
+      "segment_id": "00-06:b0044",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 2: venv (Built-in)"
+      ],
+      "ordinal": 22,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0045",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 2: venv (Built-in)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "4ed1177d3235e6e6ed1ed242b8fcbb5fdbbf99220775fcd06cdbd86ef2ba3742",
+      "target": "如果无法安装 `uv`，可以使用 Python 自带的 `venv`：\n"
+    },
+    {
+      "segment_id": "00-06:b0046",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 2: venv (Built-in)"
+      ],
+      "ordinal": 23,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0047",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 2: venv (Built-in)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "b947c1734761ecda3fa1abfeb344b877bac7e60aa57f0c8ebc36eae9e4f1d553",
+      "target": "```bash\npython3 -m venv .venv\nsource .venv/bin/activate  # Linux/macOS\n.venv\\Scripts\\activate     # Windows\n\npip install torch numpy\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0048",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 2: venv (Built-in)"
+      ],
+      "ordinal": 24,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0049",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 2: venv (Built-in)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "386274de642eb32364447a21e2ebc794d783c3db6a392251d2eb3fc24ab9d717",
+      "target": "它比 `uv` 慢，但只要安装了 Python 就能使用。\n"
+    },
+    {
+      "segment_id": "00-06:b0050",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 2: venv (Built-in)"
+      ],
+      "ordinal": 25,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0051",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "9d654f4b690e3e8f350837fefb9786f221b0b1782c04e7e7198d4c3562cdd005",
+      "target": "### 方案 3：conda（按需使用）\n"
+    },
+    {
+      "segment_id": "00-06:b0052",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 26,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0053",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "66214ab3d52fb77567ce9141bbb71f5581ee393decabc0c3620a9f49250cd21d",
+      "target": "Conda 可以管理 CUDA 工具包、cuDNN 和 C 库等非 Python 依赖项。以下情况适合使用它：\n"
+    },
+    {
+      "segment_id": "00-06:b0054",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 27,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0055",
+      "kind": "list",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "9206fa636c08e3b1ab4190906265496aca701c2ef319bd6862b154ab61898d42",
+      "target": "- 你需要特定版本的 CUDA 工具包，但不想在系统范围内安装\n- 你使用的是共享集群，无法安装系统软件包\n- 某个库的安装说明明确要求“使用 conda”\n"
+    },
+    {
+      "segment_id": "00-06:b0056",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 28,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0057",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "be99ad9f74eb109d26722d0a5d2857e375cc8c1f962d128a3e87a90d79c0f9f6",
+      "target": "```bash\n# Install miniconda (not the full Anaconda)\ncurl -LsSf https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda.sh\nbash miniconda.sh -b\n\nconda create -n myproject python=3.12\nconda activate myproject\n\nconda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0058",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 29,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0059",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "256a76cfd0910624fad65c25215ebf65830d5a10678e5ffdfecc0438e2df4fce",
+      "target": "记住一条规则：如果某个环境由 conda 管理，就用 conda 管理这个环境中的所有包。在 conda 环境中混用 `pip install` 会造成依赖项冲突，排查起来十分棘手。\n"
+    },
+    {
+      "segment_id": "00-06:b0060",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### Option 3: conda (When You Need It)"
+      ],
+      "ordinal": 30,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0061",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 31,
+      "source_sha256": "eceeebed539395ebce65f012467d4b632f688fdf732169ba43473782ecb25185",
+      "target": "### 本课程的做法：按阶段划分环境\n"
+    },
+    {
+      "segment_id": "00-06:b0062",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 31,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0063",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 32,
+      "source_sha256": "58da735b3e11e79ae777431918fe3590c1739049cc5344602f1c2916fbd8ab41",
+      "target": "你可以为整门课程只创建一个环境，但不建议这样做。不同阶段需要的依赖项各不相同，有时还会互相冲突。\n"
+    },
+    {
+      "segment_id": "00-06:b0064",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 32,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0065",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 33,
+      "source_sha256": "302af602a9674493237dae6659e7b33e75aa40b075b147ce8ddf9df01de6449c",
+      "target": "策略如下：\n"
+    },
+    {
+      "segment_id": "00-06:b0066",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 33,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0067",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 34,
+      "source_sha256": "da123542fe0f7dfc52624f0aea33057e4aa0ae9195b9d8f7edbc74c247946d07",
+      "target": "```text\nai-engineering-from-scratch/\n├── .venv/                    <-- shared lightweight env for phases 0-3\n├── phases/\n│   ├── 04-neural-networks/\n│   │   └── .venv/            <-- PyTorch env\n│   ├── 05-cnns/\n│   │   └── .venv/            <-- same PyTorch env (symlink or shared)\n│   ├── 08-transformers/\n│   │   └── .venv/            <-- might need different transformer versions\n│   └── 11-llm-apis/\n│       └── .venv/            <-- API SDKs, no torch needed\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0068",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 34,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0069",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 35,
+      "source_sha256": "2f195848c1dabf1fbc5be7c63885084de44f2b18fe778796fa2928f2ce722560",
+      "target": "`code/env_setup.sh` 中的脚本会为本课程创建基础环境。\n"
+    },
+    {
+      "segment_id": "00-06:b0070",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Build It",
+        "### For This Course: Per-Phase Strategy"
+      ],
+      "ordinal": 35,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0071",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 36,
+      "source_sha256": "1ef1e88e0eec0027cb6e0ff82eb554ec6b78a0844bc94f80597497a403e20d6a",
+      "target": "## pyproject.toml 基础\n"
+    },
+    {
+      "segment_id": "00-06:b0072",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 36,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0073",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 37,
+      "source_sha256": "cc7f54263327f490b631469efdeba5da26feeec7d621fa9c03fe7b31e125800f",
+      "target": "每个 Python 项目都应该有一个 `pyproject.toml`。它用一个文件取代 `setup.py`、`setup.cfg` 和 `requirements.txt`。\n"
+    },
+    {
+      "segment_id": "00-06:b0074",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 37,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0075",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 38,
+      "source_sha256": "bedbd430d4e331b008d400a93312fd46c26238ca137e2ef6b286991bd41032f1",
+      "target": "```toml\n[project]\nname = \"ai-engineering-from-scratch\"\nversion = \"0.1.0\"\nrequires-python = \">=3.11\"\ndependencies = [\n    \"numpy>=1.26\",\n    \"matplotlib>=3.8\",\n    \"jupyter>=1.0\",\n    \"scikit-learn>=1.4\",\n]\n\n[project.optional-dependencies]\ntorch = [\"torch>=2.3\", \"torchvision>=0.18\"]\nllm = [\"anthropic>=0.39\", \"openai>=1.50\"]\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0076",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 38,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0077",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 39,
+      "source_sha256": "b4206a104cb10d18de2c6302f8566226fce65e2f2562a53750d9868537122f32",
+      "target": "然后执行安装：\n"
+    },
+    {
+      "segment_id": "00-06:b0078",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 39,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0079",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 40,
+      "source_sha256": "4d2e23c67b95087d1edf02e292200544add0a03c02903cd4f7777bc7beeb6342",
+      "target": "```bash\nuv pip install -e \".[torch]\"    # base + PyTorch\nuv pip install -e \".[llm]\"     # base + LLM SDKs\nuv pip install -e \".[torch,llm]\" # everything\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0080",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## pyproject.toml Basics"
+      ],
+      "ordinal": 40,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0081",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Lockfiles"
+      ],
+      "ordinal": 41,
+      "source_sha256": "ab803b0695621811e144b0738f06f9f2d747e17bc176224b17b6ab21ad214cdd",
+      "target": "## 锁文件\n"
+    },
+    {
+      "segment_id": "00-06:b0082",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Lockfiles"
+      ],
+      "ordinal": 41,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0083",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Lockfiles"
+      ],
+      "ordinal": 42,
+      "source_sha256": "c2bb5af65a3b07080c53e03e44c1394dbe2605b819bb64557086a922d35210a2",
+      "target": "锁文件将每个依赖项，包括传递依赖项（transitive dependency），都锁定到确切的版本。这就保证了可复现性：任何人根据该锁文件安装，得到的包都完全相同。\n"
+    },
+    {
+      "segment_id": "00-06:b0084",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Lockfiles"
+      ],
+      "ordinal": 42,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0085",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Lockfiles"
+      ],
+      "ordinal": 43,
+      "source_sha256": "f136e8d1637f0666e2bcb8ceb5c8dfd14d4334117e928e9814a9f3e0aa288e96",
+      "target": "```bash\n# uv generates uv.lock automatically when using uv add\nuv add numpy\n\n# pip-tools approach\nuv pip compile pyproject.toml -o requirements.lock\nuv pip install -r requirements.lock\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0086",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Lockfiles"
+      ],
+      "ordinal": 43,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0087",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Lockfiles"
+      ],
+      "ordinal": 44,
+      "source_sha256": "c65eca306576330a069ab7c5c2894dbca20268735c66049e2061603b3e5a8ba0",
+      "target": "将锁文件提交（commit）到 git。其他人克隆仓库后，根据锁文件安装，就能获得完全相同的版本。\n"
+    },
+    {
+      "segment_id": "00-06:b0088",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Lockfiles"
+      ],
+      "ordinal": 44,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0089",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes"
+      ],
+      "ordinal": 45,
+      "source_sha256": "5d9d5d8edf0aaa0f4e64f7bfc16ef206901cfbea57b9aa32649a8067326a3ed0",
+      "target": "## 常见错误\n"
+    },
+    {
+      "segment_id": "00-06:b0090",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes"
+      ],
+      "ordinal": 45,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0091",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 1. Installing globally"
+      ],
+      "ordinal": 46,
+      "source_sha256": "9538c11ca3dae2646cf6063afffd4032b159de1e70916ce6f59da1b3077c9d1d",
+      "target": "### 1. 全局安装\n"
+    },
+    {
+      "segment_id": "00-06:b0092",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 1. Installing globally"
+      ],
+      "ordinal": 46,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0093",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 1. Installing globally"
+      ],
+      "ordinal": 47,
+      "source_sha256": "dbac22cf41dbfa8be5aea0085574489ec2fadb62f16ae9aba6b457986ecbde52",
+      "target": "```bash\npip install torch  # BAD: installs to system Python\n\nsource .venv/bin/activate\npip install torch  # GOOD: installs to virtual environment\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0094",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 1. Installing globally"
+      ],
+      "ordinal": 47,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0095",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 1. Installing globally"
+      ],
+      "ordinal": 48,
+      "source_sha256": "a2339f8e55d5fe4aad33f62bf225d0868ba653bcff831de8edbafc124dbbb945",
+      "target": "检查包的安装位置：\n"
+    },
+    {
+      "segment_id": "00-06:b0096",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 1. Installing globally"
+      ],
+      "ordinal": 48,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0097",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 1. Installing globally"
+      ],
+      "ordinal": 49,
+      "source_sha256": "4d5f0ad0487d7383fba905081578d0a5ed7dd1ad9f4dbee9233b0e6eba427573",
+      "target": "```bash\nwhich python       # should show .venv/bin/python, not /usr/bin/python\nwhich pip           # should show .venv/bin/pip\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0098",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 1. Installing globally"
+      ],
+      "ordinal": 49,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0099",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 2. Mixing pip and conda"
+      ],
+      "ordinal": 50,
+      "source_sha256": "256753a3baa0c4c4ca707090cd26587c30f9f0b65be5bdccc93339687bb9791f",
+      "target": "### 2. 混用 pip 和 conda\n"
+    },
+    {
+      "segment_id": "00-06:b0100",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 2. Mixing pip and conda"
+      ],
+      "ordinal": 50,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0101",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 2. Mixing pip and conda"
+      ],
+      "ordinal": 51,
+      "source_sha256": "d2be15d36a69850435a3b17020276845ad7f9ef4ed6ac224a85da78e92eac481",
+      "target": "```bash\nconda create -n myenv python=3.12\nconda activate myenv\nconda install pytorch -c pytorch\npip install some-other-package   # BAD: can break conda's dependency tracking\nconda install some-other-package # GOOD: let conda manage everything\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0102",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 2. Mixing pip and conda"
+      ],
+      "ordinal": 51,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0103",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 2. Mixing pip and conda"
+      ],
+      "ordinal": 52,
+      "source_sha256": "a24c9e3ff6703c7251e1e5136d37d2574ab0d9fc4b52a24e8fa3152c7dc6d2cb",
+      "target": "如果必须在 conda 环境内使用 pip，例如某些包只能通过 pip 安装，那么先安装所有 conda 包，最后再安装 pip 包。\n"
+    },
+    {
+      "segment_id": "00-06:b0104",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 2. Mixing pip and conda"
+      ],
+      "ordinal": 52,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0105",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 3. Forgetting to activate"
+      ],
+      "ordinal": 53,
+      "source_sha256": "e2d06379439f6473cebbf7163bf26897ac56938c2f1082a3b4a019d1655735f5",
+      "target": "### 3. 忘记激活环境\n"
+    },
+    {
+      "segment_id": "00-06:b0106",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 3. Forgetting to activate"
+      ],
+      "ordinal": 53,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0107",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 3. Forgetting to activate"
+      ],
+      "ordinal": 54,
+      "source_sha256": "ce9d644dcef28d7c01e18380caa7a3fe9643a0befc07d7fdd665250bca3544d8",
+      "target": "```bash\npython train.py           # uses system Python, missing packages\nsource .venv/bin/activate\npython train.py           # uses project Python, packages found\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0108",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 3. Forgetting to activate"
+      ],
+      "ordinal": 54,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0109",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 3. Forgetting to activate"
+      ],
+      "ordinal": 55,
+      "source_sha256": "ca5eb83d9572aaff2b8719d3dde1df86df44c9e2ca272b5bf87ad570ff3d7293",
+      "target": "Shell（命令解释器）的提示符中应该显示环境名称：\n"
+    },
+    {
+      "segment_id": "00-06:b0110",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 3. Forgetting to activate"
+      ],
+      "ordinal": 55,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0111",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 3. Forgetting to activate"
+      ],
+      "ordinal": 56,
+      "source_sha256": "dd23bb6e2a026df5f4ca653413cc959f53df6f4f87f28aded15ee4fce3e0277b",
+      "target": "```text\n(.venv) $ python train.py\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0112",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 3. Forgetting to activate"
+      ],
+      "ordinal": 56,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0113",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 4. Committing .venv to git"
+      ],
+      "ordinal": 57,
+      "source_sha256": "ce83cf7152874dbbd951cf08fb27601eb497d8fd350d32966018bfbf64be37f4",
+      "target": "### 4. 将 .venv 提交到 git\n"
+    },
+    {
+      "segment_id": "00-06:b0114",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 4. Committing .venv to git"
+      ],
+      "ordinal": 57,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0115",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 4. Committing .venv to git"
+      ],
+      "ordinal": 58,
+      "source_sha256": "46b2a59d7f6d1d9606b50b85604e7befb5eeb2836500dd4915b608f208d8fafa",
+      "target": "```bash\necho \".venv/\" >> .gitignore\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0116",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 4. Committing .venv to git"
+      ],
+      "ordinal": 58,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0117",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 4. Committing .venv to git"
+      ],
+      "ordinal": 59,
+      "source_sha256": "87057d77af20caac1945730ba63c35288c86cdca38b1a70764e337bff82b7b50",
+      "target": "虚拟环境的体积为 200MB-2GB。它们是本机环境，无法直接迁移到其他机器。应该提交的是 `pyproject.toml` 和锁文件。\n"
+    },
+    {
+      "segment_id": "00-06:b0118",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 4. Committing .venv to git"
+      ],
+      "ordinal": 59,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0119",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 5. CUDA version mismatch"
+      ],
+      "ordinal": 60,
+      "source_sha256": "a521b920cf449986504f1e17b91be220bcb9b56bd839b7d22d8e56c0df08b20b",
+      "target": "### 5. CUDA 版本不匹配\n"
+    },
+    {
+      "segment_id": "00-06:b0120",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 5. CUDA version mismatch"
+      ],
+      "ordinal": 60,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0121",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 5. CUDA version mismatch"
+      ],
+      "ordinal": 61,
+      "source_sha256": "2a70abdb405dbb47cb6a6bbc34645966dd32231720b48b6f0e177a1df66eea19",
+      "target": "```bash\nnvidia-smi                # shows driver CUDA version (e.g., 12.4)\npython -c \"import torch; print(torch.version.cuda)\"  # shows PyTorch CUDA version\n\n# These must be compatible.\n# PyTorch CUDA version must be <= driver CUDA version.\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0122",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Common Mistakes",
+        "### 5. CUDA version mismatch"
+      ],
+      "ordinal": 61,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0123",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "5ea8444f1e52d79d0fa5a9889d9e68b6f9378788af91764ac90a2934dcc50b2b",
+      "target": "## 实际使用\n"
+    },
+    {
+      "segment_id": "00-06:b0124",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Use It"
+      ],
+      "ordinal": 62,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0125",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Use It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "b02d6ded0735efb7529178913ed45e4755c2b8d424515509c2863219ab75ced6",
+      "target": "运行设置脚本，创建课程环境：\n"
+    },
+    {
+      "segment_id": "00-06:b0126",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Use It"
+      ],
+      "ordinal": 63,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0127",
+      "kind": "fence",
+      "heading_path": [
+        "# Python Environments",
+        "## Use It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "a8b9c731d844e58cc3eb66e24d36fc72630b49a7c8d1c41969c7ea30574311cd",
+      "target": "```bash\nbash phases/00-setup-and-tooling/06-python-environments/code/env_setup.sh\n```\n"
+    },
+    {
+      "segment_id": "00-06:b0128",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Use It"
+      ],
+      "ordinal": 64,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0129",
+      "kind": "paragraph",
+      "heading_path": [
+        "# Python Environments",
+        "## Use It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "f1a513b89539169ba9885fd348d4715cb2952e89c46a58870bd92cf48e85f942",
+      "target": "这会在仓库根目录下创建 `.venv`，安装核心依赖项并验证安装结果。\n"
+    },
+    {
+      "segment_id": "00-06:b0130",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Use It"
+      ],
+      "ordinal": 65,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0131",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Exercises"
+      ],
+      "ordinal": 66,
+      "source_sha256": "a4807fe836e0096bcaf158b29f934e8fe31d4f4827549967dfe8f4f2fb831a64",
+      "target": "## 练习\n"
+    },
+    {
+      "segment_id": "00-06:b0132",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Exercises"
+      ],
+      "ordinal": 66,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0133",
+      "kind": "list",
+      "heading_path": [
+        "# Python Environments",
+        "## Exercises"
+      ],
+      "ordinal": 67,
+      "source_sha256": "279329d785350c330274499e007a38365f567172725260466350bde11ed28222",
+      "target": "1. 运行 `env_setup.sh`，确认所有检查均通过\n2. 创建第二个虚拟环境，在其中安装另一个版本的 numpy，并确认两个环境相互隔离\n3. 为同时需要 PyTorch 和 Anthropic SDK（软件开发工具包）的项目编写 `pyproject.toml`\n4. 有意将一个包安装到全局环境中，也就是不激活 venv；观察它的安装位置，然后卸载该包\n"
+    },
+    {
+      "segment_id": "00-06:b0134",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Exercises"
+      ],
+      "ordinal": 67,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0135",
+      "kind": "heading",
+      "heading_path": [
+        "# Python Environments",
+        "## Key Terms"
+      ],
+      "ordinal": 68,
+      "source_sha256": "c9a48ecf34a7d8550efdf7b469e84d28521007a46a3bc08fc1e840691c760c42",
+      "target": "## 关键术语\n"
+    },
+    {
+      "segment_id": "00-06:b0136",
+      "kind": "separator",
+      "heading_path": [
+        "# Python Environments",
+        "## Key Terms"
+      ],
+      "ordinal": 68,
+      "source_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target": "\n"
+    },
+    {
+      "segment_id": "00-06:b0137",
+      "kind": "table",
+      "heading_path": [
+        "# Python Environments",
+        "## Key Terms"
+      ],
+      "ordinal": 69,
+      "source_sha256": "5c87ebffd5057ae7b8d0ff8f24e006e09c6dd1fc5e1c2d2548a1ef12ca44931a",
+      "target": "| 术语 | 常见说法 | 实际含义 |\n|------|----------------|----------------------|\n| 虚拟环境 | “一个 venv” | 一个独立的目录，包含 Python 解释器和包，与系统 Python 相互隔离 |\n| 锁文件 | “锁定的依赖项” | 列出每个包及其确切版本的文件，确保不同机器上的安装结果一致 |\n| pyproject.toml | “新版 setup.py” | 标准的 Python 项目配置文件，用于取代 setup.py/setup.cfg/requirements.txt |\n| 传递依赖项 | “依赖项的依赖项” | 包 B 依赖 C；如果安装的 A 依赖 B，那么 C 就是 A 的传递依赖项 |\n| CUDA 不匹配 | “我的 GPU 用不了” | 编译 PyTorch 时使用的 CUDA 版本与 GPU 驱动程序支持的版本不一致 |\n"
+    }
+  ],
+  "additional_glossary_path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+  "additional_glossary_sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743",
+  "referenced_glossaries": [
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY.md",
+      "sha256": "d34d55d82234c03e56fa4ff08f83f2729eedf149641dcc6d0695c0ff16f6afd6"
+    },
+    {
+      "path": "i18n/zh/.curated/TERMINOLOGY-ADDENDUM.md",
+      "sha256": "d43ec79ad1ef36068f1d6cc7575274f9020fb85cda34048184c92949ebc00960"
+    },
+    {
+      "path": "i18n/zh/.curated/stages/S01-tool-foundations/TERMINOLOGY.md",
+      "sha256": "b348564fb54990c82f6fa6ee28ee289c976c9f68de46ddf286262500e8a4c743"
+    }
+  ]
+}
