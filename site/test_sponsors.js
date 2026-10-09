@@ -4,7 +4,7 @@ const path = require('node:path');
 const test = require('node:test');
 
 const root = path.resolve(__dirname, '..');
-const read = name => fs.readFileSync(path.join(root, name), 'utf8');
+const read = name => fs.readFileSync(path.join(root, name), 'utf8').replace(/\r\n/g, '\n');
 const sponsorUrl = 'https://serpapi.com/ai-engineering-from-scratch';
 const description = 'Web Search API for your AI apps. Available in Markdown and JSON for any integration.';
 const nitroUrl = 'https://nitrostack.ai/referral/aiengineeringfromscratch';
@@ -18,6 +18,14 @@ function between(text, start, end, file) {
   const placement = section.split(end)[0];
   assert.notEqual(placement, section, `${file} is missing ${end.trim()}`);
   return placement;
+}
+
+function checkSponsorLink(text, file) {
+  const sponsorLink = text.match(/href="([^"]*SPONSORS\.md)">([^<]+)<\/a>/);
+  assert.ok(sponsorLink, file);
+  assert.equal(path.resolve(root, path.dirname(file), sponsorLink[1]), path.join(root, 'SPONSORS.md'), file);
+  assert.ok(sponsorLink[2].trim(), file);
+  if (file === 'README.md') assert.equal(sponsorLink[2], 'Become a sponsor');
 }
 
 test('sponsor placements preserve copy, destinations, and local artwork without tier labels', () => {
@@ -109,10 +117,7 @@ test('supporter navigation survives translated README headings', () => {
     const text = read(file);
     assert.ok(text.includes('href="#supporters"'), file);
     assert.ok(text.includes('<a id="supporters"></a>'), file);
-    const sponsorLink = text.match(/href="([^"]*SPONSORS\.md)">Become a sponsor/);
-    assert.ok(sponsorLink, file);
-    assert.equal(path.resolve(root, path.dirname(file), sponsorLink[1]), path.join(root, 'SPONSORS.md'), file);
-    assert.equal((text.match(/>Become a sponsor<\/a>/g) || []).length, 1, file);
+    checkSponsorLink(text, file);
     const sources = [...text.matchAll(/<source media="\(min-width: 768px\)" srcset="([^"]+)" width="48%">/g)];
     assert.equal(sources.length, 2, file);
     for (const [, src] of sources) {
@@ -122,10 +127,18 @@ test('supporter navigation survives translated README headings', () => {
     if (file !== 'README.md') {
       assert.doesNotMatch(
         text,
-        /### Sponsors|Thank you to our sponsors\.|Your support keeps every lesson free and open source\.|See all supporters|SerpApi\. Web Search API|## Sponsor the work|Free, MIT-licensed, 523 lessons\.|See all sponsors and backers|Want to support the work\?/
+        /Thank you to our sponsors\.|Your support keeps every lesson free and open source\.|See all supporters|SerpApi\. Web Search API|## Sponsor the work|Free, MIT-licensed, 523 lessons\.|See all sponsors and backers|Want to support the work\?/
       );
     }
   }
+});
+
+test('sponsor navigation accepts translated labels without accepting broken targets', () => {
+  const file = 'i18n/he/README.md';
+  checkSponsorLink('<a href="../../SPONSORS.md">Become a sponsor</a>', file);
+  checkSponsorLink('<a href="../../SPONSORS.md">תמכו בפרויקט</a>', file);
+  assert.throws(() => checkSponsorLink('<a href="SPONSORS.md">תמכו בפרויקט</a>', file));
+  assert.throws(() => checkSponsorLink('<a href="../../SPONSORS.md"> </a>', file));
 });
 
 test('sponsors page is rendered from SPONSORS.md at build time', () => {
