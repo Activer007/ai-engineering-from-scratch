@@ -201,6 +201,14 @@
       background: var(--planned);
     }
 
+    .catalog-status-dot.in-progress {
+      background: var(--status-in-progress);
+    }
+
+    .catalog-status {
+      white-space: nowrap;
+    }
+
     .catalog-lang {
       font-family: var(--font-mono);
       font-size: 0.8rem;
@@ -228,6 +236,10 @@
       margin-top: 16px;
       padding-top: 16px;
       border-top: 1px solid var(--rule-soft);
+    }
+
+    .catalog-progressive-actions[hidden] {
+      display: none;
     }
 
     .catalog-progressive-note {
@@ -295,6 +307,10 @@
       .catalog-table th,
       .catalog-table td {
         padding: 8px 10px;
+      }
+
+      .catalog-table td a {
+        overflow-wrap: anywhere;
       }
 
       .catalog-progressive-actions {
@@ -999,11 +1015,11 @@
             var l = p.lessons[j];
             allRows.push({
               phase: p.id,
-              phaseName: p.name,
-              name: l.name,
-              type: l.type,
-              lang: l.lang,
-              status: l.status,
+              phaseName: p.name || '',
+              name: l.name || '',
+              type: l.type || '',
+              lang: l.lang || '',
+              status: l.status || 'planned',
               url: l.url || ''
             });
           }
@@ -1038,7 +1054,15 @@
         function escapeHtml(str) {
           var div = document.createElement('div');
           div.textContent = str;
-          return div.innerHTML;
+          return div.innerHTML.replace(/"/g, '&quot;');
+        }
+
+        function formatCount(value) {
+          return (Number(value) || 0).toLocaleString('en');
+        }
+
+        function countLabel(value, singular, plural) {
+          return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
         }
 
         function render() {
@@ -1082,11 +1106,11 @@
           });
 
           var visibleRows = rows.slice(0, visibleLimit);
-          countEl.textContent = 'Showing ' + visibleRows.length + ' of ' + rows.length + ' matching lessons. ' + allRows.length + ' total.';
+          countEl.textContent = 'Showing ' + formatCount(visibleRows.length) + ' of ' + countLabel(rows.length, 'matching lesson', 'matching lessons') + '. ' + formatCount(allRows.length) + ' total.';
           tableWrap.setAttribute('aria-busy', 'false');
 
           if (rows.length === 0) {
-            bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">No lessons match your filters.</td></tr>';
+            bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">' + (allRows.length ? 'No lessons match your filters.' : 'No lessons are published yet.') + '</td></tr>';
             progressiveActions.hidden = true;
             return;
           }
@@ -1101,7 +1125,7 @@
           for (var i = 0; i < visibleRows.length; i++) {
             var r = visibleRows[i];
             if (sortCol === 'phase' && r.phase !== previousPhase) {
-              html += '<tr class="catalog-group-row"><th colspan="5" scope="rowgroup">Phase ' + String(r.phase).padStart(2, '0') + ': ' + escapeHtml(r.phaseName) + '<span class="catalog-group-count">' + phaseCounts[r.phase] + ' lessons</span></th></tr>';
+              html += '<tr class="catalog-group-row"><th colspan="5" scope="rowgroup">Phase ' + String(r.phase).padStart(2, '0') + ': ' + escapeHtml(r.phaseName) + '<span class="catalog-group-count">' + countLabel(phaseCounts[r.phase], 'lesson', 'lessons') + '</span></th></tr>';
               previousPhase = r.phase;
             }
             html += '<tr>';
@@ -1115,15 +1139,16 @@
             }
             html += '<td>' + escapeHtml(r.type) + '</td>';
             html += '<td><span class="catalog-lang">' + escapeHtml(r.lang) + '</span></td>';
-            html += '<td><span class="catalog-status-dot ' + r.status + '" aria-hidden="true"></span>' + r.status + '</td>';
+            var status = escapeHtml(r.status);
+            html += '<td class="catalog-status"><span class="catalog-status-dot ' + status + '" aria-hidden="true"></span>' + status + '</td>';
             html += '</tr>';
           }
           bodyEl.innerHTML = html;
 
           var remaining = rows.length - visibleRows.length;
           progressiveActions.hidden = remaining <= 0;
-          progressiveNote.textContent = remaining > 0 ? remaining + ' matching lessons remain.' : '';
-          showMoreButton.textContent = 'Show next ' + Math.min(PAGE_SIZE, remaining);
+          progressiveNote.textContent = remaining > 0 ? countLabel(remaining, 'matching lesson remains.', 'matching lessons remain.') : '';
+          showMoreButton.textContent = 'Show next ' + formatCount(Math.min(PAGE_SIZE, remaining));
           showMoreButton.hidden = remaining <= 0;
           showAllButton.hidden = remaining <= 0;
         }
