@@ -13,11 +13,11 @@ Implementera modellers interna mekanismer, sökpipelines och körmiljöer för a
 
 Gratis, öppen källkod, MIT-licens. Lär dig på webbplatsen, med en kodningsagent eller genom att köra kod lokalt.
 
-> 523 lektioner. 20 faser. Python, TypeScript, Rust, Julia.
+> 542 lektioner. 20 faser. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licens"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lektioner"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 lektioner"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 faser"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub-stjärnor"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webbplats"></a>
@@ -207,6 +207,7 @@ Installationsprogrammet visar vilka värdapplikationer det kan konfigurera och f
 | [`course-guide`](../../skills/course-guide/SKILL.md) | Ämnesvägvisare. ”Var lär jag mig attention?” eller ”min förlust är NaN” → rätt lektioner, med länkar. |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Fokuserad handledare för Model Context Protocol (MCP). Skapar `MCP-LEARNING.md`, följer manifestets 17 lektioner och sparar belägg för meddelandeutbyte, säkerhet, tillförlitlighet och protokollefterlevnad. |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Fokuserad handledare för Agent Skills. Skapar `AGENT-SKILLS-LEARNING.md`, undervisar i lektionerna 22, 24, 25, 26 och 27 och sparar belägg från riktiga värdapplikationer. |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | Fokuserad handledare för reverse engineering. Skapar `REVERSE-ENGINEERING-LEARNING.md`, undervisar i lektionerna 32 till 45 i fas 13 på program som du själv bygger och sparar belägg från laborationerna. |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certifieringshandledare. Väljer CCAO-F, CCDV-F, CCAR-F eller CCAR-P, undervisar i varje lektion, kör laborationer, granskar arbetsresultat, genomför diagnostiska prov och övningsprov samt sparar framsteg. |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA-handledare. Följer `mcpa-f` med 34 lektioner om protokollet 2026-07-28, undervisar i varje lektion, kör laborationer och meddelandekontroll, genomför det diagnostiska provet och tre övningsprov samt sparar framsteg. |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | Nivåtest med tio frågor. Kopplar dina kunskaper till en lämplig startfas och skapar en personlig studieväg med uppskattad tidsåtgång. |
@@ -246,7 +247,7 @@ Sökvägar i lektionssidornas kommandon utgår från kodarkivets rot om lektione
 
 ## Välj en lärväg
 
-Du behöver inte gå igenom 523 lektioner innan du börjar. Välj ett mål. Varje länk öppnar samma läroplan på GitHub eller webbplatsen, och båda versionerna använder samma lektionskod.
+Du behöver inte gå igenom 542 lektioner innan du börjar. Välj ett mål. Varje länk öppnar samma läroplan på GitHub eller webbplatsen, och båda versionerna använder samma lektionskod.
 
 | Ditt mål | Lär dig på GitHub | Lär dig på webbplatsen |
 |---|---|---|
@@ -262,12 +263,13 @@ Osäker på var du ska börja? Använd [handledaren `start-learning` för nivåb
 Jämför fyra kärnområden och sex karriärvägar i [studievägarna för AI-utveckling](https://aiengineeringfromscratch.com/learning-paths.html).
 
 <details>
-<summary>Fokuserade lärvägar för MCP och Agent Skills</summary>
+<summary>Fokuserade lärvägar för MCP, Agent Skills och reverse engineering</summary>
 
 | Ditt mål | Lär dig på GitHub | Lär dig på webbplatsen |
 |---|---|---|
 | Jag vill bygga med Model Context Protocol (MCP) | [Studieväg för Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Studieväg för Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Jag vill skriva och publicera Agent Skills | [Fokuserad studieväg för Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Studieväg för Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Jag vill läsa kompilerade program | [Studieväg för reverse engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Studieväg för reverse engineering](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ Jämför fyra kärnområden och sex karriärvägar i [studievägarna för AI-utv
 | Erfaren utvecklare som bara vill lära sig agentutveckling | Fas 14: Agentutveckling | ~60 timmar |
 | Vill bara bygga MCP-system för produktion | [Studievägen för Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 timmar 15 min |
 | Vill bara bygga Agent Skills för produktion | [Studievägen för utveckling av Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 timmar |
+| Vill bara lära sig reverse engineering | [Studievägen för reverse engineering](../../learning-paths/reverse-engineering.json) | ~32.5 timmar |
 
 </details>
 
@@ -330,7 +333,7 @@ flowchart TB
 Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 
 <a id="phase-0"></a>
-### Fas 0: Installation och verktyg `12 lektioner`
+### Fas 0: Installation och verktyg `13 lektioner`
 > Gör miljön redo för allt som följer.
 
 | # | Lektion | Typ | Språk |
@@ -347,6 +350,7 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 10 | [Terminal och skal](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Lär dig | — |
 | 11 | [Linux för AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Lär dig | — |
 | 12 | [Felsökning och profilering](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Bygg | Python |
+| 13 | [Python för AI-utveckling](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Bygg | Python |
 
 <details id="phase-1">
 <summary><b>Fas 1: Matematiska grunder</b> &nbsp;<code>22 lektioner</code>&nbsp; <em>Intuitionen bakom varje AI-algoritm, genom kod.</em></summary>
@@ -380,7 +384,7 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 </details>
 
 <details id="phase-2">
-<summary><b>Fas 2: Grunderna i maskininlärning</b> &nbsp;<code>18 lektioner</code>&nbsp; <em>Klassisk ML är fortfarande grunden för de flesta AI-system i produktion.</em></summary>
+<summary><b>Fas 2: Grunderna i maskininlärning</b> &nbsp;<code>21 lektioner</code>&nbsp; <em>Klassisk ML är fortfarande grunden för de flesta AI-system i produktion.</em></summary>
 <br/>
 
 | # | Lektion | Typ | Språk |
@@ -403,6 +407,9 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 16 | [Avvikelsedetektering](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Bygg | Python |
 | 17 | [Hantera obalanserade data](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Bygg | Python |
 | 18 | [Egenskapsurval](../../phases/02-ml-fundamentals/18-feature-selection/) | Bygg | Python |
+| 19 | [Design av ML-system: från problem till driftsatt modell](../../phases/02-ml-fundamentals/19-ml-system-design/) | Bygg | Python |
+| 20 | [Övervakning av modeller i produktion: datadrift och konceptdrift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Bygg | Python |
+| 21 | [Egenskapslager och skillnader mellan träning och drift](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Bygg | Python |
 
 </details>
 
@@ -693,7 +700,7 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 </details>
 
 <details id="phase-13">
-<summary><b>Fas 13: Verktyg och protokoll</b> &nbsp;<code>31 lektioner</code>&nbsp; <em>Gränssnitten mellan AI och verkligheten.</em></summary>
+<summary><b>Fas 13: Verktyg och protokoll</b> &nbsp;<code>45 lektioner</code>&nbsp; <em>Gränssnitten mellan AI och verkligheten.</em></summary>
 <br/>
 
 | # | Lektion | Typ | Språk |
@@ -729,6 +736,20 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 29 | [MCP-tillförlitlighet, avbrytning och flödeskontroll](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Bygg | Python |
 | 30 | [MCP-registrets leveranskedja: antagning, driftavvikelser och återställning](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Bygg | Python |
 | 31 | [MCP-efterlevnad: versionering, belägg och drift](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Bygg | Python |
+| 32 | [Programmets anatomi: läs ELF från grunden](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Bygg | Python |
+| 33 | [Disassemblering och kontrollflödesgrafer](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Bygg | Python |
+| 34 | [Lyft maskinkod till pseudokod](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Bygg | Python |
+| 35 | [Belägg, säkerhetsgrad och okända faktorer i binäranalys](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Bygg | Python |
+| 36 | [Bygg om och bevisa likhet](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Bygg | Python |
+| 37 | [Landskapet för reverse engineering](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Bygg | Python |
+| 38 | [Anropskonventioner och stackramar](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Bygg | Python |
+| 39 | [Kompilatoridiom och optimering](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Bygg | Python |
+| 40 | [Länkning, laddning och strippade binärer](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Bygg | Python |
+| 41 | [Återskapa data och typer](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Bygg | Python |
+| 42 | [Dynamisk analys av ditt eget program](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Bygg | Python |
+| 43 | [Bytekod och hanterade format](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Bygg | Python |
+| 44 | [Binär diffning och symbolisk exekvering](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Bygg | Python |
+| 45 | [AI-assisterad reverse engineering](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Bygg | Python |
 
 Lektionerna 06-18 och 28-31 bildar den fokuserade [studievägen för Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Manifestets ordning är 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Börja med värdapplikationens `learn-mcp`-anrop ovan. Lektion 23 är det enda valfria slutprojektet och kräver även lektionerna 19 och 20.
 
@@ -869,7 +890,7 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 </details>
 
 <details id="phase-17">
-<summary><b>Fas 17: Infrastruktur och produktion</b> &nbsp;<code>28 lektioner</code>&nbsp; <em>Ta AI ut i verkligheten.</em></summary>
+<summary><b>Fas 17: Infrastruktur och produktion</b> &nbsp;<code>29 lektioner</code>&nbsp; <em>Ta AI ut i verkligheten.</em></summary>
 <br/>
 
 | # | Lektion | Typ | Språk |
@@ -902,6 +923,7 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 | 26 | [Regelefterlevnad: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Lär dig | Python |
 | 27 | [FinOps för LLM: enhetsekonomi och kostnadsfördelning mellan kunder](../../phases/17-infrastructure-and-production/27-finops-llms/) | Lär dig | Python |
 | 28 | [Välja egenhostad inferens: matcha motor, hårdvara och skala](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Lär dig | Python |
+| 29 | [Demogränssnitt för modeller: från en funktion till en delbar app](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Bygg | Python |
 
 </details>
 
@@ -1142,7 +1164,7 @@ Andra kurser slutar med *”Grattis, du har lärt dig X.”* Varje lektion här 
 <details>
 <summary>Installera lektionsresultat</summary>
 
-**Lektionernas arbetsresultat.** Arkivet innehåller 396 färdigheter och 99 promptar under `phases/**/outputs/`. Installera dem med `scripts/install_skills.py`. Arkivet måste klonas. Skriptet stöder taggfilter, förhandsgranskning utan skrivning och agentspecifika katalogstrukturer:
+**Lektionernas arbetsresultat.** Arkivet innehåller 414 färdigheter och 100 promptar under `phases/**/outputs/`. Installera dem med `scripts/install_skills.py`. Arkivet måste klonas. Skriptet stöder taggfilter, förhandsgranskning utan skrivning och agentspecifika katalogstrukturer:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1284,7 @@ Avslutningskoden är inte noll om någon regel misslyckas. Reglerna (L001–L010
 <p align="center"><sub><b>114,584</b> läsare &nbsp;·&nbsp; <b>181,995</b> sidvisningar de senaste 30 dagarna &nbsp;·&nbsp; uppdaterat 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Gratis, MIT-licensierat, 523 lektioner. Tack till sponsorerna och stödjarna som gör arbetet möjligt. [Se alla sponsorer och stödjare](../../BACKERS.md).
+Gratis, MIT-licensierat, 542 lektioner. Tack till sponsorerna och stödjarna som gör arbetet möjligt. [Se alla sponsorer och stödjare](../../BACKERS.md).
 
 Vill du stödja arbetet? Se [sponsringsalternativen](../../SPONSORS.md), inklusive [hårdvarusponsring](../../SPONSORS.md#hardware-lab-partner), eller [sponsra på GitHub](https://github.com/sponsors/rohitg00).
 

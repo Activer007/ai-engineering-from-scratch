@@ -6,6 +6,8 @@ const test = require('node:test');
 
 const lessonApi = require('../api/lesson');
 const certificationApi = require('../api/certification');
+const ogApi = require('../api/og');
+const ogCards = require('../lib/og-cards');
 const { parseMd } = require('../site/lesson-markdown');
 const manuals = require('../site/build-manuals.js');
 const { buildData: buildProjectData } = require('../site/build-projects.js');
@@ -25,7 +27,7 @@ function makeAssets() {
         '<!-- AIFS:LESSON-SEO:START --><title>Fallback</title><!-- AIFS:LESSON-SEO:END -->',
         '</head><body><main><div id="lessonContent">',
         '<!-- AIFS:LESSON-FALLBACK:START --><p>Loading</p><!-- AIFS:LESSON-FALLBACK:END -->',
-        '</div></main></body></html>',
+        '</div><!-- AIFS:LESSON-HUBS:START --><!-- AIFS:LESSON-HUBS:END --></main></body></html>',
       ].join('\n'),
       manifest: {
         version: 1,
@@ -767,6 +769,7 @@ test('deployment routes extensionless pages through handlers and redirects legac
   const certificationsScript = fs.readFileSync(path.join(repoRoot, 'site', 'certifications.js'), 'utf8');
   assert.equal((lessonTemplate.match(/AIFS:LESSON-SEO:START/g) || []).length, 1);
   assert.equal((lessonTemplate.match(/AIFS:LESSON-FALLBACK:START/g) || []).length, 1);
+  assert.equal((lessonTemplate.match(/AIFS:LESSON-HUBS:START/g) || []).length, 1);
   assert.equal((certificationTemplate.match(/AIFS:CERTIFICATION-SEO:START/g) || []).length, 1);
   assert.equal((certificationTemplate.match(/AIFS:CERTIFICATION-FALLBACK:START/g) || []).length, 1);
   assert.doesNotMatch(lessonTemplate, /lesson\.html\?path=/);
@@ -1191,4 +1194,451 @@ test('a language with index false stays out of hreflang and the lesson sitemaps,
   isolatedBuild.annotateTranslations(manifest, { hi: ['phases/01-a/01-x'], ar: ['phases/01-a/01-x'] });
   assert.deepEqual(manifest.lessons['phases/01-a/01-x'].translations, ['hi', 'ar']);
   assert.deepEqual(isolatedBuild.writeLanguageSitemaps(manifest, site), ['sitemap-lessons-hi.xml']);
+});
+
+function metaTags(html) {
+  const tags = {};
+  for (const match of html.matchAll(/<meta (?:property|name)="([^"]+)" content="([^"]*)"\s*\/?>/g)) {
+    if (!(match[1] in tags)) tags[match[1]] = match[2].replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+  }
+  return tags;
+}
+
+function cardRequest(handler, url, method = 'GET', query) {
+  const response = { statusCode: 200, headers: {}, body: undefined };
+  const res = {
+    setHeader(name, value) { response.headers[String(name).toLowerCase()] = String(value); },
+    end(body) { response.body = body; },
+  };
+  Object.defineProperty(res, 'statusCode', {
+    get() { return response.statusCode; },
+    set(value) { response.statusCode = value; },
+  });
+  handler({ method, url, query }, res);
+  return response;
+}
+
+function cardFixture() {
+  const assets = makeAssets();
+  const vectors = Object.assign({}, assets.lesson.manifest.lessons['phases/01-math/01-vectors'], { translations: ['hi'] });
+  return {
+    'lesson-seo.json': { lessons: Object.assign({}, assets.lesson.manifest.lessons, { 'phases/01-math/01-vectors': vectors }) },
+    'certification-seo.json': assets.certification.manifest,
+    'og-cards.json': { version: 1, cards: { 'page/about': ogCards.pageCard('about', {}) } },
+  };
+}
+
+function withoutOrigin(url) {
+  return url.slice(ogCards.ORIGIN.length);
+}
+
+test('social card route renders known cards only at their versioned URL', function () {
+  const manifests = cardFixture();
+  const rendered = [];
+  const handler = ogApi.createHandler({
+    manifest: function (name) { return manifests[name]; },
+    render: function (spec) { rendered.push(spec.title); return Buffer.from(`png:${spec.title}`); },
+  });
+  const vectors = manifests['lesson-seo.json'].lessons['phases/01-math/01-vectors'];
+  const lesson = ogCards.cardPath('lesson', vectors.path, ogCards.lessonCard(vectors));
+  assert.match(lesson, /^\/og\/lesson\/phases\/01-math\/01-vectors\.png\?v=[0-9a-f]{12}$/);
+  const response = cardRequest(handler, lesson);
+  assert.equal(response.statusCode, 200);
+  assert.equal(response.headers['content-type'], 'image/png');
+  assert.equal(response.headers['cache-control'], 'public, max-age=31536000, s-maxage=31536000, immutable');
+  assert.equal(String(response.body), 'png:Vectors & <Matrices>');
+  const head = cardRequest(handler, lesson, 'HEAD');
+  assert.equal(head.statusCode, 200);
+  assert.equal(head.body, undefined);
+  assert.equal(head.headers['content-length'], response.headers['content-length']);
+
+  const hindi = ogCards.cardPath('lesson', vectors.path, ogCards.lessonCard(vectors, 'hi'), 'hi');
+  assert.match(hindi, /\?lang=hi&v=[0-9a-f]{12}$/);
+  assert.notEqual(hindi.split('v=')[1], lesson.split('v=')[1]);
+  assert.equal(cardRequest(handler, hindi).statusCode, 200);
+
+  const track = manifests['certification-seo.json'].tracks['claude-example'];
+  const trackUrl = ogCards.cardPath('track', 'claude-example', ogCards.trackCard(track));
+  assert.equal(cardRequest(handler, trackUrl).statusCode, 200);
+  const about = ogCards.cardPath('page', 'about', manifests['og-cards.json'].cards['page/about']);
+  const routed = cardRequest(handler, `/api/og?type=page&id=about&v=${about.split('v=')[1]}`, 'GET', { type: 'page', id: 'about', v: about.split('v=')[1] });
+  assert.equal(routed.statusCode, 200);
+  assert.deepEqual(rendered, ['Vectors & <Matrices>', 'Vectors & <Matrices>', 'Example Architecture Track', 'About this curriculum']);
+
+  const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  const route = config.routes.find(function (rule) { return rule.dest === '/api/og?type=$1&id=$2'; });
+  const pattern = new RegExp(`^${route.src}$`);
+  assert.deepEqual(pattern.exec('/og/lesson/phases/01-math/01-vectors.png').slice(1), ['lesson', 'phases/01-math/01-vectors']);
+  assert.equal(pattern.test('/og/lesson/../secret.png'), false);
+  assert.deepEqual(route.methods, ['GET', 'HEAD']);
+  for (const name of ['api/og.js', 'api/lesson.js', 'api/certification.js']) {
+    assert.match(config.functions[name].includeFiles, /lib\/og-render\.js,lib\/og-fonts\/\*\.json/, name);
+  }
+  assert.match(config.functions['api/og.js'].includeFiles, /site\/og-cards\.json/);
+});
+
+test('social card route redirects stale URLs and refuses unknown or forged input', function () {
+  const manifests = cardFixture();
+  const rendered = [];
+  const handler = ogApi.createHandler({
+    manifest: function (name) { return manifests[name]; },
+    render: function (spec) { rendered.push(spec.title); return Buffer.from('png'); },
+  });
+  const about = ogCards.cardPath('page', 'about', manifests['og-cards.json'].cards['page/about']);
+  for (const stale of ['/og/page/about.png', '/og/page/about.png?v=0123456789ab', `${about}&title=Forged`, `${about.replace('?', '?lang=en&')}`]) {
+    const response = cardRequest(handler, stale);
+    assert.equal(response.statusCode, 307, stale);
+    assert.equal(response.headers.location, about, stale);
+    assert.equal(response.headers['cache-control'], 'public, max-age=0, s-maxage=300, must-revalidate');
+  }
+  for (const unknown of [
+    '/og/page/missing.png', '/og/page/__proto__.png', '/og/page/constructor.png', '/og/evil/about.png',
+    '/og/lesson/phases/01-math/99-missing.png', '/og/lesson/../../etc/passwd.png', '/og/track/missing.png',
+    '/og/lesson/phases/01-math/01-vectors.png?lang=fr', '/og/lesson/phases/01-math/01-vectors.png?lang=%3Cscript%3E',
+    '/og/page/about.png?lang=hi', '/og/project/about.png', '/og/page/ABOUT.png',
+  ]) {
+    const response = cardRequest(handler, unknown);
+    assert.equal(response.statusCode, 404, unknown);
+    assert.equal(response.headers['cache-control'], 'no-store', unknown);
+    assert.equal(String(response.body), 'Card not found\n');
+  }
+  const post = cardRequest(handler, about, 'POST');
+  assert.equal(post.statusCode, 405);
+  assert.equal(post.headers.allow, 'GET, HEAD');
+  assert.deepEqual(rendered, []);
+
+  const broken = ogApi.createHandler({ manifest: function () { throw new Error('missing'); } });
+  assert.equal(cardRequest(broken, about).statusCode, 500);
+  const failing = ogApi.createHandler({ manifest: function (name) { return manifests[name]; }, render: function () { throw new Error('atlas'); } });
+  assert.equal(cardRequest(failing, about).headers['cache-control'], 'no-store');
+});
+
+test('lesson and certification heads point at their own versioned cards', async function () {
+  const assets = makeAssets();
+  const lessons = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const english = metaTags(invoke(lessons, { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } }).body);
+  assert.match(english['og:image'], /^https:\/\/aiengineeringfromscratch\.com\/og\/lesson\/phases\/01-math\/01-vectors\.png\?v=[0-9a-f]{12}$/);
+  assert.equal(english['twitter:image'], english['og:image']);
+  assert.equal(english['og:image:width'], '1200');
+  assert.equal(english['og:image:height'], '630');
+  assert.equal(english['og:image:alt'], 'Vectors & <Matrices> - AI Engineering from Scratch');
+  assert.equal(english['twitter:card'], 'summary_large_image');
+
+  const translated = lessonApi.createHandler({
+    loadAssets: function () { return withTranslations(['hi']); },
+    readTranslation: function () { return Promise.resolve(HINDI); },
+  });
+  const hindi = metaTags((await invokeAsync(translated, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` })).body);
+  assert.match(hindi['og:image'], /\/og\/lesson\/phases\/03-deep-learning-core\/01-the-perceptron\.png\?lang=hi&v=[0-9a-f]{12}$/);
+  assert.equal(hindi['twitter:image'], hindi['og:image']);
+
+  const tracks = certificationApi.createHandler({ loadAssets: function () { return assets.certification; } });
+  const track = metaTags(invoke(tracks, { method: 'GET', url: '/certification?id=claude-example', query: { id: 'claude-example' } }).body);
+  assert.match(track['og:image'], /^https:\/\/aiengineeringfromscratch\.com\/og\/track\/claude-example\.png\?v=[0-9a-f]{12}$/);
+  assert.equal(track['twitter:image'], track['og:image']);
+});
+
+test('every page type in the sitemap carries full social card tags that resolve to its own card', function (t) {
+  const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'site', 'og-cards.json'), 'utf8')).cards;
+  const og = ogApi.createHandler({ render: function () { return Buffer.from('png'); } });
+  const lessons = lessonApi.createHandler();
+  const tracks = certificationApi.createHandler();
+  const site = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-social-cards-'));
+  t.after(function () { fs.rmSync(site, { recursive: true, force: true }); });
+  manuals.writeWeb(manuals.loadAll().filter(function (manual) { return manual.status === 'ready'; }), site);
+  const sitemap = fs.readFileSync(path.join(ROOT, 'site', 'sitemap.xml'), 'utf8');
+  const seen = {};
+  for (const match of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    const url = new URL(match[1].replace(/&amp;/g, '&'));
+    const name = url.pathname.slice(1).replace(/\.html$/, '') || 'index';
+    let html;
+    let card;
+    if (name === 'lesson') {
+      html = invoke(lessons, { method: 'GET', url: url.pathname + url.search }).body;
+      card = `lesson/${url.searchParams.get('path')}`;
+    } else if (name === 'certification') {
+      html = invoke(tracks, { method: 'GET', url: url.pathname + url.search, query: { id: url.searchParams.get('id') } }).body;
+      card = `track/${url.searchParams.get('id')}`;
+    } else if (name.startsWith('manual')) {
+      html = fs.readFileSync(path.join(site, `${name}.html`), 'utf8');
+      card = name === 'manuals' ? 'page/manuals' : `manual/${name.slice('manual-'.length)}`;
+    } else {
+      html = fs.readFileSync(path.join(ROOT, 'site', `${name}.html`), 'utf8');
+      card = `page/${name === 'index' ? 'home' : name}`;
+    }
+    const tags = metaTags(ogCards.stampCards(html, cards));
+    assert.equal(tags['og:image'], tags['twitter:image'], url.href);
+    assert.ok(tags['og:image'].startsWith(`${ogCards.ORIGIN}/og/${card}.png?`), `${url.href} uses ${tags['og:image']}`);
+    assert.equal(tags['og:image:width'], '1200', url.href);
+    assert.equal(tags['og:image:height'], '630', url.href);
+    assert.ok(tags['og:image:alt'], url.href);
+    assert.equal(tags['twitter:card'], 'summary_large_image', url.href);
+    assert.equal(cardRequest(og, withoutOrigin(tags['og:image'])).statusCode, 200, tags['og:image']);
+    const type = card.split('/')[0];
+    seen[type] = (seen[type] || 0) + 1;
+  }
+  for (const [file, type, dir] of [['sitemap-glossary.xml', 'term', 'glossary'], ['sitemap-phases.xml', 'phase', 'phase']]) {
+    for (const match of fs.readFileSync(path.join(ROOT, 'site', file), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) {
+      const slug = new URL(match[1]).pathname.split('/').pop();
+      const tags = metaTags(ogCards.stampCards(fs.readFileSync(path.join(ROOT, 'site', 'hubs', dir, `${slug}.html`), 'utf8'), cards));
+      assert.ok(tags['og:image'].startsWith(`${ogCards.ORIGIN}/og/${type}/${slug}.png?`), `${match[1]} uses ${tags['og:image']}`);
+      assert.equal(tags['twitter:image'], tags['og:image'], match[1]);
+      assert.equal(tags['twitter:card'], 'summary_large_image', match[1]);
+      assert.equal(cardRequest(og, withoutOrigin(tags['og:image'])).statusCode, 200, tags['og:image']);
+      seen[type] = (seen[type] || 0) + 1;
+    }
+  }
+  assert.deepEqual(Object.keys(seen).sort(), ['lesson', 'manual', 'page', 'phase', 'term', 'track']);
+});
+
+test('the home card counts and page labels come from the build inventory', function () {
+  const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'site', 'og-cards.json'), 'utf8')).cards;
+  const phases = build.parseReadme(fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8'), build.parseRoadmap(fs.readFileSync(path.join(ROOT, 'ROADMAP.md'), 'utf8')));
+  const artifacts = build.discoverArtifacts();
+  const lessons = phases.reduce(function (total, phase) { return total + phase.lessons.length; }, 0);
+  const count = function (kind) { return artifacts.filter(function (artifact) { return artifact.kind === kind; }).length; };
+  assert.deepEqual(cards['page/home'].stats, [`${lessons} lessons`, `${phases.length} phases`, `${count('skill')} skills`, `${count('prompt')} prompts`]);
+  assert.equal(cards['page/catalog'].label, `Catalog · ${lessons} lessons`);
+  const projects = buildProjectData().projects;
+  assert.equal(cards['page/projects'].label, `Projects · ${projects.length} ready`);
+  assert.deepEqual(Object.keys(cards).filter(function (key) { return key.startsWith('project/'); }).sort(), projects.map(function (project) { return `project/${project.id}`; }).sort());
+});
+
+const hubBuilder = require('../site/build-hubs.js');
+const { phaseHubPath } = require('../lib/hub-routes');
+
+let sourceHubs;
+function hubsFromSource() {
+  if (sourceHubs) return sourceHubs;
+  const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
+  const phases = build.parseReadme(readme, build.parseRoadmap(fs.readFileSync(path.join(ROOT, 'ROADMAP.md'), 'utf8')));
+  const { lessonMinutes } = build.annotateLessonMeta(phases);
+  const { lessonManifest } = build.buildSeoManifests(phases, build.parseCertifications(), build.parseLearningPaths(ROOT, phases));
+  const glossary = build.parseGlossary(fs.readFileSync(path.join(ROOT, 'glossary', 'terms.md'), 'utf8'));
+  const hubs = hubBuilder.buildHubs({
+    phases,
+    prerequisites: build.parseCurriculumPrereqs(readme, phases),
+    glossary,
+    categories: build.GLOSSARY_CATEGORY_ORDER,
+    lessonManifest,
+    minutes: lessonMinutes,
+  });
+  sourceHubs = { glossary, lessonManifest, hubs };
+  return sourceHubs;
+}
+
+function decodeHtml(value) {
+  return value.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+}
+
+function textOf(html) {
+  return decodeHtml(html.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+}
+
+function hubGraph(html) {
+  const blocks = Array.from(html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g), function (match) { return JSON.parse(match[1]); });
+  assert.equal(blocks.length, 1);
+  return blocks[0]['@graph'];
+}
+
+function assertVisibleFaq(html, faq) {
+  const headings = Array.from(html.matchAll(/<h([1-3])[^>]*>([\s\S]*?)<\/h\1>/g), function (match) { return textOf(match[2]); });
+  const paragraphs = Array.from(html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g), function (match) { return textOf(match[1]); });
+  assert.ok(faq.mainEntity.length >= 1);
+  for (const question of faq.mainEntity) {
+    assert.ok(headings.includes(question.name), 'FAQ question is not a visible heading: ' + question.name);
+    assert.ok(paragraphs.includes(question.acceptedAnswer.text), 'FAQ answer is not visible text: ' + question.name);
+  }
+}
+
+function assertHubLinksResolve(html, hubs, lessonManifest) {
+  const termPages = new Set(hubs.termPages.map(function (page) { return page.name; }));
+  const anchors = new Set(hubs.termModels.filter(function (model) { return !model.page; }).map(function (model) { return model.slug; }));
+  const phases = new Set(hubs.phasePages.map(function (page) { return page.name; }));
+  for (const match of html.matchAll(/href="(\/(?:glossary|phase|lesson)[^"#]*(?:#[^"]*)?)"/g)) {
+    const href = decodeHtml(match[1]);
+    if (/#main$/.test(href)) continue;
+    let found;
+    if ((found = /^\/glossary\/([a-z0-9-]+)$/.exec(href))) assert.ok(termPages.has(found[1]), href);
+    else if ((found = /^\/glossary#([a-z0-9-]+)$/.exec(href))) assert.ok(anchors.has(found[1]), href);
+    else if ((found = /^\/phase\/([a-z0-9-]+)$/.exec(href))) assert.ok(phases.has(found[1]), href);
+    else if ((found = /^\/lesson\?path=([^&]+)$/.exec(href))) assert.ok(lessonManifest.lessons[decodeURIComponent(found[1])], href);
+    else assert.match(href, /^\/glossary(?:\?category=[a-z0-9-]+)?$/, href);
+  }
+}
+
+test('glossary term pages lead with the question, mirror visible FAQ text, and link only to real pages', function () {
+  const { glossary, lessonManifest, hubs } = hubsFromSource();
+  assert.equal(hubs.termPages.length + hubs.skipped.length, glossary.length);
+  assert.ok(hubs.termPages.length >= 200, 'most glossary entries stand alone');
+  for (const skipped of hubs.skipped) assert.ok(skipped.reason, skipped.term);
+  const names = hubs.termPages.map(function (page) { return page.name; });
+  assert.equal(new Set(names).size, names.length);
+  assert.ok(names.includes('adam-optimizer') && names.includes('rag-retrieval-augmented-generation'));
+  const titles = new Set();
+  for (const page of hubs.termPages) {
+    const canonical = 'https://aiengineeringfromscratch.com/glossary/' + page.name;
+    const title = decodeHtml(page.html.match(/<title>([^<]+)<\/title>/)[1]);
+    assert.ok(title.length <= 60 && !titles.has(title), title);
+    titles.add(title);
+    assert.equal(page.html.match(/<link rel="canonical" href="([^"]+)">/)[1], canonical);
+    const description = decodeHtml(page.html.match(/<meta name="description" content="([^"]+)">/)[1]);
+    assert.ok(description.length >= 40 && description.length <= 160, page.name + ': ' + description);
+    assert.equal((page.html.match(/<h1[\s>]/g) || []).length, 1);
+    const heading = textOf(page.html.match(/<h1>([\s\S]*?)<\/h1>/)[1]);
+    assert.match(heading, /^What (?:is|are) .+\?$/);
+    assert.ok(title.startsWith(heading.replace(/^What (?:is|are) /, '').replace(/\?$/, '').replace(/\s*\([^)]*\)$/, '')), title);
+    const graph = hubGraph(page.html);
+    assert.deepEqual(graph.map(function (node) { return node['@type']; }), ['DefinedTerm', 'BreadcrumbList', 'FAQPage']);
+    assert.equal(graph[0].url, canonical);
+    assert.equal(graph[0].inDefinedTermSet.url, 'https://aiengineeringfromscratch.com/glossary');
+    assert.deepEqual(graph[1].itemListElement.map(function (item) { return item.item; }), ['https://aiengineeringfromscratch.com/', 'https://aiengineeringfromscratch.com/glossary', canonical]);
+    assert.equal(graph[2].mainEntity[0].name, heading);
+    assertVisibleFaq(page.html, graph[2]);
+    assertHubLinksResolve(page.html, hubs, lessonManifest);
+    assert.match(page.html, /<base href="\/">/);
+    assert.match(page.html, /<link rel="stylesheet" href="\/hubs\.css\?v=[0-9a-f]{16}">/);
+    assert.match(page.html, /<script src="\/header\.js\?v=[0-9a-f]{16}" defer><\/script>/);
+    assert.match(page.markdown, /^# What (?:is|are) .+\?\n\nCanonical page: https:\/\/aiengineeringfromscratch\.com\/glossary\//);
+    assert.doesNotMatch(page.markdown, /<script|<!DOCTYPE/i);
+  }
+  const adamw = hubs.termPages.find(function (page) { return page.name === 'adamw'; });
+  assert.match(adamw.html, /<title>AdamW: Definition and Common Confusion<\/title>/);
+  assert.match(adamw.html, /href="\/glossary\/adam-optimizer">Adam \(Optimizer\)<\/a>/);
+  const adam = hubs.termModels.find(function (model) { return model.slug === 'adam-optimizer'; });
+  assert.ok(adam.related.some(function (model) { return model.slug === 'adamw'; }), 'related terms link both ways');
+
+  const model = function (slug) { return hubs.termModels.find(function (item) { return item.slug === slug; }); };
+  const covered = function (slug) { return model(slug).titled.concat(model(slug).mentioned).map(function (lesson) { return lesson.path; }); };
+  assert.ok(covered('adamw').includes('phases/03-deep-learning-core/06-optimizers'), 'section headings count as matches');
+  assert.match(adamw.html, /<p>Covered in <a href="\/phase\/deep-learning-core">Phase 03: Deep Learning Core<\/a>/);
+  assert.doesNotMatch(adamw.html, /Taught in/);
+  assert.match(hubs.termPages.find(function (page) { return page.name === 'agent'; }).html, /<p>Taught in <a href="\/phase\/agent-engineering">/);
+  assert.ok(covered('weight').length > 0);
+  assert.ok(!model('weight').titled.some(function (lesson) { return /Open-Weight/.test(lesson.title); }), 'hyphenated words do not match');
+  assert.ok(!covered('exact-match-em').includes('phases/02-ml-fundamentals/07-unsupervised-learning'), 'names of two characters are skipped');
+  assert.ok(!model('adam-optimizer').titled.some(function (lesson) { return /ZeRO Optimizer/.test(lesson.title); }), 'a qualifier that names another term is not a match');
+  const unlinked = hubs.termModels.filter(function (item) { return item.page && !item.learn.length && !covered(item.slug).length; });
+  assert.ok(unlinked.length < 61, unlinked.length + ' term pages link to no lesson');
+});
+
+test('phase hubs state real lesson counts, link every lesson, and answer a visible FAQ from data', function () {
+  const { lessonManifest, hubs } = hubsFromSource();
+  const coursePaths = Object.values(lessonManifest.lessons)
+    .filter(function (entry) { return entry.context.kind === 'course'; })
+    .map(function (entry) { return entry.path; });
+  assert.equal(hubs.phasePages.length, new Set(coursePaths.map(phaseHubPath)).size);
+  const titles = new Set();
+  for (const page of hubs.phasePages) {
+    const canonical = 'https://aiengineeringfromscratch.com/phase/' + page.name;
+    const lessons = coursePaths.filter(function (lessonPath) { return phaseHubPath(lessonPath) === '/phase/' + page.name; });
+    const title = decodeHtml(page.html.match(/<title>([^<]+)<\/title>/)[1]);
+    assert.ok(title.endsWith(': ' + lessons.length + ' Free Lessons'), title);
+    assert.ok(title.length <= 60 && !titles.has(title), title);
+    titles.add(title);
+    assert.equal(textOf(page.html.match(/<h1>([\s\S]*?)<\/h1>/)[1]), title);
+    assert.equal(page.html.match(/<link rel="canonical" href="([^"]+)">/)[1], canonical);
+    for (const lessonPath of lessons) assert.ok(page.html.includes('href="/lesson?path=' + encodeURIComponent(lessonPath) + '"'), lessonPath);
+    const graph = hubGraph(page.html);
+    assert.deepEqual(graph.map(function (node) { return node['@type']; }), ['Course', 'BreadcrumbList', 'FAQPage']);
+    assert.equal(graph[0].hasPart.length, lessons.length);
+    assert.equal(graph[0].isAccessibleForFree, true);
+    assert.equal(graph[1].itemListElement[1].item, 'https://aiengineeringfromscratch.com/catalog');
+    assert.equal(graph[1].itemListElement[2].item, canonical);
+    assertVisibleFaq(page.html, graph[2]);
+    assert.ok(graph[2].mainEntity.some(function (question) { return /^Is Phase \d+ free\?$/.test(question.name) && /free to read/.test(question.acceptedAnswer.text); }));
+    assert.ok(graph[2].mainEntity.some(function (question) { return question.acceptedAnswer.text.includes(lessons.length + ' lessons'); }));
+    assertHubLinksResolve(page.html, hubs, lessonManifest);
+    assert.match(page.markdown, /^# .+: \d+ Free Lessons\n\nCanonical page: /);
+  }
+  const deepLearning = hubs.phasePages.find(function (page) { return page.name === 'deep-learning-core'; });
+  assert.match(deepLearning.html, /<h1>Learn Deep Learning from Scratch: \d+ Free Lessons<\/h1>/);
+  assert.match(deepLearning.html, /builds on <a href="\/phase\/ml-fundamentals">Phase 02: ML Fundamentals<\/a>/);
+  assert.match(deepLearning.html, /<h3>What should I know before I start Phase 03\?<\/h3><p>The phase guide gives these prerequisites: /);
+  assert.match(deepLearning.html, /The time estimates of all \d+ lessons add up to about \d+ hours\./);
+});
+
+test('lessons, the glossary page, and sitemaps link the new hubs without changing other pages', function (t) {
+  const { glossary, lessonManifest, hubs } = hubsFromSource();
+  for (const [lessonPath, terms] of Object.entries(hubs.lessonTerms)) {
+    assert.ok(lessonManifest.lessons[lessonPath], lessonPath);
+    for (const term of terms) assert.match(term.href, /^\/glossary[/#][a-z0-9-]+$/);
+  }
+  assert.ok(hubs.lessonTerms['phases/14-agent-engineering/01-the-agent-loop'].some(function (term) { return term.href === '/glossary/agent'; }), 'Learn it links reach the lesson');
+  assert.ok(hubs.lessonTerms['phases/07-transformers-deep-dive/09-vision-transformers'].some(function (term) { return term.href === '/glossary/vision-transformer-vit'; }), 'title matches reach the lesson');
+  for (const model of hubs.termModels) {
+    assert.ok(hubs.glossaryIndex.includes(model.page ? 'href="glossary/' + model.slug + '"' : 'href="#' + model.slug + '"'), model.slug);
+  }
+  const set = JSON.parse(hubs.glossaryJsonLd.match(/<script type="application\/ld\+json">([\s\S]*)<\/script>/)[1]);
+  assert.equal(set['@type'], 'DefinedTermSet');
+  assert.equal(set.hasDefinedTerm.length, glossary.length);
+  const page = fs.readFileSync(path.join(ROOT, 'site', 'glossary.html'), 'utf8');
+  for (const marker of ['GLOSSARY-JSONLD:START', 'GLOSSARY-JSONLD:END', 'GLOSSARY-INDEX:START', 'GLOSSARY-INDEX:END']) assert.ok(page.includes('<!-- GENERATED:' + marker + ' -->'), marker);
+  assert.match(page, /termPages\[entry\.slug\]/);
+
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-hub-sitemaps-'));
+  t.after(function () { fs.rmSync(root, { recursive: true, force: true }); });
+  build.writeLanguageSitemaps({ lessons: {} }, root, ['sitemap-phases.xml', 'sitemap-glossary.xml']);
+  const index = fs.readFileSync(path.join(root, 'sitemap-index.xml'), 'utf8');
+  assert.deepEqual(Array.from(index.matchAll(/<loc>([^<]+)<\/loc>/g), function (match) { return match[1]; }), [
+    'https://aiengineeringfromscratch.com/sitemap.xml',
+    'https://aiengineeringfromscratch.com/sitemap-phases.xml',
+    'https://aiengineeringfromscratch.com/sitemap-glossary.xml',
+  ]);
+  assert.doesNotMatch(index, /lastmod/);
+});
+
+test('translated lesson pages keep the hub breadcrumb but leave out the English link block', async function () {
+  const handler = lessonApi.createHandler({
+    loadAssets: function () { return withTranslations(['hi']); },
+    readTranslation: function () { return Promise.resolve(HINDI); },
+  });
+  const english = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}` });
+  const hindi = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+  assert.match(english.body, /<nav class="lesson-hub-links"/);
+  assert.match(hindi.body, /<html lang="hi"/);
+  assert.doesNotMatch(hindi.body, /<nav class="lesson-hub-links"/);
+  assert.match(hindi.body, /"item":"https:\/\/aiengineeringfromscratch\.com\/phase\/deep-learning-core"/);
+});
+
+test('lesson route breadcrumbs point to the phase hub and list the terms the lesson teaches', function () {
+  const assets = makeAssets();
+  assets.lesson.lessonTerms = {
+    'phases/01-math/01-vectors': [
+      { term: 'Vector <Space>', href: '/glossary/vector-space' },
+      { term: 'Unsafe', href: 'javascript:alert(1)' },
+    ],
+  };
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const breadcrumbs = function (body) {
+    const graph = JSON.parse(body.match(/<script type="application\/ld\+json" id="lessonJsonLd">([\s\S]*?)<\/script>/)[1])['@graph'];
+    return graph.find(function (node) { return node['@type'] === 'BreadcrumbList'; }).itemListElement;
+  };
+  const course = invoke(handler, { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } });
+  assert.equal(course.statusCode, 200);
+  assert.deepEqual(breadcrumbs(course.body)[1], { '@type': 'ListItem', position: 2, name: 'Phase 01: Math Foundations', item: 'https://aiengineeringfromscratch.com/phase/math' });
+  assert.match(course.body, /<nav class="lesson-hub-links"[^>]*>[\s\S]*<a href="\/phase\/math">Phase 01: Math Foundations<\/a>/);
+  assert.match(course.body, /Terms in this lesson:<\/span> <a href="\/glossary\/vector-space">Vector &lt;Space&gt;<\/a>/);
+  assert.doesNotMatch(course.body, /javascript:alert/);
+  assert.ok(course.body.indexOf('lesson-hub-links') > course.body.indexOf('<!-- AIFS:LESSON-FALLBACK:END -->'), 'the hub block sits outside the client-rendered region');
+
+  const certification = invoke(handler, {
+    method: 'GET',
+    url: '/lesson?path=certifications%2Fclaude%2Flessons%2F01-models&track=claude-example',
+    query: { path: 'certifications/claude/lessons/01-models', track: 'claude-example' },
+  });
+  assert.equal(certification.statusCode, 200);
+  assert.equal(breadcrumbs(certification.body)[1].name, 'Certifications');
+  assert.doesNotMatch(certification.body, /<nav class="lesson-hub-links"/);
+
+  const withoutTerms = invoke(lessonApi.createHandler({ loadAssets: function () { return makeAssets().lesson; } }), { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } });
+  assert.equal(withoutTerms.statusCode, 200);
+  assert.match(withoutTerms.body, /<a href="\/phase\/math">/);
+  assert.doesNotMatch(withoutTerms.body, /Terms in this lesson/);
+
+  const template = fs.readFileSync(path.join(ROOT, 'site', 'lesson.html'), 'utf8');
+  assert.ok(template.indexOf('<!-- AIFS:LESSON-HUBS:START -->') > template.indexOf('<!-- AIFS:LESSON-FALLBACK:END -->'));
+  assert.match(template, /item: ORIGIN \+ hubPhase\.hub/);
+  const functions = require('../vercel.json').functions['api/lesson.js'].includeFiles;
+  assert.ok(functions.includes('site/lesson-terms.json'));
 });

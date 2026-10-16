@@ -13,11 +13,11 @@ Implementează mecanismele interne ale modelelor, fluxurile de regăsire a infor
 
 Gratuit, cu sursă deschisă, licență MIT. Învață pe site, cu un agent de programare sau rulând cod local.
 
-> 523 de lecții. 20 de etape. Python, TypeScript, Rust, Julia.
+> 542 de lecții. 20 de etape. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licență MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 de lecții"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 de lecții"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 de etape"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Stele GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Site web"></a>
@@ -207,6 +207,7 @@ Instalatorul enumeră gazdele pe care le poate configura și întreabă unde să
 | [`course-guide`](../../skills/course-guide/SKILL.md) | Ghid de subiecte. „Unde învăț atenția?” sau „pierderea mea este NaN” → lecțiile exacte, cu linkuri. |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor Model Context Protocol (MCP). Creează `MCP-LEARNING.md`, urmează manifestul cu 17 lecții și înregistrează dovezi de comunicație, securitate, fiabilitate și conformitate. |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor Agent Skills. Creează `AGENT-SKILLS-LEARNING.md`, predă lecțiile 22, 24, 25, 26 și 27 și înregistrează dovezi de pe gazde reale. |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | Tutor de inginerie inversă. Creează `REVERSE-ENGINEERING-LEARNING.md`, predă lecțiile de la 32 la 45 din etapa 13 pe programe construite de tine și înregistrează dovezi din laborator. |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | Tutor de certificare. Alege CCAO-F, CCDV-F, CCAR-F sau CCAR-P; predă lecțiile, rulează laboratoare, evaluează rezultate, administrează diagnostice și simulări, salvează progresul. |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor MCPA. Urmează traseul `mcpa-f` cu 34 de lecții despre protocolul 2026-07-28; predă lecțiile, rulează laboratoare și verificatorul comunicației, administrează diagnosticul și trei simulări, salvează progresul. |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | Test de plasare cu zece întrebări. Mapează cunoștințele la etapa inițială și produce un traseu personalizat cu estimări de timp. |
@@ -246,7 +247,7 @@ Căile din comenzile paginilor de lecție pornesc de la rădăcina depozitului, 
 
 ## Alege un traseu de învățare
 
-Nu trebuie să parcurgi toate cele 523 de lecții înainte să începi. Alege un obiectiv. Fiecare link deschide același program pe GitHub sau pe site, iar ambele versiuni folosesc același cod al lecțiilor.
+Nu trebuie să parcurgi toate cele 542 de lecții înainte să începi. Alege un obiectiv. Fiecare link deschide același program pe GitHub sau pe site, iar ambele versiuni folosesc același cod al lecțiilor.
 
 | Obiectivul tău | Învață pe GitHub | Învață pe site |
 |---|---|---|
@@ -262,12 +263,13 @@ Nu știi de unde să începi? Folosește [tutorele `start-learning` pentru evalu
 Compară patru domenii de bază și șase trasee profesionale în [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
 
 <details>
-<summary>Trasee specializate MCP și Agent Skills</summary>
+<summary>Trasee specializate MCP, Agent Skills și inginerie inversă</summary>
 
 | Obiectivul tău | Învață pe GitHub | Învață pe site |
 |---|---|---|
 | Vreau să construiesc folosind Model Context Protocol (MCP) | [Ruta Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Traseul Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Vreau să scriu și să public Agent Skills | [Ruta dedicată Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Traseul Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Vreau să citesc programe compilate | [Ruta de inginerie inversă](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Traseul de inginerie inversă](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ Compară patru domenii de bază și șase trasee profesionale în [AI Engineerin
 | Inginer senior, vrei doar ingineria agenților | Etapa 14: Ingineria agenților | ~60 ore |
 | Vrei doar să construiești sisteme MCP de producție | [Traseul Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 de ore și 15 minute |
 | Vrei doar să construiești Agent Skills de producție | [Traseul de inginerie Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 ore |
+| Vrei doar să înveți inginerie inversă | [Traseul de inginerie inversă](../../learning-paths/reverse-engineering.json) | ~32.5 ore |
 
 </details>
 
@@ -330,7 +333,7 @@ flowchart TB
 Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 <a id="phase-0"></a>
-### Etapa 0: Configurare și instrumente `12 lecții`
+### Etapa 0: Configurare și instrumente `13 lecții`
 > Pregătește-ți mediul pentru tot ce urmează.
 
 | # | Lecție | Tip | Limbaj |
@@ -347,6 +350,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 10 | [Terminalul și interpretorul de comenzi](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Învață | — |
 | 11 | [Linux pentru AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Învață | — |
 | 12 | [Depanarea și profilarea](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Construiește | Python |
+| 13 | [Python pentru ingineria AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Construiește | Python |
 
 <details id="phase-1">
 <summary><b>Etapa 1: Fundamente matematice</b> &nbsp;<code>22 lecții</code>&nbsp; <em>Intuiția din spatele fiecărui algoritm AI, prin cod.</em></summary>
@@ -380,7 +384,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 </details>
 
 <details id="phase-2">
-<summary><b>Etapa 2: Bazele ML</b> &nbsp;<code>18 lecții</code>&nbsp; <em>ML clasic: încă baza majorității AI din producție.</em></summary>
+<summary><b>Etapa 2: Bazele ML</b> &nbsp;<code>21 lecții</code>&nbsp; <em>ML clasic: încă baza majorității AI din producție.</em></summary>
 <br/>
 
 | # | Lecție | Tip | Limbaj |
@@ -403,6 +407,9 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 16 | [Detectarea anomaliilor](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Construiește | Python |
 | 17 | [Gestionarea datelor dezechilibrate](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Construiește | Python |
 | 18 | [Selectarea caracteristicilor](../../phases/02-ml-fundamentals/18-feature-selection/) | Construiește | Python |
+| 19 | [Proiectarea sistemelor ML: de la problemă la modelul în producție](../../phases/02-ml-fundamentals/19-ml-system-design/) | Construiește | Python |
+| 20 | [Monitorizarea modelelor în producție: deriva datelor și deriva conceptului](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Construiește | Python |
+| 21 | [Depozite de caracteristici și decalajul dintre antrenare și servire](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Construiește | Python |
 
 </details>
 
@@ -693,7 +700,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 </details>
 
 <details id="phase-13">
-<summary><b>Etapa 13: Instrumente și protocoale</b> &nbsp;<code>31 lecții</code>&nbsp; <em>Interfețele dintre AI și lumea reală.</em></summary>
+<summary><b>Etapa 13: Instrumente și protocoale</b> &nbsp;<code>45 de lecții</code>&nbsp; <em>Interfețele dintre AI și lumea reală.</em></summary>
 <br/>
 
 | # | Lecție | Tip | Limbaj |
@@ -729,6 +736,20 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 29 | [Fiabilitatea MCP, anularea și controlul fluxului](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Construiește | Python |
 | 30 | [Lanțul de aprovizionare al registrului MCP: admitere, abateri și revenire](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Construiește | Python |
 | 31 | [Conformitatea MCP: versiuni, dovezi și operațiuni](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Construiește | Python |
+| 32 | [Anatomia programului: citirea ELF de la zero](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Construiește | Python |
+| 33 | [Dezasamblare și grafuri de flux de control](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Construiește | Python |
+| 34 | [Ridicarea codului mașină la pseudocod](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Construiește | Python |
+| 35 | [Dovezi, încredere și necunoscute în analiza binară](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Construiește | Python |
+| 36 | [Reconstruiește și demonstrează echivalența](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Construiește | Python |
+| 37 | [Peisajul ingineriei inverse](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Construiește | Python |
+| 38 | [Convenții de apel și cadre de stivă](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Construiește | Python |
+| 39 | [Idiomuri ale compilatorului și optimizare](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Construiește | Python |
+| 40 | [Legare, încărcare și binare fără simboluri](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Construiește | Python |
+| 41 | [Recuperarea datelor și a tipurilor](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Construiește | Python |
+| 42 | [Analiza dinamică a propriului program](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Construiește | Python |
+| 43 | [Bytecode și formate gestionate](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Construiește | Python |
+| 44 | [Compararea binarelor și execuție simbolică](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Construiește | Python |
+| 45 | [Inginerie inversă asistată de AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Construiește | Python |
 
 Lecțiile 06-18 și 28-31 formează [traseul Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Ordinea manifestului este 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Începe cu invocarea `learn-mcp` specifică gazdei de mai sus. Lecția 23 este singurul proiect final opțional și necesită și lecțiile 19 și 20.
 
@@ -869,7 +890,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 </details>
 
 <details id="phase-17">
-<summary><b>Etapa 17: Infrastructură și producție</b> &nbsp;<code>28 lecții</code>&nbsp; <em>Livrează AI în lumea reală.</em></summary>
+<summary><b>Etapa 17: Infrastructură și producție</b> &nbsp;<code>29 lecții</code>&nbsp; <em>Livrează AI în lumea reală.</em></summary>
 <br/>
 
 | # | Lecție | Tip | Limbaj |
@@ -902,6 +923,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 26 | [Conformitate: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Învață | Python |
 | 27 | [FinOps pentru LLM: economie unitară și atribuirea costurilor per client](../../phases/17-infrastructure-and-production/27-finops-llms/) | Învață | Python |
 | 28 | [Alegerea inferenței autogăzduite: potrivirea motorului cu hardware-ul și scara](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Învață | Python |
+| 29 | [Interfețe demo pentru modele: de la o funcție la o aplicație care poate fi partajată](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Construiește | Python |
 
 </details>
 
@@ -1142,7 +1164,7 @@ Alte cursuri se încheie cu *„felicitări, ai învățat X”*. Aici, fiecare 
 <details>
 <summary>Instalează artefactele lecțiilor</summary>
 
-**Rezultatele lecțiilor.** Depozitul livrează 396 de abilități și 99 de prompturi în `phases/**/outputs/`; instalează-le prin `scripts/install_skills.py`. Necesită clonarea depozitului. Acceptă filtre de etichete, rulări de probă și organizări per agent:
+**Rezultatele lecțiilor.** Depozitul livrează 414 de abilități și 100 de prompturi în `phases/**/outputs/`; instalează-le prin `scripts/install_skills.py`. Necesită clonarea depozitului. Acceptă filtre de etichete, rulări de probă și organizări per agent:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1284,7 @@ Codul de ieșire este diferit de zero când o regulă eșuează. Regulile L001�
 <p align="center"><sub><b>114,584</b> cititori &nbsp;·&nbsp; <b>181,995</b> vizualizări de pagini în ultimele 30 de zile &nbsp;·&nbsp; la 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Gratuit, cu licență MIT, 523 de lecții. Mulțumim sponsorilor și susținătorilor care fac posibilă această muncă. [Vezi toți sponsorii și susținătorii](../../BACKERS.md).
+Gratuit, cu licență MIT, 542 de lecții. Mulțumim sponsorilor și susținătorilor care fac posibilă această muncă. [Vezi toți sponsorii și susținătorii](../../BACKERS.md).
 
 Vrei să susții proiectul? Vezi [opțiunile de sponsorizare](../../SPONSORS.md), inclusiv [sponsorizarea cu hardware](../../SPONSORS.md#hardware-lab-partner), sau [devino sponsor pe GitHub](https://github.com/sponsors/rohitg00).
 

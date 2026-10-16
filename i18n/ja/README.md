@@ -13,11 +13,11 @@
 
 無料、オープンソース、MIT ライセンスです。ウェブサイト、コーディングエージェント、ローカルでのコード実行から学び方を選べます。
 
-> 523 授業. 20段階. Python, TypeScript, Rust, Julia.
+> 542 授業. 20段階. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MITライセンス"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 授業"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 授業"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20段階"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHubのスター"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="ウェブサイト"></a>
@@ -207,6 +207,7 @@ Agent Skillsだけを学ぶ場合は、ホストに対応したAgent Skillsの�
 | [`course-guide`](../../skills/course-guide/SKILL.md) | トピック案内。「アテンションはどこで学べる？」「損失がNaNになる」などの質問から、関連レッスンとリンクを案内します。 |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Model Context Protocol（MCP）に特化したチューターです。`MCP-LEARNING.md`を作成して17レッスンのマニフェストに沿って進み、ワイヤ形式、セキュリティ、信頼性、適合性の証跡を記録します。 |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skillsに特化したチューターです。`AGENT-SKILLS-LEARNING.md`を作成し、レッスン22、24、25、26、27を教えて、実ホストでの証跡を記録します。 |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | リバースエンジニアリングに特化したチューターです。`REVERSE-ENGINEERING-LEARNING.md`を作成し、フェーズ13のレッスン32から45を自分で作ったプログラムで教えて、ラボの証跡を記録します。 |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | 認定資格チューターです。CCAO-F、CCDV-F、CCAR-F、CCAR-Pからトラックを選び、各レッスンを教え、ラボを実行し、成果物をレビューし、診断と模擬試験を実施して、進捗を保存します。 |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPAチューターです。2026-07-28プロトコルに対応する34レッスンの`mcpa-f`パスに沿って教え、ラボとワイヤ形式チェッカーを実行し、診断と模擬試験3回分を実施して、進捗を保存します。 |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | 10問のレベル判定クイズで知識を確認し、開始フェーズと所要時間の目安を含む個別パスを作成します。 |
@@ -246,7 +247,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## 学習パスを選ぶ
 
-始める前に523レッスンすべてに目を通す必要はありません。目標を1つ選んでください。どのリンクからもGitHubまたはウェブサイトで同じカリキュラムを開けます。どちらも同じレッスンコードを使っています。
+始める前に542レッスンすべてに目を通す必要はありません。目標を1つ選んでください。どのリンクからもGitHubまたはウェブサイトで同じカリキュラムを開けます。どちらも同じレッスンコードを使っています。
 
 | 目標 | GitHubで学ぶ | ウェブサイトで学ぶ |
 |---|---|---|
@@ -262,12 +263,13 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 4つの主要分野と6つのキャリアパスを[AIエンジニアリング学習パス](https://aiengineeringfromscratch.com/learning-paths.html)で比較できます。
 
 <details>
-<summary>MCP と Agent Skills の専門学習パス</summary>
+<summary>MCP、Agent Skills、リバースエンジニアリングの専門学習パス</summary>
 
 | 目標 | GitHubで学ぶ | ウェブサイトで学ぶ |
 |---|---|---|
 | Model Context Protocol（MCP）を使って構築したい | [Model Context Protocol（MCP）の学習パス](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol（MCP）のパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Agent Skillsを書いて公開したい | [Agent Skills集中学習パス](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skillsのパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| コンパイル済みプログラムを読み解きたい | [リバースエンジニアリング学習ルート](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [リバースエンジニアリングのパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 | シニアエンジニアで、エージェントエンジニアリングだけを学びたい | フェーズ14 — エージェントエンジニアリング | 約60時間 |
 | 本番向けMCPシステムだけを構築したい | [Model Context Protocol（MCP）のパス](../../learning-paths/model-context-protocol.json) | 約23時間15分 |
 | 本番向けAgent Skillsだけを作りたい | [Agent Skillsエンジニアリングのパス](../../learning-paths/agent-skills.json) | 約9.5時間 |
+| リバースエンジニアリングだけを学びたい | [リバースエンジニアリングのパス](../../learning-paths/reverse-engineering.json) | 約32.5時間 |
 
 </details>
 
@@ -330,7 +333,7 @@ flowchart TB
 全20フェーズです。各フェーズをクリックすると、レッスン一覧が開きます。
 
 <a id="phase-0"></a>
-### フェーズ0：セットアップとツール `12 レッスン`
+### フェーズ0：セットアップとツール `13 レッスン`
 
 > これから学ぶ内容に備えて、開発環境を整えましょう。
 
@@ -348,6 +351,7 @@ flowchart TB
 | 10 | [ターミナルとシェル](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | 学習 | — |
 | 11 | [AIのためのLinux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | 学習 | — |
 | 12 | [デバッグとプロファイリング](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | 制作 | Python |
+| 13 | [AIエンジニアリングのためのPython](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | 制作 | Python |
 
 <details id="phase-1">
 <summary><b>フェーズ1 — 数学の基礎</b> &nbsp;<code>22 レッスン</code>&nbsp; <em>コードを通じて、あらゆるAIアルゴリズムの背景にある直観を学びます。</em></summary>
@@ -381,7 +385,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>フェーズ2 — 機械学習の基礎</b> &nbsp;<code>18 レッスン</code>&nbsp; <em>古典的な機械学習は、今も多くの本番AIシステムを支えています。</em></summary>
+<summary><b>フェーズ2 — 機械学習の基礎</b> &nbsp;<code>21 レッスン</code>&nbsp; <em>古典的な機械学習は、今も多くの本番AIシステムを支えています。</em></summary>
 <br/>
 
 | # | レッスン | 種別 | 言語 |
@@ -404,6 +408,9 @@ flowchart TB
 | 16 | [異常検知](../../phases/02-ml-fundamentals/16-anomaly-detection/) | 制作 | Python |
 | 17 | [不均衡データへの対処](../../phases/02-ml-fundamentals/17-imbalanced-data/) | 制作 | Python |
 | 18 | [特徴量選択](../../phases/02-ml-fundamentals/18-feature-selection/) | 制作 | Python |
+| 19 | [機械学習システム設計：課題からデプロイ済みモデルまで](../../phases/02-ml-fundamentals/19-ml-system-design/) | 制作 | Python |
+| 20 | [本番環境でのモデル監視：データドリフトとコンセプトドリフト](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | 制作 | Python |
+| 21 | [特徴量ストアと学習・推論間のずれ](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | 制作 | Python |
 
 </details>
 
@@ -694,7 +701,7 @@ flowchart TB
 </details>
 
 <details id="phase-13">
-<summary><b>フェーズ13 — ツールとプロトコル</b> &nbsp;<code>31 レッスン</code>&nbsp; <em>AIと現実世界をつなぐインターフェースを学びます。</em></summary>
+<summary><b>フェーズ13 — ツールとプロトコル</b> &nbsp;<code>45 レッスン</code>&nbsp; <em>AIと現実世界をつなぐインターフェースを学びます。</em></summary>
 <br/>
 
 | # | レッスン | 種別 | 言語 |
@@ -730,6 +737,20 @@ flowchart TB
 | 29 | [MCPの信頼性、キャンセル、フロー制御](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | 制作 | Python |
 | 30 | [MCPレジストリのサプライチェーン：登録審査、ドリフト、ロールバック](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | 制作 | Python |
 | 31 | [MCP適合性エンジニアリング：バージョン管理、証跡、運用](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | 制作 | Python |
+| 32 | [プログラムの構造：ELFをゼロから読む](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | 制作 | Python |
+| 33 | [逆アセンブルと制御フローグラフ](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | 制作 | Python |
+| 34 | [機械語を疑似コードへ持ち上げる](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | 制作 | Python |
+| 35 | [バイナリ解析における証拠、確信度、未知の点](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | 制作 | Python |
+| 36 | [再構築して同一性を証明する](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | 制作 | Python |
+| 37 | [リバースエンジニアリングの全体像](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | 制作 | Python |
+| 38 | [呼び出し規約とスタックフレーム](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | 制作 | Python |
+| 39 | [コンパイラのイディオムと最適化](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | 制作 | Python |
+| 40 | [リンク、ロード、ストリップされたバイナリ](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | 制作 | Python |
+| 41 | [データと型の復元](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | 制作 | Python |
+| 42 | [自作プログラムの動的解析](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | 制作 | Python |
+| 43 | [バイトコードとマネージド形式](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | 制作 | Python |
+| 44 | [バイナリ差分とシンボリック実行](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | 制作 | Python |
+| 45 | [AIを活用したリバースエンジニアリング](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | 制作 | Python |
 
 レッスン06–18および28–31が[Model Context Protocol（MCP）集中学習パス](../../learning-paths/model-context-protocol.json)を構成します。マニフェストの順序は06、07、08、09、10、11、12、13、14、15、16、18、17、28、29、30、31です。上のホスト別呼び出し方法で`learn-mcp`を開始してください。レッスン23は唯一の任意の総合課題で、レッスン19と20も必要です。
 
@@ -870,7 +891,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>フェーズ17 — インフラと本番運用</b> &nbsp;<code>28 レッスン</code>&nbsp; <em>AIを現実の世界に届けます。</em></summary>
+<summary><b>フェーズ17 — インフラと本番運用</b> &nbsp;<code>29 レッスン</code>&nbsp; <em>AIを現実の世界に届けます。</em></summary>
 <br/>
 
 | # | レッスン | 種別 | 言語 |
@@ -903,6 +924,7 @@ flowchart TB
 | 26 | [コンプライアンス：SOC 2、HIPAA、GDPR、EU AI Act、ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | 学習 | Python |
 | 27 | [LLMのFinOps：単位経済性とマルチテナントのコスト帰属](../../phases/17-infrastructure-and-production/27-finops-llms/) | 学習 | Python |
 | 28 | [セルフホスト型サービングの選定：エンジンとハードウェア、規模の適合](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | 学習 | Python |
+| 29 | [モデルのデモインターフェース：関数から共有できるアプリへ](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | 制作 | Python |
 
 </details>
 
@@ -1143,7 +1165,7 @@ flowchart LR
 <details>
 <summary>レッスンの成果物をインストールする</summary>
 
-**レッスン成果物。** リポジトリには`phases/**/outputs/`に396個のスキルと99個のプロンプトが含まれます。`scripts/install_skills.py`でインストールできます。こちらはリポジトリのクローンが必要です。タグによる絞り込み、ドライラン、エージェント別レイアウトをサポートします。
+**レッスン成果物。** リポジトリには`phases/**/outputs/`に414個のスキルと100個のプロンプトが含まれます。`scripts/install_skills.py`でインストールできます。こちらはリポジトリのクローンが必要です。タグによる絞り込み、ドライラン、エージェント別レイアウトをサポートします。
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1263,7 +1285,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> 人の読者 &nbsp;·&nbsp; <b>181,995</b> 過去30日間のページビュー &nbsp;·&nbsp; 2026-08-29時点</sub></p>
 <!-- STATS:END -->
 
-無料、MITライセンス、523レッスン。この取り組みを支えるスポンサーと支援者の皆さまに感謝します。[すべてのスポンサーと支援者を見る](../../BACKERS.md)。
+無料、MITライセンス、542レッスン。この取り組みを支えるスポンサーと支援者の皆さまに感謝します。[すべてのスポンサーと支援者を見る](../../BACKERS.md)。
 
 この取り組みを支援するには、[スポンサーシップの選択肢](../../SPONSORS.md)と[ハードウェアスポンサーシップ](../../SPONSORS.md#hardware-lab-partner)をご覧になるか、[GitHubでスポンサーになる](https://github.com/sponsors/rohitg00)ことができます。
 

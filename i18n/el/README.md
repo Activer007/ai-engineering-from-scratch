@@ -13,11 +13,11 @@
 
 Δωρεάν, ανοικτού κώδικα, με άδεια MIT. Μάθετε στον ιστότοπο, με έναν πράκτορα προγραμματισμού ή εκτελώντας κώδικα τοπικά.
 
-> 523 μαθήματα. 20 φάσεις. Python, TypeScript, Rust, Julia.
+> 542 μαθήματα. 20 φάσεις. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Άδεια MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 μαθήματα"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 μαθήματα"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 φάσεις"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Αστέρια στο GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Ιστότοπος"></a>
@@ -207,6 +207,7 @@ python3 --version
 | [`course-guide`](../../skills/course-guide/SKILL.md) | Δρομολογητής θεμάτων. «Πού μαθαίνω για την προσοχή;» ή «η απώλειά μου είναι NaN» → τα κατάλληλα μαθήματα, με συνδέσμους. |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Εξειδικευμένος δάσκαλος για το Model Context Protocol (MCP). Δημιουργεί το `MCP-LEARNING.md`, ακολουθεί τη λίστα των 17 μαθημάτων και καταγράφει τεκμήρια επικοινωνίας πρωτοκόλλου, ασφάλειας, αξιοπιστίας και συμμόρφωσης. |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Εξειδικευμένος δάσκαλος για τις δεξιότητες πρακτόρων. Δημιουργεί το `AGENT-SKILLS-LEARNING.md`, διδάσκει τα μαθήματα 22, 24, 25, 26 και 27 και καταγράφει τεκμήρια από πραγματικό περιβάλλον εκτέλεσης. |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | Εξειδικευμένος δάσκαλος αντίστροφης μηχανικής. Δημιουργεί το `REVERSE-ENGINEERING-LEARNING.md`, διδάσκει τα μαθήματα 32 έως 45 της Φάσης 13 σε προγράμματα που κατασκευάζεις μόνος σου και καταγράφει τεκμήρια εργαστηρίου. |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | Δάσκαλος πιστοποίησης. Επιλέγει CCAO-F, CCDV-F, CCAR-F ή CCAR-P· διδάσκει κάθε μάθημα· εκτελεί εργαστήρια· ελέγχει παραδοτέα· διεξάγει διαγνωστικές και δοκιμαστικές εξετάσεις· αποθηκεύει την πρόοδο. |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Δάσκαλος MCPA. Ακολουθεί τη διαδρομή `mcpa-f` των 34 μαθημάτων για το πρωτόκολλο της 2026-07-28· διδάσκει κάθε μάθημα· εκτελεί εργαστήρια και τον ελεγκτή επικοινωνίας πρωτοκόλλου· διεξάγει τη διαγνωστική και τρεις δοκιμαστικές εξετάσεις· αποθηκεύει την πρόοδο. |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | Κουίζ κατάταξης δέκα ερωτήσεων. Αντιστοιχίζει τις γνώσεις σου σε μια αρχική φάση και παράγει εξατομικευμένη διαδρομή με εκτίμηση ωρών. |
@@ -246,7 +247,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## Επιλέξτε μαθησιακή διαδρομή
 
-Δεν χρειάζεται να εξετάσεις και τα 523 μαθήματα πριν ξεκινήσεις. Διάλεξε έναν στόχο. Κάθε σύνδεσμος ανοίγει το ίδιο πρόγραμμα στο GitHub ή στον ιστότοπο, και οι δύο εκδόσεις χρησιμοποιούν τον ίδιο κώδικα μαθημάτων.
+Δεν χρειάζεται να εξετάσεις και τα 542 μαθήματα πριν ξεκινήσεις. Διάλεξε έναν στόχο. Κάθε σύνδεσμος ανοίγει το ίδιο πρόγραμμα στο GitHub ή στον ιστότοπο, και οι δύο εκδόσεις χρησιμοποιούν τον ίδιο κώδικα μαθημάτων.
 
 | Ο στόχος σου | Μάθηση στο GitHub | Μάθηση στον ιστότοπο |
 |---|---|---|
@@ -262,12 +263,13 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 Σύγκρινε τέσσερις βασικούς τομείς και έξι επαγγελματικές διαδρομές στο [Διαδρομές μάθησης μηχανικής ΤΝ](https://aiengineeringfromscratch.com/learning-paths.html).
 
 <details>
-<summary>Εστιασμένες διαδρομές MCP και Agent Skills</summary>
+<summary>Εστιασμένες διαδρομές MCP, Agent Skills και αντίστροφης μηχανικής</summary>
 
 | Ο στόχος σου | Μάθηση στο GitHub | Μάθηση στον ιστότοπο |
 |---|---|---|
 | Θέλω να αναπτύξω λύσεις με Model Context Protocol (MCP) | [Διαδρομή Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Μαθησιακή διαδρομή Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Θέλω να γράψω και να διαθέσω Agent Skills | [Εστιασμένη διαδρομή Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Μαθησιακή διαδρομή Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Θέλω να διαβάζω μεταγλωττισμένα προγράμματα | [Διαδρομή αντίστροφης μηχανικής](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Μαθησιακή διαδρομή αντίστροφης μηχανικής](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 | Έμπειρος μηχανικός, σε ενδιαφέρει μόνο η μηχανική πρακτόρων | Φάση 14: Μηχανική πρακτόρων | ~60 ώρες |
 | Θέλεις μόνο να κατασκευάζεις συστήματα MCP για παραγωγή | [Διαδρομή Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 ώρες 15 λεπτά |
 | Θέλεις μόνο να κατασκευάζεις δεξιότητες πρακτόρων για παραγωγή | [Διαδρομή μηχανικής δεξιοτήτων πρακτόρων](../../learning-paths/agent-skills.json) | ~9.5 ώρες |
+| Θέλεις μόνο να μάθεις αντίστροφη μηχανική | [Διαδρομή αντίστροφης μηχανικής](../../learning-paths/reverse-engineering.json) | ~32.5 ώρες |
 
 </details>
 
@@ -330,7 +333,7 @@ flowchart TB
 Είκοσι φάσεις. Πάτησε μια φάση για να εμφανιστεί η λίστα μαθημάτων της.
 
 <a id="phase-0"></a>
-### Φάση 0: Ρύθμιση και εργαλεία `12 μαθήματα`
+### Φάση 0: Ρύθμιση και εργαλεία `13 μαθήματα`
 > Προετοίμασε το περιβάλλον σου για όσα ακολουθούν.
 
 | # | Μάθημα | Τύπος | Γλώσσα |
@@ -347,6 +350,7 @@ flowchart TB
 | 10 | [Τερματικό και κέλυφος](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Μάθηση | — |
 | 11 | [Linux για ΤΝ](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Μάθηση | — |
 | 12 | [Αποσφαλμάτωση και ανάλυση επιδόσεων](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Κατασκευή | Python |
+| 13 | [Python για μηχανική τεχνητής νοημοσύνης](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Κατασκευή | Python |
 
 <details id="phase-1">
 <summary><b>Φάση 1: Μαθηματικά θεμέλια</b> &nbsp;<code>22 μαθήματα</code>&nbsp; <em>Η διαίσθηση πίσω από κάθε αλγόριθμο ΤΝ, μέσα από κώδικα.</em></summary>
@@ -380,7 +384,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>Φάση 2: Βασικές αρχές μηχανικής μάθησης</b> &nbsp;<code>18 μαθήματα</code>&nbsp; <em>Κλασική μηχανική μάθηση· εξακολουθεί να αποτελεί τη βάση των περισσότερων συστημάτων ΤΝ στην παραγωγή.</em></summary>
+<summary><b>Φάση 2: Βασικές αρχές μηχανικής μάθησης</b> &nbsp;<code>21 μαθήματα</code>&nbsp; <em>Κλασική μηχανική μάθηση· εξακολουθεί να αποτελεί τη βάση των περισσότερων συστημάτων ΤΝ στην παραγωγή.</em></summary>
 <br/>
 
 | # | Μάθημα | Τύπος | Γλώσσα |
@@ -403,6 +407,9 @@ flowchart TB
 | 16 | [Ανίχνευση ανωμαλιών](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Κατασκευή | Python |
 | 17 | [Διαχείριση μη ισορροπημένων δεδομένων](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Κατασκευή | Python |
 | 18 | [Επιλογή χαρακτηριστικών](../../phases/02-ml-fundamentals/18-feature-selection/) | Κατασκευή | Python |
+| 19 | [Σχεδίαση συστημάτων ML: από το πρόβλημα στο μοντέλο σε λειτουργία](../../phases/02-ml-fundamentals/19-ml-system-design/) | Κατασκευή | Python |
+| 20 | [Παρακολούθηση μοντέλων στην παραγωγή: μετατόπιση δεδομένων και μετατόπιση εννοιών](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Κατασκευή | Python |
+| 21 | [Αποθήκες χαρακτηριστικών και απόκλιση εκπαίδευσης και εξυπηρέτησης](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Κατασκευή | Python |
 
 </details>
 
@@ -693,7 +700,7 @@ flowchart TB
 </details>
 
 <details id="phase-13">
-<summary><b>Φάση 13: Εργαλεία και πρωτόκολλα</b> &nbsp;<code>31 μαθήματα</code>&nbsp; <em>Οι διεπαφές ανάμεσα στην ΤΝ και τον πραγματικό κόσμο.</em></summary>
+<summary><b>Φάση 13: Εργαλεία και πρωτόκολλα</b> &nbsp;<code>45 μαθήματα</code>&nbsp; <em>Οι διεπαφές ανάμεσα στην ΤΝ και τον πραγματικό κόσμο.</em></summary>
 <br/>
 
 | # | Μάθημα | Τύπος | Γλώσσα |
@@ -729,6 +736,20 @@ flowchart TB
 | 29 | [Αξιοπιστία MCP, ακύρωση και έλεγχος ροής](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Κατασκευή | Python |
 | 30 | [Αλυσίδα εφοδιασμού μητρώου MCP: εισαγωγή, αποκλίσεις και επαναφορά](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Κατασκευή | Python |
 | 31 | [Μηχανική συμμόρφωσης MCP: εκδόσεις, αποδείξεις και λειτουργία](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Κατασκευή | Python |
+| 32 | [Ανατομία προγράμματος: ανάγνωση ELF από το μηδέν](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Κατασκευή | Python |
+| 33 | [Αποσυναρμολόγηση και γράφοι ροής ελέγχου](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Κατασκευή | Python |
+| 34 | [Ανύψωση κώδικα μηχανής σε ψευδοκώδικα](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Κατασκευή | Python |
+| 35 | [Τεκμήρια, βεβαιότητα και άγνωστα στην ανάλυση δυαδικών](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Κατασκευή | Python |
+| 36 | [Ανακατασκευή και απόδειξη ισοδυναμίας](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Κατασκευή | Python |
+| 37 | [Το τοπίο της αντίστροφης μηχανικής](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Κατασκευή | Python |
+| 38 | [Συμβάσεις κλήσης και πλαίσια στοίβας](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Κατασκευή | Python |
+| 39 | [Ιδιώματα μεταγλωττιστή και βελτιστοποίηση](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Κατασκευή | Python |
+| 40 | [Σύνδεση, φόρτωση και απογυμνωμένα δυαδικά](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Κατασκευή | Python |
+| 41 | [Ανάκτηση δεδομένων και τύπων](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Κατασκευή | Python |
+| 42 | [Δυναμική ανάλυση του δικού σου προγράμματος](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Κατασκευή | Python |
+| 43 | [Bytecode και διαχειριζόμενες μορφές](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Κατασκευή | Python |
+| 44 | [Σύγκριση δυαδικών και συμβολική εκτέλεση](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Κατασκευή | Python |
+| 45 | [Αντίστροφη μηχανική με βοήθεια ΤΝ](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Κατασκευή | Python |
 
 Τα μαθήματα 06-18 και 28-31 αποτελούν την ειδική [διαδρομή Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Η σειρά του δηλωτικού είναι 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Ξεκίνα με την παραπάνω κλήση `learn-mcp` για την εφαρμογή σου. Το μάθημα 23 είναι το μόνο προαιρετικό τελικό έργο και απαιτεί επίσης τα μαθήματα 19 και 20.
 
@@ -869,7 +890,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>Φάση 17: Υποδομή και παραγωγή</b> &nbsp;<code>28 μαθήματα</code>&nbsp; <em>Βάλε την ΤΝ στον πραγματικό κόσμο.</em></summary>
+<summary><b>Φάση 17: Υποδομή και παραγωγή</b> &nbsp;<code>29 μαθήματα</code>&nbsp; <em>Βάλε την ΤΝ στον πραγματικό κόσμο.</em></summary>
 <br/>
 
 | # | Μάθημα | Τύπος | Γλώσσα |
@@ -902,6 +923,7 @@ flowchart TB
 | 26 | [Συμμόρφωση: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Μάθηση | Python |
 | 27 | [FinOps για LLM: οικονομία μονάδας και κατανομή κόστους πολλών πελατών](../../phases/17-infrastructure-and-production/27-finops-llms/) | Μάθηση | Python |
 | 28 | [Επιλογή αυτοφιλοξενούμενης εξυπηρέτησης: αντιστοίχιση μηχανής, υλικού και κλίμακας](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Μάθηση | Python |
+| 29 | [Διεπαφές επίδειξης μοντέλων: από μια συνάρτηση σε μια εφαρμογή για κοινή χρήση](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Κατασκευή | Python |
 
 </details>
 
@@ -1142,7 +1164,7 @@ flowchart LR
 <details>
 <summary>Εγκατάσταση παραδοτέων μαθημάτων</summary>
 
-**Τα παραδοτέα μαθημάτων.** Το αποθετήριο παρέχει 396 δεξιότητες και 99 προτροπές στο `phases/**/outputs/`· εγκατέστησέ τα μέσω `scripts/install_skills.py`. Απαιτείται κλωνοποίηση. Υποστηρίζονται φίλτρα ετικετών, δοκιμαστικές εκτελέσεις και διατάξεις ανά πράκτορα:
+**Τα παραδοτέα μαθημάτων.** Το αποθετήριο παρέχει 414 δεξιότητες και 100 προτροπές στο `phases/**/outputs/`· εγκατέστησέ τα μέσω `scripts/install_skills.py`. Απαιτείται κλωνοποίηση. Υποστηρίζονται φίλτρα ετικετών, δοκιμαστικές εκτελέσεις και διατάξεις ανά πράκτορα:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1284,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> αναγνώστες &nbsp;·&nbsp; <b>181,995</b> προβολές σελίδων τις τελευταίες 30 ημέρες &nbsp;·&nbsp; στις 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Δωρεάν, με άδεια MIT, 523 μαθήματα. Ευχαριστούμε τους χορηγούς και υποστηρικτές που κάνουν αυτή τη δουλειά εφικτή. [Δες όλους τους χορηγούς και υποστηρικτές](../../BACKERS.md).
+Δωρεάν, με άδεια MIT, 542 μαθήματα. Ευχαριστούμε τους χορηγούς και υποστηρικτές που κάνουν αυτή τη δουλειά εφικτή. [Δες όλους τους χορηγούς και υποστηρικτές](../../BACKERS.md).
 
 Θέλεις να στηρίξεις τη δουλειά; Δες τις [επιλογές χορηγίας](../../SPONSORS.md), όπως τις [χορηγίες υλικού](../../SPONSORS.md#hardware-lab-partner), ή [γίνε χορηγός στο GitHub](https://github.com/sponsors/rohitg00).
 

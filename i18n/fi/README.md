@@ -13,11 +13,11 @@ Toteuta mallien sisäiset mekanismit, hakuprosessit ja agenttien suoritusympäri
 
 Maksuton, avoin lähdekoodi, MIT-lisenssi. Opi verkkosivustolla, koodausagentin kanssa tai suorittamalla koodia paikallisesti.
 
-> 523 oppituntia. 20 vaihetta. Python, TypeScript, Rust, Julia.
+> 542 oppituntia. 20 vaihetta. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-lisenssi"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 oppituntia"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 oppituntia"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 vaihetta"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub-tähdet"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Verkkosivusto"></a>
@@ -207,6 +207,7 @@ Asennusohjelma näyttää tukemansa isäntäsovellukset ja kysyy asennuspaikkaa.
 | [`course-guide`](../../skills/course-guide/SKILL.md) | Aiheopas. ”Missä opin attention-mekanismista?” tai ”häviöni on NaN” → oikeat oppitunnit linkkeineen. |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Model Context Protocoliin (MCP) keskittyvä opettaja. Luo tiedoston `MCP-LEARNING.md`, seuraa 17 oppitunnin manifestia ja tallentaa näyttöä viestiliikenteestä, turvallisuudesta, luotettavuudesta ja vaatimustenmukaisuudesta. |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skillsiin keskittyvä opettaja. Luo tiedoston `AGENT-SKILLS-LEARNING.md`, opettaa oppitunnit 22, 24, 25, 26 ja 27 sekä tallentaa näyttöä oikeista isäntäsovelluksista. |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | Takaisinmallinnukseen keskittyvä opettaja. Luo tiedoston `REVERSE-ENGINEERING-LEARNING.md`, opettaa vaiheen 13 oppitunnit 32–45 itse rakentamillasi ohjelmilla ja tallentaa näyttöä laboratorioharjoituksista. |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | Sertifiointiopettaja. Valitsee polun CCAO-F, CCDV-F, CCAR-F tai CCAR-P, opettaa oppitunnit, suorittaa harjoitukset, arvioi tuotokset, järjestää lähtötaso- ja harjoituskokeet sekä tallentaa edistymisen. |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA-opettaja. Seuraa protokollan 2026-07-28 mukaista 34 oppitunnin `mcpa-f`-polkua, opettaa oppitunnit, suorittaa harjoitukset ja viestitarkistukset, järjestää lähtötasotestin ja kolme harjoituskoetta sekä tallentaa edistymisen. |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | Kymmenen kysymyksen tasotesti. Yhdistää osaamisesi sopivaan lähtövaiheeseen ja tuottaa henkilökohtaisen polun tuntiarvioineen. |
@@ -246,7 +247,7 @@ Oppituntisivujen komentojen polut ovat suhteessa koodivaraston juureen, ellei op
 
 ## Valitse oppimispolku
 
-Sinun ei tarvitse käydä läpi 523 oppituntia ennen aloittamista. Valitse yksi tavoite. Jokainen linkki avaa saman opetussuunnitelman GitHubissa tai verkkosivustolla, ja molemmissa versioissa käytetään samaa oppituntien koodia.
+Sinun ei tarvitse käydä läpi 542 oppituntia ennen aloittamista. Valitse yksi tavoite. Jokainen linkki avaa saman opetussuunnitelman GitHubissa tai verkkosivustolla, ja molemmissa versioissa käytetään samaa oppituntien koodia.
 
 | Tavoitteesi | Opi GitHubissa | Opi verkkosivustolla |
 |---|---|---|
@@ -262,12 +263,13 @@ Etkö tiedä, mistä aloittaa? Käytä [`start-learning`-tasokartoitustuutoria](
 Vertaa neljää ydinaluetta ja kuutta urapolkua [tekoälykehityksen oppimispoluissa](https://aiengineeringfromscratch.com/learning-paths.html).
 
 <details>
-<summary>Kohdennetut MCP- ja Agent Skills -polut</summary>
+<summary>Kohdennetut MCP-, Agent Skills- ja takaisinmallinnuspolut</summary>
 
 | Tavoitteesi | Opi GitHubissa | Opi verkkosivustolla |
 |---|---|---|
 | Haluan rakentaa Model Context Protocol (MCP) -protokollalla | [Model Context Protocol (MCP) -polku](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) -oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Haluan kirjoittaa ja julkaista Agent Skills -taitoja | [Agent Skills -täsmäpolku](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills -oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Haluan lukea käännettyjä ohjelmia | [Takaisinmallinnuksen polku](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Takaisinmallinnuksen oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ Vertaa neljää ydinaluetta ja kuutta urapolkua [tekoälykehityksen oppimispolui
 | Kokenut kehittäjä, joka haluaa vain agenttikehitystä | Vaihe 14: Agenttikehitys | ~60 tuntia |
 | Haluat rakentaa vain tuotannon MCP-järjestelmiä | [Model Context Protocol (MCP) -polku](../../learning-paths/model-context-protocol.json) | ~23 tuntia 15 min |
 | Haluat rakentaa vain tuotannon Agent Skills -taitoja | [Agent Skills -kehityspolku](../../learning-paths/agent-skills.json) | ~9.5 tuntia |
+| Haluat oppia vain takaisinmallinnusta | [Takaisinmallinnuksen polku](../../learning-paths/reverse-engineering.json) | ~32.5 tuntia |
 
 </details>
 
@@ -330,7 +333,7 @@ flowchart TB
 Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 
 <a id="phase-0"></a>
-### Vaihe 0: Asennus ja työkalut `12 oppituntia`
+### Vaihe 0: Asennus ja työkalut `13 oppituntia`
 > Valmistele ympäristö kaikkea seuraavaa varten.
 
 | # | Oppitunti | Tyyppi | Kieli |
@@ -347,6 +350,7 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 10 | [Pääte ja komentotulkki](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Opi | — |
 | 11 | [Linux AI-kehityksessä](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Opi | — |
 | 12 | [Virheenjäljitys ja profilointi](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Rakenna | Python |
+| 13 | [Python tekoälytekniikkaan](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Rakenna | Python |
 
 <details id="phase-1">
 <summary><b>Vaihe 1: Matematiikan perusteet</b> &nbsp;<code>22 oppituntia</code>&nbsp; <em>Jokaisen AI-algoritmin taustalla oleva intuitio koodin kautta.</em></summary>
@@ -380,7 +384,7 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 </details>
 
 <details id="phase-2">
-<summary><b>Vaihe 2: Koneoppimisen perusteet</b> &nbsp;<code>18 oppituntia</code>&nbsp; <em>Klassinen ML on yhä useimpien tuotannon AI-järjestelmien perusta.</em></summary>
+<summary><b>Vaihe 2: Koneoppimisen perusteet</b> &nbsp;<code>21 oppituntia</code>&nbsp; <em>Klassinen ML on yhä useimpien tuotannon AI-järjestelmien perusta.</em></summary>
 <br/>
 
 | # | Oppitunti | Tyyppi | Kieli |
@@ -403,6 +407,9 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 16 | [Poikkeamien tunnistaminen](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Rakenna | Python |
 | 17 | [Epätasapainoisen datan käsittely](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Rakenna | Python |
 | 18 | [Piirteiden valinta](../../phases/02-ml-fundamentals/18-feature-selection/) | Rakenna | Python |
+| 19 | [ML-järjestelmien suunnittelu: ongelmasta käyttöön otettuun malliin](../../phases/02-ml-fundamentals/19-ml-system-design/) | Rakenna | Python |
+| 20 | [Mallien valvonta tuotannossa: datan ajautuminen ja käsitteen ajautuminen](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Rakenna | Python |
+| 21 | [Piirrevarastot ja koulutuksen ja tuotannon välinen ero](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Rakenna | Python |
 
 </details>
 
@@ -693,7 +700,7 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 </details>
 
 <details id="phase-13">
-<summary><b>Vaihe 13: Työkalut ja protokollat</b> &nbsp;<code>31 oppituntia</code>&nbsp; <em>Rajapinnat AI:n ja todellisen maailman välillä.</em></summary>
+<summary><b>Vaihe 13: Työkalut ja protokollat</b> &nbsp;<code>45 oppituntia</code>&nbsp; <em>Rajapinnat AI:n ja todellisen maailman välillä.</em></summary>
 <br/>
 
 | # | Oppitunti | Tyyppi | Kieli |
@@ -729,6 +736,20 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 29 | [MCP:n luotettavuus, peruutus ja vuonhallinta](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Rakenna | Python |
 | 30 | [MCP-rekisterin toimitusketju: hyväksyntä, poikkeamat ja palautus](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Rakenna | Python |
 | 31 | [MCP:n vaatimustenmukaisuus: versiointi, näyttö ja operointi](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Rakenna | Python |
+| 32 | [Ohjelman anatomia: ELF-tiedoston lukeminen alusta asti](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Rakenna | Python |
+| 33 | [Disassemblointi ja ohjausvuograafit](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Rakenna | Python |
+| 34 | [Konekoodin nostaminen pseudokoodiksi](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Rakenna | Python |
+| 35 | [Näyttö, varmuus ja tuntemattomat binäärianalyysissä](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Rakenna | Python |
+| 36 | [Rakenna uudelleen ja todista yhtäläisyys](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Rakenna | Python |
+| 37 | [Takaisinmallinnuksen kenttä](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Rakenna | Python |
+| 38 | [Kutsukäytännöt ja pinokehykset](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Rakenna | Python |
+| 39 | [Kääntäjän idiomit ja optimointi](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Rakenna | Python |
+| 40 | [Linkitys, lataus ja riisutut binäärit](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Rakenna | Python |
+| 41 | [Datan ja tyyppien palauttaminen](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Rakenna | Python |
+| 42 | [Oman ohjelmasi dynaaminen analyysi](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Rakenna | Python |
+| 43 | [Tavukoodi ja hallitut formaatit](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Rakenna | Python |
+| 44 | [Binäärivertailu ja symbolinen suoritus](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Rakenna | Python |
+| 45 | [Tekoälyavusteinen takaisinmallinnus](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Rakenna | Python |
 
 Oppitunnit 06-18 ja 28-31 muodostavat rajatun [Model Context Protocol (MCP) -polun](../../learning-paths/model-context-protocol.json). Manifestin järjestys on 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Aloita yllä kuvatulla isäntäsovelluskohtaisella `learn-mcp`-kutsulla. Oppitunti 23 on polun ainoa valinnainen lopputyö ja edellyttää myös oppitunteja 19 ja 20.
 
@@ -869,7 +890,7 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 </details>
 
 <details id="phase-17">
-<summary><b>Vaihe 17: Infrastruktuuri ja tuotanto</b> &nbsp;<code>28 oppituntia</code>&nbsp; <em>Vie AI todelliseen maailmaan.</em></summary>
+<summary><b>Vaihe 17: Infrastruktuuri ja tuotanto</b> &nbsp;<code>29 oppituntia</code>&nbsp; <em>Vie AI todelliseen maailmaan.</em></summary>
 <br/>
 
 | # | Oppitunti | Tyyppi | Kieli |
@@ -902,6 +923,7 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 | 26 | [Vaatimustenmukaisuus: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Opi | Python |
 | 27 | [FinOps LLM-malleille: yksikkötalous ja asiakaskohtainen kustannuskohdistus](../../phases/17-infrastructure-and-production/27-finops-llms/) | Opi | Python |
 | 28 | [Oman päättelypalvelun valinta: moottori, laitteisto ja mittakaava](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Opi | Python |
+| 29 | [Mallien demokäyttöliittymät: funktiosta jaettavaan sovellukseen](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Rakenna | Python |
 
 </details>
 
@@ -1142,7 +1164,7 @@ Muut kurssit päättyvät toteamukseen *”Onnittelut, opit X:n.”* Täällä j
 <details>
 <summary>Asenna oppituntien tuotokset</summary>
 
-**Oppituntien tuotokset.** Tietovarastossa on 396 taitoa ja 99 kehotetta hakemiston `phases/**/outputs/` alla. Asenna ne komennolla `scripts/install_skills.py`. Tämä vaatii tietovaraston kloonaamisen. Työkalu tukee tunnistesuodatusta, kirjoittamatonta esikatselua ja agenttikohtaisia hakemistorakenteita:
+**Oppituntien tuotokset.** Tietovarastossa on 414 taitoa ja 100 kehotetta hakemiston `phases/**/outputs/` alla. Asenna ne komennolla `scripts/install_skills.py`. Tämä vaatii tietovaraston kloonaamisen. Työkalu tukee tunnistesuodatusta, kirjoittamatonta esikatselua ja agenttikohtaisia hakemistorakenteita:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1284,7 @@ Paluuarvo on nollasta poikkeava, jos yksikin sääntö epäonnistuu. Säännöt 
 <p align="center"><sub><b>114,584</b> lukijaa &nbsp;·&nbsp; <b>181,995</b> sivukatselua viimeisten 30 päivän aikana &nbsp;·&nbsp; tilanne 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Maksuton, MIT-lisensoitu, 523 oppituntia. Kiitos sponsoreille ja tukijoille, jotka mahdollistavat tämän työn. [Katso kaikki sponsorit ja tukijat](../../BACKERS.md).
+Maksuton, MIT-lisensoitu, 542 oppituntia. Kiitos sponsoreille ja tukijoille, jotka mahdollistavat tämän työn. [Katso kaikki sponsorit ja tukijat](../../BACKERS.md).
 
 Haluatko tukea työtä? Tutustu [sponsorointivaihtoehtoihin](../../SPONSORS.md), kuten [laitteistosponsorointiin](../../SPONSORS.md#hardware-lab-partner), tai [sponsoroi GitHubissa](https://github.com/sponsors/rohitg00).
 

@@ -13,11 +13,11 @@
 
 مفت، اوپن سورس، MIT لائسنس۔ ویب سائٹ پر، کوڈنگ ایجنٹ کے ساتھ یا مقامی کوڈ چلا کر سیکھیں۔
 
-> <span dir="rtl">523 اسباق. 20 مراحل.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
+> <span dir="rtl">542 اسباق. 20 مراحل.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT لائسنس"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 اسباق"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 اسباق"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 مراحل"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub اسٹار"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="ویب سائٹ"></a>
@@ -207,6 +207,7 @@ python3 --version
 | [`course-guide`](../../skills/course-guide/SKILL.md) | موضوع کی رہنمائی۔ “اٹینشن کہاں سیکھوں؟” یا “میرا لاس NaN ہے” → لنکس سمیت درست اسباق۔ |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | مخصوص Model Context Protocol (MCP) ٹیوٹر۔ `MCP-LEARNING.md` بناتا ہے، 17 اسباق کے مینی فیسٹ کی پیروی کرتا ہے اور مواصلات، سلامتی، قابل اعتمادی اور مطابقت کے ثبوت رکھتا ہے۔ |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | مخصوص Agent Skills ٹیوٹر۔ `AGENT-SKILLS-LEARNING.md` بناتا ہے، اسباق 22، 24، 25، 26 اور 27 پڑھاتا ہے اور حقیقی ہوسٹ کے ثبوت محفوظ کرتا ہے۔ |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | مخصوص ریورس انجینئرنگ ٹیوٹر۔ `REVERSE-ENGINEERING-LEARNING.md` بناتا ہے، آپ کے خود بنائے ہوئے پروگراموں پر مرحلہ 13 کے اسباق 32 سے 45 پڑھاتا ہے اور لیب کے ثبوت محفوظ کرتا ہے۔ |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | سرٹیفیکیشن ٹیوٹر۔ CCAO-F، CCDV-F، CCAR-F یا CCAR-P چنتا ہے؛ اسباق پڑھاتا ہے؛ مشقیں چلاتا ہے؛ بنائی ہوئی چیزیں جانچتا ہے؛ تشخیصی اور مشقی امتحان لیتا ہے؛ پیش رفت محفوظ کرتا ہے۔ |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA ٹیوٹر۔ 2026-07-28 پروٹوکول پر 34 اسباق کے `mcpa-f` راستے پر چلتا ہے؛ اسباق پڑھاتا ہے؛ مشق اور مواصلاتی جانچ چلاتا ہے؛ تشخیصی اور تین مشقی امتحان لیتا ہے؛ پیش رفت محفوظ کرتا ہے۔ |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | دس سوالوں کا سطح متعین کرنے والا امتحان۔ علم کو ابتدائی مرحلے سے ملا کر وقت کے اندازوں سمیت ذاتی راستہ بناتا ہے۔ |
@@ -246,7 +247,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## سیکھنے کا راستہ منتخب کریں
 
-شروع کرنے سے پہلے تمام 523 اسباق دیکھنے کی ضرورت نہیں۔ ایک مقصد چنیں۔ ہر لنک GitHub یا ویب سائٹ پر یہی نصاب کھولتا ہے، اور دونوں جگہ سبق کا ایک ہی کوڈ استعمال ہوتا ہے۔
+شروع کرنے سے پہلے تمام 542 اسباق دیکھنے کی ضرورت نہیں۔ ایک مقصد چنیں۔ ہر لنک GitHub یا ویب سائٹ پر یہی نصاب کھولتا ہے، اور دونوں جگہ سبق کا ایک ہی کوڈ استعمال ہوتا ہے۔
 
 | آپ کا مقصد | GitHub پر سیکھیں | ویب سائٹ پر سیکھیں |
 |---|---|---|
@@ -262,12 +263,13 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 [AI انجینئرنگ کے تعلیمی راستوں](https://aiengineeringfromscratch.com/learning-paths.html) میں چار بنیادی شعبوں اور چھ پیشہ ورانہ راستوں کا موازنہ کریں۔
 
 <details>
-<summary>MCP اور Agent Skills کے مخصوص راستے</summary>
+<summary>MCP، Agent Skills اور ریورس انجینئرنگ کے مخصوص راستے</summary>
 
 | آپ کا مقصد | GitHub پر سیکھیں | ویب سائٹ پر سیکھیں |
 |---|---|---|
 | میں Model Context Protocol (MCP) کے ساتھ بنانا چاہتا ہوں | [Model Context Protocol (MCP) کا تعلیمی روٹ](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) کا راستہ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | میں Agent Skills لکھ کر جاری کرنا چاہتا ہوں | [Agent Skills کا مخصوص روٹ](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills کا راستہ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| میں کمپائل شدہ پروگرام پڑھنا چاہتا ہوں | [ریورس انجینئرنگ کا تعلیمی روٹ](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [ریورس انجینئرنگ کا راستہ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 | سینئر انجینئر، صرف ایجنٹ انجینئرنگ چاہیے | مرحلہ 14: ایجنٹ انجینئرنگ | ~60 گھنٹے |
 | صرف عملی MCP نظام بنانا چاہتے ہیں | [Model Context Protocol (MCP) کا راستہ](../../learning-paths/model-context-protocol.json) | ~23 گھنٹے 15 منٹ |
 | صرف عملی Agent Skills بنانا چاہتے ہیں | [Agent Skills انجینئرنگ کا راستہ](../../learning-paths/agent-skills.json) | ~9.5 گھنٹے |
+| صرف ریورس انجینئرنگ سیکھنا چاہتے ہیں | [ریورس انجینئرنگ کا راستہ](../../learning-paths/reverse-engineering.json) | ~32.5 گھنٹے |
 
 </details>
 
@@ -330,7 +333,7 @@ flowchart TB
 بیس مراحل۔ اسباق کی فہرست کھولنے کے لیے کسی بھی مرحلے پر کلک کریں۔
 
 <a id="phase-0"></a>
-### مرحلہ 0: ترتیب اور ٹولز `12 اسباق`
+### مرحلہ 0: ترتیب اور ٹولز `13 اسباق`
 > آگے آنے والی ہر چیز کے لیے اپنا ماحول تیار کریں۔
 
 | # | سبق | قسم | زبان |
@@ -347,6 +350,7 @@ flowchart TB
 | 10 | [ٹرمینل اور شیل](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | سیکھیں | — |
 | 11 | [AI کے لیے Linux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | سیکھیں | — |
 | 12 | [ڈیبگنگ اور کارکردگی کا تجزیہ](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | بنائیں | Python |
+| 13 | [AI انجینئرنگ کے لیے Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | بنائیں | Python |
 
 <details id="phase-1">
 <summary><b>مرحلہ 1: ریاضی کی بنیادیں</b> &nbsp;<code>22 اسباق</code>&nbsp; <em>کوڈ کے ذریعے ہر AI الگورتھم کی بنیادی سمجھ۔</em></summary>
@@ -380,7 +384,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>مرحلہ 2: ML کی بنیادیں</b> &nbsp;<code>18 اسباق</code>&nbsp; <em>روایتی ML آج بھی زیادہ تر عملی AI کی بنیاد ہے۔</em></summary>
+<summary><b>مرحلہ 2: ML کی بنیادیں</b> &nbsp;<code>21 اسباق</code>&nbsp; <em>روایتی ML آج بھی زیادہ تر عملی AI کی بنیاد ہے۔</em></summary>
 <br/>
 
 | # | سبق | قسم | زبان |
@@ -403,6 +407,9 @@ flowchart TB
 | 16 | [غیر معمولی صورتوں کی شناخت](../../phases/02-ml-fundamentals/16-anomaly-detection/) | بنائیں | Python |
 | 17 | [غیر متوازن ڈیٹا سنبھالنا](../../phases/02-ml-fundamentals/17-imbalanced-data/) | بنائیں | Python |
 | 18 | [فیچر کا انتخاب](../../phases/02-ml-fundamentals/18-feature-selection/) | بنائیں | Python |
+| 19 | [ML سسٹم ڈیزائن: مسئلے سے تعینات ماڈل تک](../../phases/02-ml-fundamentals/19-ml-system-design/) | بنائیں | Python |
+| 20 | [عملی استعمال میں ماڈلز کی نگرانی: ڈیٹا ڈرفٹ اور تصوراتی ڈرفٹ](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | بنائیں | Python |
+| 21 | [فیچر اسٹورز اور تربیت اور سروِنگ کا فرق](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | بنائیں | Python |
 
 </details>
 
@@ -693,7 +700,7 @@ flowchart TB
 </details>
 
 <details id="phase-13">
-<summary><b>مرحلہ 13: ٹول اور پروٹوکول</b> &nbsp;<code>31 اسباق</code>&nbsp; <em>AI اور حقیقی دنیا کے درمیان واسطے۔</em></summary>
+<summary><b>مرحلہ 13: ٹول اور پروٹوکول</b> &nbsp;<code>45 اسباق</code>&nbsp; <em>AI اور حقیقی دنیا کے درمیان واسطے۔</em></summary>
 <br/>
 
 | # | سبق | قسم | زبان |
@@ -729,6 +736,20 @@ flowchart TB
 | 29 | [MCP کی قابل اعتمادی، منسوخی اور بہاؤ کا کنٹرول](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | بنائیں | Python |
 | 30 | [MCP رجسٹری کی سپلائی چین: داخلہ، انحراف اور واپسی](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | بنائیں | Python |
 | 31 | [MCP مطابقت کی انجینئرنگ: ورژن، ثبوت اور عمل کاری](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | بنائیں | Python |
+| 32 | [پروگرام کی ساخت: شروع سے ELF پڑھنا](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | بنائیں | Python |
+| 33 | [ڈس اسمبلی اور کنٹرول فلو گراف](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | بنائیں | Python |
+| 34 | [مشین کوڈ کو سوڈوکوڈ میں ڈھالنا](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | بنائیں | Python |
+| 35 | [بائنری تجزیے میں ثبوت، اعتماد اور نامعلوم](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | بنائیں | Python |
+| 36 | [دوبارہ بنائیں اور برابری ثابت کریں](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | بنائیں | Python |
+| 37 | [ریورس انجینئرنگ کا منظرنامہ](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | بنائیں | Python |
+| 38 | [کالنگ کنونشنز اور اسٹیک فریم](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | بنائیں | Python |
+| 39 | [کمپائلر کے محاورے اور اصلاح](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | بنائیں | Python |
+| 40 | [لنکنگ، لوڈنگ اور اسٹرپ شدہ بائنریز](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | بنائیں | Python |
+| 41 | [ڈیٹا اور ٹائپس کی بازیابی](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | بنائیں | Python |
+| 42 | [اپنے پروگرام کا متحرک تجزیہ](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | بنائیں | Python |
+| 43 | [بائٹ کوڈ اور منظم فارمیٹس](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | بنائیں | Python |
+| 44 | [بائنری موازنہ اور علامتی اجرا](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | بنائیں | Python |
+| 45 | [AI کی مدد سے ریورس انجینئرنگ](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | بنائیں | Python |
 
 اسباق 06-18 اور 28-31 مخصوص [Model Context Protocol (MCP) راستہ](../../learning-paths/model-context-protocol.json) بناتے ہیں۔ مینی فیسٹ کی ترتیب 06، 07، 08، 09، 10، 11، 12، 13، 14، 15، 16، 18، 17، 28، 29، 30، 31 ہے۔ اوپر ہوسٹ کے مطابق `learn-mcp` بلانے سے شروع کریں۔ سبق 23 اس کا واحد اختیاری آخری منصوبہ ہے اور اسے اسباق 19 اور 20 بھی درکار ہیں۔
 
@@ -869,7 +890,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>مرحلہ 17: بنیادی ڈھانچہ اور عملی استعمال</b> &nbsp;<code>28 اسباق</code>&nbsp; <em>AI حقیقی دنیا تک پہنچائیں۔</em></summary>
+<summary><b>مرحلہ 17: بنیادی ڈھانچہ اور عملی استعمال</b> &nbsp;<code>29 اسباق</code>&nbsp; <em>AI حقیقی دنیا تک پہنچائیں۔</em></summary>
 <br/>
 
 | # | سبق | قسم | زبان |
@@ -902,6 +923,7 @@ flowchart TB
 | 26 | [قانونی مطابقت: SOC 2، HIPAA، GDPR، EU AI Act، ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | سیکھیں | Python |
 | 27 | [LLM کے لیے FinOps: فی اکائی معیشت اور متعدد صارفین میں لاگت کی نسبت](../../phases/17-infrastructure-and-production/27-finops-llms/) | سیکھیں | Python |
 | 28 | [اپنی میزبانی والی سروس کا انتخاب: انجن، ہارڈویئر اور پیمانے کی مطابقت](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | سیکھیں | Python |
+| 29 | [ماڈل ڈیمو انٹرفیس: فنکشن سے قابلِ اشتراک ایپ تک](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | بنائیں | Python |
 
 </details>
 
@@ -1142,7 +1164,7 @@ flowchart LR
 <details>
 <summary>سبق کے نتائج نصب کریں</summary>
 
-**اسباق کی تیار کردہ چیزیں۔** ریپوزٹری میں `phases/**/outputs/` کے تحت 396 اسکلز اور 99 پرامپٹس ہیں؛ انہیں `scripts/install_skills.py` سے نصب کریں۔ ریپوزٹری کلون کرنا لازم ہے۔ ٹیگ سے چھانٹنا، بغیر لکھے آزمائشی اجرا اور ہر ایجنٹ کی ترتیب معاون ہیں:
+**اسباق کی تیار کردہ چیزیں۔** ریپوزٹری میں `phases/**/outputs/` کے تحت 414 اسکلز اور 100 پرامپٹس ہیں؛ انہیں `scripts/install_skills.py` سے نصب کریں۔ ریپوزٹری کلون کرنا لازم ہے۔ ٹیگ سے چھانٹنا، بغیر لکھے آزمائشی اجرا اور ہر ایجنٹ کی ترتیب معاون ہیں:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1284,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> قارئین &nbsp;·&nbsp; <b>181,995</b> صفحے کے مشاہدے گزشتہ 30 دنوں میں &nbsp;·&nbsp; 2026-08-29 تک</sub></p>
 <!-- STATS:END -->
 
-مفت، MIT لائسنس کے تحت، 523 اسباق۔ ان سرپرستوں اور معاونین کا شکریہ جن سے یہ کام ممکن ہوتا ہے۔ [تمام سرپرست اور معاونین دیکھیں](../../BACKERS.md)۔
+مفت، MIT لائسنس کے تحت، 542 اسباق۔ ان سرپرستوں اور معاونین کا شکریہ جن سے یہ کام ممکن ہوتا ہے۔ [تمام سرپرست اور معاونین دیکھیں](../../BACKERS.md)۔
 
 اس کام کی مدد کرنا چاہتے ہیں؟ [سرپرستی کے اختیارات](../../SPONSORS.md) دیکھیں، جن میں [ہارڈویئر کی سرپرستی](../../SPONSORS.md#hardware-lab-partner) بھی شامل ہے، یا [GitHub پر سرپرست بنیں](https://github.com/sponsors/rohitg00)۔
 

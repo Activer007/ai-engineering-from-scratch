@@ -44,6 +44,14 @@
       "dest": "/api/certification?legacy=1"
     },
     {
+      "src": "/og/([a-z]+)/([a-z0-9][a-z0-9/-]*)\\.png",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "dest": "/api/og?type=$1&id=$2"
+    },
+    {
       "src": "/",
       "has": [
         {
@@ -65,21 +73,6 @@
       "destination": "/api/certification"
     },
     {
-      "source": "/prereqs",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": "(?i).*text/markdown.*"
-        }
-      ],
-      "destination": "/agent-pages/prereqs.md"
-    },
-    {
-      "source": "/prereqs",
-      "destination": "/prereqs.html"
-    },
-    {
       "source": "/project",
       "destination": "/project.html"
     },
@@ -97,6 +90,18 @@
     {
       "source": "/about",
       "destination": "/about.html"
+    },
+    {
+      "source": "/inside-an-ai-agent",
+      "destination": "/inside-an-ai-agent.html"
+    },
+    {
+      "source": "/skills",
+      "destination": "/skills.html"
+    },
+    {
+      "source": "/how-to-learn",
+      "destination": "/how-to-learn.html"
     },
     {
       "source": "/catalog",
@@ -129,7 +134,7 @@
       "destination": "/glossary.html"
     },
     {
-      "source": "/path",
+      "source": "/glossary/:page([a-z0-9-]+)",
       "has": [
         {
           "type": "header",
@@ -137,11 +142,26 @@
           "value": "(?i).*text/markdown.*"
         }
       ],
-      "destination": "/agent-pages/prereqs.md"
+      "destination": "/agent-pages/glossary/:page.md"
     },
     {
-      "source": "/path",
-      "destination": "/prereqs.html"
+      "source": "/glossary/:page([a-z0-9-]+)",
+      "destination": "/hubs/glossary/:page.html"
+    },
+    {
+      "source": "/phase/:page([a-z0-9-]+)",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/phase/:page.md"
+    },
+    {
+      "source": "/phase/:page([a-z0-9-]+)",
+      "destination": "/hubs/phase/:page.html"
     },
     {
       "source": "/roadmap",
@@ -152,11 +172,11 @@
           "value": "(?i).*text/markdown.*"
         }
       ],
-      "destination": "/agent-pages/prereqs.md"
+      "destination": "/agent-pages/roadmap.md"
     },
     {
       "source": "/roadmap",
-      "destination": "/prereqs.html"
+      "destination": "/roadmap.html"
     },
     {
       "source": "/developer",
@@ -419,6 +439,19 @@
       ]
     },
     {
+      "source": "/(glossary|phase)/([a-z0-9-]+)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept, Accept-Encoding"
+        }
+      ]
+    },
+    {
       "source": "/llms.txt",
       "headers": [
         {
@@ -465,11 +498,15 @@
   "functions": {
     "api/lesson.js": {
       "maxDuration": 10,
-      "includeFiles": "{site/lesson.html,site/lesson-seo.json,site/lesson-markdown.js,languages.json,phases/*/*/docs/en.md,certifications/*/lessons/*/docs/en.md}"
+      "includeFiles": "{site/lesson.html,site/lesson-seo.json,site/lesson-terms.json,site/lesson-markdown.js,languages.json,phases/*/*/docs/en.md,certifications/*/lessons/*/docs/en.md,lib/og-render.js,lib/og-fonts/*.json}"
     },
     "api/certification.js": {
       "maxDuration": 10,
-      "includeFiles": "{site/certification.html,site/certification-seo.json}"
+      "includeFiles": "{site/certification.html,site/certification-seo.json,lib/og-render.js,lib/og-fonts/*.json}"
+    },
+    "api/og.js": {
+      "maxDuration": 10,
+      "includeFiles": "{site/lesson-seo.json,site/certification-seo.json,site/og-cards.json,site/anatomy/*.png,lib/og-render.js,lib/og-fonts/*.json}"
     },
     "api/markdown.js": {
       "maxDuration": 10,
@@ -505,6 +542,21 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/prereqs",
+      "destination": "/roadmap",
+      "permanent": true
+    },
+    {
+      "source": "/path",
+      "destination": "/roadmap",
+      "permanent": true
+    },
+    {
+      "source": "/prereqs.html",
+      "destination": "/roadmap",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
@@ -515,7 +567,7 @@
       "permanent": true
     },
     {
-      "source": "/:page(about|catalog|glossary|prereqs|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment).html",
+      "source": "/:page(about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment|inside-an-ai-agent|skills|how-to-learn).html",
       "destination": "/:page",
       "permanent": true
     },
@@ -523,6 +575,21 @@
       "source": "/:page(manuals|manual-[a-z0-9-]+).html",
       "destination": "/:page",
       "permanent": true
+    },
+    {
+      "source": "/hubs/glossary/:page([a-z0-9-]+).html",
+      "destination": "/glossary/:page",
+      "permanent": true
+    },
+    {
+      "source": "/hubs/phase/:page([a-z0-9-]+).html",
+      "destination": "/phase/:page",
+      "permanent": true
+    },
+    {
+      "source": "/phase",
+      "destination": "/catalog",
+      "permanent": false
     },
     {
       "source": "/project",

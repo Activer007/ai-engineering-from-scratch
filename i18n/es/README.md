@@ -13,11 +13,11 @@ Implementa componentes internos de modelos, pipelines de recuperación y entorno
 
 Gratis, de código abierto y con licencia MIT. Aprende en el sitio web, con un agente de programación o ejecutando código local.
 
-> 523 lecciones. 20 fases. Python, TypeScript, Rust, Julia.
+> 542 lecciones. 20 fases. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licencia del MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lecciones"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 lecciones"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 fases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Estrellas de GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Sitio web"></a>
@@ -207,6 +207,7 @@ El instalador muestra los hosts que puede configurar y pregunta dónde quieres i
 | [`course-guide`](../../skills/course-guide/SKILL.md) | Guía por temas: encuentra las lecciones exactas y sus enlaces para preguntas como «¿Dónde aprendo atención?» o «mi pérdida es NaN». |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor especializado en Model Context Protocol (MCP). Crea `MCP-LEARNING.md`, sigue el manifiesto de 17 lecciones y registra evidencias sobre protocolo, seguridad, confiabilidad y conformidad. |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor especializado en Agent Skills. Crea `AGENT-SKILLS-LEARNING.md`, enseña las lecciones 22, 24, 25, 26 y 27, y registra evidencias en hosts reales. |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | Tutor especializado en ingeniería inversa. Crea `REVERSE-ENGINEERING-LEARNING.md`, enseña las lecciones 32 a 45 de la fase 13 sobre programas que compilas tú mismo y registra evidencias del laboratorio. |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | Tutor de certificación. Elige CCAO-F, CCDV-F, CCAR-F o CCAR-P; enseña cada lección, ejecuta laboratorios, revisa artefactos, administra diagnósticos y simulacros y guarda el progreso. |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor de MCPA. Sigue la ruta `mcpa-f` de 34 lecciones sobre el protocolo 2026-07-28; enseña cada lección, ejecuta los laboratorios y el verificador del protocolo, administra el diagnóstico y tres simulacros y guarda el progreso. |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | Cuestionario de nivelación de diez preguntas. Determina la fase inicial adecuada y propone una ruta personalizada con estimaciones de horas. |
@@ -246,7 +247,7 @@ Los comandos de las lecciones usan rutas relativas a la raíz del repositorio, s
 
 ## Elige una ruta de aprendizaje
 
-No hace falta recorrer las 523 lecciones antes de empezar. Elige un objetivo. Cada enlace abre el mismo plan de estudios en GitHub o en el sitio web, y ambas versiones usan el mismo código de las lecciones.
+No hace falta recorrer las 542 lecciones antes de empezar. Elige un objetivo. Cada enlace abre el mismo plan de estudios en GitHub o en el sitio web, y ambas versiones usan el mismo código de las lecciones.
 
 | Tu objetivo | Aprende en GitHub | Aprende en el sitio web |
 |---|---|---|
@@ -262,12 +263,13 @@ No hace falta recorrer las 523 lecciones antes de empezar. Elige un objetivo. Ca
 Compara cuatro áreas fundamentales y seis trayectorias profesionales en las [rutas de aprendizaje de AI Engineering](https://aiengineeringfromscratch.com/learning-paths.html).
 
 <details>
-<summary>Rutas específicas de MCP y Agent Skills</summary>
+<summary>Rutas específicas de MCP, Agent Skills e ingeniería inversa</summary>
 
 | Tu objetivo | Aprende en GitHub | Aprende en el sitio web |
 |---|---|---|
 | Quiero crear soluciones con Model Context Protocol (MCP) | [Ruta de Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Ruta de Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Quiero crear y publicar Agent Skills | [Ruta enfocada de Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Ruta de Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Quiero leer programas compilados | [Ruta de ingeniería inversa](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Ruta de ingeniería inversa](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ Compara cuatro áreas fundamentales y seis trayectorias profesionales en las [ru
 | Ingeniero sénior, solo te interesa la ingeniería de agentes | Fase 14 — Ingeniería de agentes | ~60 horas |
 | Solo quiero crear sistemas MCP para producción | [Ruta de Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 horas y 15 minutos |
 | Solo quiero crear Agent Skills para producción | [Ruta de ingeniería de Agent Skills](../../learning-paths/agent-skills.json) | ~9,5 horas |
+| Solo quiero aprender ingeniería inversa | [Ruta de ingeniería inversa](../../learning-paths/reverse-engineering.json) | ~32,5 horas |
 
 </details>
 
@@ -331,7 +334,7 @@ Veinte fases. Haz clic en cualquier fase para ampliar su lista de lecciones.
 
 <a id="phase-0"></a>
 
-### Fase 0: Configuración y herramientas `12 lecciones`
+### Fase 0: Configuración y herramientas `13 lecciones`
 
 > Prepara tu entorno para todo lo que viene.
 
@@ -349,6 +352,7 @@ Veinte fases. Haz clic en cualquier fase para ampliar su lista de lecciones.
 | 10 | [Terminal y Shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Aprender | — |
 | 11 | [Linux para IA](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Aprender | — |
 | 12 | [Depuración y perfilado](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Construir | Python |
+| 13 | [Python para ingeniería de IA](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Construir | Python |
 
 <details id="phase-1">
 <summary><b>Fase 1 — Fundamentos matemáticos</b> &nbsp;<code>22 lecciones</code>&nbsp; <em>La intuición que hay detrás de cada algoritmo de IA, explicada con código.</em></summary>
@@ -381,7 +385,7 @@ Veinte fases. Haz clic en cualquier fase para ampliar su lista de lecciones.
 
 </details>
 <details id="phase-2">
-<summary><b>Fase 2 — Fundamentos de ML</b> &nbsp;<code>18 lecciones</code>&nbsp; <em>El ML clásico sigue siendo la base de la mayoría de los sistemas de IA en producción.</em></summary>
+<summary><b>Fase 2 — Fundamentos de ML</b> &nbsp;<code>21 lecciones</code>&nbsp; <em>El ML clásico sigue siendo la base de la mayoría de los sistemas de IA en producción.</em></summary>
 <br/>
 
 | # | Lección | Tipo | Idioma |
@@ -404,6 +408,9 @@ Veinte fases. Haz clic en cualquier fase para ampliar su lista de lecciones.
 | 16 | [Detección de anomalías](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Construir | Python |
 | 17 | [Tratar datos desequilibrados](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Construir | Python |
 | 18 | [Selección de características](../../phases/02-ml-fundamentals/18-feature-selection/) | Construir | Python |
+| 19 | [Diseño de sistemas de ML: del problema al modelo desplegado](../../phases/02-ml-fundamentals/19-ml-system-design/) | Construir | Python |
+| 20 | [Monitorización de modelos en producción: deriva de datos y deriva de concepto](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Construir | Python |
+| 21 | [Almacenes de características y desfase entre entrenamiento y servicio](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Construir | Python |
 
 </details>
 <details id="phase-3">
@@ -683,7 +690,7 @@ Veinte fases. Haz clic en cualquier fase para ampliar su lista de lecciones.
 
 </details>
 <details id="phase-13">
-<summary><b>Fase 13 — Herramientas y protocolos</b> &nbsp;<code>31 lecciones</code>&nbsp; <em>Las interfaces entre la IA y el mundo real.</em></summary>
+<summary><b>Fase 13 — Herramientas y protocolos</b> &nbsp;<code>45 lecciones</code>&nbsp; <em>Las interfaces entre la IA y el mundo real.</em></summary>
 <br/>
 
 | # | Lección | Tipo | Idioma |
@@ -719,6 +726,20 @@ Veinte fases. Haz clic en cualquier fase para ampliar su lista de lecciones.
 | 29 | [Confiabilidad, cancelación y control de flujo en MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Construir | Python |
 | 30 | [Cadena de suministro del registro MCP: admisión, deriva y reversión](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Construir | Python |
 | 31 | [Ingeniería de conformidad MCP: versiones, evidencias y operaciones](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Construir | Python |
+| 32 | [Anatomía de un programa: leer ELF desde cero](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Construir | Python |
+| 33 | [Desensamblado y grafos de flujo de control](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Construir | Python |
+| 34 | [Elevar código máquina a pseudocódigo](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Construir | Python |
+| 35 | [Evidencias, confianza e incógnitas en el análisis binario](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Construir | Python |
+| 36 | [Reconstruir y demostrar la equivalencia](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Construir | Python |
+| 37 | [El panorama de la ingeniería inversa](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Construir | Python |
+| 38 | [Convenciones de llamada y marcos de pila](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Construir | Python |
+| 39 | [Idiomas del compilador y optimización](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Construir | Python |
+| 40 | [Enlazado, carga y binarios sin símbolos](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Construir | Python |
+| 41 | [Recuperar datos y tipos](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Construir | Python |
+| 42 | [Análisis dinámico de tu propio programa](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Construir | Python |
+| 43 | [Bytecode y formatos gestionados](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Construir | Python |
+| 44 | [Comparación de binarios y ejecución simbólica](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Construir | Python |
+| 45 | [Ingeniería inversa asistida por IA](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Construir | Python |
 
 Las lecciones 06–18 y 28–31 forman la ruta específica de [Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). El orden del manifiesto es 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30 y 31. Iníciala con `learn-mcp`, usando la invocación específica de tu host. La lección 23 es el único proyecto final opcional y también requiere las lecciones 19 y 20.
 
@@ -855,7 +876,7 @@ Las lecciones 31–46 forman la [ruta de ingeniería asistida por agentes](../..
 
 </details>
 <details id="phase-17">
-<summary><b>Fase 17 — Infraestructura y producción</b> &nbsp;<code>28 lecciones</code>&nbsp; <em>Lleva la IA al mundo real.</em></summary>
+<summary><b>Fase 17 — Infraestructura y producción</b> &nbsp;<code>29 lecciones</code>&nbsp; <em>Lleva la IA al mundo real.</em></summary>
 <br/>
 
 | # | Lección | Tipo | Idioma |
@@ -888,6 +909,7 @@ Las lecciones 31–46 forman la [ruta de ingeniería asistida por agentes](../..
 | 26 | [Cumplimiento — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Aprender | Python |
 | 27 | [FinOps para LLM — economía unitaria y atribución multiinquilino](../../phases/17-infrastructure-and-production/27-finops-llms/) | Aprender | Python |
 | 28 | [Selección de servicio autoalojado — cómo ajustar el motor al hardware y la escala](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Aprender | Python |
+| 29 | [Interfaces de demostración para modelos: de una función a una aplicación compartible](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Construir | Python |
 
 </details>
 <details id="phase-18">
@@ -1126,7 +1148,7 @@ Otros planes de estudio terminan con «¡Felicidades, aprendiste X!». Aquí, ca
 <details>
 <summary>Instalar artefactos de las lecciones</summary>
 
-**Los artefactos de las lecciones.** El repositorio incluye 396 skills y 99 prompts en `phases/**/outputs/`; instálalos con `scripts/install_skills.py`. Hace falta clonar el repositorio. La herramienta permite filtrar por etiquetas, hacer una ejecución de prueba y elegir una estructura para cada agente:
+**Los artefactos de las lecciones.** El repositorio incluye 414 skills y 100 prompts en `phases/**/outputs/`; instálalos con `scripts/install_skills.py`. Hace falta clonar el repositorio. La herramienta permite filtrar por etiquetas, hacer una ejecución de prueba y elegir una estructura para cada agente:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1246,7 +1268,7 @@ El código de salida es distinto de cero si falla alguna regla. Las reglas L001�
 <p align="center"><sub><b>114,584</b> lectores &nbsp;·&nbsp; <b>181,995</b> visitas a las páginas en los últimos 30 días &nbsp;·&nbsp; desde el 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Gratis, con licencia MIT y 523 lecciones. Gracias a los patrocinadores y colaboradores que hacen posible este trabajo. [Ver todos los patrocinadores y colaboradores](../../BACKERS.md).
+Gratis, con licencia MIT y 542 lecciones. Gracias a los patrocinadores y colaboradores que hacen posible este trabajo. [Ver todos los patrocinadores y colaboradores](../../BACKERS.md).
 
 ¿Quieres apoyar el proyecto? Consulta las [opciones de patrocinio](../../SPONSORS.md), incluidos los [patrocinios de hardware](../../SPONSORS.md#hardware-lab-partner), o [patrocina en GitHub](https://github.com/sponsors/rohitg00).
 

@@ -13,11 +13,11 @@
 
 ฟรี เปิดเผยซอร์สโค้ด และใช้สัญญาอนุญาต MIT เรียนผ่านเว็บไซต์ กับเอเจนต์เขียนโค้ด หรือด้วยการรันโค้ดบนเครื่องของคุณ
 
-> 523 บทเรียน. 20 ระยะ. Python, TypeScript, Rust, Julia.
+> 542 บทเรียน. 20 ระยะ. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="สัญญาอนุญาต MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 บทเรียน"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 บทเรียน"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 ระยะ"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="ดาวบน GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="เว็บไซต์"></a>
@@ -207,6 +207,7 @@ python3 --version
 | [`course-guide`](../../skills/course-guide/SKILL.md) | ตัวนำทางหัวข้อ ถามว่า “เรียน attention ที่ไหน” หรือ “ค่า loss เป็น NaN” → ได้บทเรียนที่ตรงพร้อมลิงก์ |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | ผู้สอนเฉพาะ Model Context Protocol (MCP) สร้าง `MCP-LEARNING.md` เดินตามแมนิเฟสต์ 17 บทเรียน และบันทึกหลักฐานการสื่อสาร ความปลอดภัย ความน่าเชื่อถือ และความสอดคล้อง |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | ผู้สอนเฉพาะ Agent Skills สร้าง `AGENT-SKILLS-LEARNING.md` สอนบทเรียน 22, 24, 25, 26 และ 27 พร้อมบันทึกหลักฐานจากโฮสต์จริง |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | ผู้สอนเฉพาะวิศวกรรมย้อนกลับ สร้าง `REVERSE-ENGINEERING-LEARNING.md` สอนบทเรียน 32 ถึง 45 ของระยะ 13 บนโปรแกรมที่คุณสร้างเอง พร้อมบันทึกหลักฐานจากแล็บ |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | ผู้สอนเตรียมใบรับรอง เลือก CCAO-F, CCDV-F, CCAR-F หรือ CCAR-P สอนแต่ละบท รันแล็บ ตรวจชิ้นงาน จัดแบบประเมินและข้อสอบจำลอง แล้วบันทึกความคืบหน้า |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | ผู้สอน MCPA ติดตามเส้นทาง `mcpa-f` 34 บทเรียนบนโพรโทคอล 2026-07-28 สอนแต่ละบท รันแล็บและตัวตรวจข้อความ จัดแบบประเมินพื้นฐานกับข้อสอบจำลองสามชุด แล้วบันทึกความคืบหน้า |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | แบบทดสอบจัดระดับสิบข้อ จับคู่ความรู้กับระยะเริ่มต้น และสร้างเส้นทางส่วนตัวพร้อมประมาณชั่วโมงเรียน |
@@ -246,7 +247,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## เลือกเส้นทางการเรียนรู้
 
-คุณไม่จำเป็นต้องไล่ดูทั้ง 523 บทเรียนก่อนเริ่ม เลือกเป้าหมายหนึ่งอย่าง แต่ละลิงก์เปิดหลักสูตรเดียวกันบน GitHub หรือเว็บไซต์ และทั้งสองแบบใช้โค้ดบทเรียนเดียวกัน
+คุณไม่จำเป็นต้องไล่ดูทั้ง 542 บทเรียนก่อนเริ่ม เลือกเป้าหมายหนึ่งอย่าง แต่ละลิงก์เปิดหลักสูตรเดียวกันบน GitHub หรือเว็บไซต์ และทั้งสองแบบใช้โค้ดบทเรียนเดียวกัน
 
 | เป้าหมายของคุณ | เรียนบน GitHub | เรียนบนเว็บไซต์ |
 |---|---|---|
@@ -262,12 +263,13 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 เปรียบเทียบสี่สาขาหลักและหกเส้นทางอาชีพใน[เส้นทางเรียนวิศวกรรม AI](https://aiengineeringfromscratch.com/learning-paths.html)
 
 <details>
-<summary>เส้นทางเฉพาะด้าน MCP และ Agent Skills</summary>
+<summary>เส้นทางเฉพาะด้าน MCP, Agent Skills และวิศวกรรมย้อนกลับ</summary>
 
 | เป้าหมายของคุณ | เรียนบน GitHub | เรียนบนเว็บไซต์ |
 |---|---|---|
 | ฉันต้องการสร้างด้วย Model Context Protocol (MCP) | [แนวทางเรียน Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [เส้นทาง Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | ฉันต้องการเขียนและเผยแพร่ Agent Skills | [แนวทางเรียน Agent Skills โดยเฉพาะ](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [เส้นทาง Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| ฉันต้องการอ่านโปรแกรมที่คอมไพล์แล้ว | [แนวทางเรียนวิศวกรรมย้อนกลับ](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [เส้นทางวิศวกรรมย้อนกลับ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 | วิศวกรอาวุโสที่ต้องการเฉพาะวิศวกรรมเอเจนต์ | ระยะ 14: วิศวกรรมเอเจนต์ | ~60 ชั่วโมง |
 | ต้องการสร้างเฉพาะระบบ MCP สำหรับงานจริง | [เส้นทาง Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 ชั่วโมง 15 นาที |
 | ต้องการสร้างเฉพาะ Agent Skills สำหรับงานจริง | [เส้นทางวิศวกรรม Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 ชั่วโมง |
+| ต้องการเรียนเฉพาะวิศวกรรมย้อนกลับ | [เส้นทางวิศวกรรมย้อนกลับ](../../learning-paths/reverse-engineering.json) | ~32.5 ชั่วโมง |
 
 </details>
 
@@ -330,7 +333,7 @@ flowchart TB
 ยี่สิบระยะ คลิกที่ระยะเพื่อขยายรายชื่อบทเรียน
 
 <a id="phase-0"></a>
-### ระยะ 0: การตั้งค่าและเครื่องมือ `12 บทเรียน`
+### ระยะ 0: การตั้งค่าและเครื่องมือ `13 บทเรียน`
 > เตรียมสภาพแวดล้อมให้พร้อมสำหรับสิ่งที่จะตามมา
 
 | # | บทเรียน | ประเภท | ภาษา |
@@ -347,6 +350,7 @@ flowchart TB
 | 10 | [เทอร์มินัลและเชลล์](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | เรียนรู้ | — |
 | 11 | [Linux สำหรับ AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | เรียนรู้ | — |
 | 12 | [การดีบักและวิเคราะห์ประสิทธิภาพ](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | สร้าง | Python |
+| 13 | [Python สำหรับวิศวกรรม AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | สร้าง | Python |
 
 <details id="phase-1">
 <summary><b>ระยะ 1: พื้นฐานคณิตศาสตร์</b> &nbsp;<code>22 บทเรียน</code>&nbsp; <em>เข้าใจแนวคิดเบื้องหลังทุกอัลกอริทึม AI ผ่านโค้ด</em></summary>
@@ -380,7 +384,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>ระยะ 2: พื้นฐาน ML</b> &nbsp;<code>18 บทเรียน</code>&nbsp; <em>ML แบบดั้งเดิมยังเป็นแกนหลักของ AI ส่วนใหญ่ที่ใช้งานจริง</em></summary>
+<summary><b>ระยะ 2: พื้นฐาน ML</b> &nbsp;<code>21 บทเรียน</code>&nbsp; <em>ML แบบดั้งเดิมยังเป็นแกนหลักของ AI ส่วนใหญ่ที่ใช้งานจริง</em></summary>
 <br/>
 
 | # | บทเรียน | ประเภท | ภาษา |
@@ -403,6 +407,9 @@ flowchart TB
 | 16 | [การตรวจจับความผิดปกติ](../../phases/02-ml-fundamentals/16-anomaly-detection/) | สร้าง | Python |
 | 17 | [การจัดการข้อมูลไม่สมดุล](../../phases/02-ml-fundamentals/17-imbalanced-data/) | สร้าง | Python |
 | 18 | [การเลือกคุณลักษณะ](../../phases/02-ml-fundamentals/18-feature-selection/) | สร้าง | Python |
+| 19 | [การออกแบบระบบ ML: จากโจทย์สู่โมเดลที่ใช้งานจริง](../../phases/02-ml-fundamentals/19-ml-system-design/) | สร้าง | Python |
+| 20 | [การเฝ้าติดตามโมเดลในการใช้งานจริง: การเลื่อนของข้อมูลและการเลื่อนของแนวคิด](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | สร้าง | Python |
+| 21 | [คลังคุณลักษณะและความไม่ตรงกันระหว่างการฝึกและการให้บริการ](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | สร้าง | Python |
 
 </details>
 
@@ -693,7 +700,7 @@ flowchart TB
 </details>
 
 <details id="phase-13">
-<summary><b>ระยะ 13: เครื่องมือและโพรโทคอล</b> &nbsp;<code>31 บทเรียน</code>&nbsp; <em>อินเทอร์เฟซระหว่าง AI กับโลกจริง</em></summary>
+<summary><b>ระยะ 13: เครื่องมือและโพรโทคอล</b> &nbsp;<code>45 บทเรียน</code>&nbsp; <em>อินเทอร์เฟซระหว่าง AI กับโลกจริง</em></summary>
 <br/>
 
 | # | บทเรียน | ประเภท | ภาษา |
@@ -729,6 +736,20 @@ flowchart TB
 | 29 | [ความน่าเชื่อถือ การยกเลิก และการควบคุมการไหลของ MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | สร้าง | Python |
 | 30 | [ห่วงโซ่อุปทานรีจิสทรี MCP: รับเข้า ความคลาดเคลื่อน และย้อนกลับ](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | สร้าง | Python |
 | 31 | [วิศวกรรมความสอดคล้อง MCP: เวอร์ชัน หลักฐาน และการปฏิบัติการ](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | สร้าง | Python |
+| 32 | [กายวิภาคของโปรแกรม: อ่าน ELF จากศูนย์](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | สร้าง | Python |
+| 33 | [การถอดแอสเซมบลีและกราฟโฟลว์ควบคุม](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | สร้าง | Python |
+| 34 | [ยกระดับรหัสเครื่องเป็นซูโดโค้ด](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | สร้าง | Python |
+| 35 | [หลักฐาน ความมั่นใจ และสิ่งที่ไม่รู้ในการวิเคราะห์ไบนารี](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | สร้าง | Python |
+| 36 | [สร้างใหม่และพิสูจน์ว่าเท่ากัน](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | สร้าง | Python |
+| 37 | [ภาพรวมของวิศวกรรมย้อนกลับ](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | สร้าง | Python |
+| 38 | [แบบแผนการเรียกและสแตกเฟรม](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | สร้าง | Python |
+| 39 | [รูปแบบโค้ดของคอมไพเลอร์และการปรับให้เหมาะสม](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | สร้าง | Python |
+| 40 | [การลิงก์ การโหลด และไบนารีที่ถูกตัดสัญลักษณ์](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | สร้าง | Python |
+| 41 | [กู้คืนข้อมูลและชนิดข้อมูล](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | สร้าง | Python |
+| 42 | [วิเคราะห์แบบไดนามิกกับโปรแกรมของคุณเอง](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | สร้าง | Python |
+| 43 | [ไบต์โค้ดและรูปแบบที่มีการจัดการ](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | สร้าง | Python |
+| 44 | [เทียบความต่างไบนารีและการประมวลผลเชิงสัญลักษณ์](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | สร้าง | Python |
+| 45 | [วิศวกรรมย้อนกลับโดยมี AI ช่วย](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | สร้าง | Python |
 
 บทเรียน 06-18 และ 28-31 รวมเป็น[เส้นทาง Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) โดยลำดับในแมนิเฟสต์คือ 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31 เริ่มด้วยคำสั่ง `learn-mcp` ของโฮสต์ตามด้านบน บทเรียน 23 เป็นโครงงานสรุปทางเลือกเพียงบทเดียว และต้องเรียนบท 19 กับ 20 ด้วย
 
@@ -869,7 +890,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>ระยะ 17: โครงสร้างพื้นฐานและงานจริง</b> &nbsp;<code>28 บทเรียน</code>&nbsp; <em>นำ AI ออกสู่โลกจริง</em></summary>
+<summary><b>ระยะ 17: โครงสร้างพื้นฐานและงานจริง</b> &nbsp;<code>29 บทเรียน</code>&nbsp; <em>นำ AI ออกสู่โลกจริง</em></summary>
 <br/>
 
 | # | บทเรียน | ประเภท | ภาษา |
@@ -902,6 +923,7 @@ flowchart TB
 | 26 | [การปฏิบัติตามข้อกำหนด: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | เรียนรู้ | Python |
 | 27 | [FinOps สำหรับ LLM: ต้นทุนต่อหน่วยและการแบ่งต้นทุนผู้เช่า](../../phases/17-infrastructure-and-production/27-finops-llms/) | เรียนรู้ | Python |
 | 28 | [เลือกเอนจินให้บริการเองให้เหมาะกับฮาร์ดแวร์และขนาดงาน](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | เรียนรู้ | Python |
+| 29 | [อินเทอร์เฟซสาธิตโมเดล: จากฟังก์ชันสู่แอปที่แชร์ได้](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | สร้าง | Python |
 
 </details>
 
@@ -1142,7 +1164,7 @@ flowchart LR
 <details>
 <summary>ติดตั้งผลงานจากบทเรียน</summary>
 
-**ชิ้นงานจากบทเรียน.** ที่เก็บมี 396 สกิลและ 99 พรอมป์ต์ภายใต้ `phases/**/outputs/` ติดตั้งด้วย `scripts/install_skills.py` โดยต้องโคลนที่เก็บก่อน รองรับการกรองแท็ก ทดลองโดยไม่เขียนไฟล์ และรูปแบบโฟลเดอร์ตามแต่ละเอเจนต์:
+**ชิ้นงานจากบทเรียน.** ที่เก็บมี 414 สกิลและ 100 พรอมป์ต์ภายใต้ `phases/**/outputs/` ติดตั้งด้วย `scripts/install_skills.py` โดยต้องโคลนที่เก็บก่อน รองรับการกรองแท็ก ทดลองโดยไม่เขียนไฟล์ และรูปแบบโฟลเดอร์ตามแต่ละเอเจนต์:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1284,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> ผู้อ่าน &nbsp;·&nbsp; <b>181,995</b> การดูหน้าใน 30 วันที่ผ่านมา &nbsp;·&nbsp; ข้อมูล ณ 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-ฟรี ภายใต้สัญญาอนุญาต MIT จำนวน 523 บทเรียน ขอบคุณผู้สนับสนุนและผู้ให้ทุนที่ทำให้งานนี้เป็นไปได้ [ดูผู้สนับสนุนและผู้ให้ทุนทั้งหมด](../../BACKERS.md)
+ฟรี ภายใต้สัญญาอนุญาต MIT จำนวน 542 บทเรียน ขอบคุณผู้สนับสนุนและผู้ให้ทุนที่ทำให้งานนี้เป็นไปได้ [ดูผู้สนับสนุนและผู้ให้ทุนทั้งหมด](../../BACKERS.md)
 
 ต้องการสนับสนุนงานนี้? ดู[ตัวเลือกการสนับสนุน](../../SPONSORS.md) รวมถึง[การสนับสนุนฮาร์ดแวร์](../../SPONSORS.md#hardware-lab-partner) หรือ[สนับสนุนผ่าน GitHub](https://github.com/sponsors/rohitg00)
 

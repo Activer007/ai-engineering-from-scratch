@@ -13,11 +13,11 @@ Triển khai cơ chế bên trong mô hình, quy trình truy xuất và môi tr�
 
 Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng tác tử lập trình hoặc bằng cách chạy mã cục bộ.
 
-> 523 bài học. 20 giai đoạn. Python, TypeScript, Rust, Julia.
+> 542 bài học. 20 giai đoạn. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Giấy phép MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 bài học"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-542-3553ff?style=flat-square&labelColor=fafaf5" alt="542 bài học"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 giai đoạn"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Sao GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Trang web"></a>
@@ -207,6 +207,7 @@ Trình cài đặt liệt kê các host có thể cấu hình và hỏi nơi cà
 | [`course-guide`](../../skills/course-guide/SKILL.md) | Điều hướng chủ đề. "Tôi học attention ở đâu?" hoặc "loss của tôi là NaN" → đúng bài cần học, kèm liên kết. |
 | [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Gia sư chuyên về Model Context Protocol (MCP). Tạo `MCP-LEARNING.md`, theo bản kê 17 bài, ghi bằng chứng về giao tiếp, bảo mật, độ tin cậy và tuân thủ. |
 | [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Gia sư chuyên về Agent Skills. Tạo `AGENT-SKILLS-LEARNING.md`, dạy các bài 22, 24, 25, 26, 27 và ghi bằng chứng trên host thực tế. |
+| [`learn-reverse-engineering`](../../skills/learn-reverse-engineering/SKILL.md) | Gia sư chuyên về Reverse Engineering. Tạo `REVERSE-ENGINEERING-LEARNING.md`, dạy các bài 32 đến 45 của Giai đoạn 13 trên chương trình do chính bạn xây dựng và ghi bằng chứng thực hành. |
 | [`claude-certification`](../../skills/claude-certification/SKILL.md) | Gia sư chứng chỉ. Chọn CCAO-F, CCDV-F, CCAR-F hoặc CCAR-P; dạy từng bài; chạy thực hành; đánh giá sản phẩm; tổ chức bài chẩn đoán và thi thử; lưu tiến độ. |
 | [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Gia sư MCPA. Theo lộ trình `mcpa-f` gồm 34 bài về giao thức 2026-07-28; dạy từng bài; chạy thực hành và bộ kiểm tra giao tiếp; tổ chức bài chẩn đoán cùng ba đề thi thử; lưu tiến độ. |
 | [`find-your-level`](../../skills/find-your-level/SKILL.md) | Bài kiểm tra trình độ mười câu. Đối chiếu kiến thức với giai đoạn bắt đầu và tạo lộ trình cá nhân kèm thời gian ước tính. |
@@ -246,7 +247,7 @@ Các lệnh trong trang bài học dùng đường dẫn tính từ thư mục g
 
 ## Chọn lộ trình học
 
-Bạn không cần xem qua cả 523 bài học trước khi bắt đầu. Hãy chọn một mục tiêu. Mỗi liên kết mở cùng một chương trình trên GitHub hoặc trang web, và cả hai phiên bản đều dùng cùng mã nguồn bài học.
+Bạn không cần xem qua cả 542 bài học trước khi bắt đầu. Hãy chọn một mục tiêu. Mỗi liên kết mở cùng một chương trình trên GitHub hoặc trang web, và cả hai phiên bản đều dùng cùng mã nguồn bài học.
 
 | Mục tiêu của bạn | Học trên GitHub | Học trên trang web |
 |---|---|---|
@@ -262,12 +263,13 @@ Chưa biết nên bắt đầu ở đâu? Dùng [gia sư đánh giá trình đ�
 So sánh bốn lĩnh vực cốt lõi và sáu lộ trình nghề nghiệp trong [Lộ trình học kỹ thuật AI](https://aiengineeringfromscratch.com/learning-paths.html).
 
 <details>
-<summary>Lộ trình chuyên biệt về MCP và Agent Skills</summary>
+<summary>Lộ trình chuyên biệt về MCP, Agent Skills và Reverse Engineering</summary>
 
 | Mục tiêu của bạn | Học trên GitHub | Học trên trang web |
 |---|---|---|
 | Tôi muốn xây dựng với Model Context Protocol (MCP) | [Lộ trình Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Lộ trình học Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Tôi muốn viết và phát hành Agent Skills | [Lộ trình chuyên về Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Lộ trình học Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Tôi muốn đọc chương trình đã biên dịch | [Lộ trình Reverse Engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Lộ trình học Reverse Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
 
 </details>
 
@@ -290,6 +292,7 @@ So sánh bốn lĩnh vực cốt lõi và sáu lộ trình nghề nghiệp trong
 | Kỹ sư cấp cao, chỉ muốn học kỹ thuật tác tử | Giai đoạn 14: Kỹ thuật tác tử | ~60 giờ |
 | Chỉ muốn xây hệ thống MCP vận hành thực tế | [Lộ trình Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 giờ 15 phút |
 | Chỉ muốn xây Agent Skills dùng trong thực tế | [Lộ trình Kỹ thuật Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 giờ |
+| Chỉ muốn học kỹ thuật dịch ngược | [Lộ trình Reverse Engineering](../../learning-paths/reverse-engineering.json) | ~32.5 giờ |
 
 </details>
 
@@ -330,7 +333,7 @@ flowchart TB
 Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sách bài học.
 
 <a id="phase-0"></a>
-### Giai đoạn 0: Thiết lập và công cụ `12 bài học`
+### Giai đoạn 0: Thiết lập và công cụ `13 bài học`
 > Chuẩn bị môi trường cho mọi nội dung tiếp theo.
 
 | # | Bài học | Loại | Ngôn ngữ |
@@ -347,6 +350,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 10 | [Terminal và shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Tìm hiểu | — |
 | 11 | [Linux cho AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Tìm hiểu | — |
 | 12 | [Gỡ lỗi và phân tích hiệu năng](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Xây dựng | Python |
+| 13 | [Python cho kỹ thuật AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Xây dựng | Python |
 
 <details id="phase-1">
 <summary><b>Giai đoạn 1: Nền tảng toán học</b> &nbsp;<code>22 bài học</code>&nbsp; <em>Hiểu trực quan nền tảng của mọi thuật toán AI qua mã.</em></summary>
@@ -380,7 +384,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 </details>
 
 <details id="phase-2">
-<summary><b>Giai đoạn 2: Nền tảng ML</b> &nbsp;<code>18 bài học</code>&nbsp; <em>ML cổ điển: vẫn là nền tảng của phần lớn AI đang vận hành thực tế.</em></summary>
+<summary><b>Giai đoạn 2: Nền tảng ML</b> &nbsp;<code>21 bài học</code>&nbsp; <em>ML cổ điển: vẫn là nền tảng của phần lớn AI đang vận hành thực tế.</em></summary>
 <br/>
 
 | # | Bài học | Loại | Ngôn ngữ |
@@ -403,6 +407,9 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 16 | [Phát hiện bất thường](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Xây dựng | Python |
 | 17 | [Xử lý dữ liệu mất cân bằng](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Xây dựng | Python |
 | 18 | [Lựa chọn đặc trưng](../../phases/02-ml-fundamentals/18-feature-selection/) | Xây dựng | Python |
+| 19 | [Thiết kế hệ thống ML: từ bài toán đến mô hình được triển khai](../../phases/02-ml-fundamentals/19-ml-system-design/) | Xây dựng | Python |
+| 20 | [Giám sát mô hình trong môi trường thực tế: trôi dữ liệu và trôi khái niệm](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Xây dựng | Python |
+| 21 | [Kho đặc trưng và độ lệch giữa huấn luyện và phục vụ](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Xây dựng | Python |
 
 </details>
 
@@ -693,7 +700,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 </details>
 
 <details id="phase-13">
-<summary><b>Giai đoạn 13: Công cụ và giao thức</b> &nbsp;<code>31 bài học</code>&nbsp; <em>Giao diện giữa AI và thế giới thực.</em></summary>
+<summary><b>Giai đoạn 13: Công cụ và giao thức</b> &nbsp;<code>45 bài học</code>&nbsp; <em>Giao diện giữa AI và thế giới thực.</em></summary>
 <br/>
 
 | # | Bài học | Loại | Ngôn ngữ |
@@ -729,6 +736,20 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 29 | [Độ tin cậy, hủy tác vụ và điều khiển luồng MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Xây dựng | Python |
 | 30 | [Chuỗi cung ứng registry MCP: xét duyệt, sai lệch và khôi phục](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Xây dựng | Python |
 | 31 | [Kỹ thuật tuân thủ MCP: phiên bản, bằng chứng và vận hành](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Xây dựng | Python |
+| 32 | [Giải phẫu chương trình: đọc ELF từ đầu](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Xây dựng | Python |
+| 33 | [Tháo dịch và đồ thị luồng điều khiển](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Xây dựng | Python |
+| 34 | [Nâng mã máy lên mã giả](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Xây dựng | Python |
+| 35 | [Bằng chứng, độ tin cậy và điều chưa biết trong phân tích nhị phân](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Xây dựng | Python |
+| 36 | [Dựng lại và chứng minh tương đương](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Xây dựng | Python |
+| 37 | [Toàn cảnh kỹ thuật dịch ngược](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Xây dựng | Python |
+| 38 | [Quy ước gọi hàm và khung ngăn xếp](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Xây dựng | Python |
+| 39 | [Thành ngữ của trình biên dịch và tối ưu hóa](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Xây dựng | Python |
+| 40 | [Liên kết, nạp và tệp nhị phân đã lược bỏ ký hiệu](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Xây dựng | Python |
+| 41 | [Khôi phục dữ liệu và kiểu](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Xây dựng | Python |
+| 42 | [Phân tích động chương trình của chính bạn](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Xây dựng | Python |
+| 43 | [Bytecode và các định dạng được quản lý](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Xây dựng | Python |
+| 44 | [So sánh khác biệt nhị phân và thực thi ký hiệu](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Xây dựng | Python |
+| 45 | [Kỹ thuật dịch ngược có AI hỗ trợ](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Xây dựng | Python |
 
 Các bài 06-18 và 28-31 tạo thành [lộ trình Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) chuyên biệt. Thứ tự trong bản kê là 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Bắt đầu bằng cách gọi `learn-mcp` theo host ở trên. Bài 23 là đồ án tùy chọn duy nhất và cũng yêu cầu Bài 19, 20.
 
@@ -869,7 +890,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 </details>
 
 <details id="phase-17">
-<summary><b>Giai đoạn 17: Hạ tầng và triển khai thực tế</b> &nbsp;<code>28 bài học</code>&nbsp; <em>Đưa AI vào thế giới thực.</em></summary>
+<summary><b>Giai đoạn 17: Hạ tầng và triển khai thực tế</b> &nbsp;<code>29 bài học</code>&nbsp; <em>Đưa AI vào thế giới thực.</em></summary>
 <br/>
 
 | # | Bài học | Loại | Ngôn ngữ |
@@ -902,6 +923,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 26 | [Tuân thủ: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Tìm hiểu | Python |
 | 27 | [FinOps cho LLM: kinh tế đơn vị và phân bổ nhiều bên thuê](../../phases/17-infrastructure-and-production/27-finops-llms/) | Tìm hiểu | Python |
 | 28 | [Chọn hệ thống tự lưu trữ để phục vụ mô hình: khớp engine với phần cứng và quy mô](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Tìm hiểu | Python |
+| 29 | [Giao diện demo cho mô hình: từ một hàm đến ứng dụng có thể chia sẻ](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Xây dựng | Python |
 
 </details>
 
@@ -1142,7 +1164,7 @@ Các chương trình khác kết thúc bằng *"chúc mừng, bạn đã học X
 <details>
 <summary>Cài đặt sản phẩm của bài học</summary>
 
-**Sản phẩm của bài học.** Kho mã có 396 skill và 99 prompt trong `phases/**/outputs/`; cài bằng `scripts/install_skills.py`. Cần clone kho mã. Hỗ trợ lọc theo nhãn, chạy thử không ghi và bố cục riêng cho từng tác tử:
+**Sản phẩm của bài học.** Kho mã có 414 skill và 100 prompt trong `phases/**/outputs/`; cài bằng `scripts/install_skills.py`. Cần clone kho mã. Hỗ trợ lọc theo nhãn, chạy thử không ghi và bố cục riêng cho từng tác tử:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1284,7 @@ Mã thoát khác không nếu có quy tắc nào thất bại. Các quy tắc (L
 <p align="center"><sub><b>114,584</b> độc giả &nbsp;·&nbsp; <b>181,995</b> lượt xem trang trong 30 ngày qua &nbsp;·&nbsp; tính đến 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Miễn phí, giấy phép MIT, 523 bài học. Cảm ơn các nhà tài trợ và người ủng hộ đã giúp duy trì công việc này. [Xem tất cả nhà tài trợ và người ủng hộ](../../BACKERS.md).
+Miễn phí, giấy phép MIT, 542 bài học. Cảm ơn các nhà tài trợ và người ủng hộ đã giúp duy trì công việc này. [Xem tất cả nhà tài trợ và người ủng hộ](../../BACKERS.md).
 
 Bạn muốn hỗ trợ dự án? Xem [các hình thức tài trợ](../../SPONSORS.md), bao gồm [tài trợ phần cứng](../../SPONSORS.md#hardware-lab-partner), hoặc [tài trợ trên GitHub](https://github.com/sponsors/rohitg00).
 
